@@ -1,0 +1,326 @@
+/* Text Safety and Overflow Handling CSS */
+
+/* === BASE TEXT SAFETY === */
+
+/* Prevent text overflow and layout breaks */
+* {
+  /* Handle long words and URLs */
+  overflow-wrap: break-word;
+  word-wrap: break-word; /* Fallback */
+
+  /* Improve text rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === MULTILINGUAL SUPPORT === */
+
+/* Automatic text direction detection */
+[dir="auto"] {
+  direction: ltr; /* Default fallback */
+}
+
+/* RTL language support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="ltr"] {
+  text-align: left;
+}
+
+/* Languages with no spaces (CJK) */
+:lang(zh), :lang(ja), :lang(ko), :lang(th) {
+  word-break: break-all;
+  line-break: anywhere;
+}
+
+/* Arabic and Hebrew specific adjustments */
+:lang(ar), :lang(he) {
+  direction: rtl;
+  text-align: right;
+}
+
+/* === TEXT OVERFLOW UTILITIES === */
+
+/* Single line truncation */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Multi-line truncation */
+.truncate-lines-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.truncate-lines-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.truncate-lines-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Safe text wrapping */
+.text-wrap-safe {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* URL and email specific handling */
+.text-break-all {
+  word-break: break-all;
+}
+
+/* === SPECIFIC CONTENT TYPES === */
+
+/* Username handling */
+.username {
+  font-weight: 500;
+  overflow-wrap: break-word;
+  max-width: 200px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Long URLs */
+.url-text {
+  word-break: break-all;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+/* Email addresses */
+.email-text {
+  word-break: break-all;
+  font-family: monospace;
+  font-size: 0.9em;
+  direction: ltr; /* Always LTR for emails */
+}
+
+/* === CASE HANDLING === */
+
+/* Improve readability for different text cases */
+.text-uppercase {
+  letter-spacing: 0.05em;
+}
+
+.text-lowercase {
+  letter-spacing: 0.01em;
+}
+
+/* === CONTAINER CONSTRAINTS === */
+
+/* Prevent content from breaking layouts */
+.content-container {
+  min-width: 0; /* Allow flex items to shrink */
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Table cell text handling */
+td, th {
+  min-width: 0;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+td.text-wrap, th.text-wrap {
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* === ACCESSIBILITY IMPROVEMENTS === */
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .truncate::after {
+    content: "...";
+    background: transparent;
+    color: inherit;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .text-animate {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* === FONT SIZE SCALING === */
+
+/* Support for system font size scaling */
+@media (min-resolution: 1.5dppx) {
+  /* High DPI adjustments */
+  body {
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+  }
+}
+
+/* Large font size support */
+@media (min-width: 1px) {
+  html {
+    /* Use relative units that scale with user preferences */
+    font-size: clamp(14px, 1rem, 24px);
+  }
+}
+
+/* === BUTTON AND INTERACTIVE ELEMENT TEXT === */
+
+/* Ensure button text doesn't break layout */
+button, .btn {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+button.text-wrap, .btn.text-wrap {
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* === FORM ELEMENT TEXT === */
+
+/* Input placeholder and value handling */
+input, textarea, select {
+  text-overflow: ellipsis;
+}
+
+input[type="email"], input[type="url"] {
+  direction: ltr; /* Always LTR for these inputs */
+  font-family: monospace;
+}
+
+/* === DARK MODE CONSIDERATIONS === */
+
+@media (prefers-color-scheme: dark) {
+  /* Improve text contrast in dark mode */
+  body {
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+}
+
+/* === PRINT STYLES === */
+
+@media print {
+  /* Ensure text is readable when printed */
+  .truncate {
+    overflow: visible;
+    text-overflow: initial;
+    white-space: normal;
+  }
+
+  .truncate-lines-2,
+  .truncate-lines-3,
+  .truncate-lines-4 {
+    display: block;
+    -webkit-line-clamp: none;
+    overflow: visible;
+  }
+}
+
+/* === MOBILE SPECIFIC === */
+
+@media (max-width: 768px) {
+  /* Tighter constraints on mobile */
+  .username {
+    max-width: 150px;
+  }
+
+  td, th {
+    max-width: 120px;
+  }
+
+  /* Prevent horizontal scrolling from long content */
+  .mobile-safe {
+    max-width: calc(100vw - 2rem);
+    overflow-wrap: break-word;
+  }
+}
+
+/* === UTILITY CLASSES === */
+
+/* Show full text on hover/focus */
+.show-full-on-hover {
+  transition: all 0.2s ease;
+}
+
+.show-full-on-hover:hover,
+.show-full-on-hover:focus {
+  overflow: visible;
+  white-space: normal;
+  text-overflow: initial;
+  z-index: 10;
+  position: relative;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Hide overflow safely */
+.hide-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Force text direction */
+.force-ltr {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+.force-rtl {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+/* === RESPONSIVE TEXT SIZING === */
+
+/* Fluid typography that respects user preferences */
+.responsive-text {
+  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+  line-height: 1.5;
+}
+
+.responsive-title {
+  font-size: clamp(1.25rem, 4vw, 2.5rem);
+  line-height: 1.2;
+}
+
+/* === ERROR PREVENTION === */
+
+/* Prevent text selection issues */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Prevent text from breaking out of containers */
+.text-contain {
+  contain: layout style;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}

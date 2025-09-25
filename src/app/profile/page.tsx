@@ -111,8 +111,8 @@ function SafeAvatar({
         onError={() => setImageError(true)}
         onLoad={() => setImageLoaded(true)}
         placeholder="empty"
-        // NOTE: if you are doing static export, use `unoptimized` here or set `images.unoptimized = true`
-        // unoptimized
+      // NOTE: if you are doing static export, use `unoptimized` here or set `images.unoptimized = true`
+      // unoptimized
       />
       {/* Show ionicon while loading */}
       {!imageLoaded && !imageError && (
@@ -344,11 +344,8 @@ function ProfileContent() {
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-2xl" />
       </div>
 
-      {/* Header */}
-      <Header />
-
       {/* Main content */}
-      <div className="pt-[124px] md:pt-[144px] pb-32 sm:pb-28 md:pb-6 relative z-10">
+      <div className="pt-8 pb-32 sm:pb-28 md:pb-6 relative z-10">
         <div className="px-4 sm:px-6 md:px-8">
           <div className="max-w-4xl mx-auto space-y-6">
 
@@ -393,7 +390,6 @@ function ProfileContent() {
                 </button>
               </div>
             </div>
-
             {/* Stats Overview */}
             <div ref={statsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-sage/10 shadow-sm">
               <h2 className="font-urbanist text-lg font-600 text-charcoal mb-4">Stats Overview</h2>
@@ -565,8 +561,6 @@ function ProfileContent() {
           </div>
         </div>
       </div>
-
-      <BottomNav />
     </div>
   );
 }

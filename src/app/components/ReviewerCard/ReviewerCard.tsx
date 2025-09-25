@@ -58,134 +58,130 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
 
   if (variant === "reviewer" || reviewer) {
     return (
-      <li id={idForSnap} className="snap-start snap-always w-[280px] sm:w-[320px] flex-shrink-0">
-        <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer">
-          <div className="relative overflow-hidden rounded-t-[6px]" onClick={toggleActions}>
-            {!imgError && reviewerData?.profilePicture ? (
-              <Image
-                src={reviewerData.profilePicture}
-                alt={reviewerData?.name || 'User avatar'}
-                width={400}
-                height={320}
-                className="h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
-                priority={false}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                onError={() => setImgError(true)}
-              />
-            ) : (
-              <div className="h-[200px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[6px]">
-                <ion-icon
-                  name="person-outline"
-                  class="text-4xl md:text-5xl text-sage/70"
-                />
-              </div>
-            )}
-            
-            {/* Subtle overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            
-            {/* Silver shimmer effect on hover */}
-            <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform skew-x-12 group-hover:left-full transition-transform duration-700 ease-out" />
+      <div id={idForSnap} className="snap-start snap-always w-[260px] sm:w-[280px] flex-shrink-0">
+        <div className="bg-off-white rounded-[8px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02] group cursor-pointer h-[200px] relative" onClick={toggleActions}>
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-off-white to-coral/5" />
 
-            {/* Instagram-style verified badge - positioned above image */}
-            {reviewerData?.badge === 'verified' && (
-              <div className="absolute left-2 top-2 z-20">
-                <VerifiedBadge />
-              </div>
-            )}
-            
-            {/* Numeric rating badge - positioned above image */}
-            <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-6 bg-white/50 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
-              <ion-icon name="star" class="text-coral text-sm drop-shadow-sm" />
-              <span className="font-urbanist text-sm font-700">{reviewerData?.rating.toFixed(1)}</span>
-            </span>
+          {/* Content */}
+          <div className="relative z-10 p-4 h-full flex flex-col">
+            {/* Header with small profile pic and rating */}
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-3">
+                {!imgError && reviewerData?.profilePicture ? (
+                  <div className="relative">
+                    <Image
+                      src={reviewerData.profilePicture}
+                      alt={reviewerData?.name || 'User avatar'}
+                      width={48}
+                      height={48}
+                      className="w-12 h-12 object-cover rounded-full border-2 border-white shadow-md"
+                      priority={false}
+                      onError={() => setImgError(true)}
+                    />
+                    {/* Instagram-style verified badge */}
+                    {reviewerData?.badge === 'verified' && (
+                      <div className="absolute -right-0.5 -top-0.5 z-20">
+                        <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                          <ion-icon name="checkmark" class="text-white text-xs" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="w-12 h-12 flex items-center justify-center bg-sage/20 text-sage rounded-full border-2 border-white shadow-md">
+                    <ion-icon name="person-outline" class="text-lg text-sage/70" />
+                  </div>
+                )}
 
-            {/* Card Actions - mobile: show on click, desktop: show on hover */}
-            <div className={`absolute right-2 bottom-2 z-20 flex-col gap-2 transition-all duration-300 ease-out
-              ${isDesktop
-                ? 'hidden sm:flex translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'
-                : showActions
-                  ? 'flex translate-x-0 opacity-100'
-                  : 'flex translate-x-12 opacity-0 pointer-events-none'
-              }`}>
-              <button
-                className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <ion-icon name="person-add-outline" class="text-charcoal" style={{fontSize: '24px'}} />
-              </button>
-              <button
-                className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <ion-icon name="chatbubble-outline" class="text-charcoal" style={{fontSize: '24px'}} />
-              </button>
-              <button
-                className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '24px'}} />
-              </button>
-            </div>
-          </div>
-
-          <div className="p-5 relative">
-            {/* Reviewer name - left aligned */}
-            <div className="mb-1">
-              <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">
-                <Link href={`/reviewer/${reviewerData?.id}` || "#"} className="hover:underline decoration-2 underline-offset-2">
-                  {reviewerData?.name}
-                </Link>
-              </h3>
-            </div>
-
-            {/* Location line - left aligned and subtle */}
-            <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
-              Local Reviewer • {reviewerData?.location}
-            </p>
-
-            {/* Stats - left aligned */}
-            <div className="mb-4 flex items-center gap-2">
-              <div className="flex items-center gap-1">
-                <ion-icon name="star" class="text-coral text-sm" />
-                <span className="font-urbanist text-sm font-400 leading-none text-charcoal/70">{reviewerData?.rating.toFixed(1)}</span>
-              </div>
-              <p className="font-urbanist text-sm font-400 leading-none text-charcoal/70 transition-colors duration-200">{reviewerData?.reviewCount} reviews</p>
-            </div>
-
-            {/* Badge info at bottom */}
-            <div className="flex items-center gap-2 flex-wrap">
-              {reviewerData?.badge && (
-                <div className={`px-2 py-1 rounded-full text-xs font-urbanist font-600 ${
-                  reviewerData.badge === 'top' ? 'bg-amber-100 text-amber-700' :
-                  reviewerData.badge === 'verified' ? 'bg-blue-100 text-blue-700' :
-                  'bg-sage/10 text-sage'
-                }`}>
-                  {reviewerData.badge === 'top' ? '🏆 Top Reviewer' :
-                   reviewerData.badge === 'verified' ? '✓ Verified' :
-                   '📍 Local Expert'}
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-urbanist text-sm font-700 text-charcoal truncate">
+                    {reviewerData?.name}
+                  </h3>
+                  <p className="font-urbanist text-xs text-charcoal/60">
+                    {reviewerData?.location}
+                  </p>
                 </div>
-              )}
+              </div>
 
-              {reviewerData?.trophyBadge && (
-                <div className={`px-2 py-1 rounded-full text-xs font-urbanist font-600 ${
-                  reviewerData.trophyBadge === 'gold' ? 'bg-yellow-50 text-yellow-700 border border-yellow-200' :
-                  reviewerData.trophyBadge === 'silver' ? 'bg-gray-50 text-gray-700 border border-gray-200' :
-                  reviewerData.trophyBadge === 'bronze' ? 'bg-orange-50 text-orange-700 border border-orange-200' :
-                  reviewerData.trophyBadge === 'rising-star' ? 'bg-purple-50 text-purple-700 border border-purple-200' :
-                  'bg-pink-50 text-pink-700 border border-pink-200'
-                }`}>
-                  {reviewerData.trophyBadge === 'gold' ? '🏆 Gold Champion' :
-                   reviewerData.trophyBadge === 'silver' ? '🥈 Silver Star' :
-                   reviewerData.trophyBadge === 'bronze' ? '🥉 Bronze Winner' :
-                   reviewerData.trophyBadge === 'rising-star' ? '⭐ Rising Star' :
-                   '❤️ Community Favorite'}
+              {/* Rating badge */}
+              <div className="flex items-center gap-1 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm">
+                <ion-icon name="star" class="text-coral text-xs" />
+                <span className="font-urbanist text-xs font-700 text-charcoal">{reviewerData?.rating.toFixed(1)}</span>
+              </div>
+            </div>
+
+            {/* Stats */}
+            <div className="mb-3">
+              <div className="flex items-center gap-4">
+                <div className="text-center">
+                  <div className="font-urbanist font-800 text-lg text-charcoal">{reviewerData?.reviewCount}</div>
+                  <div className="font-urbanist text-xs text-charcoal/60">Reviews</div>
                 </div>
-              )}
+                <div className="text-center">
+                  <div className="font-urbanist font-800 text-lg text-sage">{reviewerData?.rating.toFixed(1)}</div>
+                  <div className="font-urbanist text-xs text-charcoal/60">Rating</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Badges */}
+            <div className="mt-auto flex items-center justify-between">
+              <div className="flex items-center gap-1 flex-wrap">
+                {reviewerData?.badge && (
+                  <div className={`px-2 py-1 rounded-full text-xs font-urbanist font-600 ${
+                    reviewerData.badge === 'top' ? 'bg-amber-100 text-amber-700' :
+                    reviewerData.badge === 'verified' ? 'bg-blue-100 text-blue-700' :
+                    'bg-sage/10 text-sage'
+                  }`}>
+                    {reviewerData.badge === 'top' ? '🏆' :
+                     reviewerData.badge === 'verified' ? '✓' :
+                     '📍'}
+                  </div>
+                )}
+
+                {reviewerData?.trophyBadge && (
+                  <div className={`px-2 py-1 rounded-full text-xs font-urbanist font-600 ${
+                    reviewerData.trophyBadge === 'gold' ? 'bg-yellow-50 text-yellow-700' :
+                    reviewerData.trophyBadge === 'silver' ? 'bg-gray-50 text-gray-700' :
+                    reviewerData.trophyBadge === 'bronze' ? 'bg-orange-50 text-orange-700' :
+                    reviewerData.trophyBadge === 'rising-star' ? 'bg-purple-50 text-purple-700' :
+                    'bg-pink-50 text-pink-700'
+                  }`}>
+                    {reviewerData.trophyBadge === 'gold' ? '🏆' :
+                     reviewerData.trophyBadge === 'silver' ? '🥈' :
+                     reviewerData.trophyBadge === 'bronze' ? '🥉' :
+                     reviewerData.trophyBadge === 'rising-star' ? '⭐' :
+                     '❤️'}
+                  </div>
+                )}
+              </div>
+
+              {/* Card Actions - simplified */}
+              <div className={`flex gap-1 transition-all duration-300 ease-out
+                ${isDesktop
+                  ? 'opacity-0 group-hover:opacity-100'
+                  : showActions
+                    ? 'opacity-100'
+                    : 'opacity-0'
+                }`}>
+                <button
+                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white hover:scale-110 transition-all duration-200"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ion-icon name="person-add-outline" class="text-charcoal text-sm" />
+                </button>
+                <button
+                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white hover:scale-110 transition-all duration-200"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ion-icon name="chatbubble-outline" class="text-charcoal text-sm" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </li>
+      </div>
     );
   }
 
