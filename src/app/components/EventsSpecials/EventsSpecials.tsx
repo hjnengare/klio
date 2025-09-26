@@ -37,7 +37,7 @@ export default function EventsSpecials({
         <div ref={titleRef} className="mb-6 sm:mb-12 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
             {title}
-            <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-sage to-coral rounded-full" />
+          
           </h2>
           <button
             onClick={handleSeeMore}
@@ -54,7 +54,7 @@ export default function EventsSpecials({
             {events.map((event, index) => (
               <div
                 key={event.id}
-                className={`premium-hover card-entrance card-entrance-${Math.min(index + 1, 6)}`}
+                className={`premium-hover list-none card-entrance card-entrance-${Math.min(index + 1, 6)}`}
                 data-scroll-reveal
               >
                 <EventCard event={event} />
