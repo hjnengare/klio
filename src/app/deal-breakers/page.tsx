@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
+import { useToast } from "../contexts/ToastContext";
+import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
+import OnboardingCard from "../components/Onboarding/OnboardingCard";
 
-// CSS styles for consistent button radius
-const styles = `
-`;
 
 interface DealBreaker {
   id: string;
@@ -15,223 +15,295 @@ interface DealBreaker {
   icon: string; // Ionicon name
 }
 
+// Demo data for deal-breakers based on wireframe
+const DEMO_DEAL_BREAKERS: DealBreaker[] = [
+  { id: "security", label: "Security", icon: "shield-checkmark" },
+  { id: "time", label: "Time", icon: "time" },
+  { id: "experience", label: "Experience", icon: "happy" },
+  { id: "reviews", label: "Reviews", icon: "star" }
+];
 
-export default function DealBreakersPage() {
-  const [catalog, setCatalog] = useState<DealBreaker[]>([]);
+/** Prevent hydration mismatch: true only after first client render */
+function useMounted() {3
+  
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  return mounted;
+}
+
+function DealBreakersContent() {
+  const mounted = useMounted();
   const [selected, setSelected] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
   const router = useRouter();
+  const { user } = useAuth();
+  const { showToast } = useToast();
 
-  const { user, updateUser } = useAuth();
+  // Constants for min/max selection
+  const MIN_SELECTIONS = 2;
+  const MAX_SELECTIONS = 3;
 
-  // Load catalog and user selections on mount
+  // Route protection - redirect if not authenticated
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true);
+    if (mounted && !user) {
+      router.replace('/login?redirect=/deal-breakers');
+    }
+  }, [mounted, user, router]);
 
-        // Load catalog
-        const catalogRes = await fetch('/api/deal-breakers');
-        if (catalogRes.ok) {
-          const catalogData = await catalogRes.json();
-          setCatalog(catalogData.dealBreakers ?? []);
-        }
-
-        // Load user selections
-        const userRes = await fetch('/api/user/deal-breakers');
-        if (userRes.ok) {
-          const userData = await userRes.json();
-          setSelected(userData.dealBreakers ?? []);
-        }
-      } catch (error) {
-        console.error('Error loading deal-breakers data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
+  // Animation trigger helper
+  const triggerMicroBounce = useCallback((id: string) => {
+    setAnimatingIds(prev => {
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+    setTimeout(() => {
+      setAnimatingIds(prev => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    }, 300);
   }, []);
 
   // Save selections to API
   const saveSelections = useCallback(async (selections: string[]) => {
     try {
-      await fetch('/api/user/deal-breakers', {
+      const response = await fetch('/api/user/deal-breakers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ selections })
       });
+
+      if (!response.ok) {
+        showToast('Failed to save deal-breakers', 'error', 3000);
+      }
     } catch (error) {
       console.error('Error saving deal-breakers:', error);
+      showToast('Failed to save deal-breakers', 'error', 3000);
     }
-  }, []);
+  }, [showToast]);
 
-  const toggle = useCallback((id: string) => {
+  const handleToggle = useCallback((id: string) => {
+    const isCurrentlySelected = selected.includes(id);
+
+    // Trigger micro-bounce animation
+    triggerMicroBounce(id);
+
+    // If trying to select but already at max, prevent with feedback
+    if (!isCurrentlySelected && selected.length >= MAX_SELECTIONS) {
+      showToast(`Maximum ${MAX_SELECTIONS} deal-breakers allowed`, 'warning', 2000);
+      return;
+    }
+
     setSelected(prev => {
-      const on = prev.includes(id);
-      const next = on
+      const newSelection = isCurrentlySelected
         ? prev.filter(x => x !== id)
-        : prev.length >= 3
-          ? prev  // pick 2–3 max
-          : [...prev, id];
+        : [...prev, id];
 
-      // Optimistically save selections
-      saveSelections(next);
-      return next;
+      // Show contextual feedback
+      if (!isCurrentlySelected) {
+        if (newSelection.length === MIN_SELECTIONS) {
+          showToast('🎉 Great! You can continue now', 'sage', 2000);
+        } else if (newSelection.length === MAX_SELECTIONS) {
+          showToast('✨ Perfect selection!', 'sage', 2000);
+        }
+      }
+
+      // Save to API
+      saveSelections(newSelection);
+      return newSelection;
     });
-  }, [saveSelections]);
+  }, [selected.length, saveSelections, showToast, triggerMicroBounce, MAX_SELECTIONS, MIN_SELECTIONS]);
 
   const canContinue = useMemo(() =>
-    selected.length >= 2 && selected.length <= 3,
-    [selected.length]
+    selected.length >= MIN_SELECTIONS && selected.length <= MAX_SELECTIONS && !isNavigating && !!user,
+    [selected.length, isNavigating, user, MIN_SELECTIONS, MAX_SELECTIONS]
   );
 
   const handleNext = useCallback(() => {
-    if (!canContinue || !user) return;
+    if (!canContinue) return;
+    setIsNavigating(true);
 
-    // Optimistic navigation - navigate immediately
-    router.push("/complete");
+    try {
+      showToast(`Moving to final step with ${selected.length} deal-breakers!`, 'success', 2000);
+      router.push("/complete");
+    } catch (error) {
+      console.error("Error proceeding to next step:", error);
+      setIsNavigating(false);
+      showToast('Failed to proceed. Please try again.', 'error', 3000);
+    }
+  }, [canContinue, selected.length, router, showToast]);
 
-    // Update user data asynchronously
-    updateUser({ dealBreakers: selected });
-  }, [canContinue, user, router, selected, updateUser]);
-
-  return (
-    <>
-      <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
-        {/* Back button - top left */}
-        <div className="absolute top-6 left-6 z-20">
-          <Link
-            href="/subcategories"
-            className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full"
-          >
-            <ion-icon name="arrow-back-outline" size="small"></ion-icon>
-          </Link>
-        </div>
-
-        {/* Decorative background blobs */}
-        <div className="absolute inset-0 opacity-4">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/20 to-sage/85 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/15 to-coral/85 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-charcoal/10 to-charcoal/3 rounded-full blur-2xl animate-pulse delay-500"></div>
-        </div>
-
-        {/* Mesh overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-off-white/30 via-transparent to-off-white/20 pointer-events-none"></div>
-
-        <div className="w-[90%] max-w-[700px] mx-auto relative z-10">
-          {/* Header */}
-          <div className="text-center mb-12 md:mb-16">
-            <div className="inline-block relative mb-6">
-              <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-5 md:mb-6 text-center leading-snug px-2 tracking-[0.01em]">
-                Your deal-breakers
-              </h2>
-
-            </div>
-            <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-10 md:mb-12 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto">
-              (Pick 2–3 that matter most to you)
-            </p>
-          </div>
-
-          {/* Deal Breakers Grid */}
-          <div className="grid grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12 justify-items-center">
-            {loading ? (
-              // Loading state
-              <div className="col-span-2 text-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sage mx-auto mb-4"></div>
-                <p className="font-urbanist text-charcoal/70">Loading deal-breakers...</p>
-              </div>
-            ) : (
-              catalog.map((item) => {
-                const isOn = selected.includes(item.id);
-
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => toggle(item.id)}
-                    aria-pressed={isOn}
-                    className="relative w-full max-w-[260px] aspect-square rounded-full transform-gpu transition-transform duration-500 ease-out"
-                    style={{ perspective: "1200px" }}
-                  >
-                    {/* Flipper */}
-                    <div
-                      className="relative w-full h-full rounded-full transition-transform duration-500 ease-out"
-                      style={{
-                        transformStyle: "preserve-3d",
-                        transform: isOn ? "rotateY(180deg)" : "",
-                      }}
-                    >
-                      {/* FRONT (unselected) — SAGE circle with label */}
-                      <div
-                        className="absolute inset-0 flex items-center justify-center rounded-md bg-sage text-white font-urbanist"
-                        style={{ backfaceVisibility: "hidden" }}
-                      >
-                        <span className="text-6 md:text-5 font-600">{item.label}</span>
-                      </div>
-
-                      {/* BACK (selected) — CORAL circle with icon */}
-                      <div
-                        className="absolute inset-0 flex items-center justify-center rounded-md bg-coral"
-                        style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }}
-                      >
-                        <ion-icon
-                          name={item.icon}
-                          style={{ fontSize: "56px", color: "var(--charcoal)" }}
-                        />
-                      </div>
-                    </div>
-                  </button>
-                );
-              })
-            )}
-          </div>
-
-          {/* Continue button */}
-          <div className="pt-6">
-            <button
-              onClick={handleNext}
-              disabled={!canContinue}
-              className={`group block w-full py-3 md:w-1/4 px-8 md:px-10 rounded-6 text-center font-urbanist text-6 md:text-5 font-600 transition-all duration-300 relative overflow-hidden
-                        ${canContinue
-                  ? "bg-gradient-to-r from-sage to-sage/90 text-white hover:scale-105 shadow-lg  focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
-                  : "bg-light-gray/50 text-charcoal/40 cursor-not-allowed"}`}
-            >
-              <span className="relative z-10">Continue</span>
-              {canContinue && (
-                <div className="absolute inset-0 bg-gradient-to-r from-sage/80 to-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              )}
-            </button>
-          </div>
-
-          <div className="text-center mt-4">
-            <Link
-              href="/complete"
-              className="inline-block font-urbanist text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
-              aria-label="Skip deal-breakers for now"
-            >
-              Skip for now
-            </Link>
-            <div className="mt-1 text-xs text-charcoal/50 max-w-sm mx-auto">
-              <span>You can set deal-breakers later in your profile</span>
-            </div>
-          </div>
-
-
-
-          {/* Progress indicator */}
-          <div className="flex justify-center items-center space-x-2 mt-6 mb-4">
-            <div className="w-3 h-3 bg-sage/40 rounded-full"></div>
-            <div className="w-3 h-3 bg-sage/40 rounded-full"></div>
-            <div className="w-3 h-3 bg-sage rounded-full"></div>
-            <div className="w-3 h-3 bg-charcoal/20 rounded-full"></div>
-          </div>
-
-          <div className="text-center">
-            <p className="font-urbanist text-8 font-400 text-charcoal/50">Step 3 of 4</p>
-          </div>
+  // Don't render anything if not authenticated
+  if (!user) {
+    return (
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="font-urbanist text-base text-charcoal/70">Checking authentication...</p>
         </div>
       </div>
-    </>
+    );
+  }
+
+  // Hydration-safe selections
+  const hydratedSelected = mounted ? selected : [];
+
+  return (
+    <OnboardingLayout backHref="/subcategories" step={3}>
+
+      {/* Header */}
+      <div className="text-center animate-fade-in-up">
+        <div className="inline-block relative mb-3">
+          <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-2 text-center leading-snug px-2 tracking-[0.01em]">
+            Your deal-breakers
+          </h2>
+        </div>
+        <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto">
+          Pick 2–3 that matter most to you
+        </p>
+      </div>
+
+      <OnboardingCard className="animate-fade-in-up delay-200">
+
+              {/* Selection Counter */}
+              <div className="text-center mb-4">
+                <div className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-3 transition-colors duration-300 ${hydratedSelected.length >= MIN_SELECTIONS
+                  ? 'bg-sage/10 border border-sage/30'
+                  : 'bg-sage/10 border border-sage/20'
+                  }`}>
+                  <span
+                    className={`font-urbanist text-sm font-600 ${hydratedSelected.length >= MIN_SELECTIONS ? 'text-sage' : 'text-sage'
+                      }`}
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    {hydratedSelected.length} of {MIN_SELECTIONS}-{MAX_SELECTIONS} selected
+                  </span>
+                  {hydratedSelected.length >= MIN_SELECTIONS && (
+                    <ion-icon name="checkmark-circle" style={{ color: "hsl(148, 20%, 38%)" }} size="small" />
+                  )}
+                </div>
+                <p
+                  className="font-urbanist text-xs text-charcoal/60"
+                  aria-live="polite"
+                >
+                  {hydratedSelected.length < MIN_SELECTIONS
+                    ? `Select ${MIN_SELECTIONS - hydratedSelected.length} more to continue`
+                    : hydratedSelected.length === MAX_SELECTIONS
+                      ? "Perfect! You've selected the maximum"
+                      : "Great! You can continue or select more"
+                  }
+                </p>
+              </div>
+
+              {/* Deal Breakers Grid */}
+              <div className="grid grid-cols-2 gap-6 md:gap-8 mb-6 justify-items-center">
+                {DEMO_DEAL_BREAKERS.map((item, index) => {
+                  const isSelected = hydratedSelected.includes(item.id);
+                  const isDisabled = !isSelected && hydratedSelected.length >= MAX_SELECTIONS;
+
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleToggle(item.id)}
+                      disabled={isDisabled}
+                      aria-pressed={isSelected}
+                      aria-label={`${item.label} deal-breaker${isSelected ? ' (selected)' : isDisabled ? ' (maximum reached)' : ''}`}
+                      className={`
+                        relative w-full max-w-[180px] sm:max-w-[200px] aspect-square transition-all duration-500 ease-out
+                        focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
+                        disabled:cursor-not-allowed disabled:opacity-60
+                        ${animatingIds.has(item.id) ? 'animate-micro-bounce' : ''}
+                        animate-fade-in-up delay-${index * 100}
+                      `}
+                      style={{ perspective: "1200px" }}
+                      suppressHydrationWarning
+                    >
+                      {/* Flipper */}
+                      <div
+                        className="relative w-full h-full transition-transform duration-500 ease-out"
+                        style={{
+                          transformStyle: "preserve-3d",
+                          transform: isSelected ? "rotateY(180deg)" : "",
+                        }}
+                      >
+                        {/* FRONT (unselected) — SAGE rectangle with label */}
+                        <div
+                          className="absolute inset-0 flex flex-col items-center justify-center bg-sage text-white font-urbanist shadow-lg"
+                          style={{ backfaceVisibility: "hidden" }}
+                        >
+                          <span className="text-sm sm:text-base font-600 text-center px-4">{item.label}</span>
+                        </div>
+
+                        {/* BACK (selected) — CORAL rectangle with icon */}
+                        <div
+                          className="absolute inset-0 flex items-center justify-center bg-coral shadow-lg"
+                          style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }}
+                        >
+                          <ion-icon
+                            name={item.icon}
+                            style={{ fontSize: "48px", color: "white" }}
+                          />
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-4 space-y-3">
+                {/* Next Button */}
+                <button
+                  className={`
+                    group block w-full text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full shadow-lg transition-all duration-300 relative text-center
+                    ${canContinue
+                      ? "bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
+                      : "bg-off-white text-charcoal/40 cursor-not-allowed"
+                    }
+                  `}
+                  onClick={handleNext}
+                  disabled={!canContinue}
+                  aria-label={`Continue with ${hydratedSelected.length} selected deal-breakers`}
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    {isNavigating && (
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    )}
+                    Continue {hydratedSelected.length > 0 && `(${hydratedSelected.length} selected)`}
+                    <ion-icon name="arrow-forward" size="small" />
+                  </span>
+                  {canContinue && (
+                    <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  )}
+                </button>
+
+                {/* Skip Option */}
+                <div className="text-center">
+                  <Link
+                    href="/complete"
+                    className="inline-block font-urbanist text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
+                    aria-label="Skip deal-breakers for now"
+                  >
+                    Skip for now
+                  </Link>
+                  <div className="mt-1 text-xs text-charcoal/50 max-w-sm mx-auto">
+                    {hydratedSelected.length < MIN_SELECTIONS ? (
+                      <span>You can set deal-breakers later in your profile</span>
+                    ) : (
+                      <span>You can always update your preferences later</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+      </OnboardingCard>
+    </OnboardingLayout>
   );
+}
+
+export default function DealBreakersPage() {
+  return <DealBreakersContent />;
 }

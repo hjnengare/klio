@@ -23,8 +23,13 @@ interface ToastProviderProps {
 export function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
+  // Generate unique ID to prevent collisions
+  const generateUniqueId = () => {
+    return `toast_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  };
+
   const showToast = (message: string, type: Toast['type'] = 'info', duration = 4000) => {
-    const id = Date.now().toString();
+    const id = generateUniqueId();
     const newToast: Toast = { id, message, type, duration };
 
     setToasts(prev => [...prev, newToast]);
