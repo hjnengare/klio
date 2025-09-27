@@ -15,7 +15,7 @@ export * from './tokens';
 // UTILITIES
 // =============================================================================
 
-export { cn, clsx, twMerge } from './utils/cn';
+export { cn, clsx, twMerge, default as cnDefault } from './utils/cn';
 export type { VariantProps } from './utils/cn';
 
 // =============================================================================

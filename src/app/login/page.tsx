@@ -8,6 +8,95 @@ import { motion } from "framer-motion";
 import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
 
+// Mobile-first CSS with proper typography scale and safe areas
+const styles = `
+  /* Mobile-first typography scale - Body text ≥ 16px */
+  .text-body { font-size: 1rem; line-height: 1.5; } /* 16px */
+  .text-body-lg { font-size: 1.125rem; line-height: 1.5; } /* 18px */
+  .text-heading-sm { font-size: 1.25rem; line-height: 1.4; } /* 20px */
+  .text-heading-md { font-size: 1.5rem; line-height: 1.3; } /* 24px */
+  .text-heading-lg { font-size: 1.875rem; line-height: 1.2; } /* 30px */
+
+  /* iOS inertia scrolling and prevent double scroll */
+  .ios-inertia {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    min-height: 0;
+  }
+
+  /* Button press states - 44-48px targets */
+  .btn-press:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  .btn-target {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+
+  /* Input styling - 16px+ to prevent auto-zoom */
+  .input-mobile {
+    font-size: 1rem !important; /* 16px minimum */
+    min-height: 48px;
+    touch-action: manipulation;
+  }
+
+  /* Card styling - border-first, tiny shadow (no heavy blur) */
+  .card-mobile {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* Text truncation support */
+  .text-truncate {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Full-screen pattern - respects notches */
+  .full-screen {
+    min-height: 100dvh;
+    min-height: 100vh; /* fallback */
+  }
+
+  /* Safe area padding */
+  .safe-area-full {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-top: max(1.5rem, env(safe-area-inset-top));
+    padding-bottom: max(6rem, env(safe-area-inset-bottom));
+  }
+
+  /* Prevent layout jumps */
+  .stable-layout {
+    contain: layout style;
+  }
+
+  /* Fixed aspect ratios for images */
+  .aspect-square { aspect-ratio: 1 / 1; }
+  .aspect-video { aspect-ratio: 16 / 9; }
+  .aspect-photo { aspect-ratio: 4 / 3; }
+
+  /* Carousel patterns for mobile */
+  @media (max-width: 768px) {
+    .carousel-mobile {
+      scroll-snap-type: x mandatory;
+      overflow-x: auto;
+      display: flex;
+    }
+
+    .carousel-item {
+      scroll-snap-align: center;
+      flex-shrink: 0;
+    }
+  }
+`;
+
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -84,7 +173,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 pb-24 sm:py-8 sm:pb-20 md:pb-16 relative overflow-hidden">
+    <div ref={containerRef} className="min-h-[100dvh] bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col relative overflow-hidden ios-inertia safe-area-full">
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -102,41 +191,27 @@ export default function LoginPage() {
 
       <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
         {/* Header with premium styling and animations */}
-        <div className="text-center mb-6 sm:mb-8 md:mb-12">
+        <div className="text-center mb-4">
           <FadeInUp delay={0.4} duration={1} distance={60}>
-            <div className="inline-block relative mb-6">
-              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-3 sm:mb-4 md:mb-6 text-center leading-snug px-2 tracking-[0.01em]">
+            <div className="inline-block relative mb-4">
+              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-2 text-center leading-snug px-2 tracking-[0.01em]">
                 Welcome back
               </h2>
-              
+
             </div>
           </FadeInUp>
           <FadeInUp delay={0.7} duration={0.8} distance={30}>
-            <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-6 sm:mb-8 md:mb-10 leading-relaxed px-2 max-w-lg mx-auto">
+            <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto">
               Sign in to continue discovering KLIO
             </p>
           </FadeInUp>
         </div>
 
-        {/* Demo Credentials Info with animation */}
-        <FadeInUp delay={1.0} duration={0.6} distance={20}>
-          <motion.div
-            className="bg-sage/5 border border-sage/20  p-3 sm:p-4 mb-4 sm:mb-6 text-center"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
-          >
-            <p className="font-urbanist text-[14px] font-600 text-sage mb-2">Demo Login Credentials</p>
-            <p className="font-urbanist text-xs text-charcoal/70">
-              Email: <span className="font-mono bg-white px-2 py-1 rounded">name@domain.com</span> |
-              Password: <span className="font-mono bg-white px-2 py-1 rounded">your-set-Passw0rd</span>
-            </p>
-          </motion.div>
-        </FadeInUp>
 
         {/* Form Card */}
-        <div className="bg-off-white/95 backdrop-blur-lg shadow-xl p-4 sm:p-8 md:p-10 lg:p-12 mb-4 sm:mb-6 relative overflow-hidden">
+        <div className="bg-off-white/95 card-mobile p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
           
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6 relative z-10">
+          <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
@@ -166,7 +241,7 @@ export default function LoginPage() {
                   if (!emailTouched) setEmailTouched(true);
                 }}
                 onBlur={() => setEmailTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   email && !getEmailError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
@@ -211,7 +286,7 @@ export default function LoginPage() {
                   if (!passwordTouched) setPasswordTouched(true);
                 }}
                 onBlur={() => setPasswordTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getPasswordError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   password && !getPasswordError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
@@ -256,13 +331,13 @@ export default function LoginPage() {
             </div>
 
             {/* Sign In Button with premium effects */}
-            <div className="pt-2 sm:pt-4 flex justify-center">
+            <div className="pt-4 flex justify-center">
               <div className="w-full">
                 <PremiumHover scale={1.02} shadowIntensity="strong">
                   <motion.button
                     type="submit"
                     disabled={isSubmitting || isLoading || !!getEmailError() || !!getPasswordError() || !email || !password}
-                    className={`group block w-full font-urbanist text-sm sm:text-base font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-6 shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[44px] whitespace-nowrap ${
+                    className={`group block w-full font-urbanist text-body font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-6 shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap btn-press ${
                       isSubmitting || isLoading || !!getEmailError() || !!getPasswordError() || !email || !password
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
                         : 'bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white focus:ring-sage/20 hover:focus:ring-coral/20 hover:scale-[1.02]'
@@ -283,7 +358,7 @@ export default function LoginPage() {
             </div>
 
             {/* Divider */}
-            <div className="relative my-4 sm:my-5 md:my-6">
+            <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-light-gray/50"></div>
               </div>
@@ -296,7 +371,7 @@ export default function LoginPage() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-xs sm:text-sm md:text-base font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group min-h-[44px]"
+                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -308,7 +383,7 @@ export default function LoginPage() {
               </button>
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-xs sm:text-sm md:text-base font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group min-h-[44px]"
+                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
@@ -319,7 +394,7 @@ export default function LoginPage() {
           </form>
 
           {/* Enhanced footer */}
-          <div className="text-center mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-light-gray/30">
+          <div className="text-center mt-4 pt-4 border-t border-light-gray/30">
             <div className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70">
               {"Don&apos;t have an account? "}
               <Link
@@ -334,7 +409,7 @@ export default function LoginPage() {
         </div>
 
         {/* Premium Trust Indicators with spring animations */}
-        <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-12 text-charcoal/60 text-center pt-4 sm:pt-6">
+        <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-12 text-charcoal/60 text-center pt-4">
           <FadeInUp delay={1.5} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
               <div className="flex flex-col items-center space-y-1 sm:space-y-2">
@@ -346,7 +421,7 @@ export default function LoginPage() {
                 >
                   <ion-icon name="shield-checkmark-outline" style={{ color: "#749176" }} size="small"></ion-icon>
                 </motion.div>
-                <span className="font-urbanist text-xs sm:text-sm md:text-base font-500">Secure</span>
+                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Secure</span>
               </div>
             </PremiumHover>
           </FadeInUp>
@@ -362,7 +437,7 @@ export default function LoginPage() {
                 >
                   <ion-icon name="people-outline" style={{ color: "#d67469" }} size="small"></ion-icon>
                 </motion.div>
-                <span className="font-urbanist text-xs sm:text-sm md:text-base font-500">Community</span>
+                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Community</span>
               </div>
             </PremiumHover>
           </FadeInUp>
@@ -378,7 +453,7 @@ export default function LoginPage() {
                 >
                   <ion-icon name="star-outline" style={{ color: "#211e1d" }} size="small"></ion-icon>
                 </motion.div>
-                <span className="font-urbanist text-xs sm:text-sm md:text-base font-500">Quality</span>
+                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Quality</span>
               </div>
             </PremiumHover>
           </FadeInUp>

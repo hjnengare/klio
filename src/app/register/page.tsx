@@ -10,13 +10,99 @@ import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
 import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion";
 
-// CSS styles for consistent button radius
+// Mobile-first CSS with proper typography scale and safe areas
 const styles = `
+  /* Mobile-first typography scale - Body text ≥ 16px */
+  .text-body { font-size: 1rem; line-height: 1.5; } /* 16px */
+  .text-body-lg { font-size: 1.125rem; line-height: 1.5; } /* 18px */
+  .text-heading-sm { font-size: 1.25rem; line-height: 1.4; } /* 20px */
+  .text-heading-md { font-size: 1.5rem; line-height: 1.3; } /* 24px */
+  .text-heading-lg { font-size: 1.875rem; line-height: 1.2; } /* 30px */
+
+  /* iOS inertia scrolling and prevent double scroll */
+  .ios-inertia {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    min-height: 0;
+  }
+
+  /* Button press states - 44-48px targets */
+  .btn-press:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  .btn-target {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+
+  /* Input styling - 16px+ to prevent auto-zoom */
+  .input-mobile {
+    font-size: 1rem !important; /* 16px minimum */
+    min-height: 48px;
+    touch-action: manipulation;
+  }
+
+  /* Card styling - border-first, tiny shadow (no heavy blur) */
+  .card-mobile {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* Text truncation support */
+  .text-truncate {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Full-screen pattern - respects notches */
+  .full-screen {
+    min-height: 100dvh;
+    min-height: 100vh; /* fallback */
+  }
+
+  /* Safe area padding */
+  .safe-area-full {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-top: max(1.5rem, env(safe-area-inset-top));
+    padding-bottom: max(6rem, env(safe-area-inset-bottom));
+  }
+
+  /* Prevent layout jumps */
+  .stable-layout {
+    contain: layout style;
+  }
+
+  /* Fixed aspect ratios for images */
+  .aspect-square { aspect-ratio: 1 / 1; }
+  .aspect-video { aspect-ratio: 16 / 9; }
+  .aspect-photo { aspect-ratio: 4 / 3; }
+
+  /* Carousel patterns for mobile */
+  @media (max-width: 768px) {
+    .carousel-mobile {
+      scroll-snap-type: x mandatory;
+      overflow-x: auto;
+      display: flex;
+    }
+
+    .carousel-item {
+      scroll-snap-align: center;
+      flex-shrink: 0;
+    }
+  }
 `;
 
 export default function RegisterPage() {
   const prefersReduced = usePrefersReducedMotion();
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -24,6 +110,7 @@ export default function RegisterPage() {
   const [submitting, setSubmitting] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [consent, setConsent] = useState(false);
+  const [usernameTouched, setUsernameTouched] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState({
@@ -56,6 +143,11 @@ export default function RegisterPage() {
       window.removeEventListener('offline', updateOnlineStatus);
     };
   }, []);
+
+  const validateUsername = (username: string) => {
+    const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+    return usernameRegex.test(username);
+  };
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -117,6 +209,15 @@ export default function RegisterPage() {
     return { score, feedback, checks, color };
   };
 
+  const getUsernameError = () => {
+    if (!usernameTouched) return "";
+    if (!username) return "Username is required";
+    if (username.length < 3) return "Username must be at least 3 characters";
+    if (username.length > 20) return "Username must be less than 20 characters";
+    if (!validateUsername(username)) return "Username can only contain letters, numbers, and underscores";
+    return "";
+  };
+
   const getEmailError = () => {
     if (!emailTouched) return "";
     if (!email) return "Email is required";
@@ -129,6 +230,11 @@ export default function RegisterPage() {
     if (!password) return "Password is required";
     const validation = validatePassword(password);
     return validation;
+  };
+
+  const handleUsernameChange = (value: string) => {
+    setUsername(value);
+    if (!usernameTouched) setUsernameTouched(true);
   };
 
   const handleEmailChange = (value: string) => {
@@ -159,9 +265,16 @@ export default function RegisterPage() {
 
     try {
       // Enhanced validation
-      if (!email?.trim() || !password?.trim()) {
+      if (!username?.trim() || !email?.trim() || !password?.trim()) {
         setError("Please fill in all fields");
         showToast("Please fill in all fields", 'sage', 3000);
+        setSubmitting(false);
+        return;
+      }
+
+      if (!validateUsername(username.trim())) {
+        setError("Please enter a valid username");
+        showToast("Please enter a valid username", 'sage', 3000);
         setSubmitting(false);
         return;
       }
@@ -211,6 +324,7 @@ export default function RegisterPage() {
 
       if (success) {
         // Clear form
+        setUsername("");
         setEmail("");
         setPassword("");
         setPasswordStrength({
@@ -263,7 +377,7 @@ export default function RegisterPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-6 pb-24 sm:py-8 sm:pb-20 md:pb-16 relative overflow-hidden">
+      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh] bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col relative overflow-hidden ios-inertia safe-area-full">
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -280,39 +394,26 @@ export default function RegisterPage() {
 
       <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
         {/* Header with premium styling and animations */}
-        <div className="text-center mb-6 sm:mb-8 md:mb-12">
+        <div className="text-center mb-4">
           <FadeInUp delay={0.4} duration={1} distance={60}>
-            <div className="inline-block relative mb-6">
-              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-3 sm:mb-4 md:mb-6 text-center leading-snug px-2 tracking-[0.01em]">
+            <div className="inline-block relative mb-4">
+              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-2 text-center leading-snug px-2 tracking-[0.01em]">
                 Create your account
               </h2>
             </div>
           </FadeInUp>
           <FadeInUp delay={0.7} duration={0.8} distance={30}>
-            <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-6 sm:mb-8 md:mb-10 leading-relaxed px-2 max-w-lg mx-auto">
+            <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto">
               Join KLIO and discover places real locals love
             </p>
           </FadeInUp>
         </div>
 
-        {/* Demo Credentials Info with animation */}
-        <FadeInUp delay={1.0} duration={0.6} distance={20}>
-          <motion.div
-            className="bg-sage/5 border border-sage/20 p-3 sm:p-4 mb-4 sm:mb-6 text-center"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
-          >
-            <p className="font-urbanist text-[14px] font-600 text-sage mb-2">Registration Requirements</p>
-            <p className="font-urbanist text-xs text-charcoal/70">
-              Password must be at least 8 characters with uppercase, lowercase, and number
-            </p>
-          </motion.div>
-        </FadeInUp>
 
         {/* Form Card */}
-        <div className="bg-off-white/95 backdrop-blur-lg shadow-xl p-4 sm:p-8 md:p-10 lg:p-12 mb-4 sm:mb-6 relative overflow-hidden">
+        <div className="bg-off-white/95 card-mobile p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
 
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6 relative z-10">
+          <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
@@ -325,6 +426,48 @@ export default function RegisterPage() {
               <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
                 <p className="font-urbanist text-[14px] font-600 text-orange-600">You&apos;re offline. We&apos;ll try again when you&apos;re back online.</p>
               </div>
+            )}
+
+            {/* Username with icon */}
+            <div className="relative group">
+              <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
+                getUsernameError() ? 'text-red-500' :
+                username && !getUsernameError() && usernameTouched ? 'text-sage' :
+                'text-charcoal/40 group-focus-within:text-sage'
+              }`}>
+                <ion-icon name={
+                  getUsernameError() ? "alert-circle" :
+                  username && !getUsernameError() && usernameTouched ? "checkmark-circle" :
+                  "person-outline"
+                } size="small"></ion-icon>
+              </div>
+              <input
+                type="text"
+                placeholder="Choose a username"
+                value={username}
+                onChange={(e) => handleUsernameChange(e.target.value)}
+                onBlur={() => setUsernameTouched(true)}
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
+                  getUsernameError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
+                  username && !getUsernameError() && usernameTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
+                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                }`}
+                disabled={submitting || isLoading}
+              />
+            </div>
+
+            {/* Username validation feedback */}
+            {getUsernameError() && (
+              <p className="text-xs text-red-600 flex items-center gap-1 mt-1" role="alert">
+                <ion-icon name="alert-circle" style={{ fontSize: '12px' }} />
+                {getUsernameError()}
+              </p>
+            )}
+            {username && !getUsernameError() && usernameTouched && (
+              <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status">
+                <ion-icon name="checkmark-circle" style={{ fontSize: '12px' }} />
+                Username looks good!
+              </p>
             )}
 
             {/* Email with icon */}
@@ -346,7 +489,7 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => handleEmailChange(e.target.value)}
                 onBlur={() => setEmailTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   email && !getEmailError() && emailTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
@@ -388,7 +531,7 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => handlePasswordChange(e.target.value)}
                 onBlur={() => setPasswordTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   passwordStrength.score >= 3 && passwordTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   passwordStrength.score > 0 && passwordStrength.score < 3 ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
@@ -460,14 +603,14 @@ export default function RegisterPage() {
             </div>
 
             {/* Sign Up Button with premium effects */}
-            <div className="pt-2 sm:pt-4 flex justify-center">
+            <div className="pt-4 flex justify-center">
               <div className="w-full">
                 <PremiumHover scale={1.02} shadowIntensity="strong">
                   <motion.button
                     type="submit"
-                    disabled={submitting || isLoading || !consent || passwordStrength.score < 3 || !email || !password || !validateEmail(email)}
-                    className={`group block w-full font-urbanist text-sm sm:text-base font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-6 shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[44px] whitespace-nowrap ${
-                      submitting || isLoading || !consent || passwordStrength.score < 3 || !email || !password || !validateEmail(email)
+                    disabled={submitting || isLoading || !consent || passwordStrength.score < 3 || !username || !email || !password || !validateUsername(username) || !validateEmail(email)}
+                    className={`group block w-full font-urbanist text-body font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-6 shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap btn-press ${
+                      submitting || isLoading || !consent || passwordStrength.score < 3 || !username || !email || !password || !validateUsername(username) || !validateEmail(email)
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
                         : 'bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white focus:ring-sage/20 hover:focus:ring-coral/20 hover:scale-[1.02]'
                     }`}
@@ -487,19 +630,23 @@ export default function RegisterPage() {
             </div>
 
             {/* Registration progress indicator */}
-            <div className="text-center space-y-2 pt-2">
-              <div className="flex items-center justify-center gap-4 text-xs">
-                <div className={`flex items-center gap-1 ${email && !getEmailError() ? 'text-sage' : 'text-gray-400'}`}>
+            <div className="text-center space-y-2 pt-4">
+              <div className="flex items-center justify-center gap-3 text-xs">
+                <div className={`flex items-center gap-1 min-w-0 ${username && !getUsernameError() ? 'text-sage' : 'text-gray-400'}`}>
+                  <ion-icon name={username && !getUsernameError() ? "checkmark-circle" : "ellipse-outline"} style={{ fontSize: '14px' }}></ion-icon>
+                  <span className="text-truncate">Username</span>
+                </div>
+                <div className={`flex items-center gap-1 min-w-0 ${email && !getEmailError() ? 'text-sage' : 'text-gray-400'}`}>
                   <ion-icon name={email && !getEmailError() ? "checkmark-circle" : "ellipse-outline"} style={{ fontSize: '14px' }}></ion-icon>
-                  <span>Email</span>
+                  <span className="text-truncate">Email</span>
                 </div>
-                <div className={`flex items-center gap-1 ${passwordStrength.score >= 3 ? 'text-sage' : 'text-gray-400'}`}>
+                <div className={`flex items-center gap-1 min-w-0 ${passwordStrength.score >= 3 ? 'text-sage' : 'text-gray-400'}`}>
                   <ion-icon name={passwordStrength.score >= 3 ? "checkmark-circle" : "ellipse-outline"} style={{ fontSize: '14px' }}></ion-icon>
-                  <span>Strong Password</span>
+                  <span className="text-truncate">Password</span>
                 </div>
-                <div className={`flex items-center gap-1 ${consent ? 'text-sage' : 'text-gray-400'}`}>
+                <div className={`flex items-center gap-1 min-w-0 ${consent ? 'text-sage' : 'text-gray-400'}`}>
                   <ion-icon name={consent ? "checkmark-circle" : "ellipse-outline"} style={{ fontSize: '14px' }}></ion-icon>
-                  <span>Terms</span>
+                  <span className="text-truncate">Terms</span>
                 </div>
               </div>
               <p className="text-xs text-charcoal/60">
@@ -508,7 +655,7 @@ export default function RegisterPage() {
             </div>
 
             {/* Divider */}
-            <div className="relative my-4 sm:my-5 md:my-6">
+            <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-light-gray/50"></div>
               </div>
@@ -521,7 +668,7 @@ export default function RegisterPage() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-xs sm:text-sm md:text-base font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group min-h-[44px]"
+                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -533,7 +680,7 @@ export default function RegisterPage() {
               </button>
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-xs sm:text-sm md:text-base font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group min-h-[44px]"
+                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
@@ -544,7 +691,7 @@ export default function RegisterPage() {
           </form>
 
           {/* Enhanced footer */}
-          <div className="text-center mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-light-gray/30">
+          <div className="text-center mt-4 pt-4 border-t border-light-gray/30">
             <div className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70">
               Already have an account?{" "}
               <Link
@@ -559,7 +706,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Premium Trust Indicators with spring animations */}
-        <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-12 text-charcoal/60 text-center pt-4 sm:pt-6">
+        <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-12 text-charcoal/60 text-center pt-4">
           <FadeInUp delay={1.5} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
               <div className="flex flex-col items-center space-y-1 sm:space-y-2">
@@ -571,7 +718,7 @@ export default function RegisterPage() {
                 >
                   <ion-icon name="shield-checkmark-outline" style={{ color: "#749176" }} size="small"></ion-icon>
                 </motion.div>
-                <span className="font-urbanist text-xs sm:text-sm md:text-base font-500">Secure</span>
+                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Secure</span>
               </div>
             </PremiumHover>
           </FadeInUp>
@@ -587,7 +734,7 @@ export default function RegisterPage() {
                 >
                   <ion-icon name="people-outline" style={{ color: "#d67469" }} size="small"></ion-icon>
                 </motion.div>
-                <span className="font-urbanist text-xs sm:text-sm md:text-base font-500">Community</span>
+                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Community</span>
               </div>
             </PremiumHover>
           </FadeInUp>
@@ -603,7 +750,7 @@ export default function RegisterPage() {
                 >
                   <ion-icon name="star-outline" style={{ color: "#211e1d" }} size="small"></ion-icon>
                 </motion.div>
-                <span className="font-urbanist text-xs sm:text-sm md:text-base font-500">Quality</span>
+                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Quality</span>
               </div>
             </PremiumHover>
           </FadeInUp>

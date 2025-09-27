@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import confetti from "canvas-confetti";
-import { useAuth } from "../contexts/AuthContext";
+// import { useAuth } from "../contexts/AuthContext"; // Disabled for UI/UX design
 import { useReducedMotion } from "../utils/useReducedMotion";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 
@@ -26,24 +26,24 @@ const completeStyles = `
 `;
 
 export default function CompletePage() {
-  const { updateUser, user } = useAuth();
+  // const { updateUser, user } = useAuth(); // Disabled for UI/UX design
   const reducedMotion = useReducedMotion();
   
   useEffect(() => {
-    // Mark onboarding as complete
-    updateUser({
-      profile: {
-        ...user?.profile,
-        onboarding_complete: true,
-        onboarding_step: 'complete',
-        interests: user?.profile?.interests || [],
-        sub_interests: user?.profile?.sub_interests || [],
-        dealbreakers: user?.profile?.dealbreakers || [],
-        created_at: user?.profile?.created_at || new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        id: user?.id || ''
-      }
-    });
+    // Mark onboarding as complete - disabled for UI/UX design
+    // updateUser({
+    //   profile: {
+    //     ...user?.profile,
+    //     onboarding_complete: true,
+    //     onboarding_step: 'complete',
+    //     interests: user?.profile?.interests || [],
+    //     sub_interests: user?.profile?.sub_interests || [],
+    //     dealbreakers: user?.profile?.dealbreakers || [],
+    //     created_at: user?.profile?.created_at || new Date().toISOString(),
+    //     updated_at: new Date().toISOString(),
+    //     id: user?.id || ''
+    //   }
+    // });
 
     // Rain confetti effect on mount (respect reduced motion)
     if (!reducedMotion) {
@@ -98,12 +98,12 @@ export default function CompletePage() {
           <h1 className="font-urbanist text-3xl md:text-5xl lg:text-6xl font-700 text-charcoal mb-4 animate-fade-in-up" aria-live="polite">
             You&apos;re all set!
           </h1>
-          <p className="font-urbanist text-base md:text-lg font-400 text-charcoal/70 mb-12 animate-fade-in-up delay-200">
+          <p className="font-urbanist text-base md:text-lg font-400 text-charcoal/70 mb-4 animate-fade-in-up delay-200">
             Time to discover what&apos;s out there.
           </p>
 
           {/* Small moving graphic */}
-          <div className="relative mx-auto mb-14 h-28 w-full max-w-[420px] animate-fade-in-up delay-300" aria-hidden="true">
+          <div className="relative mx-auto mb-4 h-28 w-full max-w-[420px] animate-fade-in-up delay-300" aria-hidden="true">
             <div className="absolute inset-0 overflow-hidden">
               <div className="absolute bottom-0 left-[15%] w-14 h-14 rounded-full bg-off-white border-2 border-coral flex items-center justify-center float-anim">
                 <ion-icon name="happy-outline" style={{ fontSize: 22, color: "var(--charcoal)" }} aria-hidden="true" />

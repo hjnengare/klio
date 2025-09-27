@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useAuth } from "../contexts/AuthContext";
+// import { useAuth } from "../contexts/AuthContext"; // Disabled for UI/UX design
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
@@ -70,7 +70,7 @@ function SubcategoriesContent() {
   const mounted = useMounted();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { user } = useAuth();
+  // const { user } = useAuth(); // Disabled for UI/UX design
   const { showToast } = useToast();
   const { selectedSubInterests, setSelectedSubInterests, loadSubInterests, subInterests, isLoading } = useOnboarding();
 
@@ -84,20 +84,19 @@ function SubcategoriesContent() {
   const MIN_SELECTIONS = 3;
   const MAX_SELECTIONS = 12;
 
-  // Get selected interests from URL or user profile
+  // Get selected interests from URL (no user profile for UI/UX design)
   const selectedInterests = useMemo(() => {
     const fromUrl = searchParams?.get("interests")?.split(",").filter(Boolean) || [];
-    const fromProfile = user?.profile?.interests || [];
-    return fromUrl.length > 0 ? fromUrl : fromProfile;
-  }, [searchParams, user?.profile?.interests]);
+    return fromUrl; // Only use URL params for UI/UX design
+  }, [searchParams]);
 
 
-  // Route protection - redirect if not authenticated
-  useEffect(() => {
-    if (mounted && !user) {
-      router.replace('/login?redirect=/subcategories');
-    }
-  }, [mounted, user, router]);
+  // Route protection disabled for UI/UX design
+  // useEffect(() => {
+  //   if (mounted && !user) {
+  //     router.replace('/login?redirect=/subcategories');
+  //   }
+  // }, [mounted, user, router]);
 
   // Offline detection
   useEffect(() => {
@@ -250,8 +249,8 @@ function SubcategoriesContent() {
       )}
 
       {/* Header */}
-      <div className="text-center animate-fade-in-up">
-        <div className="inline-block relative mb-3">
+      <div className="text-center animate-fade-in-up mb-4">
+        <div className="inline-block relative mb-2">
           <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-2 text-center leading-snug px-2 tracking-[0.01em]">
             Tell us more!
           </h2>
@@ -295,7 +294,7 @@ function SubcategoriesContent() {
           </div>
 
               {/* Sections: subheading + 3-per-row animated pills */}
-              <div className="space-y-4 md:space-y-6 mb-6">
+              <div className="space-y-4 mb-4">
                 {Object.entries(groupedSubcategories).map(([interestId, section], sectionIndex) => (
                   <section key={interestId} className="animate-fade-in-up" style={{ animationDelay: `${sectionIndex * 100}ms` }}>
                     <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal mb-3 px-1">

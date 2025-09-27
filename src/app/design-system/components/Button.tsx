@@ -5,7 +5,7 @@
  * Supports all use cases found in the codebase audit
  */
 
-import React, { forwardRef, ReactNode } from 'react';
+import React, { forwardRef, ReactNode, cloneElement, isValidElement } from 'react';
 import { motion, MotionProps } from 'framer-motion';
 import { cn } from '../utils/cn';
 
@@ -46,6 +46,9 @@ export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
 
   /** Motion properties */
   motionProps?: MotionProps;
+
+  /** Render as child element instead of button */
+  asChild?: boolean;
 }
 
 // =============================================================================
@@ -179,6 +182,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       premium = false,
       motionProps,
       disabled,
+      asChild = false,
       ...props
     },
     ref
@@ -195,7 +199,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className
     );
 
-    // Button content
+    // Button content for normal buttons
     const buttonContent = (
       <>
         {/* Loading state */}
@@ -221,6 +225,22 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </>
     );
+
+    // Handle asChild case - render children with button props
+    if (asChild) {
+      if (isValidElement(children)) {
+        // Clone the child element and merge props
+        return cloneElement(children, {
+          className: cn(buttonClasses, children.props.className),
+          ref,
+          ...props,
+          ...children.props,
+        });
+      } else {
+        console.warn('Button: asChild prop requires a single valid React element as children');
+        return null;
+      }
+    }
 
     // Premium motion effects
     if (premium && !isDisabled) {

@@ -2,24 +2,14 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "./contexts/AuthContext";
 
 export default function HomePage() {
   const router = useRouter();
-  const { user, isLoading } = useAuth();
 
   useEffect(() => {
-    if (isLoading) return;
-
-    // Smart routing based on user state
-    if (user) {
-      // User is logged in, go to main app
-      router.push("/home");
-    } else {
-      // New user, show onboarding
-      router.push("/onboarding");
-    }
-  }, [router, user, isLoading]);
+    // Direct redirect to home for UI/UX design (no auth required)
+    router.push("/home");
+  }, [router]);
 
   return (
     <div className="min-h-dvh bg-off-white flex items-center justify-center">
@@ -31,7 +21,7 @@ export default function HomePage() {
           KLIO
         </h1>
         <p className="font-urbanist text-6 font-400 text-charcoal/70">
-          {isLoading ? "Checking your session..." : "Getting ready..."}
+          Getting ready...
         </p>
       </div>
     </div>

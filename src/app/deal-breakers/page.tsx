@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../contexts/AuthContext";
+// import { useAuth } from "../contexts/AuthContext"; // Disabled for UI/UX design
 import { useToast } from "../contexts/ToastContext";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
@@ -37,19 +37,19 @@ function DealBreakersContent() {
   const [isNavigating, setIsNavigating] = useState(false);
   const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
   const router = useRouter();
-  const { user } = useAuth();
+  // const { user } = useAuth(); // Disabled for UI/UX design
   const { showToast } = useToast();
 
   // Constants for min/max selection
   const MIN_SELECTIONS = 2;
   const MAX_SELECTIONS = 3;
 
-  // Route protection - redirect if not authenticated
-  useEffect(() => {
-    if (mounted && !user) {
-      router.replace('/login?redirect=/deal-breakers');
-    }
-  }, [mounted, user, router]);
+  // Route protection disabled for UI/UX design
+  // useEffect(() => {
+  //   if (mounted && !user) {
+  //     router.replace('/login?redirect=/deal-breakers');
+  //   }
+  // }, [mounted, user, router]);
 
   // Animation trigger helper
   const triggerMicroBounce = useCallback((id: string) => {
@@ -155,8 +155,8 @@ function DealBreakersContent() {
     <OnboardingLayout backHref="/subcategories" step={3}>
 
       {/* Header */}
-      <div className="text-center animate-fade-in-up">
-        <div className="inline-block relative mb-3">
+      <div className="text-center animate-fade-in-up mb-4">
+        <div className="inline-block relative mb-2">
           <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-2 text-center leading-snug px-2 tracking-[0.01em]">
             Your deal-breakers
           </h2>
@@ -200,7 +200,7 @@ function DealBreakersContent() {
               </div>
 
               {/* Deal Breakers Grid */}
-              <div className="grid grid-cols-2 gap-6 md:gap-8 mb-6 justify-items-center">
+              <div className="grid grid-cols-2 gap-6 md:gap-8 mb-4 justify-items-center">
                 {DEMO_DEAL_BREAKERS.map((item, index) => {
                   const isSelected = hydratedSelected.includes(item.id);
                   const isDisabled = !isSelected && hydratedSelected.length >= MAX_SELECTIONS;

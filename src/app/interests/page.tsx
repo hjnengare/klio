@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../contexts/AuthContext";
+// import { useAuth } from "../contexts/AuthContext"; // Disabled for UI/UX design
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
 import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion";
@@ -105,7 +105,7 @@ function InterestsContent() {
     minimumReached: false
   });
 
-  const { user } = useAuth();
+  // const { user } = useAuth(); // Disabled for UI/UX design
   const router = useRouter();
   const { showToast } = useToast();
 
@@ -114,24 +114,24 @@ function InterestsContent() {
   const MAX_SELECTIONS = 6;
 
 
-  // Route protection - redirect if not authenticated
-  useEffect(() => {
-    if (mounted && !user) {
-      router.replace('/login?redirect=/interests');
-    }
-  }, [mounted, user, router]);
+  // Route protection disabled for UI/UX design
+  // useEffect(() => {
+  //   if (mounted && !user) {
+  //     router.replace('/login?redirect=/interests');
+  //   }
+  // }, [mounted, user, router]);
 
-  // Don't render anything if not authenticated
-  if (!user) {
-    return (
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="font-urbanist text-base text-charcoal/70">Checking authentication...</p>
-        </div>
-      </div>
-    );
-  }
+  // Authentication check disabled for UI/UX design
+  // if (!user) {
+  //   return (
+  //     <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+  //       <div className="text-center">
+  //         <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
+  //         <p className="font-urbanist text-base text-charcoal/70">Checking authentication...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   /* -------- Offline detection and queue management -------- */
   useEffect(() => {
@@ -240,7 +240,7 @@ function InterestsContent() {
 
   // Robust save helper with retry logic and offline support
   const saveInterests = useCallback(async (selections: string[], retries = 3): Promise<boolean> => {
-    if (!user) return false;
+    // if (!user) return false; // Disabled for UI/UX design
 
     // If offline, queue the request
     if (!isOnline) {
@@ -391,8 +391,8 @@ function InterestsContent() {
       )}
 
       {/* Header */}
-      <div className="text-center animate-fade-in-up">
-        <div className="inline-block relative mb-3">
+      <div className="text-center animate-fade-in-up mb-4">
+        <div className="inline-block relative mb-2">
           <h2 className="font-urbanist text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-2 text-center leading-snug px-2 tracking-[0.01em]">
             What interests you?
           </h2>
@@ -406,13 +406,13 @@ function InterestsContent() {
 
               {/* Error */}
               {onboardingError && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-6">
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4">
                   <p className="font-urbanist text-sm font-600 text-red-600">{onboardingError}</p>
                 </div>
               )}
 
               {/* Selection Counter and Instructions */}
-              <div className="text-center mb-6">
+              <div className="text-center mb-4">
                 <div className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-3 transition-colors duration-300 ${hydratedSelected.length >= MIN_SELECTIONS
                     ? 'bg-sage/10 border border-sage/30'
                     : 'bg-sage/10 border border-sage/20'
@@ -443,7 +443,7 @@ function InterestsContent() {
               </div>
 
               {/* Interests grid */}
-              <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12 overflow-visible">
+              <div className="grid grid-cols-2 gap-4 md:gap-6 mb-4 overflow-visible">
                 {list.map((interest) => {
                   const isSelected = hydratedSelected.includes(interest.id);
                   const isDisabled = !isSelected && hydratedSelected.length >= MAX_SELECTIONS;
@@ -487,7 +487,7 @@ function InterestsContent() {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-6 space-y-4">
+              <div className="pt-4 space-y-4">
                 {/* Next Button */}
                 <button
                   className={`
