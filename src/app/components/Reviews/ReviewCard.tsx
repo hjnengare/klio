@@ -60,7 +60,7 @@ export default function ReviewCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.01, x: 5 }}
-      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-6 border border-sage/5 hover:border-sage/20 transition-all duration-300 group shadow-sm hover:shadow-md"
+      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-6 border border-sage/5 transition-all duration-300 group shadow-sm"
     >
       <div className="flex items-start space-x-4">
         {/* Avatar */}
@@ -78,7 +78,7 @@ export default function ReviewCard({
               className="w-12 h-12 rounded-full object-cover ring-2 ring-sage/20 group-hover:ring-sage/40 transition-all duration-300"
             />
           ) : (
-            <div className="w-12 h-12 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300">
+            <div className="w-12 h-12 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center transition-shadow duration-300">
               <span className="font-urbanist text-lg font-700 text-sage">
                 {review.user.name?.[0] || 'U'}
               </span>

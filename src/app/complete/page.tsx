@@ -28,6 +28,7 @@ const completeStyles = `
 export default function CompletePage() {
   // const { updateUser, user } = useAuth(); // Disabled for UI/UX design
   const user = { id: 'dummy-user-id' }; // Dummy user for UI/UX design
+  const updateUser = () => {}; // Dummy function for UI/UX design
   const reducedMotion = useReducedMotion();
   
   useEffect(() => {

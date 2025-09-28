@@ -40,7 +40,7 @@ export default function Card({
 
   return (
     <article className={`
-      rounded-6 shadow-2 hover:shadow-1 transition-all duration-1 ease-cubic-out
+      rounded-6 shadow-2 transition-all duration-1 ease-cubic-out
       ${cardVariantClasses[variant]}
     `}>
       <Link href={href} className="block p-4">

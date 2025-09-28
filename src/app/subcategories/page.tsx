@@ -73,10 +73,11 @@ function SubcategoriesContent() {
   // const { user } = useAuth(); // Disabled for UI/UX design
   const user = { id: 'dummy-user-id' }; // Dummy user for UI/UX design
   const { showToast } = useToast();
-  const { selectedSubInterests, setSelectedSubInterests, loadSubInterests, subInterests, isLoading } = useOnboarding();
+  const { selectedSubInterests, setSelectedSubInterests, loadSubInterests, subInterests, isLoading: contextLoading } = useOnboarding();
+  const isLoading = false; // Disabled for UI/UX design
 
   // State
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false); // Disabled for UI/UX design
   const [isOnline, setIsOnline] = useState(true);
   const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
   const [hasLoadedSubcategories, setHasLoadedSubcategories] = useState(false);
@@ -207,7 +208,7 @@ function SubcategoriesContent() {
   // Handle next step
   const handleNext = useCallback(async () => {
     if (!canProceed || isLoading) return;
-    setIsNavigating(true);
+    // setIsNavigating(true); // Disabled for UI/UX design
 
     try {
       // Show success message
@@ -217,7 +218,7 @@ function SubcategoriesContent() {
       router.push('/deal-breakers');
     } catch (error) {
       console.error("Error proceeding to next step:", error);
-      setIsNavigating(false);
+      // setIsNavigating(false); // Disabled for UI/UX design
       showToast('Failed to proceed. Please try again.', 'error', 3000);
     }
   }, [canProceed, isLoading, selectedSubInterests.length, router, showToast]);
@@ -239,9 +240,9 @@ function SubcategoriesContent() {
 
   return (
     <OnboardingLayout backHref="/interests" step={2}>
-      {/* Offline indicator */}
+      {/* Offline indicator with safe area support */}
       {!isOnline && (
-        <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20">
+        <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 safe-area-top">
           <div className="bg-orange-100 border border-orange-200 rounded-full px-3 py-1 flex items-center gap-2 animate-fade-in-up delay-100">
             <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
             <span className="font-urbanist text-xs font-600 text-orange-700">Offline</span>
@@ -319,14 +320,16 @@ function SubcategoriesContent() {
                                   relative w-full py-2 md:py-3 px-2 md:px-3
                                   font-urbanist text-xs font-600 text-center
                                   transition-all duration-200 ease-out
-                                  min-h-[40px]
+                                  min-h-[44px] touch-target-large
                                   rounded-full
                                   focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
                                   disabled:cursor-not-allowed disabled:opacity-60
+                                  mobile-interaction
+                                  active:scale-[0.98] md:active:scale-[1.0]
                                   ${animatingIds.has(subcategory.id) ? 'animate-micro-bounce' : ''}
 
                                   ${isSelected
-                                ? "bg-coral border-coral text-white shadow-md"
+                                ? "bg-coral border-coral text-white md:shadow-md"
                                 : isDisabled
                                   ? "bg-gray-100 border-2 border-gray-200 text-gray-400"
                                   : "bg-off-white border-2 border-sage text-charcoal hover:bg-sage hover:border-sage hover:text-white hover:scale-[1.02]"
@@ -341,7 +344,7 @@ function SubcategoriesContent() {
                                 <ion-icon
                                   name="checkmark-circle"
                                   size="small"
-                                  style={{ filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.15))" }}
+                                  className="md:drop-shadow-sm"
                                 />
                               </div>
                             )}
@@ -359,9 +362,11 @@ function SubcategoriesContent() {
                     {/* Next Button */}
                     <button
                       className={`
-                        group block w-full text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full shadow-lg transition-all duration-300 relative text-center
+                        group block w-full text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full md:shadow-lg transition-all duration-300 relative text-center
+                        min-h-[48px] touch-target-large mobile-interaction
+                        active:scale-[0.98] md:active:scale-[1.0]
                         ${canProceed
-                          ? "bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
+                          ? "bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 md:hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
                           : "bg-off-white text-charcoal/40 cursor-not-allowed"
                         }
                       `}

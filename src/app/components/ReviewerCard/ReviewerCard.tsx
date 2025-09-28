@@ -59,7 +59,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
   if (variant === "reviewer" || reviewer) {
     return (
       <div id={idForSnap} className="snap-start snap-always w-[260px] sm:w-[280px] flex-shrink-0">
-        <div className="bg-off-white rounded-[8px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02] group cursor-pointer h-[200px] relative" onClick={toggleActions}>
+        <div className="bg-off-white rounded-[8px] overflow-hidden shadow-sm transition-all duration-300 group cursor-pointer h-[200px] relative" onClick={toggleActions}>
           {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-off-white to-coral/5" />
 
@@ -187,7 +187,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
 
   return (
     <li className="snap-start snap-always w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[320px] flex-shrink-0">
-      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] group cursor-pointer h-[280px] flex flex-col relative overflow-hidden" onClick={toggleActions}>
+      <div className="bg-white rounded-xl p-6 shadow-sm transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden" onClick={toggleActions}>
         <div className="flex items-start gap-4 mb-4">
           <div className="relative">
             <ProfilePicture

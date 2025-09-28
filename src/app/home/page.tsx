@@ -6,6 +6,7 @@ import Header from "../components/Header/Header";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
 import { useScrollRevealMultiple } from "../hooks/useScrollReveal";
 import { useBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
+import { useAddressBarHide } from "../hooks/useAddressBarHide";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../data/communityHighlightsData";
 
@@ -38,6 +39,9 @@ const MemoizedBusinessRow = memo(BusinessRow);
 export default function Home() {
   // Initialize scroll reveal for all data-scroll-reveal elements
   useScrollRevealMultiple({ staggerDelay: 150 });
+
+  // Hide address bar on scroll
+  useAddressBarHide();
 
   // Fetch businesses data
   const { businesses: forYouBusinesses, loading: forYouLoading, error: forYouError } = useBusinesses({ limit: 12 });

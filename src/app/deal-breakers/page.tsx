@@ -34,8 +34,9 @@ function useMounted() {3
 function DealBreakersContent() {
   const mounted = useMounted();
   const [selected, setSelected] = useState<string[]>([]);
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false); // Disabled for UI/UX design
   const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
+  const [hasInteracted, setHasInteracted] = useState(false);
   const router = useRouter();
   // const { user } = useAuth(); // Disabled for UI/UX design
   const user = { id: 'dummy-user-id' }; // Dummy user for UI/UX design
@@ -86,8 +87,18 @@ function DealBreakersContent() {
     }
   }, [showToast]);
 
+  // Effect to show contextual feedback when selection changes (only after user interaction)
+  useEffect(() => {
+    if (hasInteracted && selected.length === MIN_SELECTIONS) {
+      showToast('🎉 Great! You can continue now', 'sage', 2000);
+    }
+  }, [selected.length, showToast, hasInteracted, MIN_SELECTIONS]);
+
   const handleToggle = useCallback((id: string) => {
     const isCurrentlySelected = selected.includes(id);
+
+    // Mark that user has interacted
+    setHasInteracted(true);
 
     // Trigger micro-bounce animation
     triggerMicroBounce(id);
@@ -98,25 +109,17 @@ function DealBreakersContent() {
       return;
     }
 
-    setSelected(prev => {
-      const newSelection = isCurrentlySelected
-        ? prev.filter(x => x !== id)
-        : [...prev, id];
+    // Calculate new selection first
+    const newSelection = isCurrentlySelected
+      ? selected.filter(x => x !== id)
+      : [...selected, id];
 
-      // Show contextual feedback
-      if (!isCurrentlySelected) {
-        if (newSelection.length === MIN_SELECTIONS) {
-          showToast('🎉 Great! You can continue now', 'sage', 2000);
-        } else if (newSelection.length === MAX_SELECTIONS) {
-          showToast('✨ Perfect selection!', 'sage', 2000);
-        }
-      }
+    // Update state
+    setSelected(newSelection);
 
-      // Save to API
-      saveSelections(newSelection);
-      return newSelection;
-    });
-  }, [selected.length, saveSelections, showToast, triggerMicroBounce, MAX_SELECTIONS, MIN_SELECTIONS]);
+    // Save to API
+    saveSelections(newSelection);
+  }, [selected, saveSelections, showToast, triggerMicroBounce, MAX_SELECTIONS, MIN_SELECTIONS]);
 
   const canContinue = useMemo(() =>
     selected.length >= MIN_SELECTIONS && selected.length <= MAX_SELECTIONS && !isNavigating && !!user,
@@ -125,14 +128,14 @@ function DealBreakersContent() {
 
   const handleNext = useCallback(() => {
     if (!canContinue) return;
-    setIsNavigating(true);
+    // setIsNavigating(true); // Disabled for UI/UX design
 
     try {
       showToast(`Moving to final step with ${selected.length} deal-breakers!`, 'success', 2000);
       router.push("/complete");
     } catch (error) {
       console.error("Error proceeding to next step:", error);
-      setIsNavigating(false);
+      // setIsNavigating(false); // Disabled for UI/UX design
       showToast('Failed to proceed. Please try again.', 'error', 3000);
     }
   }, [canContinue, selected.length, router, showToast]);

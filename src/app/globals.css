@@ -669,6 +669,58 @@
     }
   }
 
+  /* Additional mobile edge case handling */
+  .safe-area-top {
+    margin-top: max(16px, env(safe-area-inset-top));
+  }
+
+  /* Prevent bounce scroll on iOS */
+  .mobile-scroll-container {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Fix tap highlight on iOS/Android */
+  .mobile-interaction {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  /* Viewport height fixes for mobile browsers */
+  .mobile-vh-fix {
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+  }
+
+  /* Hide browser navbar on scroll */
+  .hide-address-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    height: -webkit-fill-available;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Enhanced fullscreen experience */
+  @supports (display-mode: standalone) {
+    .hide-address-bar {
+      height: 100vh;
+    }
+  }
+
+  /* iOS Safari specific fixes */
+  @supports (-webkit-appearance: none) {
+    .hide-address-bar {
+      min-height: -webkit-fill-available;
+    }
+  }
+
   /* Scroll reveal animations */
   .scroll-reveal {
     opacity: 0;
