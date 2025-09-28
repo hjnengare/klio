@@ -49,7 +49,6 @@ const styles = `
   .card-mobile {
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    background-color: rgba(255, 255, 255, 0.95);
   }
 
   /* Text truncation support */
@@ -124,8 +123,20 @@ export default function RegisterPage() {
     }
   });
 
-  const { register, isLoading, error: authError } = useAuth();
+  const [mounted, setMounted] = useState(false);
+
+  const { register, isLoading: authLoading, error: authError } = useAuth();
+  const isLoading = false; // Disabled for UI/UX design
   const { showToast } = useToast();
+
+  // Prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Hydration-safe disabled state
+  const isFormDisabled = mounted ? (submitting || isLoading) : false;
+  const isSubmitDisabled = mounted ? (submitting || isLoading || !consent || passwordStrength.score < 3 || !username || !email || !password || !validateUsername(username) || !validateEmail(email)) : true;
   const router = useRouter();
 
   const containerRef = useRef(null);
@@ -452,7 +463,7 @@ export default function RegisterPage() {
                   username && !getUsernameError() && usernameTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
-                disabled={submitting || isLoading}
+                disabled={isFormDisabled}
               />
             </div>
 
@@ -494,7 +505,7 @@ export default function RegisterPage() {
                   email && !getEmailError() && emailTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
-                disabled={submitting || isLoading}
+                disabled={isFormDisabled}
               />
             </div>
 
@@ -536,13 +547,13 @@ export default function RegisterPage() {
                   passwordStrength.score > 0 && passwordStrength.score < 3 ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
-                disabled={submitting || isLoading}
+                disabled={isFormDisabled}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 sm:right-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 hover:text-charcoal transition-colors duration-300 p-1 z-10"
-                disabled={submitting || isLoading}
+                className="absolute right-4 sm:right-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 hover:text-charcoal transition-colors duration-300 p-1 z-10 rounded-full"
+                disabled={isFormDisabled}
               >
                 <ion-icon
                   name={showPassword ? "eye-off-outline" : "eye-outline"}
@@ -608,20 +619,20 @@ export default function RegisterPage() {
                 <PremiumHover scale={1.02} shadowIntensity="strong">
                   <motion.button
                     type="submit"
-                    disabled={submitting || isLoading || !consent || passwordStrength.score < 3 || !username || !email || !password || !validateUsername(username) || !validateEmail(email)}
-                    className={`group block w-full font-urbanist text-body font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-6 shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap btn-press ${
-                      submitting || isLoading || !consent || passwordStrength.score < 3 || !username || !email || !password || !validateUsername(username) || !validateEmail(email)
+                    disabled={isSubmitDisabled}
+                    className={`group block w-full font-urbanist text-body font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap btn-press ${
+                      isSubmitDisabled
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
                         : 'bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white focus:ring-sage/20 hover:focus:ring-coral/20 hover:scale-[1.02]'
                     }`}
-                    whileTap={{ scale: submitting || isLoading ? 1 : 0.98 }}
+                    whileTap={{ scale: isFormDisabled ? 1 : 0.98 }}
                     transition={{ duration: 0.1 }}
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
-                      {(submitting || isLoading) && (
+                      {isFormDisabled && (
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                       )}
-                      {submitting || isLoading ? "Creating account..." : "Create account"}
+                      {isFormDisabled ? "Creating account..." : "Create account"}
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </motion.button>

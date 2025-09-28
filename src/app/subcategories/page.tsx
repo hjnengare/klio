@@ -71,6 +71,7 @@ function SubcategoriesContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   // const { user } = useAuth(); // Disabled for UI/UX design
+  const user = { id: 'dummy-user-id' }; // Dummy user for UI/UX design
   const { showToast } = useToast();
   const { selectedSubInterests, setSelectedSubInterests, loadSubInterests, subInterests, isLoading } = useOnboarding();
 

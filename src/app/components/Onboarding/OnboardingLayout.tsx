@@ -102,14 +102,14 @@ export default function OnboardingLayout({
     <>
       <style dangerouslySetInnerHTML={{ __html: onboardingStyles }} />
 
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-4 relative overflow-y-auto onboarding-enter">
+      <div className="min-h-dvh mobile-viewport bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container mobile-scroll-container">
 
         {/* Back button */}
         {backHref && (
           <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 animate-fade-in-up delay-100">
             <Link
               href={backHref}
-              className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full"
+              className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full touch-target-large"
             >
               <ion-icon name="arrow-back-outline" size="small"></ion-icon>
             </Link>
@@ -130,7 +130,7 @@ export default function OnboardingLayout({
 
         {/* Progress indicator */}
         {showProgress && (
-          <div className="animate-fade-in-up delay-500">
+          <div className="animate-fade-in-up delay-500 mb-safe-interaction">
             <div className="flex justify-center items-center space-x-2 mt-2">
               {Array.from({ length: totalSteps }).map((_, index) => {
                 const isActive = index + 1 === step;

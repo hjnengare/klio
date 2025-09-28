@@ -24,13 +24,6 @@ const styles = `
   .delay-1400 { animation-delay: 1.4s; }
   .delay-1600 { animation-delay: 1.6s; }
 
-  /* Mobile-first typography scale - Body text ≥ 16px */
-  .text-body { font-size: 1rem; line-height: 1.5; } /* 16px */
-  .text-body-lg { font-size: 1.125rem; line-height: 1.5; } /* 18px */
-  .text-heading-sm { font-size: 1.25rem; line-height: 1.4; } /* 20px */
-  .text-heading-md { font-size: 1.5rem; line-height: 1.3; } /* 24px */
-  .text-heading-lg { font-size: 1.875rem; line-height: 1.2; } /* 30px */
-  .text-heading-xl { font-size: 2.25rem; line-height: 1.1; } /* 36px */
 
   /* Safe area support for mobile devices */
   .safe-area-padding {
@@ -84,7 +77,7 @@ export default function OnboardingPage() {
           {/* App Name */}
           <div className="text-center mb-4 opacity-0 animate-fade-in-up delay-400">
             <div className="inline-block relative">
-              <h1 className="font-urbanist text-heading-sm md:text-heading-md lg:text-heading-lg font-700 text-charcoal mb-1 md:mb-1.5 relative tracking-tight">
+              <h1 className="font-urbanist text-xl md:text-2xl lg:text-3xl font-700 text-charcoal mb-1 md:mb-1.5 relative tracking-tight" suppressHydrationWarning>
                 KLIO
               </h1>
             </div>
@@ -93,13 +86,13 @@ export default function OnboardingPage() {
           {/* Main Content */}
           <div className="text-center mb-4">
             <div className="opacity-0 animate-fade-in-up delay-600">
-              <h2 className="font-urbanist text-heading-md sm:text-heading-lg md:text-heading-xl lg:text-4xl font-700 text-charcoal mb-4 text-center leading-tight px-1 md:px-2 tracking-[0.01em]">
+              <h2 className="font-urbanist text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-700 text-charcoal mb-4 text-center leading-tight px-1 md:px-2 tracking-[0.01em]" suppressHydrationWarning>
                 Discover trusted local gems near you!
               </h2>
             </div>
 
             <div className="opacity-0 animate-fade-in-up delay-800">
-              <p className="font-urbanist text-body md:text-body-lg font-400 text-charcoal/70 mb-4 leading-relaxed px-2 md:px-4 max-w-sm md:max-w-lg lg:max-w-2xl mx-auto">
+              <p className="font-urbanist text-base md:text-lg font-400 text-charcoal/70 mb-4 leading-relaxed px-2 md:px-4 max-w-sm md:max-w-lg lg:max-w-2xl mx-auto" suppressHydrationWarning>
                 Let&apos;s find your new favourite spot and connect with authentic experiences in your community
               </p>
             </div>
@@ -109,7 +102,7 @@ export default function OnboardingPage() {
               <div className="opacity-0 animate-fade-in-up delay-1000">
                 <Link
                   href="/register"
-                  className="group block w-full rounded-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-body font-600 min-h-[48px] py-3 px-6 rounded-6 shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/20 hover:focus:ring-coral/20 focus:ring-offset-1 relative overflow-hidden text-center hover:scale-[1.02] btn-press flex items-center justify-center"
+                  className="group block w-full rounded-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-base font-600 min-h-[48px] py-3 px-6 rounded-6 shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/20 hover:focus:ring-coral/20 focus:ring-offset-1 relative overflow-hidden text-center hover:scale-[1.02] btn-press flex items-center justify-center"
                 >
                   <span className="relative z-10">Get Started</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -119,7 +112,7 @@ export default function OnboardingPage() {
               <div className="opacity-0 animate-fade-in-up delay-1200">
                 <Link
                   href="/login"
-                  className="group block w-full text-coral hover:text-coral/80 font-urbanist text-body font-600 min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none relative text-center hover:scale-[1.01] btn-press flex items-center justify-center"
+                  className="group block w-full text-coral hover:text-coral/80 font-urbanist text-base font-600 min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none relative text-center hover:scale-[1.01] btn-press flex items-center justify-center"
                 >
                   <span className="relative z-10">Log in</span>
                 </Link>
@@ -133,21 +126,21 @@ export default function OnboardingPage() {
               <div className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-sage/10 rounded-full flex items-center justify-center">
                 <div className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 bg-sage rounded-full" />
               </div>
-              <span className="font-urbanist text-body font-500 tracking-tight min-w-0">Trusted</span>
+              <span className="font-urbanist text-base font-500 tracking-tight min-w-0">Trusted</span>
             </div>
 
             <div className="flex flex-col items-center space-y-1 md:space-y-1.5 lg:space-y-2 opacity-0 animate-scale-in delay-1600">
               <div className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-coral/10 rounded-full flex items-center justify-center">
                 <div className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 bg-coral rounded-full" />
               </div>
-              <span className="font-urbanist text-body font-500 tracking-tight min-w-0">Local</span>
+              <span className="font-urbanist text-base font-500 tracking-tight min-w-0">Local</span>
             </div>
 
             <div className="flex flex-col items-center space-y-1 md:space-y-1.5 lg:space-y-2 opacity-0 animate-scale-in delay-1800">
               <div className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-charcoal/10 rounded-full flex items-center justify-center">
                 <div className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 bg-charcoal rounded-full" />
               </div>
-              <span className="font-urbanist text-body font-500 tracking-tight min-w-0">Authentic</span>
+              <span className="font-urbanist text-base font-500 tracking-tight min-w-0">Authentic</span>
             </div>
           </div>
         </div>

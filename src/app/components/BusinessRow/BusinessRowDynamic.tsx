@@ -3,29 +3,17 @@
 import dynamic from "next/dynamic";
 import { Business } from "../BusinessCard/BusinessCard";
 
-// Optimized loading component for BusinessRow
+// Minimal loading component for BusinessRow
 const BusinessRowSkeleton = () => (
-  <section
-    className="pb-8 sm:pb-12 sm:pt-4 bg-gradient-to-b from-off-white to-off-white/95 relative"
-    aria-label="businesses loading"
-  >
-    <div className="container mx-auto max-w-[1300px] relative z-10 px-4 md:px-6 lg:px-8">
-      <div className="mb-6 sm:mb-10 flex flex-wrap items-center justify-between gap-6">
-        <div className="h-6 bg-gray-200 rounded w-32 animate-pulse" />
-        <div className="h-4 bg-gray-200 rounded w-20 animate-pulse" />
+  <section className="pb-4 sm:pb-6 sm:pt-2 bg-gradient-to-b from-off-white to-off-white/95 relative">
+    <div className="container mx-auto max-w-[1300px] px-4 relative z-10">
+      <div className="mb-6 sm:mb-12 flex items-center justify-between gap-4">
+        <div className="h-6 bg-sage/10 rounded w-32" />
+        <div className="h-4 bg-sage/10 rounded w-20" />
       </div>
-
-      <div className="flex gap-6 overflow-hidden">
+      <div className="flex gap-6">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="flex-shrink-0 w-[280px]">
-            <div className="rounded-2xl overflow-hidden bg-white ring-1 ring-black/[0.04] shadow-sm">
-              <div className="w-full aspect-[4/3] bg-gray-200 animate-pulse" />
-              <div className="p-4 min-h-[140px]">
-                <div className="h-4 bg-gray-200 rounded mb-2 animate-pulse" />
-                <div className="h-3 w-2/3 bg-gray-200 rounded animate-pulse" />
-              </div>
-            </div>
-          </div>
+          <div key={i} className="flex-shrink-0 w-[280px] h-[240px] bg-sage/5 rounded-lg" />
         ))}
       </div>
     </div>

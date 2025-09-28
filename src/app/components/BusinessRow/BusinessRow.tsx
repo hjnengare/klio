@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import BusinessCard, { Business } from "../BusinessCard/BusinessCard";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
-import KlioLoader from "../KlioLoader/KlioLoader";
 
 export default function BusinessRow({
   title,
@@ -54,12 +53,11 @@ export default function BusinessRow({
         <ScrollableSection>
           <div className="flex gap-6">
             {loading ? (
-              // Minimal loading state
-              <div className="w-full flex items-center justify-center py-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 border-2 border-sage/30 border-t-sage rounded-full animate-spin"></div>
-                  <span className="font-urbanist text-sm text-charcoal/60">Loading {title.toLowerCase()}...</span>
-                </div>
+              // Ultra-minimal loading placeholder
+              <div className="flex gap-6">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="flex-shrink-0 w-[280px] h-[240px] bg-sage/5 rounded-lg"></div>
+                ))}
               </div>
             ) : error ? (
               // Error state

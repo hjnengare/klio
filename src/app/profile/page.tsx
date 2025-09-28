@@ -273,7 +273,6 @@ function ProfileContent() {
   if (loading) {
     return (
       <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative">
-        <Header />
         <div className="pt-4 pb-32 sm:pb-28 md:pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">

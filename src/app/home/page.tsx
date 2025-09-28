@@ -4,7 +4,6 @@ import { memo } from "react";
 import dynamic from "next/dynamic";
 import Header from "../components/Header/Header";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
-import KlioLoader from "../components/KlioLoader/KlioLoader";
 import { useScrollRevealMultiple } from "../hooks/useScrollReveal";
 import { useBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";

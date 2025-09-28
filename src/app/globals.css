@@ -477,6 +477,27 @@
     50% { transform: translateX(4px); }
   }
 
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+  }
+
+  @keyframes bubbly {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(0.95); }
+    45% { transform: scale(1.05); }
+    60% { transform: scale(0.98); }
+    75% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes micro-bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -540,6 +561,112 @@
   /* Arrow bounce animation */
   .arrow-bounce {
     animation: bounceRight 2s ease-in-out infinite;
+  }
+
+  /* Shake animation for error feedback */
+  .animate-shake {
+    animation: shake 0.6s ease-in-out;
+  }
+
+  /* Bubbly animation for button interactions */
+  .animate-bubbly {
+    animation: bubbly 0.7s ease-in-out;
+  }
+
+  /* Micro bounce animation for subtle feedback */
+  .animate-micro-bounce {
+    animation: micro-bounce 0.3s ease-in-out;
+  }
+
+  /* Safe area support for iOS and Android */
+  .safe-area-container {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  .pb-safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .pt-safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  .pl-safe-area-left {
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+
+  .pr-safe-area-right {
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  /* Additional safe area spacing for interactive elements */
+  .mb-safe-interaction {
+    margin-bottom: max(1.5rem, calc(env(safe-area-inset-bottom) + 0.5rem));
+  }
+
+  .mt-safe-interaction {
+    margin-top: max(1.5rem, calc(env(safe-area-inset-top) + 0.5rem));
+  }
+
+  /* Enhanced mobile touch targets */
+  .touch-target-large {
+    min-height: 48px;
+    min-width: 48px;
+    touch-action: manipulation;
+  }
+
+  .touch-target-xl {
+    min-height: 56px;
+    min-width: 56px;
+    touch-action: manipulation;
+  }
+
+  /* Mobile-specific viewport handling */
+  @supports (height: 100dvh) {
+    .min-h-dvh {
+      min-height: 100dvh;
+    }
+    .h-dvh {
+      height: 100dvh;
+    }
+  }
+
+  /* Prevent iOS zoom on input focus */
+  @supports (-webkit-touch-callout: none) {
+    input, textarea, select {
+      font-size: 16px !important;
+      transform: translateZ(0);
+    }
+  }
+
+  /* Enhanced scrolling for mobile */
+  .mobile-scroll-container {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+  }
+
+  /* Android Chrome address bar handling */
+  @media screen and (max-width: 768px) {
+    .mobile-viewport {
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    /* Better button spacing on mobile */
+    .mobile-button-spacing {
+      margin-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+  }
+
+  /* iOS Safari specific improvements */
+  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+    .ios-safe-area {
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      padding-top: max(20px, env(safe-area-inset-top));
+    }
   }
 
   /* Scroll reveal animations */

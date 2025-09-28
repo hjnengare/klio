@@ -106,6 +106,7 @@ function InterestsContent() {
   });
 
   // const { user } = useAuth(); // Disabled for UI/UX design
+  const user = { id: 'dummy-user-id' }; // Dummy user for UI/UX design
   const router = useRouter();
   const { showToast } = useToast();
 
@@ -457,12 +458,12 @@ function InterestsContent() {
                       aria-pressed={isSelected}
                       aria-label={`${interest.name}${isSelected ? ' (selected)' : isDisabled ? ' (maximum reached)' : ''}`}
                       className={`
-                            relative z-30 w-[85%] aspect-square rounded-full border-2 transition-all duration-300 ease-out mx-auto min-h-[44px] min-w-[44px]
+                            relative z-30 w-[85%] aspect-square rounded-full border-2 transition-all duration-300 ease-out mx-auto min-h-[44px] min-w-[44px] touch-target-large
                             ${isSelected
                           ? "bg-coral border-coral text-white shadow-lg scale-105 interest-selected"
                           : isDisabled
                             ? "bg-gray-300 border-gray-300 text-gray-500 cursor-not-allowed opacity-60"
-                            : "bg-sage border-sage text-white hover:bg-sage/90 hover:scale-105"
+                            : "bg-sage border-sage text-white hover:bg-sage/90 hover:scale-105 active:scale-95"
                         }
                             focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2
                             disabled:focus:ring-gray-300
@@ -487,11 +488,11 @@ function InterestsContent() {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 space-y-4">
+              <div className="pt-4 space-y-4 mb-safe-interaction">
                 {/* Next Button */}
                 <button
                   className={`
-                        group block w-full text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-full shadow-lg transition-all duration-300 relative text-center
+                        group block w-full text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-full shadow-lg transition-all duration-300 relative text-center touch-target-large mobile-button-spacing
                         ${canProceed
                       ? "bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
                       : "bg-gray-200 text-charcoal/40 cursor-not-allowed"

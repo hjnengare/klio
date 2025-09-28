@@ -38,6 +38,7 @@ function DealBreakersContent() {
   const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
   const router = useRouter();
   // const { user } = useAuth(); // Disabled for UI/UX design
+  const user = { id: 'dummy-user-id' }; // Dummy user for UI/UX design
   const { showToast } = useToast();
 
   // Constants for min/max selection
