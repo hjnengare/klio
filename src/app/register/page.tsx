@@ -422,7 +422,7 @@ export default function RegisterPage() {
 
 
         {/* Form Card */}
-        <div className="bg-off-white/95 card-mobile p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
+        <div className="bg-off-white/95 card-mobile border border-white/30 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
 
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
