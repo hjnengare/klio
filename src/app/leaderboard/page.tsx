@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import Link from "next/link";
 import FallbackImage from "../components/FallbackImage/FallbackImage";
 
@@ -292,12 +291,13 @@ export default function LeaderboardPage() {
                         {user.rank}
                       </div>
                       <div className="w-12 h-12 relative rounded-full overflow-hidden border-2 border-white shadow-md group-hover:scale-105 transition-transform duration-300">
-                        <Image
+                        <FallbackImage
                           src={user.avatar}
                           alt={user.username}
                           fill
                           className="object-cover"
                           sizes="48px"
+                          fallbackType="profile"
                         />
                       </div>
                       <div>
