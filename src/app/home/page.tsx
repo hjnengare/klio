@@ -6,7 +6,6 @@ import Header from "../components/Header/Header";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
 import { useScrollRevealMultiple } from "../hooks/useScrollReveal";
 import { useBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
-import { useAddressBarHide } from "../hooks/useAddressBarHide";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../data/communityHighlightsData";
 
@@ -24,9 +23,6 @@ const FloatingElements = dynamic(() => import("../components/Animations/Floating
   loading: () => null,
 });
 
-const BottomNav = dynamic(() => import("../components/Navigation/BottomNav"), {
-  loading: () => null,
-});
 
 const Footer = dynamic(() => import("../components/Footer/Footer"), {
   loading: () => null,
@@ -39,9 +35,6 @@ const MemoizedBusinessRow = memo(BusinessRow);
 export default function Home() {
   // Initialize scroll reveal for all data-scroll-reveal elements
   useScrollRevealMultiple({ staggerDelay: 150 });
-
-  // Hide address bar on scroll
-  useAddressBarHide();
 
   // Fetch businesses data
   const { businesses: forYouBusinesses, loading: forYouLoading, error: forYouError } = useBusinesses({ limit: 12 });
@@ -62,7 +55,7 @@ export default function Home() {
       <Header />
 
       {/* Main content */}
-      <div className="pt-4 pb-24 md:pb-6 relative z-10">
+      <div className="pt-4 pb-6 relative z-10">
       
         {/* Business Rows with Enhanced CSS Scroll Animations */}
         <div className="scroll-reveal stagger-1" data-scroll-reveal>
@@ -110,8 +103,6 @@ export default function Home() {
       {/* Footer - only on larger screens */}
       <Footer />
 
-      {/* Bottom Navigation */}
-      <BottomNav />
     </div>
   );
 }

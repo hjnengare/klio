@@ -414,18 +414,22 @@
     height: 100vh !important;
   }
 
-  /* Mobile viewport utilities for all devices */
+  /* Enhanced mobile viewport utilities with dynamic height */
   @media only screen and (max-width: 768px) {
     .min-h-dvh-safe,
     .min-h-dvh {
       min-height: 100vh;
       min-height: calc(var(--vh, 1vh) * 100);
+      min-height: 100svh; /* Small viewport height */
+      min-height: 100dvh; /* Dynamic viewport height */
     }
 
     .h-screen-safe,
     .h-screen {
       height: 100vh;
       height: calc(var(--vh, 1vh) * 100);
+      height: 100svh; /* Small viewport height */
+      height: 100dvh; /* Dynamic viewport height */
     }
 
     .full-viewport {
@@ -433,17 +437,32 @@
       height: 100vh !important;
       min-height: calc(var(--vh, 1vh) * 100) !important;
       height: calc(var(--vh, 1vh) * 100) !important;
+      min-height: 100svh !important; /* Small viewport height */
+      height: 100dvh !important; /* Dynamic viewport height */
       overflow-x: hidden !important;
     }
 
-    /* Prevent unintended scroll on mobile pages */
+    /* Enhanced mobile page container */
     .mobile-page {
       height: 100vh;
       height: calc(var(--vh, 1vh) * 100);
+      height: 100dvh; /* Dynamic viewport height */
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
       overscroll-behavior-y: none;
+      touch-action: pan-y;
+    }
+
+    /* iOS specific mobile page optimizations */
+    @supports (-webkit-touch-callout: none) {
+      .mobile-page {
+        height: -webkit-fill-available;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
     }
   }
 
@@ -687,30 +706,109 @@
     touch-action: manipulation;
   }
 
-  /* Viewport height fixes for mobile browsers */
+  /* Enhanced viewport height fixes for mobile browsers */
   .mobile-vh-fix {
     min-height: 100vh;
     min-height: 100dvh;
+    min-height: 100svh; /* Small viewport height */
     min-height: -webkit-fill-available;
+    min-height: calc(var(--vh, 1vh) * 100);
+    min-height: calc(var(--window-height, 100vh));
   }
 
-  /* Hide browser navbar on scroll */
+  /* Enhanced address bar hiding */
   .hide-address-bar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+    width: 100vw;
     height: 100vh;
     height: 100dvh;
+    height: 100svh; /* Small viewport height */
     height: -webkit-fill-available;
+    height: calc(var(--vh, 1vh) * 100);
+    height: calc(var(--window-height, 100vh));
     overflow-y: scroll;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+    touch-action: pan-y;
+  }
+
+  /* Aggressive fullscreen mobile experience */
+  .mobile-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    height: 100svh;
+    height: -webkit-fill-available;
+    height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Mobile viewport container with enhanced address bar hiding */
+  .mobile-viewport-container {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    height: 100svh;
+    height: -webkit-fill-available;
+    height: calc(var(--vh, 1vh) * 100);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
+    touch-action: pan-y;
   }
 
   /* Enhanced fullscreen experience */
   @supports (display-mode: standalone) {
     .hide-address-bar {
       height: 100vh;
+      height: 100dvh;
+    }
+  }
+
+  /* PWA standalone mode optimizations */
+  @media (display-mode: standalone) {
+    body {
+      background-color: #749176; /* Sage background for PWA */
+    }
+
+    .mobile-page {
+      height: 100vh;
+      height: 100dvh;
+    }
+  }
+
+  /* Enhanced iOS Safari fullscreen */
+  @supports (-webkit-touch-callout: none) and (display-mode: browser) {
+    .ios-fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      height: -webkit-fill-available;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      z-index: 1;
+    }
+
+    /* Force minimal UI on iOS Safari */
+    .ios-minimal-ui {
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      display: flex;
+      flex-direction: column;
     }
   }
 
