@@ -18,11 +18,57 @@ const PremiumHover = dynamic(() => import("../../../components/Animations/Premiu
   ssr: false,
 });
 
-const BottomNav = dynamic(() => import("../../../components/Navigation/BottomNav"));
 
 const ImageUpload = dynamic(() => import("../../../components/ReviewForm/ImageUpload"), {
   ssr: false,
 });
+
+const Footer = dynamic(() => import("../../../components/Footer/Footer"), {
+  loading: () => null,
+  ssr: false,
+});
+
+// Mobile-first CSS with proper typography scale and safe areas
+const styles = `
+  /* Mobile-first typography scale - Body text ≥ 16px */
+  .text-body { font-size: 1rem; line-height: 1.5; } /* 16px */
+  .text-body-lg { font-size: 1.125rem; line-height: 1.5; } /* 18px */
+  .text-heading-sm { font-size: 1.25rem; line-height: 1.4; } /* 20px */
+  .text-heading-md { font-size: 1.5rem; line-height: 1.3; } /* 24px */
+  .text-heading-lg { font-size: 1.875rem; line-height: 1.2; } /* 30px */
+
+  /* Button press states - 44-48px targets */
+  .btn-press:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  .btn-target {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+
+  /* Input styling - 16px+ to prevent auto-zoom */
+  .input-mobile {
+    font-size: 1rem !important; /* 16px minimum */
+    min-height: 48px;
+    touch-action: manipulation;
+  }
+
+  /* Card styling - border-first, tiny shadow (no heavy blur) */
+  .card-mobile {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  @media (min-width: 768px) {
+    .card-mobile {
+      border: 1px solid rgba(116, 145, 118, 0.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
+`;
 
 export default function WriteReviewPage() {
   const router = useRouter();
@@ -114,8 +160,10 @@ export default function WriteReviewPage() {
   const isFormValid = overallRating > 0 && reviewText.trim().length > 0;
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
-      {/* Ambient background elements */}
+    <>
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
+        {/* Ambient background elements */}
       <div className="absolute inset-0 opacity-20">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -159,11 +207,11 @@ export default function WriteReviewPage() {
         </div>
       </motion.header>
 
-      <div className="w-full md:w-3/4 mx-auto px-4 md:px-4 py-6 pb-24 md:pb-6 relative z-10">
+      <div className="w-full md:w-3/4 mx-auto px-4 md:px-4 py-6 pb-6 relative z-10">
         {/* Review Form */}
         <FadeInUp delay={0.2}>
           <PremiumHover scale={1.02} shadowIntensity="medium" duration={0.4}>
-            <div className="bg-off-white/90 backdrop-blur-lg rounded-none md:rounded-3xl shadow-xl border-0 md:border border-sage/10 p-4 md:p-8 mb-0 md:mb-8 relative overflow-hidden min-h-[calc(100vh-200px)] md:min-h-0 flex flex-col">
+            <div className="bg-off-white/95 backdrop-blur-lg rounded-none md:rounded-3xl card-mobile md:shadow-xl border-0 md:border border-sage/10 p-4 md:p-8 mb-0 md:mb-8 relative overflow-hidden min-h-[calc(100vh-200px)] md:min-h-0 flex flex-col">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
@@ -217,7 +265,7 @@ export default function WriteReviewPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.6 }}
-                  className="font-urbanist text-2xl md:text-5xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-6 md:mb-8 text-center"
+                  className="font-urbanist text-heading-md md:text-5xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-6 md:mb-8 text-center"
                 >
                   Write a Review for {businessName}
                 </motion.h2>
@@ -229,7 +277,7 @@ export default function WriteReviewPage() {
                   transition={{ delay: 0.4, duration: 0.6 }}
                   className="mb-8"
                 >
-                  <h3 className="font-urbanist text-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
+                  <h3 className="font-urbanist text-body-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
                     <motion.div
                       animate={{ rotate: [0, 5, -5, 0] }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
@@ -258,7 +306,7 @@ export default function WriteReviewPage() {
                       </motion.button>
                     ))}
                   </div>
-                  <p className="text-center font-urbanist text-[14px] font-400 text-charcoal/60">
+                  <p className="text-center font-urbanist text-sm font-400 text-charcoal/60">
                     Tap to select rating
                   </p>
                 </motion.div>
@@ -270,7 +318,7 @@ export default function WriteReviewPage() {
                   transition={{ delay: 0.5, duration: 0.6 }}
                   className="mb-8"
                 >
-                  <h3 className="font-urbanist text-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
+                  <h3 className="font-urbanist text-body-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
                     <motion.div
                       animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
@@ -291,7 +339,7 @@ export default function WriteReviewPage() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className={`
-                          px-4 md:px-6 py-2 md:py-3 rounded-full border-2 transition-all duration-300 font-urbanist text-[14px] font-600
+                          px-4 md:px-6 py-3 md:py-4 rounded-full border-2 transition-all duration-300 font-urbanist text-sm font-600 btn-target
                           ${selectedTags.includes(tag)
                             ? 'bg-sage border-sage text-white shadow-lg'
                             : 'bg-white/80 backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
@@ -312,7 +360,7 @@ export default function WriteReviewPage() {
                   transition={{ delay: 0.75, duration: 0.6 }}
                   className="mb-6"
                 >
-                  <h3 className="font-urbanist text-lg md:text-2xl font-600 text-charcoal mb-3 flex items-center justify-center md:justify-start">
+                  <h3 className="font-urbanist text-body-lg md:text-2xl font-600 text-charcoal mb-3 flex items-center justify-center md:justify-start">
                     <motion.div
                       animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
@@ -328,7 +376,7 @@ export default function WriteReviewPage() {
                     onChange={(e) => setReviewTitle(e.target.value)}
                     placeholder="Summarize your experience in a few words..."
                     whileFocus={{ scale: 1.01 }}
-                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-urbanist text-[14px] md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 shadow-sm"
+                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 shadow-sm input-mobile"
                   />
                 </motion.div>
 
@@ -339,7 +387,7 @@ export default function WriteReviewPage() {
                   transition={{ delay: 0.8, duration: 0.6 }}
                   className="mb-8"
                 >
-                  <h3 className="font-urbanist text-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
+                  <h3 className="font-urbanist text-body-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
                     <motion.div
                       animate={{ rotate: [0, -5, 5, 0] }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 5 }}
@@ -355,7 +403,7 @@ export default function WriteReviewPage() {
                     placeholder="Share your thoughts and help other locals..."
                     rows={4}
                     whileFocus={{ scale: 1.02 }}
-                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-urbanist text-[14px] md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none shadow-sm flex-1 min-h-[120px] md:min-h-0"
+                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none shadow-sm flex-1 min-h-[120px] md:min-h-0 input-mobile"
                   />
                 </motion.div>
 
@@ -366,7 +414,7 @@ export default function WriteReviewPage() {
                   transition={{ delay: 0.85, duration: 0.6 }}
                   className="mb-8"
                 >
-                  <h3 className="font-urbanist text-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
+                  <h3 className="font-urbanist text-body-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
                     <motion.div
                       animate={{ rotate: [0, 10, -10, 0] }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
@@ -393,9 +441,9 @@ export default function WriteReviewPage() {
                   whileTap={isFormValid && !submitting ? { scale: 0.98 } : {}}
                   onClick={handleSubmitReview}
                   className={`
-                    w-full py-4 md:py-5 px-6 md:px-8 rounded-xl md:rounded-2xl font-urbanist text-base md:text-2xl font-600 transition-all duration-300 relative overflow-hidden
+                    w-full py-4 md:py-5 px-6 md:px-8 rounded-xl md:rounded-2xl font-urbanist text-body md:text-2xl font-600 transition-all duration-300 relative overflow-hidden btn-target btn-press
                     ${isFormValid && !submitting
-                      ? 'bg-gradient-to-r from-sage to-sage/90 text-white  focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 group'
+                      ? 'bg-gradient-to-r from-sage to-sage/90 text-white focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 group'
                       : 'bg-charcoal/20 text-charcoal/40 cursor-not-allowed'
                     }
                   `}
@@ -440,8 +488,9 @@ export default function WriteReviewPage() {
         </FadeInUp>
       </div>
 
-      {/* Bottom Navigation */}
-      <BottomNav />
-    </div>
+      {/* Footer */}
+      <Footer />
+      </div>
+    </>
   );
 }

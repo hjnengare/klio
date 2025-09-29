@@ -11,7 +11,10 @@ import { getBrowserSupabase } from "../lib/supabase/client";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 
 // Dynamic imports
-const BottomNav = dynamic(() => import("../components/Navigation/BottomNav"), { ssr: false });
+const Footer = dynamic(() => import("../components/Footer/Footer"), {
+  loading: () => null,
+  ssr: false,
+});
 
 // Types based on new database schema
 interface UserProfile {
@@ -273,7 +276,7 @@ function ProfileContent() {
   if (loading) {
     return (
       <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative">
-        <div className="pt-4 pb-32 sm:pb-28 md:pb-6 relative z-10">
+        <div className="pt-4 pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">
               <div className="bg-off-white/90 backdrop-blur-sm p-6 border border-sage/10 shadow-sm">
@@ -298,7 +301,6 @@ function ProfileContent() {
             </div>
           </div>
         </div>
-        <BottomNav />
       </div>
     );
   }
@@ -308,7 +310,7 @@ function ProfileContent() {
     return (
       <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative">
         <Header />
-        <div className="pt-4 pb-32 sm:pb-28 md:pb-6 relative z-10">
+        <div className="pt-4 pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">
               <div className="bg-off-white/90 backdrop-blur-sm p-6 border border-red-200 shadow-sm text-center">
@@ -330,7 +332,6 @@ function ProfileContent() {
             </div>
           </div>
         </div>
-        <BottomNav />
       </div>
     );
   }
@@ -344,7 +345,7 @@ function ProfileContent() {
       </div>
 
       {/* Main content */}
-      <div className="pt-8 pb-32 sm:pb-28 md:pb-6 relative z-10">
+      <div className="pt-8 pb-6 relative z-10">
         <div className="px-4 sm:px-6 md:px-8">
           <div className="max-w-4xl mx-auto space-y-6">
 
@@ -560,6 +561,9 @@ function ProfileContent() {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

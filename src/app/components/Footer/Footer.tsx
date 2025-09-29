@@ -58,16 +58,16 @@ export default function Footer({ variant = 'default' }: FooterProps) {
   ];
 
   return (
-    <footer className="hidden md:block bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 border-t border-sage/10 relative overflow-hidden">
+    <footer className="bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 border-t border-sage/10 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/3 w-24 h-24 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-2xl" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
         {/* Main footer content */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
 
           {/* Brand section */}
           <div className="lg:col-span-1">
@@ -109,7 +109,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
 
           {/* Links sections */}
           <div className="lg:col-span-3">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
 
               {/* Company */}
               <motion.div
@@ -196,7 +196,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="pt-8 border-t border-sage/20"
+          className="pt-6 md:pt-8 border-t border-sage/20"
         >
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
 
@@ -220,7 +220,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
             </div>
 
             {/* App download links */}
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
               <motion.div
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}

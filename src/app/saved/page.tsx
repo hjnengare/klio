@@ -7,9 +7,12 @@ import BusinessCard from "../components/BusinessCard/BusinessCard";
 import ScrollableSection from "../components/ScrollableSection/ScrollableSection";
 import { TRENDING_BUSINESSES } from "../data/businessData";
 
-// Dynamic import for bottom navigation
-const BottomNav = dynamic(() => import("../components/Navigation/BottomNav"));
 const ScrollReveal = dynamic(() => import("../components/Animations/ScrollReveal"), {
+  ssr: false,
+});
+
+const Footer = dynamic(() => import("../components/Footer/Footer"), {
+  loading: () => null,
   ssr: false,
 });
 
@@ -32,7 +35,7 @@ export default function SavedPage() {
       <Header />
 
       {/* Main content */}
-      <div className="pt-4 pb-24 md:pb-6 relative z-10">
+      <div className="pt-4 pb-6 relative z-10">
         <div className="px-4 sm:px-6 md:px-8 mb-6">
           <div className="max-w-[1300px] mx-auto">
             <ScrollReveal delay={0.1}>
@@ -114,7 +117,8 @@ export default function SavedPage() {
         </div>
       </div>
 
-      <BottomNav />
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
