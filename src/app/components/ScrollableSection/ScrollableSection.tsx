@@ -58,21 +58,62 @@ export default function ScrollableSection({
   const scrollRight = () => {
     if (!scrollRef.current) return;
 
-    const scrollAmount = scrollRef.current.clientWidth * 0.8;
-    scrollRef.current.scrollBy({
-      left: scrollAmount,
-      behavior: 'smooth'
-    });
+    // Enhanced scrolling with premium feel
+    const scrollAmount = scrollRef.current.clientWidth * 0.75; // Slightly less aggressive
+
+    // Custom smooth scrolling with enhanced easing
+    const start = scrollRef.current.scrollLeft;
+    const change = scrollAmount;
+    const duration = 600; // Longer duration for premium feel
+    let startTime: number | null = null;
+
+    const animateScroll = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = easeInOutCubic(timeElapsed, start, change, duration);
+
+      if (scrollRef.current) {
+        scrollRef.current.scrollLeft = run;
+      }
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animateScroll);
+      }
+    };
+
+    // Fallback to native smooth scroll for better compatibility
+    try {
+      scrollRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    } catch (e) {
+      requestAnimationFrame(animateScroll);
+    }
   };
 
   const scrollLeft = () => {
     if (!scrollRef.current) return;
 
-    const scrollAmount = scrollRef.current.clientWidth * 0.8;
-    scrollRef.current.scrollBy({
-      left: -scrollAmount,
-      behavior: 'smooth'
-    });
+    const scrollAmount = scrollRef.current.clientWidth * 0.75;
+
+    try {
+      scrollRef.current.scrollBy({
+        left: -scrollAmount,
+        behavior: 'smooth'
+      });
+    } catch (e) {
+      // Fallback scrolling
+      scrollRef.current.scrollLeft -= scrollAmount;
+    }
+  };
+
+  // Easing function for premium scroll feel
+  const easeInOutCubic = (t: number, b: number, c: number, d: number) => {
+    t /= d / 2;
+    if (t < 1) return c / 2 * t * t * t + b;
+    t -= 2;
+    return c / 2 * (t * t * t + 2) + b;
   };
 
   return (
@@ -86,8 +127,17 @@ export default function ScrollableSection({
           WebkitScrollbar: { display: 'none' },
           scrollSnapType: 'x mandatory',
           scrollBehavior: 'smooth',
-          // Enhanced mobile scroll physics
-          WebkitOverflowScrolling: 'touch'
+          // Premium smooth scrolling physics
+          WebkitOverflowScrolling: 'touch',
+          // Enhanced momentum scrolling for premium feel
+          overscrollBehaviorX: 'contain',
+          scrollPaddingLeft: '1rem',
+          scrollPaddingRight: '1rem',
+          // Force GPU acceleration for smoother performance
+          transform: 'translateZ(0)',
+          willChange: 'scroll-position',
+          // Enhanced touch response
+          touchAction: 'pan-x',
         }}
       >
         {children}

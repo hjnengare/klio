@@ -38,7 +38,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
   };
 
   return (
-    <li id={idForSnap} className="snap-start w-[280px] sm:w-[320px] flex-shrink-0">
+    <li id={idForSnap} className="snap-start w-[calc(100vw-2rem)] sm:w-[320px] flex-shrink-0">
       <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm transition-all duration-300 group cursor-pointer">
         <div className="relative overflow-hidden rounded-t-[6px]">
           {!imgError ? (

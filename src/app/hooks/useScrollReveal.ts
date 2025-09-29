@@ -21,7 +21,16 @@ export function useScrollReveal({
     const element = elementRef.current;
     if (!element) return;
 
-    // Add the initial class
+    // Check if screen is medium or larger (768px+)
+    const isLargeScreen = () => window.innerWidth >= 768;
+
+    if (!isLargeScreen()) {
+      // On small screens, immediately show content without animation
+      element.classList.add('reveal');
+      return;
+    }
+
+    // Add the initial class only on larger screens
     element.classList.add(className);
 
     const observer = new IntersectionObserver(
@@ -61,6 +70,17 @@ export function useScrollRevealMultiple({
 }: ScrollRevealOptions & { staggerDelay?: number } = {}) {
   useEffect(() => {
     const elements = document.querySelectorAll('[data-scroll-reveal]');
+
+    // Check if screen is medium or larger (768px+)
+    const isLargeScreen = () => window.innerWidth >= 768;
+
+    if (!isLargeScreen()) {
+      // On small screens, immediately show all content without animation
+      elements.forEach((element) => {
+        element.classList.add('reveal');
+      });
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {

@@ -242,7 +242,7 @@
     overscroll-behavior-x: none;
   }
 
-  /* Enhanced carousel scrolling */
+  /* Premium enhanced carousel scrolling */
   .horizontal-scroll {
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
@@ -251,6 +251,12 @@
     -webkit-overflow-scrolling: touch;
     transform: translateZ(0); /* Force GPU acceleration */
     will-change: scroll-position;
+    /* Premium momentum scrolling */
+    overscroll-behavior-x: contain;
+    /* Enhanced touch responsiveness */
+    touch-action: pan-x;
+    /* Better scroll physics on iOS */
+    -webkit-scroll-behavior: smooth;
   }
 
   .horizontal-scroll::-webkit-scrollbar {
@@ -660,11 +666,18 @@
     }
   }
 
-  /* Enhanced scrolling for mobile */
+  /* Premium enhanced scrolling for mobile */
   .mobile-scroll-container {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     scroll-behavior: smooth;
+    /* Enhanced momentum and responsiveness */
+    transform: translateZ(0);
+    will-change: scroll-position, transform;
+    /* Better scroll physics */
+    scroll-snap-type: both proximity;
+    /* Improved touch responsiveness */
+    touch-action: manipulation;
   }
 
   /* Android Chrome address bar handling */
@@ -704,6 +717,63 @@
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     touch-action: manipulation;
+  }
+
+  /* Modal scroll lock utilities - prevent layout shifts */
+  .modal-scroll-lock {
+    overflow: hidden !important;
+    touch-action: none;
+    -webkit-overflow-scrolling: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* Scrollbar width compensation utility */
+  .scrollbar-compensate {
+    /* This will be dynamically set via JS for accurate scrollbar width */
+    margin-right: var(--scrollbar-width, 0);
+  }
+
+  /* Fixed element scrollbar compensation */
+  .fixed-compensate {
+    /* For fixed positioned elements like headers */
+    right: var(--scrollbar-width, 0) !important;
+  }
+
+  /* Prevent horizontal layout shifts during modal transitions */
+  .no-layout-shift {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Modal backdrop that doesn't affect layout */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 90;
+    pointer-events: auto;
+  }
+
+  /* Modal content that slides without affecting layout */
+  .modal-slide-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 100;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    will-change: transform;
+  }
+
+  .modal-slide-left.open {
+    transform: translateX(0);
   }
 
   /* Enhanced viewport height fixes for mobile browsers */

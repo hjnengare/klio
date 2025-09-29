@@ -82,7 +82,7 @@ export default function BusinessRow({
               businesses.map((business, index) => (
                 <div
                   key={business.id}
-                  className={`premium-hover list-none card-entrance card-entrance-${Math.min(index + 1, 6)}`}
+                  className={`list-none card-entrance card-entrance-${Math.min(index + 1, 6)}`}
                   data-scroll-reveal
                 >
                   <BusinessCard business={business} />

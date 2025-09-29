@@ -54,7 +54,7 @@ export default function EventsSpecials({
             {events.map((event, index) => (
               <div
                 key={event.id}
-                className={`premium-hover list-none card-entrance card-entrance-${Math.min(index + 1, 6)}`}
+                className={`list-none card-entrance card-entrance-${Math.min(index + 1, 6)}`}
                 data-scroll-reveal
               >
                 <EventCard event={event} />

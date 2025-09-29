@@ -220,7 +220,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
             </div>
 
             {/* App download links */}
-            <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
+            <div className="flex flex-row items-center space-x-3">
               <motion.div
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}

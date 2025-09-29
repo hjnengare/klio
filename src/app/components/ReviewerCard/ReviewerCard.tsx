@@ -58,7 +58,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
 
   if (variant === "reviewer" || reviewer) {
     return (
-      <div id={idForSnap} className="snap-start snap-always w-[260px] sm:w-[280px] flex-shrink-0">
+      <div id={idForSnap} className="snap-start snap-always w-[calc(100vw-2rem)] sm:w-[280px] flex-shrink-0">
         <div className="bg-off-white rounded-[8px] overflow-hidden shadow-sm transition-all duration-300 group cursor-pointer h-[200px] relative" onClick={toggleActions}>
           {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-off-white to-coral/5" />

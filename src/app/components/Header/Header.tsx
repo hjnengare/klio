@@ -6,12 +6,16 @@ import { useEffect, useRef, useState } from "react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import useScrollDirection from "../../hooks/useScrollDirection";
+import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
+import MenuModal from "../HamburgerMenu/MenuModal";
 
 export default function Header({ showSearch = true, showProfile = true }) {
   const { isVisible } = useScrollDirection({ threshold: 100, throttleMs: 16 });
 
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const searchWrapRef = useRef<HTMLDivElement>(null);
 
   const openFilters = () => {
@@ -28,8 +32,27 @@ export default function Header({ showSearch = true, showProfile = true }) {
     console.log("filters:", f);
   };
 
+  const openMenu = () => {
+    if (isMenuVisible) return;
+    setIsMenuVisible(true);
+    setTimeout(() => setIsMenuOpen(true), 10);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    setTimeout(() => setIsMenuVisible(false), 300);
+  };
+
+  const toggleMenu = () => {
+    if (isMenuOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  };
+
   useEffect(() => {
-    ["person", "options", "search"].forEach((n) => {
+    ["person", "options", "search", "menu", "close"].forEach((n) => {
       const el = document.createElement("ion-icon");
       el.name = n; el.style.display = "none";
       document.body.appendChild(el);
@@ -54,14 +77,22 @@ export default function Header({ showSearch = true, showProfile = true }) {
               </span>
             </Link>
 
-            {showProfile && (
-              <Link
-                href="/profile"
-                className="w-10 h-10 rounded-full border border-charcoal/5 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 flex items-center justify-center transition-all duration-300 hover:scale-110"
-              >
-                <ion-icon name="person" class="text-base text-charcoal/70" />
-              </Link>
-            )}
+            <div className="flex items-center space-x-3">
+              {/* Hamburger Menu */}
+              <HamburgerMenu
+                isOpen={isMenuOpen}
+                onToggle={toggleMenu}
+              />
+
+              {showProfile && (
+                <Link
+                  href="/profile"
+                  className="w-10 h-10 rounded-full border border-charcoal/5 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 flex items-center justify-center transition-all duration-300 hover:scale-110"
+                >
+                  <ion-icon name="person" class="text-base text-charcoal/70" />
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* row 2: search (anchor wrapper) */}
@@ -88,6 +119,13 @@ export default function Header({ showSearch = true, showProfile = true }) {
         onClose={closeFilters}
         onApplyFilters={handleApplyFilters}
         anchorRef={searchWrapRef}   // <-- anchor under search
+      />
+
+      {/* Menu Modal */}
+      <MenuModal
+        isOpen={isMenuOpen}
+        isVisible={isMenuVisible}
+        onClose={closeMenu}
       />
 
       {/* spacer so content isn't hidden under fixed header */}

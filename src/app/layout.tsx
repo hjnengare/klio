@@ -29,14 +29,7 @@ export const metadata: Metadata = {
     description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
     url: "/",
     siteName: "KLIO",
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "KLIO - Discover trusted KLIO near you",
-      },
-    ],
+    images: [],
     locale: "en_US",
     type: "website",
   },
@@ -44,7 +37,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "KLIO - Discover trusted KLIO near you",
     description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
-    images: ["/og.png"],
   },
   robots: {
     index: true,
@@ -90,30 +82,13 @@ export default function RootLayout({
         <meta name="nightmode" content="enable/disable" />
         <meta name="layoutmode" content="fitscreen/standard" />
 
-        {/* PWA iOS Icons */}
-        <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png" />
-        <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
-        <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png" />
-        <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png" />
-
-        {/* iOS Splash Screens */}
-        <link rel="apple-touch-startup-image" href="/splash/launch-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
-        <link rel="apple-touch-startup-image" href="/splash/launch-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
-        <link rel="apple-touch-startup-image" href="/splash/launch-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
-        <link rel="apple-touch-startup-image" href="/splash/launch-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
-        <link rel="apple-touch-startup-image" href="/splash/launch-1284x2778.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
-        <link rel="apple-touch-startup-image" href="/splash/launch-1170x2532.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+        {/* PWA Manifest - Icons defined in manifest.json when available */}
 
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="preconnect" href="https://unpkg.com" crossOrigin="" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://unpkg.com" crossOrigin="anonymous" />
         <link rel="canonical" href="/" />
         {/* Ionicons: Simple and reliable setup */}
         <Script
@@ -127,7 +102,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
-      <body className={`${urbanist.className} mobile-vh-fix mobile-scroll-container`}>
+      <body className={`${urbanist.className} mobile-vh-fix mobile-scroll-container no-layout-shift`}>
         <AddressBarHide />
         <WebVitals />
         <ErrorBoundary>

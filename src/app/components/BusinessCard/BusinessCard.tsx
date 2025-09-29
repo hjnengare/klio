@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import Stars from "../Stars/Stars";
 import PercentileChip from "../PercentileChip/PercentileChip";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
-import PremiumHover from "../Animations/PremiumHover";
 
 type Percentiles = {
   service: number;
@@ -84,8 +83,7 @@ function BusinessCard({ business }: { business: Business }) {
       id={idForSnap}
       className="snap-start snap-always w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
     >
-      <PremiumHover scale={1.03} shadowIntensity="light" duration={0.4}>
-        <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer">
+      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer">
           <div
             className="relative overflow-hidden rounded-t-[6px]"
             onClick={toggleActions}
@@ -150,7 +148,7 @@ function BusinessCard({ business }: { business: Business }) {
               }`}
             >
               <button
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleWriteReview();
@@ -159,7 +157,7 @@ function BusinessCard({ business }: { business: Business }) {
                 <ion-icon name="create-outline" class="text-base text-charcoal" />
               </button>
               <button
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleBookmark();
@@ -168,7 +166,7 @@ function BusinessCard({ business }: { business: Business }) {
                 <ion-icon name="heart-outline" class="text-base text-charcoal" />
               </button>
               <button
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleShare();
@@ -221,7 +219,6 @@ function BusinessCard({ business }: { business: Business }) {
             )}
           </div>
         </div>
-      </PremiumHover>
     </li>
   );
 }

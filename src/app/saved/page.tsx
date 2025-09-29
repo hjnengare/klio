@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import Header from "../components/Header/Header";
 import BusinessCard from "../components/BusinessCard/BusinessCard";
 import ScrollableSection from "../components/ScrollableSection/ScrollableSection";
@@ -18,6 +19,7 @@ const Footer = dynamic(() => import("../components/Footer/Footer"), {
 
 export default function SavedPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const router = useRouter();
 
   // Mock saved businesses - in real app this would come from user data
   const savedBusinesses = TRENDING_BUSINESSES.slice(0, 3);
@@ -31,13 +33,20 @@ export default function SavedPage() {
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-2xl" />
       </div>
 
-      {/* Header */}
-      <Header />
-
       {/* Main content */}
       <div className="pt-4 pb-6 relative z-10">
         <div className="px-4 sm:px-6 md:px-8 mb-6">
           <div className="max-w-[1300px] mx-auto">
+            {/* Back Arrow */}
+            <div className="mb-4">
+              <button
+                onClick={() => router.back()}
+                className="flex items-center gap-2 text-charcoal hover:text-sage transition-colors duration-300"
+              >
+                <ion-icon name="arrow-back-outline" style={{ fontSize: "20px" }}></ion-icon>
+              </button>
+            </div>
+
             <ScrollReveal delay={0.1}>
               <div className="text-center mb-8">
                 <h1 className="font-urbanist text-2 md:text-4xl font-700 text-charcoal mb-4">
@@ -74,7 +83,7 @@ export default function SavedPage() {
             {savedBusinesses.length > 0 ? (
               <ScrollReveal delay={0.3}>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                  {savedBusinesses.map((business, index) => (
+                  {savedBusinesses.map((business) => (
                     <div key={business.id} className="relative">
                       <BusinessCard business={business} />
                       {/* Saved indicator */}

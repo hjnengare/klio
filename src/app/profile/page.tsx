@@ -7,7 +7,6 @@ import Image from "next/image";
 import { useAuth } from "../contexts/AuthContext";
 import Header from "../components/Header/Header";
 import { Ion } from "../components/Ion";
-import { getBrowserSupabase } from "../lib/supabase/client";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 
 // Dynamic imports
@@ -141,104 +140,133 @@ function ProfileContent() {
   const [userInterests, setUserInterests] = useState<UserInterest[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [achievements, setAchievements] = useState<UserAchievement[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load all user data from database
+  // Load user data from auth context and create profile data
   useEffect(() => {
-    const loadProfileData = async () => {
-      if (!user?.id) return;
+    if (!user?.id) return;
 
-      try {
-        setLoading(true);
-        setError(null);
-        const supabase = getBrowserSupabase();
-
-        // Fetch user profile with all fields
-        const { data: profileData, error: profileError } = await supabase
-          .from('profiles')
-          .select(`
-            user_id,
-            username,
-            display_name,
-            avatar_url,
-            locale,
-            onboarding_step,
-            is_top_reviewer,
-            reviews_count,
-            badges_count,
-            interests_count,
-            last_interests_updated,
-            created_at,
-            updated_at
-          `)
-          .eq('user_id', user.id)
-          .single();
-
-        if (profileError) {
-          console.error('Error fetching profile:', profileError);
-          setError('Failed to load profile data');
-          return;
-        }
-
-        // Fetch user interests with interest details
-        const { data: interestsData, error: interestsError } = await supabase
-          .from('user_interests')
-          .select(`
-            interest_id,
-            interests(id, name)
-          `)
-          .eq('user_id', user.id);
-
-        // Fetch user reviews
-        const { data: reviewsData, error: reviewsError } = await supabase
-          .from('reviews')
-          .select('id, business_name, rating, review_text, is_featured, created_at')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: false })
-          .limit(10);
-
-        // Fetch user achievements with achievement details
-        const { data: achievementsData, error: achievementsError } = await supabase
-          .from('user_achievements')
-          .select(`
-            achievement_id,
-            earned_at,
-            achievements(id, name, description, icon, category)
-          `)
-          .eq('user_id', user.id);
-
-        if (interestsError) {
-          console.error('Error fetching interests:', interestsError);
-        }
-        if (reviewsError) {
-          console.error('Error fetching reviews:', reviewsError);
-        }
-        if (achievementsError) {
-          console.error('Error fetching achievements:', achievementsError);
-        }
-
-        setProfile(profileData);
-        setUserInterests(interestsData || []);
-        setReviews(reviewsData || []);
-        setAchievements(achievementsData || []);
-      } catch (err) {
-        console.error('Unexpected error loading profile:', err);
-        setError('An unexpected error occurred');
-      } finally {
-        setLoading(false);
-      }
+    // Create profile data from auth user data immediately (no loading state)
+    const mockProfile: UserProfile = {
+      user_id: user.id,
+      username: user.email?.split('@')[0] || 'user',
+      display_name: user.name || user.email?.split('@')[0] || 'User',
+      avatar_url: user.avatar_url || null,
+      locale: 'en_US',
+      onboarding_step: user.profile?.onboarding_step || 'complete',
+      is_top_reviewer: true, // Mock as top reviewer for demo
+      reviews_count: 8,
+      badges_count: 3,
+      interests_count: user.interests?.length || 4,
+      last_interests_updated: new Date().toISOString(),
+      created_at: user.created_at || new Date().toISOString(),
+      updated_at: user.updated_at || new Date().toISOString()
     };
 
-    loadProfileData();
-  }, [user?.id]);
+    // Create mock user interests from auth context
+    const mockUserInterests: UserInterest[] = (user.interests || []).map((interestId, index) => ({
+      interest_id: interestId,
+      interests: {
+        id: interestId,
+        name: interestId.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())
+      }
+    }));
 
-  // IMPORTANT: pass tokens separately to avoid DOMTokenList InvalidCharacterError
+    // Create mock reviews data
+    const mockReviews: Review[] = [
+      {
+        id: '1',
+        business_name: 'The Pot Luck Club',
+        rating: 5,
+        review_text: 'Amazing rooftop dining experience with incredible city views!',
+        is_featured: true,
+        created_at: '2024-01-15T10:30:00Z'
+      },
+      {
+        id: '2',
+        business_name: 'Kirstenbosch Gardens',
+        rating: 5,
+        review_text: 'Perfect place for a weekend picnic and nature walks.',
+        is_featured: false,
+        created_at: '2024-01-10T14:20:00Z'
+      },
+      {
+        id: '3',
+        business_name: 'La Colombe Restaurant',
+        rating: 4,
+        review_text: 'Excellent wine selection and beautiful vineyard setting.',
+        is_featured: false,
+        created_at: '2024-01-05T19:45:00Z'
+      },
+      {
+        id: '4',
+        business_name: 'V&A Waterfront',
+        rating: 4,
+        review_text: 'Great shopping and entertainment hub with harbor views.',
+        is_featured: false,
+        created_at: '2023-12-28T16:15:00Z'
+      },
+      {
+        id: '5',
+        business_name: 'Chapman\'s Peak Drive',
+        rating: 5,
+        review_text: 'Breathtaking coastal drive - must do when visiting Cape Town!',
+        is_featured: true,
+        created_at: '2023-12-20T09:30:00Z'
+      }
+    ];
+
+    // Create mock achievements
+    const mockAchievements: UserAchievement[] = [
+      {
+        achievement_id: '1',
+        earned_at: '2024-01-01T12:00:00Z',
+        achievements: {
+          id: '1',
+          name: 'Local Explorer',
+          description: 'Reviewed 5 different businesses in your area',
+          icon: 'map',
+          category: 'discovery'
+        }
+      },
+      {
+        achievement_id: '2',
+        earned_at: '2024-01-10T12:00:00Z',
+        achievements: {
+          id: '2',
+          name: 'Top Reviewer',
+          description: 'Earned featured review status',
+          icon: 'trophy',
+          category: 'quality'
+        }
+      },
+      {
+        achievement_id: '3',
+        earned_at: '2024-01-15T12:00:00Z',
+        achievements: {
+          id: '3',
+          name: 'Community Helper',
+          description: 'Your reviews helped 50+ people discover great places',
+          icon: 'heart',
+          category: 'community'
+        }
+      }
+    ];
+
+    // Set all data immediately without loading delays
+    setProfile(mockProfile);
+    setUserInterests(mockUserInterests);
+    setReviews(mockReviews);
+    setAchievements(mockAchievements);
+  }, [user]);
+
+  // Simplified scroll reveal for better performance
   const headerRef = useScrollReveal({ className: ["scroll-reveal"] });
-  const statsRef = useScrollReveal({ className: ["scroll-reveal", "stagger-1"] });
-  const contributionsRef = useScrollReveal({ className: ["scroll-reveal", "stagger-2"] });
-  const achievementsRef = useScrollReveal({ className: ["scroll-reveal", "stagger-3"] });
-  const settingsRef = useScrollReveal({ className: ["scroll-reveal", "stagger-4"] });
+  const statsRef = useScrollReveal({ className: ["scroll-reveal"] });
+  const contributionsRef = useScrollReveal({ className: ["scroll-reveal"] });
+  const achievementsRef = useScrollReveal({ className: ["scroll-reveal"] });
+  const settingsRef = useScrollReveal({ className: ["scroll-reveal"] });
 
   const handleLogout = () => {
     logout();
@@ -338,19 +366,101 @@ function ProfileContent() {
 
   return (
     <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative">
-      {/* Background decorative elements */}
-      <div className="fixed inset-0 pointer-events-none opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-2xl" />
+      {/* Floating background elements */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        {/* Floating orbs */}
+        <motion.div
+          className="absolute w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"
+          initial={{ x: -100, y: 100 }}
+          animate={{
+            x: ["-100px", "100px", "-100px"],
+            y: ["100px", "50px", "100px"],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{ top: "20%", left: "10%" }}
+        />
+
+        <motion.div
+          className="absolute w-24 h-24 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-xl"
+          initial={{ x: 100, y: -50 }}
+          animate={{
+            x: ["100px", "-50px", "100px"],
+            y: ["-50px", "100px", "-50px"],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{ top: "60%", right: "15%" }}
+        />
+
+        <motion.div
+          className="absolute w-20 h-20 bg-gradient-to-br from-sage/6 to-transparent rounded-full blur-lg"
+          initial={{ x: 0, y: 0 }}
+          animate={{
+            x: ["0px", "80px", "-40px", "0px"],
+            y: ["0px", "-60px", "40px", "0px"],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{ bottom: "20%", left: "20%" }}
+        />
+
+        {/* Subtle sparkles */}
+        {Array.from({ length: 4 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-sage/20 rounded-full"
+            style={{
+              left: `${(i * 83 + 37) % 100}%`,
+              top: `${(i * 127 + 19) % 100}%`,
+            }}
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: [0, 1, 0],
+              scale: [0, 1.5, 0],
+            }}
+            transition={{
+              duration: 3 + (i % 3),
+              repeat: Infinity,
+              delay: i * 0.4,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Back arrow */}
+      <div className="pt-4 pb-2 relative z-10">
+        <div className="px-4 sm:px-6 md:px-8">
+          <div className="max-w-4xl mx-auto">
+            <Link
+              href="/home"
+              className="inline-flex items-center justify-center w-10 h-10 bg-off-white/90 hover:bg-off-white border border-white/30 rounded-full transition-all duration-200 shadow-sm hover:shadow-md"
+            >
+              <Ion name="chevron-back" className="text-sage text-[20px]" />
+            </Link>
+          </div>
+        </div>
       </div>
 
       {/* Main content */}
-      <div className="pt-8 pb-6 relative z-10">
+      <div className="pt-2 pb-6 relative z-10">
         <div className="px-4 sm:px-6 md:px-8">
           <div className="max-w-4xl mx-auto space-y-6">
 
             {/* Profile Header Card */}
-            <div ref={headerRef} className="bg-off-white/90 backdrop-blur-sm p-6 border border-sage/10 shadow-sm">
+            <div ref={headerRef} className="bg-off-white/90 backdrop-blur-sm p-6 border border-white/30 shadow-sm">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-4">
                   <div className="relative">
@@ -391,7 +501,7 @@ function ProfileContent() {
               </div>
             </div>
             {/* Stats Overview */}
-            <div ref={statsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-sage/10 shadow-sm">
+            <div ref={statsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
               <h2 className="font-urbanist text-lg font-600 text-charcoal mb-4">Stats Overview</h2>
               <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 <div className="text-center px-1">
@@ -425,7 +535,7 @@ function ProfileContent() {
             </div>
 
             {/* Your Contributions */}
-            <div ref={contributionsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-sage/10 shadow-sm">
+            <div ref={contributionsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-urbanist text-lg font-600 text-charcoal">Your Contributions</h2>
                 <button
@@ -471,7 +581,7 @@ function ProfileContent() {
             </div>
 
             {/* Your Achievements */}
-            <div ref={achievementsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-sage/10 shadow-sm">
+            <div ref={achievementsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
               <h2 className="font-urbanist text-lg font-600 text-charcoal mb-4">Your Achievements</h2>
               <div className="space-y-3">
                 {achievements.map((userAchievement) => (
@@ -500,7 +610,7 @@ function ProfileContent() {
             </div>
 
             {/* Account Settings */}
-            <div ref={settingsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-sage/10 shadow-sm">
+            <div ref={settingsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
               <div className="space-y-2">
                 <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
                   <div className="flex items-center space-x-3">
@@ -547,16 +657,6 @@ function ProfileContent() {
               </div>
             </div>
 
-            {/* Back Button */}
-            <div className="pt-4">
-              <Link
-                href="/home"
-                className="w-full bg-sage/10 hover:bg-sage/15 p-4 font-urbanist text-base font-600 text-sage hover:text-sage/80 transition-all duration-300 flex items-center justify-center space-x-2 border border-sage/20"
-              >
-                <Ion name="chevron-back" className="text-[18px]" />
-                <span>Back</span>
-              </Link>
-            </div>
 
           </div>
         </div>
