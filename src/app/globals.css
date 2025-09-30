@@ -1,36 +1,17 @@
 @import "tailwindcss";
 
-/* Enhanced Snap Scrolling */
+/* Normal Scrolling */
 .horizontal-scroll {
-  scroll-snap-type: none;
-  scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
-  /* Better scrolling physics on iOS */
-  overscroll-behavior-x: contain;
+  overscroll-behavior-x: auto;
 }
 
-/* Enhanced snap points */
 .snap-start {
-  scroll-snap-align: start;
+  /* No snap */
 }
 
 .snap-always {
-  scroll-snap-stop: normal;
-}
-
-/* Mobile-specific enhancements */
-@media (max-width: 640px) {
-  .horizontal-scroll {
-    /* No snapping - free scroll */
-    scroll-snap-type: none;
-    scroll-padding-left: 1rem;
-    scroll-padding-right: 1rem;
-  }
-
-  /* Remove snap alignment */
-  .snap-start {
-    scroll-snap-align: none;
-  }
+  /* No snap */
 }
 
 @theme reference {
@@ -244,16 +225,12 @@
     background-attachment: fixed;
   }
 
-  /* Premium enhanced carousel scrolling */
+  /* Normal carousel scrolling */
   .horizontal-scroll {
-    scroll-behavior: auto;
-    scroll-snap-type: none;
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
-    /* Premium momentum scrolling */
-    overscroll-behavior-x: contain;
-    /* Enhanced touch responsiveness */
+    overscroll-behavior-x: auto;
     touch-action: pan-x;
   }
 
@@ -312,10 +289,6 @@
     scrollbar-color: rgba(116, 145, 118, 0.4) rgba(116, 145, 118, 0.05);
   }
 
-  .horizontal-scroll > * {
-    scroll-snap-align: none;
-    scroll-snap-stop: normal;
-  }
 
   /* Fix iOS safari viewport height issues and prevent unintended scroll */
   @supports (-webkit-touch-callout: none) {
