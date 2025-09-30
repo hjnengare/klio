@@ -83,15 +83,15 @@ function BusinessCard({ business }: { business: Business }) {
       id={idForSnap}
       className="snap-start snap-always w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
     >
-      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer">
+      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[90vh] sm:h-auto flex flex-col">
           <div
-            className="relative overflow-hidden rounded-t-[6px]"
+            className="relative overflow-hidden rounded-t-[6px] flex-1 sm:flex-initial"
             onClick={toggleActions}
           >
             <motion.div
               animate={{ scale: showActions ? 1.05 : 1 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="relative"
+              className="relative h-full"
             >
               {!imgError ? (
                 <Image
@@ -100,14 +100,14 @@ function BusinessCard({ business }: { business: Business }) {
                   width={400}
                   height={320}
                   sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="h-[360px] md:h-[320px] lg:h-[280px] w-full object-cover transition-transform duration-500 md:group-hover:scale-105 rounded-t-[6px]"
+                  className="h-full sm:h-[320px] md:h-[320px] lg:h-[280px] w-full object-cover transition-transform duration-500 md:group-hover:scale-105 rounded-t-[6px]"
                   priority={false}
                   loading="lazy"
                   quality={85}
                   onError={() => setImgError(true)}
                 />
               ) : (
-                <div className="h-[360px] md:h-[320px] lg:h-[280px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[6px]">
+                <div className="h-full sm:h-[320px] md:h-[320px] lg:h-[280px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[6px]">
                   <ion-icon
                     name="image-outline"
                     class="text-4xl md:text-5xl lg:text-6xl text-sage/70"
@@ -177,7 +177,7 @@ function BusinessCard({ business }: { business: Business }) {
             </div>
           </div>
 
-          <div className="p-5 relative">
+          <div className="p-5 relative flex-shrink-0">
             <div className="mb-1">
               <h3 className="font-urbanist text-base md:text-lg font-700 text-charcoal transition-colors duration-200 md:group-hover:text-sage">
                 <Link
