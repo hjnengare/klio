@@ -60,7 +60,7 @@ export function HeroCarousel() {
   };
 
   return (
-    <section className="relative min-h-[100vh] sm:min-h-[110svh] w-full overflow-hidden" aria-label="Hero carousel">
+    <section className="relative min-h-[100vh] sm:min-h-[110vh] w-full overflow-hidden" aria-label="Hero carousel">
       {HERO_SLIDES.map((slide, index) => (
         <div
           key={slide.id}
