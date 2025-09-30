@@ -205,7 +205,7 @@ export default function LeaderboardPage() {
                 </div>
                 <div className="bg-off-white rounded-[6px] p-4 sm:p-5 min-w-[140px] sm:min-w-[160px] shadow-xl border-2 border-sage/30 group-hover:shadow-2xl transition-all duration-300">
                   <div className="font-urbanist text-lg sm:text-xl font-700 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300">@{topReviewers[0].username}</div>
-                  <div className="font-urbanist text-sm text-charcoal/70 mb-3">{topReviewers[0].reviews}</span> <span className="font-400">reviews</span></div>
+                  <div className="font-urbanist text-sm text-charcoal/70 mb-3"><span className="font-700">{topReviewers[0].reviews}</span> <span className="font-400">reviews</span></div>
                   <div className="bg-gradient-to-r from-sage/20 to-sage/10 backdrop-blur-sm px-3 py-2 rounded-full shadow-sm border border-sage/20 flex items-center justify-center gap-1 mx-auto w-fit">
                     <ion-icon name="star" class="text-base text-sage" />
                     <span className="font-urbanist text-base font-700 text-charcoal">{topReviewers[0].totalRating}</span>
