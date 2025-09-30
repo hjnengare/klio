@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 // import { useAuth } from "../contexts/AuthContext"; // Disabled for UI/UX design
 import { useOnboarding } from "../contexts/OnboardingContext";
@@ -410,5 +410,16 @@ function SubcategoriesContent() {
 }
 
 export default function SubcategoriesPage() {
-  return <SubcategoriesContent />;
+  return (
+    <Suspense fallback={
+      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="font-urbanist text-base text-charcoal/70">Loading subcategories...</p>
+        </div>
+      </div>
+    }>
+      <SubcategoriesContent />
+    </Suspense>
+  );
 }

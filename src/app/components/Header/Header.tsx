@@ -119,20 +119,8 @@ export default function Header({ showSearch = true, showProfile = true }) {
 
             {/* Right Side Actions */}
             <div className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
-              {showProfile && (
-                <Link
-                  href="/profile"
-                  className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110 ${
-                    isScrolled
-                      ? 'border-charcoal/5 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10'
-                      : 'border-white/20 bg-white/10 hover:bg-white/20'
-                  }`}
-                >
-                  <ion-icon name="person" class={`text-base transition-colors duration-300 ${
-                    isScrolled ? 'text-charcoal/70' : 'text-white'
-                  }`} />
-                </Link>
-              )}
+              {/* Profile icon placeholder to maintain space */}
+              <div className="w-10 h-10" />
             </div>
           </div>
 
@@ -163,6 +151,22 @@ export default function Header({ showSearch = true, showProfile = true }) {
       />
 
       {/* No spacer needed - hero starts at top-0 */}
+
+      {/* Always visible profile icon - fixed position */}
+      {showProfile && (
+        <Link
+          href="/profile"
+          className={`fixed top-4 right-4 sm:right-6 md:right-8 z-[60] w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg ${
+            isScrolled
+              ? 'border-charcoal/5 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10'
+              : 'border-white/20 bg-white/10 hover:bg-white/20 backdrop-blur-sm'
+          }`}
+        >
+          <ion-icon name="person" class={`text-base transition-colors duration-300 ${
+            isScrolled ? 'text-charcoal/70' : 'text-white'
+          }`} />
+        </Link>
+      )}
     </>
   );
 }

@@ -235,7 +235,7 @@ export default function LeaderboardPage() {
                 </div>
                 <div className="bg-off-white rounded-[6px] p-3 sm:p-4 min-w-[120px] sm:min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
                   <div className="font-urbanist text-sm sm:text-base md:text-lg font-700 text-charcoal mb-1 group-hover:text-coral transition-colors duration-300">@{topReviewers[1].username}</div>
-                  <div className="font-urbanist text-xs sm:text-sm text-charcoal/70 mb-2">{topReviewers[1].reviews}</span> <span className="font-400">reviews</span></div>
+                  <div className="font-urbanist text-xs sm:text-sm text-charcoal/70 mb-2"><span className="font-700">{topReviewers[1].reviews}</span> <span className="font-400">reviews</span></div>
                   <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
                     <ion-icon name="star" class="text-xs sm:text-sm text-coral" />
                     <span className="font-urbanist text-xs sm:text-sm font-600 text-charcoal">{topReviewers[1].totalRating}</span>
@@ -266,7 +266,7 @@ export default function LeaderboardPage() {
                 </div>
                 <div className="bg-off-white rounded-[6px] p-3 sm:p-4 min-w-[120px] sm:min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
                   <div className="font-urbanist text-sm sm:text-base md:text-lg font-700 text-charcoal mb-1 group-hover:text-charcoal/80 transition-colors duration-300">@{topReviewers[2].username}</div>
-                  <div className="font-urbanist text-xs sm:text-sm text-charcoal/70 mb-2">{topReviewers[2].reviews}</span> <span className="font-400">reviews</span></div>
+                  <div className="font-urbanist text-xs sm:text-sm text-charcoal/70 mb-2"><span className="font-700">{topReviewers[2].reviews}</span> <span className="font-400">reviews</span></div>
                   <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
                     <ion-icon name="star" class="text-xs sm:text-sm text-charcoal/60" />
                     <span className="font-urbanist text-xs sm:text-sm font-600 text-charcoal">{topReviewers[2].totalRating}</span>
@@ -302,7 +302,7 @@ export default function LeaderboardPage() {
                       </div>
                       <div>
                         <div className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-300">@{user.username}</div>
-                        <div className="font-urbanist text-sm text-charcoal/60">{user.reviews}</span> <span className="font-400">reviews</span></div>
+                        <div className="font-urbanist text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
                       </div>
                     </div>
                     <div className="bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1">
@@ -395,7 +395,7 @@ export default function LeaderboardPage() {
                       <div className="flex items-center gap-1 text-sm font-urbanist text-charcoal/60">
                         <span>by {business.ownerName}</span>
                         <span>•</span>
-                        <span>{business.reviews}</span> <span className="font-400">reviews</span></span>
+                        <span><span className="font-700">{business.reviews}</span> <span className="font-400">reviews</span></span>
                       </div>
                     </div>
 
