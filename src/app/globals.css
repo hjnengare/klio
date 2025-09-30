@@ -240,6 +240,8 @@
   /* Prevent horizontal scroll bounce on iOS */
   body {
     overscroll-behavior-x: none;
+    background: linear-gradient(to bottom right, #f2e3da 0%, rgba(242, 227, 218, 0.98) 50%, rgba(242, 227, 218, 0.95) 100%);
+    background-attachment: fixed;
   }
 
   /* Premium enhanced carousel scrolling */

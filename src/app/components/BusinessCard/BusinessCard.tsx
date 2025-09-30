@@ -179,7 +179,7 @@ function BusinessCard({ business }: { business: Business }) {
 
           <div className="p-5 relative">
             <div className="mb-1">
-              <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal transition-colors duration-200 md:group-hover:text-sage">
+              <h3 className="font-urbanist text-base md:text-lg font-700 text-charcoal transition-colors duration-200 md:group-hover:text-sage">
                 <Link
                   href={business.href || "#"}
                   prefetch={true}
@@ -190,14 +190,17 @@ function BusinessCard({ business }: { business: Business }) {
               </h3>
             </div>
 
-            <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70 transition-colors duration-200 md:group-hover:text-charcoal/80">
-              {business.category} - {business.location}
+            <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/60 transition-colors duration-200 md:group-hover:text-charcoal/70">
+              {business.category} · {business.location}
             </p>
 
             <div className="mb-4 flex items-center gap-2">
               <Stars value={business.rating} />
-              <p className="font-urbanist text-sm font-400 leading-none text-charcoal/70">
-                {business.reviews} reviews
+              <p className="font-urbanist text-sm font-600 leading-none text-charcoal">
+                {business.reviews}
+              </p>
+              <p className="font-urbanist text-sm font-400 leading-none text-charcoal/60">
+                reviews
               </p>
             </div>
 

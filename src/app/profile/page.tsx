@@ -460,7 +460,7 @@ function ProfileContent() {
           <div className="max-w-4xl mx-auto space-y-6">
 
             {/* Profile Header Card */}
-            <div ref={headerRef} className="bg-off-white/90 backdrop-blur-sm p-6 border border-white/30 shadow-sm">
+            <div ref={headerRef} className="bg-white backdrop-blur-sm p-6 border border-white/30 shadow-md">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-4">
                   <div className="relative">
@@ -501,43 +501,43 @@ function ProfileContent() {
               </div>
             </div>
             {/* Stats Overview */}
-            <div ref={statsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
-              <h2 className="font-urbanist text-lg font-600 text-charcoal mb-4">Stats Overview</h2>
+            <div ref={statsRef} className="bg-white backdrop-blur-sm p-5 border border-white/30 shadow-md">
+              <h2 className="font-urbanist text-lg font-700 text-charcoal mb-4">Stats Overview</h2>
               <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 <div className="text-center px-1">
                   <div className="flex flex-col items-center mb-2">
                     <Ion name="star" className="text-coral text-[18px] mb-1" />
-                    <span className="font-urbanist text-base font-700 text-charcoal leading-tight">
+                    <span className="font-urbanist text-xl font-700 text-charcoal leading-tight">
                       {profile.reviews_count}
                     </span>
                   </div>
-                  <span className="text-base text-charcoal/60 leading-tight">reviews</span>
+                  <span className="text-sm font-400 text-charcoal/60 leading-tight">reviews</span>
                 </div>
                 <div className="text-center px-1">
                   <div className="flex flex-col items-center mb-2">
                     <Ion name="trophy" className="text-sage text-[18px] mb-1" />
-                    <span className="font-urbanist text-base font-700 text-charcoal leading-tight">
+                    <span className="font-urbanist text-xl font-700 text-charcoal leading-tight">
                       {profile.badges_count}
                     </span>
                   </div>
-                  <span className="text-base text-charcoal/60 leading-tight">badges</span>
+                  <span className="text-sm font-400 text-charcoal/60 leading-tight">badges</span>
                 </div>
                 <div className="text-center px-1">
                   <div className="flex flex-col items-center mb-2">
                     <Ion name="calendar" className="text-sage text-[18px] mb-1" />
-                    <span className="font-urbanist text-base font-600 text-charcoal leading-tight">
+                    <span className="font-urbanist text-sm font-700 text-charcoal leading-tight">
                       {formatMemberSince(profile.created_at)}
                     </span>
                   </div>
-                  <span className="text-base text-charcoal/60 leading-tight">member since</span>
+                  <span className="text-xs font-400 text-charcoal/60 leading-tight">member since</span>
                 </div>
               </div>
             </div>
 
             {/* Your Contributions */}
-            <div ref={contributionsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
+            <div ref={contributionsRef} className="bg-white backdrop-blur-sm p-5 border border-white/30 shadow-md">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="font-urbanist text-lg font-600 text-charcoal">Your Contributions</h2>
+                <h2 className="font-urbanist text-lg font-700 text-charcoal">Your Contributions</h2>
                 <button
                   onClick={() => setShowAllReviews(!showAllReviews)}
                   className="text-sm text-coral font-500 hover:text-coral/80 transition-colors duration-200 flex items-center space-x-1"
@@ -551,7 +551,7 @@ function ProfileContent() {
                   <div key={review.id} className="flex items-center justify-between py-3 border-b border-sage/10 last:border-b-0">
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-1">
-                        <span className="font-urbanist text-base font-600 text-charcoal">
+                        <span className="font-urbanist text-base font-700 text-charcoal">
                           {review.business_name}
                         </span>
                         <div className="flex items-center space-x-1">
