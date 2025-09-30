@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: klio
+    runtime: node
+    region: oregon
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 22.16.0
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=2048
+      - key: NEXT_TELEMETRY_DISABLED
+        value: 1
+      - key: NODE_ENV
+        value: production
+    # Add your Supabase environment variables in Render dashboard:
+    # - NEXT_PUBLIC_SUPABASE_URL
+    # - NEXT_PUBLIC_SUPABASE_ANON_KEY
