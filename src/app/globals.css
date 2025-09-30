@@ -2,8 +2,8 @@
 
 /* Enhanced Snap Scrolling */
 .horizontal-scroll {
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
   /* Better scrolling physics on iOS */
   overscroll-behavior-x: contain;
@@ -21,15 +21,15 @@
 /* Mobile-specific enhancements */
 @media (max-width: 640px) {
   .horizontal-scroll {
-    /* Smooth snapping on mobile */
-    scroll-snap-type: x proximity;
+    /* No snapping - free scroll */
+    scroll-snap-type: none;
     scroll-padding-left: 1rem;
     scroll-padding-right: 1rem;
   }
 
-  /* Ensure cards snap into view smoothly */
+  /* Remove snap alignment */
   .snap-start {
-    scroll-snap-align: start;
+    scroll-snap-align: none;
   }
 }
 
@@ -119,7 +119,7 @@
     padding: 0;
     height: 100%;
     min-height: 100vh;
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 
   body {
@@ -246,8 +246,8 @@
 
   /* Premium enhanced carousel scrolling */
   .horizontal-scroll {
-    scroll-behavior: smooth;
-    scroll-snap-type: x proximity;
+    scroll-behavior: auto;
+    scroll-snap-type: none;
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
@@ -255,8 +255,6 @@
     overscroll-behavior-x: contain;
     /* Enhanced touch responsiveness */
     touch-action: pan-x;
-    /* Better scroll physics on iOS */
-    -webkit-scroll-behavior: smooth;
   }
 
   .horizontal-scroll::-webkit-scrollbar {
@@ -315,7 +313,7 @@
   }
 
   .horizontal-scroll > * {
-    scroll-snap-align: start;
+    scroll-snap-align: none;
     scroll-snap-stop: normal;
   }
 
