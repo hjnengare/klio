@@ -7,6 +7,7 @@ import PromoRow from "../components/PromoRow/PromoRow";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
 import EventsSpecials from "../components/EventsSpecials/EventsSpecials";
 import CommunityHighlights from "../components/CommunityHighlights/CommunityHighlights";
+import FeaturedDeal from "../components/FeaturedDeal/FeaturedDeal";
 import FloatingElements from "../components/Animations/FloatingElements";
 import Footer from "../components/Footer/Footer";
 import { useBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
@@ -63,6 +64,9 @@ export default function Home() {
             businessesOfTheMonth={BUSINESSES_OF_THE_MONTH}
             variant="reviews"
           />
+
+          {/* Featured Deal */}
+          <FeaturedDeal />
         </div>
 
         {/* Footer - only on larger screens */}
