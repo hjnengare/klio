@@ -39,22 +39,22 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
 
   return (
     <li id={idForSnap} className="snap-start w-[calc(100vw-2rem)] sm:w-[320px] flex-shrink-0">
-      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm transition-all duration-300 group cursor-pointer">
-        <div className="relative overflow-hidden rounded-t-[6px]">
+      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm transition-all duration-300 group cursor-pointer h-[70vh] sm:h-auto flex flex-col">
+        <div className="relative overflow-hidden rounded-t-[6px] flex-1 sm:flex-initial">
           {!imgError ? (
             <Image
               src={business.image}
               alt={business.alt}
               width={400}
               height={320}
-              className="h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
+              className="h-full sm:h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
               priority={false}
               loading="lazy"
               quality={85}
               onError={() => setImgError(true)}
             />
           ) : (
-            <div className="h-[200px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[6px]">
+            <div className="h-full sm:h-[200px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[6px]">
               <ion-icon
                 name="image-outline"
                 class="text-4xl md:text-5xl text-sage/70"
@@ -103,7 +103,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           </div>
         </div>
 
-        <div className="p-5 relative">
+        <div className="p-5 relative flex-shrink-0">
           {/* Business name - left aligned as in wireframe */}
           <div className="mb-1">
             <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">

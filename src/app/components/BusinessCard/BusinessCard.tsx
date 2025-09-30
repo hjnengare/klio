@@ -83,7 +83,7 @@ function BusinessCard({ business }: { business: Business }) {
       id={idForSnap}
       className="snap-start snap-always w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
     >
-      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[90vh] sm:h-auto flex flex-col">
+      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[70vh] sm:h-auto flex flex-col">
           <div
             className="relative overflow-hidden rounded-t-[6px] flex-1 sm:flex-initial"
             onClick={toggleActions}
