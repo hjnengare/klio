@@ -15,21 +15,21 @@
 }
 
 .snap-always {
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
 }
 
 /* Mobile-specific enhancements */
 @media (max-width: 640px) {
   .horizontal-scroll {
-    /* More aggressive snapping on mobile */
-    scroll-snap-type: x mandatory;
+    /* Smooth snapping on mobile */
+    scroll-snap-type: x proximity;
     scroll-padding-left: 1rem;
     scroll-padding-right: 1rem;
   }
 
-  /* Ensure cards fully snap into view */
+  /* Ensure cards snap into view smoothly */
   .snap-start {
-    scroll-snap-align: center;
+    scroll-snap-align: start;
   }
 }
 
@@ -135,8 +135,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
-    /* Prevent overscroll bounce on mobile */
-    overscroll-behavior-y: none;
+    /* Smooth scrolling on mobile */
+    overscroll-behavior-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -247,12 +247,10 @@
   /* Premium enhanced carousel scrolling */
   .horizontal-scroll {
     scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
-    transform: translateZ(0); /* Force GPU acceleration */
-    will-change: scroll-position;
     /* Premium momentum scrolling */
     overscroll-behavior-x: contain;
     /* Enhanced touch responsiveness */
@@ -318,7 +316,7 @@
 
   .horizontal-scroll > * {
     scroll-snap-align: start;
-    scroll-snap-stop: always;
+    scroll-snap-stop: normal;
   }
 
   /* Fix iOS safari viewport height issues and prevent unintended scroll */
@@ -326,7 +324,6 @@
     html {
       height: 100vh;
       height: -webkit-fill-available;
-      overflow: hidden;
     }
 
     body {
