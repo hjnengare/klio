@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { IoArrowForward } from "react-icons/io5";
@@ -40,7 +41,7 @@ const PROMO_CARDS: PromoCard[] = [
   },
 ];
 
-export default function PromoRow() {
+function PromoRow() {
   return (
     <section
       className="py-8 sm:py-12 bg-gradient-to-b from-off-white/95 to-off-white relative"
@@ -68,6 +69,9 @@ export default function PromoRow() {
                 fill
                 sizes="(max-width: 640px) 100vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
+                priority={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
+                quality={80}
               />
 
               {/* Gradient Overlay */}
@@ -107,3 +111,5 @@ export default function PromoRow() {
     </section>
   );
 }
+
+export default memo(PromoRow);

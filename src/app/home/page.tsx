@@ -1,18 +1,38 @@
 "use client";
 
 import { memo } from "react";
+import dynamic from "next/dynamic";
 import Header from "../components/Header/Header";
 import { HeroCarousel } from "../components/Hero";
-import PromoRow from "../components/PromoRow/PromoRow";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
-import EventsSpecials from "../components/EventsSpecials/EventsSpecials";
-import CommunityHighlights from "../components/CommunityHighlights/CommunityHighlights";
-import FeaturedDeal from "../components/FeaturedDeal/FeaturedDeal";
-import FloatingElements from "../components/Animations/FloatingElements";
-import Footer from "../components/Footer/Footer";
 import { useBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../data/communityHighlightsData";
+
+// Dynamic imports for below-the-fold components
+const PromoRow = dynamic(() => import("../components/PromoRow/PromoRow"), {
+  loading: () => <div className="h-64 sm:h-80 bg-off-white animate-pulse" />,
+});
+
+const EventsSpecials = dynamic(() => import("../components/EventsSpecials/EventsSpecials"), {
+  loading: () => <div className="h-96 bg-off-white animate-pulse" />,
+});
+
+const CommunityHighlights = dynamic(() => import("../components/CommunityHighlights/CommunityHighlights"), {
+  loading: () => <div className="h-96 bg-off-white animate-pulse" />,
+});
+
+const FeaturedDeal = dynamic(() => import("../components/FeaturedDeal/FeaturedDeal"), {
+  loading: () => <div className="h-96 bg-off-white animate-pulse" />,
+});
+
+const FloatingElements = dynamic(() => import("../components/Animations/FloatingElements"), {
+  ssr: false,
+});
+
+const Footer = dynamic(() => import("../components/Footer/Footer"), {
+  loading: () => <div className="h-64 bg-charcoal" />,
+});
 
 // Memoized BusinessRow component
 const MemoizedBusinessRow = memo(BusinessRow);

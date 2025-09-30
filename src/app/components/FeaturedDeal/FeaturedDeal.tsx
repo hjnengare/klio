@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { IoArrowForward } from "react-icons/io5";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 
 interface DealCategory {
   title: string;
@@ -74,7 +74,7 @@ const DEAL_CATEGORIES: DealCategory[] = [
   },
 ];
 
-export default function FeaturedDeal() {
+function FeaturedDeal() {
   const [currentCategory, setCurrentCategory] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
@@ -147,6 +147,8 @@ export default function FeaturedDeal() {
                   fill
                   sizes="(max-width: 768px) 50vw, 25vw"
                   className="object-cover rounded-6"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
             </div>
@@ -161,6 +163,8 @@ export default function FeaturedDeal() {
                   fill
                   sizes="(max-width: 768px) 50vw, 25vw"
                   className="object-cover rounded-6"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
             </div>
@@ -234,3 +238,5 @@ export default function FeaturedDeal() {
     </section>
   );
 }
+
+export default memo(FeaturedDeal);
