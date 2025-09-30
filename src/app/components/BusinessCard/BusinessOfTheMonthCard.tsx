@@ -58,6 +58,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               <ion-icon
                 name="image-outline"
                 class="text-4xl md:text-5xl text-sage/70"
+                suppressHydrationWarning
               />
             </div>
           )}
@@ -85,20 +86,20 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           
           {/* Numeric rating badge - positioned above image */}
           <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-6 bg-white/50 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
-            <ion-icon name="star" class="text-coral text-[14px] drop-shadow-sm" />
+            <ion-icon name="star" class="text-coral text-[14px] drop-shadow-sm" suppressHydrationWarning />
             <span className="font-urbanist text-9 font-700">{business.totalRating.toFixed(1)}</span>
           </span>
 
           {/* Card Actions - slide in from right on hover - hidden on mobile */}
           <div className="hidden sm:flex absolute right-2 bottom-2 z-20 flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">
             <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
-              <ion-icon name="create-outline" class="text-charcoal" style={{fontSize: '24px'}} />
+              <ion-icon name="create-outline" class="text-charcoal" style={{fontSize: '24px'}} suppressHydrationWarning />
             </button>
             <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
-              <ion-icon name="bookmark-outline" class="text-charcoal" style={{fontSize: '24px'}} />
+              <ion-icon name="bookmark-outline" class="text-charcoal" style={{fontSize: '24px'}} suppressHydrationWarning />
             </button>
             <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
-              <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '24px'}} />
+              <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '24px'}} suppressHydrationWarning />
             </button>
           </div>
         </div>

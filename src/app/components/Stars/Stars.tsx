@@ -3,7 +3,7 @@ export default function Stars({ value = 5 }: { value?: number }) {
   return (
     <div className="flex items-center gap-[2px] text-[15px] text-coral">
       {[...Array(5)].map((_, i) => (
-        <ion-icon key={i} name={i < full ? "star" : "star-outline"} />
+        <ion-icon key={i} name={i < full ? "star" : "star-outline"} suppressHydrationWarning />
       ))}
     </div>
   );

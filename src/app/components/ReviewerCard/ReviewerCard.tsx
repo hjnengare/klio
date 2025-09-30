@@ -83,14 +83,14 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
                     {reviewerData?.badge === 'verified' && (
                       <div className="absolute -right-0.5 -top-0.5 z-20">
                         <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                          <ion-icon name="checkmark" class="text-white text-xs" />
+                          <ion-icon name="checkmark" class="text-white text-xs" suppressHydrationWarning />
                         </div>
                       </div>
                     )}
                   </div>
                 ) : (
                   <div className="w-12 h-12 flex items-center justify-center bg-sage/20 text-sage rounded-full border-2 border-white shadow-md">
-                    <ion-icon name="person-outline" class="text-lg text-sage/70" />
+                    <ion-icon name="person-outline" class="text-lg text-sage/70" suppressHydrationWarning />
                   </div>
                 )}
 
@@ -106,7 +106,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
 
               {/* Rating badge */}
               <div className="flex items-center gap-1 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm">
-                <ion-icon name="star" class="text-coral text-xs" />
+                <ion-icon name="star" class="text-coral text-xs" suppressHydrationWarning />
                 <span className="font-urbanist text-xs font-700 text-charcoal">{reviewerData?.rating.toFixed(1)}</span>
               </div>
             </div>
@@ -169,13 +169,13 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
                   className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <ion-icon name="person-add-outline" class="text-charcoal text-sm" />
+                  <ion-icon name="person-add-outline" class="text-charcoal text-sm" suppressHydrationWarning />
                 </button>
                 <button
                   className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <ion-icon name="chatbubble-outline" class="text-charcoal text-sm" />
+                  <ion-icon name="chatbubble-outline" class="text-charcoal text-sm" suppressHydrationWarning />
                 </button>
               </div>
             </div>
@@ -225,19 +225,19 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
               className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
             >
-              <ion-icon name="person-add-outline" class="text-charcoal" style={{fontSize: '20px'}} />
+              <ion-icon name="person-add-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />
             </button>
             <button
               className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
             >
-              <ion-icon name="chatbubble-outline" class="text-charcoal" style={{fontSize: '20px'}} />
+              <ion-icon name="chatbubble-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />
             </button>
             <button
               className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
             >
-              <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '20px'}} />
+              <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />
             </button>
           </div>
         </div>
