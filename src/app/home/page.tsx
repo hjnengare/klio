@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Header from "../components/Header/Header";
 import { HeroCarousel } from "../components/Hero";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
-import { useBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
+import { TRENDING_BUSINESSES } from "../data/businessData";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../data/communityHighlightsData";
 
@@ -38,9 +38,9 @@ const Footer = dynamic(() => import("../components/Footer/Footer"), {
 const MemoizedBusinessRow = memo(BusinessRow);
 
 export default function Home() {
-  // Fetch businesses data
-  const { businesses: forYouBusinesses } = useBusinesses({ limit: 12 });
-  const { businesses: trendingBusinesses } = useTrendingBusinesses(12);
+  // Use dummy data - 10 items per section
+  const forYouBusinesses = TRENDING_BUSINESSES.slice(0, 10);
+  const trendingBusinesses = TRENDING_BUSINESSES.slice(10, 20);
 
   return (
     <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
