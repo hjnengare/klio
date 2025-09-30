@@ -3,6 +3,7 @@
 import { memo } from "react";
 import Header from "../components/Header/Header";
 import { HeroCarousel } from "../components/Hero";
+import PromoRow from "../components/PromoRow/PromoRow";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
 import EventsSpecials from "../components/EventsSpecials/EventsSpecials";
 import CommunityHighlights from "../components/CommunityHighlights/CommunityHighlights";
@@ -39,6 +40,9 @@ export default function Home() {
         <FloatingElements />
 
         <div className="pt-8 pb-6 relative z-10">
+          {/* Promotional highlights */}
+          <PromoRow />
+
           <MemoizedBusinessRow
             title="For You"
             businesses={forYouBusinesses}
