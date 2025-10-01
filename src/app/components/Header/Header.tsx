@@ -13,6 +13,7 @@ export default function Header({ showSearch = true, showProfile = true }) {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const searchWrapRef = useRef<HTMLDivElement>(null);
 
   const openFilters = () => {
@@ -30,7 +31,7 @@ export default function Header({ showSearch = true, showProfile = true }) {
   };
 
   useEffect(() => {
-    ["person", "options", "search"].forEach((n) => {
+    ["person", "options", "search", "menu", "close"].forEach((n) => {
       const el = document.createElement("ion-icon");
       el.name = n; el.style.display = "none";
       document.body.appendChild(el);
@@ -45,6 +46,33 @@ export default function Header({ showSearch = true, showProfile = true }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('[data-mobile-menu]') && !target.closest('[data-hamburger]')) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMobileMenuOpen]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <>
@@ -119,6 +147,38 @@ export default function Header({ showSearch = true, showProfile = true }) {
 
             {/* Right Side Actions */}
             <div className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
+              {/* Hamburger Menu Button - Mobile Only */}
+              <button
+                data-hamburger
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className={`md:hidden w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] transition-all duration-200 group ${
+                  isScrolled
+                    ? 'hover:bg-sage/10'
+                    : 'hover:bg-white/10'
+                }`}
+                aria-label="Toggle menu"
+              >
+                <span className={`h-[2px] rounded-full transition-all duration-200 ${
+                  isMobileMenuOpen ? 'w-0 opacity-0' : 'w-5'
+                } ${
+                  isScrolled
+                    ? 'bg-charcoal/70 group-hover:bg-sage'
+                    : 'bg-white group-hover:bg-white/80'
+                }`} />
+                <span className={`w-6 h-[2px] rounded-full transition-all duration-200 ${
+                  isScrolled
+                    ? 'bg-charcoal/70 group-hover:bg-sage'
+                    : 'bg-white group-hover:bg-white/80'
+                }`} />
+                <span className={`h-[2px] rounded-full transition-all duration-200 ${
+                  isMobileMenuOpen ? 'w-0 opacity-0' : 'w-5'
+                } ${
+                  isScrolled
+                    ? 'bg-charcoal/70 group-hover:bg-sage'
+                    : 'bg-white group-hover:bg-white/80'
+                }`} />
+              </button>
+
               {/* Profile icon placeholder to maintain space */}
               <div className="w-10 h-10" />
             </div>
@@ -140,6 +200,91 @@ export default function Header({ showSearch = true, showProfile = true }) {
           )}
         </div>
       </header>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-[70] md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Menu Slide-in Panel */}
+      <div
+        data-mobile-menu
+        className={`fixed top-0 right-0 h-full w-full bg-off-white z-[80] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="flex flex-col h-full">
+          {/* Mobile Menu Header */}
+          <div className="flex items-center justify-between px-6 py-6 border-b border-charcoal/10">
+            <span className="font-urbanist text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+              KLIO
+            </span>
+            {/* Premium Hamburger Icon - 3 lines */}
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] text-charcoal/70 hover:bg-sage/10 transition-colors group"
+              aria-label="Close menu"
+            >
+              <span className="w-5 h-[2px] bg-charcoal/70 rounded-full transition-all duration-200 group-hover:bg-sage" />
+              <span className="w-6 h-[2px] bg-charcoal/70 rounded-full transition-all duration-200 group-hover:bg-sage" />
+              <span className="w-5 h-[2px] bg-charcoal/70 rounded-full transition-all duration-200 group-hover:bg-sage" />
+            </button>
+          </div>
+
+          {/* Mobile Navigation Links */}
+          <nav className="flex flex-col py-4 px-4">
+            <Link
+              href="/home"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5 transition-all duration-200"
+            >
+              Home
+            </Link>
+
+            <Link
+              href="/all"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5 transition-all duration-200"
+            >
+              Explore
+            </Link>
+
+            <Link
+              href="/saved"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5 transition-all duration-200"
+            >
+              Saved
+            </Link>
+
+            <Link
+              href="/leaderboard"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5 transition-all duration-200"
+            >
+              Leaderboard
+            </Link>
+
+            {/* Divider */}
+            <div className="h-px bg-charcoal/10 my-4 mx-4" />
+
+            {/* Profile Link in Mobile Menu */}
+            {showProfile && (
+              <Link
+                href="/profile"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5 transition-all duration-200 flex items-center gap-3"
+              >
+                <ion-icon name="person" class="text-lg" />
+                Profile
+              </Link>
+            )}
+          </nav>
+        </div>
+      </div>
 
       {/* popover */}
       <FilterModal
