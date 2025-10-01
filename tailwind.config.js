@@ -109,6 +109,10 @@ module.exports = {
           },
         },
       },
+      // Safe area utilities for iOS/Android device compatibility
+      padding: {
+        safe: 'max(1rem, env(safe-area-inset-bottom))',
+      },
     },
   },
   plugins: [],
