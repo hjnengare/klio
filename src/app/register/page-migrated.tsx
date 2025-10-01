@@ -155,7 +155,7 @@ export default function RegisterPageMigrated() {
   };
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col px-container-mobile sm:px-container-tablet md:px-container-desktop py-8 sm:py-12 pb-24 sm:pb-20 md:pb-16 relative overflow-hidden">
+    <div className="min-h-dvh bg-off-white flex flex-col px-container-mobile sm:px-container-tablet md:px-container-desktop py-8 sm:py-12 pb-24 sm:pb-20 md:pb-16 relative overflow-hidden">
 
       {/* Lightweight decorative elements */}
       {!prefersReduced && (

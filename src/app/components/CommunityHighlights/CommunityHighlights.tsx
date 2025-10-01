@@ -45,7 +45,7 @@ export default function CommunityHighlights({
     : reviews;
 
   return (
-    <section className="bg-gradient-to-b from-off-white/95 to-off-white relative" aria-label="community highlights" data-section>
+    <section className="bg-white/90 relative" aria-label="community highlights" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 right-20 w-32 h-32 bg-gradient-to-br from-sage/8 to-transparent rounded-full blur-2xl" />
@@ -92,7 +92,7 @@ export default function CommunityHighlights({
 
         {/* Businesses of the Month Subsection */}
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
-          <div className="mt-8 sm:mt-14 md:mt-16">
+          <div className="mt-6 sm:mt-8 md:mt-10">
             <div className="mb-4 sm:mb-8 flex flex-wrap items-center justify-between gap-[18px]">
               <h3 className="font-urbanist text-base font-700 text-charcoal relative">
                 Businesses of the Month

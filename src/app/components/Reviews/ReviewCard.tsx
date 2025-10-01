@@ -60,7 +60,7 @@ export default function ReviewCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.01, x: 5 }}
-      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-6 border border-sage/5 transition-all duration-300 group shadow-sm"
+      className="bg-white rounded-2xl p-6 border border-sage/5 transition-all duration-300 group shadow-sm"
     >
       <div className="flex items-start space-x-4">
         {/* Avatar */}

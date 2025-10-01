@@ -42,11 +42,10 @@ export default function ExploreGemsPage() {
   });
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative overflow-hidden">
+    <div className="min-h-dvh bg-white/90 relative overflow-hidden">
       {/* Static background layers */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-off-white/50 via-transparent to-off-white/30" />
       </div>
 
       {/* Header */}

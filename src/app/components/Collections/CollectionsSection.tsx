@@ -114,7 +114,7 @@ export default function CollectionsSection() {
   };
 
   return (
-    <section className="py-12 bg-gradient-to-br from-off-white via-off-white/98 to-sage/5">
+    <section className="py-12 bg-white/90">
       <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10">
@@ -135,7 +135,7 @@ export default function CollectionsSection() {
           {businessCollections.map((business, index) => (
             <div
               key={business.id}
-              className={`group relative bg-off-white rounded-2xl shadow-sm hover:shadow-xl border border-charcoal/5 overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
+              className={`group relative bg-white rounded-2xl shadow-sm hover:shadow-xl border border-charcoal/5 overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
                 visibleCards.includes(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'

@@ -11,7 +11,7 @@ interface EventCardProps {
 export default function EventCard({ event }: EventCardProps) {
   return (
     <li className="snap-start w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[280px]">
-      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[320px] flex flex-col">
+      <div className="bg-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[320px] flex flex-col">
           <EventBanner
             image={event.image}
             alt={event.alt}

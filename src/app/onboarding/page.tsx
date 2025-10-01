@@ -64,7 +64,7 @@ export default function OnboardingPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-[100dvh] bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
+      <div className="min-h-[100dvh] bg-white/90 flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
 
         {/* Lightweight decorative elements - optimized for mobile */}
         <div className="absolute inset-0 pointer-events-none">

@@ -226,7 +226,7 @@ function SubcategoriesContent() {
   // Don't render anything if not authenticated
   if (!user) {
     return (
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+      <div className="min-h-dvh bg-white/90 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
           <p className="font-urbanist text-base text-charcoal/70">Checking authentication...</p>
@@ -332,7 +332,7 @@ function SubcategoriesContent() {
                                 ? "bg-coral border-coral text-white md:shadow-md"
                                 : isDisabled
                                   ? "bg-gray-100 border-2 border-gray-200 text-gray-400"
-                                  : "bg-off-white border-2 border-sage text-charcoal hover:bg-sage hover:border-sage hover:text-white hover:scale-[1.02]"
+                                  : "bg-white/90 border-2 border-sage text-charcoal hover:bg-sage hover:border-sage hover:text-white hover:scale-[1.02]"
                               }
   `}
                             style={{ animationDelay: `${(idx % 3) * 50}ms` }}
@@ -367,7 +367,7 @@ function SubcategoriesContent() {
                         active:scale-[0.98] md:active:scale-[1.0]
                         ${canProceed
                           ? "bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 md:hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
-                          : "bg-off-white text-charcoal/40 cursor-not-allowed"
+                          : "bg-white/90 text-charcoal/40 cursor-not-allowed"
                         }
                       `}
                   onClick={handleNext}
@@ -412,7 +412,7 @@ function SubcategoriesContent() {
 export default function SubcategoriesPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+      <div className="min-h-dvh bg-white/90 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
           <p className="font-urbanist text-base text-charcoal/70">Loading subcategories...</p>

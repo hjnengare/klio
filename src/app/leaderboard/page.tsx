@@ -106,7 +106,7 @@ const businessOfMonth: BusinessOfMonth[] = [
 
 export default function LeaderboardPage() {
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 pb-6 relative overflow-hidden">
+    <div className="min-h-dvh bg-white/90 pb-6 relative overflow-hidden">
       {/* Premium background elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-sage/8 via-sage/4 to-transparent rounded-full blur-3xl animate-pulse" />
@@ -119,7 +119,7 @@ export default function LeaderboardPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="bg-off-white/80 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm relative z-10"
+        className="bg-white/90/80 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm relative z-10"
       >
         <div className="flex items-center justify-between max-w-[1300px] mx-auto">
           {/* Back button */}
@@ -169,7 +169,7 @@ export default function LeaderboardPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="bg-off-white/95 backdrop-blur-xl shadow-xl border border-white/30 p-6 md:p-8 mb-12 relative overflow-hidden"
+          className="bg-white/90/95 backdrop-blur-xl shadow-xl border border-white/30 p-6 md:p-8 mb-12 relative overflow-hidden"
         >
           {/* Card decorative elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
@@ -203,7 +203,7 @@ export default function LeaderboardPage() {
                   </div>
                   <div className="absolute -top-3 -right-3 text-2xl sm:text-3xl animate-pulse">{topReviewers[0].badge}</div>
                 </div>
-                <div className="bg-off-white rounded-[6px] p-4 sm:p-5 min-w-[140px] sm:min-w-[160px] shadow-xl border-2 border-sage/30 group-hover:shadow-2xl transition-all duration-300">
+                <div className="bg-white/90 rounded-[6px] p-4 sm:p-5 min-w-[140px] sm:min-w-[160px] shadow-xl border-2 border-sage/30 group-hover:shadow-2xl transition-all duration-300">
                   <div className="font-urbanist text-lg sm:text-xl font-700 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300">@{topReviewers[0].username}</div>
                   <div className="font-urbanist text-sm text-charcoal/70 mb-3"><span className="font-700">{topReviewers[0].reviews}</span> <span className="font-400">reviews</span></div>
                   <div className="bg-gradient-to-r from-sage/20 to-sage/10 backdrop-blur-sm px-3 py-2 rounded-full shadow-sm border border-sage/20 flex items-center justify-center gap-1 mx-auto w-fit">
@@ -233,7 +233,7 @@ export default function LeaderboardPage() {
                   </div>
                   <div className="absolute -top-2 -right-2 text-xl sm:text-2xl animate-bounce">{topReviewers[1].badge}</div>
                 </div>
-                <div className="bg-off-white rounded-[6px] p-3 sm:p-4 min-w-[120px] sm:min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
+                <div className="bg-white/90 rounded-[6px] p-3 sm:p-4 min-w-[120px] sm:min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
                   <div className="font-urbanist text-sm sm:text-base md:text-lg font-700 text-charcoal mb-1 group-hover:text-coral transition-colors duration-300">@{topReviewers[1].username}</div>
                   <div className="font-urbanist text-xs sm:text-sm text-charcoal/70 mb-2"><span className="font-700">{topReviewers[1].reviews}</span> <span className="font-400">reviews</span></div>
                   <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
@@ -264,7 +264,7 @@ export default function LeaderboardPage() {
                   </div>
                   <div className="absolute -top-2 -right-2 text-xl sm:text-2xl animate-bounce" style={{ animationDelay: "0.5s" }}>{topReviewers[2].badge}</div>
                 </div>
-                <div className="bg-off-white rounded-[6px] p-3 sm:p-4 min-w-[120px] sm:min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
+                <div className="bg-white/90 rounded-[6px] p-3 sm:p-4 min-w-[120px] sm:min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
                   <div className="font-urbanist text-sm sm:text-base md:text-lg font-700 text-charcoal mb-1 group-hover:text-charcoal/80 transition-colors duration-300">@{topReviewers[2].username}</div>
                   <div className="font-urbanist text-xs sm:text-sm text-charcoal/70 mb-2"><span className="font-700">{topReviewers[2].reviews}</span> <span className="font-400">reviews</span></div>
                   <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
@@ -283,7 +283,7 @@ export default function LeaderboardPage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
-                  className="group bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.01] cursor-pointer"
+                  className="group bg-white/90 rounded-[6px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.01] cursor-pointer"
                 >
                   <div className="flex items-center justify-between p-4">
                     <div className="flex items-center gap-4">
@@ -327,7 +327,7 @@ export default function LeaderboardPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="bg-off-white/95 backdrop-blur-xl  shadow-xl border border-white/30 p-6 md:p-8 mb-8 relative overflow-hidden"
+          className="bg-white/90/95 backdrop-blur-xl  shadow-xl border border-white/30 p-6 md:p-8 mb-8 relative overflow-hidden"
         >
           {/* Card decorative elements */}
           <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl"></div>
@@ -346,7 +346,7 @@ export default function LeaderboardPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 + index * 0.1, duration: 0.6 }}
-                  className="group bg-off-white rounded-[6px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+                  className="group bg-white/90 rounded-[6px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.03] cursor-pointer"
                 >
                   <div className="relative overflow-hidden rounded-t-[6px]">
                     <div className="relative">

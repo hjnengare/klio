@@ -388,7 +388,7 @@ export default function RegisterPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh] bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex flex-col relative overflow-hidden ios-inertia safe-area-full">
+      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh] bg-white/90 flex flex-col relative overflow-hidden ios-inertia safe-area-full">
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -422,7 +422,7 @@ export default function RegisterPage() {
 
 
         {/* Form Card */}
-        <div className="bg-off-white/95 card-mobile border border-white/30 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
+        <div className="bg-white/90/95 card-mobile border border-white/30 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
 
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
@@ -671,7 +671,7 @@ export default function RegisterPage() {
                 <div className="w-full border-t border-light-gray/50"></div>
               </div>
               <div className="relative flex justify-center text-[14px]">
-                <span className="px-4 bg-off-white/90 text-charcoal/60 font-urbanist text-7 font-400">or continue with</span>
+                <span className="px-4 bg-white/90/90 text-charcoal/60 font-urbanist text-7 font-400">or continue with</span>
               </div>
             </div>
 

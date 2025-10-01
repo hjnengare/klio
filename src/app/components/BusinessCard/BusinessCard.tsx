@@ -41,11 +41,10 @@ function BusinessCard({ business }: { business: Business }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const [imgError, setImgError] = useState(false);
 
-  // Preload the review route
+  // Preload the review route using UUID
   const reviewRoute = useMemo(() => {
-    const businessSlug = business.name.toLowerCase().replace(/[^a-z0-9]/g, "");
-    return `/business/${businessSlug}/review`;
-  }, [business.name]);
+    return `/business/${business.id}/review`;
+  }, [business.id]);
 
   useEffect(() => {
     const checkIsDesktop = () => setIsDesktop(window.innerWidth >= 640);
@@ -83,7 +82,7 @@ function BusinessCard({ business }: { business: Business }) {
       id={idForSnap}
       className="snap-start snap-always w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
     >
-      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[70vh] sm:h-auto flex flex-col">
+      <div className="bg-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[70vh] sm:h-auto flex flex-col">
           <div
             className="relative overflow-hidden rounded-t-[6px] flex-1 sm:flex-initial"
             onClick={toggleActions}
@@ -154,7 +153,7 @@ function BusinessCard({ business }: { business: Business }) {
                   handleWriteReview();
                 }}
               >
-                <ion-icon name="create-outline" class="text-base text-charcoal" />
+                <ion-icon name="create" class="text-lg text-charcoal font-bold" />
               </button>
               <button
                 className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
@@ -163,7 +162,7 @@ function BusinessCard({ business }: { business: Business }) {
                   handleBookmark();
                 }}
               >
-                <ion-icon name="heart-outline" class="text-base text-charcoal" />
+                <ion-icon name="heart" class="text-lg text-charcoal font-bold" />
               </button>
               <button
                 className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
@@ -172,7 +171,7 @@ function BusinessCard({ business }: { business: Business }) {
                   handleShare();
                 }}
               >
-                <ion-icon name="share-social-outline" class="text-base text-charcoal" />
+                <ion-icon name="share-social" class="text-lg text-charcoal font-bold" />
               </button>
             </div>
           </div>

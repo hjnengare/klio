@@ -125,7 +125,7 @@ function InterestsContent() {
   // Authentication check disabled for UI/UX design
   // if (!user) {
   //   return (
-  //     <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+  //     <div className="min-h-dvh bg-white/90 flex items-center justify-center">
   //       <div className="text-center">
   //         <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
   //         <p className="font-urbanist text-base text-charcoal/70">Checking authentication...</p>

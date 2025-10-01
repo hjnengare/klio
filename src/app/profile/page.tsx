@@ -302,11 +302,11 @@ function ProfileContent() {
   // Show loading state
   if (loading) {
     return (
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative">
+      <div className="min-h-dvh bg-white/90 relative">
         <div className="pt-4 pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">
-              <div className="bg-off-white/90 backdrop-blur-sm p-6 border border-sage/10 shadow-sm">
+              <div className="bg-white/90/90 backdrop-blur-sm p-6 border border-sage/10 shadow-sm">
                 <div className="animate-pulse">
                   <div className="flex items-center space-x-4 mb-4">
                     <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
@@ -335,11 +335,11 @@ function ProfileContent() {
   // Show error state
   if (error || !profile) {
     return (
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative">
+      <div className="min-h-dvh bg-white/90 relative">
         <div className="pt-4 pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">
-              <div className="bg-off-white/90 backdrop-blur-sm p-6 border border-red-200 shadow-sm text-center">
+              <div className="bg-white/90/90 backdrop-blur-sm p-6 border border-red-200 shadow-sm text-center">
                 <Ion name="alert-circle" className="text-red-500 text-[48px] mb-4" />
                 <h2 className="font-urbanist text-xl font-600 text-charcoal mb-2">
                   {error || 'Profile not found'}
@@ -363,7 +363,7 @@ function ProfileContent() {
   }
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white relative">
+    <div className="min-h-dvh bg-white/90 relative">
       {/* Floating background elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         {/* Floating orbs */}
@@ -444,7 +444,7 @@ function ProfileContent() {
           <div className="max-w-4xl mx-auto">
             <Link
               href="/home"
-              className="inline-flex items-center justify-center w-10 h-10 bg-off-white/90 hover:bg-off-white border border-white/30 rounded-full transition-all duration-200 shadow-sm hover:shadow-md"
+              className="inline-flex items-center justify-center w-10 h-10 bg-white/90/90 hover:bg-white/90 border border-white/30 rounded-full transition-all duration-200 shadow-sm hover:shadow-md"
             >
               <Ion name="chevron-back" className="text-sage text-[20px]" />
             </Link>
@@ -579,7 +579,7 @@ function ProfileContent() {
             </div>
 
             {/* Your Achievements */}
-            <div ref={achievementsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
+            <div ref={achievementsRef} className="bg-white/90/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
               <h2 className="font-urbanist text-lg font-600 text-charcoal mb-4">Your Achievements</h2>
               <div className="space-y-3">
                 {achievements.map((userAchievement) => (
@@ -608,7 +608,7 @@ function ProfileContent() {
             </div>
 
             {/* Account Settings */}
-            <div ref={settingsRef} className="bg-off-white/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
+            <div ref={settingsRef} className="bg-white/90/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
               <div className="space-y-2">
                 <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
                   <div className="flex items-center space-x-3">

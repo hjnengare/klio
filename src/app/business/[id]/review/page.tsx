@@ -92,7 +92,7 @@ export default function WriteReviewPage() {
 
   if (authLoading || businessLoading) {
     return (
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+      <div className="min-h-dvh bg-white/90 flex items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -104,7 +104,7 @@ export default function WriteReviewPage() {
 
   if (!business) {
     return (
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+      <div className="min-h-dvh bg-white/90 flex items-center justify-center">
         <div className="text-center">
           <h1 className="font-urbanist text-2xl font-600 text-charcoal mb-4">Business not found</h1>
           <Link
@@ -162,7 +162,7 @@ export default function WriteReviewPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
+      <div className="min-h-dvh bg-white/90 relative overflow-hidden">
         {/* Ambient background elements */}
       <div className="absolute inset-0 opacity-20">
         <motion.div
@@ -184,7 +184,7 @@ export default function WriteReviewPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative z-10 bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm"
+        className="relative z-10 bg-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm"
       >
         <div className="flex items-center justify-between max-w-4xl mx-auto">
           <motion.div
@@ -211,7 +211,7 @@ export default function WriteReviewPage() {
         {/* Review Form */}
         <FadeInUp delay={0.2}>
           <PremiumHover scale={1.02} shadowIntensity="medium" duration={0.4}>
-            <div className="bg-off-white/95 backdrop-blur-lg rounded-none md:rounded-3xl card-mobile md:shadow-xl border-0 md:border border-sage/10 p-4 md:p-8 mb-0 md:mb-8 relative overflow-hidden min-h-[calc(100vh-200px)] md:min-h-0 flex flex-col">
+            <div className="bg-white/90/95 backdrop-blur-lg rounded-none md:rounded-3xl card-mobile md:shadow-xl border-0 md:border border-sage/10 p-4 md:p-8 mb-0 md:mb-8 relative overflow-hidden min-h-[calc(100vh-200px)] md:min-h-0 flex flex-col">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>

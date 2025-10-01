@@ -33,9 +33,9 @@ export default function WriteReviewPage() {
   );
 
   return (
-    <div className="min-h-screen bg-off-white">
+    <div className="min-h-screen bg-white/90">
       {/* Header */}
-      <div className="bg-off-white/95 backdrop-blur-sm border-b border-charcoal/10 sticky top-0 z-10">
+      <div className="bg-white/90/95 backdrop-blur-sm border-b border-charcoal/10 sticky top-0 z-10">
         <div className="max-w-[1300px] mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">

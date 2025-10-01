@@ -143,7 +143,7 @@ function DealBreakersContent() {
   // Don't render anything if not authenticated
   if (!user) {
     return (
-      <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 flex items-center justify-center">
+      <div className="min-h-dvh bg-white/90 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
           <p className="font-urbanist text-base text-charcoal/70">Checking authentication...</p>
@@ -266,7 +266,7 @@ function DealBreakersContent() {
                     group block w-full text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full shadow-lg transition-all duration-300 relative text-center
                     ${canContinue
                       ? "bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
-                      : "bg-off-white text-charcoal/40 cursor-not-allowed"
+                      : "bg-white/90 text-charcoal/40 cursor-not-allowed"
                     }
                   `}
                   onClick={handleNext}

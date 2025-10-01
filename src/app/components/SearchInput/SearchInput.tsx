@@ -86,12 +86,12 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
             onFocus={onFocusOpenFilters}
             onTouchStart={onFocusOpenFilters}
             placeholder={ph}
-            className={`w-full bg-off-white/75 border border-sage/30 rounded-full
+            className={`w-full bg-white border border-gray-300 rounded-full
               ${showFilter && onFilterClick ? "pl-12 pr-12 sm:pl-14 sm:pr-12" : "pl-12 pr-4"}
               ${variant === "header" ? "py-3 text-base lg:text-lg" : "py-2 text-sm md:text-base"}
               font-urbanist font-500 text-charcoal placeholder-charcoal/40
-              focus:outline-none focus:ring-4 focus:ring-sage/20 focus:border-sage/60
-              transition-all duration-300 hover:border-sage/50
+              focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage
+              hover:border-gray-400
               truncate lg:truncate-none`}  // truncate on small, full text on lg
             aria-label="Search"
           />

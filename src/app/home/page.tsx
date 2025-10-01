@@ -11,19 +11,19 @@ import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../dat
 
 // Dynamic imports for below-the-fold components
 const PromoRow = dynamic(() => import("../components/PromoRow/PromoRow"), {
-  loading: () => <div className="h-64 sm:h-80 bg-off-white animate-pulse" />,
+  loading: () => <div className="h-64 sm:h-80 bg-[#f5f7f8] animate-pulse" />,
 });
 
 const EventsSpecials = dynamic(() => import("../components/EventsSpecials/EventsSpecials"), {
-  loading: () => <div className="h-96 bg-off-white animate-pulse" />,
+  loading: () => <div className="h-96 bg-[#f5f7f8] animate-pulse" />,
 });
 
 const CommunityHighlights = dynamic(() => import("../components/CommunityHighlights/CommunityHighlights"), {
-  loading: () => <div className="h-96 bg-off-white animate-pulse" />,
+  loading: () => <div className="h-96 bg-[#f5f7f8] animate-pulse" />,
 });
 
 const FeaturedDeal = dynamic(() => import("../components/FeaturedDeal/FeaturedDeal"), {
-  loading: () => <div className="h-96 bg-off-white animate-pulse" />,
+  loading: () => <div className="h-96 bg-[#f5f7f8] animate-pulse" />,
 });
 
 const FloatingElements = dynamic(() => import("../components/Animations/FloatingElements"), {
@@ -43,7 +43,7 @@ export default function Home() {
   const trendingBusinesses = TRENDING_BUSINESSES.slice(10, 20);
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
+    <div className="min-h-dvh bg-white/90 relative overflow-hidden">
       {/* Header - Transparent at top, overlays hero */}
       <Header showSearch={true} showProfile={true} />
 
@@ -51,7 +51,7 @@ export default function Home() {
       <HeroCarousel />
 
       {/* Main content */}
-      <div className="relative z-10 bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95">
+      <div className="relative z-10 bg-white/90">
         {/* Static background layers */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />

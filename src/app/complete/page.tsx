@@ -107,13 +107,13 @@ export default function CompletePage() {
           {/* Small moving graphic */}
           <div className="relative mx-auto mb-4 h-28 w-full max-w-[420px] animate-fade-in-up delay-300" aria-hidden="true">
             <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute bottom-0 left-[15%] w-14 h-14 rounded-full bg-off-white border-2 border-coral flex items-center justify-center float-anim">
+              <div className="absolute bottom-0 left-[15%] w-14 h-14 rounded-full bg-white/90 border-2 border-coral flex items-center justify-center float-anim">
                 <ion-icon name="happy-outline" style={{ fontSize: 22, color: "var(--charcoal)" }} aria-hidden="true" />
               </div>
-              <div className="absolute bottom-0 left-[45%] w-14 h-14 rounded-full bg-off-white border-2 border-sage flex items-center justify-center float-anim delay-400">
+              <div className="absolute bottom-0 left-[45%] w-14 h-14 rounded-full bg-white/90 border-2 border-sage flex items-center justify-center float-anim delay-400">
                 <ion-icon name="sparkles-outline" style={{ fontSize: 22, color: "var(--charcoal)" }} aria-hidden="true" />
               </div>
-              <div className="absolute bottom-0 left-[75%] w-14 h-14 rounded-full bg-off-white border-2 border-coral flex items-center justify-center float-anim delay-800">
+              <div className="absolute bottom-0 left-[75%] w-14 h-14 rounded-full bg-white/90 border-2 border-coral flex items-center justify-center float-anim delay-800">
                 <ion-icon name="checkmark-outline" style={{ fontSize: 22, color: "var(--charcoal)" }} aria-hidden="true" />
               </div>
             </div>

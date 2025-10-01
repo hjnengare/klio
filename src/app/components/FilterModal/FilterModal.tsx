@@ -120,9 +120,8 @@ export default function FilterModal({
         role="dialog"
         aria-label="Search filters"
         tabIndex={-1}
-        className={`pointer-events-auto bg-off-white/98 backdrop-blur-md border border-sage/20 shadow-2xl
-                    transition-all duration-200 ease-out flex flex-col
-                    ${isOpen ? "opacity-100 translate-y-0 scale-100" : "opacity-0 -translate-y-1 scale-[0.98]"}`}
+        className={`pointer-events-auto bg-white border border-gray-300 shadow-lg flex flex-col
+                    ${isOpen ? "opacity-100" : "opacity-0"}`}
         style={{
           position: "fixed",
           top: style.top,
@@ -134,7 +133,7 @@ export default function FilterModal({
         }}
       >
         {/* header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-sage/10">
+        <div className="flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-gray-200">
           <div>
             <h2 className="font-urbanist text-sm md:text-base font-700 text-charcoal flex items-center">
               <ion-icon name="options" class="text-sage mr-2 text-base" />
@@ -144,7 +143,7 @@ export default function FilterModal({
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 border border-charcoal/10 bg-charcoal/5 hover:bg-sage/10 flex items-center justify-center"
+            className="w-9 h-9 border border-gray-300 bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
             aria-label="Close filters"
           >
             <ion-icon name="close" class="text-base text-charcoal/70" />
@@ -154,7 +153,7 @@ export default function FilterModal({
         {/* body (scrollable) */}
         <div className="px-5 sm:px-6 py-4 space-y-4 overflow-y-auto flex-1" style={{ maxHeight: "calc(70vh - 140px)" }}>
           {/* Category */}
-          <div className="bg-off-white/70 p-4 border border-sage/10">
+          <div className="bg-gray-50 p-4 border border-gray-200">
             <h3 className="font-urbanist text-sm font-600 text-charcoal mb-3 flex items-center">
               <ion-icon name="restaurant" class="text-sage mr-2 text-base" />
               Category
@@ -169,7 +168,7 @@ export default function FilterModal({
               ].map((c) => (
                 <label
                   key={c.name}
-                  className="group flex items-center gap-2 cursor-pointer hover:bg-sage/5 p-2 transition-all border border-transparent hover:border-sage/10 flex-shrink-0"
+                  className="group flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 border border-transparent hover:border-gray-300 flex-shrink-0"
                 >
                   <input
                     type="checkbox"
@@ -179,7 +178,7 @@ export default function FilterModal({
                         prev.includes(c.name) ? prev.filter((x) => x !== c.name) : [...prev, c.name]
                       )
                     }
-                    className="w-4 h-4 text-sage bg-off-white border-2 border-sage/30 focus:ring-4 focus:ring-sage/20"
+                    className="w-4 h-4 text-sage bg-white border-2 border-gray-300 focus:ring-2 focus:ring-sage/30"
                   />
                   <ion-icon name={c.icon} class="text-sage text-base" />
                   <span className="font-urbanist text-sm font-500 text-charcoal">{c.name}</span>
@@ -189,7 +188,7 @@ export default function FilterModal({
           </div>
 
           {/* Rating */}
-          <div className="bg-off-white/70 p-4 border border-sage/10">
+          <div className="bg-gray-50 p-4 border border-gray-200">
             <h3 className="font-urbanist text-sm font-600 text-charcoal mb-3 flex items-center">
               <ion-icon name="star" class="text-sage mr-2 text-base" />
               Minimum Rating
@@ -198,14 +197,14 @@ export default function FilterModal({
               {[5, 4, 3, 2, 1].map((r) => (
                 <label
                   key={r}
-                  className="group flex items-center gap-2 cursor-pointer hover:bg-sage/5 p-2 transition-all border border-transparent hover:border-sage/10 flex-shrink-0"
+                  className="group flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 border border-transparent hover:border-gray-300 flex-shrink-0"
                 >
                   <input
                     type="radio"
                     name="rating"
                     checked={selectedRating === r}
                     onChange={() => setSelectedRating(r)}
-                    className="w-4 h-4 text-sage bg-off-white border-2 border-sage/30 focus:ring-4 focus:ring-sage/20"
+                    className="w-4 h-4 text-sage bg-white border-2 border-gray-300 focus:ring-2 focus:ring-sage/30"
                   />
                   <div className="flex items-center gap-2">
                     <div className="flex">
@@ -221,7 +220,7 @@ export default function FilterModal({
           </div>
 
           {/* Distance */}
-          <div className="bg-off-white/70 p-4 border border-sage/10">
+          <div className="bg-gray-50 p-4 border border-gray-200">
             <h3 className="font-urbanist text-sm font-600 text-charcoal mb-3 flex items-center">
               <ion-icon name="location" class="text-sage mr-2 text-base" />
               Distance
@@ -235,14 +234,14 @@ export default function FilterModal({
               ].map((d) => (
                 <label
                   key={d.distance}
-                  className="group flex items-center gap-2 cursor-pointer hover:bg-sage/5 p-2 transition-all border border-transparent hover:border-sage/10 flex-shrink-0"
+                  className="group flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 border border-transparent hover:border-gray-300 flex-shrink-0"
                 >
                   <input
                     type="radio"
                     name="distance"
                     checked={selectedDistance === d.distance}
                     onChange={() => setSelectedDistance(d.distance)}
-                    className="w-4 h-4 text-sage bg-off-white border-2 border-sage/30 focus:ring-4 focus:ring-sage/20"
+                    className="w-4 h-4 text-sage bg-white border-2 border-gray-300 focus:ring-2 focus:ring-sage/30"
                   />
                   <ion-icon name={d.icon} class="text-sage text-base" />
                   <span className="font-urbanist text-sm text-charcoal whitespace-nowrap">{d.distance}</span>
@@ -253,16 +252,16 @@ export default function FilterModal({
         </div>
 
         {/* footer */}
-        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-sage/10 bg-off-white/80">
+        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-gray-200 bg-white">
           <button
             onClick={handleClearAll}
-            className="flex-1 bg-charcoal/5 hover:bg-charcoal/10 text-charcoal font-urbanist font-600 py-2.5 px-4 border border-charcoal/10"
+            className="flex-1 bg-gray-100 hover:bg-gray-200 text-charcoal font-urbanist font-600 py-2.5 px-4 border border-gray-300"
           >
             Clear
           </button>
           <button
             onClick={handleApply}
-            className="flex-1 bg-sage hover:bg-sage/90 text-white font-urbanist font-600 py-2.5 px-4 border border-sage/30"
+            className="flex-1 bg-sage hover:bg-sage/90 text-white font-urbanist font-600 py-2.5 px-4 border border-sage"
           >
             Apply
           </button>

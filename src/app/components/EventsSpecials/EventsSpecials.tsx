@@ -26,7 +26,7 @@ export default function EventsSpecials({
   };
 
   return (
-    <section ref={sectionRef} className="bg-gradient-to-b from-off-white to-off-white/95 relative" aria-label="events and specials" data-section>
+    <section ref={sectionRef} className="bg-white/90 relative" aria-label="events and specials" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 left-20 w-32 h-32 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl" />

@@ -58,7 +58,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 border-t border-sage/10 relative overflow-hidden">
+    <footer className="bg-white/90 border-t border-sage/10 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl" />
