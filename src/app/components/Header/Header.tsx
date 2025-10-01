@@ -301,11 +301,11 @@ export default function Header({ showSearch = true, showProfile = true }) {
       {showProfile && (
         <Link
           href="/profile"
-          className={`fixed top-4 right-4 sm:right-6 md:right-8 z-[60] w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg ${
+          className={`fixed top-4 right-4 sm:right-6 md:right-8 z-[60] w-10 h-10 rounded-full border flex items-center justify-center hover:scale-110 shadow-lg transition-all duration-300 ${
             isScrolled
               ? 'border-charcoal/5 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10'
               : 'border-white/20 bg-white/10 hover:bg-white/20 backdrop-blur-sm'
-          }`}
+          } ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0'}`}
         >
           <ion-icon name="person" class={`text-base transition-colors duration-300 ${
             isScrolled ? 'text-charcoal/70' : 'text-white'

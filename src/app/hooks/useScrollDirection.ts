@@ -41,17 +41,20 @@ export function useScrollDirection({
     const isScrollingUp = currentScrollY < lastScrollY;
 
     // Determine visibility based on scroll behavior
-    let isVisible = true;
+    let isVisible: boolean;
 
     if (currentScrollY <= 10) {
       // Always show when at top
       isVisible = true;
-    } else if (isScrollingUp && scrollDifference > 3) {
-      // Show when scrolling up with meaningful movement
+    } else if (isScrollingUp) {
+      // Show immediately when scrolling up
       isVisible = true;
-    } else if (isScrollingDown && currentScrollY > threshold && scrollDifference > 3) {
-      // Hide when scrolling down past threshold with meaningful movement
+    } else if (isScrollingDown && currentScrollY > threshold) {
+      // Hide when scrolling down past threshold
       isVisible = false;
+    } else {
+      // Keep current state
+      isVisible = scrollState.isVisible;
     }
 
     setScrollState({
@@ -62,7 +65,7 @@ export function useScrollDirection({
     });
 
     setLastScrollY(currentScrollY);
-  }, [isClient, lastScrollY, threshold]);
+  }, [isClient, lastScrollY, threshold, scrollState.isVisible]);
 
   // Set client-side flag
   useEffect(() => {
