@@ -57,86 +57,27 @@ export default function ScrollableSection({
 
   const scrollRight = () => {
     if (!scrollRef.current) return;
-
-    // Enhanced scrolling with premium feel
-    const scrollAmount = scrollRef.current.clientWidth * 0.75; // Slightly less aggressive
-
-    // Custom smooth scrolling with enhanced easing
-    const start = scrollRef.current.scrollLeft;
-    const change = scrollAmount;
-    const duration = 600; // Longer duration for premium feel
-    let startTime: number | null = null;
-
-    const animateScroll = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const run = easeInOutCubic(timeElapsed, start, change, duration);
-
-      if (scrollRef.current) {
-        scrollRef.current.scrollLeft = run;
-      }
-
-      if (timeElapsed < duration) {
-        requestAnimationFrame(animateScroll);
-      }
-    };
-
-    // Fallback to native smooth scroll for better compatibility
-    try {
-      scrollRef.current.scrollBy({
-        left: scrollAmount,
-        behavior: 'smooth'
-      });
-    } catch (e) {
-      requestAnimationFrame(animateScroll);
-    }
+    const scrollAmount = scrollRef.current.clientWidth * 0.75;
+    scrollRef.current.scrollLeft += scrollAmount;
   };
 
   const scrollLeft = () => {
     if (!scrollRef.current) return;
-
     const scrollAmount = scrollRef.current.clientWidth * 0.75;
-
-    try {
-      scrollRef.current.scrollBy({
-        left: -scrollAmount,
-        behavior: 'smooth'
-      });
-    } catch (e) {
-      // Fallback scrolling
-      scrollRef.current.scrollLeft -= scrollAmount;
-    }
-  };
-
-  // Easing function for premium scroll feel
-  const easeInOutCubic = (t: number, b: number, c: number, d: number) => {
-    t /= d / 2;
-    if (t < 1) return c / 2 * t * t * t + b;
-    t -= 2;
-    return c / 2 * (t * t * t + 2) + b;
+    scrollRef.current.scrollLeft -= scrollAmount;
   };
 
   return (
     <div className="relative overflow-hidden">
       <div
         ref={scrollRef}
-        className={`horizontal-scroll flex snap-x snap-mandatory gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 ${className}`}
+        className={`horizontal-scroll flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
           WebkitScrollbar: { display: 'none' },
-          scrollSnapType: 'x mandatory',
-          scrollBehavior: 'smooth',
-          // Premium smooth scrolling physics
           WebkitOverflowScrolling: 'touch',
-          // Enhanced momentum scrolling for premium feel
-          overscrollBehaviorX: 'contain',
-          scrollPaddingLeft: '1rem',
-          scrollPaddingRight: '1rem',
-          // Force GPU acceleration for smoother performance
-          transform: 'translateZ(0)',
-          willChange: 'scroll-position',
-          // Enhanced touch response
+          overscrollBehaviorX: 'auto',
           touchAction: 'pan-x',
         }}
       >

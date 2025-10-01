@@ -636,16 +636,10 @@
     }
   }
 
-  /* Premium enhanced scrolling for mobile */
+  /* Normal scrolling for mobile */
   .mobile-scroll-container {
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    scroll-behavior: smooth;
-    /* Enhanced momentum and responsiveness */
-    transform: translateZ(0);
-    will-change: scroll-position, transform;
-    /* Better scroll physics */
-    scroll-snap-type: both proximity;
+    overscroll-behavior: auto;
     /* Improved touch responsiveness */
     touch-action: manipulation;
   }
