@@ -134,7 +134,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
         <div className="p-6 space-y-2">
           {/* Write Review */}
           <button
-            onClick={() => handleNavigation("/business/1/review")}
+            onClick={() => handleNavigation("/business/review")}
             className="w-full flex items-center space-x-4 p-4 rounded-xl hover:bg-sage/5 transition-all duration-200 group mobile-interaction touch-target-large"
           >
             <div className="w-10 h-10 bg-coral/10 rounded-full flex items-center justify-center group-hover:bg-coral/20 transition-colors duration-200">

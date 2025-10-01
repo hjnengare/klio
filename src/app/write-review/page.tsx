@@ -88,7 +88,7 @@ export default function WriteReviewPage() {
           {filteredBusinesses.map((business) => (
             <Link
               key={business.id}
-              href={`/business/${business.id}/review`}
+              href="/business/review"
               className="block p-4 bg-white border border-charcoal/5 rounded-xl hover:bg-sage/5
                          hover:border-sage/20 transition-all duration-200 group"
             >

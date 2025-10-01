@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+import { useParams, useRouter } from "next/navigation";
+import { useMemo } from "react";
 
 // Dynamic imports for premium animations
 const FadeInUp = dynamic(() => import("../../components/Animations/FadeInUp"), {
@@ -15,39 +17,47 @@ const PremiumHover = dynamic(() => import("../../components/Animations/PremiumHo
 });
 
 export default function BusinessProfilePage() {
-  // const [activeTab, setActiveTab] = useState("overview");
+  const params = useParams();
+  const router = useRouter();
+  const businessId = params?.id as string;
 
   // Mock data - in real app this would come from params and API
-  const business = {
-    name: "Mama's Kitchen",
-    rating: 4.8,
-    image: "/images/product-01.jpg", // Business photo
-    trust: 95,
-    punctuality: 89,
-    friendliness: 92,
-    specials: [
-      { id: 1, name: "2 for 1 Pizza", description: "Every day", icon: "pizza" },
-      { id: 2, name: "Jazz Night", description: "Mondays", icon: "musical-notes" }
-    ],
-    reviews: [
-      {
-        id: 1,
-        author: "Jess",
-        rating: 5,
-        text: "Loved the pizza, staff were so friendly. Food came fast & trustworthy. @on time @friendly",
-        date: "Feb 2023",
-        tags: ["trustworthy", "on time", "friendly"]
-      },
-      {
-        id: 2,
-        author: "Hilario",
-        rating: 4,
-        text: "Terrible anything but food came fast. @on time",
-        date: "March 2023",
-        tags: ["on time"]
-      }
-    ]
-  };
+  // For now, we'll use the same mock data for any ID to prevent 404 errors
+  const business = useMemo(() => {
+    // In production, this would fetch from API based on businessId
+    // For now, return mock data for development/testing
+    return {
+      id: businessId || "demo",
+      name: "Mama's Kitchen",
+      rating: 4.8,
+      image: "/images/product-01.jpg", // Business photo
+      trust: 95,
+      punctuality: 89,
+      friendliness: 92,
+      specials: [
+        { id: 1, name: "2 for 1 Pizza", description: "Every day", icon: "pizza" },
+        { id: 2, name: "Jazz Night", description: "Mondays", icon: "musical-notes" }
+      ],
+      reviews: [
+        {
+          id: 1,
+          author: "Jess",
+          rating: 5,
+          text: "Loved the pizza, staff were so friendly. Food came fast & trustworthy. @on time @friendly",
+          date: "Feb 2023",
+          tags: ["trustworthy", "on time", "friendly"]
+        },
+        {
+          id: 2,
+          author: "Hilario",
+          rating: 4,
+          text: "Terrible anything but food came fast. @on time",
+          date: "March 2023",
+          tags: ["on time"]
+        }
+      ]
+    };
+  }, [businessId]);
 
   return (
     <div className="min-h-dvh bg-white/90 relative overflow-hidden">
@@ -311,7 +321,7 @@ export default function BusinessProfilePage() {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Link
-                      href={`/business/${business.name.toLowerCase().replace(/[^a-z0-9]/g, '')}/review`}
+                      href="review"
                       className="inline-flex items-center space-x-2 bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full hover:shadow-lg transition-all duration-300 group"
                     >
                       <ion-icon name="create-outline" size="small" />

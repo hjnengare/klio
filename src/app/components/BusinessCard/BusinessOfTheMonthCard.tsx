@@ -92,9 +92,9 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
 
           {/* Card Actions - slide in from right on hover - hidden on mobile */}
           <div className="hidden sm:flex absolute right-2 bottom-2 z-20 flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">
-            <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
+            <Link href="/business/review" className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
               <ion-icon name="create-outline" class="text-charcoal" style={{fontSize: '24px'}} suppressHydrationWarning />
-            </button>
+            </Link>
             <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
               <ion-icon name="bookmark-outline" class="text-charcoal" style={{fontSize: '24px'}} suppressHydrationWarning />
             </button>

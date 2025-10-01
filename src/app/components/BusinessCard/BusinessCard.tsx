@@ -19,6 +19,7 @@ type Business = {
   id: string;
   name: string;
   image: string;
+  image_url?: string; // Alternative image field for API compatibility
   alt: string;
   category: string;
   location: string;
@@ -31,6 +32,9 @@ type Business = {
   verified?: boolean;
   distance?: string;
   priceRange?: string;
+  stats?: {
+    average_rating: number;
+  };
 };
 
 function BusinessCard({ business }: { business: Business }) {
@@ -41,10 +45,10 @@ function BusinessCard({ business }: { business: Business }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const [imgError, setImgError] = useState(false);
 
-  // Preload the review route using UUID
+  // Preload the review route with business ID
   const reviewRoute = useMemo(() => {
-    return `/business/${business.id}/review`;
-  }, [business.id]);
+    return `/business/review`;
+  }, []);
 
   useEffect(() => {
     const checkIsDesktop = () => setIsDesktop(window.innerWidth >= 640);
