@@ -204,7 +204,7 @@ export default function Header({ showSearch = true, showProfile = true }) {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-[70] md:hidden"
+          className="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-[90] md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
@@ -212,7 +212,7 @@ export default function Header({ showSearch = true, showProfile = true }) {
       {/* Mobile Menu Slide-in Panel */}
       <div
         data-mobile-menu
-        className={`fixed top-0 right-0 h-full w-full bg-off-white z-[80] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 right-0 h-full w-full bg-off-white z-[100] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -305,7 +305,7 @@ export default function Header({ showSearch = true, showProfile = true }) {
             isScrolled
               ? 'border-charcoal/5 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10'
               : 'border-white/20 bg-white/10 hover:bg-white/20 backdrop-blur-sm'
-          } ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0'}`}
+          } ${isVisible && !isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0'}`}
         >
           <ion-icon name="person" class={`text-base transition-colors duration-300 ${
             isScrolled ? 'text-charcoal/70' : 'text-white'
