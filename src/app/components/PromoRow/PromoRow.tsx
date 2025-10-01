@@ -44,7 +44,7 @@ const PROMO_CARDS: PromoCard[] = [
 function PromoRow() {
   return (
     <section
-      className="py-8 sm:py-12 bg-white/90 relative"
+      className="py-4 sm:py-6 bg-white/90 relative"
       aria-label="promotional highlights"
       data-section
     >

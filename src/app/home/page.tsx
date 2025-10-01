@@ -60,7 +60,7 @@ export default function Home() {
         {/* Floating elements without parallax */}
         <FloatingElements />
 
-        <div className="pt-8 pb-6 relative z-10">
+        <div className="pt-4 pb-3 relative z-10">
           {/* Promotional highlights */}
           <PromoRow />
 
