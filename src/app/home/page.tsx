@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <div className="min-h-dvh bg-white/90 relative overflow-hidden">
       {/* Header - Transparent at top, overlays hero */}
-      <Header showSearch={true} showProfile={true} />
+      <Header showSearch={true} />
 
       {/* Hero Section - starts at pixel 0, header overlays it */}
       <HeroCarousel />

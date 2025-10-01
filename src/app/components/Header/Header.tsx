@@ -7,7 +7,7 @@ import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { useHideOnScroll } from "../../hooks/useHideOnScroll";
 
-export default function Header({ showSearch = true, showProfile = true }) {
+export default function Header({ showSearch = true }) {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -182,21 +182,16 @@ export default function Header({ showSearch = true, showProfile = true }) {
               </button>
 
               {/* Profile Icon - Desktop */}
-              {showProfile && (
-                <Link
-                  href="/profile"
-                  className={`hidden md:flex w-10 h-10 rounded-full border items-center justify-center shadow-lg ${
-                    isScrolled
-                      ? 'border-charcoal/5 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10'
-                      : 'border-white/40 bg-white/80 backdrop-blur'
-                  }`}
-                >
-                  <ion-icon
-                    name="person"
-                    className={`text-base ${isScrolled ? 'text-charcoal/80' : 'text-charcoal'}`}
-                  />
-                </Link>
-              )}
+              <Link
+                href="/profile"
+                className="hidden md:flex w-10 h-10 rounded-full items-center justify-center transition-all duration-200 bg-white/20 backdrop-blur-sm border border-white/40 text-white hover:text-white"
+                aria-label="Profile"
+              >
+                <ion-icon
+                  name="person-outline"
+                  className="text-xl"
+                />
+              </Link>
             </div>
           </div>
 
@@ -288,16 +283,14 @@ export default function Header({ showSearch = true, showProfile = true }) {
             <div className="h-px bg-charcoal/10 my-4 mx-4" />
 
             {/* Profile Link in Mobile Menu */}
-            {showProfile && (
-              <Link
-                href="/profile"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5 transition-all duration-200 flex items-center gap-3"
-              >
-                <ion-icon name="person" className="text-lg" />
-                Profile
-              </Link>
-            )}
+            <Link
+              href="/profile"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5 transition-all duration-200 flex items-center gap-3"
+            >
+              <ion-icon name="person-outline" className="text-xl" />
+              Profile
+            </Link>
           </nav>
         </div>
       </div>

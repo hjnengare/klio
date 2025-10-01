@@ -100,7 +100,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
                     className="w-10 h-10 bg-sage/10 hover:bg-sage/20 rounded-full flex items-center justify-center text-sage hover:text-sage/80 transition-all duration-300"
                     aria-label={social.name}
                   >
-                    <ion-icon name={social.icon} style={{ fontSize: "20px" }} />
+                    <ion-icon name={social.icon} style={{ fontSize: "20px" }} suppressHydrationWarning />
                   </motion.a>
                 ))}
               </div>
@@ -209,11 +209,11 @@ export default function Footer({ variant = 'default' }: FooterProps) {
               {/* Trust indicators */}
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2 px-3 py-1 bg-sage/10 rounded-full">
-                  <ion-icon name="shield-checkmark" style={{ color: "#749176", fontSize: "14px" }} />
+                  <ion-icon name="shield-checkmark" style={{ color: "#749176", fontSize: "14px" }} suppressHydrationWarning />
                   <span className="font-urbanist text-8 font-500 text-sage">Secure</span>
                 </div>
                 <div className="flex items-center space-x-2 px-3 py-1 bg-coral/10 rounded-full">
-                  <ion-icon name="heart" style={{ color: "#d67469", fontSize: "14px" }} />
+                  <ion-icon name="heart" style={{ color: "#d67469", fontSize: "14px" }} suppressHydrationWarning />
                   <span className="font-urbanist text-8 font-500 text-coral">Trusted</span>
                 </div>
               </div>
@@ -231,7 +231,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
 
                 <div className="relative z-10 flex items-center space-x-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-slate-800 to-black rounded-xl flex items-center justify-center shadow-sm">
-                    <ion-icon name="logo-apple" style={{ fontSize: "22px", color: "white" }} />
+                    <ion-icon name="logo-apple" style={{ fontSize: "22px", color: "white" }} suppressHydrationWarning />
                   </div>
                   <div className="text-left">
                     <div className="font-urbanist text-xs text-charcoal/60 mb-0.5">Download on the</div>
@@ -251,7 +251,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
 
                 <div className="relative z-10 flex items-center space-x-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-green-500 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-sm">
-                    <ion-icon name="logo-google-playstore" style={{ fontSize: "22px", color: "white" }} />
+                    <ion-icon name="logo-google-playstore" style={{ fontSize: "22px", color: "white" }} suppressHydrationWarning />
                   </div>
                   <div className="text-left">
                     <div className="font-urbanist text-xs text-charcoal/60 mb-0.5">Get it on</div>
