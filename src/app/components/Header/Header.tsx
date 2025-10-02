@@ -145,6 +145,17 @@ export default function Header({ showSearch = true }) {
               >
                 Leaderboard
               </Link>
+
+              <Link
+                href="/write-review"
+                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-600 ${
+                  isScrolled
+                    ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                Write Review
+              </Link>
             </nav>
 
             {/* Right Side Actions */}
@@ -184,7 +195,11 @@ export default function Header({ showSearch = true }) {
               {/* Profile Icon - Desktop */}
               <Link
                 href="/profile"
-                className="hidden md:flex w-10 h-10 rounded-full items-center justify-center transition-all duration-200 bg-white/20 backdrop-blur-sm border border-white/40 text-white hover:text-white"
+                className={`hidden md:flex w-10 h-10 rounded-full items-center justify-center transition-all duration-200 ${
+                  isScrolled
+                    ? 'bg-charcoal/10 border border-charcoal/20 text-charcoal hover:bg-charcoal/20'
+                    : 'bg-white/20 backdrop-blur-sm border border-white/40 text-white hover:text-white'
+                }`}
                 aria-label="Profile"
               >
                 <ion-icon
@@ -197,7 +212,14 @@ export default function Header({ showSearch = true }) {
 
           {/* row 2: search (anchor wrapper) */}
           {showSearch && (
-            <div ref={searchWrapRef} className="mt-3 sm:mt-4">
+            <div
+              ref={searchWrapRef}
+              className={`mt-3 sm:mt-4 transition-all duration-300 overflow-hidden ${
+                isScrolled
+                  ? 'max-h-0 opacity-0 mt-0'
+                  : 'max-h-20 opacity-100'
+              }`}
+            >
               <SearchInput
                 variant="header"
                 placeholder="Discover exceptional local experiences, premium dining, and hidden gems..."
@@ -277,6 +299,14 @@ export default function Header({ showSearch = true }) {
               className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5"
             >
               Leaderboard
+            </Link>
+
+            <Link
+              href="/write-review"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5"
+            >
+              Write Review
             </Link>
 
             {/* Divider */}

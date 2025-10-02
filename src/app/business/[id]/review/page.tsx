@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
@@ -10,65 +9,19 @@ import { useBusiness } from "../../../hooks/useBusinesses";
 import { useReviewSubmission } from "../../../hooks/useReviews";
 import { useAuth } from "../../../contexts/AuthContext";
 
-const FadeInUp = dynamic(() => import("../../../components/Animations/FadeInUp"), {
-  ssr: false,
-});
-
-const PremiumHover = dynamic(() => import("../../../components/Animations/PremiumHover"), {
-  ssr: false,
-});
-
-
 const ImageUpload = dynamic(() => import("../../../components/ReviewForm/ImageUpload"), {
   ssr: false,
 });
 
-const Footer = dynamic(() => import("../../../components/Footer/Footer"), {
-  loading: () => null,
+const FloatingElements = dynamic(() => import("../../../components/Animations/FloatingElements"), {
   ssr: false,
 });
 
-// Mobile-first CSS with proper typography scale and safe areas
-const styles = `
-  /* Mobile-first typography scale - Body text ≥ 16px */
-  .text-body { font-size: 1rem; line-height: 1.5; } /* 16px */
-  .text-body-lg { font-size: 1.125rem; line-height: 1.5; } /* 18px */
-  .text-heading-sm { font-size: 1.25rem; line-height: 1.4; } /* 20px */
-  .text-heading-md { font-size: 1.5rem; line-height: 1.3; } /* 24px */
-  .text-heading-lg { font-size: 1.875rem; line-height: 1.2; } /* 30px */
-
-  /* Button press states - 44-48px targets */
-  .btn-press:active {
-    transform: scale(0.98);
-    transition: transform 0.1s ease;
-  }
-
-  .btn-target {
-    min-height: 44px;
-    min-width: 44px;
-    touch-action: manipulation;
-  }
-
-  /* Input styling - 16px+ to prevent auto-zoom */
-  .input-mobile {
-    font-size: 1rem !important; /* 16px minimum */
-    min-height: 48px;
-    touch-action: manipulation;
-  }
-
-  /* Card styling - border-first, tiny shadow (no heavy blur) */
-  .card-mobile {
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  }
-
-  @media (min-width: 768px) {
-    .card-mobile {
-      border: 1px solid rgba(116, 145, 118, 0.1);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    }
-  }
-`;
+// Constants
+const MIN_REVIEW_LENGTH = 10;
+const MAX_REVIEW_LENGTH = 1000;
+const MAX_TAGS = 4;
+const DRAFT_STORAGE_KEY = "review_draft_";
 
 export default function WriteReviewPage() {
   const router = useRouter();
@@ -82,6 +35,68 @@ export default function WriteReviewPage() {
   const [reviewText, setReviewText] = useState("");
   const [reviewTitle, setReviewTitle] = useState("");
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [showDraftNotification, setShowDraftNotification] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [imageError, setImageError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  const draftKey = params?.id ? `${DRAFT_STORAGE_KEY}${params.id}` : null;
+
+  // Load draft on mount
+  useEffect(() => {
+    if (draftKey && typeof window !== 'undefined') {
+      const draft = localStorage.getItem(draftKey);
+      if (draft) {
+        try {
+          const parsed = JSON.parse(draft);
+          setOverallRating(parsed.rating || 0);
+          setSelectedTags(parsed.tags || []);
+          setReviewText(parsed.content || '');
+          setReviewTitle(parsed.title || '');
+          setShowDraftNotification(true);
+          setTimeout(() => setShowDraftNotification(false), 5000);
+        } catch (e) {
+          console.error('Failed to load draft:', e);
+        }
+      }
+    }
+  }, [draftKey]);
+
+  // Save draft to localStorage
+  useEffect(() => {
+    if (hasUnsavedChanges && draftKey && typeof window !== 'undefined') {
+      const draft = {
+        rating: overallRating,
+        tags: selectedTags,
+        content: reviewText,
+        title: reviewTitle,
+        timestamp: Date.now()
+      };
+      localStorage.setItem(draftKey, JSON.stringify(draft));
+    }
+  }, [overallRating, selectedTags, reviewText, reviewTitle, hasUnsavedChanges, draftKey]);
+
+  // Track unsaved changes
+  useEffect(() => {
+    if (overallRating > 0 || reviewText || reviewTitle || selectedTags.length > 0) {
+      setHasUnsavedChanges(true);
+    }
+  }, [overallRating, reviewText, reviewTitle, selectedTags]);
+
+  // Warn before leaving with unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges && !isSubmitting) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [hasUnsavedChanges, isSubmitting]);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -93,26 +108,53 @@ export default function WriteReviewPage() {
   if (authLoading || businessLoading) {
     return (
       <div className="min-h-dvh bg-white/90 flex items-center justify-center">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          className="w-8 h-8 border-2 border-sage border-t-transparent rounded-full"
-        />
+        <div className="w-12 h-12 border-4 border-sage border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!business) {
     return (
-      <div className="min-h-dvh bg-white/90 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="font-urbanist text-2xl font-600 text-charcoal mb-4">Business not found</h1>
-          <Link
-            href="/home"
-            className="text-sage hover:text-sage/80 font-urbanist font-500"
-          >
-            ← Back to Home
-          </Link>
+      <div className="min-h-dvh bg-white/90 flex items-center justify-center relative overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />
+        </div>
+
+        <div className="text-center px-4 relative z-10 max-w-md">
+          <div className="mb-6 flex justify-center">
+            <div className="w-24 h-24 bg-sage/10 rounded-full flex items-center justify-center">
+              <ion-icon name="business-outline" style={{ fontSize: '48px', color: 'var(--sage)' }} />
+            </div>
+          </div>
+
+          <h1 className="font-urbanist text-2xl md:text-3xl font-700 text-charcoal mb-3">
+            Business Not Found
+          </h1>
+
+          <p className="font-urbanist text-base text-charcoal/60 mb-6">
+            {params?.id
+              ? "We couldn't find a business with this ID. It may have been removed or doesn't exist."
+              : "No business ID was provided."}
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/home"
+              className="inline-flex items-center justify-center space-x-2 bg-sage text-white font-urbanist text-base font-600 py-3 px-6 transition-all hover:bg-sage/90 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2"
+            >
+              <ion-icon name="home-outline" />
+              <span>Go to Home</span>
+            </Link>
+
+            <button
+              onClick={() => router.back()}
+              className="inline-flex items-center justify-center space-x-2 bg-white border border-sage/20 text-charcoal font-urbanist text-base font-600 py-3 px-6 transition-all hover:border-sage hover:bg-sage/5 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2"
+            >
+              <ion-icon name="arrow-back-outline" />
+              <span>Go Back</span>
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -128,173 +170,216 @@ export default function WriteReviewPage() {
   ];
 
   const handleTagToggle = (tag: string) => {
-    setSelectedTags(prev =>
-      prev.includes(tag)
-        ? prev.filter(t => t !== tag)
-        : [...prev, tag]
-    );
+    setSelectedTags(prev => {
+      if (prev.includes(tag)) {
+        return prev.filter(t => t !== tag);
+      }
+      // Enforce max tags limit
+      if (prev.length >= MAX_TAGS) {
+        setToast({ message: `Maximum ${MAX_TAGS} tags allowed`, type: 'error' });
+        setTimeout(() => setToast(null), 3000);
+        return prev;
+      }
+      return [...prev, tag];
+    });
   };
 
   const handleStarClick = (rating: number) => {
     setOverallRating(rating);
-  };
-
-  const handleSubmitReview = async () => {
-    if (!business || !user) return;
-
-    const success = await submitReview({
-      business_id: business.id,
-      rating: overallRating,
-      title: reviewTitle.trim() || undefined,
-      content: reviewText.trim(),
-      tags: selectedTags,
-      images: selectedImages.length > 0 ? selectedImages : undefined
-    });
-
-    if (success) {
-      // Navigate back to business page
-      router.push(`/business/${params?.id}`);
+    // Haptic feedback for mobile
+    if (typeof window !== 'undefined' && 'vibrate' in navigator) {
+      navigator.vibrate(10);
     }
   };
 
-  const isFormValid = overallRating > 0 && reviewText.trim().length > 0;
+  const handleKeyDown = (e: React.KeyboardEvent, rating: number) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleStarClick(rating);
+    }
+  };
+
+  const scrollToError = useCallback(() => {
+    if (formRef.current) {
+      const firstError = formRef.current.querySelector('[aria-invalid="true"]');
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        (firstError as HTMLElement).focus();
+      }
+    }
+  }, []);
+
+  const handleSubmitReview = async () => {
+    if (!business || !user || isSubmitting) return;
+
+    // Validation
+    if (overallRating === 0) {
+      setToast({ message: 'Please select a rating', type: 'error' });
+      scrollToError();
+      return;
+    }
+
+    if (reviewText.trim().length < MIN_REVIEW_LENGTH) {
+      setToast({ message: `Review must be at least ${MIN_REVIEW_LENGTH} characters`, type: 'error' });
+      scrollToError();
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const success = await submitReview({
+        business_id: business.id,
+        rating: overallRating,
+        title: reviewTitle.trim() || undefined,
+        content: reviewText.trim(),
+        tags: selectedTags,
+        images: selectedImages.length > 0 ? selectedImages : undefined
+      });
+
+      if (success) {
+        // Clear draft from localStorage
+        if (draftKey) {
+          localStorage.removeItem(draftKey);
+        }
+        setHasUnsavedChanges(false);
+
+        setToast({ message: 'Review submitted successfully!', type: 'success' });
+
+        // Navigate after short delay to show success message
+        setTimeout(() => {
+          router.push(`/business/${params?.id}`);
+        }, 1500);
+      } else {
+        setToast({ message: 'Failed to submit review. Please try again.', type: 'error' });
+        setIsSubmitting(false);
+      }
+    } catch (error) {
+      setToast({ message: 'An error occurred. Please try again.', type: 'error' });
+      setIsSubmitting(false);
+    }
+  };
+
+  const isFormValid = overallRating > 0 && reviewText.trim().length >= MIN_REVIEW_LENGTH;
+  const characterCount = reviewText.length;
+  const characterCountColor = characterCount > MAX_REVIEW_LENGTH ? 'text-coral' : characterCount > MAX_REVIEW_LENGTH * 0.9 ? 'text-amber-500' : 'text-charcoal/60';
 
   return (
-    <>
-      <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-dvh bg-white/90 relative overflow-hidden">
-        {/* Ambient background elements */}
-      <div className="absolute inset-0 opacity-20">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-          className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/30 to-sage/10 rounded-full blur-3xl"
-        />
-        <motion.div
-          initial={{ opacity: 0, scale: 1.2 }}
-          animate={{ opacity: 1, scale: 0.8 }}
-          transition={{ duration: 3, delay: 1, repeat: Infinity, repeatType: "reverse" }}
-          className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/20 to-coral/5 rounded-full blur-3xl"
-        />
+    <div className="min-h-dvh bg-white/90 relative overflow-hidden">
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full shadow-lg backdrop-blur-xl transition-all duration-300 ${
+          toast.type === 'success' ? 'bg-sage/90 text-white' : 'bg-coral/90 text-white'
+        }`}>
+          <div className="flex items-center space-x-2">
+            <ion-icon name={toast.type === 'success' ? 'checkmark-circle' : 'alert-circle'} style={{ fontSize: '20px' }} />
+            <span className="font-urbanist font-500">{toast.message}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Draft Notification */}
+      {showDraftNotification && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-amber-500/90 text-white rounded-full shadow-lg backdrop-blur-xl">
+          <div className="flex items-center space-x-2">
+            <ion-icon name="document-text" style={{ fontSize: '20px' }} />
+            <span className="font-urbanist font-500">Draft restored</span>
+          </div>
+        </div>
+      )}
+
+      {/* Static background layers */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />
       </div>
 
-      {/* Premium Header */}
-      <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative z-10 bg-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm"
-      >
+      {/* Floating elements */}
+      <FloatingElements />
+
+      {/* Header */}
+      <header className="relative z-20 bg-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-6">
         <div className="flex items-center justify-between max-w-4xl mx-auto">
-          <motion.div
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+          <Link
+            href={`/business/${params?.id}`}
+            className="text-charcoal/60 hover:text-charcoal transition-colors p-2 hover:bg-charcoal/5 rounded-full touch-target-large"
           >
-            <Link href={`/business/${params?.id}`} className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
-              <ion-icon name="arrow-back-outline" size="small"></ion-icon>
-            </Link>
-          </motion.div>
-          <motion.h1
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="font-urbanist text-2xl md:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
-          >
+            <ion-icon name="arrow-back-outline" size="small"></ion-icon>
+          </Link>
+          <h1 className="font-urbanist text-2xl md:text-4xl font-700 text-charcoal">
             Write a Review
-          </motion.h1>
+          </h1>
           <div className="w-10"></div>
         </div>
-      </motion.header>
+      </header>
 
-      <div className="w-full md:w-3/4 mx-auto px-4 md:px-4 py-6 pb-6 relative z-10">
-        {/* Review Form */}
-        <FadeInUp delay={0.2}>
-          <PremiumHover scale={1.02} shadowIntensity="medium" duration={0.4}>
-            <div className="bg-white/90/95 backdrop-blur-lg rounded-none md:rounded-3xl card-mobile md:shadow-xl border-0 md:border border-sage/10 p-4 md:p-8 mb-0 md:mb-8 relative overflow-hidden min-h-[calc(100vh-200px)] md:min-h-0 flex flex-col">
-              {/* Decorative elements */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
-
-              <div className="relative z-10 flex-1 flex flex-col">
+      {/* Main content */}
+      <div className="relative z-10 bg-white/90">
+        <div className="pt-4 pb-3 pb-safe-area-bottom">
+          <div className="w-full md:max-w-4xl mx-auto px-4 py-6">
+            {/* Review Form */}
+            <div ref={formRef} className="bg-white border-0 md:border border-sage/10 p-4 md:p-8 shadow-sm">
+              <div className="flex-1 flex flex-col">
                 {/* Business Profile Picture */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                  className="flex justify-center mb-4 md:mb-6"
-                >
-                  <div className="relative group">
-                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden ring-4 ring-sage/20 group-hover:ring-sage/40 transition-all duration-500">
-                      {business.image_url ? (
+                <div className="flex justify-center mb-6">
+                  <div className="relative">
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden ring-4 ring-sage/20 transition-all">
+                      {business.image_url && !imageError ? (
                         <Image
                           src={business.image_url}
                           alt={`${businessName} photo`}
                           width={96}
                           height={96}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          className="w-full h-full object-cover"
                           priority
+                          onError={() => setImageError(true)}
                         />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-sage/20 to-sage/10 flex items-center justify-center">
                           <ion-icon name="business" style={{ fontSize: '32px', color: 'var(--sage)' }} />
                         </div>
                       )}
-                      {/* Shimmer overlay on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 group-hover:translate-x-full"></div>
                     </div>
 
                     {/* Rating badge */}
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.5, duration: 0.4 }}
-                      className="absolute -bottom-2 -right-2 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full p-2 shadow-lg"
-                    >
+                    <div className="absolute -bottom-2 -right-2 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full p-2 shadow-lg">
                       <div className="flex items-center space-x-1">
                         <ion-icon name="star" style={{ color: 'white', fontSize: '12px' }} />
                         <span className="font-urbanist text-xs font-700 text-white">
                           {business.stats?.average_rating?.toFixed(1) || '0.0'}
                         </span>
                       </div>
-                    </motion.div>
+                    </div>
                   </div>
-                </motion.div>
+                </div>
 
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
-                  className="font-urbanist text-heading-md md:text-5xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-6 md:mb-8 text-center"
-                >
+                <h2 className="font-urbanist text-2xl md:text-3xl font-700 text-charcoal mb-8 text-center">
                   Write a Review for {businessName}
-                </motion.h2>
+                </h2>
 
                 {/* Overall Rating */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  className="mb-8"
-                >
-                  <h3 className="font-urbanist text-body-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
-                    <motion.div
-                      animate={{ rotate: [0, 5, -5, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
-                      className="w-6 h-6 bg-gradient-to-br from-coral/20 to-coral/10 rounded-full flex items-center justify-center mr-3"
-                    >
+                <div className="mb-8">
+                  <h3 className="font-urbanist text-lg md:text-xl font-600 text-charcoal mb-4 flex items-center justify-center md:justify-start">
+                    <div className="w-6 h-6 bg-coral/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="star" style={{ color: 'var(--coral)', fontSize: '16px' }} />
-                    </motion.div>
-                    Overall rating
+                    </div>
+                    Overall rating<span className="text-coral ml-1">*</span>
                   </h3>
-                  <div className="flex items-center justify-center space-x-1 md:space-x-2 mb-2">
+                  <div
+                    className="flex items-center justify-center space-x-2 mb-2"
+                    role="radiogroup"
+                    aria-label="Overall rating"
+                    aria-required="true"
+                  >
                     {[1, 2, 3, 4, 5].map((star) => (
-                      <motion.button
+                      <button
                         key={star}
                         onClick={() => handleStarClick(star)}
-                        whileHover={{ scale: 1.2 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="p-1 md:p-2 focus:outline-none transition-all duration-300 rounded-full hover:bg-sage/10"
+                        onKeyDown={(e) => handleKeyDown(e, star)}
+                        className="p-2 focus:outline-none transition-all rounded-full hover:bg-sage/10 focus:ring-2 focus:ring-sage/50 touch-target-large"
+                        role="radio"
+                        aria-checked={overallRating === star}
+                        aria-label={`${star} star${star > 1 ? 's' : ''}`}
+                        tabIndex={overallRating === star ? 0 : -1}
                       >
                         <ion-icon
                           name={star <= overallRating ? "star" : "star-outline"}
@@ -303,125 +388,119 @@ export default function WriteReviewPage() {
                             fontSize: "2rem"
                           }}
                         ></ion-icon>
-                      </motion.button>
+                      </button>
                     ))}
                   </div>
-                  <p className="text-center font-urbanist text-sm font-400 text-charcoal/60">
-                    Tap to select rating
+                  <p className="text-center font-urbanist text-sm text-charcoal/60">
+                    {overallRating > 0 ? `${overallRating} star${overallRating > 1 ? 's' : ''} selected` : 'Tap to select rating'}
                   </p>
-                </motion.div>
+                </div>
 
                 {/* Quick Tags */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
-                  className="mb-8"
-                >
-                  <h3 className="font-urbanist text-body-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
-                    <motion.div
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                      className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3"
-                    >
-                      <ion-icon name="pricetags-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
-                    </motion.div>
-                    Choose up to 4 quick tags
-                  </h3>
-                  <div className="flex flex-wrap justify-center gap-2 md:gap-3">
-                    {quickTags.map((tag, index) => (
-                      <motion.button
+                <div className="mb-8">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-urbanist text-lg md:text-xl font-600 text-charcoal flex items-center">
+                      <div className="w-6 h-6 bg-sage/10 rounded-full flex items-center justify-center mr-3">
+                        <ion-icon name="pricetags-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
+                      </div>
+                      Choose quick tags
+                    </h3>
+                    <span className={`font-urbanist text-sm font-500 ${selectedTags.length >= MAX_TAGS ? 'text-coral' : 'text-charcoal/60'}`}>
+                      {selectedTags.length}/{MAX_TAGS}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap justify-center gap-3" role="group" aria-label="Quick tags">
+                    {quickTags.map((tag) => (
+                      <button
                         key={tag}
                         onClick={() => handleTagToggle(tag)}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.6 + (index * 0.1), duration: 0.3 }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
                         className={`
-                          px-4 md:px-6 py-3 md:py-4 rounded-full border-2 transition-all duration-300 font-urbanist text-sm font-600 btn-target
+                          px-6 py-3 rounded-full border-2 transition-all font-urbanist text-sm font-600 touch-target-large
                           ${selectedTags.includes(tag)
-                            ? 'bg-sage border-sage text-white shadow-lg'
-                            : 'bg-white/80 backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
+                            ? 'bg-sage border-sage text-white'
+                            : 'bg-white border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
                           }
+                          ${selectedTags.length >= MAX_TAGS && !selectedTags.includes(tag) ? 'opacity-50 cursor-not-allowed' : ''}
                           focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2
                         `}
+                        aria-pressed={selectedTags.includes(tag)}
+                        aria-label={`Tag: ${tag}`}
+                        disabled={selectedTags.length >= MAX_TAGS && !selectedTags.includes(tag)}
                       >
                         {tag}
-                      </motion.button>
+                      </button>
                     ))}
                   </div>
-                </motion.div>
+                </div>
 
                 {/* Review Title */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.75, duration: 0.6 }}
-                  className="mb-6"
-                >
-                  <h3 className="font-urbanist text-body-lg md:text-2xl font-600 text-charcoal mb-3 flex items-center justify-center md:justify-start">
-                    <motion.div
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
-                      className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3"
-                    >
+                <div className="mb-6">
+                  <h3 className="font-urbanist text-lg md:text-xl font-600 text-charcoal mb-3 flex items-center justify-center md:justify-start">
+                    <div className="w-6 h-6 bg-sage/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="pencil-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
-                    </motion.div>
+                    </div>
                     Review Title (Optional)
                   </h3>
-                  <motion.input
+                  <input
                     type="text"
                     value={reviewTitle}
                     onChange={(e) => setReviewTitle(e.target.value)}
                     placeholder="Summarize your experience in a few words..."
-                    whileFocus={{ scale: 1.01 }}
-                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 shadow-sm input-mobile"
+                    className="w-full bg-white border border-sage/20 px-6 py-4 font-urbanist text-base text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all disabled:bg-charcoal/5 disabled:cursor-not-allowed"
+                    disabled={isSubmitting}
+                    aria-label="Review title"
                   />
-                </motion.div>
+                </div>
 
                 {/* Review Text */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                  className="mb-8"
-                >
-                  <h3 className="font-urbanist text-body-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
-                    <motion.div
-                      animate={{ rotate: [0, -5, 5, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 5 }}
-                      className="w-6 h-6 bg-gradient-to-br from-coral/20 to-coral/10 rounded-full flex items-center justify-center mr-3"
-                    >
-                      <ion-icon name="create-outline" style={{ color: 'var(--coral)', fontSize: '16px' }} />
-                    </motion.div>
-                    Tell us about your experience
-                  </h3>
-                  <motion.textarea
+                <div className="mb-8">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-urbanist text-lg md:text-xl font-600 text-charcoal flex items-center">
+                      <div className="w-6 h-6 bg-coral/10 rounded-full flex items-center justify-center mr-3">
+                        <ion-icon name="create-outline" style={{ color: 'var(--coral)', fontSize: '16px' }} />
+                      </div>
+                      Tell us about your experience<span className="text-coral ml-1">*</span>
+                    </h3>
+                    <span className={`font-urbanist text-sm font-500 ${characterCountColor}`}>
+                      {characterCount}/{MAX_REVIEW_LENGTH}
+                    </span>
+                  </div>
+                  <textarea
                     value={reviewText}
-                    onChange={(e) => setReviewText(e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value.length <= MAX_REVIEW_LENGTH) {
+                        setReviewText(e.target.value);
+                      }
+                    }}
                     placeholder="Share your thoughts and help other locals..."
                     rows={4}
-                    whileFocus={{ scale: 1.02 }}
-                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none shadow-sm flex-1 min-h-[120px] md:min-h-0 input-mobile"
+                    className={`w-full bg-white border px-6 py-4 font-urbanist text-base text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 transition-all resize-none min-h-[120px] disabled:bg-charcoal/5 disabled:cursor-not-allowed ${
+                      reviewText.length < MIN_REVIEW_LENGTH && reviewText.length > 0
+                        ? 'border-amber-500'
+                        : reviewText.length > MAX_REVIEW_LENGTH
+                        ? 'border-coral'
+                        : 'border-sage/20 focus:border-sage'
+                    }`}
+                    disabled={isSubmitting}
+                    aria-required="true"
+                    aria-invalid={reviewText.length > 0 && reviewText.length < MIN_REVIEW_LENGTH}
+                    aria-describedby="review-text-hint"
                   />
-                </motion.div>
+                  <p id="review-text-hint" className="mt-2 text-sm text-charcoal/60 font-urbanist">
+                    {reviewText.length === 0
+                      ? `Minimum ${MIN_REVIEW_LENGTH} characters required`
+                      : reviewText.length < MIN_REVIEW_LENGTH
+                      ? `${MIN_REVIEW_LENGTH - reviewText.length} more characters needed`
+                      : ''}
+                  </p>
+                </div>
 
                 {/* Image Upload */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.85, duration: 0.6 }}
-                  className="mb-8"
-                >
-                  <h3 className="font-urbanist text-body-lg md:text-3xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
-                    <motion.div
-                      animate={{ rotate: [0, 10, -10, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
-                      className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3"
-                    >
+                <div className="mb-8">
+                  <h3 className="font-urbanist text-lg md:text-xl font-600 text-charcoal mb-4 flex items-center justify-center md:justify-start">
+                    <div className="w-6 h-6 bg-sage/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="camera-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
-                    </motion.div>
+                    </div>
                     Add Photos (Optional)
                   </h3>
                   <ImageUpload
@@ -429,68 +508,54 @@ export default function WriteReviewPage() {
                     maxImages={5}
                     disabled={submitting}
                   />
-                </motion.div>
-
+                </div>
 
                 {/* Submit Button */}
-                <motion.button
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9, duration: 0.6 }}
-                  whileHover={isFormValid && !submitting ? { scale: 1.02, y: -2 } : {}}
-                  whileTap={isFormValid && !submitting ? { scale: 0.98 } : {}}
+                <button
                   onClick={handleSubmitReview}
                   className={`
-                    w-full py-4 md:py-5 px-6 md:px-8 rounded-xl md:rounded-2xl font-urbanist text-body md:text-2xl font-600 transition-all duration-300 relative overflow-hidden btn-target btn-press
-                    ${isFormValid && !submitting
-                      ? 'bg-gradient-to-r from-sage to-sage/90 text-white focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 group'
+                    w-full py-4 px-8 font-urbanist text-lg font-600 transition-all touch-target-large relative overflow-hidden
+                    ${isFormValid && !isSubmitting
+                      ? 'bg-sage text-white hover:bg-sage/90 active:scale-98 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2'
                       : 'bg-charcoal/20 text-charcoal/40 cursor-not-allowed'
                     }
                   `}
-                  disabled={!isFormValid || submitting}
+                  disabled={!isFormValid || isSubmitting}
+                  aria-label={isSubmitting ? 'Submitting review' : 'Submit review'}
+                  aria-busy={isSubmitting}
                 >
-                  {isFormValid && !submitting && (
-                    <motion.div
-                      initial={{ x: '-100%' }}
-                      whileHover={{ x: '100%' }}
-                      transition={{ duration: 0.6 }}
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
-                    />
-                  )}
-                  <span className="relative z-10 flex items-center justify-center space-x-2">
-                    {submitting ? (
+                  <span className="flex items-center justify-center space-x-2">
+                    {isSubmitting ? (
                       <>
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                        />
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         <span>Submitting...</span>
                       </>
                     ) : (
                       <>
                         <span>Submit Review</span>
                         {isFormValid && (
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            whileHover={{ opacity: 1 }}
-                          >
-                            <ion-icon name="arrow-forward-outline" />
-                          </motion.div>
+                          <ion-icon name="arrow-forward-outline" />
                         )}
                       </>
                     )}
                   </span>
-                </motion.button>
+                </button>
+
+                {/* Validation hint */}
+                {!isFormValid && (overallRating === 0 || reviewText.length < MIN_REVIEW_LENGTH) && (
+                  <p className="mt-3 text-sm text-center text-charcoal/60 font-urbanist">
+                    {overallRating === 0 && reviewText.length < MIN_REVIEW_LENGTH
+                      ? 'Please select a rating and write a review'
+                      : overallRating === 0
+                      ? 'Please select a rating'
+                      : `Please write at least ${MIN_REVIEW_LENGTH} characters`}
+                  </p>
+                )}
               </div>
             </div>
-          </PremiumHover>
-        </FadeInUp>
+          </div>
+        </div>
       </div>
-
-      {/* Footer */}
-      <Footer />
-      </div>
-    </>
+    </div>
   );
 }
