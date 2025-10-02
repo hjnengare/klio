@@ -47,15 +47,15 @@ export function ToastProvider({ children }: ToastProviderProps) {
   const getToastStyles = (type: Toast['type']) => {
     switch (type) {
       case 'success':
-        return 'bg-sage/95 border-sage/30 text-white';
+        return 'bg-white text-sage';
       case 'sage':
-        return 'bg-sage/95 border-sage/30 text-white';
+        return 'bg-white text-sage';
       case 'error':
-        return 'bg-red-500/95 border-red-400/30 text-white';
+        return 'bg-white text-red-500';
       case 'warning':
-        return 'bg-amber-500/95 border-amber-400/30 text-white';
+        return 'bg-white text-amber-500';
       default:
-        return 'bg-charcoal/95 border-charcoal/30 text-white';
+        return 'bg-white text-charcoal';
     }
   };
 
@@ -90,7 +90,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
             <div
               key={toast.id}
               className={`
-                pointer-events-auto max-w-sm w-full backdrop-blur-xl border rounded-xl p-4 shadow-2xl
+                pointer-events-auto max-w-sm w-full backdrop-blur-xl rounded-xl p-4 shadow-2xl
                 transition-all duration-300 ease-out
                 ${getToastStyles(toast.type)}
               `}
