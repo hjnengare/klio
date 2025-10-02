@@ -10,7 +10,7 @@ export default function EventsSpecials({
   title = "Events & Specials",
   events,
   cta = "See More...",
-  href = "/events",
+  href = "/events-specials",
 }: {
   title?: string;
   events: Event[];

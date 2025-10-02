@@ -1,0 +1,192 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import EventCard from "../components/EventCard/EventCard";
+import Footer from "../components/Footer/Footer";
+import { EVENTS_AND_SPECIALS, Event } from "../data/eventsData";
+import { useToast } from "../contexts/ToastContext";
+
+const ITEMS_PER_PAGE = 8;
+
+export default function EventsSpecialsPage() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedFilter, setSelectedFilter] = useState<"all" | "event" | "special">("all");
+  const { showToast } = useToast();
+
+  // Filter events based on selected type
+  const filteredEvents = EVENTS_AND_SPECIALS.filter(event => {
+    if (selectedFilter === "all") return true;
+    return event.type === selectedFilter;
+  });
+
+  const totalPages = Math.ceil(filteredEvents.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentEvents = filteredEvents.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filter changes
+  const handleFilterChange = (filter: "all" | "event" | "special") => {
+    setSelectedFilter(filter);
+    setCurrentPage(1);
+  };
+
+  const handleBookmark = (event: Event) => {
+    showToast(`${event.title} saved to your bookmarks!`, "success");
+  };
+
+  return (
+    <div className="min-h-dvh bg-white/90 relative overflow-hidden">
+      {/* Static background layers */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-coral/3 via-transparent to-sage/3" />
+      </div>
+
+      {/* Header */}
+      <motion.header
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="bg-white/90/80 backdrop-blur-xl border-b border-coral/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
+      >
+        <div className="flex items-center justify-between max-w-[1300px] mx-auto">
+          {/* Back button */}
+          <Link href="/home" className="group flex items-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-coral/20 hover:to-coral/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-coral/20 mr-2 sm:mr-4">
+              <ion-icon name="arrow-back" class="text-lg sm:text-xl text-charcoal/70 group-hover:text-coral transition-colors duration-300" />
+            </div>
+            <motion.h1
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-coral via-coral/90 to-charcoal transition-all duration-300 group-hover:from-coral/90 group-hover:to-coral relative"
+            >
+              Events & Specials
+            </motion.h1>
+          </Link>
+        </div>
+      </motion.header>
+
+      {/* Main content with proper spacing */}
+      <div className="pb-6 relative z-10">
+        {/* Filter tabs */}
+        <div className="px-3 sm:px-4 md:px-6 lg:px-8 pt-6 pb-4">
+          <div className="max-w-[1300px] mx-auto">
+            <div className="flex gap-2 justify-center">
+              <button
+                onClick={() => handleFilterChange("all")}
+                className={`px-4 py-2 rounded-full font-urbanist font-600 text-sm transition-all duration-200 ${
+                  selectedFilter === "all"
+                    ? "bg-coral text-white shadow-lg"
+                    : "bg-white/80 text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-coral/20"
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => handleFilterChange("event")}
+                className={`px-4 py-2 rounded-full font-urbanist font-600 text-sm transition-all duration-200 ${
+                  selectedFilter === "event"
+                    ? "bg-coral text-white shadow-lg"
+                    : "bg-white/80 text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-coral/20"
+                }`}
+              >
+                Events
+              </button>
+              <button
+                onClick={() => handleFilterChange("special")}
+                className={`px-4 py-2 rounded-full font-urbanist font-600 text-sm transition-all duration-200 ${
+                  selectedFilter === "special"
+                    ? "bg-coral text-white shadow-lg"
+                    : "bg-white/80 text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-coral/20"
+                }`}
+              >
+                Specials
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Results count */}
+        <div className="px-3 sm:px-4 md:px-6 lg:px-8 pb-2">
+          <div className="max-w-[1300px] mx-auto">
+            <p className="font-urbanist text-sm text-charcoal/60">
+              Showing {currentEvents.length} {selectedFilter === "all" ? "events & specials" : selectedFilter === "event" ? "events" : "specials"}
+            </p>
+          </div>
+        </div>
+
+        {/* Main events grid */}
+        <div className="px-3 sm:px-4 md:px-6 lg:px-8">
+          <div className="max-w-[1300px] mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {currentEvents.map((event) => (
+                <div key={event.id} className="animate-fade-in-up list-none relative group">
+                  <EventCard event={event} />
+                  {/* Bookmark button */}
+                  <button
+                    onClick={() => handleBookmark(event)}
+                    className="absolute top-2 right-2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-white hover:scale-110 z-20"
+                    aria-label="Bookmark event"
+                  >
+                    <ion-icon name="bookmark-outline" class="text-lg text-coral font-bold" />
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-2 mt-12">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="w-10 h-10 rounded-full border border-charcoal/20 flex items-center justify-center hover:bg-coral/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
+                  aria-label="Previous page"
+                >
+                  <ion-icon name="chevron-back" class="text-lg text-charcoal/70" />
+                </button>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`w-10 h-10 rounded-full font-urbanist font-600 text-sm transition-all duration-200 ${
+                      currentPage === page
+                        ? 'bg-coral text-white'
+                        : 'border border-charcoal/20 text-charcoal/70 hover:bg-coral/5'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="w-10 h-10 rounded-full border border-charcoal/20 flex items-center justify-center hover:bg-coral/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
+                  aria-label="Next page"
+                >
+                  <ion-icon name="chevron-forward" class="text-lg text-charcoal/70" />
+                </button>
+              </div>
+            )}
+
+            {currentEvents.length === 0 && (
+              <div className="text-center py-16">
+                <ion-icon name="calendar-outline" class="text-6xl text-charcoal/20 mb-4" />
+                <h3 className="font-urbanist font-700 text-xl text-charcoal/60 mb-2">No {selectedFilter === "event" ? "events" : "specials"} found</h3>
+                <p className="font-urbanist text-charcoal/40">Check back later for new {selectedFilter === "event" ? "events" : "specials"}!</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <Footer />
+
+    </div>
+  );
+}
