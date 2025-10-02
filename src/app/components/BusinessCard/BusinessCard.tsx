@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import React, { useMemo, useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
@@ -77,6 +76,10 @@ function BusinessCard({ business }: { business: Business }) {
     if (!isDesktop) setShowActions(!showActions);
   };
 
+  const handleCardClick = () => {
+    router.push(`/business/${business.id}`);
+  };
+
   const handleWriteReview = () => router.push(reviewRoute);
   const handleBookmark = () => console.log("Bookmark clicked:", business.name);
   const handleShare = () => console.log("Share clicked:", business.name);
@@ -89,7 +92,14 @@ function BusinessCard({ business }: { business: Business }) {
       <div className="bg-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[70vh] sm:h-auto flex flex-col">
           <div
             className="relative overflow-hidden rounded-t-[6px] flex-1 sm:flex-initial"
-            onClick={toggleActions}
+            onClick={(e) => {
+              // On mobile, toggle actions. On desktop, navigate to profile
+              if (!isDesktop) {
+                toggleActions();
+              } else {
+                handleCardClick();
+              }
+            }}
           >
             <motion.div
               animate={{ scale: showActions ? 1.05 : 1 }}
@@ -157,7 +167,7 @@ function BusinessCard({ business }: { business: Business }) {
                   handleWriteReview();
                 }}
               >
-                <ion-icon name="create" class="text-lg text-charcoal font-bold" />
+                <ion-icon name="create" class="text-lg text-charcoal" />
               </button>
               <button
                 className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
@@ -166,7 +176,7 @@ function BusinessCard({ business }: { business: Business }) {
                   handleBookmark();
                 }}
               >
-                <ion-icon name="heart" class="text-lg text-charcoal font-bold" />
+                <ion-icon name="heart" class="text-lg text-charcoal" />
               </button>
               <button
                 className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
@@ -175,21 +185,15 @@ function BusinessCard({ business }: { business: Business }) {
                   handleShare();
                 }}
               >
-                <ion-icon name="share-social" class="text-lg text-charcoal font-bold" />
+                <ion-icon name="share-social" class="text-lg text-charcoal" />
               </button>
             </div>
           </div>
 
-          <div className="p-5 relative flex-shrink-0">
+          <div className="p-5 relative flex-shrink-0 cursor-pointer" onClick={handleCardClick}>
             <div className="mb-1">
               <h3 className="font-urbanist text-base md:text-lg font-700 text-charcoal transition-colors duration-200 md:group-hover:text-sage">
-                <Link
-                  href={business.href || "#"}
-                  prefetch={true}
-                  className="md:hover:underline decoration-2 underline-offset-2"
-                >
-                  {business.name}
-                </Link>
+                {business.name}
               </h3>
             </div>
 
