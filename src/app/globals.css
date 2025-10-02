@@ -1,19 +1,5 @@
 @import "tailwindcss";
 
-/* Normal Scrolling */
-.horizontal-scroll {
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: auto;
-}
-
-.snap-start {
-  /* No snap */
-}
-
-.snap-always {
-  /* No snap */
-}
-
 @theme reference {
   --color-hoockers-green: hsl(148, 20%, 38%);
   --color-hoockers-green-20: hsl(148, 20%, 38%, 0.2);
@@ -98,9 +84,6 @@
     font-size: 100%; /* Standard 16px base for accessibility */
     margin: 0;
     padding: 0;
-    height: 100%;
-    min-height: 100vh;
-    scroll-behavior: auto;
   }
 
   body {
@@ -109,18 +92,12 @@
     background-color: hsl(0, 0%, 100%);
     margin: 0;
     padding: 0;
-    min-height: 100vh;
     width: 100%;
     max-width: 100vw;
     overflow-x: hidden;
-    overflow-y: scroll;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
-    /* Enhanced smooth scrolling on mobile */
-    overscroll-behavior-y: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
   }
 
   /* Reset default margins and paddings */
@@ -220,9 +197,8 @@
     transform: translateZ(0);
   }
 
-  /* Prevent horizontal scroll bounce on iOS */
+  /* Background styling */
   body {
-    overscroll-behavior-x: none;
     background: linear-gradient(to bottom right, #f2e3da 0%, rgba(242, 227, 218, 0.98) 50%, rgba(242, 227, 218, 0.95) 100%);
     background-attachment: fixed;
   }
@@ -231,9 +207,6 @@
   .horizontal-scroll {
     scrollbar-width: none;
     -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: auto;
-    touch-action: pan-x;
   }
 
   .horizontal-scroll::-webkit-scrollbar {
@@ -292,21 +265,8 @@
   }
 
 
-  /* Fix iOS safari viewport height issues and prevent unintended scroll */
+  /* Fix iOS safari viewport height issues */
   @supports (-webkit-touch-callout: none) {
-    html {
-      height: 100vh;
-      height: -webkit-fill-available;
-    }
-
-    body {
-      height: 100vh;
-      height: -webkit-fill-available;
-      overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
     .min-h-dvh {
       min-height: 100vh;
       min-height: -webkit-fill-available;
@@ -444,29 +404,6 @@
     }
   }
 
-  /* iOS Safari specific viewport height */
-  @supports (-webkit-touch-callout: none) {
-    .min-h-dvh-safe {
-      min-height: -webkit-fill-available;
-    }
-
-    .h-screen-safe {
-      height: -webkit-fill-available;
-    }
-
-    .full-viewport {
-      min-height: -webkit-fill-available !important;
-      height: -webkit-fill-available !important;
-    }
-
-    .mobile-page {
-      height: -webkit-fill-available;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior-y: none;
-    }
-  }
 
   /* Premium CSS Animations */
   @keyframes bounceRight {
@@ -620,87 +557,16 @@
     touch-action: manipulation;
   }
 
-  /* Mobile-specific viewport handling */
-  @supports (height: 100dvh) {
-    .min-h-dvh {
-      min-height: 100dvh;
-    }
-    .h-dvh {
-      height: 100dvh;
-    }
-  }
-
   /* Prevent iOS zoom on input focus */
   @supports (-webkit-touch-callout: none) {
     input, textarea, select {
       font-size: 16px !important;
-      transform: translateZ(0);
     }
-  }
-
-  /* Enhanced smooth scrolling for mobile */
-  .mobile-scroll-container {
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: auto;
-    overflow-y: scroll;
-    /* Improved touch responsiveness */
-    touch-action: pan-y;
-    scroll-behavior: smooth;
-  }
-
-  /* Android Chrome address bar handling */
-  @media screen and (max-width: 768px) {
-    .mobile-viewport {
-      min-height: 100vh;
-      min-height: 100dvh;
-    }
-
-    /* Better button spacing on mobile */
-    .mobile-button-spacing {
-      margin-bottom: max(24px, env(safe-area-inset-bottom));
-    }
-  }
-
-  /* iOS Safari specific improvements */
-  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
-    .ios-safe-area {
-      padding-bottom: max(20px, env(safe-area-inset-bottom));
-      padding-top: max(20px, env(safe-area-inset-top));
-    }
-  }
-
-  /* Additional mobile edge case handling */
-  .safe-area-top {
-    margin-top: max(16px, env(safe-area-inset-top));
-  }
-
-  /* Prevent bounce scroll on iOS while maintaining smooth scrolling */
-  .mobile-scroll-container {
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch !important;
-  }
-
-  /* Smooth page scrolling utility */
-  .smooth-scroll {
-    -webkit-overflow-scrolling: touch !important;
-    scroll-behavior: smooth;
-    overflow-y: auto;
-    touch-action: pan-y;
-  }
-
-  /* Fix tap highlight on iOS/Android */
-  .mobile-interaction {
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-    touch-action: manipulation;
   }
 
   /* Modal scroll lock utilities - prevent layout shifts */
   .modal-scroll-lock {
     overflow: hidden !important;
-    touch-action: none;
-    -webkit-overflow-scrolling: auto;
-    overscroll-behavior: contain;
   }
 
   /* Scrollbar width compensation utility */
@@ -752,118 +618,6 @@
     transform: translateX(0);
   }
 
-  /* Enhanced viewport height fixes for mobile browsers */
-  .mobile-vh-fix {
-    min-height: 100vh;
-    min-height: 100dvh;
-    min-height: 100svh; /* Small viewport height */
-    min-height: -webkit-fill-available;
-    min-height: calc(var(--vh, 1vh) * 100);
-    min-height: calc(var(--window-height, 100vh));
-  }
-
-  /* Enhanced address bar hiding */
-  .hide-address-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    height: 100svh; /* Small viewport height */
-    height: -webkit-fill-available;
-    height: calc(var(--vh, 1vh) * 100);
-    height: calc(var(--window-height, 100vh));
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: none;
-    touch-action: pan-y;
-  }
-
-  /* Aggressive fullscreen mobile experience */
-  .mobile-fullscreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    height: 100svh;
-    height: -webkit-fill-available;
-    height: calc(var(--vh, 1vh) * 100);
-    overflow: hidden;
-    overscroll-behavior: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Mobile viewport container with enhanced address bar hiding */
-  .mobile-viewport-container {
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    height: 100svh;
-    height: -webkit-fill-available;
-    height: calc(var(--vh, 1vh) * 100);
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: none;
-    overscroll-behavior-x: none;
-    touch-action: pan-y;
-  }
-
-  /* Enhanced fullscreen experience */
-  @supports (display-mode: standalone) {
-    .hide-address-bar {
-      height: 100vh;
-      height: 100dvh;
-    }
-  }
-
-  /* PWA standalone mode optimizations */
-  @media (display-mode: standalone) {
-    body {
-      background-color: #749176; /* Sage background for PWA */
-    }
-
-    .mobile-page {
-      height: 100vh;
-      height: 100dvh;
-    }
-  }
-
-  /* Enhanced iOS Safari fullscreen */
-  @supports (-webkit-touch-callout: none) and (display-mode: browser) {
-    .ios-fullscreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      height: -webkit-fill-available;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      z-index: 1;
-    }
-
-    /* Force minimal UI on iOS Safari */
-    .ios-minimal-ui {
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  /* iOS Safari specific fixes */
-  @supports (-webkit-appearance: none) {
-    .hide-address-bar {
-      min-height: -webkit-fill-available;
-    }
-  }
 
   /* Scroll reveal animations */
   .scroll-reveal {

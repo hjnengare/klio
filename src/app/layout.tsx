@@ -102,7 +102,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
-      <body className={`${urbanist.className} mobile-vh-fix mobile-scroll-container no-layout-shift`}>
+      <body className={`${urbanist.className} no-layout-shift`}>
         <AddressBarHide />
         <WebVitals />
         <ErrorBoundary>
