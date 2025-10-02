@@ -99,7 +99,28 @@ export default function BusinessProfilePage() {
             {business.name}
           </motion.h1>
 
-          <div className="w-10"></div>
+          {/* Profile Picture Placeholder */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            {business.image ? (
+              <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sage/20">
+                <Image
+                  src={business.image}
+                  alt={`${business.name} profile`}
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sage/20 to-sage/10 flex items-center justify-center ring-2 ring-sage/20">
+                <ion-icon name="business" style={{ fontSize: '20px', color: 'var(--sage)' }} />
+              </div>
+            )}
+          </motion.div>
         </div>
       </motion.header>
 
