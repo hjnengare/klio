@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import FallbackImage from "../components/FallbackImage/FallbackImage";
@@ -27,86 +28,99 @@ const topReviewers: LeaderboardUser[] = [
   { rank: 5, username: "TasteExplorer", reviews: 10, avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.5 },
   { rank: 6, username: "CityScout", reviews: 8, avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.4 },
   { rank: 7, username: "GemHunter", reviews: 7, avatar: "https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.3 },
-  { rank: 8, username: "ReviewMaster", reviews: 6, avatar: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.2 }
+  { rank: 8, username: "ReviewMaster", reviews: 6, avatar: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.2 },
+  { rank: 9, username: "FoodieLife", reviews: 5, avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.1 },
+  { rank: 10, username: "UrbanExplorer", reviews: 5, avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 4.0 },
+  { rank: 11, username: "TrendSetter", reviews: 4, avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 3.9 },
+  { rank: 12, username: "NightOwl", reviews: 4, avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 3.8 },
+  { rank: 13, username: "VibeChecker", reviews: 3, avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 3.7 },
+  { rank: 14, username: "QualityFirst", reviews: 3, avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 3.6 },
+  { rank: 15, username: "StyleHunter", reviews: 2, avatar: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 3.5 }
 ];
 
-interface BusinessOfMonth {
-  name: string;
-  rating: number;
-  category: string;
-  image: string;
-  location: string;
-  ownerName: string;
-  ownerAvatar: string;
-  reviews: number;
-}
-
-const businessOfMonth: BusinessOfMonth[] = [
-  {
-    name: "Mama's Kitchen",
-    rating: 4.9,
-    category: "Restaurant",
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-    location: "Downtown",
-    ownerName: "Maria Santos",
-    ownerAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80",
-    reviews: 127
-  },
-  {
-    name: "Bella's Hair",
-    rating: 4.8,
-    category: "Beauty",
-    image: "https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-    location: "Arts District",
-    ownerName: "Isabella Chen",
-    ownerAvatar: "https://images.unsplash.com/photo-1494790108755-2616b332e234?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80",
-    reviews: 89
-  },
-  {
-    name: "Fresh Flowers",
-    rating: 4.9,
-    category: "Florist",
-    image: "https://images.unsplash.com/photo-1463320726281-696a485928c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-    location: "Riverside",
-    ownerName: "David Green",
-    ownerAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80",
-    reviews: 156
-  },
-  {
-    name: "Ocean Kloof",
-    rating: 4.9,
-    category: "Restaurant",
-    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-    location: "Old Town",
-    ownerName: "James Wilson",
-    ownerAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80",
-    reviews: 203
-  },
-  {
-    name: "Apple Store",
-    rating: 4.5,
-    category: "Tech",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-    location: "Westside",
-    ownerName: "Sarah Johnson",
-    ownerAvatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80",
-    reviews: 74
-  },
-  {
-    name: "Pet Store A",
-    rating: 4.9,
-    category: "Pets",
-    image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-    location: "Main Street",
-    ownerName: "Michael Brown",
-    ownerAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80",
-    reviews: 342
-  }
-];
 
 export default function LeaderboardPage() {
+  const [showFullLeaderboard, setShowFullLeaderboard] = useState(false);
+  const [showToast, setShowToast] = useState(true);
+
   return (
     <div className="min-h-dvh bg-white/90 pb-6 relative overflow-hidden">
+      {/* Motivational Toast with Overlay */}
+      <AnimatePresence>
+        {showToast && (
+          <>
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-50"
+              onClick={() => setShowToast(false)}
+            />
+
+            {/* Toast Modal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-xl mx-4"
+            >
+              <div className="bg-gradient-to-br from-sage via-sage/95 to-sage/90 text-white rounded-3xl shadow-2xl p-8 md:p-10 backdrop-blur-xl border-2 border-white/30 relative overflow-hidden">
+                {/* Decorative elements */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-coral/20 rounded-full blur-3xl"></div>
+
+                <div className="relative z-10">
+                  {/* Icon */}
+                  <div className="flex justify-center mb-6">
+                    <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center shadow-xl">
+                      <ion-icon name="trophy" class="text-5xl text-white drop-shadow-lg" />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="text-center">
+                    <h3 className="font-urbanist text-2xl md:text-3xl font-700 mb-4">
+                      Join the Top Contributors! 🌟
+                    </h3>
+                    <p className="font-urbanist text-base md:text-lg font-400 text-white/95 mb-8 leading-relaxed max-w-md mx-auto">
+                      These amazing reviewers are helping our community grow. Share your experiences and climb the leaderboard!
+                    </p>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      <button
+                        onClick={() => setShowToast(false)}
+                        className="bg-white text-sage font-urbanist text-base font-600 py-3 px-8 rounded-full hover:bg-white/90 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
+                      >
+                        Start Reviewing
+                      </button>
+                      <button
+                        onClick={() => setShowToast(false)}
+                        className="bg-white/20 backdrop-blur-sm text-white font-urbanist text-base font-600 py-3 px-8 rounded-full hover:bg-white/30 transition-all duration-200 border border-white/40"
+                      >
+                        Maybe Later
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Close button */}
+                  <button
+                    onClick={() => setShowToast(false)}
+                    className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center hover:bg-white/20 rounded-full transition-colors duration-200"
+                    aria-label="Close"
+                  >
+                    <ion-icon name="close" class="text-2xl text-white" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* Premium background elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-sage/8 via-sage/4 to-transparent rounded-full blur-3xl animate-pulse" />
@@ -119,47 +133,38 @@ export default function LeaderboardPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="bg-white/90/80 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm relative z-10"
+        className="bg-white/90/80 backdrop-blur-xl border-b border-sage/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
       >
         <div className="flex items-center justify-between max-w-[1300px] mx-auto">
           {/* Back button */}
           <Link href="/home" className="group flex items-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-4">
-              <ion-icon name="arrow-back" class="text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
+              <ion-icon name="arrow-back" class="text-lg sm:text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
             </div>
             <motion.h1
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="font-urbanist text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
+              className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
             >
               Community Highlights
             </motion.h1>
           </Link>
-
-          {/* Profile button */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-12 h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20"
-          >
-            <ion-icon name="person-outline" class="text-base text-charcoal/70 hover:text-sage transition-colors duration-300" />
-          </motion.button>
         </div>
       </motion.header>
 
-      <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12 relative z-10">
+      <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12 relative z-10">
         {/* Page Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <h2 className="font-urbanist text-base font-700 text-charcoal mb-4">
+          <h2 className="font-urbanist text-lg sm:text-xl md:text-2xl font-700 text-charcoal mb-2 sm:mb-4 px-4">
             Top Contributors This Month
           </h2>
-          <p className="font-urbanist text-base font-400 text-charcoal/70 max-w-2xl mx-auto">
+          <p className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70 max-w-2xl mx-auto px-4">
             Celebrating our community&apos;s most valued reviewers and featured businesses
           </p>
         </motion.div>
@@ -169,261 +174,250 @@ export default function LeaderboardPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="bg-white/90/95 backdrop-blur-xl shadow-xl border border-white/30 p-6 md:p-8 mb-12 relative overflow-hidden"
+          className="bg-white/90/95 backdrop-blur-xl shadow-xl border border-white/30 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 relative overflow-hidden rounded-2xl"
         >
           {/* Card decorative elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
           <div className="relative z-10">
-            <h3 className="font-urbanist text-base font-700 text-charcoal mb-8 text-center flex items-center justify-center gap-3">
-              <ion-icon name="trophy" class="text-base text-sage" />
+            <h3 className="font-urbanist text-base sm:text-lg font-700 text-charcoal mb-6 sm:mb-8 text-center flex items-center justify-center gap-2 sm:gap-3">
+              <ion-icon name="trophy" class="text-base sm:text-lg text-sage" />
               Top Reviewers
             </h3>
 
-            {/* Top 3 Podium - Responsive */}
-            <div className="flex flex-col sm:flex-row justify-center items-center sm:items-end gap-4 sm:gap-6 mb-8 sm:mb-12 px-2">
-              {/* 1st Place - Mobile First */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                className="text-center group cursor-pointer order-1 sm:order-2"
-              >
-                <div className="relative mb-4">
-                  <div className="w-24 h-24 sm:w-28 sm:h-28 relative rounded-full overflow-hidden border-4 border-sage mx-auto group-hover:scale-110 transition-transform duration-300 shadow-xl">
-                    <FallbackImage
-                      src={topReviewers[0].avatar}
-                      alt={topReviewers[0].username}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 96px, 112px"
-                      fallbackType="profile"
-                    />
-                  </div>
-                  <div className="absolute -top-3 -right-3 text-2xl sm:text-3xl animate-pulse">{topReviewers[0].badge}</div>
-                </div>
-                <div className="bg-white/90 rounded-[6px] p-4 sm:p-5 min-w-[140px] sm:min-w-[160px] shadow-xl border-2 border-sage/30 group-hover:shadow-2xl transition-all duration-300">
-                  <div className="font-urbanist text-lg sm:text-xl font-700 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300">@{topReviewers[0].username}</div>
-                  <div className="font-urbanist text-sm text-charcoal/70 mb-3"><span className="font-700">{topReviewers[0].reviews}</span> <span className="font-400">reviews</span></div>
-                  <div className="bg-gradient-to-r from-sage/20 to-sage/10 backdrop-blur-sm px-3 py-2 rounded-full shadow-sm border border-sage/20 flex items-center justify-center gap-1 mx-auto w-fit">
-                    <ion-icon name="star" class="text-base text-sage" />
-                    <span className="font-urbanist text-base font-700 text-charcoal">{topReviewers[0].totalRating}</span>
-                  </div>
-                </div>
-              </motion.div>
-
+            {/* Top 3 Podium - Professional */}
+            <div className="flex flex-col sm:flex-row justify-center items-end gap-4 sm:gap-4 mb-6 sm:mb-8 md:mb-12 px-2 max-w-3xl mx-auto">
               {/* 2nd Place */}
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
-                className="text-center group cursor-pointer order-2 sm:order-1"
+                className="text-center group cursor-pointer flex-1 w-full sm:max-w-[180px]"
               >
-                <div className="relative mb-4">
-                  <div className="w-18 h-18 sm:w-20 sm:h-20 relative rounded-full overflow-hidden border-4 border-coral/30 mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <div className="relative mb-2 sm:mb-3">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 relative rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-xl mx-auto ring-3 sm:ring-4 ring-coral/30">
                     <FallbackImage
                       src={topReviewers[1].avatar}
                       alt={topReviewers[1].username}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 640px) 72px, 80px"
+                      sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, 96px"
                       fallbackType="profile"
                     />
                   </div>
-                  <div className="absolute -top-2 -right-2 text-xl sm:text-2xl animate-bounce">{topReviewers[1].badge}</div>
+                  <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-coral to-coral/80 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+                    <span className="text-sm sm:text-lg font-bold text-white">2</span>
+                  </div>
                 </div>
-                <div className="bg-white/90 rounded-[6px] p-3 sm:p-4 min-w-[120px] sm:min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
-                  <div className="font-urbanist text-sm sm:text-base md:text-lg font-700 text-charcoal mb-1 group-hover:text-coral transition-colors duration-300">@{topReviewers[1].username}</div>
-                  <div className="font-urbanist text-xs sm:text-sm text-charcoal/70 mb-2"><span className="font-700">{topReviewers[1].reviews}</span> <span className="font-400">reviews</span></div>
-                  <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
-                    <ion-icon name="star" class="text-xs sm:text-sm text-coral" />
-                    <span className="font-urbanist text-xs sm:text-sm font-600 text-charcoal">{topReviewers[1].totalRating}</span>
+                <div className="font-urbanist text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 group-hover:text-coral transition-colors duration-300 truncate px-2">@{topReviewers[1].username}</div>
+                <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
+                  <span className="font-700 text-charcoal">{topReviewers[1].reviews}</span> reviews
+                </div>
+                <div className="bg-white backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-coral/20 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-2 sm:mb-3">
+                  <ion-icon name="star" class="text-sm text-coral" />
+                  <span className="font-urbanist text-sm font-700 text-charcoal">{topReviewers[1].totalRating}</span>
+                </div>
+                {/* Professional Podium Block */}
+                <div className="relative mt-auto">
+                  <div className="bg-gradient-to-b from-coral/25 to-coral/15 rounded-t-xl h-20 sm:h-28 md:h-32 w-full shadow-xl border-t-4 sm:border-t-[6px] border-coral relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+                    {/* Medal icon */}
+                    <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2">
+                      <ion-icon name="medal" class="text-lg sm:text-xl md:text-2xl text-coral/40" />
+                    </div>
+                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-4xl md:text-5xl font-900 text-coral/20">2</div>
                   </div>
                 </div>
               </motion.div>
 
+              {/* 1st Place */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="text-center group cursor-pointer flex-1 w-full sm:max-w-[200px] order-first sm:order-none"
+              >
+                <div className="relative mb-2 sm:mb-3">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 relative rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-2xl mx-auto ring-3 sm:ring-4 ring-sage">
+                    <FallbackImage
+                      src={topReviewers[0].avatar}
+                      alt={topReviewers[0].username}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, 128px"
+                      fallbackType="profile"
+                    />
+                  </div>
+                  <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-xl border-2 border-white">
+                    <ion-icon name="trophy" class="text-xl sm:text-2xl text-white" />
+                  </div>
+                </div>
+                <div className="font-urbanist text-sm sm:text-base md:text-xl font-700 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300 truncate px-2">@{topReviewers[0].username}</div>
+                <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
+                  <span className="font-700 text-charcoal">{topReviewers[0].reviews}</span> reviews
+                </div>
+                <div className="bg-white backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md border border-sage/30 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-3 sm:mb-4">
+                  <ion-icon name="star" class="text-base text-sage" />
+                  <span className="font-urbanist text-base font-700 text-charcoal">{topReviewers[0].totalRating}</span>
+                </div>
+                {/* Professional Podium Block */}
+                <div className="relative mt-auto">
+                  <div className="bg-gradient-to-b from-sage/35 to-sage/20 rounded-t-xl h-24 sm:h-36 md:h-48 w-full shadow-2xl border-t-4 sm:border-t-[6px] border-sage relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+                    {/* Crown and Medal icons */}
+                    <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5 sm:gap-1">
+                      <ion-icon name="star" class="text-xl sm:text-2xl md:text-3xl text-sage/30" />
+                      <ion-icon name="medal" class="text-lg sm:text-xl md:text-2xl text-amber-500/40" />
+                    </div>
+                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-5xl md:text-6xl font-900 text-sage/20">1</div>
+                  </div>
+                </div>
+              </motion.div>
 
               {/* 3rd Place */}
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7, duration: 0.6 }}
-                className="text-center group cursor-pointer order-3 sm:order-3"
+                className="text-center group cursor-pointer flex-1 w-full sm:max-w-[180px]"
               >
-                <div className="relative mb-4">
-                  <div className="w-18 h-18 sm:w-20 sm:h-20 relative rounded-full overflow-hidden border-4 border-charcoal/30 mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <div className="relative mb-2 sm:mb-3">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 relative rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-xl mx-auto ring-3 sm:ring-4 ring-charcoal/20">
                     <FallbackImage
                       src={topReviewers[2].avatar}
                       alt={topReviewers[2].username}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 640px) 72px, 80px"
+                      sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, 96px"
                       fallbackType="profile"
                     />
                   </div>
-                  <div className="absolute -top-2 -right-2 text-xl sm:text-2xl animate-bounce" style={{ animationDelay: "0.5s" }}>{topReviewers[2].badge}</div>
+                  <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-charcoal/70 to-charcoal/50 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+                    <span className="text-sm sm:text-lg font-bold text-white">3</span>
+                  </div>
                 </div>
-                <div className="bg-white/90 rounded-[6px] p-3 sm:p-4 min-w-[120px] sm:min-w-[140px] shadow-lg border border-white/50 group-hover:shadow-xl transition-all duration-300">
-                  <div className="font-urbanist text-sm sm:text-base md:text-lg font-700 text-charcoal mb-1 group-hover:text-charcoal/80 transition-colors duration-300">@{topReviewers[2].username}</div>
-                  <div className="font-urbanist text-xs sm:text-sm text-charcoal/70 mb-2"><span className="font-700">{topReviewers[2].reviews}</span> <span className="font-400">reviews</span></div>
-                  <div className="bg-white/50 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-white/30 flex items-center justify-center gap-1 mx-auto w-fit">
-                    <ion-icon name="star" class="text-xs sm:text-sm text-charcoal/60" />
-                    <span className="font-urbanist text-xs sm:text-sm font-600 text-charcoal">{topReviewers[2].totalRating}</span>
+                <div className="font-urbanist text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 group-hover:text-charcoal/80 transition-colors duration-300 truncate px-2">@{topReviewers[2].username}</div>
+                <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
+                  <span className="font-700 text-charcoal">{topReviewers[2].reviews}</span> reviews
+                </div>
+                <div className="bg-white backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-charcoal/20 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-2 sm:mb-3">
+                  <ion-icon name="star" class="text-sm text-charcoal/70" />
+                  <span className="font-urbanist text-sm font-700 text-charcoal">{topReviewers[2].totalRating}</span>
+                </div>
+                {/* Professional Podium Block */}
+                <div className="relative mt-auto">
+                  <div className="bg-gradient-to-b from-charcoal/20 to-charcoal/10 rounded-t-xl h-16 sm:h-24 md:h-28 w-full shadow-xl border-t-4 sm:border-t-[6px] border-charcoal/50 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+                    {/* Medal icon */}
+                    <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2">
+                      <ion-icon name="medal" class="text-lg sm:text-xl md:text-2xl text-charcoal/30" />
+                    </div>
+                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-4xl md:text-5xl font-900 text-charcoal/20">3</div>
                   </div>
                 </div>
               </motion.div>
             </div>
 
             {/* Rest of Rankings */}
-            <div className="space-y-3">
-              {topReviewers.slice(3).map((user, index) => (
+            <div className="space-y-2 sm:space-y-3">
+              {topReviewers.slice(3, showFullLeaderboard ? undefined : 8).map((user, index) => (
                 <motion.div
                   key={user.rank}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
-                  className="group bg-white/90 rounded-[6px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.01] cursor-pointer"
+                  className="group bg-white/90 rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer"
                 >
-                  <div className="flex items-center justify-between p-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-8 h-8 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center font-urbanist text-sm font-600 text-charcoal/70 shadow-sm">
+                  <div className="flex items-center justify-between p-3 sm:p-4">
+                    <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center font-urbanist text-xs sm:text-sm font-600 text-charcoal/70 shadow-sm flex-shrink-0">
                         {user.rank}
                       </div>
-                      <div className="w-12 h-12 relative rounded-full overflow-hidden border-2 border-white shadow-md group-hover:scale-105 transition-transform duration-300">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 relative rounded-full overflow-hidden border-2 border-white shadow-md flex-shrink-0">
                         <FallbackImage
                           src={user.avatar}
                           alt={user.username}
                           fill
                           className="object-cover"
-                          sizes="48px"
+                          sizes="(max-width: 640px) 40px, 48px"
                           fallbackType="profile"
                         />
                       </div>
-                      <div>
-                        <div className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-300">@{user.username}</div>
-                        <div className="font-urbanist text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
+                      <div className="min-w-0 flex-1">
+                        <div className="font-urbanist text-sm sm:text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-300 truncate">@{user.username}</div>
+                        <div className="font-urbanist text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
                       </div>
                     </div>
-                    <div className="bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1">
+                    <div className="bg-white/50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
                       <ion-icon name="star" class="text-sm text-coral" />
                       <span className="font-urbanist text-sm font-600 text-charcoal">{user.totalRating}</span>
                     </div>
                   </div>
                 </motion.div>
               ))}
-            </div>
 
-            <div className="text-center mt-8">
-              <button className="font-urbanist text-base font-600 text-sage hover:text-sage/80 transition-colors duration-300 px-6 py-2 hover:bg-sage/5 rounded-full">
-                View Full Leaderboard →
-              </button>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Businesses of the Month */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="bg-white/90/95 backdrop-blur-xl  shadow-xl border border-white/30 p-6 md:p-8 mb-8 relative overflow-hidden"
-        >
-          {/* Card decorative elements */}
-          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl"></div>
-          <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tr from-sage/10 to-transparent rounded-full blur-2xl"></div>
-
-          <div className="relative z-10">
-            <h3 className="font-urbanist text-lg md:text-xl font-700 text-charcoal mb-8 text-center flex items-center justify-center gap-3">
-              <ion-icon name="diamond" class="text-xl text-coral" />
-              Featured Businesses
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {businessOfMonth.map((business, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + index * 0.1, duration: 0.6 }}
-                  className="group bg-white/90 rounded-[6px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.03] cursor-pointer"
-                >
-                  <div className="relative overflow-hidden rounded-t-[6px]">
-                    <div className="relative">
-                      <FallbackImage
-                        src={business.image}
-                        alt={business.name}
-                        width={400}
-                        height={240}
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        className="h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[6px]"
-                        fallbackType="business"
-                      />
-
-                      {/* Rating badge - exactly matching BusinessCard style */}
-                      <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-6 bg-white/50 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
-                        <ion-icon name="star" class="text-coral text-sm drop-shadow-sm" />
-                        <span className="font-urbanist text-sm font-700">{business.rating.toFixed(1)}</span>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-4">
-                    {/* Business name - matching BusinessCard typography */}
-                    <div className="mb-1">
-                      <h3 className="font-urbanist text-base font-600 text-charcoal transition-colors duration-200 group-hover:text-sage">
-                        {business.name}
-                      </h3>
-                    </div>
-
-                    {/* Category and location line */}
-                    <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
-                      {business.category} - {business.location}
-                    </p>
-
-                    {/* Owner information */}
-                    <div className="flex items-center gap-2 mb-3">
-                      <FallbackImage
-                        src={business.ownerAvatar}
-                        alt={business.ownerName}
-                        width={24}
-                        height={24}
-                        className="rounded-full ring-1 ring-white/50 shadow-sm"
-                        sizes="24px"
-                        fallbackType="profile"
-                      />
-                      <div className="flex items-center gap-1 text-sm font-urbanist text-charcoal/60">
-                        <span>by {business.ownerName}</span>
-                        <span>•</span>
-                        <span><span className="font-700">{business.reviews}</span> <span className="font-400">reviews</span></span>
-                      </div>
-                    </div>
-
-                    {/* Rating display matching BusinessCard style */}
-                    <div className="flex items-center gap-2">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <ion-icon
-                            key={i}
-                            name={i < Math.floor(business.rating) ? "star" : business.rating > i ? "star-half" : "star-outline"}
-                            class={`text-sm ${i < business.rating ? "text-coral" : "text-charcoal/30"}`}
+              <AnimatePresence>
+                {showFullLeaderboard && topReviewers.slice(8).map((user, index) => (
+                  <motion.div
+                    key={user.rank}
+                    initial={{ opacity: 0, height: 0, y: -20 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -20 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className="group bg-white/90 rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer"
+                  >
+                    <div className="flex items-center justify-between p-3 sm:p-4">
+                      <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center font-urbanist text-xs sm:text-sm font-600 text-charcoal/70 shadow-sm flex-shrink-0">
+                          {user.rank}
+                        </div>
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 relative rounded-full overflow-hidden border-2 border-white shadow-md flex-shrink-0">
+                          <FallbackImage
+                            src={user.avatar}
+                            alt={user.username}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 640px) 40px, 48px"
+                            fallbackType="profile"
                           />
-                        ))}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="font-urbanist text-sm sm:text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-300 truncate">@{user.username}</div>
+                          <div className="font-urbanist text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
+                        </div>
                       </div>
-                      <p className="font-urbanist text-sm font-400 leading-none text-charcoal/70 transition-colors duration-200">Featured</p>
+                      <div className="bg-white/50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
+                        <ion-icon name="star" class="text-sm text-coral" />
+                        <span className="font-urbanist text-sm font-600 text-charcoal">{user.totalRating}</span>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
 
-            <div className="text-center mt-8">
-              <button className="font-urbanist text-base font-600 text-coral hover:text-coral/80 transition-colors duration-300 px-6 py-2 hover:bg-coral/5 rounded-full">
-                Explore All Businesses →
+            <div className="text-center mt-6 sm:mt-8">
+              <button
+                onClick={() => setShowFullLeaderboard(!showFullLeaderboard)}
+                className="font-urbanist text-sm sm:text-base font-600 text-sage hover:text-sage/80 transition-all duration-300 px-4 sm:px-6 py-2 hover:bg-sage/5 rounded-full flex items-center gap-2 mx-auto"
+              >
+                {showFullLeaderboard ? (
+                  <>
+                    <ion-icon name="chevron-up-outline" class="text-base" />
+                    Show Less
+                  </>
+                ) : (
+                  <>
+                    View Full Leaderboard
+                    <ion-icon name="chevron-down-outline" class="text-base" />
+                  </>
+                )}
               </button>
             </div>
           </div>
         </motion.div>
+
       </div>
 
       {/* Footer - only on larger screens */}
