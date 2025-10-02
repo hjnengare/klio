@@ -105,21 +105,16 @@ export default function BusinessProfilePage() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            {business.image ? (
-              <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sage/20">
-                <Image
-                  src={business.image}
-                  alt={`${business.name} profile`}
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sage/20 to-sage/10 flex items-center justify-center ring-2 ring-sage/20">
-                <ion-icon name="business" style={{ fontSize: '20px', color: 'var(--sage)' }} />
-              </div>
-            )}
+            <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sage/20">
+              <Image
+                src={business.image || 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=100&h=100&fit=crop'}
+                alt={`${business.name} profile`}
+                width={40}
+                height={40}
+                className="w-full h-full object-cover"
+                unoptimized={!business.image}
+              />
+            </div>
           </motion.div>
         </div>
       </motion.header>
@@ -142,22 +137,17 @@ export default function BusinessProfilePage() {
                     className="flex-shrink-0"
                   >
                     <div className="relative">
-                      {business.image ? (
-                        <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-[6px] overflow-hidden ring-4 ring-sage/20">
-                          <Image
-                            src={business.image}
-                            alt={`${business.name} photo`}
-                            width={224}
-                            height={224}
-                            className="w-full h-full object-cover"
-                            priority
-                          />
-                        </div>
-                      ) : (
-                        <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-[6px] bg-gradient-to-br from-sage/20 to-coral/20 flex items-center justify-center ring-4 ring-sage/20">
-                          <ion-icon name="restaurant" style={{ fontSize: '4rem', color: 'var(--sage)' }} />
-                        </div>
-                      )}
+                      <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-[6px] overflow-hidden ring-4 ring-sage/20">
+                        <Image
+                          src={business.image || 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&h=400&fit=crop'}
+                          alt={`${business.name} photo`}
+                          width={224}
+                          height={224}
+                          className="w-full h-full object-cover"
+                          priority
+                          unoptimized={!business.image}
+                        />
+                      </div>
                     </div>
                   </motion.div>
 
