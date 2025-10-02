@@ -5,7 +5,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 // Dynamic imports for premium animations
 const FadeInUp = dynamic(() => import("../../components/Animations/FadeInUp"), {
@@ -16,6 +16,7 @@ export default function BusinessProfilePage() {
   const params = useParams();
   const router = useRouter();
   const businessId = params?.id as string;
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Mock data - in real app this would come from params and API
   // For now, we'll use the same mock data for any ID to prevent 404 errors
@@ -27,6 +28,13 @@ export default function BusinessProfilePage() {
       name: "Mama's Kitchen",
       rating: 4.8,
       image: "/images/product-01.jpg", // Business photo
+      images: [
+        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=600&fit=crop"
+      ],
       trust: 95,
       punctuality: 89,
       friendliness: 92,
@@ -129,25 +137,62 @@ export default function BusinessProfilePage() {
 
               <div className="relative z-10">
                 <div className="flex flex-col lg:flex-row items-start lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
-                  {/* Business Photo/Icon Section */}
+                  {/* Business Photo Carousel */}
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
                     className="flex-shrink-0"
                   >
-                    <div className="relative">
-                      <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-[6px] overflow-hidden ring-4 ring-sage/20">
+                    <div className="relative w-full lg:w-auto">
+                      {/* Main Image */}
+                      <div className="w-full h-64 lg:w-96 lg:h-72 rounded-[6px] overflow-hidden ring-4 ring-sage/20">
                         <Image
-                          src={business.image || 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&h=400&fit=crop'}
-                          alt={`${business.name} photo`}
-                          width={224}
-                          height={224}
+                          src={business.images?.[currentImageIndex] || business.image || 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=600&fit=crop'}
+                          alt={`${business.name} photo ${currentImageIndex + 1}`}
+                          width={384}
+                          height={288}
                           className="w-full h-full object-cover"
                           priority
-                          unoptimized={!business.image}
+                          unoptimized
                         />
                       </div>
+
+                      {/* Navigation Controls */}
+                      {business.images && business.images.length > 1 && (
+                        <>
+                          {/* Previous Button */}
+                          <button
+                            onClick={() => setCurrentImageIndex((prev) => prev === 0 ? business.images.length - 1 : prev - 1)}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg z-10"
+                          >
+                            <ion-icon name="chevron-back" style={{ fontSize: '20px', color: 'var(--charcoal)' }} />
+                          </button>
+
+                          {/* Next Button */}
+                          <button
+                            onClick={() => setCurrentImageIndex((prev) => prev === business.images.length - 1 ? 0 : prev + 1)}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg z-10"
+                          >
+                            <ion-icon name="chevron-forward" style={{ fontSize: '20px', color: 'var(--charcoal)' }} />
+                          </button>
+
+                          {/* Dots Indicator */}
+                          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+                            {business.images.map((_, index) => (
+                              <button
+                                key={index}
+                                onClick={() => setCurrentImageIndex(index)}
+                                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                  index === currentImageIndex
+                                    ? 'bg-white w-8'
+                                    : 'bg-white/50'
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </>
+                      )}
                     </div>
                   </motion.div>
 
