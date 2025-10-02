@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Trophy, ArrowRight } from "lucide-react";
 import ReviewerCard from "../ReviewerCard/ReviewerCard";
 import BusinessOfTheMonthCard from "../BusinessCard/BusinessOfTheMonthCard";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
@@ -17,11 +18,11 @@ interface CommunityHighlightsProps {
 }
 
 export default function CommunityHighlights({
-  title = "Community Highlights", 
+  title = "Community Highlights",
   reviews,
   topReviewers,
   businessesOfTheMonth,
-  cta = "See Leaderboard...",
+  cta = "See Leaderboard",
   href = "/leaderboard",
   variant = "reviews"
 }: CommunityHighlightsProps) {
@@ -60,16 +61,17 @@ export default function CommunityHighlights({
           </h2>
           <button
             onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base"
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base flex items-center gap-1"
           >
-            <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
+            <span className="transition-transform duration-300 group-hover:translate-x-[-2px]">
               {cta}
             </span>
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-[2px]" />
           </button>
         </div>
 
         {/* Top Reviewers Subsection */}
-        <div className="mt-8 sm:mt-14 md:mt-16">
+        <div className="mt-6 sm:mt-8 md:mt-10">
           <div className="mb-4 sm:mb-8 flex flex-wrap items-center justify-between gap-[18px]">
             <h3 className="font-urbanist text-base font-700 text-charcoal relative">
               Top Reviewers This Month In Claremont
@@ -93,7 +95,7 @@ export default function CommunityHighlights({
         {/* Businesses of the Month Subsection */}
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
           <div className="mt-6 sm:mt-8 md:mt-10">
-            <div className="mb-4 sm:mb-8 flex flex-wrap items-center justify-between gap-[18px]">
+            <div className="mb-3 sm:mb-4 flex flex-wrap items-center justify-between gap-[18px]">
               <h3 className="font-urbanist text-base font-700 text-charcoal relative">
                 Businesses of the Month
               </h3>
@@ -101,7 +103,7 @@ export default function CommunityHighlights({
 
             <div className="mb-4 sm:mb-5 md:mb-6 text-center">
               <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-coral/10 rounded-full px-3 sm:px-4 py-1.5 sm:py-2">
-                <ion-icon name="trophy" class="text-coral text-base sm:text-lg" suppressHydrationWarning />
+                <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-coral" />
                 <span className="font-urbanist font-600 text-coral text-base">
                   September 2025 Winners
                 </span>

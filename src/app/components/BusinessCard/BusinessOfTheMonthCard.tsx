@@ -115,7 +115,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           </div>
 
           {/* Category line - left aligned and subtle */}
-          <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
+          <p className="mb-3 font-urbanist text-sm font-600 text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
             {business.category} • {business.location}
           </p>
 

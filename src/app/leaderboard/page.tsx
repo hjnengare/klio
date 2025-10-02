@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { Trophy, X } from "lucide-react";
 import FallbackImage from "../components/FallbackImage/FallbackImage";
 
 const Footer = dynamic(() => import("../components/Footer/Footer"), {
@@ -65,41 +66,41 @@ export default function LeaderboardPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-xl mx-4"
+              className="fixed inset-4 sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 z-50 w-auto sm:w-full sm:max-w-xl h-fit my-auto"
             >
-              <div className="bg-gradient-to-br from-sage via-sage/95 to-sage/90 text-white rounded-3xl shadow-2xl p-8 md:p-10 backdrop-blur-xl border-2 border-white/30 relative overflow-hidden">
+              <div className="bg-white/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 border border-charcoal/10 relative overflow-hidden">
                 {/* Decorative elements */}
-                <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-coral/20 rounded-full blur-3xl"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-sage/5 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-coral/5 rounded-full blur-3xl"></div>
 
                 <div className="relative z-10">
                   {/* Icon */}
-                  <div className="flex justify-center mb-6">
-                    <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center shadow-xl">
-                      <ion-icon name="trophy" class="text-5xl text-white drop-shadow-lg" />
+                  <div className="flex justify-center mb-4 sm:mb-6">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sage/10 rounded-full flex items-center justify-center shadow-lg">
+                      <Trophy className="w-8 h-8 sm:w-10 sm:h-10 text-sage" />
                     </div>
                   </div>
 
                   {/* Content */}
                   <div className="text-center">
-                    <h3 className="font-urbanist text-2xl md:text-3xl font-700 mb-4">
+                    <h3 className="font-urbanist text-xl sm:text-2xl md:text-3xl font-700 mb-3 sm:mb-4 text-charcoal px-2">
                       Join the Top Contributors! 🌟
                     </h3>
-                    <p className="font-urbanist text-base md:text-lg font-400 text-white/95 mb-8 leading-relaxed max-w-md mx-auto">
+                    <p className="font-urbanist text-sm sm:text-base md:text-lg font-400 text-charcoal/70 mb-6 sm:mb-8 leading-relaxed max-w-md mx-auto px-2">
                       These amazing reviewers are helping our community grow. Share your experiences and climb the leaderboard!
                     </p>
 
                     {/* Action Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center px-2">
                       <button
                         onClick={() => setShowToast(false)}
-                        className="bg-white text-sage font-urbanist text-base font-600 py-3 px-8 rounded-full hover:bg-white/90 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
+                        className="bg-sage text-white font-urbanist text-sm sm:text-base font-600 py-3 px-6 sm:px-8 rounded-full hover:bg-sage/90 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl sm:hover:scale-105"
                       >
                         Start Reviewing
                       </button>
                       <button
                         onClick={() => setShowToast(false)}
-                        className="bg-white/20 backdrop-blur-sm text-white font-urbanist text-base font-600 py-3 px-8 rounded-full hover:bg-white/30 transition-all duration-200 border border-white/40"
+                        className="bg-charcoal/5 text-charcoal font-urbanist text-sm sm:text-base font-600 py-3 px-6 sm:px-8 rounded-full hover:bg-charcoal/10 active:scale-95 transition-all duration-200 border border-charcoal/10"
                       >
                         Maybe Later
                       </button>
@@ -109,10 +110,10 @@ export default function LeaderboardPage() {
                   {/* Close button */}
                   <button
                     onClick={() => setShowToast(false)}
-                    className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center hover:bg-white/20 rounded-full transition-colors duration-200"
+                    className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 flex items-center justify-center hover:bg-charcoal/5 active:bg-charcoal/10 rounded-full transition-colors duration-200"
                     aria-label="Close"
                   >
-                    <ion-icon name="close" class="text-2xl text-white" />
+                    <X className="w-5 h-5 text-charcoal/70" />
                   </button>
                 </div>
               </div>

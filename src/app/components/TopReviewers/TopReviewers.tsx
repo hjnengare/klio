@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 import ReviewerCard from "../ReviewerCard/ReviewerCard";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
 import { Reviewer } from "../../data/communityHighlightsData";
@@ -15,7 +16,7 @@ interface TopReviewersProps {
 export default function TopReviewers({
   title = "Top Reviewers",
   reviewers,
-  cta = "See More...",
+  cta = "See More",
   href = "/reviewers"
 }: TopReviewersProps) {
   const router = useRouter();
@@ -40,11 +41,12 @@ export default function TopReviewers({
           </h2>
           <button
             onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base"
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base flex items-center gap-1"
           >
-            <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
+            <span className="transition-transform duration-300 group-hover:translate-x-[-2px]">
               {cta}
             </span>
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-[2px]" />
           </button>
         </div>
 

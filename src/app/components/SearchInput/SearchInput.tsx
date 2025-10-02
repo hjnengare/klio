@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect, forwardRef, useImperativeHandle, useRef } from "react";
+import { Search, SlidersHorizontal } from "lucide-react";
 
 interface SearchInputProps {
   placeholder?: string;           // long placeholder (desktop)
@@ -63,7 +64,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
         <div className="relative group">
           {/* left icon */}
           <div className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-sage/60 group-focus-within:text-sage transition-all duration-300 z-10">
-            <ion-icon name="search" class={variant === "header" ? "text-base" : "text-base"} />
+            <Search className="w-4 h-4" />
           </div>
 
           {/* right icon (filters) */}
@@ -74,7 +75,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
               className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-sage/60 hover:text-sage transition-all duration-300 z-10 p-2"
               aria-label="Open filters"
             >
-              <ion-icon name="options" class={variant === "header" ? "text-base" : "text-base"} />
+              <SlidersHorizontal className="w-4 h-4" />
             </button>
           )}
 

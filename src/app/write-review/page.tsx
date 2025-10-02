@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function WriteReviewPage() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [recentBusinesses, setRecentBusinesses] = useState([]);
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     // Preload common ion-icons
@@ -21,10 +23,34 @@ export default function WriteReviewPage() {
   }, []);
 
   const mockBusinesses = [
-    { id: 1, name: "Blue Bottle Coffee", category: "Coffee Shop", location: "Downtown" },
-    { id: 2, name: "The French Laundry", category: "Fine Dining", location: "Napa Valley" },
-    { id: 3, name: "Yoga Flow Studio", category: "Fitness", location: "Mission District" },
-    { id: 4, name: "Local Bookstore", category: "Retail", location: "Castro" }
+    {
+      id: 1,
+      name: "Blue Bottle Coffee",
+      category: "Coffee Shop",
+      location: "Downtown",
+      image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=200&h=200&fit=crop&auto=format"
+    },
+    {
+      id: 2,
+      name: "The French Laundry",
+      category: "Fine Dining",
+      location: "Napa Valley",
+      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=200&h=200&fit=crop&auto=format"
+    },
+    {
+      id: 3,
+      name: "Yoga Flow Studio",
+      category: "Fitness",
+      location: "Mission District",
+      image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&h=200&fit=crop&auto=format"
+    },
+    {
+      id: 4,
+      name: "Local Bookstore",
+      category: "Retail",
+      location: "Castro",
+      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=200&h=200&fit=crop&auto=format"
+    }
   ];
 
   const filteredBusinesses = mockBusinesses.filter(business =>
@@ -94,9 +120,22 @@ export default function WriteReviewPage() {
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-sage/10 rounded-full flex items-center justify-center
-                                  group-hover:bg-sage/20 transition-colors duration-200">
-                    <ion-icon name="business" class="text-sage text-lg" />
+                  {/* Business Image or Placeholder */}
+                  <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 bg-sage/10 group-hover:bg-sage/20 transition-colors duration-200">
+                    {business.image && !imageErrors[business.id] ? (
+                      <Image
+                        src={business.image}
+                        alt={business.name}
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-cover"
+                        onError={() => setImageErrors(prev => ({ ...prev, [business.id]: true }))}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <ion-icon name="business" class="text-sage text-lg" />
+                      </div>
+                    )}
                   </div>
                   <div>
                     <h3 className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage

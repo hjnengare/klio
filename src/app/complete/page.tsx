@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import confetti from "canvas-confetti";
+import { Smile, Sparkles, Check, ArrowRight, CheckCircle } from "lucide-react";
 // import { useAuth } from "../contexts/AuthContext"; // Disabled for UI/UX design
 import { useReducedMotion } from "../utils/useReducedMotion";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
@@ -108,13 +109,13 @@ export default function CompletePage() {
           <div className="relative mx-auto mb-4 h-28 w-full max-w-[420px] animate-fade-in-up delay-300" aria-hidden="true">
             <div className="absolute inset-0 overflow-hidden">
               <div className="absolute bottom-0 left-[15%] w-14 h-14 rounded-full bg-white/90 border-2 border-coral flex items-center justify-center float-anim">
-                <ion-icon name="happy-outline" style={{ fontSize: 22, color: "var(--charcoal)" }} aria-hidden="true" />
+                <Smile className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
               <div className="absolute bottom-0 left-[45%] w-14 h-14 rounded-full bg-white/90 border-2 border-sage flex items-center justify-center float-anim delay-400">
-                <ion-icon name="sparkles-outline" style={{ fontSize: 22, color: "var(--charcoal)" }} aria-hidden="true" />
+                <Sparkles className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
               <div className="absolute bottom-0 left-[75%] w-14 h-14 rounded-full bg-white/90 border-2 border-coral flex items-center justify-center float-anim delay-800">
-                <ion-icon name="checkmark-outline" style={{ fontSize: 22, color: "var(--charcoal)" }} aria-hidden="true" />
+                <Check className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -128,14 +129,14 @@ export default function CompletePage() {
               className="group inline-block w-full sm:w-auto bg-sage text-white font-urbanist text-sm font-600 py-4 px-8 rounded-full shadow-lg transition-[transform,background-color,box-shadow] duration-300 hover:scale-[1.03] hover:bg-coral focus:bg-coral focus:outline-none focus:ring-4 focus:ring-coral/30 focus:ring-offset-2"
             >
               Continue to Home
-              <ion-icon name="arrow-forward" size="small" class="ml-2" />
+              <ArrowRight className="w-5 h-5 ml-2 inline-block" />
             </Link>
           </div>
 
           {/* Completion indicator */}
           <div className="mt-8 animate-fade-in-up delay-500">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-sage/10 border border-sage/30 rounded-full">
-              <ion-icon name="checkmark-circle" style={{ color: "var(--sage)", fontSize: "16px" }} />
+              <CheckCircle className="w-4 h-4 text-sage" />
               <span className="font-urbanist text-xs font-600 text-sage">Setup Complete</span>
             </div>
           </div>

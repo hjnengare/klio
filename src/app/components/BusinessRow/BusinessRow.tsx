@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 import BusinessCard, { Business } from "../BusinessCard/BusinessCard";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
 
@@ -38,11 +39,12 @@ export default function BusinessRow({
           </h2>
           <button
             onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base premium-hover"
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base premium-hover flex items-center gap-1"
           >
-            <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
-              See More...
+            <span className="transition-transform duration-300 group-hover:translate-x-[-2px]">
+              See More
             </span>
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-[2px]" />
           </button>
         </div>
 

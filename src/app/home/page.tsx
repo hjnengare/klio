@@ -67,13 +67,15 @@ export default function Home() {
           <MemoizedBusinessRow
             title="For You"
             businesses={forYouBusinesses}
-            cta="View All"
+            cta="Explore For You"
+            href="/for-you"
           />
 
           <MemoizedBusinessRow
             title="Trending Now"
             businesses={trendingBusinesses}
-            cta="View All Trending"
+            cta="Explore Trending"
+            href="/trending"
           />
 
           <EventsSpecials events={EVENTS_AND_SPECIALS} />

@@ -197,7 +197,7 @@ function BusinessCard({ business }: { business: Business }) {
               </h3>
             </div>
 
-            <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/60 transition-colors duration-200 md:group-hover:text-charcoal/70">
+            <p className="mb-3 font-urbanist text-sm font-600 text-charcoal/60 transition-colors duration-200 md:group-hover:text-charcoal/70">
               {business.category} · {business.location}
             </p>
 

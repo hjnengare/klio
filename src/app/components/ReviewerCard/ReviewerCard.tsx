@@ -96,7 +96,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
                   <h3 className="font-urbanist text-sm font-700 text-charcoal truncate">
                     {reviewerData?.name}
                   </h3>
-                  <p className="font-urbanist text-xs text-charcoal/60">
+                  <p className="font-urbanist text-xs font-600 text-charcoal/60">
                     {reviewerData?.location}
                   </p>
                 </div>

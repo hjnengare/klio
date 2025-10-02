@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 import EventCard from "../EventCard/EventCard";
 import { Event } from "../../data/eventsData";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
@@ -9,7 +10,7 @@ import { useScrollReveal } from "../../hooks/useScrollReveal";
 export default function EventsSpecials({
   title = "Events & Specials",
   events,
-  cta = "See More...",
+  cta = "See More",
   href = "/events-specials",
 }: {
   title?: string;
@@ -41,11 +42,12 @@ export default function EventsSpecials({
           </h2>
           <button
             onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base premium-hover"
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base premium-hover flex items-center gap-1"
           >
-            <span className="transition-transform duration-300 group-hover:translate-x-[-1px]">
+            <span className="transition-transform duration-300 group-hover:translate-x-[-2px]">
               {cta}
             </span>
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-[2px]" />
           </button>
         </div>
 

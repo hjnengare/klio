@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { User, X } from "lucide-react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { useHideOnScroll } from "../../hooks/useHideOnScroll";
@@ -37,13 +38,6 @@ export default function Header({ showSearch = true }) {
   };
 
   useEffect(() => {
-    ["person", "options", "search", "menu", "close"].forEach((n) => {
-      const el = document.createElement("ion-icon");
-      el.name = n; el.style.display = "none";
-      document.body.appendChild(el);
-      setTimeout(() => document.body.contains(el) && document.body.removeChild(el), 100);
-    });
-
     // Track scroll position for header background
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -104,7 +98,7 @@ export default function Header({ showSearch = true }) {
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
               <Link
                 href="/home"
-                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-600 ${
+                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-700 ${
                   isScrolled
                     ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -115,7 +109,7 @@ export default function Header({ showSearch = true }) {
 
               <Link
                 href="/all"
-                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-600 ${
+                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-700 ${
                   isScrolled
                     ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -126,7 +120,7 @@ export default function Header({ showSearch = true }) {
 
               <Link
                 href="/saved"
-                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-600 ${
+                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-700 ${
                   isScrolled
                     ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -137,7 +131,7 @@ export default function Header({ showSearch = true }) {
 
               <Link
                 href="/leaderboard"
-                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-600 ${
+                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-700 ${
                   isScrolled
                     ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -148,7 +142,7 @@ export default function Header({ showSearch = true }) {
 
               <Link
                 href="/write-review"
-                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-600 ${
+                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-700 ${
                   isScrolled
                     ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -164,32 +158,40 @@ export default function Header({ showSearch = true }) {
               <button
                 data-hamburger
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`md:hidden w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] group ${
+                className={`md:hidden w-10 h-10 rounded-full flex items-center justify-center group ${
                   isScrolled
                     ? 'hover:bg-sage/10'
                     : 'hover:bg-white/10'
                 }`}
                 aria-label="Toggle menu"
               >
-                <span className={`h-[2px] rounded-full ${
-                  isMobileMenuOpen ? 'w-0 opacity-0' : 'w-5'
-                } ${
-                  isScrolled
-                    ? 'bg-charcoal/70 group-hover:bg-sage'
-                    : 'bg-white group-hover:bg-white/80'
-                }`} />
-                <span className={`w-6 h-[2px] rounded-full ${
-                  isScrolled
-                    ? 'bg-charcoal/70 group-hover:bg-sage'
-                    : 'bg-white group-hover:bg-white/80'
-                }`} />
-                <span className={`h-[2px] rounded-full ${
-                  isMobileMenuOpen ? 'w-0 opacity-0' : 'w-5'
-                } ${
-                  isScrolled
-                    ? 'bg-charcoal/70 group-hover:bg-sage'
-                    : 'bg-white group-hover:bg-white/80'
-                }`} />
+                {isMobileMenuOpen ? (
+                  <X
+                    className={`w-6 h-6 ${
+                      isScrolled
+                        ? 'text-charcoal/70 group-hover:text-sage'
+                        : 'text-white group-hover:text-white/80'
+                    }`}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center gap-[5px]">
+                    <span className={`w-5 h-[2px] rounded-full ${
+                      isScrolled
+                        ? 'bg-charcoal/70 group-hover:bg-sage'
+                        : 'bg-white group-hover:bg-white/80'
+                    }`} />
+                    <span className={`w-6 h-[2px] rounded-full ${
+                      isScrolled
+                        ? 'bg-charcoal/70 group-hover:bg-sage'
+                        : 'bg-white group-hover:bg-white/80'
+                    }`} />
+                    <span className={`w-5 h-[2px] rounded-full ${
+                      isScrolled
+                        ? 'bg-charcoal/70 group-hover:bg-sage'
+                        : 'bg-white group-hover:bg-white/80'
+                    }`} />
+                  </div>
+                )}
               </button>
 
               {/* Profile Icon - Desktop */}
@@ -202,10 +204,7 @@ export default function Header({ showSearch = true }) {
                 }`}
                 aria-label="Profile"
               >
-                <ion-icon
-                  name="person-outline"
-                  className="text-xl"
-                />
+                <User className="w-5 h-5" />
               </Link>
             </div>
           </div>
@@ -272,7 +271,7 @@ export default function Header({ showSearch = true }) {
             <Link
               href="/home"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5"
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5"
             >
               Home
             </Link>
@@ -280,7 +279,7 @@ export default function Header({ showSearch = true }) {
             <Link
               href="/all"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5"
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5"
             >
               Explore
             </Link>
@@ -288,7 +287,7 @@ export default function Header({ showSearch = true }) {
             <Link
               href="/saved"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5"
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5"
             >
               Saved
             </Link>
@@ -296,7 +295,7 @@ export default function Header({ showSearch = true }) {
             <Link
               href="/leaderboard"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5"
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5"
             >
               Leaderboard
             </Link>
@@ -304,7 +303,7 @@ export default function Header({ showSearch = true }) {
             <Link
               href="/write-review"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5"
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5"
             >
               Write Review
             </Link>
@@ -316,9 +315,9 @@ export default function Header({ showSearch = true }) {
             <Link
               href="/profile"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-600 text-charcoal/70 hover:text-sage hover:bg-sage/5 transition-all duration-200 flex items-center gap-3"
+              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5 transition-all duration-200 flex items-center gap-3"
             >
-              <ion-icon name="person-outline" className="text-xl" />
+              <User className="w-5 h-5" />
               Profile
             </Link>
           </nav>

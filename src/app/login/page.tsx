@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useRef } from "react";
+import { ArrowLeft, Mail, AlertCircle, CheckCircle, Lock, Eye, EyeOff, ShieldCheck, Users, Star } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
 import { motion } from "framer-motion";
@@ -183,7 +184,7 @@ export default function LoginPage() {
       >
         <PremiumHover scale={1.1} duration={0.2}>
           <Link href="/onboarding" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-3 hover:bg-charcoal/5 rounded-full block">
-            <ion-icon name="arrow-back-outline" size="small"></ion-icon>
+            <ArrowLeft className="w-5 h-5" />
           </Link>
         </PremiumHover>
       </motion.div>
@@ -226,11 +227,9 @@ export default function LoginPage() {
                 email && !getEmailError() ? 'text-sage' :
                 'text-charcoal/40 group-focus-within:text-sage'
               }`}>
-                <ion-icon name={
-                  getEmailError() ? "alert-circle" :
-                  email && !getEmailError() ? "checkmark-circle" :
-                  "mail-outline"
-                } size="small"></ion-icon>
+                {getEmailError() ? <AlertCircle className="w-5 h-5" /> :
+                  email && !getEmailError() ? <CheckCircle className="w-5 h-5" /> :
+                  <Mail className="w-5 h-5" />}
               </div>
               <input
                 type="email"
@@ -253,13 +252,13 @@ export default function LoginPage() {
             {/* Email validation feedback */}
             {getEmailError() && (
               <p className="text-xs text-red-600 flex items-center gap-1 mt-1" role="alert">
-                <ion-icon name="alert-circle" style={{ fontSize: '12px' }} />
+                <AlertCircle className="w-3 h-3" />
                 {getEmailError()}
               </p>
             )}
             {email && !getEmailError() && emailTouched && (
               <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status">
-                <ion-icon name="checkmark-circle" style={{ fontSize: '12px' }} />
+                <CheckCircle className="w-3 h-3" />
                 Email looks good!
               </p>
             )}
@@ -271,11 +270,9 @@ export default function LoginPage() {
                 password && !getPasswordError() ? 'text-sage' :
                 'text-charcoal/40 group-focus-within:text-sage'
               }`}>
-                <ion-icon name={
-                  getPasswordError() ? "alert-circle" :
-                  password && !getPasswordError() ? "checkmark-circle" :
-                  "lock-closed-outline"
-                } size="small"></ion-icon>
+                {getPasswordError() ? <AlertCircle className="w-5 h-5" /> :
+                  password && !getPasswordError() ? <CheckCircle className="w-5 h-5" /> :
+                  <Lock className="w-5 h-5" />}
               </div>
               <input
                 type={showPassword ? "text" : "password"}
@@ -299,23 +296,20 @@ export default function LoginPage() {
                 className="absolute right-4 sm:right-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 hover:text-charcoal transition-colors duration-300 p-1 z-10 rounded-full"
                 disabled={isSubmitting || isLoading}
               >
-                <ion-icon
-                  name={showPassword ? "eye-off-outline" : "eye-outline"}
-                  size="small"
-                ></ion-icon>
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
 
             {/* Password validation feedback */}
             {getPasswordError() && (
               <p className="text-xs text-red-600 flex items-center gap-1 mt-1" role="alert">
-                <ion-icon name="alert-circle" style={{ fontSize: '12px' }} />
+                <AlertCircle className="w-3 h-3" />
                 {getPasswordError()}
               </p>
             )}
             {password && !getPasswordError() && passwordTouched && (
               <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status">
-                <ion-icon name="checkmark-circle" style={{ fontSize: '12px' }} />
+                <CheckCircle className="w-3 h-3" />
                 Password looks good!
               </p>
             )}
@@ -419,7 +413,7 @@ export default function LoginPage() {
                   transition={{ duration: 0.6, delay: 1.7, type: "spring", stiffness: 300 }}
                   className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-sage/10 rounded-full flex items-center justify-center"
                 >
-                  <ion-icon name="shield-checkmark-outline" style={{ color: "#749176" }} size="small"></ion-icon>
+                  <ShieldCheck className="w-5 h-5 text-sage" />
                 </motion.div>
                 <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Secure</span>
               </div>
@@ -435,7 +429,7 @@ export default function LoginPage() {
                   transition={{ duration: 0.6, delay: 1.9, type: "spring", stiffness: 300 }}
                   className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-coral/10 rounded-full flex items-center justify-center"
                 >
-                  <ion-icon name="people-outline" style={{ color: "#d67469" }} size="small"></ion-icon>
+                  <Users className="w-5 h-5 text-coral" />
                 </motion.div>
                 <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Community</span>
               </div>
@@ -451,7 +445,7 @@ export default function LoginPage() {
                   transition={{ duration: 0.6, delay: 2.1, type: "spring", stiffness: 300 }}
                   className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-charcoal/10 rounded-full flex items-center justify-center"
                 >
-                  <ion-icon name="star-outline" style={{ color: "#211e1d" }} size="small"></ion-icon>
+                  <Star className="w-5 h-5 text-charcoal" />
                 </motion.div>
                 <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Quality</span>
               </div>
