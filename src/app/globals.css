@@ -113,12 +113,14 @@
     width: 100%;
     max-width: 100vw;
     overflow-x: hidden;
+    overflow-y: scroll;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
-    /* Smooth scrolling on mobile */
+    /* Enhanced smooth scrolling on mobile */
     overscroll-behavior-y: auto;
     -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
 
   /* Reset default margins and paddings */
@@ -636,12 +638,14 @@
     }
   }
 
-  /* Normal scrolling for mobile */
+  /* Enhanced smooth scrolling for mobile */
   .mobile-scroll-container {
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch !important;
     overscroll-behavior: auto;
+    overflow-y: scroll;
     /* Improved touch responsiveness */
-    touch-action: manipulation;
+    touch-action: pan-y;
+    scroll-behavior: smooth;
   }
 
   /* Android Chrome address bar handling */
@@ -670,10 +674,18 @@
     margin-top: max(16px, env(safe-area-inset-top));
   }
 
-  /* Prevent bounce scroll on iOS */
+  /* Prevent bounce scroll on iOS while maintaining smooth scrolling */
   .mobile-scroll-container {
     overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Smooth page scrolling utility */
+  .smooth-scroll {
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth;
+    overflow-y: auto;
+    touch-action: pan-y;
   }
 
   /* Fix tap highlight on iOS/Android */
