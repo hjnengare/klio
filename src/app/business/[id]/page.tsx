@@ -106,7 +106,7 @@ export default function BusinessProfilePage() {
       <div className="max-w-4xl mx-auto px-4 py-6 relative z-10">
         {/* Premium Business Header */}
         <FadeInUp delay={0.2}>
-            <div className="bg-white/90/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
+            <div className="bg-white/90/90 backdrop-blur-lg rounded-[6px] shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
@@ -122,7 +122,7 @@ export default function BusinessProfilePage() {
                   >
                     <div className="relative">
                       {business.image ? (
-                        <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-2xl overflow-hidden ring-4 ring-sage/20">
+                        <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-[6px] overflow-hidden ring-4 ring-sage/20">
                           <Image
                             src={business.image}
                             alt={`${business.name} photo`}
@@ -133,7 +133,7 @@ export default function BusinessProfilePage() {
                           />
                         </div>
                       ) : (
-                        <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-2xl bg-gradient-to-br from-sage/20 to-coral/20 flex items-center justify-center ring-4 ring-sage/20">
+                        <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-[6px] bg-gradient-to-br from-sage/20 to-coral/20 flex items-center justify-center ring-4 ring-sage/20">
                           <ion-icon name="restaurant" style={{ fontSize: '4rem', color: 'var(--sage)' }} />
                         </div>
                       )}
@@ -214,7 +214,7 @@ export default function BusinessProfilePage() {
 
         {/* Specials & Events */}
         <FadeInUp delay={0.4}>
-            <div className="bg-white/90/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
+            <div className="bg-white/90/90 backdrop-blur-lg rounded-[6px] shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
@@ -242,10 +242,10 @@ export default function BusinessProfilePage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.6 + (index * 0.1), duration: 0.5 }}
-                      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-6 border border-sage/10"
+                      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-[6px] p-6 border border-sage/10"
                     >
                       <div className="flex items-center space-x-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-sage/20 to-sage/10 rounded-2xl flex items-center justify-center">
+                        <div className="w-16 h-16 bg-gradient-to-br from-sage/20 to-sage/10 rounded-[6px] flex items-center justify-center">
                           <ion-icon
                             name={special.icon}
                             style={{ color: 'var(--sage)', fontSize: '28px' }}
@@ -269,7 +269,7 @@ export default function BusinessProfilePage() {
 
         {/* Reviews */}
         <FadeInUp delay={0.6}>
-            <div className="bg-white/90/90 backdrop-blur-lg rounded-3xl shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
+            <div className="bg-white/90/90 backdrop-blur-lg rounded-[6px] shadow-xl border border-sage/10 p-8 mb-8 relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
 
@@ -313,7 +313,7 @@ export default function BusinessProfilePage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.9 + (index * 0.1), duration: 0.5 }}
-                      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-6 border border-sage/5"
+                      className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-[6px] p-6 border border-sage/5"
                     >
                       <div className="flex items-start space-x-4">
                         {/* Avatar */}
