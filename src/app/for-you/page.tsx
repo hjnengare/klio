@@ -3,51 +3,21 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import BusinessCard, { Business } from "../components/BusinessCard/BusinessCard";
 import Footer from "../components/Footer/Footer";
-import { TRENDING_BUSINESSES, NEARBY_FAVORITES } from "../data/businessData";
+import { TRENDING_BUSINESSES } from "../data/businessData";
 
-
-
-// Combine all business data
-const allBusinesses: Business[] = [...TRENDING_BUSINESSES, ...NEARBY_FAVORITES];
+// Use For You businesses (first 10 from TRENDING_BUSINESSES)
+const forYouBusinesses: Business[] = TRENDING_BUSINESSES.slice(0, 10);
 const ITEMS_PER_PAGE = 8;
 
-export default function ExploreGemsPage() {
-  const router = useRouter();
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
-  const [selectedRating, setSelectedRating] = useState("All Ratings");
-  const [selectedDistance, setSelectedDistance] = useState("All Distances");
-  const [searchQuery, setSearchQuery] = useState("");
+export default function ForYouPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-  };
-
-  const filteredBusinesses = allBusinesses.filter(business => {
-    // Search query filter - searches name, category, and description
-    const searchMatch = !searchQuery ||
-      business.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      business.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (business.description && business.description.toLowerCase().includes(searchQuery.toLowerCase()));
-
-    const categoryMatch = selectedCategory === "All Categories" || business.category === selectedCategory;
-
-    let ratingMatch = true;
-    if (selectedRating === "4.5+ Stars") ratingMatch = business.totalRating >= 4.5;
-    else if (selectedRating === "4.0+ Stars") ratingMatch = business.totalRating >= 4.0;
-    else if (selectedRating === "3.5+ Stars") ratingMatch = business.totalRating >= 3.5;
-
-    return searchMatch && categoryMatch && ratingMatch;
-  });
-
-  const totalPages = Math.ceil(filteredBusinesses.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(forYouBusinesses.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentBusinesses = filteredBusinesses.slice(startIndex, endIndex);
-
+  const currentBusinesses = forYouBusinesses.slice(startIndex, endIndex);
   return (
     <div className="min-h-dvh bg-white/90 relative overflow-hidden">
       {/* Static background layers */}
@@ -74,7 +44,7 @@ export default function ExploreGemsPage() {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
             >
-              Explore All
+              For You
             </motion.h1>
           </Link>
         </div>
@@ -82,43 +52,11 @@ export default function ExploreGemsPage() {
 
       {/* Main content with proper spacing */}
       <div className="pb-6 relative z-10">
-        {/* Filter tags section */}
-        <div className="px-3 sm:px-4 md:px-6 lg:px-8 pt-6 pb-4">
-          <div className="max-w-[1300px] mx-auto">
-            <div className="flex gap-2 flex-wrap justify-center">
-              {selectedCategory !== "All Categories" && (
-                <span className="px-3 py-1 bg-sage/10 text-sage font-urbanist font-600 rounded-full text-sm flex items-center gap-2">
-                  {selectedCategory}
-                  <button onClick={() => setSelectedCategory("All Categories")}>
-                    <ion-icon name="close" class="text-base" />
-                  </button>
-                </span>
-              )}
-              {selectedRating !== "All Ratings" && (
-                <span className="px-3 py-1 bg-coral/10 text-coral font-urbanist font-600 rounded-full text-sm flex items-center gap-2">
-                  {selectedRating}
-                  <button onClick={() => setSelectedRating("All Ratings")}>
-                    <ion-icon name="close" class="text-base" />
-                  </button>
-                </span>
-              )}
-              {selectedDistance !== "All Distances" && (
-                <span className="px-3 py-1 bg-sage/10 text-sage font-urbanist font-600 rounded-full text-sm flex items-center gap-2">
-                  {selectedDistance}
-                  <button onClick={() => setSelectedDistance("All Distances")}>
-                    <ion-icon name="close" class="text-base" />
-                  </button>
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-
         {/* Results count */}
-        <div className="px-3 sm:px-4 md:px-6 lg:px-8 pb-4">
+        <div className="px-3 sm:px-4 md:px-6 lg:px-8 pt-6 pb-2">
           <div className="max-w-[1300px] mx-auto">
             <p className="font-urbanist text-sm text-charcoal/60">
-              Showing {currentBusinesses.length} of {filteredBusinesses.length} results
+              Showing {currentBusinesses.length} personalized recommendations
             </p>
           </div>
         </div>
@@ -168,14 +106,6 @@ export default function ExploreGemsPage() {
                 >
                   <ion-icon name="chevron-forward" class="text-lg text-charcoal/70" />
                 </button>
-              </div>
-            )}
-
-            {currentBusinesses.length === 0 && (
-              <div className="text-center py-16">
-                <ion-icon name="search" class="text-6xl text-charcoal/20 mb-4" />
-                <h3 className="font-urbanist font-700 text-xl text-charcoal/60 mb-2">No results found</h3>
-                <p className="font-urbanist text-charcoal/40">Try adjusting your filters or search terms</p>
               </div>
             )}
           </div>
