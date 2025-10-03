@@ -8,18 +8,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Design system colors
-        'sage': 'hsl(148, 20%, 38%)',
-        'coral': 'hsl(16, 100%, 66%)',
-        'charcoal': 'hsl(0, 0%, 25%)',
-        'off-white': 'hsl(0, 0%, 98%)',
-        
+        // Primary Brand Colors
+        'charcoal': '#211e1d',      // Dark neutral base for text & navbars
+        'sage': '#749176',          // Signature brand green - accents, buttons, highlights
+        'coral': '#d67469',         // Secondary accent - CTAs, saved/bookmarked, errors
+        'off-white': '#f2e3da',     // Main background - soft, premium feel
+
         // Instagram blue for verified badge
         'blue-500': '#3b82f6',
-        
-        // Legacy colors (for compatibility)
-        'hoockers-green': 'hsl(148, 20%, 38%)',
-        'hoockers-green-20': 'hsl(148, 20%, 38%, 0.2)',
+
+        // Legacy colors (for compatibility during migration)
+        'hoockers-green': '#749176',
+        'hoockers-green-20': 'rgba(116, 145, 118, 0.2)',
         'pale-spring-bud': 'hsl(60, 68%, 85%)',
         'spanish-gray': 'hsl(0, 0%, 61%)',
         'light-gray': 'hsl(0, 0%, 80%)',
