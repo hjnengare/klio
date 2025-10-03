@@ -5,7 +5,8 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import MasonryGallery from "../../components/Gallery/MasonryGallery";
 
 // Dynamic imports for premium animations
 const FadeInUp = dynamic(() => import("../../components/Animations/FadeInUp"), {
@@ -16,7 +17,6 @@ export default function BusinessProfilePage() {
   const params = useParams();
   const router = useRouter();
   const businessId = params?.id as string;
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Mock data - in real app this would come from params and API
   // For now, we'll use the same mock data for any ID to prevent 404 errors
@@ -142,134 +142,102 @@ export default function BusinessProfilePage() {
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
               <div className="relative z-10">
-                <div className="flex flex-col lg:flex-row items-start lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
-                  {/* Business Photo Carousel */}
+                {/* Business Info */}
+                <div className="text-center mb-8">
+                  {/* Rating */}
                   <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="flex-shrink-0"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                    className="flex items-center justify-center space-x-2 mb-6"
                   >
-                    <div className="relative w-full lg:w-auto">
-                      {/* Main Image */}
-                      <div className="w-full h-64 lg:w-96 lg:h-72 rounded-[6px] overflow-hidden ring-4 ring-sage/20">
-                        <Image
-                          src={business.images?.[currentImageIndex] || business.image || 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=600&fit=crop'}
-                          alt={`${business.name} photo ${currentImageIndex + 1}`}
-                          width={384}
-                          height={288}
-                          className="w-full h-full object-cover"
-                          priority
-                          unoptimized
-                        />
-                      </div>
-
-                      {/* Navigation Controls */}
-                      {business.images && business.images.length > 1 && (
-                        <>
-                          {/* Previous Button */}
-                          <button
-                            onClick={() => setCurrentImageIndex((prev) => prev === 0 ? business.images.length - 1 : prev - 1)}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg z-10"
-                          >
-                            <ion-icon name="chevron-back" style={{ fontSize: '20px', color: 'var(--charcoal)' }} />
-                          </button>
-
-                          {/* Next Button */}
-                          <button
-                            onClick={() => setCurrentImageIndex((prev) => prev === business.images.length - 1 ? 0 : prev + 1)}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg z-10"
-                          >
-                            <ion-icon name="chevron-forward" style={{ fontSize: '20px', color: 'var(--charcoal)' }} />
-                          </button>
-
-                          {/* Dots Indicator */}
-                          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
-                            {business.images.map((_, index) => (
-                              <button
-                                key={index}
-                                onClick={() => setCurrentImageIndex(index)}
-                                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                                  index === currentImageIndex
-                                    ? 'bg-white w-8'
-                                    : 'bg-white/50'
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </div>
+                    <motion.div
+                      animate={{ rotate: [0, 10, -10, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                      className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full shadow-lg"
+                    >
+                      <ion-icon name="star" style={{ color: 'var(--white)', fontSize: '20px' }} />
+                    </motion.div>
+                    <span className="font-urbanist text-xl font-700 text-charcoal">{business.rating}</span>
                   </motion.div>
 
-                  {/* Business Info */}
-                  <div className="flex-1 text-center lg:text-left">
-                    <motion.h2
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.5, duration: 0.6 }}
-                      className="font-urbanist text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4"
-                    >
-                      {business.name}
-                    </motion.h2>
-
-                    {/* Rating */}
-                    <motion.div
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.6, duration: 0.6 }}
-                      className="flex items-center justify-center lg:justify-start space-x-2 mb-6"
-                    >
+                  {/* Trust Metrics */}
+                  <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="grid grid-cols-3 gap-6 max-w-md mx-auto"
+                  >
+                    {[
+                      { label: "Trust", value: business.trust, color: "sage" },
+                      { label: "Punctuality", value: business.punctuality, color: "coral" },
+                      { label: "Friendliness", value: business.friendliness, color: "sage" }
+                    ].map((metric, index) => (
                       <motion.div
-                        animate={{ rotate: [0, 10, -10, 0] }}
-                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                        className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full shadow-lg"
+                        key={metric.label}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 + (index * 0.1), duration: 0.5 }}
+                        className="text-center"
                       >
-                        <ion-icon name="star" style={{ color: 'var(--white)', fontSize: '18px' }} />
+                        <div className={`w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br ${
+                          metric.color === 'sage' ? 'from-sage/20 to-sage/10' : 'from-coral/20 to-coral/10'
+                        } flex items-center justify-center`}>
+                          <motion.div
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
+                            className={`font-urbanist text-lg font-700 ${
+                              metric.color === 'sage' ? 'text-sage' : 'text-coral'
+                            }`}
+                          >
+                            {metric.value}%
+                          </motion.div>
+                        </div>
+                        <span className="font-urbanist text-sm font-500 text-charcoal/70 capitalize">
+                          {metric.label}
+                        </span>
                       </motion.div>
-                      <span className="font-urbanist text-base font-700 text-charcoal">{business.rating}</span>
-                    </motion.div>
-
-                    {/* Trust Metrics */}
-                    <motion.div
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.7, duration: 0.6 }}
-                      className="grid grid-cols-3 gap-6"
-                    >
-                      {[
-                        { label: "Trust", value: business.trust, color: "sage" },
-                        { label: "Punctuality", value: business.punctuality, color: "coral" },
-                        { label: "Friendliness", value: business.friendliness, color: "sage" }
-                      ].map((metric, index) => (
-                        <motion.div
-                          key={metric.label}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.8 + (index * 0.1), duration: 0.5 }}
-                          className="text-center"
-                        >
-                          <div className={`w-10 h-10 mx-auto mb-3 rounded-full bg-gradient-to-br ${
-                            metric.color === 'sage' ? 'from-sage/20 to-sage/10' : 'from-coral/20 to-coral/10'
-                          } flex items-center justify-center`}>
-                            <motion.div
-                              animate={{ scale: [1, 1.2, 1] }}
-                              transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
-                              className={`font-urbanist text-base font-700 ${
-                                metric.color === 'sage' ? 'text-sage' : 'text-coral'
-                              }`}
-                            >
-                              {metric.value}%
-                            </motion.div>
-                          </div>
-                          <span className="font-urbanist text-sm font-500 text-charcoal/70 capitalize">
-                            {metric.label}
-                          </span>
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  </div>
+                    ))}
+                  </motion.div>
                 </div>
+              </div>
+            </div>
+        </FadeInUp>
+
+        {/* Photo Gallery Section */}
+        <FadeInUp delay={0.3}>
+            <div className="bg-white/90/90 backdrop-blur-lg rounded-[6px] shadow-sm border border-sage/10 p-8 mb-8 relative overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
+
+              <div className="relative z-10">
+                <motion.h3
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                  className="font-urbanist text-xl font-600 text-charcoal mb-6 flex items-center"
+                >
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                    className="w-8 h-8 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3"
+                  >
+                    <ion-icon name="images-outline" style={{ color: 'var(--sage)', fontSize: '18px' }} />
+                  </motion.div>
+                  Photos
+                </motion.h3>
+
+                {/* Masonry Photo Gallery */}
+                <motion.div
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                >
+                  <MasonryGallery
+                    images={business.images || [business.image]}
+                    businessName={business.name}
+                  />
+                </motion.div>
               </div>
             </div>
         </FadeInUp>

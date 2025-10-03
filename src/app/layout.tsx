@@ -9,6 +9,7 @@ import PageTransitionProvider from "./components/Providers/PageTransitionProvide
 import WebVitals from "./components/Performance/WebVitals";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import AddressBarHide from "./components/MobileUX/AddressBarHide";
+import BusinessNotifications from "./components/Notifications/BusinessNotifications";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -110,6 +111,7 @@ export default function RootLayout({
             <AuthProvider>
               <OnboardingProvider>
                 <PageTransitionProvider>
+                  <BusinessNotifications />
                   {children}
                 </PageTransitionProvider>
               </OnboardingProvider>

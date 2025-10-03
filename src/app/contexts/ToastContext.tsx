@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { CheckCircle, XCircle, AlertTriangle, Info, X, Sparkles } from 'lucide-react';
 
 interface Toast {
   id: string;
@@ -60,17 +61,18 @@ export function ToastProvider({ children }: ToastProviderProps) {
   };
 
   const getToastIcon = (type: Toast['type']) => {
+    const iconClasses = "w-5 h-5 flex-shrink-0";
     switch (type) {
       case 'success':
-        return 'checkmark-circle';
+        return <CheckCircle className={iconClasses} />;
       case 'sage':
-        return 'information-circle';
+        return <Sparkles className={iconClasses} />;
       case 'error':
-        return 'close-circle';
+        return <XCircle className={iconClasses} />;
       case 'warning':
-        return 'warning';
+        return <AlertTriangle className={iconClasses} />;
       default:
-        return 'information-circle';
+        return <Info className={iconClasses} />;
     }
   };
 
@@ -83,24 +85,21 @@ export function ToastProvider({ children }: ToastProviderProps) {
     <ToastContext.Provider value={value}>
       {children}
 
-      {/* Toast Container - Simple version without animations for performance */}
+      {/* Toast Container - Bottom-left position */}
       {toasts.length > 0 && (
-        <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-2 pointer-events-none">
+        <div className="fixed bottom-4 left-4 z-[9999] flex flex-col-reverse gap-2 pointer-events-none max-w-sm">
           {toasts.map((toast) => (
             <div
               key={toast.id}
               className={`
-                pointer-events-auto max-w-sm w-full backdrop-blur-xl rounded-xl p-4 shadow-2xl
-                transition-all duration-300 ease-out
+                pointer-events-auto max-w-sm w-full backdrop-blur-xl rounded-xl p-4 shadow-2xl border border-sage/20
+                transition-all duration-300 ease-out animate-in slide-in-from-left
                 ${getToastStyles(toast.type)}
               `}
             >
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0">
-                  <ion-icon
-                    name={getToastIcon(toast.type)}
-                    style={{ fontSize: '24px' }}
-                  />
+                  {getToastIcon(toast.type)}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-urbanist text-sm font-600 leading-tight">
@@ -109,9 +108,10 @@ export function ToastProvider({ children }: ToastProviderProps) {
                 </div>
                 <button
                   onClick={() => removeToast(toast.id)}
-                  className="flex-shrink-0 ml-2 opacity-70 hover:opacity-100 transition-opacity duration-200"
+                  className="flex-shrink-0 ml-2 opacity-70 hover:opacity-100 transition-opacity duration-200 p-1 hover:bg-charcoal/10 rounded-full"
+                  aria-label="Dismiss notification"
                 >
-                  <ion-icon name="close" style={{ fontSize: '20px' }} />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
             </div>
