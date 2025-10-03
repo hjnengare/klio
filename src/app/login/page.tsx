@@ -8,6 +8,7 @@ import { useToast } from "../contexts/ToastContext";
 import { motion } from "framer-motion";
 import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
+import MasonryBackground from "../components/Onboarding/MasonryBackground";
 
 // Mobile-first CSS with proper typography scale and safe areas
 const styles = `
@@ -174,7 +175,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-[100dvh] bg-white/90 flex flex-col relative overflow-hidden ios-inertia safe-area-full">
+    <div ref={containerRef} className="min-h-[100dvh] bg-off-white flex flex-col relative overflow-hidden ios-inertia safe-area-full">
+      {/* Masonry background */}
+      <MasonryBackground />
+
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -210,7 +214,7 @@ export default function LoginPage() {
 
 
         {/* Form Card */}
-        <div className="bg-white/90/95 card-mobile border border-white/30 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
+        <div className="bg-white/95 card-mobile border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden backdrop-blur-sm">
           
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
@@ -240,10 +244,10 @@ export default function LoginPage() {
                   if (!emailTouched) setEmailTouched(true);
                 }}
                 onBlur={() => setEmailTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
+                className={`w-full bg-off-white/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-xl ${
                   getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   email && !getEmailError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                  'border-charcoal/20 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isSubmitting || isLoading}
               />
@@ -283,10 +287,10 @@ export default function LoginPage() {
                   if (!passwordTouched) setPasswordTouched(true);
                 }}
                 onBlur={() => setPasswordTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
+                className={`w-full bg-off-white/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-xl ${
                   getPasswordError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   password && !getPasswordError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                  'border-charcoal/20 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isSubmitting || isLoading}
               />

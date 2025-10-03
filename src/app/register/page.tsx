@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
 import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion";
+import MasonryBackground from "../components/Onboarding/MasonryBackground";
 
 // Mobile-first CSS with proper typography scale and safe areas
 const styles = `
@@ -389,7 +390,10 @@ export default function RegisterPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh] bg-white/90 flex flex-col relative overflow-hidden ios-inertia safe-area-full">
+      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh] bg-off-white flex flex-col relative overflow-hidden ios-inertia safe-area-full">
+      {/* Masonry background */}
+      <MasonryBackground />
+
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -423,7 +427,7 @@ export default function RegisterPage() {
 
 
         {/* Form Card */}
-        <div className="bg-white/90/95 card-mobile border border-white/30 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
+        <div className="bg-white/95 card-mobile border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden backdrop-blur-sm">
 
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
@@ -457,10 +461,10 @@ export default function RegisterPage() {
                 value={username}
                 onChange={(e) => handleUsernameChange(e.target.value)}
                 onBlur={() => setUsernameTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
+                className={`w-full bg-off-white/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-xl ${
                   getUsernameError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   username && !getUsernameError() && usernameTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                  'border-charcoal/20 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isFormDisabled}
               />
@@ -497,10 +501,10 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => handleEmailChange(e.target.value)}
                 onBlur={() => setEmailTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
+                className={`w-full bg-off-white/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-xl ${
                   getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   email && !getEmailError() && emailTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                  'border-charcoal/20 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isFormDisabled}
               />
@@ -537,10 +541,10 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => handlePasswordChange(e.target.value)}
                 onBlur={() => setPasswordTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
+                className={`w-full bg-off-white/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-xl ${
                   passwordStrength.score >= 3 && passwordTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   passwordStrength.score > 0 && passwordStrength.score < 3 ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
-                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                  'border-charcoal/20 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isFormDisabled}
               />
@@ -663,10 +667,10 @@ export default function RegisterPage() {
             {/* Divider */}
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-light-gray/50"></div>
+                <div className="w-full border-t border-charcoal/20"></div>
               </div>
               <div className="relative flex justify-center text-[14px]">
-                <span className="px-4 bg-white/90/90 text-charcoal/60 font-urbanist text-7 font-400">or continue with</span>
+                <span className="px-4 bg-white/95 text-charcoal/60 font-urbanist text-7 font-400">or continue with</span>
               </div>
             </div>
 
@@ -674,7 +678,7 @@ export default function RegisterPage() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
+                className="flex items-center justify-center bg-white border border-charcoal/20 rounded-xl px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -686,7 +690,7 @@ export default function RegisterPage() {
               </button>
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
+                className="flex items-center justify-center bg-white border border-charcoal/20 rounded-xl px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
@@ -697,7 +701,7 @@ export default function RegisterPage() {
           </form>
 
           {/* Enhanced footer */}
-          <div className="text-center mt-4 pt-4 border-t border-light-gray/30">
+          <div className="text-center mt-4 pt-4 border-t border-charcoal/20">
             <div className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70">
               Already have an account?{" "}
               <Link

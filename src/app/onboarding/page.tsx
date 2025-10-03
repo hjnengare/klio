@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMounted } from "../hooks/useMounted";
+import MasonryBackground from "../components/Onboarding/MasonryBackground";
 
 // Mobile-first CSS with proper typography scale and safe areas
 const styles = `
@@ -64,14 +65,10 @@ export default function OnboardingPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-[100dvh] bg-white/90 flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
+      <div className="min-h-[100dvh] bg-off-white flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
 
-        {/* Lightweight decorative elements - optimized for mobile */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-12 left-4 w-24 h-24 md:top-20 md:left-10 md:w-40 md:h-40 bg-gradient-to-br from-sage/30 to-sage/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-200" />
-          <div className="absolute bottom-16 right-6 w-32 h-32 md:bottom-32 md:right-16 md:w-56 md:h-56 bg-gradient-to-br from-coral/25 to-coral/80 rounded-full blur-3xl opacity-0 animate-fade-in-up delay-400" />
-          <div className="absolute top-1/2 left-1/4 w-20 h-20 md:left-1/3 md:w-32 md:h-32 bg-gradient-to-br from-charcoal/20 to-charcoal/20 rounded-full blur-2xl opacity-0 animate-fade-in-up delay-600" />
-        </div>
+        {/* Masonry background with review images */}
+        <MasonryBackground />
 
         <div className="w-full max-w-full px-3 md:max-w-4xl md:px-4 mx-auto relative z-10 max-h-screen overflow-y-auto ios-inertia flex flex-col justify-center min-h-0">
           {/* App Name */}

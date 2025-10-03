@@ -331,8 +331,8 @@ function SubcategoriesContent() {
                                   ${isSelected
                                 ? "bg-coral border-coral text-white md:shadow-md"
                                 : isDisabled
-                                  ? "bg-gray-100 border-2 border-gray-200 text-gray-400"
-                                  : "bg-white/90 border-2 border-sage text-charcoal hover:bg-sage hover:border-sage hover:text-white hover:scale-[1.02]"
+                                  ? "bg-charcoal/5 border-2 border-charcoal/20 text-charcoal/40"
+                                  : "bg-off-white border-2 border-sage text-charcoal hover:bg-sage hover:border-sage hover:text-white hover:scale-[1.02]"
                               }
   `}
                             style={{ animationDelay: `${(idx % 3) * 50}ms` }}

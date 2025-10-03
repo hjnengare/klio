@@ -302,24 +302,24 @@ function ProfileContent() {
   // Show loading state
   if (loading) {
     return (
-      <div className="min-h-dvh bg-white/90 relative">
+      <div className="min-h-dvh bg-off-white relative">
         <div className="pt-4 pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">
-              <div className="bg-white/90/90 backdrop-blur-sm p-6 border border-sage/10 shadow-sm">
+              <div className="bg-off-white backdrop-blur-sm p-6 border border-charcoal/10 shadow-sm">
                 <div className="animate-pulse">
                   <div className="flex items-center space-x-4 mb-4">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
+                    <div className="w-16 h-16 bg-charcoal/10 rounded-full"></div>
                     <div className="space-y-2">
-                      <div className="h-6 bg-gray-200 rounded w-48"></div>
-                      <div className="h-4 bg-gray-200 rounded w-32"></div>
+                      <div className="h-6 bg-charcoal/10 rounded w-48"></div>
+                      <div className="h-4 bg-charcoal/10 rounded w-32"></div>
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     {[1, 2, 3].map((i) => (
                       <div key={i} className="text-center">
-                        <div className="h-8 bg-gray-200 rounded mb-2"></div>
-                        <div className="h-4 bg-gray-200 rounded"></div>
+                        <div className="h-8 bg-charcoal/10 rounded mb-2"></div>
+                        <div className="h-4 bg-charcoal/10 rounded"></div>
                       </div>
                     ))}
                   </div>
@@ -335,7 +335,7 @@ function ProfileContent() {
   // Show error state
   if (error || !profile) {
     return (
-      <div className="min-h-dvh bg-white/90 relative">
+      <div className="min-h-dvh bg-off-white relative">
         <div className="pt-4 pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">
@@ -444,7 +444,7 @@ function ProfileContent() {
           <div className="max-w-4xl mx-auto">
             <Link
               href="/home"
-              className="inline-flex items-center justify-center w-10 h-10 bg-white/90/90 hover:bg-white/90 border border-white/30 rounded-full transition-all duration-200 shadow-sm hover:shadow-md"
+              className="inline-flex items-center justify-center w-10 h-10 bg-off-white hover:bg-white border border-charcoal/10 rounded-full transition-all duration-200 shadow-sm hover:shadow-md"
             >
               <Ion name="chevron-back" className="text-sage text-[20px]" />
             </Link>
@@ -458,7 +458,7 @@ function ProfileContent() {
           <div className="max-w-4xl mx-auto space-y-6">
 
             {/* Profile Header Card */}
-            <div ref={headerRef} className="bg-white backdrop-blur-sm p-6 border border-white/30 shadow-md">
+            <div ref={headerRef} className="bg-white backdrop-blur-sm p-6 border border-charcoal/10 shadow-md">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-4">
                   <div className="relative">
@@ -499,7 +499,7 @@ function ProfileContent() {
               </div>
             </div>
             {/* Stats Overview */}
-            <div ref={statsRef} className="bg-white backdrop-blur-sm p-5 border border-white/30 shadow-md">
+            <div ref={statsRef} className="bg-white backdrop-blur-sm p-5 border border-charcoal/10 shadow-md">
               <h2 className="font-urbanist text-lg font-700 text-charcoal mb-4">Stats Overview</h2>
               <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 <div className="text-center px-1">
@@ -533,7 +533,7 @@ function ProfileContent() {
             </div>
 
             {/* Your Contributions */}
-            <div ref={contributionsRef} className="bg-white backdrop-blur-sm p-5 border border-white/30 shadow-md">
+            <div ref={contributionsRef} className="bg-white backdrop-blur-sm p-5 border border-charcoal/10 shadow-md">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-urbanist text-lg font-700 text-charcoal">Your Contributions</h2>
                 <button
@@ -579,7 +579,7 @@ function ProfileContent() {
             </div>
 
             {/* Your Achievements */}
-            <div ref={achievementsRef} className="bg-white/90/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
+            <div ref={achievementsRef} className="bg-off-white backdrop-blur-sm p-5 border border-charcoal/10 shadow-sm">
               <h2 className="font-urbanist text-lg font-600 text-charcoal mb-4">Your Achievements</h2>
               <div className="space-y-3">
                 {achievements.map((userAchievement) => (
@@ -608,7 +608,7 @@ function ProfileContent() {
             </div>
 
             {/* Account Settings */}
-            <div ref={settingsRef} className="bg-white/90/90 backdrop-blur-sm p-5 border border-white/30 shadow-sm">
+            <div ref={settingsRef} className="bg-off-white backdrop-blur-sm p-5 border border-charcoal/10 shadow-sm">
               <div className="space-y-2">
                 <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
                   <div className="flex items-center space-x-3">

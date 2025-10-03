@@ -45,7 +45,7 @@ export default function LeaderboardPage() {
   const [showToast, setShowToast] = useState(true);
 
   return (
-    <div className="min-h-dvh bg-white/90 pb-6 relative overflow-hidden">
+    <div className="min-h-dvh bg-off-white pb-6 relative overflow-hidden">
       {/* Motivational Toast with Overlay */}
       <AnimatePresence>
         {showToast && (
@@ -68,7 +68,7 @@ export default function LeaderboardPage() {
               transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="fixed inset-4 sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 z-50 w-auto sm:w-full sm:max-w-xl h-fit my-auto"
             >
-              <div className="bg-white/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 border border-charcoal/10 relative overflow-hidden">
+              <div className="bg-off-white backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 border border-charcoal/10 relative overflow-hidden">
                 {/* Decorative elements */}
                 <div className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-sage/5 rounded-full blur-3xl"></div>
                 <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-coral/5 rounded-full blur-3xl"></div>
@@ -134,7 +134,7 @@ export default function LeaderboardPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="bg-white/90/80 backdrop-blur-xl border-b border-sage/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
+        className="bg-off-white/80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
       >
         <div className="flex items-center justify-between max-w-[1300px] mx-auto">
           {/* Back button */}
@@ -175,7 +175,7 @@ export default function LeaderboardPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="bg-white/90/95 backdrop-blur-xl shadow-xl border border-white/30 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 relative overflow-hidden rounded-2xl"
+          className="bg-off-white backdrop-blur-xl shadow-xl border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 relative overflow-hidden rounded-2xl"
         >
           {/* Card decorative elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
@@ -328,7 +328,7 @@ export default function LeaderboardPage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
-                  className="group bg-white/90 rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer"
+                  className="group bg-off-white rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer border border-charcoal/10"
                 >
                   <div className="flex items-center justify-between p-3 sm:p-4">
                     <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
@@ -366,7 +366,7 @@ export default function LeaderboardPage() {
                     animate={{ opacity: 1, height: 'auto', y: 0 }}
                     exit={{ opacity: 0, height: 0, y: -20 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className="group bg-white/90 rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer"
+                    className="group bg-off-white rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer border border-charcoal/10"
                   >
                     <div className="flex items-center justify-between p-3 sm:p-4">
                       <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">

@@ -52,8 +52,8 @@ const InterestTile = ({ id, name, selected, disabled, onToggle }: InterestTilePr
         ${selected
           ? 'bg-sage border-sage text-white shadow-md'
           : disabled
-            ? 'bg-gray-100 border-gray-200 text-gray-400 opacity-50 cursor-not-allowed'
-            : 'bg-white border-gray-300 text-charcoal hover:border-sage hover:bg-sage/5'
+            ? 'bg-charcoal/5 border-charcoal/20 text-charcoal/40 opacity-50 cursor-not-allowed'
+            : 'bg-off-white border-charcoal/20 text-charcoal hover:border-sage hover:bg-sage/5'
         }
       `}
     >
@@ -462,11 +462,11 @@ function InterestsContent() {
                             ${isSelected
                           ? "bg-coral border-coral text-white shadow-lg scale-105 interest-selected"
                           : isDisabled
-                            ? "bg-gray-300 border-gray-300 text-gray-500 cursor-not-allowed opacity-60"
+                            ? "bg-charcoal/5 border-charcoal/20 text-charcoal/40 cursor-not-allowed opacity-60"
                             : "bg-sage border-sage text-white hover:bg-sage/90 hover:scale-105 active:scale-95"
                         }
                             focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2
-                            disabled:focus:ring-gray-300
+                            disabled:focus:ring-charcoal/20
                           `}
                       // Prevent hydration warnings for class differences if any linger
                       suppressHydrationWarning
@@ -495,7 +495,7 @@ function InterestsContent() {
                         group block w-full text-white font-urbanist text-sm md:text-base font-600 py-3.5 md:py-4 px-6 md:px-8 rounded-full shadow-lg transition-all duration-300 relative text-center touch-target-large mobile-button-spacing
                         ${canProceed
                       ? "bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
-                      : "bg-gray-200 text-charcoal/40 cursor-not-allowed"
+                      : "bg-charcoal/10 text-charcoal/40 cursor-not-allowed"
                     }
                       `}
                   onClick={handleNext}

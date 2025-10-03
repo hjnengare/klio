@@ -12,15 +12,15 @@ export default function HomePage() {
   }, [router]);
 
   return (
-    <div className="min-h-dvh bg-white/95 flex items-center justify-center">
+    <div className="min-h-dvh bg-off-white flex items-center justify-center">
       <div className="text-center">
         <div className="w-12 h-12 mx-auto mb-4">
-          <div className="w-full h-full border-4 border-white/90 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-full h-full border-4 border-sage border-t-transparent rounded-full animate-spin"></div>
         </div>
-        <h1 className="font-urbanist text-4 font-700 text-white/90 mb-2">
+        <h1 className="font-urbanist text-4 font-700 text-charcoal mb-2">
           KLIO
         </h1>
-        <p className="font-urbanist text-6 font-400 text-white/90">
+        <p className="font-urbanist text-6 font-400 text-charcoal/70">
           Getting ready...
         </p>
       </div>

@@ -8,7 +8,6 @@ import { ToastProvider } from "./contexts/ToastContext";
 import PageTransitionProvider from "./components/Providers/PageTransitionProvider";
 import WebVitals from "./components/Performance/WebVitals";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
-import AddressBarHide from "./components/MobileUX/AddressBarHide";
 import BusinessNotifications from "./components/Notifications/BusinessNotifications";
 
 const urbanist = Urbanist({
@@ -104,7 +103,6 @@ export default function RootLayout({
         />
       </head>
       <body className={`${urbanist.className} no-layout-shift`}>
-        <AddressBarHide />
         <WebVitals />
         <ErrorBoundary>
           <ToastProvider>
