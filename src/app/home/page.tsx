@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Header from "../components/Header/Header";
 import { HeroCarousel } from "../components/Hero";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
+import WelcomeModal from "../components/WelcomeModal/WelcomeModal";
 import { TRENDING_BUSINESSES } from "../data/businessData";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../data/communityHighlightsData";
@@ -44,6 +45,9 @@ export default function Home() {
 
   return (
     <div className="min-h-dvh bg-white/90 relative overflow-hidden">
+      {/* Welcome Modal */}
+      <WelcomeModal />
+
       {/* Header - Transparent at top, overlays hero */}
       <Header showSearch={true} />
 
