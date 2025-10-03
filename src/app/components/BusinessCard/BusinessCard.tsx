@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useMemo, useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { ImageOff, Star, Edit, Heart, Share2 } from "lucide-react";
 import Stars from "../Stars/Stars";
 import PercentileChip from "../PercentileChip/PercentileChip";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
@@ -121,10 +122,7 @@ function BusinessCard({ business }: { business: Business }) {
                 />
               ) : (
                 <div className="h-full sm:h-[320px] md:h-[320px] lg:h-[280px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[6px]">
-                  <ion-icon
-                    name="image-outline"
-                    class="text-4xl md:text-5xl lg:text-6xl text-sage/70"
-                  />
+                  <ImageOff className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-sage/70" />
                 </div>
               )}
             </motion.div>
@@ -144,7 +142,7 @@ function BusinessCard({ business }: { business: Business }) {
 
             {/* rating badge */}
             <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-6 bg-white/50 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
-              <ion-icon name="star" class="text-coral text-sm drop-shadow-sm" />
+              <Star className="w-3.5 h-3.5 text-coral fill-coral drop-shadow-sm" />
               <span className="font-urbanist text-sm font-700">
                 {business.totalRating.toFixed(1)}
               </span>
@@ -167,7 +165,7 @@ function BusinessCard({ business }: { business: Business }) {
                   handleWriteReview();
                 }}
               >
-                <ion-icon name="create" class="text-lg text-charcoal" />
+                <Edit className="w-4 h-4 text-black" />
               </button>
               <button
                 className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
@@ -176,7 +174,7 @@ function BusinessCard({ business }: { business: Business }) {
                   handleBookmark();
                 }}
               >
-                <ion-icon name="heart" class="text-lg text-charcoal" />
+                <Heart className="w-4 h-4 text-black" />
               </button>
               <button
                 className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
@@ -185,7 +183,7 @@ function BusinessCard({ business }: { business: Business }) {
                   handleShare();
                 }}
               >
-                <ion-icon name="share-social" class="text-lg text-charcoal" />
+                <Share2 className="w-4 h-4 text-black" />
               </button>
             </div>
           </div>

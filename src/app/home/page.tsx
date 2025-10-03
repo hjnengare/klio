@@ -44,7 +44,7 @@ export default function Home() {
   const trendingBusinesses = TRENDING_BUSINESSES.slice(10, 20);
 
   return (
-    <div className="min-h-dvh bg-white/90 relative overflow-hidden">
+    <div className="min-h-dvh bg-white/90 relative">
       {/* Welcome Modal */}
       <WelcomeModal />
 
