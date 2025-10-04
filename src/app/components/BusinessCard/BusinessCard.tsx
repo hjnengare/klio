@@ -88,7 +88,7 @@ function BusinessCard({ business, hideStar = false }: { business: Business; hide
   return (
     <li
       id={idForSnap}
-      className="snap-start snap-always w-screen sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
+      className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
     >
       <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10">
           <div
