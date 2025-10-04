@@ -79,16 +79,13 @@ export default function CommunityHighlights({
           </div>
 
           <ScrollableSection>
-            <ul className="flex snap-x gap-4 sm:gap-5 md:gap-6">
-              {topReviewers.map((reviewer) => (
-                <div key={reviewer.id}>
-                  <ReviewerCard
-                    reviewer={reviewer}
-                    variant="reviewer"
-                  />
-                </div>
-              ))}
-            </ul>
+            {topReviewers.map((reviewer) => (
+              <ReviewerCard
+                key={reviewer.id}
+                reviewer={reviewer}
+                variant="reviewer"
+              />
+            ))}
           </ScrollableSection>
         </div>
 
@@ -111,13 +108,9 @@ export default function CommunityHighlights({
             </div>
 
             <ScrollableSection>
-              <ul className="flex snap-x gap-4 sm:gap-5 md:gap-6">
-                {businessesOfTheMonth.map((business) => (
-                  <div key={business.id}>
-                    <BusinessOfTheMonthCard business={business} />
-                  </div>
-                ))}
-              </ul>
+              {businessesOfTheMonth.map((business) => (
+                <BusinessOfTheMonthCard key={business.id} business={business} />
+              ))}
             </ScrollableSection>
           </div>
         )}
