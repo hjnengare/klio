@@ -37,7 +37,7 @@ type Business = {
   };
 };
 
-function BusinessCard({ business }: { business: Business }) {
+function BusinessCard({ business, hideStar = false }: { business: Business; hideStar?: boolean }) {
   const router = useRouter();
   const idForSnap = useMemo(() => `business-${business.id}`, [business.id]);
 
@@ -88,9 +88,9 @@ function BusinessCard({ business }: { business: Business }) {
   return (
     <li
       id={idForSnap}
-      className="snap-start snap-always w-[calc(100vw-2rem)] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
+      className="snap-start snap-always w-screen sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
     >
-      <div className="bg-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[70vh] sm:h-auto flex flex-col">
+      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10">
           <div
             className="relative overflow-hidden rounded-t-[6px] flex-1 sm:flex-initial"
             onClick={(e) => {
@@ -141,12 +141,14 @@ function BusinessCard({ business }: { business: Business }) {
             )}
 
             {/* rating badge */}
-            <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-6 bg-white/50 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
-              <Star className="w-3.5 h-3.5 text-coral fill-coral drop-shadow-sm" />
-              <span className="font-urbanist text-sm font-700">
-                {business.totalRating.toFixed(1)}
+            {!hideStar && (
+              <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-6 bg-off-white/80 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
+                <Star className="w-3.5 h-3.5 text-coral fill-coral drop-shadow-sm" />
+                <span className="font-urbanist text-sm font-700">
+                  {business.totalRating.toFixed(1)}
+                </span>
               </span>
-            </span>
+            )}
 
             {/* actions */}
             <div
@@ -159,7 +161,7 @@ function BusinessCard({ business }: { business: Business }) {
               }`}
             >
               <button
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-off-white md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleWriteReview();
@@ -168,7 +170,7 @@ function BusinessCard({ business }: { business: Business }) {
                 <Edit className="w-4 h-4 text-black" />
               </button>
               <button
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-off-white md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleBookmark();
@@ -177,7 +179,7 @@ function BusinessCard({ business }: { business: Business }) {
                 <Heart className="w-4 h-4 text-black" />
               </button>
               <button
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-white md:hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-off-white md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleShare();
