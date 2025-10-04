@@ -63,7 +63,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
       <form onSubmit={handleSubmit} className={`${containerClass} ${className}`} ref={containerRef}>
         <div className="relative group">
           {/* left icon */}
-          <div className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-sage/60 group-focus-within:text-sage transition-all duration-300 z-10">
+          <div className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-charcoal/60 group-focus-within:text-sage transition-all duration-300 z-10">
             <Search className="w-4 h-4" />
           </div>
 
@@ -72,7 +72,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
             <button
               type="button"
               onClick={onFilterClick}
-              className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-sage/60 hover:text-sage transition-all duration-300 z-10 p-2"
+              className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-charcoal/60 hover:text-sage transition-all duration-300 z-10 p-2"
               aria-label="Open filters"
             >
               <SlidersHorizontal className="w-4 h-4" />
@@ -87,12 +87,12 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
             onFocus={onFocusOpenFilters}
             onTouchStart={onFocusOpenFilters}
             placeholder={ph}
-            className={`w-full bg-white border border-gray-300 rounded-full
+            className={`w-full bg-off-white/50 border border-charcoal/20 rounded-full
               ${showFilter && onFilterClick ? "pl-12 pr-12 sm:pl-14 sm:pr-12" : "pl-12 pr-4"}
               ${variant === "header" ? "py-3 text-base lg:text-lg" : "py-2 text-sm md:text-base"}
               font-urbanist font-500 text-charcoal placeholder-charcoal/40
               focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage
-              hover:border-gray-400
+              hover:border-sage/40
               truncate lg:truncate-none`}  // truncate on small, full text on lg
             aria-label="Search"
           />

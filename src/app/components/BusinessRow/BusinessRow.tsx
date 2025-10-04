@@ -25,7 +25,7 @@ export default function BusinessRow({
   if (businesses.length === 0) return null;
 
   return (
-    <section className="pb-2 sm:pb-3 sm:pt-1 bg-white/90 relative" aria-label="businesses" data-section>
+    <section className="pb-2 sm:pb-3 sm:pt-1 bg-off-white relative" aria-label="businesses" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 right-20 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />
@@ -33,7 +33,7 @@ export default function BusinessRow({
       </div>
 
       <div className="container mx-auto max-w-[1300px] px-4 relative z-10">
-        <div className="mb-6 sm:mb-12 flex flex-wrap items-center justify-between gap-[18px]">
+        <div className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
             {title}
           </h2>

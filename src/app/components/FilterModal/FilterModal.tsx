@@ -120,7 +120,7 @@ export default function FilterModal({
         role="dialog"
         aria-label="Search filters"
         tabIndex={-1}
-        className={`pointer-events-auto bg-white border border-gray-300 shadow-lg flex flex-col
+        className={`pointer-events-auto bg-off-white border border-charcoal/20 shadow-lg flex flex-col
                     ${isOpen ? "opacity-100" : "opacity-0"}`}
         style={{
           position: "fixed",
@@ -178,7 +178,7 @@ export default function FilterModal({
                         prev.includes(c.name) ? prev.filter((x) => x !== c.name) : [...prev, c.name]
                       )
                     }
-                    className="w-4 h-4 text-sage bg-white border-2 border-gray-300 focus:ring-2 focus:ring-sage/30"
+                    className="w-4 h-4 text-sage bg-off-white border-2 border-charcoal/20 focus:ring-2 focus:ring-sage/30"
                   />
                   <ion-icon name={c.icon} class="text-sage text-base" />
                   <span className="font-urbanist text-sm font-500 text-charcoal">{c.name}</span>
@@ -204,7 +204,7 @@ export default function FilterModal({
                     name="rating"
                     checked={selectedRating === r}
                     onChange={() => setSelectedRating(r)}
-                    className="w-4 h-4 text-sage bg-white border-2 border-gray-300 focus:ring-2 focus:ring-sage/30"
+                    className="w-4 h-4 text-sage bg-off-white border-2 border-charcoal/20 focus:ring-2 focus:ring-sage/30"
                   />
                   <div className="flex items-center gap-2">
                     <div className="flex">
@@ -241,7 +241,7 @@ export default function FilterModal({
                     name="distance"
                     checked={selectedDistance === d.distance}
                     onChange={() => setSelectedDistance(d.distance)}
-                    className="w-4 h-4 text-sage bg-white border-2 border-gray-300 focus:ring-2 focus:ring-sage/30"
+                    className="w-4 h-4 text-sage bg-off-white border-2 border-charcoal/20 focus:ring-2 focus:ring-sage/30"
                   />
                   <ion-icon name={d.icon} class="text-sage text-base" />
                   <span className="font-urbanist text-sm text-charcoal whitespace-nowrap">{d.distance}</span>
@@ -252,7 +252,7 @@ export default function FilterModal({
         </div>
 
         {/* footer */}
-        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-gray-200 bg-white">
+        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-charcoal/20 bg-off-white">
           <button
             onClick={handleClearAll}
             className="flex-1 bg-gray-100 hover:bg-gray-200 text-charcoal font-urbanist font-600 py-2.5 px-4 border border-gray-300"

@@ -27,15 +27,15 @@ export default function EventsSpecials({
   };
 
   return (
-    <section ref={sectionRef} className="bg-white/90 relative" aria-label="events and specials" data-section>
+    <section ref={sectionRef} className="bg-off-white relative" aria-label="events and specials" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 left-20 w-32 h-32 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl" />
         <div className="absolute bottom-20 right-10 w-24 h-24 bg-gradient-to-br from-sage/8 to-transparent rounded-full blur-xl" />
       </div>
-      
-      <div className="container mx-auto max-w-[1300px] px-4 relative z-10 pt-2 sm:pt-3 pb-3 sm:pb-4">
-        <div ref={titleRef} className="mb-6 sm:mb-12 flex flex-wrap items-center justify-between gap-[18px]">
+
+      <div className="container mx-auto max-w-[1300px] px-4 relative z-10 pt-1 sm:pt-1 pb-1 sm:pb-2">
+        <div ref={titleRef} className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
             {title}
           

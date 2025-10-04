@@ -15,13 +15,12 @@ export default function Header({ showSearch = true }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const searchWrapRef = useRef<HTMLDivElement>(null);
 
-  // No hide/show behavior - header stays visible
-  // const { visible } = useHideOnScroll({
-  //   topSafe: 80,
-  //   hysteresis: 28,
-  //   throttleMs: 60,
-  //   forceShow: isMobileMenuOpen
-  // });
+  const { visible } = useHideOnScroll({
+    topSafe: 80,
+    hysteresis: 28,
+    throttleMs: 60,
+    forceShow: isMobileMenuOpen
+  });
 
   const openFilters = () => {
     if (isFilterVisible) return;
@@ -76,7 +75,7 @@ export default function Header({ showSearch = true }) {
       <header
         className={`fixed top-0 left-0 right-0 z-50 ${
           isScrolled
-            ? 'bg-white/90 backdrop-blur-md shadow-sm'
+            ? 'bg-off-white/90 backdrop-blur-md shadow-sm'
             : 'bg-transparent'
         }`}
       >
@@ -244,7 +243,7 @@ export default function Header({ showSearch = true }) {
       {/* Mobile Menu Slide-in Panel */}
       <div
         data-mobile-menu
-        className={`fixed top-0 right-0 h-full w-full bg-white z-[100] shadow-2xl transform md:hidden ${
+        className={`fixed top-0 right-0 h-full w-full bg-off-white z-[100] shadow-2xl transform md:hidden ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

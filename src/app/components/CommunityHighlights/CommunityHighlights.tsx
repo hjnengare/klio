@@ -46,15 +46,15 @@ export default function CommunityHighlights({
     : reviews;
 
   return (
-    <section className="bg-white/90 relative" aria-label="community highlights" data-section>
+    <section className="bg-off-white relative" aria-label="community highlights" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 right-20 w-32 h-32 bg-gradient-to-br from-sage/8 to-transparent rounded-full blur-2xl" />
         <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-xl" />
       </div>
       
-      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 pt-2 sm:pt-3 pb-4 sm:pb-6">
-        <div className="mb-6 sm:mb-12 flex flex-wrap items-center justify-between gap-[18px]">
+      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 pt-1 sm:pt-2 pb-2 sm:pb-3">
+        <div className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
             {title}
           
@@ -71,8 +71,8 @@ export default function CommunityHighlights({
         </div>
 
         {/* Top Reviewers Subsection */}
-        <div className="mt-6 sm:mt-8 md:mt-10">
-          <div className="mb-4 sm:mb-8 flex flex-wrap items-center justify-between gap-[18px]">
+        <div className="mt-4 sm:mt-5 md:mt-6">
+          <div className="mb-2 sm:mb-3 flex flex-wrap items-center justify-between gap-[18px]">
             <h3 className="font-urbanist text-base font-700 text-charcoal relative">
               Top Reviewers This Month In Claremont
             </h3>
@@ -94,14 +94,14 @@ export default function CommunityHighlights({
 
         {/* Businesses of the Month Subsection */}
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
-          <div className="mt-6 sm:mt-8 md:mt-10">
-            <div className="mb-3 sm:mb-4 flex flex-wrap items-center justify-between gap-[18px]">
+          <div className="mt-4 sm:mt-5 md:mt-6">
+            <div className="mb-2 sm:mb-3 flex flex-wrap items-center justify-between gap-[18px]">
               <h3 className="font-urbanist text-base font-700 text-charcoal relative">
                 Businesses of the Month
               </h3>
             </div>
 
-            <div className="mb-4 sm:mb-5 md:mb-6 text-center">
+            <div className="mb-3 sm:mb-4 text-center">
               <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-coral/10 rounded-full px-3 sm:px-4 py-1.5 sm:py-2">
                 <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-coral" />
                 <span className="font-urbanist font-600 text-coral text-base">

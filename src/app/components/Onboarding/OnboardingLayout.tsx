@@ -102,7 +102,7 @@ export default function OnboardingLayout({
     <>
       <style dangerouslySetInnerHTML={{ __html: onboardingStyles }} />
 
-      <div className="min-h-dvh mobile-viewport bg-white/90 flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container mobile-scroll-container">
+      <div className="min-h-dvh mobile-viewport bg-off-white flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container mobile-scroll-container">
 
         {/* Back button */}
         {backHref && (
@@ -115,13 +115,6 @@ export default function OnboardingLayout({
             </Link>
           </div>
         )}
-
-        {/* Decorative backdrop elements */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-          <div className="absolute top-1/4 left-8 w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-sage/30 to-sage/60 rounded-full blur-2xl opacity-100 animate-fade-in-up delay-200" />
-          <div className="absolute bottom-1/4 right-8 w-32 h-32 md:w-40 md:h-40 bg-gradient-to-br from-coral/25 to-coral/50 rounded-full blur-2xl opacity-100 animate-fade-in-up delay-300" />
-          <div className="absolute top-1/2 left-4 w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-charcoal/15 to-charcoal/30 rounded-full blur-xl opacity-100 animate-fade-in-up delay-400" />
-        </div>
 
         {/* Main content */}
         <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-4 onboarding-content">
