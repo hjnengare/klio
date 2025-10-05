@@ -27,7 +27,7 @@ const PROMO_CARDS: PromoCard[] = [
     title: "New This Week",
     subtitle: "Fresh picks for you",
     imageUrl: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop&auto=format",
-    href: "/new",
+    href: "/discover/reviews",
     cta: "Discover Now",
     gradient: "from-sage/10 to-sage/5",
   },

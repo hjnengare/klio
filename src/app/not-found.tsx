@@ -9,7 +9,7 @@ import PremiumHover from "./components/Animations/PremiumHover";
 
 export default function NotFound() {
   return (
-    <div className="min-h-dvh bg-white/90 relative overflow-hidden">
+    <div className="min-h-dvh bg-gradient-to-br from-off-white via-off-white/98 to-off-white/95 relative overflow-hidden">
       {/* Floating background elements */}
       <FloatingElements />
 
