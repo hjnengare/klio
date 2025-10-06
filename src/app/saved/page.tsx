@@ -37,22 +37,21 @@ export default function SavedPage() {
       <div className="pt-4 pb-6 relative z-10">
         <div className="px-4 sm:px-6 md:px-8 mb-6">
           <div className="max-w-[1300px] mx-auto">
-            {/* Back Arrow */}
-            <div className="mb-4">
-              <button
-                onClick={() => router.back()}
-                className="flex items-center gap-2 text-charcoal hover:text-sage transition-colors duration-300"
-              >
-                <ion-icon name="arrow-back-outline" style={{ fontSize: "20px" }}></ion-icon>
-              </button>
-            </div>
-
+            {/* Header with gradient text */}
             <ScrollReveal delay={0.1}>
-              <div className="text-center mb-8">
-                <h1 className="font-urbanist text-2 md:text-4xl font-700 text-charcoal mb-4">
-                  Saved Gems
-                </h1>
-                <p className="font-urbanist text-6 md:text-5 text-charcoal/70 max-w-md mx-auto">
+              <div className="mb-8">
+                <button
+                  onClick={() => router.back()}
+                  className="group flex items-center mb-6"
+                >
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-3 sm:mr-4">
+                    <ion-icon name="arrow-back" class="text-lg sm:text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
+                  </div>
+                  <h1 className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative">
+                    Saved Gems
+                  </h1>
+                </button>
+                <p className="font-urbanist text-sm sm:text-base text-charcoal/70 max-w-md ml-14 sm:ml-16">
                   Your collection of favorite local spots
                 </p>
               </div>

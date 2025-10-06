@@ -236,7 +236,7 @@ function DealBreakersContent() {
                       >
                         {/* FRONT (unselected) — SAGE rectangle with label */}
                         <div
-                          className="absolute inset-0 flex flex-col items-center justify-center bg-sage text-white font-urbanist shadow-lg"
+                          className="absolute inset-0 flex flex-col items-center justify-center bg-sage text-white font-urbanist shadow-lg rounded-xl"
                           style={{ backfaceVisibility: "hidden" }}
                         >
                           <span className="text-sm sm:text-base font-600 text-center px-4">{item.label}</span>
@@ -244,7 +244,7 @@ function DealBreakersContent() {
 
                         {/* BACK (selected) — CORAL rectangle with icon */}
                         <div
-                          className="absolute inset-0 flex items-center justify-center bg-coral shadow-lg"
+                          className="absolute inset-0 flex items-center justify-center bg-coral shadow-lg rounded-xl"
                           style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }}
                         >
                           <ion-icon

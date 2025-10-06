@@ -458,12 +458,12 @@ function InterestsContent() {
                       aria-pressed={isSelected}
                       aria-label={`${interest.name}${isSelected ? ' (selected)' : isDisabled ? ' (maximum reached)' : ''}`}
                       className={`
-                            relative z-30 w-[85%] aspect-square rounded-full border-2 transition-all duration-300 ease-out mx-auto min-h-[44px] min-w-[44px] touch-target-large
+                            relative z-30 w-[85%] aspect-square rounded-full transition-all duration-300 ease-out mx-auto min-h-[44px] min-w-[44px] touch-target-large
                             ${isSelected
-                          ? "bg-coral border-coral text-white shadow-lg scale-105 interest-selected"
+                          ? "bg-coral text-white shadow-lg scale-105 interest-selected"
                           : isDisabled
-                            ? "bg-charcoal/5 border-charcoal/20 text-charcoal/40 cursor-not-allowed opacity-60"
-                            : "bg-sage border-sage text-white hover:bg-sage/90 hover:scale-105 active:scale-95"
+                            ? "bg-charcoal/5 text-charcoal/40 cursor-not-allowed opacity-60"
+                            : "bg-sage text-white hover:bg-sage/90 hover:scale-105 active:scale-95"
                         }
                             focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2
                             disabled:focus:ring-charcoal/20

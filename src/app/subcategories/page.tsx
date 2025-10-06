@@ -317,10 +317,10 @@ function SubcategoriesContent() {
                             aria-pressed={isSelected}
                             aria-label={`${subcategory.label}${isSelected ? ' (selected)' : isDisabled ? ' (maximum reached)' : ''}`}
                             className={`
-                                  relative w-full py-2 md:py-3 px-2 md:px-3
-                                  font-urbanist text-xs font-600 text-center
+                                  relative w-full py-3 md:py-4 px-3 md:px-4
+                                  font-urbanist text-sm md:text-base font-600 text-center
                                   transition-all duration-200 ease-out
-                                  min-h-[44px] touch-target-large
+                                  min-h-[48px] md:min-h-[52px] touch-target-large
                                   rounded-full
                                   focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
                                   disabled:cursor-not-allowed disabled:opacity-60
@@ -329,10 +329,10 @@ function SubcategoriesContent() {
                                   ${animatingIds.has(subcategory.id) ? 'animate-micro-bounce' : ''}
 
                                   ${isSelected
-                                ? "bg-coral border-coral text-white md:shadow-md"
+                                ? "bg-coral text-white md:shadow-md"
                                 : isDisabled
-                                  ? "bg-charcoal/5 border-2 border-charcoal/20 text-charcoal/40"
-                                  : "bg-off-white border-2 border-sage text-charcoal hover:bg-sage hover:border-sage hover:text-white hover:scale-[1.02]"
+                                  ? "bg-charcoal/5 text-charcoal/40"
+                                  : "bg-sage text-white hover:bg-sage/90 hover:scale-[1.02]"
                               }
   `}
                             style={{ animationDelay: `${(idx % 3) * 50}ms` }}

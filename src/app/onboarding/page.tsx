@@ -74,7 +74,7 @@ export default function OnboardingPage() {
           {/* App Name */}
           <div className="text-center mb-4 opacity-0 animate-fade-in-up delay-400">
             <div className="inline-block relative">
-              <h1 className="font-urbanist text-xl md:text-2xl lg:text-3xl font-700 text-charcoal mb-1 md:mb-1.5 relative tracking-tight" suppressHydrationWarning>
+              <h1 className="font-urbanist text-xl md:text-2xl lg:text-3xl font-700 text-white mb-1 md:mb-1.5 relative tracking-tight" suppressHydrationWarning>
                 KLIO
               </h1>
             </div>
@@ -83,13 +83,13 @@ export default function OnboardingPage() {
           {/* Main Content */}
           <div className="text-center mb-4">
             <div className="opacity-0 animate-fade-in-up delay-600">
-              <h2 className="font-urbanist text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-700 text-charcoal mb-4 text-center leading-tight px-1 md:px-2 tracking-[0.01em]" suppressHydrationWarning>
+              <h2 className="font-urbanist text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-700 text-white mb-4 text-center leading-tight px-1 md:px-2 tracking-[0.01em]" suppressHydrationWarning>
                 Discover trusted local gems near you!
               </h2>
             </div>
 
             <div className="opacity-0 animate-fade-in-up delay-800">
-              <p className="font-urbanist text-base md:text-lg font-400 text-charcoal/70 mb-4 leading-relaxed px-2 md:px-4 max-w-sm md:max-w-lg lg:max-w-2xl mx-auto" suppressHydrationWarning>
+              <p className="font-urbanist text-base md:text-lg font-400 text-white/90 mb-4 leading-relaxed px-2 md:px-4 max-w-sm md:max-w-lg lg:max-w-2xl mx-auto" suppressHydrationWarning>
                 Let&apos;s find your new favourite spot and connect with authentic experiences in your community
               </p>
             </div>

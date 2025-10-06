@@ -102,7 +102,7 @@ export default function OnboardingLayout({
     <>
       <style dangerouslySetInnerHTML={{ __html: onboardingStyles }} />
 
-      <div className="min-h-dvh mobile-viewport bg-off-white flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container mobile-scroll-container">
+      <div className="min-h-dvh mobile-viewport bg-gradient-to-br from-off-white/95 via-off-white to-off-white/90 flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container mobile-scroll-container">
 
         {/* Back button */}
         {backHref && (

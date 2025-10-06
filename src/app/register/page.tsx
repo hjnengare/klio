@@ -413,13 +413,13 @@ export default function RegisterPage() {
         <div className="text-center mb-4">
           <FadeInUp delay={0.4} duration={1} distance={60}>
             <div className="inline-block relative mb-4">
-              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-charcoal mb-2 text-center leading-snug px-2 tracking-[0.01em]">
+              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-white mb-2 text-center leading-snug px-2 tracking-[0.01em]">
                 Create your account
               </h2>
             </div>
           </FadeInUp>
           <FadeInUp delay={0.7} duration={0.8} distance={30}>
-            <p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto">
+            <p className="font-urbanist text-sm md:text-base font-400 text-white/90 mb-4 leading-relaxed px-2 max-w-lg mx-auto">
               Join KLIO and discover places real locals love
             </p>
           </FadeInUp>
@@ -427,7 +427,7 @@ export default function RegisterPage() {
 
 
         {/* Form Card */}
-        <div className="bg-white/95 card-mobile border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden backdrop-blur-sm">
+        <div className="bg-off-white card-mobile border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
 
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}

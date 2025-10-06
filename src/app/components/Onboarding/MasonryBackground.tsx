@@ -30,11 +30,11 @@ export default function MasonryBackground() {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {/* Masonry grid */}
-      <div className="absolute inset-0 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4 p-4 md:p-6 auto-rows-[150px] md:auto-rows-[200px]">
+      <div className="absolute inset-0 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[2px] auto-rows-[150px] md:auto-rows-[200px]">
         {REVIEW_IMAGES.map((src, index) => (
           <div
             key={index}
-            className={`relative rounded-xl overflow-hidden ${
+            className={`relative overflow-hidden ${
               index % 3 === 0 ? "row-span-2" : "row-span-1"
             }`}
           >
@@ -51,11 +51,11 @@ export default function MasonryBackground() {
         ))}
       </div>
 
-      {/* Overlay gradient - on top of images */}
-      <div className="absolute inset-0 bg-gradient-to-br from-off-white/95 via-off-white/90 to-off-white/85" />
+      {/* Glassmorphism overlay with dark tint */}
+      <div className="absolute inset-0 bg-gradient-to-br from-charcoal/40 via-charcoal/30 to-charcoal/20" />
 
-      {/* Additional blur for depth */}
-      <div className="absolute inset-0 backdrop-blur-sm" />
+      {/* Minimal blur for glassmorphism effect */}
+      <div className="absolute inset-0 backdrop-blur-[5px]" />
     </div>
   );
 }

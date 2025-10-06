@@ -45,7 +45,7 @@ function BusinessCard({ business, hideStar = false }: { business: Business; hide
   const [isDesktop, setIsDesktop] = useState(false);
   const [imgError, setImgError] = useState(false);
 
-  // Preload the review route with business ID
+  // Preload the review route with businessG ID
   const reviewRoute = useMemo(() => {
     return `/business/review`;
   }, []);
