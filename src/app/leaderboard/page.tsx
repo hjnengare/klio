@@ -227,7 +227,7 @@ export default function LeaderboardPage() {
                     <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2">
                       <ion-icon name="medal" class="text-lg sm:text-xl md:text-2xl text-coral/40" />
                     </div>
-                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-4xl md:text-5xl font-900 text-coral/20">2</div>
+                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-4xl md:text-5xl font-900 text-white">2</div>
                   </div>
                 </div>
               </motion.div>
@@ -271,7 +271,7 @@ export default function LeaderboardPage() {
                       <ion-icon name="star" class="text-xl sm:text-2xl md:text-3xl text-sage/30" />
                       <ion-icon name="medal" class="text-lg sm:text-xl md:text-2xl text-amber-500/40" />
                     </div>
-                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-5xl md:text-6xl font-900 text-sage/20">1</div>
+                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-5xl md:text-6xl font-900 text-white">1</div>
                   </div>
                 </div>
               </motion.div>
@@ -314,7 +314,7 @@ export default function LeaderboardPage() {
                     <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2">
                       <ion-icon name="medal" class="text-lg sm:text-xl md:text-2xl text-charcoal/30" />
                     </div>
-                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-4xl md:text-5xl font-900 text-charcoal/20">3</div>
+                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-4xl md:text-5xl font-900 text-white">3</div>
                   </div>
                 </div>
               </motion.div>
