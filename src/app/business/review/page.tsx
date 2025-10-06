@@ -112,33 +112,34 @@ export default function WriteReviewPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-dvh bg-white/90 relative overflow-hidden">
+      <div className="min-h-dvh bg-off-white relative overflow-hidden">
+        {/* Static background layers */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />
+        </div>
+
+        {/* Floating elements */}
+        <FloatingElements />
+
         {/* Premium Header */}
-        <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm">
+        <header className="relative z-20 bg-off-white backdrop-blur-xl border-b border-sage/10 px-4 py-6">
           <div className="flex items-center justify-between max-w-4xl mx-auto">
-            <Link href="/home" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full">
+            <Link href="/home" className="text-charcoal/60 hover:text-charcoal transition-colors p-2 hover:bg-charcoal/5 rounded-full">
               <ion-icon name="arrow-back-outline" size="small"></ion-icon>
             </Link>
-            <h1 className="font-urbanist text-2xl md:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal">
+            <h1 className="font-urbanist text-2xl md:text-4xl font-700 text-charcoal">
               Write a Review
             </h1>
             <div className="w-10"></div>
           </div>
         </header>
 
-        {/* Main content with background layers */}
-        <div className="relative z-10 bg-white/90">
-          {/* Static background layers - matches home page */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />
-          </div>
-
-          {/* Floating elements */}
-          <FloatingElements />
+        {/* Main content */}
+        <div className="relative z-10 bg-off-white">
 
           <div className="w-full md:w-3/4 mx-auto px-4 md:px-4 py-6 pb-6 relative z-10">
         {/* Review Form */}
-        <div className="bg-white/95 backdrop-blur-lg card-mobile md:shadow-xl border border-sage/5 rounded-6 p-4 md:p-8 mb-0 md:mb-8 relative overflow-hidden min-h-[calc(100vh-200px)] md:min-h-0 flex flex-col">
+        <div className="bg-off-white backdrop-blur-lg card-mobile md:shadow-xl border border-sage/5 rounded-6 p-4 md:p-8 mb-0 md:mb-8 relative overflow-hidden min-h-[calc(100vh-200px)] md:min-h-0 flex flex-col">
           <div className="relative z-10 flex-1 flex flex-col">
                 {/* Business Profile Picture */}
                 <div className="flex justify-center mb-4 md:mb-6">
@@ -217,7 +218,7 @@ export default function WriteReviewPage() {
                           px-4 md:px-6 py-3 md:py-4 rounded-full border-2 transition-all duration-300 font-urbanist text-sm font-600 btn-target
                           ${selectedTags.includes(tag)
                             ? 'bg-sage border-sage text-white shadow-lg'
-                            : 'bg-white/80 backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
+                            : 'bg-white backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
                           }
                           focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2
                         `}
@@ -241,7 +242,7 @@ export default function WriteReviewPage() {
                     value={reviewTitle}
                     onChange={(e) => setReviewTitle(e.target.value)}
                     placeholder="Summarize your experience in a few words..."
-                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 shadow-2 input-mobile"
+                    className="w-full bg-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 shadow-2 input-mobile"
                   />
                 </div>
 
@@ -258,7 +259,7 @@ export default function WriteReviewPage() {
                     onChange={(e) => setReviewText(e.target.value)}
                     placeholder="Share your thoughts and help other locals..."
                     rows={4}
-                    className="w-full bg-white/80 backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none shadow-2 flex-1 min-h-[120px] md:min-h-0 input-mobile"
+                    className="w-full bg-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none shadow-2 flex-1 min-h-[120px] md:min-h-0 input-mobile"
                   />
                 </div>
 

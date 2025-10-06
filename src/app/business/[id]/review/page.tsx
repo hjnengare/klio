@@ -107,7 +107,7 @@ export default function WriteReviewPage() {
 
   if (authLoading || businessLoading) {
     return (
-      <div className="min-h-dvh bg-white/90 flex items-center justify-center">
+      <div className="min-h-dvh bg-off-white flex items-center justify-center">
         <div className="w-12 h-12 border-4 border-sage border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -115,10 +115,10 @@ export default function WriteReviewPage() {
 
   if (!business) {
     return (
-      <div className="min-h-dvh bg-white/90 flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-dvh bg-off-white flex items-center justify-center relative overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />
+          <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />
         </div>
 
         <div className="text-center px-4 relative z-10 max-w-md">
@@ -265,7 +265,7 @@ export default function WriteReviewPage() {
   const characterCountColor = characterCount > MAX_REVIEW_LENGTH ? 'text-coral' : characterCount > MAX_REVIEW_LENGTH * 0.9 ? 'text-amber-500' : 'text-charcoal/60';
 
   return (
-    <div className="min-h-dvh bg-white/90 relative overflow-hidden">
+    <div className="min-h-dvh bg-off-white relative overflow-hidden">
       {/* Toast Notification */}
       {toast && (
         <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full shadow-lg backdrop-blur-xl transition-all duration-300 ${
@@ -290,14 +290,14 @@ export default function WriteReviewPage() {
 
       {/* Static background layers */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />
+        <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />
       </div>
 
       {/* Floating elements */}
       <FloatingElements />
 
       {/* Header */}
-      <header className="relative z-20 bg-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-6">
+      <header className="relative z-20 bg-off-white backdrop-blur-xl border-b border-sage/10 px-4 py-6">
         <div className="flex items-center justify-between max-w-4xl mx-auto">
           <Link
             href={`/business/${params?.id}`}
@@ -313,7 +313,7 @@ export default function WriteReviewPage() {
       </header>
 
       {/* Main content */}
-      <div className="relative z-10 bg-white/90">
+      <div className="relative z-10 bg-off-white">
         <div className="pt-4 pb-3 pb-safe-area-bottom">
           <div className="w-full md:max-w-4xl mx-auto px-4 py-6">
             {/* Review Form */}
