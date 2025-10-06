@@ -1,0 +1,79 @@
+
+> klio@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.3
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+
+[2m[1172.20ms][22m [@tailwindcss/postcss] src\app\globals.css
+[2m[   0.23ms][22m  [2m ↳ [22mQuick bail check
+[2m[ 445.23ms][22m  [2m ↳ [22mSetup compiler
+[2m[   3.48ms][22m    [2m ↳ [22mPostCSS AST -> Tailwind CSS AST
+[2m[ 441.64ms][22m    [2m ↳ [22mCreate compiler
+[2m[   0.20ms][22m  [2m ↳ [22mRegister full rebuild paths
+[2m[   5.37ms][22m  [2m ↳ [22mSetup scanner
+[2m[ 194.35ms][22m  [2m ↳ [22mScan for candidates
+[2m[ 210.31ms][22m  [2m ↳ [22mRegister dependency messages
+[2m[ 171.56ms][22m  [2m ↳ [22mBuild utilities
+[2m[ 117.08ms][22m  [2m ↳ [22mOptimization
+[2m[   4.05ms][22m    [2m ↳ [22mAST -> CSS
+[2m[  64.48ms][22m    [2m ↳ [22mLightning CSS
+[2m[  48.32ms][22m    [2m ↳ [22mCSS -> PostCSS AST
+[2m[  26.58ms][22m  [2m ↳ [22mUpdate PostCSS AST
+
+ ✓ Compiled successfully in 22.0s
+   Skipping validation of types
+   Skipping linting
+   Collecting page data ...
+   Generating static pages (0/21) ...
+   Generating static pages (5/21) 
+   Generating static pages (10/21) 
+   Generating static pages (15/21) 
+ ✓ Generating static pages (21/21)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                  Size  First Load JS
+┌ ○ /                                       501 B         215 kB
+├ ○ /_not-found                             153 B         214 kB
+├ ○ /all                                  3.48 kB         251 kB
+├ ƒ /api/businesses                         153 B         214 kB
+├ ƒ /api/deal-breakers                      153 B         214 kB
+├ ƒ /api/interests                          153 B         214 kB
+├ ƒ /api/seed/interests                     153 B         214 kB
+├ ƒ /api/subcategories                      153 B         214 kB
+├ ƒ /api/user/deal-breakers                 153 B         214 kB
+├ ƒ /api/user/interests                     153 B         214 kB
+├ ƒ /api/user/subcategories                 153 B         214 kB
+├ ƒ /business/[id]                          28 kB         242 kB
+├ ƒ /business/[id]/review                 32.9 kB         247 kB
+├ ○ /claim-business                       2.13 kB         216 kB
+├ ○ /complete                             2.53 kB         217 kB
+├ ○ /deal-breakers                        4.33 kB         218 kB
+├ ○ /home                                 7.67 kB         250 kB
+├ ○ /interests                            4.98 kB         224 kB
+├ ○ /leaderboard                          29.1 kB         243 kB
+├ ○ /login                                32.1 kB         246 kB
+├ ○ /onboarding                           2.08 kB         216 kB
+├ ○ /profile                              6.98 kB         225 kB
+├ ○ /register                             34.8 kB         249 kB
+├ ○ /saved                                2.46 kB         246 kB
+├ ○ /subcategories                        4.52 kB         224 kB
+└ ○ /write-review                         1.76 kB         216 kB
++ First Load JS shared by all              215 kB
+  ├ chunks/4bd1b696-f785427dddbba9fb.js   54.2 kB
+  ├ chunks/vendors-d3aafb92caae244b.js     158 kB
+  └ other shared chunks (total)           2.77 kB
+
+Route (pages)                                Size  First Load JS
+─   /_app                                     0 B         218 kB
++ First Load JS shared by all              218 kB
+  ├ chunks/framework-b9fffb5537caa07c.js  57.7 kB
+  └ chunks/vendors-d3aafb92caae244b.js     158 kB
+  └ other shared chunks (total)           2.94 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

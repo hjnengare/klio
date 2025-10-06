@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 import { Ion } from "../components/Ion";
 import { useScrollReveal } from "../hooks/useScrollReveal";
@@ -144,27 +145,27 @@ function ProfileContent() {
 
   // Load user data from auth context and create profile data
   useEffect(() => {
-    if (!user?.id) return;
-
-    // Create profile data from auth user data immediately (no loading state)
+    // Always create dummy profile data for UI/UX design - no auth required
     const mockProfile: UserProfile = {
-      user_id: user.id,
-      username: user.email?.split('@')[0] || 'user',
-      display_name: user.name || user.email?.split('@')[0] || 'User',
-      avatar_url: user.avatar_url || null,
+      user_id: user?.id || 'dummy-user-id',
+      username: user?.email?.split('@')[0] || 'foodie_explorer',
+      display_name: user?.name || user?.email?.split('@')[0] || 'Alex Johnson',
+      avatar_url: user?.avatar_url || null,
       locale: 'en_US',
-      onboarding_step: user.profile?.onboarding_step || 'complete',
+      onboarding_step: user?.profile?.onboarding_step || 'complete',
       is_top_reviewer: true, // Mock as top reviewer for demo
       reviews_count: 8,
       badges_count: 3,
-      interests_count: user.interests?.length || 4,
+      interests_count: user?.interests?.length || 4,
       last_interests_updated: new Date().toISOString(),
-      created_at: user.created_at || new Date().toISOString(),
-      updated_at: user.updated_at || new Date().toISOString()
+      created_at: user?.created_at || new Date().toISOString(),
+      updated_at: user?.updated_at || new Date().toISOString()
     };
 
-    // Create mock user interests from auth context
-    const mockUserInterests: UserInterest[] = (user.interests || []).map((interestId, index) => ({
+    // Create mock user interests from auth context or default interests
+    const defaultInterests = ['food-drink', 'arts-culture', 'outdoors-adventure', 'nightlife-entertainment'];
+    const interestsToUse = user?.interests && user.interests.length > 0 ? user.interests : defaultInterests;
+    const mockUserInterests: UserInterest[] = interestsToUse.map((interestId, index) => ({
       interest_id: interestId,
       interests: {
         id: interestId,
@@ -339,7 +340,7 @@ function ProfileContent() {
         <div className="pt-4 pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">
-              <div className="bg-white/90/90 backdrop-blur-sm p-6 border border-red-200 shadow-sm text-center">
+              <div className="bg-off-white backdrop-blur-sm p-6 border border-red-200 shadow-sm text-center">
                 <Ion name="alert-circle" className="text-red-500 text-[48px] mb-4" />
                 <h2 className="font-urbanist text-xl font-600 text-charcoal mb-2">
                   {error || 'Profile not found'}
@@ -363,7 +364,7 @@ function ProfileContent() {
   }
 
   return (
-    <div className="min-h-dvh bg-white/90 relative">
+    <div className="min-h-dvh bg-off-white relative">
       {/* Floating background elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         {/* Floating orbs */}
@@ -458,7 +459,7 @@ function ProfileContent() {
           <div className="max-w-4xl mx-auto space-y-6">
 
             {/* Profile Header Card */}
-            <div ref={headerRef} className="bg-white backdrop-blur-sm p-6 border border-charcoal/10 shadow-md">
+            <div ref={headerRef} className="bg-off-white backdrop-blur-sm p-6 border border-charcoal/10 shadow-md">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-4">
                   <div className="relative">
@@ -499,7 +500,7 @@ function ProfileContent() {
               </div>
             </div>
             {/* Stats Overview */}
-            <div ref={statsRef} className="bg-white backdrop-blur-sm p-5 border border-charcoal/10 shadow-md">
+            <div ref={statsRef} className="bg-off-white backdrop-blur-sm p-5 border border-charcoal/10 shadow-md">
               <h2 className="font-urbanist text-lg font-700 text-charcoal mb-4">Stats Overview</h2>
               <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 <div className="text-center px-1">
@@ -533,7 +534,7 @@ function ProfileContent() {
             </div>
 
             {/* Your Contributions */}
-            <div ref={contributionsRef} className="bg-white backdrop-blur-sm p-5 border border-charcoal/10 shadow-md">
+            <div ref={contributionsRef} className="bg-off-white backdrop-blur-sm p-5 border border-charcoal/10 shadow-md">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-urbanist text-lg font-700 text-charcoal">Your Contributions</h2>
                 <button

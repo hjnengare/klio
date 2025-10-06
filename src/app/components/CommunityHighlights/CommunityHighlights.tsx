@@ -107,7 +107,7 @@ export default function CommunityHighlights({
               </div>
             </div>
 
-            <ScrollableSection>
+            <ScrollableSection className="list-none">
               {businessesOfTheMonth.map((business) => (
                 <BusinessOfTheMonthCard key={business.id} business={business} />
               ))}

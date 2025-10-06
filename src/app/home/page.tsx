@@ -62,7 +62,7 @@ export default function Home() {
 
         <div className="pt-4 pb-3 relative z-10">
           {/* Promotional highlights */}
-          <PromoRow />
+          {/* <PromoRow /> */}
 
           <MemoizedBusinessRow
             title="For You"
@@ -88,7 +88,7 @@ export default function Home() {
           />
 
           {/* Featured Deal */}
-          <FeaturedDeal />
+          {/* <FeaturedDeal /> */}
         </div>
 
         {/* Footer - only on larger screens */}

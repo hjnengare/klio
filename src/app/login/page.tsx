@@ -187,7 +187,7 @@ export default function LoginPage() {
         className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20"
       >
         <PremiumHover scale={1.1} duration={0.2}>
-          <Link href="/onboarding" className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-3 hover:bg-charcoal/5 rounded-full block">
+          <Link href="/onboarding" className="text-white/80 hover:text-white transition-colors duration-300 p-3 hover:bg-white/10 rounded-full block">
             <ArrowLeft className="w-5 h-5" />
           </Link>
         </PremiumHover>
@@ -199,14 +199,14 @@ export default function LoginPage() {
         <div className="text-center mb-4">
           <FadeInUp delay={0.4} duration={1} distance={60}>
             <div className="inline-block relative mb-4">
-              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-white mb-2 text-center leading-snug px-2 tracking-[0.01em]">
+              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-white mb-2 text-center leading-snug px-2 tracking-[0.01em] drop-shadow-lg">
                 Welcome back
               </h2>
 
             </div>
           </FadeInUp>
           <FadeInUp delay={0.7} duration={0.8} distance={30}>
-            <p className="font-urbanist text-sm md:text-base font-400 text-white/90 mb-4 leading-relaxed px-2 max-w-lg mx-auto">
+            <p className="font-urbanist text-sm md:text-base font-400 text-white/90 mb-4 leading-relaxed px-2 max-w-lg mx-auto drop-shadow-md">
               Sign in to continue discovering KLIO
             </p>
           </FadeInUp>

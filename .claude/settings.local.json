@@ -24,7 +24,12 @@
       "Bash(curl:*)",
       "Bash(git reset:*)",
       "Bash(start http://localhost:3002/register)",
-      "Bash(start \"http://localhost:3002/subcategories?interests=food-drink,arts-culture\")"
+      "Bash(start \"http://localhost:3002/subcategories?interests=food-drink,arts-culture\")",
+      "Bash(if [ -f src/app/general/reviews/page.tsx ])",
+      "Bash(then echo \"File exists at general/reviews\")",
+      "Bash(else echo \"File does not exist at general/reviews\")",
+      "Bash(rm:*)",
+      "Bash(npm cache clean:*)"
     ],
     "deny": [],
     "ask": []

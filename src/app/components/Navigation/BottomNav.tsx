@@ -82,13 +82,14 @@ export default function BottomNav() {
                 whileTap={{ scale: 0.9 }}
                 className={`relative z-10 flex items-center justify-center w-6 h-6 rounded-full transition-all duration-300 ${
                   isActive
-                    ? "bg-sage text-white shadow-lg"
+                    ? "!bg-sage !text-white shadow-lg"
                     : "text-charcoal/60 group-hover:text-sage group-hover:bg-sage/10"
                 }`}
               >
                 <ion-icon
                   name={isActive ? item.icon : `${item.icon}-outline`}
                   class="text-base"
+                  style={isActive ? { color: 'white' } : undefined}
                 />
               </motion.div>
 
@@ -96,7 +97,7 @@ export default function BottomNav() {
               <span
                 className={`relative z-10 font-urbanist text-xs font-600 transition-all duration-300 ${
                   isActive
-                    ? "text-sage"
+                    ? "!text-sage"
                     : "text-charcoal/60 group-hover:text-sage"
                 }`}
               >

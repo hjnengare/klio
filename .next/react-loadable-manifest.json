@@ -21,38 +21,20 @@
       "static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js"
     ]
   },
-  "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
-    "id": "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app",
+  "app\\business\\review\\page.tsx -> ../../components/Animations/FloatingElements": {
+    "id": "app\\business\\review\\page.tsx -> ../../components/Animations/FloatingElements",
     "files": [
-      "static/chunks/_pages-dir-browser_node_modules_next_dist_pages__app_js.js"
+      "static/chunks/_app-pages-browser_src_app_components_Animations_FloatingElements_tsx-_99650.js"
     ]
   },
-  "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
-    "id": "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error",
+  "app\\business\\review\\page.tsx -> ../../components/Footer/Footer": {
+    "id": "app\\business\\review\\page.tsx -> ../../components/Footer/Footer",
     "files": [
-      "static/chunks/_pages-dir-browser_node_modules_next_dist_pages__error_js.js"
+      "static/chunks/_app-pages-browser_src_app_components_Footer_Footer_tsx-_548f0.js"
     ]
   },
-  "app\\business\\[id]\\review\\page.tsx -> ../../../components/Animations/FadeInUp": {
-    "id": "app\\business\\[id]\\review\\page.tsx -> ../../../components/Animations/FadeInUp",
-    "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Animations_FadeInUp_tsx.js"
-    ]
-  },
-  "app\\business\\[id]\\review\\page.tsx -> ../../../components/Animations/PremiumHover": {
-    "id": "app\\business\\[id]\\review\\page.tsx -> ../../../components/Animations/PremiumHover",
-    "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Animations_PremiumHover_tsx.js"
-    ]
-  },
-  "app\\business\\[id]\\review\\page.tsx -> ../../../components/Navigation/BottomNav": {
-    "id": "app\\business\\[id]\\review\\page.tsx -> ../../../components/Navigation/BottomNav",
-    "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Navigation_BottomNav_tsx-_0fed1.js"
-    ]
-  },
-  "app\\business\\[id]\\review\\page.tsx -> ../../../components/ReviewForm/ImageUpload": {
-    "id": "app\\business\\[id]\\review\\page.tsx -> ../../../components/ReviewForm/ImageUpload",
+  "app\\business\\review\\page.tsx -> ../../components/ReviewForm/ImageUpload": {
+    "id": "app\\business\\review\\page.tsx -> ../../components/ReviewForm/ImageUpload",
     "files": [
       "static/chunks/_app-pages-browser_src_app_components_ReviewForm_ImageUpload_tsx.js"
     ]
@@ -63,16 +45,10 @@
       "static/chunks/_app-pages-browser_node_modules_web-vitals_dist_web-vitals_js.js"
     ]
   },
-  "app\\components\\Providers\\PageTransitionProvider.tsx -> ../Loading/PageLoading": {
-    "id": "app\\components\\Providers\\PageTransitionProvider.tsx -> ../Loading/PageLoading",
-    "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Loading_PageLoading_tsx.js"
-    ]
-  },
   "app\\home\\page.tsx -> ../components/Animations/FloatingElements": {
     "id": "app\\home\\page.tsx -> ../components/Animations/FloatingElements",
     "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Animations_FloatingElements_tsx.js"
+      "static/chunks/_app-pages-browser_src_app_components_Animations_FloatingElements_tsx-_99651.js"
     ]
   },
   "app\\home\\page.tsx -> ../components/CommunityHighlights/CommunityHighlights": {
@@ -87,22 +63,28 @@
       "static/chunks/_app-pages-browser_src_app_components_EventsSpecials_EventsSpecials_tsx.js"
     ]
   },
+  "app\\home\\page.tsx -> ../components/FeaturedDeal/FeaturedDeal": {
+    "id": "app\\home\\page.tsx -> ../components/FeaturedDeal/FeaturedDeal",
+    "files": [
+      "static/chunks/_app-pages-browser_src_app_components_FeaturedDeal_FeaturedDeal_tsx.js"
+    ]
+  },
   "app\\home\\page.tsx -> ../components/Footer/Footer": {
     "id": "app\\home\\page.tsx -> ../components/Footer/Footer",
     "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Footer_Footer_tsx.js"
+      "static/chunks/_app-pages-browser_src_app_components_Footer_Footer_tsx-_548f1.js"
     ]
   },
-  "app\\home\\page.tsx -> ../components/Navigation/BottomNav": {
-    "id": "app\\home\\page.tsx -> ../components/Navigation/BottomNav",
+  "app\\home\\page.tsx -> ../components/PromoRow/PromoRow": {
+    "id": "app\\home\\page.tsx -> ../components/PromoRow/PromoRow",
     "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Navigation_BottomNav_tsx-_0fed1.js"
+      "static/chunks/_app-pages-browser_src_app_components_PromoRow_PromoRow_tsx.js"
     ]
   },
-  "app\\profile\\page.tsx -> ../components/Navigation/BottomNav": {
-    "id": "app\\profile\\page.tsx -> ../components/Navigation/BottomNav",
+  "app\\profile\\page.tsx -> ../components/Footer/Footer": {
+    "id": "app\\profile\\page.tsx -> ../components/Footer/Footer",
     "files": [
-      "static/chunks/_app-pages-browser_src_app_components_Navigation_BottomNav_tsx-_0fed0.js"
+      "static/chunks/_app-pages-browser_src_app_components_Footer_Footer_tsx-_548f1.js"
     ]
   }
 }
