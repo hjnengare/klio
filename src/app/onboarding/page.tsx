@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useMounted } from "../hooks/useMounted";
-import MasonryBackground from "../components/Onboarding/MasonryBackground";
 
 // Mobile-first CSS with proper typography scale and safe areas
 const styles = `
@@ -40,10 +39,44 @@ const styles = `
     overscroll-behavior: contain;
   }
 
+  /* Hide scrollbar */
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+
   /* Button press states */
   .btn-press:active {
     transform: scale(0.98);
     transition: transform 0.1s ease;
+  }
+
+  /* Premium button styling */
+  .btn-premium {
+    position: relative;
+    background: linear-gradient(135deg, #7D9B76 0%, #6B8A64 100%);
+    box-shadow:
+      0 10px 40px rgba(125, 155, 118, 0.25),
+      0 4px 12px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 20px 60px rgba(125, 155, 118, 0.35),
+      0 8px 24px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-premium:active {
+    transform: translateY(0);
   }
 
   /* Card styling - border-first, tiny shadow */
@@ -65,16 +98,13 @@ export default function OnboardingPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-[100dvh] bg-off-white flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
+      <div className="min-h-[100dvh] bg-gradient-to-b from-[#faeee8] to-[#f7e3db] flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
 
-        {/* Masonry background with review images */}
-        <MasonryBackground />
-
-        <div className="w-full max-w-full px-3 md:max-w-4xl md:px-4 mx-auto relative z-10 max-h-screen overflow-y-auto ios-inertia flex flex-col justify-center min-h-0">
+        <div className="w-full max-w-full px-3 md:max-w-4xl md:px-4 mx-auto relative z-10 max-h-screen overflow-y-auto ios-inertia hide-scrollbar flex flex-col justify-center min-h-0">
           {/* App Name */}
           <div className="text-center mb-4 opacity-0 animate-fade-in-up delay-400">
             <div className="inline-block relative">
-              <h1 className="font-urbanist text-xl md:text-2xl lg:text-3xl font-700 text-white mb-1 md:mb-1.5 relative tracking-tight drop-shadow-lg" suppressHydrationWarning>
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-charcoal mb-1 md:mb-1.5 relative tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }} suppressHydrationWarning>
                 KLIO
               </h1>
             </div>
@@ -83,14 +113,14 @@ export default function OnboardingPage() {
           {/* Main Content */}
           <div className="text-center mb-4">
             <div className="opacity-0 animate-fade-in-up delay-600">
-              <h2 className="font-urbanist text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-700 text-white mb-4 text-center leading-tight px-1 md:px-2 tracking-[0.01em] drop-shadow-lg" suppressHydrationWarning>
-                Discover trusted local gems near you!
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-charcoal mb-4 text-center leading-tight px-1 md:px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }} suppressHydrationWarning>
+                Discover local gems near you!
               </h2>
             </div>
 
             <div className="opacity-0 animate-fade-in-up delay-800">
-              <p className="font-urbanist text-base md:text-lg font-400 text-white/90 mb-4 leading-relaxed px-2 md:px-4 max-w-sm md:max-w-lg lg:max-w-2xl mx-auto drop-shadow-md" suppressHydrationWarning>
-                Let&apos;s find your new favourite spot and connect with authentic experiences in your community
+              <p className="text-base md:text-lg font-normal text-charcoal/70 mb-4 leading-relaxed px-2 md:px-4 max-w-sm md:max-w-lg lg:max-w-2xl mx-auto" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }} suppressHydrationWarning>
+              From restaurants to plumbers, find trusted businesses reviewed by us South Africans
               </p>
             </div>
 
@@ -99,45 +129,50 @@ export default function OnboardingPage() {
               <div className="opacity-0 animate-fade-in-up delay-1000">
                 <Link
                   href="/register"
-                  className="group block w-full rounded-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-base font-600 min-h-[48px] py-3 px-6 rounded-6 shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/20 hover:focus:ring-coral/20 focus:ring-offset-1 relative overflow-hidden text-center hover:scale-[1.02] btn-press flex items-center justify-center"
+                  className="btn-premium group block w-full rounded-full text-white text-base font-semibold py-3 px-6 md:px-4 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 relative overflow-hidden text-center flex items-center justify-center"
+                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
-                  <span className="relative z-10">Get Started</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative z-10 tracking-wide">Get Started</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-coral via-coral/95 to-coral/90 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out" />
                 </Link>
               </div>
 
               <div className="opacity-0 animate-fade-in-up delay-1200">
                 <Link
                   href="/login"
-                  className="group block w-full text-coral hover:text-coral/80 font-urbanist text-base font-600 min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none relative text-center hover:scale-[1.01] btn-press flex items-center justify-center"
+                  className="group block w-full text-coral hover:text-coral/80 text-base font-semibold min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none relative text-center flex items-center justify-center"
+                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
-                  <span className="relative z-10">Log in</span>
+                  <span className="relative z-10">
+                    Log in
+                    <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-coral scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-center" />
+                  </span>
                 </Link>
               </div>
             </div>
           </div>
 
           {/* Trust indicators */}
-          <div className="flex justify-center items-center space-x-4 md:space-x-6 lg:space-x-10 text-charcoal/60 text-center px-2 md:px-4">
-            <div className="flex flex-col items-center space-y-1 md:space-y-1.5 lg:space-y-2 opacity-0 animate-scale-in delay-1400">
-              <div className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-sage/10 rounded-full flex items-center justify-center">
-                <div className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 bg-sage rounded-full" />
+          <div className="flex justify-center items-start gap-3 md:gap-5 text-charcoal/60 text-center px-2 md:px-4">
+            <div className="flex flex-col items-center gap-1 w-14 md:w-16 opacity-0 animate-scale-in delay-1400">
+              <div className="w-7 h-7 md:w-8 md:h-8 bg-sage/10 rounded-full flex items-center justify-center">
+                <div className="w-2.5 h-2.5 md:w-3 md:h-3 bg-sage rounded-full" />
               </div>
-              <span className="font-urbanist text-base font-500 tracking-tight min-w-0">Trusted</span>
+              <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Earn points</span>
             </div>
 
-            <div className="flex flex-col items-center space-y-1 md:space-y-1.5 lg:space-y-2 opacity-0 animate-scale-in delay-1600">
-              <div className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-coral/10 rounded-full flex items-center justify-center">
-                <div className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 bg-coral rounded-full" />
+            <div className="flex flex-col items-center gap-1 w-14 md:w-16 opacity-0 animate-scale-in delay-1600">
+              <div className="w-7 h-7 md:w-8 md:h-8 bg-coral/10 rounded-full flex items-center justify-center">
+                <div className="w-2.5 h-2.5 md:w-3 md:h-3 bg-coral rounded-full" />
               </div>
-              <span className="font-urbanist text-base font-500 tracking-tight min-w-0">Local</span>
+              <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Trusted opinions</span>
             </div>
 
-            <div className="flex flex-col items-center space-y-1 md:space-y-1.5 lg:space-y-2 opacity-0 animate-scale-in delay-1800">
-              <div className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-charcoal/10 rounded-full flex items-center justify-center">
-                <div className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 bg-charcoal rounded-full" />
+            <div className="flex flex-col items-center gap-1 w-14 md:w-16 opacity-0 animate-scale-in delay-1800">
+              <div className="w-7 h-7 md:w-8 md:h-8 bg-charcoal/10 rounded-full flex items-center justify-center">
+                <div className="w-2.5 h-2.5 md:w-3 md:h-3 bg-charcoal rounded-full" />
               </div>
-              <span className="font-urbanist text-base font-500 tracking-tight min-w-0">Authentic</span>
+              <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Community favourites</span>
             </div>
           </div>
         </div>
