@@ -87,7 +87,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
             onFocus={onFocusOpenFilters}
             onTouchStart={onFocusOpenFilters}
             placeholder={ph}
-            className={`w-full bg-off-white/50 border border-charcoal/20 rounded-full
+            className={`w-full bg-[#d6d4d6]/50 border border-charcoal/20 rounded-full
               ${showFilter && onFilterClick ? "pl-12 pr-12 sm:pl-14 sm:pr-12" : "pl-12 pr-4"}
               ${variant === "header" ? "py-3 text-base lg:text-lg" : "py-2 text-sm md:text-base"}
               font-urbanist font-500 text-charcoal placeholder-charcoal/40

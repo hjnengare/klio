@@ -83,7 +83,7 @@ const inputVariants = {
 
   variants: {
     default: [
-      'bg-off-white-100 border border-charcoal-200',
+      'bg-off-white -100 border border-charcoal-200',
       'hover:border-sage-400 hover:bg-white',
       'focus:border-sage-500 focus:ring-sage-500/20 focus:bg-white',
       'invalid:border-error-500 invalid:ring-error-500/20',

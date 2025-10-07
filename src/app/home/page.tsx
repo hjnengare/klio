@@ -11,19 +11,19 @@ import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../dat
 
 // Dynamic imports for below-the-fold components
 const PromoRow = dynamic(() => import("../components/PromoRow/PromoRow"), {
-  loading: () => <div className="h-64 sm:h-80 bg-off-white/50 animate-pulse" />,
+  loading: () => <div className="h-64 sm:h-80 bg-off-white /50 animate-pulse" />,
 });
 
 const EventsSpecials = dynamic(() => import("../components/EventsSpecials/EventsSpecials"), {
-  loading: () => <div className="h-96 bg-off-white/50 animate-pulse" />,
+  loading: () => <div className="h-96 bg-off-white /50 animate-pulse" />,
 });
 
 const CommunityHighlights = dynamic(() => import("../components/CommunityHighlights/CommunityHighlights"), {
-  loading: () => <div className="h-96 bg-off-white/50 animate-pulse" />,
+  loading: () => <div className="h-96 bg-off-white /50 animate-pulse" />,
 });
 
 const FeaturedDeal = dynamic(() => import("../components/FeaturedDeal/FeaturedDeal"), {
-  loading: () => <div className="h-96 bg-off-white/50 animate-pulse" />,
+  loading: () => <div className="h-96 bg-off-white /50 animate-pulse" />,
 });
 
 const FloatingElements = dynamic(() => import("../components/Animations/FloatingElements"), {
@@ -43,7 +43,7 @@ export default function Home() {
   const trendingBusinesses = TRENDING_BUSINESSES.slice(10, 20);
 
   return (
-    <div className="min-h-dvh bg-off-white relative">
+    <div className="min-h-dvh bg-off-white  relative">
       {/* Header - Transparent at top, overlays hero */}
       <Header showSearch={true} />
 
@@ -51,7 +51,7 @@ export default function Home() {
       <HeroCarousel />
 
       {/* Main content */}
-      <div className="relative z-10 bg-off-white">
+      <div className="relative z-10 bg-off-white ">
         {/* Static background layers */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />

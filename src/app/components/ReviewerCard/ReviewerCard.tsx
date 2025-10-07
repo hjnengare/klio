@@ -59,7 +59,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
   if (variant === "reviewer" || reviewer) {
     return (
       <div id={idForSnap} className="snap-start snap-always w-[100vw] sm:w-[280px] flex-shrink-0">
-        <div className="bg-off-white rounded-[8px] overflow-hidden shadow-sm group cursor-pointer h-[200px] relative border border-charcoal/10" onClick={toggleActions}>
+        <div className="bg-[#d6d4d6] rounded-[8px] overflow-hidden shadow-sm group cursor-pointer h-[200px] relative border border-charcoal/10" onClick={toggleActions}>
 
           {/* Content */}
           <div className="relative z-10 p-4 h-full flex flex-col">
@@ -185,7 +185,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
 
   return (
     <li className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[320px] flex-shrink-0">
-      <div className="bg-off-white rounded-xl p-6 shadow-sm transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10" onClick={toggleActions}>
+      <div className="bg-[#d6d4d6] rounded-xl p-6 shadow-sm transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10" onClick={toggleActions}>
         <div className="flex items-start gap-4 mb-4">
           <div className="relative">
             <ProfilePicture

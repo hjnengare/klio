@@ -155,7 +155,7 @@ export default function WriteReviewPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-dvh bg-off-white relative overflow-hidden">
+      <div className="min-h-dvh bg-off-white  relative overflow-hidden">
         {/* Static background layers */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />
@@ -165,7 +165,7 @@ export default function WriteReviewPage() {
         <FloatingElements />
 
         {/* Header - matches explore page pattern */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-off-white/90 backdrop-blur-md border-b border-sage/10 px-4 py-4">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-off-white /90 backdrop-blur-md border-b border-sage/10 px-4 py-4">
           <div className="flex items-center max-w-7xl mx-auto">
             <Link href="/home" className="group flex items-center">
               <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-3 md:mr-4">
@@ -179,10 +179,10 @@ export default function WriteReviewPage() {
         </header>
 
         {/* Main content */}
-        <div className="relative z-10 bg-off-white pt-16 md:pt-20">
+        <div className="relative z-10 bg-off-white  pt-16 md:pt-20">
           <div className="w-full max-w-4xl mx-auto px-0 md:px-4 py-4 md:py-6 relative z-10">
         {/* Review Form */}
-        <div className="bg-off-white backdrop-blur-lg border-0 md:border border-sage/10 rounded-none md:rounded-lg p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col">
+        <div className="bg-off-white  backdrop-blur-lg border-0 md:border border-sage/10 rounded-none md:rounded-lg p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col">
           <div className="relative z-10 flex-1 flex flex-col">
                 {/* Business Header */}
                 <div className="mb-4 md:mb-6 text-center px-4">
@@ -324,7 +324,7 @@ export default function WriteReviewPage() {
                           px-4 md:px-6 py-3 md:py-4 rounded-full border-2 transition-all duration-300 font-urbanist text-sm font-600 btn-target
                           ${selectedTags.includes(tag)
                             ? 'bg-sage border-sage text-white shadow-lg'
-                            : 'bg-off-white backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
+                            : 'bg-off-white  backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
                           }
                           focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2
                         `}
@@ -348,7 +348,7 @@ export default function WriteReviewPage() {
                     value={reviewTitle}
                     onChange={(e) => setReviewTitle(e.target.value)}
                     placeholder="Summarize your experience in a few words..."
-                    className="w-full bg-off-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 input-mobile"
+                    className="w-full bg-off-white  backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 input-mobile"
                   />
                 </div>
 
@@ -365,7 +365,7 @@ export default function WriteReviewPage() {
                     onChange={(e) => setReviewText(e.target.value)}
                     placeholder="Share your thoughts and help other locals..."
                     rows={4}
-                    className="w-full bg-off-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none flex-1 min-h-[120px] md:min-h-0 input-mobile"
+                    className="w-full bg-off-white  backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none flex-1 min-h-[120px] md:min-h-0 input-mobile"
                   />
                 </div>
 

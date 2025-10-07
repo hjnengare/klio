@@ -90,7 +90,7 @@ function BusinessCard({ business, hideStar = false }: { business: Business; hide
       id={idForSnap}
       className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
     >
-      <div className="bg-off-white rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10">
+      <div className="bg-off-white  rounded-[6px] overflow-hidden shadow-sm group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10">
           <div
             className="relative overflow-hidden rounded-t-[6px] flex-1 sm:flex-initial"
             onClick={(e) => {
@@ -142,7 +142,7 @@ function BusinessCard({ business, hideStar = false }: { business: Business; hide
 
             {/* rating badge */}
             {!hideStar && (
-              <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-6 bg-off-white/80 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
+              <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-6 bg-off-white /80 backdrop-blur-sm px-2 py-1 text-charcoal shadow-lg">
                 <Star className="w-3.5 h-3.5 text-coral fill-coral drop-shadow-sm" />
                 <span className="font-urbanist text-sm font-700">
                   {business.totalRating.toFixed(1)}
@@ -161,7 +161,7 @@ function BusinessCard({ business, hideStar = false }: { business: Business; hide
               }`}
             >
               <button
-                className="w-10 h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-off-white md:hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-off-white /95 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-off-white  md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleWriteReview();
@@ -170,7 +170,7 @@ function BusinessCard({ business, hideStar = false }: { business: Business; hide
                 <Edit className="w-4 h-4 text-black" />
               </button>
               <button
-                className="w-10 h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-off-white md:hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-off-white /95 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-off-white  md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleBookmark();
@@ -179,7 +179,7 @@ function BusinessCard({ business, hideStar = false }: { business: Business; hide
                 <Heart className="w-4 h-4 text-black" />
               </button>
               <button
-                className="w-10 h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-off-white md:hover:scale-110 transition-all duration-200"
+                className="w-10 h-10 bg-off-white /95 backdrop-blur-sm rounded-full flex items-center justify-center md:shadow-lg md:hover:bg-off-white  md:hover:scale-110 transition-all duration-200"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleShare();

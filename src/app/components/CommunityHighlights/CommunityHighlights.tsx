@@ -46,7 +46,7 @@ export default function CommunityHighlights({
     : reviews;
 
   return (
-    <section className="bg-off-white relative" aria-label="community highlights" data-section>
+    <section className="bg-[#d6d4d6] relative" aria-label="community highlights" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 right-20 w-32 h-32 bg-gradient-to-br from-sage/8 to-transparent rounded-full blur-2xl" />

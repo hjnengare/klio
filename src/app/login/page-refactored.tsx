@@ -248,7 +248,7 @@ export default function LoginPageRefactored() {
                     <Text
                       size="sm"
                       color="secondary"
-                      className="px-4 bg-off-white-100"
+                      className="px-4 bg-off-white -100"
                     >
                       or continue with
                     </Text>

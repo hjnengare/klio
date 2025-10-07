@@ -12,7 +12,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
 
   if (variant === 'bottom-nav') {
     return (
-      <nav className="fixed bottom-0 left-0 right-0 bg-off-white border-t border-charcoal/10 px-4 py-2 z-40">
+      <nav className="fixed bottom-0 left-0 right-0 bg-[#d6d4d6] border-t border-charcoal/10 px-4 py-2 z-40">
         <div className="flex items-center justify-center max-w-6xl mx-auto">
           <div className="flex items-center space-x-8">
             <Link href="/" className="flex flex-col items-center space-y-1 p-2 text-hoockers-green">
@@ -58,7 +58,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
   ];
 
   return (
-    <footer className="bg-off-white border-t border-charcoal/10 relative overflow-hidden">
+    <footer className="bg-[#d6d4d6] border-t border-charcoal/10 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl" />

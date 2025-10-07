@@ -170,7 +170,7 @@ This guide helps migrate existing Blabbr components to use the new design system
 **Before:**
 ```tsx
 // Old card patterns
-<div className="bg-off-white rounded-none sm:rounded-[6px] overflow-hidden shadow-none sm:shadow-sm group cursor-pointer">
+<div className="bg-off-white  rounded-none sm:rounded-[6px] overflow-hidden shadow-none sm:shadow-sm group cursor-pointer">
   <div className="relative overflow-hidden rounded-t-none sm:rounded-t-[6px]">
     <motion.div
       animate={{ scale: showActions ? 1.05 : 1 }}

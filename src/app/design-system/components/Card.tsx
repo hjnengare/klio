@@ -58,7 +58,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 const cardVariants = {
   base: [
     // Base styles
-    'relative bg-off-white-100 overflow-hidden',
+    'relative bg-off-white -100 overflow-hidden',
     'transition-all duration-normal ease-out',
 
     // Motion-safe animations

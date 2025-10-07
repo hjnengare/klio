@@ -98,7 +98,7 @@ export default function OnboardingPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-[100dvh] bg-gradient-to-b from-[#faeee8] to-[#f7e3db] flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
+      <div className="min-h-[100dvh] bg-off-white  flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
 
         <div className="w-full max-w-full px-3 md:max-w-4xl md:px-4 mx-auto relative z-10 max-h-screen overflow-y-auto ios-inertia hide-scrollbar flex flex-col justify-center min-h-0">
           {/* App Name */}

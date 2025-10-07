@@ -123,7 +123,7 @@ function FeaturedDeal() {
 
   return (
     <section
-      className="py-6 sm:py-8 bg-off-white relative overflow-hidden"
+      className="py-6 sm:py-8 bg-[#d6d4d6] relative overflow-hidden"
       aria-label="featured deal"
       data-section
     >

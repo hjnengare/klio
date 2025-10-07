@@ -208,7 +208,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-[100dvh] bg-gradient-to-b from-[#faeee8] to-[#f7e3db] flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
+    <div ref={containerRef} className="min-h-[100dvh] bg-off-white  flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -242,7 +242,7 @@ export default function LoginPage() {
 
 
         {/* Form Card */}
-        <div className="bg-gradient-to-b from-[#faeee8] to-[#f7e3db] rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 shadow-sm">
+        <div className="bg-off-white  rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 shadow-sm">
           
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
@@ -390,7 +390,7 @@ export default function LoginPage() {
                 <div className="w-full border-t border-light-gray/50"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-gradient-to-b from-[#faeee8] to-[#f7e3db] text-charcoal/60 font-medium" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>or continue with</span>
+                <span className="px-4 bg-off-white  text-charcoal/60 font-medium" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>or continue with</span>
               </div>
             </div>
 
