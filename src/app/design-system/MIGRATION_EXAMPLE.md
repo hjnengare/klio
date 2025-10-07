@@ -45,7 +45,7 @@ This document demonstrates the dramatic code reduction and improvement achieved 
     className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
       getUsernameError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
       username && !getUsernameError() && usernameTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-      'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
+      'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white  '
     }`}
     disabled={submitting || isLoading}
   />

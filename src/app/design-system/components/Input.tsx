@@ -83,16 +83,16 @@ const inputVariants = {
 
   variants: {
     default: [
-      'bg-off-white -100 border border-charcoal-200',
-      'hover:border-sage-400 hover:bg-white',
-      'focus:border-sage-500 focus:ring-sage-500/20 focus:bg-white',
+      ' bg-white  -100 border border-charcoal-200',
+      'hover:border-sage-400 hover:bg-white  ',
+      'focus:border-sage-500 focus:ring-sage-500/20 focus:bg-white  ',
       'invalid:border-error-500 invalid:ring-error-500/20',
     ],
 
     filled: [
       'bg-charcoal-50 border-0',
       'hover:bg-charcoal-100',
-      'focus:bg-white focus:ring-sage-500/20',
+      'focus:bg-white   focus:ring-sage-500/20',
       'invalid:bg-error-50 invalid:ring-error-500/20',
     ],
 

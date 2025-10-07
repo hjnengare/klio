@@ -64,7 +64,7 @@ export default function BusinessProfilePage() {
   }, [businessId]);
 
   return (
-    <div className="min-h-dvh bg-white/90 relative overflow-hidden">
+    <div className="min-h-dvh bg-white  /90 relative overflow-hidden">
       {/* Ambient background elements */}
       <div className="absolute inset-0 opacity-20">
         <motion.div
@@ -86,7 +86,7 @@ export default function BusinessProfilePage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative z-10 bg-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm"
+        className="relative z-10 bg-white  /90 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm"
       >
         <div className="flex items-center justify-between max-w-4xl mx-auto">
           <motion.div
@@ -136,7 +136,7 @@ export default function BusinessProfilePage() {
       <div className="max-w-4xl mx-auto px-4 py-6 relative z-10">
         {/* Premium Business Header */}
         <FadeInUp delay={0.2}>
-            <div className="bg-white/90/90 backdrop-blur-lg rounded-[6px] shadow-sm border border-sage/10 p-8 mb-8 relative overflow-hidden">
+            <div className="bg-white  /90/90 backdrop-blur-lg rounded-[6px] shadow-sm border border-sage/10 p-8 mb-8 relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
@@ -206,7 +206,7 @@ export default function BusinessProfilePage() {
 
         {/* Photo Gallery Section */}
         <FadeInUp delay={0.3}>
-            <div className="bg-white/90/90 backdrop-blur-lg rounded-[6px] shadow-sm border border-sage/10 p-8 mb-8 relative overflow-hidden">
+            <div className="bg-white  /90/90 backdrop-blur-lg rounded-[6px] shadow-sm border border-sage/10 p-8 mb-8 relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
 
@@ -244,7 +244,7 @@ export default function BusinessProfilePage() {
 
         {/* Specials & Events */}
         <FadeInUp delay={0.4}>
-            <div className="bg-white/90/90 backdrop-blur-lg rounded-[6px] shadow-sm border border-sage/10 p-8 mb-8 relative overflow-hidden">
+            <div className="bg-white  /90/90 backdrop-blur-lg rounded-[6px] shadow-sm border border-sage/10 p-8 mb-8 relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
@@ -299,7 +299,7 @@ export default function BusinessProfilePage() {
 
         {/* Reviews */}
         <FadeInUp delay={0.6}>
-            <div className="bg-white/90/90 backdrop-blur-lg rounded-[6px] shadow-sm border border-sage/10 p-8 mb-8 relative overflow-hidden">
+            <div className="bg-white  /90/90 backdrop-blur-lg rounded-[6px] shadow-sm border border-sage/10 p-8 mb-8 relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
 

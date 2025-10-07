@@ -45,7 +45,7 @@ export default function LeaderboardPage() {
   const [showToast, setShowToast] = useState(true);
 
   return (
-    <div className="min-h-dvh bg-off-white  pb-6 relative overflow-hidden">
+    <div className="min-h-dvh  bg-white   pb-6 relative overflow-hidden">
      
       {/* Premium background elements */}
       <div className="absolute inset-0 opacity-30">
@@ -59,7 +59,7 @@ export default function LeaderboardPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="bg-off-white /80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
+        className=" bg-white  /80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
       >
         <div className="flex items-center justify-between max-w-[1300px] mx-auto">
           {/* Back button */}
@@ -100,7 +100,7 @@ export default function LeaderboardPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="bg-off-white  backdrop-blur-xl shadow-xl border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 relative overflow-hidden rounded-2xl"
+          className=" bg-white   backdrop-blur-xl shadow-xl border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 relative overflow-hidden rounded-2xl"
         >
           {/* Card decorative elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
@@ -140,7 +140,7 @@ export default function LeaderboardPage() {
                 <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
                   <span className="font-700 text-charcoal">{topReviewers[1].reviews}</span> reviews
                 </div>
-                <div className="bg-white backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-coral/20 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-2 sm:mb-3">
+                <div className="bg-white   backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-coral/20 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-2 sm:mb-3">
                   <ion-icon name="star" class="text-sm text-coral" />
                   <span className="font-urbanist text-sm font-700 text-charcoal">{topReviewers[1].totalRating}</span>
                 </div>
@@ -183,7 +183,7 @@ export default function LeaderboardPage() {
                 <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
                   <span className="font-700 text-charcoal">{topReviewers[0].reviews}</span> reviews
                 </div>
-                <div className="bg-white backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md border border-sage/30 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-3 sm:mb-4">
+                <div className="bg-white   backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md border border-sage/30 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-3 sm:mb-4">
                   <ion-icon name="star" class="text-base text-sage" />
                   <span className="font-urbanist text-base font-700 text-charcoal">{topReviewers[0].totalRating}</span>
                 </div>
@@ -227,7 +227,7 @@ export default function LeaderboardPage() {
                 <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
                   <span className="font-700 text-charcoal">{topReviewers[2].reviews}</span> reviews
                 </div>
-                <div className="bg-white backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-charcoal/20 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-2 sm:mb-3">
+                <div className="bg-white   backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-charcoal/20 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-2 sm:mb-3">
                   <ion-icon name="star" class="text-sm text-charcoal/70" />
                   <span className="font-urbanist text-sm font-700 text-charcoal">{topReviewers[2].totalRating}</span>
                 </div>
@@ -253,7 +253,7 @@ export default function LeaderboardPage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
-                  className="group bg-off-white  rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer border border-charcoal/10"
+                  className="group  bg-white   rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer border border-charcoal/10"
                 >
                   <div className="flex items-center justify-between p-3 sm:p-4">
                     <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
@@ -275,7 +275,7 @@ export default function LeaderboardPage() {
                         <div className="font-urbanist text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
                       </div>
                     </div>
-                    <div className="bg-white/50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
+                    <div className="bg-white  /50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
                       <ion-icon name="star" class="text-sm text-coral" />
                       <span className="font-urbanist text-sm font-600 text-charcoal">{user.totalRating}</span>
                     </div>
@@ -291,7 +291,7 @@ export default function LeaderboardPage() {
                     animate={{ opacity: 1, height: 'auto', y: 0 }}
                     exit={{ opacity: 0, height: 0, y: -20 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className="group bg-off-white  rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer border border-charcoal/10"
+                    className="group  bg-white   rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer border border-charcoal/10"
                   >
                     <div className="flex items-center justify-between p-3 sm:p-4">
                       <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
@@ -313,7 +313,7 @@ export default function LeaderboardPage() {
                           <div className="font-urbanist text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
                         </div>
                       </div>
-                      <div className="bg-white/50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
+                      <div className="bg-white  /50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
                         <ion-icon name="star" class="text-sm text-coral" />
                         <span className="font-urbanist text-sm font-600 text-charcoal">{user.totalRating}</span>
                       </div>

@@ -19,6 +19,11 @@ interface FilterModalProps {
   anchorRef?: React.RefObject<HTMLElement>;
 }
 
+const sf = {
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+} as const;
+
 export default function FilterModal({
   isOpen,
   isVisible,
@@ -31,6 +36,8 @@ export default function FilterModal({
   const [selectedDistance, setSelectedDistance] = useState<string | null>(null);
 
   const panelRef = useRef<HTMLDivElement>(null);
+  const firstInteractiveRef = useRef<HTMLButtonElement>(null);
+
   const [style, setStyle] = useState<{ top: number; left: number; width: number }>({
     top: 0,
     left: 0,
@@ -63,12 +70,18 @@ export default function FilterModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
 
-  // close on outside click/touch and prevent background scroll
+  // focus management + close on outside + prevent background scroll
   useEffect(() => {
     if (!isVisible) return;
 
     // Prevent background scroll
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
+    // Focus the first interactive element on open
+    const timer = setTimeout(() => {
+      firstInteractiveRef.current?.focus();
+    }, 0);
 
     const onOutsideInteraction = (e: Event) => {
       const target = e.target as Node;
@@ -78,17 +91,16 @@ export default function FilterModal({
     };
     const onEsc = (e: KeyboardEvent) => e.key === "Escape" && onClose();
 
-    // Listen for both mouse and touch events
     document.addEventListener("mousedown", onOutsideInteraction);
     document.addEventListener("touchstart", onOutsideInteraction);
     document.addEventListener("keydown", onEsc);
 
     return () => {
+      clearTimeout(timer);
       document.removeEventListener("mousedown", onOutsideInteraction);
       document.removeEventListener("touchstart", onOutsideInteraction);
       document.removeEventListener("keydown", onEsc);
-      // Restore background scroll
-      document.body.style.overflow = "";
+      document.body.style.overflow = prevOverflow;
     };
   }, [isVisible, onClose, anchorRef]);
 
@@ -109,19 +121,40 @@ export default function FilterModal({
 
   if (!isVisible) return null;
 
+  const categoryOptions = [
+    { name: "Restaurants", icon: "restaurant" },
+    { name: "Coffee Shops", icon: "cafe" },
+    { name: "Shopping", icon: "bag" },
+    { name: "Entertainment", icon: "game-controller" },
+    { name: "Services", icon: "construct" },
+  ];
+
+  const distanceOptions = [
+    { distance: "1 mile", icon: "walk" },
+    { distance: "5 miles", icon: "car" },
+    { distance: "10 miles", icon: "car-sport" },
+    { distance: "25 miles", icon: "airplane" },
+  ];
+
   return (
     <div
-      // no dark backdrop — just a high z-index layer holding the panel
+      // high z-index layer holding the panel (no dark backdrop)
       className="fixed inset-0 z-[70] pointer-events-none"
       aria-hidden={!isOpen}
+      style={sf}
     >
       <div
         ref={panelRef}
         role="dialog"
         aria-label="Search filters"
+        aria-modal="true"
         tabIndex={-1}
-        className={`pointer-events-auto bg-[#d6d4d6] border border-charcoal/20 shadow-lg flex flex-col
-                    ${isOpen ? "opacity-100" : "opacity-0"}`}
+        className={`pointer-events-auto
+                    rounded-2xl overflow-hidden
+                    bg-white  /95 backdrop-blur-xl
+                    border border-white/60 shadow-xl
+                    transition-all duration-200
+                    ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"}`}
         style={{
           position: "fixed",
           top: style.top,
@@ -129,139 +162,156 @@ export default function FilterModal({
           width: style.width || 360,
           maxWidth: "calc(100vw - 16px)",
           maxHeight: "min(70vh, 560px)",
-          overflow: "hidden",
+          outline: "none",
         }}
       >
         {/* header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-gray-200">
+        <div className="flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 bg-white  /60 backdrop-blur-sm">
           <div>
-            <h2 className="font-urbanist text-sm md:text-base font-700 text-charcoal flex items-center">
-              <ion-icon name="options" class="text-sage mr-2 text-base" />
+            <h2 className="text-sm md:text-base font-semibold text-charcoal flex items-center gap-2">
+              <ion-icon name="options" className="text-sage text-base" />
               Filters
             </h2>
-            <p className="font-urbanist text-xs text-charcoal/60 mt-0.5">Refine your search</p>
+            <p className="text-xs text-charcoal/60 mt-0.5">Refine your search</p>
           </div>
           <button
+            ref={firstInteractiveRef}
             onClick={onClose}
-            className="w-9 h-9 border border-gray-300 bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+            className="w-9 h-9 rounded-full border border-charcoal/10 bg-white  /70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
             aria-label="Close filters"
           >
-            <ion-icon name="close" class="text-base text-charcoal/70" />
+            <ion-icon name="close" className="text-base" />
           </button>
         </div>
 
         {/* body (scrollable) */}
-        <div className="px-5 sm:px-6 py-4 space-y-4 overflow-y-auto flex-1" style={{ maxHeight: "calc(70vh - 140px)" }}>
+        <div
+          className="px-5 sm:px-6 py-4 space-y-4 overflow-y-auto"
+          style={{ maxHeight: "calc(70vh - 140px)" }}
+        >
           {/* Category */}
-          <div className="bg-gray-50 p-4 border border-gray-200">
-            <h3 className="font-urbanist text-sm font-600 text-charcoal mb-3 flex items-center">
-              <ion-icon name="restaurant" class="text-sage mr-2 text-base" />
+          <section className="rounded-xl bg-white  /70 border border-charcoal/10 p-4">
+            <h3 className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2">
+              <ion-icon name="restaurant" className="text-sage text-base" />
               Category
             </h3>
             <div className="flex flex-wrap gap-2">
-              {[
-                { name: "Restaurants", icon: "restaurant" },
-                { name: "Coffee Shops", icon: "cafe" },
-                { name: "Shopping", icon: "bag" },
-                { name: "Entertainment", icon: "game-controller" },
-                { name: "Services", icon: "construct" },
-              ].map((c) => (
-                <label
-                  key={c.name}
-                  className="group flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 border border-transparent hover:border-gray-300 flex-shrink-0"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedCategories.includes(c.name)}
-                    onChange={() =>
+              {categoryOptions.map((c) => {
+                const active = selectedCategories.includes(c.name);
+                return (
+                  <button
+                    key={c.name}
+                    type="button"
+                    onClick={() =>
                       setSelectedCategories((prev) =>
-                        prev.includes(c.name) ? prev.filter((x) => x !== c.name) : [...prev, c.name]
+                        prev.includes(c.name)
+                          ? prev.filter((x) => x !== c.name)
+                          : [...prev, c.name]
                       )
                     }
-                    className="w-4 h-4 text-sage bg-[#d6d4d6] border-2 border-charcoal/20 focus:ring-2 focus:ring-sage/30"
-                  />
-                  <ion-icon name={c.icon} class="text-sage text-base" />
-                  <span className="font-urbanist text-sm font-500 text-charcoal">{c.name}</span>
-                </label>
-              ))}
+                    className={`px-3 py-2 rounded-full text-sm flex items-center gap-2 border transition-all
+                      ${active
+                        ? "bg-sage text-white border-sage shadow-sm"
+                        : "bg-white   text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
+                      }
+                    focus:outline-none focus:ring-2 focus:ring-sage/30`}
+                    aria-pressed={active}
+                  >
+                    <ion-icon
+                      name={c.icon}
+                      className={`text-base ${active ? "text-white" : "text-sage"}`}
+                    />
+                    <span>{c.name}</span>
+                  </button>
+                );
+              })}
             </div>
-          </div>
+          </section>
 
           {/* Rating */}
-          <div className="bg-gray-50 p-4 border border-gray-200">
-            <h3 className="font-urbanist text-sm font-600 text-charcoal mb-3 flex items-center">
-              <ion-icon name="star" class="text-sage mr-2 text-base" />
+          <section className="rounded-xl bg-white  /70 border border-charcoal/10 p-4">
+            <h3 className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2">
+              <ion-icon name="star" className="text-sage text-base" />
               Minimum Rating
             </h3>
             <div className="flex flex-wrap gap-2">
-              {[5, 4, 3, 2, 1].map((r) => (
-                <label
-                  key={r}
-                  className="group flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 border border-transparent hover:border-gray-300 flex-shrink-0"
-                >
-                  <input
-                    type="radio"
-                    name="rating"
-                    checked={selectedRating === r}
-                    onChange={() => setSelectedRating(r)}
-                    className="w-4 h-4 text-sage bg-[#d6d4d6] border-2 border-charcoal/20 focus:ring-2 focus:ring-sage/30"
-                  />
-                  <div className="flex items-center gap-2">
+              {[5, 4, 3, 2, 1].map((r) => {
+                const active = selectedRating === r;
+                return (
+                  <button
+                    key={r}
+                    type="button"
+                    onClick={() => setSelectedRating(active ? null : r)}
+                    className={`px-3 py-2 rounded-full text-sm flex items-center gap-2 border transition-all
+                      ${active
+                        ? "bg-sage text-white border-sage shadow-sm"
+                        : "bg-white   text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
+                      }
+                    focus:outline-none focus:ring-2 focus:ring-sage/30`}
+                    aria-pressed={active}
+                    aria-label={`${r}+ stars`}
+                  >
                     <div className="flex">
                       {[...Array(r)].map((_, i) => (
-                        <ion-icon key={i} name="star" class="text-sage text-base" />
+                        <ion-icon
+                          key={i}
+                          name="star"
+                          className={`text-base ${active ? "text-white" : "text-sage"}`}
+                        />
                       ))}
                     </div>
-                    <span className="font-urbanist text-sm text-charcoal">{r}+ stars</span>
-                  </div>
-                </label>
-              ))}
+                    <span>{r}+</span>
+                  </button>
+                );
+              })}
             </div>
-          </div>
+          </section>
 
           {/* Distance */}
-          <div className="bg-gray-50 p-4 border border-gray-200">
-            <h3 className="font-urbanist text-sm font-600 text-charcoal mb-3 flex items-center">
-              <ion-icon name="location" class="text-sage mr-2 text-base" />
+          <section className="rounded-xl bg-white  /70 border border-charcoal/10 p-4">
+            <h3 className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2">
+              <ion-icon name="location" className="text-sage text-base" />
               Distance
             </h3>
             <div className="flex flex-wrap gap-2">
-              {[
-                { distance: "1 mile", icon: "walk" },
-                { distance: "5 miles", icon: "car" },
-                { distance: "10 miles", icon: "car-sport" },
-                { distance: "25 miles", icon: "airplane" },
-              ].map((d) => (
-                <label
-                  key={d.distance}
-                  className="group flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 border border-transparent hover:border-gray-300 flex-shrink-0"
-                >
-                  <input
-                    type="radio"
-                    name="distance"
-                    checked={selectedDistance === d.distance}
-                    onChange={() => setSelectedDistance(d.distance)}
-                    className="w-4 h-4 text-sage bg-[#d6d4d6] border-2 border-charcoal/20 focus:ring-2 focus:ring-sage/30"
-                  />
-                  <ion-icon name={d.icon} class="text-sage text-base" />
-                  <span className="font-urbanist text-sm text-charcoal whitespace-nowrap">{d.distance}</span>
-                </label>
-              ))}
+              {distanceOptions.map((d) => {
+                const active = selectedDistance === d.distance;
+                return (
+                  <button
+                    key={d.distance}
+                    type="button"
+                    onClick={() => setSelectedDistance(active ? null : d.distance)}
+                    className={`px-3 py-2 rounded-full text-sm flex items-center gap-2 border transition-all whitespace-nowrap
+                      ${active
+                        ? "bg-coral text-white border-coral shadow-sm"
+                        : "bg-white   text-charcoal border-charcoal/10 hover:border-coral/40 hover:bg-coral/5"
+                      }
+                    focus:outline-none focus:ring-2 focus:ring-coral/30`}
+                    aria-pressed={active}
+                  >
+                    <ion-icon
+                      name={d.icon}
+                      className={`text-base ${active ? "text-white" : "text-coral"}`}
+                    />
+                    <span>{d.distance}</span>
+                  </button>
+                );
+              })}
             </div>
-          </div>
+          </section>
         </div>
 
         {/* footer */}
-        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-charcoal/20 bg-[#d6d4d6]">
+        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-white/60 bg-white  /80 backdrop-blur-sm">
           <button
             onClick={handleClearAll}
-            className="flex-1 bg-gray-100 hover:bg-gray-200 text-charcoal font-urbanist font-600 py-2.5 px-4 border border-gray-300"
+            className="flex-1 rounded-full bg-white   text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
           >
             Clear
           </button>
           <button
             onClick={handleApply}
-            className="flex-1 bg-sage hover:bg-sage/90 text-white font-urbanist font-600 py-2.5 px-4 border border-sage"
+            className="flex-1 rounded-full bg-sage hover:bg-sage/90 text-white font-semibold py-2.5 px-4 border border-sage transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
           >
             Apply
           </button>

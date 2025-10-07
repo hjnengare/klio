@@ -114,7 +114,7 @@ export default function CollectionsSection() {
   };
 
   return (
-    <section className="py-12 bg-white/90">
+    <section className="py-12 bg-white  /90">
       <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10">
@@ -135,7 +135,7 @@ export default function CollectionsSection() {
           {businessCollections.map((business, index) => (
             <div
               key={business.id}
-              className={`group relative bg-white rounded-2xl shadow-sm hover:shadow-xl border border-charcoal/5 overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
+              className={`group relative bg-white   rounded-2xl shadow-sm hover:shadow-xl border border-charcoal/5 overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
                 visibleCards.includes(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
@@ -162,7 +162,7 @@ export default function CollectionsSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
                 {/* Rating Badge */}
-                <div className="absolute bottom-4 left-4 flex items-center space-x-1 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                <div className="absolute bottom-4 left-4 flex items-center space-x-1 bg-white  /90 backdrop-blur-sm px-3 py-1 rounded-full">
                   {renderStars(business.rating)}
                   <span className="ml-1 text-sm font-urbanist font-600 text-charcoal">
                     {business.rating}

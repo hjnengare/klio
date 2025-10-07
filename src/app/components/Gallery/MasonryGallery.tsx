@@ -94,14 +94,14 @@ export default function MasonryGallery({ images, businessName }: MasonryGalleryP
           {/* Close Button */}
           <button
             onClick={closeLightbox}
-            className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+            className="absolute top-4 right-4 w-10 h-10 bg-white  /10 hover:bg-white  /20 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-200 z-10"
             aria-label="Close gallery"
           >
             <X className="w-5 h-5 text-white" />
           </button>
 
           {/* Image Counter */}
-          <div className="absolute top-4 left-4 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full z-10">
+          <div className="absolute top-4 left-4 bg-white  /10 backdrop-blur-sm px-4 py-2 rounded-full z-10">
             <span className="text-white font-urbanist text-sm font-600">
               {selectedImage + 1} / {images.length}
             </span>
@@ -114,7 +114,7 @@ export default function MasonryGallery({ images, businessName }: MasonryGalleryP
                 e.stopPropagation();
                 navigateLightbox('prev');
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white  /10 hover:bg-white  /20 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-200 z-10"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-6 h-6 text-white" />
@@ -128,7 +128,7 @@ export default function MasonryGallery({ images, businessName }: MasonryGalleryP
                 e.stopPropagation();
                 navigateLightbox('next');
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white  /10 hover:bg-white  /20 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-200 z-10"
               aria-label="Next image"
             >
               <ChevronRight className="w-6 h-6 text-white" />

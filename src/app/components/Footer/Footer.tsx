@@ -1,33 +1,11 @@
+// src/components/Footer/Footer.tsx
 "use client";
 
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-interface FooterProps {
-  variant?: 'default' | 'bottom-nav';
-}
-
-export default function Footer({ variant = 'default' }: FooterProps) {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
-
-  if (variant === 'bottom-nav') {
-    return (
-      <nav className="fixed bottom-0 left-0 right-0 bg-[#d6d4d6] border-t border-charcoal/10 px-4 py-2 z-40">
-        <div className="flex items-center justify-center max-w-6xl mx-auto">
-          <div className="flex items-center space-x-8">
-            <Link href="/" className="flex flex-col items-center space-y-1 p-2 text-hoockers-green">
-              <ion-icon name="home" size="small"></ion-icon>
-              <span className="font-urbanist text-9 font-500">Home</span>
-            </Link>
-            <Link href="/leaderboard" className="flex flex-col items-center space-y-1 p-2 text-gray-web hover:text-hoockers-green transition-colors duration-1">
-              <ion-icon name="trophy-outline" size="small"></ion-icon>
-              <span className="font-urbanist text-9 font-500">Leaderboard</span>
-            </Link>
-          </div>
-        </div>
-      </nav>
-    );
-  }
 
   const footerLinks = {
     company: [
@@ -58,9 +36,9 @@ export default function Footer({ variant = 'default' }: FooterProps) {
   ];
 
   return (
-    <footer className="bg-[#d6d4d6] border-t border-charcoal/10 relative overflow-hidden">
+    <footer className="bg-white border-t border-charcoal/10 relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute inset-0 opacity-30">
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/3 w-24 h-24 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-2xl" />
       </div>
@@ -68,7 +46,6 @@ export default function Footer({ variant = 'default' }: FooterProps) {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
         {/* Main footer content */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
-
           {/* Brand section */}
           <div className="lg:col-span-1">
             <motion.div
@@ -110,7 +87,6 @@ export default function Footer({ variant = 'default' }: FooterProps) {
           {/* Links sections */}
           <div className="lg:col-span-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-
               {/* Company */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -185,7 +161,6 @@ export default function Footer({ variant = 'default' }: FooterProps) {
                   ))}
                 </ul>
               </motion.div>
-
             </div>
           </div>
         </div>
@@ -199,7 +174,6 @@ export default function Footer({ variant = 'default' }: FooterProps) {
           className="pt-6 md:pt-8 border-t border-sage/20"
         >
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-
             {/* Copyright */}
             <div className="flex items-center space-x-6">
               <p className="font-urbanist text-7 text-charcoal/60">
@@ -226,9 +200,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
                 whileTap={{ scale: 0.98 }}
                 className="relative flex items-center space-x-3 bg-gradient-to-r from-white/90 to-white/95 hover:from-white hover:to-white border border-charcoal/10 hover:border-charcoal/20 rounded-2xl px-5 py-3 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer overflow-hidden"
               >
-                {/* Background gradient effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/5 to-coral/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
-
                 <div className="relative z-10 flex items-center space-x-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-slate-800 to-black rounded-xl flex items-center justify-center shadow-sm">
                     <ion-icon name="logo-apple" style={{ fontSize: "22px", color: "white" }} suppressHydrationWarning />
@@ -246,9 +218,7 @@ export default function Footer({ variant = 'default' }: FooterProps) {
                 whileTap={{ scale: 0.98 }}
                 className="relative flex items-center space-x-3 bg-gradient-to-r from-white/90 to-white/95 hover:from-white hover:to-white border border-charcoal/10 hover:border-charcoal/20 rounded-2xl px-5 py-3 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer overflow-hidden"
               >
-                {/* Background gradient effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/5 to-coral/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
-
                 <div className="relative z-10 flex items-center space-x-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-green-500 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-sm">
                     <ion-icon name="logo-google-playstore" style={{ fontSize: "22px", color: "white" }} suppressHydrationWarning />
@@ -261,10 +231,8 @@ export default function Footer({ variant = 'default' }: FooterProps) {
                 </div>
               </motion.div>
             </div>
-
           </div>
         </motion.div>
-
       </div>
     </footer>
   );

@@ -65,7 +65,7 @@ export default function MoreToDiscover() {
   }, []);
 
   return (
-    <section className="py-16 bg-[#d6d4d6]">
+    <section className="py-16 bg-white ">
       <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -80,7 +80,7 @@ export default function MoreToDiscover() {
             <Link
               key={card.id}
               href={card.ctaLink}
-              className={`block relative bg-[#d6d4d6] rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-lg cursor-pointer ${
+              className={`block relative bg-white  rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-lg cursor-pointer ${
                 visibleCards.includes(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'

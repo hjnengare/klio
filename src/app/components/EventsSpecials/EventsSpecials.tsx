@@ -1,3 +1,4 @@
+// src/components/EventsSpecials/EventsSpecials.tsx
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -19,35 +20,44 @@ export default function EventsSpecials({
   href?: string;
 }) {
   const router = useRouter();
-  const titleRef = useScrollReveal({ className: 'scroll-reveal-right' });
-  const sectionRef = useScrollReveal({ className: 'scroll-reveal' });
+  const titleRef = useScrollReveal({ className: "scroll-reveal-right" });
+  const sectionRef = useScrollReveal({ className: "scroll-reveal" });
 
-  const handleSeeMore = () => {
-    router.push(href);
-  };
+  if (!events || events.length === 0) return null;
 
   return (
-    <section ref={sectionRef} className="bg-[#d6d4d6] relative" aria-label="events and specials" data-section>
-      {/* Subtle section decoration */}
-      <div className="absolute inset-0 opacity-30">
+    <section
+      ref={sectionRef}
+      className="bg-white relative"
+      aria-label={title}
+      data-section
+      style={{
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+      }}
+    >
+      {/* Subtle section decoration (non-interactive) */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none" aria-hidden="true">
         <div className="absolute top-10 left-20 w-32 h-32 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl" />
-        <div className="absolute bottom-20 right-10 w-24 h-24 bg-gradient-to-br from-sage/8 to-transparent rounded-full blur-xl" />
+        <div className="absolute bottom-20 right-10 w-24 h-24 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-xl" />
       </div>
 
       <div className="container mx-auto max-w-[1300px] px-4 relative z-10 pt-1 sm:pt-1 pb-1 sm:pb-2">
-        <div ref={titleRef} className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]">
-          <h2 className="font-urbanist text-xl font-800 text-charcoal relative">
-            {title}
-          
-          </h2>
+        <div
+          ref={titleRef}
+          className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]"
+        >
+          <h2 className="text-xl font-extrabold text-charcoal tracking-tight">{title}</h2>
+
           <button
-            onClick={handleSeeMore}
-            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base premium-hover flex items-center gap-1"
+            onClick={() => router.push(href)}
+            className="group inline-flex items-center gap-1 text-base font-semibold text-charcoal/70 transition-all duration-300 hover:text-sage focus:outline-none focus:ring-2 focus:ring-sage/30 rounded-full px-2 -mx-2"
+            aria-label={`${cta}: ${title}`}
           >
-            <span className="transition-transform duration-300 group-hover:translate-x-[-2px]">
+            <span className="transition-transform duration-300 group-hover:-translate-x-0.5">
               {cta}
             </span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-[2px]" />
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
           </button>
         </div>
 

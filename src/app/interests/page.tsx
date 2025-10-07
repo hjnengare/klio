@@ -314,7 +314,7 @@ function InterestsContent() {
       backHref="/register"
       step={1}
       /** Match Register screen’s soft gradient + safe space */
-      className="min-h-[100dvh] bg-off-white  flex flex-col relative overflow-hidden"
+      className="min-h-[100dvh]  bg-white   flex flex-col relative overflow-hidden"
     >
       {/* Offline indicator (same content, refined style) */}
       {!isOnline && (
@@ -348,7 +348,7 @@ function InterestsContent() {
       </div>
 
       {/* Card — same rounded/soft feel as Register form card */}
-      <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-off-white  px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8">
+      <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm  bg-white   px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8">
         {/* Error */}
         {onboardingError && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4">

@@ -110,13 +110,13 @@ export default function CompletePage() {
           {/* Small moving graphic */}
           <div className="relative mx-auto mb-4 h-28 w-full max-w-[420px]" aria-hidden="true">
             <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute bottom-0 left-[15%] w-14 h-14 rounded-full bg-white/90 border-2 border-coral flex items-center justify-center float-anim shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+              <div className="absolute bottom-0 left-[15%] w-14 h-14 rounded-full bg-white  /90 border-2 border-coral flex items-center justify-center float-anim shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
                 <Smile className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
-              <div className="absolute bottom-0 left-[45%] w-14 h-14 rounded-full bg-white/90 border-2 border-sage flex items-center justify-center float-anim delay-400 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+              <div className="absolute bottom-0 left-[45%] w-14 h-14 rounded-full bg-white  /90 border-2 border-sage flex items-center justify-center float-anim delay-400 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
                 <Sparkles className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
-              <div className="absolute bottom-0 left-[75%] w-14 h-14 rounded-full bg-white/90 border-2 border-coral flex items-center justify-center float-anim delay-800 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+              <div className="absolute bottom-0 left-[75%] w-14 h-14 rounded-full bg-white  /90 border-2 border-coral flex items-center justify-center float-anim delay-800 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
                 <Check className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
             </div>

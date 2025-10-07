@@ -64,7 +64,7 @@ export default function ProfilePicture({
           />
         </div>
         {badge && (
-          <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
+          <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white   rounded-full flex items-center justify-center shadow-lg border border-gray-100">
             <ion-icon
               name={getBadgeIcon(badge)}
               class={`text-[14px] ${getBadgeColor(badge)}`}
@@ -88,7 +88,7 @@ export default function ProfilePicture({
       />
       
       {badge && (
-        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100">
+        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white   rounded-full flex items-center justify-center shadow-lg border border-gray-100">
           <ion-icon
             name={getBadgeIcon(badge)}
             class={`text-[14px] ${getBadgeColor(badge)}`}

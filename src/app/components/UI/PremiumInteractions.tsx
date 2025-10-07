@@ -213,7 +213,7 @@ export const PremiumInteractiveButton: React.FC<PremiumInteractiveButtonProps> =
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <span className="block w-0 h-0 rounded-full bg-white bg-opacity-30 animate-ping" />
+          <span className="block w-0 h-0 rounded-full bg-white   bg-opacity-30 animate-ping" />
         </span>
       ))}
 
@@ -285,7 +285,7 @@ export const PremiumInput: React.FC<PremiumInputProps> = ({
           className={`
             absolute left-3 transition-all duration-200 pointer-events-none
             ${isFocused || hasValue || !animatedPlaceholder
-              ? 'top-0 -translate-y-1/2 text-xs bg-white px-1 text-blue-600'
+              ? 'top-0 -translate-y-1/2 text-xs bg-white   px-1 text-blue-600'
               : 'top-1/2 -translate-y-1/2 text-gray-500'}
           `}
         >
@@ -520,7 +520,7 @@ export const PremiumModal: React.FC<PremiumModalProps> = ({
       <div
         ref={modalRef}
         className={`
-          relative bg-white rounded-xl shadow-2xl w-full ${sizeClasses[size]}
+          relative bg-white   rounded-xl shadow-2xl w-full ${sizeClasses[size]}
           transition-all duration-300 ease-out
           ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
         `}

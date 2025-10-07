@@ -282,7 +282,7 @@ Replace hardcoded colors with tokens:
 className="text-[#749176] bg-[#f2e3da]"
 
 // After
-className="text-sage-500 bg-off-white -200"
+className="text-sage-500  bg-white  -200"
 ```
 
 ### Phase 4: Typography Migration

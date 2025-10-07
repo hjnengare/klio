@@ -26,7 +26,7 @@ export default function TopReviewers({
   };
 
   return (
-    <section className="py-8 bg-[#d6d4d6] relative" aria-label="top reviewers" data-section>
+    <section className="py-8 bg-white  relative" aria-label="top reviewers" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 left-20 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />

@@ -148,7 +148,7 @@ function DealBreakersContent() {
   // Auth guard (unchanged)
   if (!user) {
     return (
-      <div className="min-h-dvh bg-white/90 flex items-center justify-center">
+      <div className="min-h-dvh bg-white  /90 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
           <p className="font-urbanist text-base text-charcoal/70">Checking authentication...</p>
@@ -181,7 +181,7 @@ function DealBreakersContent() {
       </div>
 
       {/* Card — match the premium gradient/border/shadow */}
-      <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-off-white  px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8">
+      <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm  bg-white   px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8">
         {/* Selection Counter */}
         <div className="text-center mb-4">
           <div
@@ -269,7 +269,7 @@ function DealBreakersContent() {
               ${
                 canContinue
                   ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)] shadow-[0_10px_40px_rgba(125,155,118,0.25),0_4px_12px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(125,155,118,0.35),0_8px_24px_rgba(0,0,0,0.12)] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
-                  : "bg-white/90 text-charcoal/40 cursor-not-allowed"
+                  : "bg-white  /90 text-charcoal/40 cursor-not-allowed"
               }
             `}
             onClick={handleNext}

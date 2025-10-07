@@ -1,26 +1,23 @@
-// src/components/Header/Header.tsx  (only the parts that change)
+// src/components/Header/Header.tsx
 "use client";
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { User, X } from "lucide-react";
+import { User, X, Search } from "lucide-react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
-import { useHideOnScroll } from "../../hooks/useHideOnScroll";
 
-export default function Header({ showSearch = true }) {
+const sf = {
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+} as const;
+
+export default function Header({ showSearch = true }: { showSearch?: boolean }) {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
   const searchWrapRef = useRef<HTMLDivElement>(null);
-
-  const { visible } = useHideOnScroll({
-    topSafe: 80,
-    hysteresis: 28,
-    throttleMs: 60,
-    forceShow: isMobileMenuOpen
-  });
 
   const openFilters = () => {
     if (isFilterVisible) return;
@@ -36,171 +33,97 @@ export default function Header({ showSearch = true }) {
     console.log("filters:", f);
   };
 
-  useEffect(() => {
-    // Track scroll position for header background
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Close mobile menu when clicking outside
-  useEffect(() => {
-    if (!isMobileMenuOpen) return;
-
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest('[data-mobile-menu]') && !target.closest('[data-hamburger]')) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, [isMobileMenuOpen]);
-
   // Lock body scroll when mobile menu is open
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 ${
-          isScrolled
-            ? 'bg-[#d6d4d6]/90 backdrop-blur-md shadow-sm'
-            : 'bg-transparent'
-        }`}
+        className="
+          fixed top-0 left-0 right-0 z-50
+          bg-[#f8f6f4] backdrop-blur-md
+          transition-all duration-300
+        "
+        style={sf}
       >
         <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
-          {/* row 1 */}
+          {/* Row 1: Logo & Nav */}
           <div className="flex items-center justify-between gap-6">
             {/* Logo */}
-            <Link href="/home" className="group flex-shrink-0">
-              <span className={`font-urbanist text-xl lg:text-2xl font-700 ${
-                isScrolled
-                  ? 'text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal'
-                  : 'text-white'
-              }`}>
+            <Link href="/home" className="group flex-shrink-0" aria-label="KLIO Home">
+              <span
+                className="
+                  text-xl lg:text-2xl font-bold
+                  text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal
+                "
+              >
                 KLIO
               </span>
             </Link>
 
             {/* Navigation Links - Desktop */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
-              <Link
-                href="/home"
-                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-700 ${
-                  isScrolled
-                    ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
-                    : 'text-white/90 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                Home
-              </Link>
-
-              <Link
-                href="/all"
-                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-700 ${
-                  isScrolled
-                    ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
-                    : 'text-white/90 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                Explore
-              </Link>
-
-              <Link
-                href="/saved"
-                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-700 ${
-                  isScrolled
-                    ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
-                    : 'text-white/90 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                Saved
-              </Link>
-
-              <Link
-                href="/leaderboard"
-                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-700 ${
-                  isScrolled
-                    ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
-                    : 'text-white/90 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                Leaderboard
-              </Link>
-
-              <Link
-                href="/write-review"
-                className={`px-3 lg:px-4 py-2 rounded-full font-urbanist text-sm font-700 ${
-                  isScrolled
-                    ? 'text-charcoal/70 hover:text-sage hover:bg-sage/5'
-                    : 'text-white/90 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                Write Review
-              </Link>
+              {["home", "all", "saved", "leaderboard"].map((route) => (
+                <Link
+                  key={route}
+                  href={`/${route}`}
+                  className="
+                    capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-semibold
+                    text-charcoal/80 hover:text-sage hover:bg-sage/10 transition-colors
+                  "
+                >
+                  {route === "all" ? "Explore" : route}
+                </Link>
+              ))}
             </nav>
 
-            {/* Right Side Actions */}
+            {/* Right Side Icons */}
             <div className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
-              {/* Hamburger Menu Button - Mobile Only */}
+              {/* Search Toggle */}
+              <button
+                onClick={() => setShowSearchBar((prev) => !prev)}
+                className="
+                  w-10 h-10 rounded-full flex items-center justify-center
+                  text-charcoal/80 hover:text-sage hover:bg-sage/10 transition-colors
+                "
+                aria-label="Toggle search"
+              >
+                <Search className="w-5 h-5" />
+              </button>
+
+              {/* Hamburger Menu - Mobile */}
               <button
                 data-hamburger
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`md:hidden w-10 h-10 rounded-full flex items-center justify-center group ${
-                  isScrolled
-                    ? 'hover:bg-sage/10'
-                    : 'hover:bg-white/10'
-                }`}
+                className="
+                  md:hidden w-10 h-10 rounded-full flex items-center justify-center
+                  hover:bg-sage/10 transition-colors
+                "
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
-                  <X
-                    className={`w-6 h-6 ${
-                      isScrolled
-                        ? 'text-charcoal/70 group-hover:text-sage'
-                        : 'text-white group-hover:text-white/80'
-                    }`}
-                  />
+                  <X className="w-6 h-6 text-charcoal/80" />
                 ) : (
                   <div className="flex flex-col items-center justify-center gap-[5px]">
-                    <span className={`w-5 h-[2px] rounded-full ${
-                      isScrolled
-                        ? 'bg-charcoal/70 group-hover:bg-sage'
-                        : 'bg-white group-hover:bg-white/80'
-                    }`} />
-                    <span className={`w-6 h-[2px] rounded-full ${
-                      isScrolled
-                        ? 'bg-charcoal/70 group-hover:bg-sage'
-                        : 'bg-white group-hover:bg-white/80'
-                    }`} />
-                    <span className={`w-5 h-[2px] rounded-full ${
-                      isScrolled
-                        ? 'bg-charcoal/70 group-hover:bg-sage'
-                        : 'bg-white group-hover:bg-white/80'
-                    }`} />
+                    <span className="w-5 h-[2px] bg-charcoal/80 rounded-full" />
+                    <span className="w-6 h-[2px] bg-charcoal/80 rounded-full" />
+                    <span className="w-5 h-[2px] bg-charcoal/80 rounded-full" />
                   </div>
                 )}
               </button>
 
-              {/* Profile Icon - Desktop */}
+              {/* Profile Icon */}
               <Link
                 href="/profile"
-                className={`hidden md:flex w-10 h-10 rounded-full items-center justify-center transition-all duration-200 ${
-                  isScrolled
-                    ? 'bg-charcoal/10 border border-charcoal/20 text-charcoal hover:bg-charcoal/20'
-                    : 'bg-white/20 backdrop-blur-sm border border-white/40 text-white hover:text-white'
-                }`}
+                className="
+                  hidden md:flex w-10 h-10 rounded-full items-center justify-center text-charcoal
+                  hover:text-sage hover:border-sage/40 transition-all
+                "
                 aria-label="Profile"
               >
                 <User className="w-5 h-5" />
@@ -208,15 +131,14 @@ export default function Header({ showSearch = true }) {
             </div>
           </div>
 
-          {/* row 2: search (anchor wrapper) */}
+          {/* Row 2: Search input (toggle) */}
           {showSearch && (
             <div
               ref={searchWrapRef}
-              className={`mt-3 sm:mt-4 transition-all duration-300 overflow-hidden ${
-                isScrolled
-                  ? 'max-h-0 opacity-0 mt-0'
-                  : 'max-h-20 opacity-100'
-              }`}
+              className={`
+                transition-all duration-300 overflow-hidden
+                ${showSearchBar ? "max-h-20 opacity-100 mt-3 sm:mt-4" : "max-h-0 opacity-0 mt-0"}
+              `}
             >
               <SearchInput
                 variant="header"
@@ -232,7 +154,7 @@ export default function Header({ showSearch = true }) {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-[90] md:hidden"
@@ -240,20 +162,18 @@ export default function Header({ showSearch = true }) {
         />
       )}
 
-      {/* Mobile Menu Slide-in Panel */}
+      {/* Mobile Menu */}
       <div
         data-mobile-menu
-        className={`fixed top-0 right-0 h-full w-full bg-[#d6d4d6] z-[100] shadow-2xl transform md:hidden ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed top-0 right-0 h-full w-full bg-[#f4ece7] z-[100] shadow-2xl transform md:hidden ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        } transition-transform duration-300`}
       >
         <div className="flex flex-col h-full">
-          {/* Mobile Menu Header */}
           <div className="flex items-center justify-between px-6 py-6 border-b border-charcoal/10">
-            <span className="font-urbanist text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+            <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
               KLIO
             </span>
-            {/* Premium Hamburger Icon - 3 lines */}
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] text-charcoal/70 hover:bg-sage/10 group"
@@ -265,56 +185,24 @@ export default function Header({ showSearch = true }) {
             </button>
           </div>
 
-          {/* Mobile Navigation Links */}
           <nav className="flex flex-col py-4 px-4">
-            <Link
-              href="/home"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5"
-            >
-              Home
-            </Link>
+            {["home", "all", "saved", "leaderboard"].map((route) => (
+              <Link
+                key={route}
+                href={`/${route}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="px-4 py-3 rounded-xl text-base font-semibold text-charcoal/80 hover:text-sage hover:bg-sage/5 transition-colors"
+              >
+                {route === "all" ? "Explore" : route.charAt(0).toUpperCase() + route.slice(1)}
+              </Link>
+            ))}
 
-            <Link
-              href="/all"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5"
-            >
-              Explore
-            </Link>
-
-            <Link
-              href="/saved"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5"
-            >
-              Saved
-            </Link>
-
-            <Link
-              href="/leaderboard"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5"
-            >
-              Leaderboard
-            </Link>
-
-            <Link
-              href="/write-review"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5"
-            >
-              Write Review
-            </Link>
-
-            {/* Divider */}
             <div className="h-px bg-charcoal/10 my-4 mx-4" />
 
-            {/* Profile Link in Mobile Menu */}
             <Link
               href="/profile"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl font-urbanist text-base font-700 text-charcoal/70 hover:text-sage hover:bg-sage/5 transition-all duration-200 flex items-center gap-3"
+              className="px-4 py-3 rounded-xl text-base font-semibold text-charcoal/80 hover:text-sage hover:bg-sage/5 flex items-center gap-3 transition-all duration-200"
             >
               <User className="w-5 h-5" />
               Profile
@@ -323,16 +211,14 @@ export default function Header({ showSearch = true }) {
         </div>
       </div>
 
-      {/* popover */}
+      {/* Filter Popover */}
       <FilterModal
         isOpen={isFilterOpen}
         isVisible={isFilterVisible}
         onClose={closeFilters}
         onApplyFilters={handleApplyFilters}
-        anchorRef={searchWrapRef}   // <-- anchor under search
+        anchorRef={searchWrapRef}
       />
-
-      {/* No spacer needed - hero starts at top-0 */}
     </>
   );
 }

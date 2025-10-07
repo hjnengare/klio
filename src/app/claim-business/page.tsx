@@ -41,9 +41,9 @@ export default function ClaimBusinessPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white/90">
+    <div className="min-h-screen bg-white  /90">
       {/* Header */}
-      <div className="bg-white/90/95 backdrop-blur-sm border-b border-charcoal/10 sticky top-0 z-10">
+      <div className="bg-white  /90/95 backdrop-blur-sm border-b border-charcoal/10 sticky top-0 z-10">
         <div className="max-w-[1300px] mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -87,7 +87,7 @@ export default function ClaimBusinessPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for your business..."
-              className="w-full pl-12 pr-4 py-4 bg-white border border-charcoal/10 rounded-xl
+              className="w-full pl-12 pr-4 py-4 bg-white   border border-charcoal/10 rounded-xl
                          font-urbanist text-base placeholder:text-charcoal/40
                          focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50
                          transition-all duration-200"
@@ -100,7 +100,7 @@ export default function ClaimBusinessPage() {
           {filteredBusinesses.map((business) => (
             <div
               key={business.id}
-              className="p-4 bg-white border border-charcoal/5 rounded-xl hover:bg-sage/5
+              className="p-4 bg-white   border border-charcoal/5 rounded-xl hover:bg-sage/5
                          hover:border-sage/20 transition-all duration-200 group"
             >
               <div className="flex items-center justify-between">
@@ -169,7 +169,7 @@ export default function ClaimBusinessPage() {
         )}
 
         {/* Help Section */}
-        <div className="mt-12 p-6 bg-white border border-charcoal/5 rounded-xl">
+        <div className="mt-12 p-6 bg-white   border border-charcoal/5 rounded-xl">
           <h3 className="font-urbanist text-lg font-600 text-charcoal mb-3">
             Need help claiming your business?
           </h3>

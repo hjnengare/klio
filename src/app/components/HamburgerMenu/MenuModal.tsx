@@ -106,7 +106,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
         aria-label="Navigation menu"
         className={`
           modal-slide-left w-80 max-w-[80vw] no-layout-shift
-          bg-[#d6d4d6]/98 backdrop-blur-md shadow-2xl
+          bg-white /98 backdrop-blur-md shadow-2xl
           mobile-scroll-container safe-area-container overflow-y-auto
           ${isOpen ? "open" : ""}
         `}

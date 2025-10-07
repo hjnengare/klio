@@ -19,7 +19,7 @@ export default function TrendingPage() {
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentBusinesses = trendingBusinesses.slice(startIndex, endIndex);
   return (
-    <div className="min-h-dvh bg-off-white  relative overflow-hidden">
+    <div className="min-h-dvh  bg-white   relative overflow-hidden">
       {/* Static background layers */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />
@@ -30,7 +30,7 @@ export default function TrendingPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="bg-off-white /80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
+        className=" bg-white  /80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
       >
         <div className="flex items-center justify-between max-w-[1300px] mx-auto">
           {/* Back button */}

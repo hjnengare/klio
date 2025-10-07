@@ -155,7 +155,7 @@ export default function RegisterPageMigrated() {
   };
 
   return (
-    <div className="min-h-dvh bg-off-white  flex flex-col px-container-mobile sm:px-container-tablet md:px-container-desktop py-8 sm:py-12 pb-24 sm:pb-20 md:pb-16 relative overflow-hidden">
+    <div className="min-h-dvh  bg-white   flex flex-col px-container-mobile sm:px-container-tablet md:px-container-desktop py-8 sm:py-12 pb-24 sm:pb-20 md:pb-16 relative overflow-hidden">
 
       {/* Lightweight decorative elements */}
       {!prefersReduced && (
@@ -233,7 +233,7 @@ export default function RegisterPageMigrated() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <Card variant="elevated" className="bg-off-white /95 backdrop-blur-lg shadow-xl">
+          <Card variant="elevated" className=" bg-white  /95 backdrop-blur-lg shadow-xl">
             <CardContent className="p-6 sm:p-8 md:p-10 lg:p-12">
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -368,7 +368,7 @@ export default function RegisterPageMigrated() {
                     <div className="w-full border-t border-charcoal/20"></div>
                   </div>
                   <div className="relative flex justify-center">
-                    <Text size="sm" color="secondary" className="px-4 bg-off-white /90">
+                    <Text size="sm" color="secondary" className="px-4  bg-white  /90">
                       or continue with
                     </Text>
                   </div>

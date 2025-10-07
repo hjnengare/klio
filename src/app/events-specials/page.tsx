@@ -37,7 +37,7 @@ export default function EventsSpecialsPage() {
   };
 
   return (
-    <div className="min-h-dvh bg-off-white  relative overflow-hidden">
+    <div className="min-h-dvh  bg-white   relative overflow-hidden">
       {/* Static background layers */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-coral/3 via-transparent to-sage/3" />
@@ -48,7 +48,7 @@ export default function EventsSpecialsPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="bg-off-white /80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
+        className=" bg-white/80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
       >
         <div className="flex items-center justify-between max-w-[1300px] mx-auto">
           {/* Back button */}
@@ -76,31 +76,28 @@ export default function EventsSpecialsPage() {
             <div className="flex gap-2 justify-center flex-wrap">
               <button
                 onClick={() => handleFilterChange("all")}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
-                  selectedFilter === "all"
+                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "all"
                     ? "bg-coral text-white shadow-lg"
-                    : "bg-off-white  text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
-                }`}
+                    : " bg-white   text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
+                  }`}
               >
                 All
               </button>
               <button
                 onClick={() => handleFilterChange("event")}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
-                  selectedFilter === "event"
+                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "event"
                     ? "bg-coral text-white shadow-lg"
-                    : "bg-off-white  text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
-                }`}
+                    : " bg-white   text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
+                  }`}
               >
                 Events
               </button>
               <button
                 onClick={() => handleFilterChange("special")}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
-                  selectedFilter === "special"
+                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "special"
                     ? "bg-coral text-white shadow-lg"
-                    : "bg-off-white  text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
-                }`}
+                    : " bg-white   text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
+                  }`}
               >
                 Specials
               </button>
@@ -127,7 +124,7 @@ export default function EventsSpecialsPage() {
                   {/* Bookmark button - always visible on mobile, hover on desktop */}
                   <button
                     onClick={() => handleBookmark(event)}
-                    className="absolute top-2 right-2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-200 hover:bg-white active:scale-95 sm:hover:scale-110 z-20"
+                    className="absolute top-2 right-2 w-10 h-10 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-200 hover:bg-white   active:scale-95 sm:hover:scale-110 z-20"
                     aria-label="Bookmark event"
                   >
                     <ion-icon name="bookmark-outline" class="text-lg text-coral font-bold" />
@@ -152,11 +149,10 @@ export default function EventsSpecialsPage() {
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
-                      currentPage === page
+                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${currentPage === page
                         ? 'bg-coral text-white shadow-lg'
                         : 'border border-charcoal/20 text-charcoal/70 hover:bg-coral/5'
-                    }`}
+                      }`}
                   >
                     {page}
                   </button>

@@ -59,14 +59,14 @@ export default function WriteReviewPage() {
   );
 
   return (
-    <div className="min-h-screen bg-off-white  relative overflow-hidden">
+    <div className="min-h-screen  bg-white   relative overflow-hidden">
       {/* Static background layers */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />
       </div>
 
       {/* Header */}
-      <div className="relative z-20 bg-off-white  backdrop-blur-sm border-b border-sage/10 sticky top-0">
+      <div className="relative z-20  bg-white   backdrop-blur-sm border-b border-sage/10 sticky top-0">
         <div className="max-w-[1300px] mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -106,7 +106,7 @@ export default function WriteReviewPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search businesses..."
-              className="w-full pl-12 pr-4 py-4 bg-off-white  border border-sage/10 rounded-xl
+              className="w-full pl-12 pr-4 py-4  bg-white   border border-sage/10 rounded-xl
                          font-urbanist text-base placeholder:text-charcoal/40
                          focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50
                          transition-all duration-200"
@@ -120,7 +120,7 @@ export default function WriteReviewPage() {
             <Link
               key={business.id}
               href="/business/review"
-              className="block p-4 bg-off-white  border border-sage/10 rounded-xl hover:border-sage/30
+              className="block p-4  bg-white   border border-sage/10 rounded-xl hover:border-sage/30
                          transition-all duration-200 group"
             >
               <div className="flex items-center justify-between">

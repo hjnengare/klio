@@ -59,7 +59,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
   if (variant === "reviewer" || reviewer) {
     return (
       <div id={idForSnap} className="snap-start snap-always w-[100vw] sm:w-[280px] flex-shrink-0">
-        <div className="bg-[#d6d4d6] rounded-[8px] overflow-hidden shadow-sm group cursor-pointer h-[200px] relative border border-charcoal/10" onClick={toggleActions}>
+        <div className="bg-white  rounded-[8px] overflow-hidden shadow-sm group cursor-pointer h-[200px] relative border border-charcoal/10" onClick={toggleActions}>
 
           {/* Content */}
           <div className="relative z-10 p-4 h-full flex flex-col">
@@ -103,7 +103,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
               </div>
 
               {/* Rating badge */}
-              <div className="flex items-center gap-1 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm">
+              <div className="flex items-center gap-1 bg-white  /80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm">
                 <ion-icon name="star" class="text-coral text-xs" suppressHydrationWarning />
                 <span className="font-urbanist text-xs font-700 text-charcoal">{reviewerData?.rating.toFixed(1)}</span>
               </div>
@@ -164,13 +164,13 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
                     : 'opacity-0'
                 }`}>
                 <button
-                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white hover:scale-110 transition-all duration-200"
+                  className="w-7 h-7 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white   hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <ion-icon name="person-add-outline" class="text-charcoal text-sm" suppressHydrationWarning />
                 </button>
                 <button
-                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white hover:scale-110 transition-all duration-200"
+                  className="w-7 h-7 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white   hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <ion-icon name="chatbubble-outline" class="text-charcoal text-sm" suppressHydrationWarning />
@@ -185,7 +185,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
 
   return (
     <li className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[320px] flex-shrink-0">
-      <div className="bg-[#d6d4d6] rounded-xl p-6 shadow-sm transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10" onClick={toggleActions}>
+      <div className="bg-white  rounded-xl p-6 shadow-sm transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10" onClick={toggleActions}>
         <div className="flex items-start gap-4 mb-4">
           <div className="relative">
             <ProfilePicture
@@ -220,19 +220,19 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
                 : 'flex translate-x-12 opacity-0 pointer-events-none'
             }`}>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
             >
               <ion-icon name="person-add-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
             >
               <ion-icon name="chatbubble-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
             >
               <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />

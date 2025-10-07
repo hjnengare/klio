@@ -107,7 +107,7 @@ export default function WriteReviewPage() {
 
   if (authLoading || businessLoading) {
     return (
-      <div className="min-h-dvh bg-off-white  flex items-center justify-center">
+      <div className="min-h-dvh  bg-white   flex items-center justify-center">
         <div className="w-12 h-12 border-4 border-sage border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -115,7 +115,7 @@ export default function WriteReviewPage() {
 
   if (!business) {
     return (
-      <div className="min-h-dvh bg-off-white  flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-dvh  bg-white   flex items-center justify-center relative overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />
@@ -149,7 +149,7 @@ export default function WriteReviewPage() {
 
             <button
               onClick={() => router.back()}
-              className="inline-flex items-center justify-center space-x-2 bg-white border border-sage/20 text-charcoal font-urbanist text-base font-600 py-3 px-6 transition-all hover:border-sage hover:bg-sage/5 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2"
+              className="inline-flex items-center justify-center space-x-2 bg-white   border border-sage/20 text-charcoal font-urbanist text-base font-600 py-3 px-6 transition-all hover:border-sage hover:bg-sage/5 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2"
             >
               <ion-icon name="arrow-back-outline" />
               <span>Go Back</span>
@@ -265,7 +265,7 @@ export default function WriteReviewPage() {
   const characterCountColor = characterCount > MAX_REVIEW_LENGTH ? 'text-coral' : characterCount > MAX_REVIEW_LENGTH * 0.9 ? 'text-amber-500' : 'text-charcoal/60';
 
   return (
-    <div className="min-h-dvh bg-off-white  relative overflow-hidden">
+    <div className="min-h-dvh  bg-white   relative overflow-hidden">
       {/* Toast Notification */}
       {toast && (
         <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full shadow-lg backdrop-blur-xl transition-all duration-300 ${
@@ -297,7 +297,7 @@ export default function WriteReviewPage() {
       <FloatingElements />
 
       {/* Header */}
-      <header className="relative z-20 bg-off-white  backdrop-blur-xl border-b border-sage/10 px-4 py-6">
+      <header className="relative z-20  bg-white   backdrop-blur-xl border-b border-sage/10 px-4 py-6">
         <div className="flex items-center justify-between max-w-4xl mx-auto">
           <Link
             href={`/business/${params?.id}`}
@@ -313,11 +313,11 @@ export default function WriteReviewPage() {
       </header>
 
       {/* Main content */}
-      <div className="relative z-10 bg-off-white ">
+      <div className="relative z-10  bg-white  ">
         <div className="pt-4 pb-3 pb-safe-area-bottom">
           <div className="w-full md:max-w-4xl mx-auto px-4 py-6">
             {/* Review Form */}
-            <div ref={formRef} className="bg-white border-0 md:border border-sage/10 p-4 md:p-8 shadow-sm">
+            <div ref={formRef} className="bg-white   border-0 md:border border-sage/10 p-4 md:p-8 shadow-sm">
               <div className="flex-1 flex flex-col">
                 {/* Business Profile Picture */}
                 <div className="flex justify-center mb-6">
@@ -418,7 +418,7 @@ export default function WriteReviewPage() {
                           px-6 py-3 rounded-full border-2 transition-all font-urbanist text-sm font-600 touch-target-large
                           ${selectedTags.includes(tag)
                             ? 'bg-sage border-sage text-white'
-                            : 'bg-white border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
+                            : 'bg-white   border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
                           }
                           ${selectedTags.length >= MAX_TAGS && !selectedTags.includes(tag) ? 'opacity-50 cursor-not-allowed' : ''}
                           focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2
@@ -446,7 +446,7 @@ export default function WriteReviewPage() {
                     value={reviewTitle}
                     onChange={(e) => setReviewTitle(e.target.value)}
                     placeholder="Summarize your experience in a few words..."
-                    className="w-full bg-white border border-sage/20 px-6 py-4 font-urbanist text-base text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all disabled:bg-charcoal/5 disabled:cursor-not-allowed"
+                    className="w-full bg-white   border border-sage/20 px-6 py-4 font-urbanist text-base text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all disabled:bg-charcoal/5 disabled:cursor-not-allowed"
                     disabled={isSubmitting}
                     aria-label="Review title"
                   />
@@ -474,7 +474,7 @@ export default function WriteReviewPage() {
                     }}
                     placeholder="Share your thoughts and help other locals..."
                     rows={4}
-                    className={`w-full bg-white border px-6 py-4 font-urbanist text-base text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 transition-all resize-none min-h-[120px] disabled:bg-charcoal/5 disabled:cursor-not-allowed ${
+                    className={`w-full bg-white   border px-6 py-4 font-urbanist text-base text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 transition-all resize-none min-h-[120px] disabled:bg-charcoal/5 disabled:cursor-not-allowed ${
                       reviewText.length < MIN_REVIEW_LENGTH && reviewText.length > 0
                         ? 'border-amber-500'
                         : reviewText.length > MAX_REVIEW_LENGTH
