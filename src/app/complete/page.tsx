@@ -26,28 +26,19 @@ const completeStyles = `
   }
 `;
 
+/** ---------- Shared font (SF Pro) ---------- */
+const sf = {
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+} as const;
+
 export default function CompletePage() {
   // const { updateUser, user } = useAuth(); // Disabled for UI/UX design
-  const user = { id: 'dummy-user-id' }; // Dummy user for UI/UX design
+  const user = { id: "dummy-user-id" }; // Dummy user for UI/UX design
   const updateUser = () => {}; // Dummy function for UI/UX design
   const reducedMotion = useReducedMotion();
-  
-  useEffect(() => {
-    // Mark onboarding as complete - disabled for UI/UX design
-    // updateUser({
-    //   profile: {
-    //     ...user?.profile,
-    //     onboarding_complete: true,
-    //     onboarding_step: 'complete',
-    //     interests: user?.profile?.interests || [],
-    //     sub_interests: user?.profile?.sub_interests || [],
-    //     dealbreakers: user?.profile?.dealbreakers || [],
-    //     created_at: user?.profile?.created_at || new Date().toISOString(),
-    //     updated_at: new Date().toISOString(),
-    //     id: user?.id || ''
-    //   }
-    // });
 
+  useEffect(() => {
     // Rain confetti effect on mount (respect reduced motion)
     if (!reducedMotion) {
       let cancelled = false;
@@ -74,70 +65,99 @@ export default function CompletePage() {
           colors: ["var(--coral)", "var(--sage)", "var(--charcoal)", "var(--off-white)"],
         });
 
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
+        if (Date.now() < end) requestAnimationFrame(frame);
       })();
 
-      return () => { cancelled = true; };
+      return () => {
+        cancelled = true;
+      };
     }
   }, [updateUser, reducedMotion]);
 
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: completeStyles }} />
-      <OnboardingLayout step={4} showProgress={false}>
+      <OnboardingLayout
+        step={4}
+        showProgress={false}
+        // Symmetry with other onboarding screens
+        className="min-h-[100dvh] bg-gradient-to-b from-[#faeee8] to-[#f7e3db] flex flex-col"
+      >
         <div
-          className="text-center animate-fade-in-up flex-1 flex flex-col justify-center"
-          style={{
-            // CSS variables for consistent design tokens
-            "--coral": "hsl(16, 100%, 66%)",
-            "--sage": "hsl(148, 20%, 38%)",
-            "--charcoal": "hsl(0, 0%, 25%)",
-            "--off-white": "hsl(0, 0%, 98%)",
-          } as React.CSSProperties}
+          className="text-center animate-fade-in-up flex-1 flex flex-col justify-center px-4"
+          style={
+            {
+              // CSS variables for consistent design tokens
+              "--coral": "hsl(16, 100%, 66%)",
+              "--sage": "hsl(148, 20%, 38%)",
+              "--charcoal": "hsl(0, 0%, 25%)",
+              "--off-white": "hsl(0, 0%, 98%)",
+              ...sf,
+            } as React.CSSProperties
+          }
         >
           {/* Headline & subhead */}
-          <h1 className="font-urbanist text-3xl md:text-5xl lg:text-6xl font-700 text-charcoal mb-4 animate-fade-in-up" aria-live="polite">
+          <h1
+            className="text-3xl md:text-5xl lg:text-6xl font-bold text-charcoal mb-4 tracking-tight leading-snug"
+            aria-live="polite"
+          >
             You&apos;re all set!
           </h1>
-          <p className="font-urbanist text-base md:text-lg font-400 text-charcoal/70 mb-4 animate-fade-in-up delay-200">
+          <p className="text-base md:text-lg font-normal text-charcoal/70 mb-4 leading-relaxed">
             Time to discover what&apos;s out there.
           </p>
 
           {/* Small moving graphic */}
-          <div className="relative mx-auto mb-4 h-28 w-full max-w-[420px] animate-fade-in-up delay-300" aria-hidden="true">
+          <div className="relative mx-auto mb-4 h-28 w-full max-w-[420px]" aria-hidden="true">
             <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute bottom-0 left-[15%] w-14 h-14 rounded-full bg-white/90 border-2 border-coral flex items-center justify-center float-anim">
+              <div className="absolute bottom-0 left-[15%] w-14 h-14 rounded-full bg-white/90 border-2 border-coral flex items-center justify-center float-anim shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
                 <Smile className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
-              <div className="absolute bottom-0 left-[45%] w-14 h-14 rounded-full bg-white/90 border-2 border-sage flex items-center justify-center float-anim delay-400">
+              <div className="absolute bottom-0 left-[45%] w-14 h-14 rounded-full bg-white/90 border-2 border-sage flex items-center justify-center float-anim delay-400 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
                 <Sparkles className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
-              <div className="absolute bottom-0 left-[75%] w-14 h-14 rounded-full bg-white/90 border-2 border-coral flex items-center justify-center float-anim delay-800">
+              <div className="absolute bottom-0 left-[75%] w-14 h-14 rounded-full bg-white/90 border-2 border-coral flex items-center justify-center float-anim delay-800 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
                 <Check className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
             </div>
           </div>
 
-          {/* CTA */}
-          <div className="animate-fade-in-up delay-400">
+          {/* CTA — premium gradient + soft lift to match other screens */}
+          <div>
             <Link
               href="/home"
               data-testid="onboarding-complete-cta"
               aria-label="Go to Home"
-              className="group inline-block w-full sm:w-auto bg-sage text-white font-urbanist text-sm font-600 py-4 px-8 rounded-full shadow-lg transition-[transform,background-color,box-shadow] duration-300 hover:scale-[1.03] hover:bg-coral focus:bg-coral focus:outline-none focus:ring-4 focus:ring-coral/30 focus:ring-offset-2"
+              className="group inline-flex items-center justify-center w-full sm:w-auto text-white text-sm font-semibold py-4 px-8 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
+              style={sf}
             >
-              Continue to Home
-              <ArrowRight className="w-5 h-5 ml-2 inline-block" />
+              <span
+                className="
+                  relative z-10
+                  bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)]
+                  shadow-[0_10px_40px_rgba(125,155,118,0.25),0_4px_12px_rgba(0,0,0,0.08)]
+                  px-6 py-3 rounded-full
+                  group-hover:-translate-y-0.5
+                  group-hover:shadow-[0_20px_60px_rgba(125,155,118,0.35),0_8px_24px_rgba(0,0,0,0.12)]
+                  transition-all duration-300
+                  flex items-center
+                "
+              >
+                Continue to Home
+                <ArrowRight className="w-5 h-5 ml-2 inline-block" />
+              </span>
+              {/* hover coral sheen, consistent with other CTAs */}
+              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Link>
           </div>
 
           {/* Completion indicator */}
-          <div className="mt-8 animate-fade-in-up delay-500">
+          <div className="mt-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-sage/10 border border-sage/30 rounded-full">
               <CheckCircle className="w-4 h-4 text-sage" />
-              <span className="font-urbanist text-xs font-600 text-sage">Setup Complete</span>
+              <span className="text-xs font-semibold text-sage" style={sf}>
+                Setup Complete
+              </span>
             </div>
           </div>
         </div>
