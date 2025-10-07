@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
 import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion";
-import MasonryBackground from "../components/Onboarding/MasonryBackground";
 
 // Mobile-first CSS with proper typography scale and safe areas
 const styles = `
@@ -28,6 +27,16 @@ const styles = `
     min-height: 0;
   }
 
+  /* Hide scrollbar */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Button press states - 44-48px targets */
   .btn-press:active {
     transform: scale(0.98);
@@ -40,6 +49,30 @@ const styles = `
     touch-action: manipulation;
   }
 
+  /* Premium button styling */
+  .btn-premium {
+    position: relative;
+    background: linear-gradient(135deg, #7D9B76 0%, #6B8A64 100%);
+    box-shadow:
+      0 10px 40px rgba(125, 155, 118, 0.25),
+      0 4px 12px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 20px 60px rgba(125, 155, 118, 0.35),
+      0 8px 24px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-premium:active {
+    transform: translateY(0);
+  }
+
   /* Input styling - 16px+ to prevent auto-zoom */
   .input-mobile {
     font-size: 1rem !important; /* 16px minimum */
@@ -47,10 +80,14 @@ const styles = `
     touch-action: manipulation;
   }
 
-  /* Card styling - border-first, tiny shadow (no heavy blur) */
-  .card-mobile {
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  /* Premium card styling with gradient shadow */
+  .card-premium {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(125, 155, 118, 0.1);
+    box-shadow:
+      0 8px 32px rgba(125, 155, 118, 0.12),
+      0 2px 8px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(10px);
   }
 
   /* Text truncation support */
@@ -390,10 +427,7 @@ export default function RegisterPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh] bg-off-white flex flex-col relative overflow-hidden ios-inertia safe-area-full">
-      {/* Masonry background */}
-      <MasonryBackground />
-
+      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh] bg-gradient-to-b from-[#faeee8] to-[#f7e3db] flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -401,11 +435,9 @@ export default function RegisterPage() {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20"
       >
-        <PremiumHover scale={1.1} duration={0.2}>
-          <Link href="/onboarding" className="text-white/80 hover:text-white transition-colors duration-300 p-3 hover:bg-white/10 rounded-full block">
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-        </PremiumHover>
+        <Link href="/onboarding" className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-white/50 rounded-lg block backdrop-blur-sm">
+          <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
+        </Link>
       </motion.div>
 
       <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
@@ -413,21 +445,21 @@ export default function RegisterPage() {
         <div className="text-center mb-4">
           <FadeInUp delay={0.4} duration={1} distance={60}>
             <div className="inline-block relative mb-4">
-              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-white mb-2 text-center leading-snug px-2 tracking-[0.01em] drop-shadow-lg">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Create your account
               </h2>
             </div>
           </FadeInUp>
           <FadeInUp delay={0.7} duration={0.8} distance={30}>
-            <p className="font-urbanist text-sm md:text-base font-400 text-white/90 mb-4 leading-relaxed px-2 max-w-lg mx-auto drop-shadow-md">
-              Join KLIO and discover places real locals love
+            <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              Sign up today - share honest reviews, climb leaderboards, and rate any business!
             </p>
           </FadeInUp>
         </div>
 
 
         {/* Form Card */}
-        <div className="bg-off-white card-mobile border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
+        <div className="bg-gradient-to-b from-[#faeee8] to-[#f7e3db] rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 shadow-sm">
 
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
@@ -461,10 +493,10 @@ export default function RegisterPage() {
                 value={username}
                 onChange={(e) => handleUsernameChange(e.target.value)}
                 onBlur={() => setUsernameTouched(true)}
-                className={`w-full bg-off-white/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-xl ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getUsernameError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   username && !getUsernameError() && usernameTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-                  'border-charcoal/20 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isFormDisabled}
               />
@@ -501,10 +533,10 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => handleEmailChange(e.target.value)}
                 onBlur={() => setEmailTouched(true)}
-                className={`w-full bg-off-white/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-xl ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   email && !getEmailError() && emailTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-                  'border-charcoal/20 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isFormDisabled}
               />
@@ -541,10 +573,10 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => handlePasswordChange(e.target.value)}
                 onBlur={() => setPasswordTouched(true)}
-                className={`w-full bg-off-white/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-xl ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   passwordStrength.score >= 3 && passwordTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   passwordStrength.score > 0 && passwordStrength.score < 3 ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
-                  'border-charcoal/20 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isFormDisabled}
               />
@@ -602,7 +634,7 @@ export default function RegisterPage() {
                 <span className="flex-1 leading-relaxed">
                   I agree to the{" "}
                   <Link href="/terms" className="underline text-sage hover:text-coral transition-colors">
-                    Terms of Service
+                    Terms of Use
                   </Link>{" "}
                   and{" "}
                   <Link href="/privacy" className="underline text-sage hover:text-coral transition-colors">
@@ -619,10 +651,11 @@ export default function RegisterPage() {
                   <motion.button
                     type="submit"
                     disabled={isSubmitDisabled}
-                    className={`group block w-full font-urbanist text-body font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap btn-press ${
+                    style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                    className={`group block w-full text-base font-semibold py-3 px-6 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap ${
                       isSubmitDisabled
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
-                        : 'bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white focus:ring-sage/20 hover:focus:ring-coral/20 hover:scale-[1.02]'
+                        : 'btn-premium text-white focus:ring-sage/30'
                     }`}
                     whileTap={{ scale: isFormDisabled ? 1 : 0.98 }}
                     transition={{ duration: 0.1 }}
@@ -667,10 +700,10 @@ export default function RegisterPage() {
             {/* Divider */}
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-charcoal/20"></div>
+                <div className="w-full border-t border-light-gray/50"></div>
               </div>
-              <div className="relative flex justify-center text-[14px]">
-                <span className="px-4 bg-white/95 text-charcoal/60 font-urbanist text-7 font-400">or continue with</span>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-gradient-to-b from-[#faeee8] to-[#f7e3db] text-charcoal/60 font-medium" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>or continue with</span>
               </div>
             </div>
 
@@ -678,7 +711,7 @@ export default function RegisterPage() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-charcoal/20 rounded-xl px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
+                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -690,7 +723,7 @@ export default function RegisterPage() {
               </button>
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-charcoal/20 rounded-xl px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
+                className="flex items-center justify-center bg-white border border-light-gray/50 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 font-urbanist text-body font-500 text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
@@ -701,7 +734,7 @@ export default function RegisterPage() {
           </form>
 
           {/* Enhanced footer */}
-          <div className="text-center mt-4 pt-4 border-t border-charcoal/20">
+          <div className="text-center mt-4 pt-4 border-t border-light-gray/30">
             <div className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70">
               Already have an account?{" "}
               <Link
@@ -716,51 +749,51 @@ export default function RegisterPage() {
         </div>
 
         {/* Premium Trust Indicators with spring animations */}
-        <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-12 text-charcoal/60 text-center pt-4">
+        <div className="flex justify-center items-start gap-3 md:gap-5 text-charcoal/60 text-center pt-4">
           <FadeInUp delay={1.5} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
+              <div className="flex flex-col items-center gap-1 w-14 md:w-16">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 1.7, type: "spring", stiffness: 300 }}
-                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-sage/10 rounded-full flex items-center justify-center"
+                  className="w-7 h-7 md:w-8 md:h-8 bg-sage/10 rounded-full flex items-center justify-center"
                 >
-                  <ShieldCheck className="w-5 h-5 text-sage" />
+                  <ShieldCheck className="w-4 h-4 text-sage" />
                 </motion.div>
-                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Secure</span>
+                <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight min-w-0 text-truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Secure</span>
               </div>
             </PremiumHover>
           </FadeInUp>
 
           <FadeInUp delay={1.7} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
+              <div className="flex flex-col items-center gap-1 w-14 md:w-16">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 1.9, type: "spring", stiffness: 300 }}
-                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-coral/10 rounded-full flex items-center justify-center"
+                  className="w-7 h-7 md:w-8 md:h-8 bg-coral/10 rounded-full flex items-center justify-center"
                 >
-                  <Users className="w-5 h-5 text-coral" />
+                  <Users className="w-4 h-4 text-coral" />
                 </motion.div>
-                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Community</span>
+                <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight min-w-0 text-truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Community</span>
               </div>
             </PremiumHover>
           </FadeInUp>
 
           <FadeInUp delay={1.9} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
+              <div className="flex flex-col items-center gap-1 w-14 md:w-16">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 2.1, type: "spring", stiffness: 300 }}
-                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-charcoal/10 rounded-full flex items-center justify-center"
+                  className="w-7 h-7 md:w-8 md:h-8 bg-charcoal/10 rounded-full flex items-center justify-center"
                 >
-                  <Star className="w-5 h-5 text-charcoal" />
+                  <Star className="w-4 h-4 text-charcoal" />
                 </motion.div>
-                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Quality</span>
+                <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight min-w-0 text-truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Quality</span>
               </div>
             </PremiumHover>
           </FadeInUp>

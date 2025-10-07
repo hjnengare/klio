@@ -8,7 +8,6 @@ import { useToast } from "../contexts/ToastContext";
 import { motion } from "framer-motion";
 import FadeInUp from "../components/Animations/FadeInUp";
 import PremiumHover from "../components/Animations/PremiumHover";
-import MasonryBackground from "../components/Onboarding/MasonryBackground";
 
 // Mobile-first CSS with proper typography scale and safe areas
 const styles = `
@@ -26,6 +25,16 @@ const styles = `
     min-height: 0;
   }
 
+  /* Hide scrollbar */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Button press states - 44-48px targets */
   .btn-press:active {
     transform: scale(0.98);
@@ -36,6 +45,30 @@ const styles = `
     min-height: 44px;
     min-width: 44px;
     touch-action: manipulation;
+  }
+
+  /* Premium button styling */
+  .btn-premium {
+    position: relative;
+    background: linear-gradient(135deg, #7D9B76 0%, #6B8A64 100%);
+    box-shadow:
+      0 10px 40px rgba(125, 155, 118, 0.25),
+      0 4px 12px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 20px 60px rgba(125, 155, 118, 0.35),
+      0 8px 24px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-premium:active {
+    transform: translateY(0);
   }
 
   /* Input styling - 16px+ to prevent auto-zoom */
@@ -175,10 +208,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-[100dvh] bg-off-white flex flex-col relative overflow-hidden ios-inertia safe-area-full">
-      {/* Masonry background */}
-      <MasonryBackground />
-
+    <div ref={containerRef} className="min-h-[100dvh] bg-gradient-to-b from-[#faeee8] to-[#f7e3db] flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
       {/* Back button with entrance animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -186,11 +216,9 @@ export default function LoginPage() {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20"
       >
-        <PremiumHover scale={1.1} duration={0.2}>
-          <Link href="/onboarding" className="text-white/80 hover:text-white transition-colors duration-300 p-3 hover:bg-white/10 rounded-full block">
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-        </PremiumHover>
+        <Link href="/onboarding" className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-white/50 rounded-lg block backdrop-blur-sm">
+          <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
+        </Link>
       </motion.div>
 
 
@@ -199,14 +227,14 @@ export default function LoginPage() {
         <div className="text-center mb-4">
           <FadeInUp delay={0.4} duration={1} distance={60}>
             <div className="inline-block relative mb-4">
-              <h2 className="font-urbanist text-xl sm:text-2xl md:text-4xl lg:text-5xl font-700 text-white mb-2 text-center leading-snug px-2 tracking-[0.01em] drop-shadow-lg">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Welcome back
               </h2>
 
             </div>
           </FadeInUp>
           <FadeInUp delay={0.7} duration={0.8} distance={30}>
-            <p className="font-urbanist text-sm md:text-base font-400 text-white/90 mb-4 leading-relaxed px-2 max-w-lg mx-auto drop-shadow-md">
+            <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
               Sign in to continue discovering KLIO
             </p>
           </FadeInUp>
@@ -214,7 +242,7 @@ export default function LoginPage() {
 
 
         {/* Form Card */}
-        <div className="bg-off-white card-mobile border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-4 relative overflow-hidden">
+        <div className="bg-gradient-to-b from-[#faeee8] to-[#f7e3db] rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 shadow-sm">
           
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
@@ -244,10 +272,10 @@ export default function LoginPage() {
                   if (!emailTouched) setEmailTouched(true);
                 }}
                 onBlur={() => setEmailTouched(true)}
-                className={`w-full bg-off-white/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-xl ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   email && !getEmailError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-                  'border-charcoal/20 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isSubmitting || isLoading}
               />
@@ -287,10 +315,10 @@ export default function LoginPage() {
                   if (!passwordTouched) setPasswordTouched(true);
                 }}
                 onBlur={() => setPasswordTouched(true)}
-                className={`w-full bg-off-white/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-xl ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getPasswordError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   password && !getPasswordError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-                  'border-charcoal/20 focus:ring-sage/30 focus:border-sage focus:bg-white'
+                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
                 }`}
                 disabled={isSubmitting || isLoading}
               />
@@ -335,10 +363,11 @@ export default function LoginPage() {
                   <motion.button
                     type="submit"
                     disabled={isSubmitting || isLoading || !!getEmailError() || !!getPasswordError() || !email || !password}
-                    className={`group block w-full font-urbanist text-body font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap btn-press ${
+                    style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                    className={`group block w-full text-base font-semibold py-3 px-6 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap ${
                       isSubmitting || isLoading || !!getEmailError() || !!getPasswordError() || !email || !password
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
-                        : 'bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white focus:ring-sage/20 hover:focus:ring-coral/20 hover:scale-[1.02]'
+                        : 'btn-premium text-white focus:ring-sage/30'
                     }`}
                     whileTap={{ scale: isSubmitting || isLoading ? 1 : 0.98 }}
                     transition={{ duration: 0.1 }}
@@ -407,51 +436,51 @@ export default function LoginPage() {
         </div>
 
         {/* Premium Trust Indicators with spring animations */}
-        <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-12 text-charcoal/60 text-center pt-4">
+        <div className="flex justify-center items-start gap-3 md:gap-5 text-charcoal/60 text-center pt-4">
           <FadeInUp delay={1.5} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
+              <div className="flex flex-col items-center gap-1 w-14 md:w-16">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 1.7, type: "spring", stiffness: 300 }}
-                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-sage/10 rounded-full flex items-center justify-center"
+                  className="w-7 h-7 md:w-8 md:h-8 bg-sage/10 rounded-full flex items-center justify-center"
                 >
-                  <ShieldCheck className="w-5 h-5 text-sage" />
+                  <ShieldCheck className="w-4 h-4 text-sage" />
                 </motion.div>
-                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Secure</span>
+                <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight min-w-0 text-truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Secure</span>
               </div>
             </PremiumHover>
           </FadeInUp>
 
           <FadeInUp delay={1.7} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
+              <div className="flex flex-col items-center gap-1 w-14 md:w-16">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 1.9, type: "spring", stiffness: 300 }}
-                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-coral/10 rounded-full flex items-center justify-center"
+                  className="w-7 h-7 md:w-8 md:h-8 bg-coral/10 rounded-full flex items-center justify-center"
                 >
-                  <Users className="w-5 h-5 text-coral" />
+                  <Users className="w-4 h-4 text-coral" />
                 </motion.div>
-                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Community</span>
+                <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight min-w-0 text-truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Community</span>
               </div>
             </PremiumHover>
           </FadeInUp>
 
           <FadeInUp delay={1.9} duration={0.6} distance={20}>
             <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center space-y-1 sm:space-y-2">
+              <div className="flex flex-col items-center gap-1 w-14 md:w-16">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.6, delay: 2.1, type: "spring", stiffness: 300 }}
-                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-charcoal/10 rounded-full flex items-center justify-center"
+                  className="w-7 h-7 md:w-8 md:h-8 bg-charcoal/10 rounded-full flex items-center justify-center"
                 >
-                  <Star className="w-5 h-5 text-charcoal" />
+                  <Star className="w-4 h-4 text-charcoal" />
                 </motion.div>
-                <span className="font-urbanist text-body font-500 min-w-0 text-truncate">Quality</span>
+                <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight min-w-0 text-truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Quality</span>
               </div>
             </PremiumHover>
           </FadeInUp>
