@@ -120,7 +120,7 @@ export default function OnboardingPage() {
 
             <div className="opacity-0 animate-fade-in-up delay-800">
               <p className="text-base md:text-lg font-normal text-charcoal/70 mb-4 leading-relaxed px-2 md:px-4 max-w-sm md:max-w-lg lg:max-w-2xl mx-auto" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }} suppressHydrationWarning>
-              From restaurants to plumbers, find trusted businesses reviewed by us South Africans
+                From restaurants to plumbers, find trusted businesses reviewed by us South Africans
               </p>
             </div>
 
@@ -129,13 +129,31 @@ export default function OnboardingPage() {
               <div className="opacity-0 animate-fade-in-up delay-1000">
                 <Link
                   href="/register"
-                  className="btn-premium group block w-full rounded-full text-white text-base font-semibold py-3 px-6 md:px-4 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 relative overflow-hidden text-center flex items-center justify-center"
-                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                  className="group relative block w-[200px] mx-auto rounded-full py-3 px-2 md:px-4
+               text-base font-semibold text-charcoal text-center flex items-center justify-center
+               backdrop-blur-xl bg-gradient-to-br from-sage/40 via-sage/30 to-coral/20
+               border border-white/20 shadow-lg
+               transition-all duration-500 ease-out
+               hover:scale-[1.04] hover:shadow-xl hover:border-white/40 hover:from-sage/50 hover:to-sage/30"
+                  style={{
+                    fontFamily:
+                      '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                  }}
                 >
-                  <span className="relative z-10 tracking-wide">Get Started</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-coral via-coral/95 to-coral/90 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out" />
+                  {/* Frosted glass reflection top layer */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-t from-white/15 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500 blur-[3px]" />
+
+                  {/* Animated subtle shine sweep */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out" />
+
+                  {/* Text that changes color on hover */}
+                  <span className="relative z-10 tracking-wide transition-colors duration-500 ease-out group-hover:text-coral">
+                    Get Started
+                  </span>
                 </Link>
               </div>
+
+
 
               <div className="opacity-0 animate-fade-in-up delay-1200">
                 <Link
