@@ -114,7 +114,7 @@ export const colors = {
 export const typography = {
   // Font families
   fontFamily: {
-    primary: ['Urbanist', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+    primary: ['sf', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
     mono: ['JetBrains Mono', 'Monaco', 'Consolas', 'monospace'],
   },
 

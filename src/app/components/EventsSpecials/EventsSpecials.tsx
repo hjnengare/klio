@@ -47,7 +47,7 @@ export default function EventsSpecials({
           ref={titleRef}
           className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]"
         >
-          <h2 className="text-xl font-extrabold text-charcoal tracking-tight">{title}</h2>
+          <h2 className="text-xl font-semibold text-charcoal tracking-tight">{title}</h2>
 
           <button
             onClick={() => router.push(href)}

@@ -42,7 +42,7 @@ This document demonstrates the dramatic code reduction and improvement achieved 
     value={username}
     onChange={(e) => handleUsernameChange(e.target.value)}
     onBlur={() => setUsernameTouched(true)}
-    className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
+    className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-sf text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
       getUsernameError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
       username && !getUsernameError() && usernameTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
       'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white  '
@@ -106,7 +106,7 @@ This document demonstrates the dramatic code reduction and improvement achieved 
 <motion.button
   type="submit"
   disabled={submitting || isLoading || !consent || passwordStrength.score < 3}
-  className={`group block w-full font-urbanist text-sm sm:text-base font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[44px] whitespace-nowrap ${
+  className={`group block w-full font-sf text-sm sm:text-base font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[44px] whitespace-nowrap ${
     submitting || isLoading || !consent ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50' : 'bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white focus:ring-sage/20 hover:focus:ring-coral/20'
   }`}
 >

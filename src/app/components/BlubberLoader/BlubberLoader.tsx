@@ -74,7 +74,7 @@ export default function BlubberLoader({
       </div>
 
       {/* Loading text */}
-      <p className={`font-urbanist font-500 text-charcoal/70 ${textSizeClasses[size]} animate-pulse`}>
+      <p className={`font-sf font-500 text-charcoal/70 ${textSizeClasses[size]} animate-pulse`}>
         {text}
       </p>
     </div>

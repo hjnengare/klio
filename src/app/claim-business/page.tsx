@@ -54,7 +54,7 @@ export default function ClaimBusinessPage() {
               >
                 <ion-icon name="chevron-back" class="text-lg text-charcoal/70" />
               </button>
-              <h1 className="font-urbanist text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+              <h1 className="font-sf text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
                 Claim Your Business
               </h1>
             </div>
@@ -68,7 +68,7 @@ export default function ClaimBusinessPage() {
           <div className="w-16 h-16 bg-sage/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <ion-icon name="storefront" class="text-2xl text-sage" />
           </div>
-          <h2 className="font-urbanist text-xl font-600 text-charcoal mb-2">
+          <h2 className="font-sf text-xl font-600 text-charcoal mb-2">
             Own or manage a business?
           </h2>
           <p className="text-charcoal/60 text-sm max-w-md mx-auto">
@@ -88,7 +88,7 @@ export default function ClaimBusinessPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for your business..."
               className="w-full pl-12 pr-4 py-4 bg-white   border border-charcoal/10 rounded-xl
-                         font-urbanist text-base placeholder:text-charcoal/40
+                         font-sf text-base placeholder:text-charcoal/40
                          focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50
                          transition-all duration-200"
             />
@@ -110,7 +110,7 @@ export default function ClaimBusinessPage() {
                     <ion-icon name="storefront" class="text-coral text-lg" />
                   </div>
                   <div>
-                    <h3 className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage
+                    <h3 className="font-sf text-base font-600 text-charcoal group-hover:text-sage
                                    transition-colors duration-200">
                       {business.name}
                     </h3>
@@ -129,7 +129,7 @@ export default function ClaimBusinessPage() {
                 <button
                   onClick={() => handleClaimBusiness(business.id)}
                   disabled={selectedBusiness === business.id}
-                  className={`px-4 py-2 rounded-lg font-urbanist text-sm font-500 transition-all duration-200
+                  className={`px-4 py-2 rounded-lg font-sf text-sm font-500 transition-all duration-200
                     ${selectedBusiness === business.id
                       ? 'bg-sage text-white'
                       : 'bg-sage/10 text-sage hover:bg-sage hover:text-white'
@@ -155,13 +155,13 @@ export default function ClaimBusinessPage() {
             <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
               <ion-icon name="search" class="text-2xl text-charcoal/40" />
             </div>
-            <h3 className="font-urbanist text-lg font-600 text-charcoal mb-2">
+            <h3 className="font-sf text-lg font-600 text-charcoal mb-2">
               Business not found
             </h3>
             <p className="text-charcoal/60 text-sm mb-6">
               Can't find your business? You can add it to our directory.
             </p>
-            <button className="px-6 py-3 bg-coral text-white rounded-lg font-urbanist text-sm font-500
+            <button className="px-6 py-3 bg-coral text-white rounded-lg font-sf text-sm font-500
                                hover:bg-coral/90 transition-colors duration-200">
               Add Your Business
             </button>
@@ -170,7 +170,7 @@ export default function ClaimBusinessPage() {
 
         {/* Help Section */}
         <div className="mt-12 p-6 bg-white   border border-charcoal/5 rounded-xl">
-          <h3 className="font-urbanist text-lg font-600 text-charcoal mb-3">
+          <h3 className="font-sf text-lg font-600 text-charcoal mb-3">
             Need help claiming your business?
           </h3>
           <p className="text-charcoal/60 text-sm mb-4">
@@ -178,11 +178,11 @@ export default function ClaimBusinessPage() {
             or management authorization.
           </p>
           <div className="flex flex-wrap gap-3">
-            <button className="px-4 py-2 bg-sage/10 text-sage rounded-lg font-urbanist text-sm font-500
+            <button className="px-4 py-2 bg-sage/10 text-sage rounded-lg font-sf text-sm font-500
                                hover:bg-sage hover:text-white transition-colors duration-200">
               Contact Support
             </button>
-            <button className="px-4 py-2 border border-charcoal/10 text-charcoal rounded-lg font-urbanist text-sm font-500
+            <button className="px-4 py-2 border border-charcoal/10 text-charcoal rounded-lg font-sf text-sm font-500
                                hover:bg-charcoal/5 transition-colors duration-200">
               Learn More
             </button>

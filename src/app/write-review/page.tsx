@@ -77,7 +77,7 @@ export default function WriteReviewPage() {
               >
                 <ion-icon name="chevron-back" class="text-lg text-charcoal/70" />
               </button>
-              <h1 className="font-urbanist text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+              <h1 className="font-sf text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
                 Write Review
               </h1>
             </div>
@@ -89,7 +89,7 @@ export default function WriteReviewPage() {
         {/* Search Section */}
         <div className="mb-8">
           <div className="text-center mb-6">
-            <h2 className="font-urbanist text-xl font-600 text-charcoal mb-2">
+            <h2 className="font-sf text-xl font-600 text-charcoal mb-2">
               Which business would you like to review?
             </h2>
             <p className="text-charcoal/60 text-sm">
@@ -107,7 +107,7 @@ export default function WriteReviewPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search businesses..."
               className="w-full pl-12 pr-4 py-4  bg-white   border border-sage/10 rounded-xl
-                         font-urbanist text-base placeholder:text-charcoal/40
+                         font-sf text-base placeholder:text-charcoal/40
                          focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50
                          transition-all duration-200"
             />
@@ -143,7 +143,7 @@ export default function WriteReviewPage() {
                     )}
                   </div>
                   <div>
-                    <h3 className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage
+                    <h3 className="font-sf text-base font-600 text-charcoal group-hover:text-sage
                                    transition-colors duration-200">
                       {business.name}
                     </h3>
@@ -170,13 +170,13 @@ export default function WriteReviewPage() {
             <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
               <ion-icon name="search" class="text-2xl text-charcoal/40" />
             </div>
-            <h3 className="font-urbanist text-lg font-600 text-charcoal mb-2">
+            <h3 className="font-sf text-lg font-600 text-charcoal mb-2">
               No businesses found
             </h3>
             <p className="text-charcoal/60 text-sm mb-6">
               Can't find the business you're looking for? Try a different search term.
             </p>
-            <button className="px-6 py-3 bg-sage text-white rounded-lg font-urbanist text-sm font-500
+            <button className="px-6 py-3 bg-sage text-white rounded-lg font-sf text-sm font-500
                                hover:bg-sage/90 transition-colors duration-200">
               Suggest a Business
             </button>

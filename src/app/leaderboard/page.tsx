@@ -1,11 +1,21 @@
+// src/app/leaderboard/page.tsx
 "use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Trophy, X } from "lucide-react";
 import FallbackImage from "../components/FallbackImage/FallbackImage";
+
+// 🔁 Replaced Ionicons with lucide-react
+import {
+  ArrowLeft,
+  Trophy,
+  Star,
+  Medal,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 
 const Footer = dynamic(() => import("../components/Footer/Footer"), {
   loading: () => null,
@@ -39,14 +49,13 @@ const topReviewers: LeaderboardUser[] = [
   { rank: 15, username: "StyleHunter", reviews: 2, avatar: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&h=150", totalRating: 3.5 }
 ];
 
-
 export default function LeaderboardPage() {
   const [showFullLeaderboard, setShowFullLeaderboard] = useState(false);
   const [showToast, setShowToast] = useState(true);
 
   return (
     <div className="min-h-dvh  bg-white   pb-6 relative overflow-hidden">
-     
+
       {/* Premium background elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-sage/8 via-sage/4 to-transparent rounded-full blur-3xl animate-pulse" />
@@ -65,13 +74,13 @@ export default function LeaderboardPage() {
           {/* Back button */}
           <Link href="/home" className="group flex items-center">
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
-              <ion-icon name="arrow-back" class="text-lg sm:text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
+              <ArrowLeft className="text-lg sm:text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
             </div>
             <motion.h1
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
+              className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
             >
               Community Highlights
             </motion.h1>
@@ -87,10 +96,10 @@ export default function LeaderboardPage() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="text-center mb-8 sm:mb-12"
         >
-          <h2 className="font-urbanist text-lg sm:text-xl md:text-2xl font-700 text-charcoal mb-2 sm:mb-4 px-4">
+          <h2 className="font-sf text-lg sm:text-xl md:text-2xl font-700 text-charcoal mb-2 sm:mb-4 px-4">
             Top Contributors This Month
           </h2>
-          <p className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70 max-w-2xl mx-auto px-4">
+          <p className="font-sf text-sm sm:text-base font-400 text-charcoal/70 max-w-2xl mx-auto px-4">
             Celebrating our community&apos;s most valued reviewers and featured businesses
           </p>
         </motion.div>
@@ -107,8 +116,8 @@ export default function LeaderboardPage() {
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
           <div className="relative z-10">
-            <h3 className="font-urbanist text-base sm:text-lg font-700 text-charcoal mb-6 sm:mb-8 text-center flex items-center justify-center gap-2 sm:gap-3">
-              <ion-icon name="trophy" class="text-base sm:text-lg text-sage" />
+            <h3 className="font-sf text-base sm:text-lg font-700 text-charcoal mb-6 sm:mb-8 text-center flex items-center justify-center gap-2 sm:gap-3">
+              <Trophy className="text-base sm:text-lg text-sage" />
               Top Reviewers
             </h3>
 
@@ -136,23 +145,18 @@ export default function LeaderboardPage() {
                     <span className="text-sm sm:text-lg font-bold text-white">2</span>
                   </div>
                 </div>
-                <div className="font-urbanist text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 group-hover:text-coral transition-colors duration-300 truncate px-2">@{topReviewers[1].username}</div>
-                <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
+                <div className="font-sf text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 group-hover:text-coral transition-colors duration-300 truncate px-2">@{topReviewers[1].username}</div>
+                <div className="font-sf text-xs sm:text-sm text-charcoal/60 mb-2">
                   <span className="font-700 text-charcoal">{topReviewers[1].reviews}</span> reviews
                 </div>
                 <div className="bg-white   backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-coral/20 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-2 sm:mb-3">
-                  <ion-icon name="star" class="text-sm text-coral" />
-                  <span className="font-urbanist text-sm font-700 text-charcoal">{topReviewers[1].totalRating}</span>
+                  <Star className="text-sm text-coral" />
+                  <span className="font-sf text-sm font-700 text-charcoal">{topReviewers[1].totalRating}</span>
                 </div>
                 {/* Professional Podium Block */}
                 <div className="relative mt-auto">
-                  <div className="bg-gradient-to-b from-coral/25 to-coral/15 rounded-t-xl h-20 sm:h-28 md:h-32 w-full shadow-xl border-t-4 sm:border-t-[6px] border-coral relative overflow-hidden">
+                  <div className="bg-gradient-to-b from-coral/25 to-coral/15 rounded-t-xl h-20 sm:h-28 md:h-32 w-full shadow-xl border-coral relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-                    {/* Medal icon */}
-                    <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2">
-                      <ion-icon name="medal" class="text-lg sm:text-xl md:text-2xl text-coral/40" />
-                    </div>
-                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-4xl md:text-5xl font-900 text-white">2</div>
                   </div>
                 </div>
               </motion.div>
@@ -176,27 +180,21 @@ export default function LeaderboardPage() {
                     />
                   </div>
                   <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-xl border-2 border-white">
-                    <ion-icon name="trophy" class="text-xl sm:text-2xl text-white" />
+                    <Trophy className="text-xl sm:text-2xl text-white" />
                   </div>
                 </div>
-                <div className="font-urbanist text-sm sm:text-base md:text-xl font-700 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300 truncate px-2">@{topReviewers[0].username}</div>
-                <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
+                <div className="font-sf text-sm sm:text-base md:text-xl font-700 text-charcoal mb-1 group-hover:text-sage transition-colors duration-300 truncate px-2">@{topReviewers[0].username}</div>
+                <div className="font-sf text-xs sm:text-sm text-charcoal/60 mb-2">
                   <span className="font-700 text-charcoal">{topReviewers[0].reviews}</span> reviews
                 </div>
                 <div className="bg-white   backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md border border-sage/30 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-3 sm:mb-4">
-                  <ion-icon name="star" class="text-base text-sage" />
-                  <span className="font-urbanist text-base font-700 text-charcoal">{topReviewers[0].totalRating}</span>
+                  <Star className="text-base text-sage" />
+                  <span className="font-sf text-base font-700 text-charcoal">{topReviewers[0].totalRating}</span>
                 </div>
                 {/* Professional Podium Block */}
                 <div className="relative mt-auto">
-                  <div className="bg-gradient-to-b from-sage/35 to-sage/20 rounded-t-xl h-24 sm:h-36 md:h-48 w-full shadow-2xl border-t-4 sm:border-t-[6px] border-sage relative overflow-hidden">
+                  <div className="bg-gradient-to-b from-sage/35 to-sage/20 rounded-t-xl h-24 sm:h-36 md:h-48 w-full shadow-2xl relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-                    {/* Crown and Medal icons */}
-                    <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5 sm:gap-1">
-                      <ion-icon name="star" class="text-xl sm:text-2xl md:text-3xl text-sage/30" />
-                      <ion-icon name="medal" class="text-lg sm:text-xl md:text-2xl text-amber-500/40" />
-                    </div>
-                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-5xl md:text-6xl font-900 text-white">1</div>
                   </div>
                 </div>
               </motion.div>
@@ -223,23 +221,18 @@ export default function LeaderboardPage() {
                     <span className="text-sm sm:text-lg font-bold text-white">3</span>
                   </div>
                 </div>
-                <div className="font-urbanist text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 group-hover:text-charcoal/80 transition-colors duration-300 truncate px-2">@{topReviewers[2].username}</div>
-                <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
+                <div className="font-sf text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 group-hover:text-charcoal/80 transition-colors duration-300 truncate px-2">@{topReviewers[2].username}</div>
+                <div className="font-sf text-xs sm:text-sm text-charcoal/60 mb-2">
                   <span className="font-700 text-charcoal">{topReviewers[2].reviews}</span> reviews
                 </div>
                 <div className="bg-white   backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-charcoal/20 flex items-center justify-center gap-1 sm:gap-1.5 mx-auto w-fit mb-2 sm:mb-3">
-                  <ion-icon name="star" class="text-sm text-charcoal/70" />
-                  <span className="font-urbanist text-sm font-700 text-charcoal">{topReviewers[2].totalRating}</span>
+                  <Star className="text-sm text-charcoal/70" />
+                  <span className="font-sf text-sm font-700 text-charcoal">{topReviewers[2].totalRating}</span>
                 </div>
                 {/* Professional Podium Block */}
                 <div className="relative mt-auto">
-                  <div className="bg-gradient-to-b from-charcoal/20 to-charcoal/10 rounded-t-xl h-16 sm:h-24 md:h-28 w-full shadow-xl border-t-4 sm:border-t-[6px] border-charcoal/50 relative overflow-hidden">
+                  <div className="bg-gradient-to-b from-charcoal/20 to-charcoal/10 rounded-t-xl h-16 sm:h-24 md:h-28 w-full shadow-xl border-charcoal/50 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-                    {/* Medal icon */}
-                    <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2">
-                      <ion-icon name="medal" class="text-lg sm:text-xl md:text-2xl text-charcoal/30" />
-                    </div>
-                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 font-urbanist text-3xl sm:text-4xl md:text-5xl font-900 text-white">3</div>
                   </div>
                 </div>
               </motion.div>
@@ -257,7 +250,7 @@ export default function LeaderboardPage() {
                 >
                   <div className="flex items-center justify-between p-3 sm:p-4">
                     <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center font-urbanist text-xs sm:text-sm font-600 text-charcoal/70 shadow-sm flex-shrink-0">
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center font-sf text-xs sm:text-sm font-600 text-charcoal/70 shadow-sm flex-shrink-0">
                         {user.rank}
                       </div>
                       <div className="w-10 h-10 sm:w-12 sm:h-12 relative rounded-full overflow-hidden border-2 border-white shadow-md flex-shrink-0">
@@ -271,13 +264,13 @@ export default function LeaderboardPage() {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="font-urbanist text-sm sm:text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-300 truncate">@{user.username}</div>
-                        <div className="font-urbanist text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
+                        <div className="font-sf text-sm sm:text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-300 truncate">@{user.username}</div>
+                        <div className="font-sf text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
                       </div>
                     </div>
                     <div className="bg-white  /50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
-                      <ion-icon name="star" class="text-sm text-coral" />
-                      <span className="font-urbanist text-sm font-600 text-charcoal">{user.totalRating}</span>
+                      <Star className="text-sm text-coral" />
+                      <span className="font-sf text-sm font-600 text-charcoal">{user.totalRating}</span>
                     </div>
                   </div>
                 </motion.div>
@@ -295,7 +288,7 @@ export default function LeaderboardPage() {
                   >
                     <div className="flex items-center justify-between p-3 sm:p-4">
                       <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
-                        <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center font-urbanist text-xs sm:text-sm font-600 text-charcoal/70 shadow-sm flex-shrink-0">
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center font-sf text-xs sm:text-sm font-600 text-charcoal/70 shadow-sm flex-shrink-0">
                           {user.rank}
                         </div>
                         <div className="w-10 h-10 sm:w-12 sm:h-12 relative rounded-full overflow-hidden border-2 border-white shadow-md flex-shrink-0">
@@ -309,13 +302,13 @@ export default function LeaderboardPage() {
                           />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <div className="font-urbanist text-sm sm:text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-300 truncate">@{user.username}</div>
-                          <div className="font-urbanist text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
+                          <div className="font-sf text-sm sm:text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-300 truncate">@{user.username}</div>
+                          <div className="font-sf text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
                         </div>
                       </div>
                       <div className="bg-white  /50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
-                        <ion-icon name="star" class="text-sm text-coral" />
-                        <span className="font-urbanist text-sm font-600 text-charcoal">{user.totalRating}</span>
+                        <Star className="text-sm text-coral" />
+                        <span className="font-sf text-sm font-600 text-charcoal">{user.totalRating}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -326,17 +319,17 @@ export default function LeaderboardPage() {
             <div className="text-center mt-6 sm:mt-8">
               <button
                 onClick={() => setShowFullLeaderboard(!showFullLeaderboard)}
-                className="font-urbanist text-sm sm:text-base font-600 text-sage hover:text-sage/80 transition-all duration-300 px-4 sm:px-6 py-2 hover:bg-sage/5 rounded-full flex items-center gap-2 mx-auto"
+                className="font-sf text-sm sm:text-base font-600 text-sage hover:text-sage/80 transition-all duration-300 px-4 sm:px-6 py-2 hover:bg-sage/5 rounded-full flex items-center gap-2 mx-auto"
               >
                 {showFullLeaderboard ? (
                   <>
-                    <ion-icon name="chevron-up-outline" class="text-base" />
+                    <ChevronUp className="text-base" />
                     Show Less
                   </>
                 ) : (
                   <>
                     View Full Leaderboard
-                    <ion-icon name="chevron-down-outline" class="text-base" />
+                    <ChevronDown className="text-base" />
                   </>
                 )}
               </button>
@@ -348,6 +341,17 @@ export default function LeaderboardPage() {
 
       {/* Footer - only on larger screens */}
       <Footer />
+      {/* ✅ Inline SF Pro setup */}
+      <style jsx global>{`
+        .font-sf {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+            "SF Pro Display", "Helvetica Neue", Helvetica, Arial, system-ui,
+            sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+        }
+      `}</style>
 
     </div>
   );

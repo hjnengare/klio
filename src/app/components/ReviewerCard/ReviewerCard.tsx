@@ -93,10 +93,10 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
                 )}
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-urbanist text-sm font-700 text-charcoal truncate">
+                  <h3 className="font-sf text-sm font-700 text-charcoal truncate">
                     {reviewerData?.name}
                   </h3>
-                  <p className="font-urbanist text-xs font-600 text-charcoal/60">
+                  <p className="font-sf text-xs font-600 text-charcoal/60">
                     {reviewerData?.location}
                   </p>
                 </div>
@@ -105,7 +105,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
               {/* Rating badge */}
               <div className="flex items-center gap-1 bg-white  /80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm">
                 <ion-icon name="star" class="text-coral text-xs" suppressHydrationWarning />
-                <span className="font-urbanist text-xs font-700 text-charcoal">{reviewerData?.rating.toFixed(1)}</span>
+                <span className="font-sf text-xs font-700 text-charcoal">{reviewerData?.rating.toFixed(1)}</span>
               </div>
             </div>
 
@@ -113,12 +113,12 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
             <div className="mb-3">
               <div className="flex items-center gap-4">
                 <div className="text-center">
-                  <div className="font-urbanist font-800 text-lg text-charcoal">{reviewerData?.reviewCount}</div>
-                  <div className="font-urbanist text-xs text-charcoal/60">Reviews</div>
+                  <div className="font-sf font-800 text-lg text-charcoal">{reviewerData?.reviewCount}</div>
+                  <div className="font-sf text-xs text-charcoal/60">Reviews</div>
                 </div>
                 <div className="text-center">
-                  <div className="font-urbanist font-800 text-lg text-sage">{reviewerData?.rating.toFixed(1)}</div>
-                  <div className="font-urbanist text-xs text-charcoal/60">Rating</div>
+                  <div className="font-sf font-800 text-lg text-sage">{reviewerData?.rating.toFixed(1)}</div>
+                  <div className="font-sf text-xs text-charcoal/60">Rating</div>
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
             <div className="mt-auto flex items-center justify-between">
               <div className="flex items-center gap-1 flex-wrap">
                 {reviewerData?.badge && (
-                  <div className={`px-2 py-1 rounded-full text-xs font-urbanist font-600 ${
+                  <div className={`px-2 py-1 rounded-full text-xs font-sf font-600 ${
                     reviewerData.badge === 'top' ? 'bg-amber-100 text-amber-700' :
                     reviewerData.badge === 'verified' ? 'bg-blue-100 text-blue-700' :
                     'bg-sage/10 text-sage'
@@ -139,7 +139,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
                 )}
 
                 {reviewerData?.trophyBadge && (
-                  <div className={`px-2 py-1 rounded-full text-xs font-urbanist font-600 ${
+                  <div className={`px-2 py-1 rounded-full text-xs font-sf font-600 ${
                     reviewerData.trophyBadge === 'gold' ? 'bg-yellow-50 text-yellow-700' :
                     reviewerData.trophyBadge === 'silver' ? 'bg-gray-50 text-gray-700' :
                     reviewerData.trophyBadge === 'bronze' ? 'bg-orange-50 text-orange-700' :
@@ -164,13 +164,13 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
                     : 'opacity-0'
                 }`}>
                 <button
-                  className="w-7 h-7 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white   hover:scale-110 transition-all duration-200"
+                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white   hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <ion-icon name="person-add-outline" class="text-charcoal text-sm" suppressHydrationWarning />
                 </button>
                 <button
-                  className="w-7 h-7 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white   hover:scale-110 transition-all duration-200"
+                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white   hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <ion-icon name="chatbubble-outline" class="text-charcoal text-sm" suppressHydrationWarning />
@@ -203,7 +203,7 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-urbanist font-700 text-charcoal truncate">{review?.reviewer.name}</h3>
+            <h3 className="font-sf font-700 text-charcoal truncate">{review?.reviewer.name}</h3>
             <ReviewerStats
               reviewCount={review?.reviewer.reviewCount || 0}
               rating={review?.reviewer.rating || 0}
@@ -220,19 +220,19 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
                 : 'flex translate-x-12 opacity-0 pointer-events-none'
             }`}>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
             >
               <ion-icon name="person-add-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
             >
               <ion-icon name="chatbubble-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
             >
               <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />

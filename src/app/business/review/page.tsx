@@ -165,13 +165,13 @@ export default function WriteReviewPage() {
         <FloatingElements />
 
         {/* Header - matches explore page pattern */}
-        <header className="fixed top-0 left-0 right-0 z-50  bg-white  /90 backdrop-blur-md border-b border-sage/10 px-4 py-4">
+        <header className="fixed top-0 left-0 right-0 z-50  bg-white/90 backdrop-blur-md border-b border-sage/10 px-4 py-4">
           <div className="flex items-center max-w-7xl mx-auto">
             <Link href="/home" className="group flex items-center">
               <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-3 md:mr-4">
                 <ion-icon name="arrow-back" class="text-lg md:text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
               </div>
-              <h1 className="font-urbanist text-base md:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative">
+              <h1 className="font-sf text-base md:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative">
                 Write a Review
               </h1>
             </Link>
@@ -186,13 +186,13 @@ export default function WriteReviewPage() {
           <div className="relative z-10 flex-1 flex flex-col">
                 {/* Business Header */}
                 <div className="mb-4 md:mb-6 text-center px-4">
-                  <h2 className="font-urbanist text-xl md:text-3xl font-700 text-charcoal mb-2">
+                  <h2 className="font-sf text-xl md:text-3xl font-700 text-charcoal mb-2">
                     {businessName}
                   </h2>
                   <div className="flex items-center justify-center space-x-2">
                     <div className="flex items-center space-x-1 bg-gradient-to-br from-amber-400 to-amber-600 px-3 py-1.5 rounded-full">
                       <ion-icon name="star" style={{ color: 'white', fontSize: '14px' }} />
-                      <span className="font-urbanist text-sm md:text-base font-700 text-white">
+                      <span className="font-sf text-sm md:text-base font-700 text-white">
                         {businessRating.toFixed(1)}
                       </span>
                     </div>
@@ -254,7 +254,7 @@ export default function WriteReviewPage() {
 
                     {/* Image Counter */}
                     <div className="absolute top-3 md:top-4 right-3 md:right-4 px-3 py-1.5 rounded-full bg-charcoal/70 backdrop-blur-sm z-10">
-                      <span className="font-urbanist text-xs md:text-sm font-500 text-white">
+                      <span className="font-sf text-xs md:text-sm font-500 text-white">
                         {currentImageIndex + 1} / {businessImages.length}
                       </span>
                     </div>
@@ -279,7 +279,7 @@ export default function WriteReviewPage() {
 
                 {/* Overall Rating */}
                 <div className="mb-6 md:mb-8 px-4">
-                  <h3 className="font-urbanist text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
+                  <h3 className="font-sf text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
                     <div className="w-6 h-6 bg-gradient-to-br from-amber-400/20 to-amber-600/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="star" style={{ color: '#f59e0b', fontSize: '16px' }} />
                     </div>
@@ -302,14 +302,14 @@ export default function WriteReviewPage() {
                       </button>
                     ))}
                   </div>
-                  <p className="text-center font-urbanist text-sm font-400 text-charcoal/60">
+                  <p className="text-center font-sf text-sm font-400 text-charcoal/60">
                     Tap to select rating
                   </p>
                 </div>
 
                 {/* Quick Tags */}
                 <div className="mb-6 md:mb-8 px-4">
-                  <h3 className="font-urbanist text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
+                  <h3 className="font-sf text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
                     <div className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="pricetags-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
                     </div>
@@ -321,7 +321,7 @@ export default function WriteReviewPage() {
                         key={tag}
                         onClick={() => handleTagToggle(tag)}
                         className={`
-                          px-4 md:px-6 py-3 md:py-4 rounded-full border-2 transition-all duration-300 font-urbanist text-sm font-600 btn-target
+                          px-4 md:px-6 py-3 md:py-4 rounded-full border-2 transition-all duration-300 font-sf text-sm font-600 btn-target
                           ${selectedTags.includes(tag)
                             ? 'bg-sage border-sage text-white shadow-lg'
                             : ' bg-white   backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
@@ -337,7 +337,7 @@ export default function WriteReviewPage() {
 
                 {/* Review Title */}
                 <div className="mb-4 md:mb-6 px-4">
-                  <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal mb-3 flex items-center justify-center md:justify-start">
+                  <h3 className="font-sf text-base md:text-lg font-600 text-charcoal mb-3 flex items-center justify-center md:justify-start">
                     <div className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="pencil-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
                     </div>
@@ -348,13 +348,13 @@ export default function WriteReviewPage() {
                     value={reviewTitle}
                     onChange={(e) => setReviewTitle(e.target.value)}
                     placeholder="Summarize your experience in a few words..."
-                    className="w-full  bg-white   backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 input-mobile"
+                    className="w-full  bg-white   backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-sf text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 input-mobile"
                   />
                 </div>
 
                 {/* Review Text */}
                 <div className="mb-6 md:mb-8 px-4">
-                  <h3 className="font-urbanist text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
+                  <h3 className="font-sf text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
                     <div className="w-6 h-6 bg-gradient-to-br from-coral/20 to-coral/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="create-outline" style={{ color: 'var(--coral)', fontSize: '16px' }} />
                     </div>
@@ -365,13 +365,13 @@ export default function WriteReviewPage() {
                     onChange={(e) => setReviewText(e.target.value)}
                     placeholder="Share your thoughts and help other locals..."
                     rows={4}
-                    className="w-full  bg-white   backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-urbanist text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none flex-1 min-h-[120px] md:min-h-0 input-mobile"
+                    className="w-full  bg-white   backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-sf text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none flex-1 min-h-[120px] md:min-h-0 input-mobile"
                   />
                 </div>
 
                 {/* Image Upload */}
                 <div className="mb-6 md:mb-8 px-4">
-                  <h3 className="font-urbanist text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
+                  <h3 className="font-sf text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
                     <div className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="camera-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
                     </div>
@@ -390,7 +390,7 @@ export default function WriteReviewPage() {
                 <button
                   onClick={handleSubmitReview}
                   className={`
-                    w-full py-4 px-6 rounded-lg font-urbanist text-base md:text-lg font-600 transition-all duration-300 relative overflow-hidden btn-target btn-press
+                    w-full py-4 px-6 rounded-lg font-sf text-base md:text-lg font-600 transition-all duration-300 relative overflow-hidden btn-target btn-press
                     ${isFormValid
                       ? 'bg-gradient-to-r from-sage to-sage/90 text-white focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 group hover:shadow-1'
                       : 'bg-charcoal/20 text-charcoal/40 cursor-not-allowed'

@@ -64,7 +64,7 @@ export default function BusinessProfilePage() {
   }, [businessId]);
 
   return (
-    <div className="min-h-dvh bg-white  /90 relative overflow-hidden">
+    <div className="min-h-dvh bg-white/90 relative overflow-hidden">
       {/* Ambient background elements */}
       <div className="absolute inset-0 opacity-20">
         <motion.div
@@ -86,7 +86,7 @@ export default function BusinessProfilePage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative z-10 bg-white  /90 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm"
+        className="relative z-10 bg-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm"
       >
         <div className="flex items-center justify-between max-w-4xl mx-auto">
           <motion.div
@@ -102,7 +102,7 @@ export default function BusinessProfilePage() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="font-urbanist text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
+            className="font-sf text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
           >
             {business.name}
           </motion.h1>
@@ -158,7 +158,7 @@ export default function BusinessProfilePage() {
                     >
                       <ion-icon name="star" style={{ color: 'var(--white)', fontSize: '20px' }} />
                     </motion.div>
-                    <span className="font-urbanist text-xl font-700 text-charcoal">{business.rating}</span>
+                    <span className="font-sf text-xl font-700 text-charcoal">{business.rating}</span>
                   </motion.div>
 
                   {/* Trust Metrics */}
@@ -186,14 +186,14 @@ export default function BusinessProfilePage() {
                           <motion.div
                             animate={{ scale: [1, 1.2, 1] }}
                             transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
-                            className={`font-urbanist text-lg font-700 ${
+                            className={`font-sf text-lg font-700 ${
                               metric.color === 'sage' ? 'text-sage' : 'text-coral'
                             }`}
                           >
                             {metric.value}%
                           </motion.div>
                         </div>
-                        <span className="font-urbanist text-sm font-500 text-charcoal/70 capitalize">
+                        <span className="font-sf text-sm font-500 text-charcoal/70 capitalize">
                           {metric.label}
                         </span>
                       </motion.div>
@@ -215,7 +215,7 @@ export default function BusinessProfilePage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4, duration: 0.6 }}
-                  className="font-urbanist text-xl font-600 text-charcoal mb-6 flex items-center"
+                  className="font-sf text-xl font-600 text-charcoal mb-6 flex items-center"
                 >
                   <motion.div
                     animate={{ scale: [1, 1.1, 1] }}
@@ -253,7 +253,7 @@ export default function BusinessProfilePage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
-                  className="font-urbanist text-xl font-600 text-charcoal mb-6 flex items-center"
+                  className="font-sf text-xl font-600 text-charcoal mb-6 flex items-center"
                 >
                   <motion.div
                     animate={{ rotate: [0, 5, -5, 0] }}
@@ -282,10 +282,10 @@ export default function BusinessProfilePage() {
                           />
                         </div>
                         <div>
-                          <h4 className="font-urbanist text-base font-600 text-charcoal mb-1">
+                          <h4 className="font-sf text-base font-600 text-charcoal mb-1">
                             {special.name}
                           </h4>
-                          <p className="font-urbanist text-sm font-400 text-charcoal/70">
+                          <p className="font-sf text-sm font-400 text-charcoal/70">
                             {special.description}
                           </p>
                         </div>
@@ -309,7 +309,7 @@ export default function BusinessProfilePage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.7, duration: 0.6 }}
-                    className="font-urbanist text-xl font-600 text-charcoal flex items-center"
+                    className="font-sf text-xl font-600 text-charcoal flex items-center"
                   >
                     <motion.div
                       animate={{ scale: [1, 1.1, 1] }}
@@ -328,7 +328,7 @@ export default function BusinessProfilePage() {
                   >
                     <Link
                       href="review"
-                      className="inline-flex items-center space-x-2 bg-gradient-to-r from-sage to-sage/90 text-white font-urbanist text-sm font-600 py-3 px-6 rounded-full"
+                      className="inline-flex items-center space-x-2 bg-gradient-to-r from-sage to-sage/90 text-white font-sf text-sm font-600 py-3 px-6 rounded-full"
                     >
                       <ion-icon name="create-outline" size="small" />
                       <span>Write a Review</span>
@@ -348,7 +348,7 @@ export default function BusinessProfilePage() {
                       <div className="flex items-start space-x-4">
                         {/* Avatar */}
                         <div className="w-12 h-12 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="font-urbanist text-lg font-700 text-sage">
+                          <span className="font-sf text-lg font-700 text-sage">
                             {review.author[0]}
                           </span>
                         </div>
@@ -357,7 +357,7 @@ export default function BusinessProfilePage() {
                           {/* Header */}
                           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3 space-y-2 md:space-y-0">
                             <div className="flex items-center space-x-3">
-                              <span className="font-urbanist text-lg font-600 text-charcoal">
+                              <span className="font-sf text-lg font-600 text-charcoal">
                                 {review.author}
                               </span>
                               <div className="flex items-center space-x-1">
@@ -379,13 +379,13 @@ export default function BusinessProfilePage() {
                                 ))}
                               </div>
                             </div>
-                            <span className="font-urbanist text-sm font-400 text-charcoal/60">
+                            <span className="font-sf text-sm font-400 text-charcoal/60">
                               {review.date}
                             </span>
                           </div>
 
                           {/* Review Text */}
-                          <p className="font-urbanist text-base font-400 text-charcoal/90 leading-relaxed mb-4">
+                          <p className="font-sf text-base font-400 text-charcoal/90 leading-relaxed mb-4">
                             {review.text}
                           </p>
 

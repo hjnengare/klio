@@ -17,42 +17,51 @@
   --color-black-5: hsla(0, 0%, 0%, 0.05);
   --color-black: hsl(0, 0%, 0%);
   --color-white: hsl(0, 0%, 100%);
-  
+
   /* Wireframe-specific colors */
   --color-charcoal: #211e1d;
   --color-sage: #749176;
   --color-coral: #d67469;
   --color-off-white: #f2e3da;
-  
-  --font-family-urbanist: 'Urbanist', sans-serif;
-  
+
+  --font-family-sf: 'sf', sans-serif;
+
   /* Mobile-first font sizes - better readability on small screens */
-  --font-size-1: 2.5rem;   /* 40px - Hero headings on mobile */
-  --font-size-2: 2.25rem;  /* 36px - Page headings on mobile */
-  --font-size-3: 2rem;     /* 32px - Section headings on mobile */
-  --font-size-4: 1.625rem; /* 26px - Subsection headings on mobile */
-  --font-size-5: 1.375rem; /* 22px - Large headings on mobile */
-  --font-size-6: 1.125rem; /* 18px - Small headings on mobile */
-  --font-size-7: 1rem;     /* 16px - Large body text on mobile */
-  --font-size-8: 1rem;     /* 16px - Regular body text */
-  --font-size-9: 0.875rem; /* 14px - Small text, captions */
-  
+  --font-size-1: 2.5rem;
+  /* 40px - Hero headings on mobile */
+  --font-size-2: 2.25rem;
+  /* 36px - Page headings on mobile */
+  --font-size-3: 2rem;
+  /* 32px - Section headings on mobile */
+  --font-size-4: 1.625rem;
+  /* 26px - Subsection headings on mobile */
+  --font-size-5: 1.375rem;
+  /* 22px - Large headings on mobile */
+  --font-size-6: 1.125rem;
+  /* 18px - Small headings on mobile */
+  --font-size-7: 1rem;
+  /* 16px - Large body text on mobile */
+  --font-size-8: 1rem;
+  /* 16px - Regular body text */
+  --font-size-9: 0.875rem;
+  /* 14px - Small text, captions */
+
   --font-weight-400: 400;
   --font-weight-500: 500;
   --font-weight-600: 600;
   --font-weight-700: 700;
   --font-weight-800: 800;
-  
+
   --spacing-section: 35px;
-  
+
   --shadow-1: 0 8px 16px hsla(0, 0%, 0%, 0.15);
   --shadow-2: 0 4px 10px hsla(0, 0%, 0%, 0.05);
-  
+
   --radius-3: 3px;
-  
+
   --transition-timing-function-cubic-in: cubic-bezier(0.51, 0.03, 0.64, 0.28);
   --transition-timing-function-cubic-out: cubic-bezier(0.33, 0.85, 0.4, 0.96);
-  
+
   --transition-duration-1: 250ms;
   --transition-duration-2: 500ms;
 }
@@ -60,34 +69,49 @@
 /* Responsive font scaling for larger screens */
 @media (min-width: 768px) {
   @theme reference {
-    --font-size-1: 3rem;     /* 48px - Hero headings on desktop */
-    --font-size-2: 2.5rem;   /* 40px - Page headings on desktop */
-    --font-size-3: 2.125rem; /* 34px - Section headings on desktop */
-    --font-size-4: 1.75rem;  /* 28px - Subsection headings on desktop */
-    --font-size-5: 1.5rem;   /* 24px - Large headings on desktop */
-    --font-size-6: 1.25rem;  /* 20px - Small headings on desktop */
-    --font-size-7: 1.125rem; /* 18px - Large body text on desktop */
-    --font-size-8: 1rem;     /* 16px - Regular body text */
-    --font-size-9: 0.875rem; /* 14px - Small text, captions */
+    --font-size-1: 3rem;
+    /* 48px - Hero headings on desktop */
+    --font-size-2: 2.5rem;
+    /* 40px - Page headings on desktop */
+    --font-size-3: 2.125rem;
+    /* 34px - Section headings on desktop */
+    --font-size-4: 1.75rem;
+    /* 28px - Subsection headings on desktop */
+    --font-size-5: 1.5rem;
+    /* 24px - Large headings on desktop */
+    --font-size-6: 1.25rem;
+    /* 20px - Small headings on desktop */
+    --font-size-7: 1.125rem;
+    /* 18px - Large body text on desktop */
+    --font-size-8: 1rem;
+    /* 16px - Regular body text */
+    --font-size-9: 0.875rem;
+    /* 14px - Small text, captions */
   }
 }
 
 @layer base {
+
   /* Reset browser defaults */
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
     max-width: 100%;
   }
 
   html {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 100%; /* Standard 16px base for accessibility */
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+    font-size: 100%;
+    /* Standard 16px base for accessibility */
     margin: 0;
     padding: 0;
+    scrollbar-gutter: stable;
   }
 
   body {
-    @apply text-base; /* Use token system: 16px with 1.6 line-height */
+    @apply text-base;
+    /* Use token system: 16px with 1.6 line-height */
     color: hsl(0, 0%, 0%);
     background-color: hsl(0, 0%, 100%);
     margin: 0;
@@ -101,18 +125,56 @@
   }
 
   /* Reset default margins and paddings */
-  h1, h2, h3, h4, h5, h6, p, blockquote, pre, dl, dd, ol, ul, form, fieldset, legend, figure, table, th, td, caption, hr {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote,
+  pre,
+  dl,
+  dd,
+  ol,
+  ul,
+  form,
+  fieldset,
+  legend,
+  figure,
+  table,
+  th,
+  td,
+  caption,
+  hr {
     margin: 0;
     padding: 0;
   }
 
   /* Heading hierarchy */
-  h1 { @apply text-3xl md:text-4xl font-700; }
-  h2 { @apply text-2xl md:text-3xl font-600; }
-  h3 { @apply text-xl md:text-2xl font-600; }
-  h4 { @apply text-lg md:text-xl font-600; }
-  h5 { @apply text-base md:text-lg font-500; }
-  h6 { @apply text-sm md:text-base font-500; }
+  h1 {
+    @apply text-3xl md:text-4xl font-700;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl font-600;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-600;
+  }
+
+  h4 {
+    @apply text-lg md:text-xl font-600;
+  }
+
+  h5 {
+    @apply text-base md:text-lg font-500;
+  }
+
+  h6 {
+    @apply text-sm md:text-base font-500;
+  }
 
   a {
     color: inherit;
@@ -134,14 +196,18 @@
     padding: 0;
   }
 
-  ul, ol {
+  ul,
+  ol {
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
   /* Remove default form element margins */
-  input, textarea, select, button {
+  input,
+  textarea,
+  select,
+  button {
     margin: 0;
     padding: 0;
     border: 0;
@@ -151,21 +217,36 @@
   }
 
   /* Prevent horizontal overflow for specific elements */
-  div, section, article, main, aside, header, footer, nav {
+  div,
+  section,
+  article,
+  main,
+  aside,
+  header,
+  footer,
+  nav {
     max-width: 100%;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
 
   /* Handle long text content */
-  p, span, a, strong, em, code {
+  p,
+  span,
+  a,
+  strong,
+  em,
+  code {
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
   }
 
   /* Ensure images and media don't exceed container width */
-  img, video, canvas, svg {
+  img,
+  video,
+  canvas,
+  svg {
     max-width: 100%;
     height: auto;
   }
@@ -178,7 +259,8 @@
   }
 
   /* Handle pre and code elements */
-  pre, code {
+  pre,
+  code {
     max-width: 100%;
     overflow-x: auto;
     word-wrap: break-word;
@@ -186,13 +268,19 @@
   }
 
   /* iOS Safari zoom prevention */
-  input, textarea, select {
-    font-size: 16px !important; /* Prevents zoom on iOS */
-    transform: translateZ(0); /* Force hardware acceleration */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    /* Prevents zoom on iOS */
+    transform: translateZ(0);
+    /* Force hardware acceleration */
   }
 
   /* Improved focus handling for iOS */
-  input:focus, textarea:focus, select:focus {
+  input:focus,
+  textarea:focus,
+  select:focus {
     outline: none;
     transform: translateZ(0);
   }
@@ -220,17 +308,18 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: rgba(116, 145, 118, 0.05); /* sage/5 */
+    background: rgba(116, 145, 118, 0.05);
+    /* sage/5 */
     border-radius: 8px;
     margin: 4px;
   }
 
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg,
-      rgba(116, 145, 118, 0.3) 0%,
-      rgba(116, 145, 118, 0.5) 50%,
-      rgba(214, 116, 105, 0.3) 100%
-    ); /* sage to coral gradient */
+        rgba(116, 145, 118, 0.3) 0%,
+        rgba(116, 145, 118, 0.5) 50%,
+        rgba(214, 116, 105, 0.3) 100%);
+    /* sage to coral gradient */
     border-radius: 8px;
     border: 1px solid rgba(116, 145, 118, 0.1);
     backdrop-filter: blur(4px);
@@ -239,19 +328,17 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg,
-      rgba(116, 145, 118, 0.6) 0%,
-      rgba(116, 145, 118, 0.8) 50%,
-      rgba(214, 116, 105, 0.5) 100%
-    );
+        rgba(116, 145, 118, 0.6) 0%,
+        rgba(116, 145, 118, 0.8) 50%,
+        rgba(214, 116, 105, 0.5) 100%);
     border-color: rgba(116, 145, 118, 0.3);
     box-shadow: 0 2px 8px rgba(116, 145, 118, 0.2);
   }
 
   ::-webkit-scrollbar-thumb:active {
     background: linear-gradient(135deg,
-      rgba(116, 145, 118, 0.8) 0%,
-      rgba(214, 116, 105, 0.6) 100%
-    );
+        rgba(116, 145, 118, 0.8) 0%,
+        rgba(214, 116, 105, 0.6) 100%);
   }
 
   ::-webkit-scrollbar-corner {
@@ -280,6 +367,7 @@
 
   /* Prevent zoom on input focus for iOS */
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
+
     select:focus,
     textarea:focus,
     input:focus {
@@ -290,17 +378,18 @@
 }
 
 @layer components {
+
   /* Skip link for accessibility */
   .skip-link {
     @apply absolute bg-hoockers-green text-white p-2 z-50 no-underline rounded-3;
     top: -40px;
     left: 6px;
   }
-  
+
   .skip-link:focus {
     top: 6px;
   }
-  
+
   /* Focus styles */
   *:focus-visible {
     @apply outline-2 outline-hoockers-green outline-offset-2;
@@ -308,20 +397,32 @@
 }
 
 @layer utilities {
+
   /* Hide scrollbar while maintaining scroll functionality */
   .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 
   .scrollbar-hide::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari and Opera */
+    display: none;
+    /* Chrome, Safari and Opera */
   }
 
   /* Cursor blink animation */
   @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+
+    0%,
+    50% {
+      opacity: 1;
+    }
+
+    51%,
+    100% {
+      opacity: 0;
+    }
   }
 
   /* Width constraint utilities */
@@ -364,20 +465,25 @@
 
   /* Enhanced mobile viewport utilities with dynamic height */
   @media only screen and (max-width: 768px) {
+
     .min-h-dvh-safe,
     .min-h-dvh {
       min-height: 100vh;
       min-height: calc(var(--vh, 1vh) * 100);
-      min-height: 100svh; /* Small viewport height */
-      min-height: 100dvh; /* Dynamic viewport height */
+      min-height: 100svh;
+      /* Small viewport height */
+      min-height: 100dvh;
+      /* Dynamic viewport height */
     }
 
     .h-screen-safe,
     .h-screen {
       height: 100vh;
       height: calc(var(--vh, 1vh) * 100);
-      height: 100svh; /* Small viewport height */
-      height: 100dvh; /* Dynamic viewport height */
+      height: 100svh;
+      /* Small viewport height */
+      height: 100dvh;
+      /* Dynamic viewport height */
     }
 
     .full-viewport {
@@ -385,8 +491,10 @@
       height: 100vh !important;
       min-height: calc(var(--vh, 1vh) * 100) !important;
       height: calc(var(--vh, 1vh) * 100) !important;
-      min-height: 100svh !important; /* Small viewport height */
-      height: 100dvh !important; /* Dynamic viewport height */
+      min-height: 100svh !important;
+      /* Small viewport height */
+      height: 100dvh !important;
+      /* Dynamic viewport height */
       overflow-x: hidden !important;
     }
 
@@ -394,7 +502,8 @@
     .mobile-page {
       height: 100vh;
       height: calc(var(--vh, 1vh) * 100);
-      height: 100dvh; /* Dynamic viewport height */
+      height: 100dvh;
+      /* Dynamic viewport height */
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
@@ -417,29 +526,80 @@
 
   /* Premium CSS Animations */
   @keyframes bounceRight {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(4px); }
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    50% {
+      transform: translateX(4px);
+    }
   }
 
   @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-    20%, 40%, 60%, 80% { transform: translateX(4px); }
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: translateX(-4px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: translateX(4px);
+    }
   }
 
   @keyframes bubbly {
-    0% { transform: scale(1); }
-    15% { transform: scale(1.15); }
-    30% { transform: scale(0.95); }
-    45% { transform: scale(1.05); }
-    60% { transform: scale(0.98); }
-    75% { transform: scale(1.02); }
-    100% { transform: scale(1); }
+    0% {
+      transform: scale(1);
+    }
+
+    15% {
+      transform: scale(1.15);
+    }
+
+    30% {
+      transform: scale(0.95);
+    }
+
+    45% {
+      transform: scale(1.05);
+    }
+
+    60% {
+      transform: scale(0.98);
+    }
+
+    75% {
+      transform: scale(1.02);
+    }
+
+    100% {
+      transform: scale(1);
+    }
   }
 
   @keyframes micro-bounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.05);
+    }
   }
 
   @keyframes fadeInUp {
@@ -447,6 +607,7 @@
       opacity: 0;
       transform: translateY(30px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -458,6 +619,7 @@
       opacity: 0;
       transform: translateX(-30px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
@@ -469,6 +631,7 @@
       opacity: 0;
       transform: translateX(30px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
@@ -480,6 +643,7 @@
       opacity: 0;
       transform: scale(0.9);
     }
+
     to {
       opacity: 1;
       transform: scale(1);
@@ -491,6 +655,7 @@
       opacity: 0;
       transform: translateY(50px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -498,8 +663,15 @@
   }
 
   @keyframes gentleFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-8px);
+    }
   }
 
   /* Arrow bounce animation */
@@ -569,7 +741,10 @@
 
   /* Prevent iOS zoom on input focus */
   @supports (-webkit-touch-callout: none) {
-    input, textarea, select {
+
+    input,
+    textarea,
+    select {
       font-size: 16px !important;
     }
   }
@@ -675,12 +850,29 @@
   }
 
   /* Staggered animation delays */
-  .stagger-1 { transition-delay: 0.1s; }
-  .stagger-2 { transition-delay: 0.2s; }
-  .stagger-3 { transition-delay: 0.3s; }
-  .stagger-4 { transition-delay: 0.4s; }
-  .stagger-5 { transition-delay: 0.5s; }
-  .stagger-6 { transition-delay: 0.6s; }
+  .stagger-1 {
+    transition-delay: 0.1s;
+  }
+
+  .stagger-2 {
+    transition-delay: 0.2s;
+  }
+
+  .stagger-3 {
+    transition-delay: 0.3s;
+  }
+
+  .stagger-4 {
+    transition-delay: 0.4s;
+  }
+
+  .stagger-5 {
+    transition-delay: 0.5s;
+  }
+
+  .stagger-6 {
+    transition-delay: 0.6s;
+  }
 
   /* Scroll arrow animations */
   .scroll-arrow {
@@ -710,12 +902,29 @@
     animation: slideInFromBottom 0.6s ease-out forwards;
   }
 
-  .card-entrance-1 { animation-delay: 0.1s; }
-  .card-entrance-2 { animation-delay: 0.2s; }
-  .card-entrance-3 { animation-delay: 0.3s; }
-  .card-entrance-4 { animation-delay: 0.4s; }
-  .card-entrance-5 { animation-delay: 0.5s; }
-  .card-entrance-6 { animation-delay: 0.6s; }
+  .card-entrance-1 {
+    animation-delay: 0.1s;
+  }
+
+  .card-entrance-2 {
+    animation-delay: 0.2s;
+  }
+
+  .card-entrance-3 {
+    animation-delay: 0.3s;
+  }
+
+  .card-entrance-4 {
+    animation-delay: 0.4s;
+  }
+
+  .card-entrance-5 {
+    animation-delay: 0.5s;
+  }
+
+  .card-entrance-6 {
+    animation-delay: 0.6s;
+  }
 
   /* Floating elements */
   .gentle-float {

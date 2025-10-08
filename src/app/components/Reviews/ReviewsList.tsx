@@ -67,10 +67,10 @@ export default function ReviewsList({
             style={{ fontSize: '24px', color: '#ef4444' }}
           />
         </div>
-        <h3 className="font-urbanist text-lg font-600 text-red-800 mb-2">
+        <h3 className="font-sf text-lg font-600 text-red-800 mb-2">
           Unable to load reviews
         </h3>
-        <p className="font-urbanist text-sm text-red-600">
+        <p className="font-sf text-sm text-red-600">
           {error}
         </p>
       </motion.div>
@@ -101,10 +101,10 @@ export default function ReviewsList({
             style={{ fontSize: '32px', color: 'var(--sage)' }}
           />
         </motion.div>
-        <h3 className="font-urbanist text-xl font-600 text-charcoal mb-2">
+        <h3 className="font-sf text-xl font-600 text-charcoal mb-2">
           No reviews yet
         </h3>
-        <p className="font-urbanist text-base text-charcoal/70">
+        <p className="font-sf text-base text-charcoal/70">
           {emptyMessage}
         </p>
       </motion.div>
@@ -135,7 +135,7 @@ export default function ReviewsList({
           transition={{ delay: reviews.length * 0.1 + 0.2 }}
           className="text-center pt-4"
         >
-          <p className="font-urbanist text-sm text-charcoal/60">
+          <p className="font-sf text-sm text-charcoal/60">
             Showing {reviews.length} review{reviews.length !== 1 ? 's' : ''}
           </p>
         </motion.div>

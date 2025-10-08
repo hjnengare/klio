@@ -33,17 +33,17 @@ export default function ReviewContent({
     <div className="flex-1">
       <div className="mb-3">
         <div className="flex items-center justify-between mb-2">
-          <h4 className="font-urbanist font-700 text-charcoal">{businessName}</h4>
-          <span className="text-xs text-charcoal/50 font-urbanist">{date}</span>
+          <h4 className="font-sf font-700 text-charcoal">{businessName}</h4>
+          <span className="text-xs text-charcoal/50 font-sf">{date}</span>
         </div>
         
         <div className="flex items-center gap-2 mb-2">
           <div className="flex">{renderStars(rating)}</div>
-          <span className="text-xs text-charcoal/60 font-urbanist">• {businessType}</span>
+          <span className="text-xs text-charcoal/60 font-sf">• {businessType}</span>
         </div>
       </div>
 
-      <p className="font-urbanist text-[14px] text-charcoal/80 leading-relaxed mb-3 line-clamp-3">
+      <p className="font-sf text-[14px] text-charcoal/80 leading-relaxed mb-3 line-clamp-3">
         {reviewText}
       </p>
 
@@ -62,7 +62,7 @@ export default function ReviewContent({
 
       <div className="flex items-center gap-1 text-charcoal/60">
         <ion-icon name="heart-outline" class="text-[14px]" />
-        <span className="text-xs font-urbanist">{likes}</span>
+        <span className="text-xs font-sf">{likes}</span>
       </div>
     </div>
   );

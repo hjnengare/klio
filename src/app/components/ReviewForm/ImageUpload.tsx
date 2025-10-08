@@ -163,15 +163,15 @@ export default function ImageUpload({
           </motion.div>
 
           {selectedImages.length >= maxImages ? (
-            <p className="font-urbanist text-sm font-500 text-charcoal/60">
+            <p className="font-sf text-sm font-500 text-charcoal/60">
               Maximum {maxImages} images reached
             </p>
           ) : (
             <>
-              <p className="font-urbanist text-base font-600 text-charcoal mb-2">
+              <p className="font-sf text-base font-600 text-charcoal mb-2">
                 {dragActive ? 'Drop images here' : 'Add photos to your review'}
               </p>
-              <p className="font-urbanist text-sm font-400 text-charcoal/60">
+              <p className="font-sf text-sm font-400 text-charcoal/60">
                 Drag & drop or click to select images
                 <br />
                 <span className="text-xs">
@@ -214,7 +214,7 @@ export default function ImageUpload({
           >
             <div className="flex items-center space-x-2 text-red-700">
               <ion-icon name="alert-circle" style={{ fontSize: '18px' }} />
-              <span className="font-urbanist text-sm font-500">{uploadError}</span>
+              <span className="font-sf text-sm font-500">{uploadError}</span>
             </div>
           </motion.div>
         )}
@@ -229,7 +229,7 @@ export default function ImageUpload({
             exit={{ opacity: 0, height: 0 }}
             className="space-y-3"
           >
-            <h4 className="font-urbanist text-sm font-600 text-charcoal flex items-center">
+            <h4 className="font-sf text-sm font-600 text-charcoal flex items-center">
               <ion-icon name="images" style={{ fontSize: '16px', marginRight: '6px' }} />
               Selected Images ({selectedImages.length})
             </h4>
@@ -272,10 +272,10 @@ export default function ImageUpload({
 
                   {/* File Info Overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
-                    <p className="text-white text-xs font-urbanist font-500 truncate">
+                    <p className="text-white text-xs font-sf font-500 truncate">
                       {file.name}
                     </p>
-                    <p className="text-white/70 text-xs font-urbanist">
+                    <p className="text-white/70 text-xs font-sf">
                       {(file.size / (1024 * 1024)).toFixed(1)}MB
                     </p>
                   </div>

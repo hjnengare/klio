@@ -102,7 +102,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
                   {getToastIcon(toast.type)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-urbanist text-sm font-600 leading-tight">
+                  <p className="font-sf text-sm font-600 leading-tight">
                     {toast.message}
                   </p>
                 </div>

@@ -145,7 +145,7 @@ export default function OnboardingLayout({
             </div>
 
             <div className="text-center mt-1">
-              <p className="font-urbanist text-xs font-400 text-charcoal/50">
+              <p className="font-sf text-xs font-400 text-charcoal/50">
                 Step {step} of {totalSteps}
               </p>
             </div>

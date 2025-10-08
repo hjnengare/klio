@@ -35,7 +35,7 @@ This guide helps migrate existing Blabbr components to use the new design system
 // Old button patterns found in codebase
 <motion.button
   type="submit"
-  className={`group block w-full font-urbanist text-sm sm:text-base font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[44px] whitespace-nowrap ${
+  className={`group block w-full font-sf text-sm sm:text-base font-600 py-3 sm:py-3.5 md:py-4 px-4 sm:px-6 md:px-8 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-1 relative overflow-hidden text-center min-h-[44px] whitespace-nowrap ${
     isSubmitting || isLoading || !!getEmailError() || !!getPasswordError() || !email || !password
       ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
       : 'bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white focus:ring-sage/20 hover:focus:ring-coral/20 hover:scale-[1.02]'
@@ -99,7 +99,7 @@ This guide helps migrate existing Blabbr components to use the new design system
     placeholder="email@example.com"
     value={email}
     onChange={(e) => setEmail(e.target.value)}
-    className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
+    className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-sf text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
       getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
       email && !getEmailError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
       'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white  '
@@ -140,10 +140,10 @@ This guide helps migrate existing Blabbr components to use the new design system
 **Before:**
 ```tsx
 // Old typography patterns
-<h2 className="font-urbanist text-xl md:text-2xl lg:text-3xl font-700 text-charcoal mb-2 sm:mb-3 md:mb-4 text-center leading-snug px-4 tracking-[0.01em]">
+<h2 className="font-sf text-xl md:text-2xl lg:text-3xl font-700 text-charcoal mb-2 sm:mb-3 md:mb-4 text-center leading-snug px-4 tracking-[0.01em]">
   Welcome back
 </h2>
-<p className="font-urbanist text-sm md:text-base font-400 text-charcoal/70 mb-4 sm:mb-6 md:mb-8 leading-relaxed px-4 max-w-lg mx-auto">
+<p className="font-sf text-sm md:text-base font-400 text-charcoal/70 mb-4 sm:mb-6 md:mb-8 leading-relaxed px-4 max-w-lg mx-auto">
   Sign in to continue discovering blabbr
 </p>
 ```
@@ -182,11 +182,11 @@ This guide helps migrate existing Blabbr components to use the new design system
   </div>
   <div className="p-5 relative">
     <div className="mb-1">
-      <h3 className="font-urbanist text-base md:text-lg font-600 text-charcoal">
+      <h3 className="font-sf text-base md:text-lg font-600 text-charcoal">
         {business.name}
       </h3>
     </div>
-    <p className="mb-3 font-urbanist text-sm font-400 text-charcoal/70">
+    <p className="mb-3 font-sf text-sm font-400 text-charcoal/70">
       {business.category} - {business.location}
     </p>
   </div>
@@ -254,7 +254,7 @@ This guide helps migrate existing Blabbr components to use the new design system
 
 3. **Find typography patterns:**
    ```
-   Find: font-urbanist text-\w+ font-\d+
+   Find: font-sf text-\w+ font-\d+
    Replace: {use Typography component}
    ```
 

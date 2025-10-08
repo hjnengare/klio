@@ -128,11 +128,11 @@ export default function WriteReviewPage() {
             </div>
           </div>
 
-          <h1 className="font-urbanist text-2xl md:text-3xl font-700 text-charcoal mb-3">
+          <h1 className="font-sf text-2xl md:text-3xl font-700 text-charcoal mb-3">
             Business Not Found
           </h1>
 
-          <p className="font-urbanist text-base text-charcoal/60 mb-6">
+          <p className="font-sf text-base text-charcoal/60 mb-6">
             {params?.id
               ? "We couldn't find a business with this ID. It may have been removed or doesn't exist."
               : "No business ID was provided."}
@@ -141,7 +141,7 @@ export default function WriteReviewPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/home"
-              className="inline-flex items-center justify-center space-x-2 bg-sage text-white font-urbanist text-base font-600 py-3 px-6 transition-all hover:bg-sage/90 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2"
+              className="inline-flex items-center justify-center space-x-2 bg-sage text-white font-sf text-base font-600 py-3 px-6 transition-all hover:bg-sage/90 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2"
             >
               <ion-icon name="home-outline" />
               <span>Go to Home</span>
@@ -149,7 +149,7 @@ export default function WriteReviewPage() {
 
             <button
               onClick={() => router.back()}
-              className="inline-flex items-center justify-center space-x-2 bg-white   border border-sage/20 text-charcoal font-urbanist text-base font-600 py-3 px-6 transition-all hover:border-sage hover:bg-sage/5 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2"
+              className="inline-flex items-center justify-center space-x-2 bg-white   border border-sage/20 text-charcoal font-sf text-base font-600 py-3 px-6 transition-all hover:border-sage hover:bg-sage/5 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2"
             >
               <ion-icon name="arrow-back-outline" />
               <span>Go Back</span>
@@ -273,7 +273,7 @@ export default function WriteReviewPage() {
         }`}>
           <div className="flex items-center space-x-2">
             <ion-icon name={toast.type === 'success' ? 'checkmark-circle' : 'alert-circle'} style={{ fontSize: '20px' }} />
-            <span className="font-urbanist font-500">{toast.message}</span>
+            <span className="font-sf font-500">{toast.message}</span>
           </div>
         </div>
       )}
@@ -283,7 +283,7 @@ export default function WriteReviewPage() {
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-amber-500/90 text-white rounded-full shadow-lg backdrop-blur-xl">
           <div className="flex items-center space-x-2">
             <ion-icon name="document-text" style={{ fontSize: '20px' }} />
-            <span className="font-urbanist font-500">Draft restored</span>
+            <span className="font-sf font-500">Draft restored</span>
           </div>
         </div>
       )}
@@ -305,7 +305,7 @@ export default function WriteReviewPage() {
           >
             <ion-icon name="arrow-back-outline" size="small"></ion-icon>
           </Link>
-          <h1 className="font-urbanist text-2xl md:text-4xl font-700 text-charcoal">
+          <h1 className="font-sf text-2xl md:text-4xl font-700 text-charcoal">
             Write a Review
           </h1>
           <div className="w-10"></div>
@@ -344,7 +344,7 @@ export default function WriteReviewPage() {
                     <div className="absolute -bottom-2 -right-2 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full p-2 shadow-lg">
                       <div className="flex items-center space-x-1">
                         <ion-icon name="star" style={{ color: 'white', fontSize: '12px' }} />
-                        <span className="font-urbanist text-xs font-700 text-white">
+                        <span className="font-sf text-xs font-700 text-white">
                           {business.stats?.average_rating?.toFixed(1) || '0.0'}
                         </span>
                       </div>
@@ -352,13 +352,13 @@ export default function WriteReviewPage() {
                   </div>
                 </div>
 
-                <h2 className="font-urbanist text-2xl md:text-3xl font-700 text-charcoal mb-8 text-center">
+                <h2 className="font-sf text-2xl md:text-3xl font-700 text-charcoal mb-8 text-center">
                   Write a Review for {businessName}
                 </h2>
 
                 {/* Overall Rating */}
                 <div className="mb-8">
-                  <h3 className="font-urbanist text-lg md:text-xl font-600 text-charcoal mb-4 flex items-center justify-center md:justify-start">
+                  <h3 className="font-sf text-lg md:text-xl font-600 text-charcoal mb-4 flex items-center justify-center md:justify-start">
                     <div className="w-6 h-6 bg-coral/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="star" style={{ color: 'var(--coral)', fontSize: '16px' }} />
                     </div>
@@ -391,7 +391,7 @@ export default function WriteReviewPage() {
                       </button>
                     ))}
                   </div>
-                  <p className="text-center font-urbanist text-sm text-charcoal/60">
+                  <p className="text-center font-sf text-sm text-charcoal/60">
                     {overallRating > 0 ? `${overallRating} star${overallRating > 1 ? 's' : ''} selected` : 'Tap to select rating'}
                   </p>
                 </div>
@@ -399,13 +399,13 @@ export default function WriteReviewPage() {
                 {/* Quick Tags */}
                 <div className="mb-8">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-urbanist text-lg md:text-xl font-600 text-charcoal flex items-center">
+                    <h3 className="font-sf text-lg md:text-xl font-600 text-charcoal flex items-center">
                       <div className="w-6 h-6 bg-sage/10 rounded-full flex items-center justify-center mr-3">
                         <ion-icon name="pricetags-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
                       </div>
                       Choose quick tags
                     </h3>
-                    <span className={`font-urbanist text-sm font-500 ${selectedTags.length >= MAX_TAGS ? 'text-coral' : 'text-charcoal/60'}`}>
+                    <span className={`font-sf text-sm font-500 ${selectedTags.length >= MAX_TAGS ? 'text-coral' : 'text-charcoal/60'}`}>
                       {selectedTags.length}/{MAX_TAGS}
                     </span>
                   </div>
@@ -415,7 +415,7 @@ export default function WriteReviewPage() {
                         key={tag}
                         onClick={() => handleTagToggle(tag)}
                         className={`
-                          px-6 py-3 rounded-full border-2 transition-all font-urbanist text-sm font-600 touch-target-large
+                          px-6 py-3 rounded-full border-2 transition-all font-sf text-sm font-600 touch-target-large
                           ${selectedTags.includes(tag)
                             ? 'bg-sage border-sage text-white'
                             : 'bg-white   border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10'
@@ -435,7 +435,7 @@ export default function WriteReviewPage() {
 
                 {/* Review Title */}
                 <div className="mb-6">
-                  <h3 className="font-urbanist text-lg md:text-xl font-600 text-charcoal mb-3 flex items-center justify-center md:justify-start">
+                  <h3 className="font-sf text-lg md:text-xl font-600 text-charcoal mb-3 flex items-center justify-center md:justify-start">
                     <div className="w-6 h-6 bg-sage/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="pencil-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
                     </div>
@@ -446,7 +446,7 @@ export default function WriteReviewPage() {
                     value={reviewTitle}
                     onChange={(e) => setReviewTitle(e.target.value)}
                     placeholder="Summarize your experience in a few words..."
-                    className="w-full bg-white   border border-sage/20 px-6 py-4 font-urbanist text-base text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all disabled:bg-charcoal/5 disabled:cursor-not-allowed"
+                    className="w-full bg-white   border border-sage/20 px-6 py-4 font-sf text-base text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all disabled:bg-charcoal/5 disabled:cursor-not-allowed"
                     disabled={isSubmitting}
                     aria-label="Review title"
                   />
@@ -455,13 +455,13 @@ export default function WriteReviewPage() {
                 {/* Review Text */}
                 <div className="mb-8">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-urbanist text-lg md:text-xl font-600 text-charcoal flex items-center">
+                    <h3 className="font-sf text-lg md:text-xl font-600 text-charcoal flex items-center">
                       <div className="w-6 h-6 bg-coral/10 rounded-full flex items-center justify-center mr-3">
                         <ion-icon name="create-outline" style={{ color: 'var(--coral)', fontSize: '16px' }} />
                       </div>
                       Tell us about your experience<span className="text-coral ml-1">*</span>
                     </h3>
-                    <span className={`font-urbanist text-sm font-500 ${characterCountColor}`}>
+                    <span className={`font-sf text-sm font-500 ${characterCountColor}`}>
                       {characterCount}/{MAX_REVIEW_LENGTH}
                     </span>
                   </div>
@@ -474,7 +474,7 @@ export default function WriteReviewPage() {
                     }}
                     placeholder="Share your thoughts and help other locals..."
                     rows={4}
-                    className={`w-full bg-white   border px-6 py-4 font-urbanist text-base text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 transition-all resize-none min-h-[120px] disabled:bg-charcoal/5 disabled:cursor-not-allowed ${
+                    className={`w-full bg-white   border px-6 py-4 font-sf text-base text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 transition-all resize-none min-h-[120px] disabled:bg-charcoal/5 disabled:cursor-not-allowed ${
                       reviewText.length < MIN_REVIEW_LENGTH && reviewText.length > 0
                         ? 'border-amber-500'
                         : reviewText.length > MAX_REVIEW_LENGTH
@@ -486,7 +486,7 @@ export default function WriteReviewPage() {
                     aria-invalid={reviewText.length > 0 && reviewText.length < MIN_REVIEW_LENGTH}
                     aria-describedby="review-text-hint"
                   />
-                  <p id="review-text-hint" className="mt-2 text-sm text-charcoal/60 font-urbanist">
+                  <p id="review-text-hint" className="mt-2 text-sm text-charcoal/60 font-sf">
                     {reviewText.length === 0
                       ? `Minimum ${MIN_REVIEW_LENGTH} characters required`
                       : reviewText.length < MIN_REVIEW_LENGTH
@@ -497,7 +497,7 @@ export default function WriteReviewPage() {
 
                 {/* Image Upload */}
                 <div className="mb-8">
-                  <h3 className="font-urbanist text-lg md:text-xl font-600 text-charcoal mb-4 flex items-center justify-center md:justify-start">
+                  <h3 className="font-sf text-lg md:text-xl font-600 text-charcoal mb-4 flex items-center justify-center md:justify-start">
                     <div className="w-6 h-6 bg-sage/10 rounded-full flex items-center justify-center mr-3">
                       <ion-icon name="camera-outline" style={{ color: 'var(--sage)', fontSize: '16px' }} />
                     </div>
@@ -514,7 +514,7 @@ export default function WriteReviewPage() {
                 <button
                   onClick={handleSubmitReview}
                   className={`
-                    w-full py-4 px-8 font-urbanist text-lg font-600 transition-all touch-target-large relative overflow-hidden
+                    w-full py-4 px-8 font-sf text-lg font-600 transition-all touch-target-large relative overflow-hidden
                     ${isFormValid && !isSubmitting
                       ? 'bg-sage text-white hover:bg-sage/90 active:scale-98 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2'
                       : 'bg-charcoal/20 text-charcoal/40 cursor-not-allowed'
@@ -543,7 +543,7 @@ export default function WriteReviewPage() {
 
                 {/* Validation hint */}
                 {!isFormValid && (overallRating === 0 || reviewText.length < MIN_REVIEW_LENGTH) && (
-                  <p className="mt-3 text-sm text-center text-charcoal/60 font-urbanist">
+                  <p className="mt-3 text-sm text-center text-charcoal/60 font-sf">
                     {overallRating === 0 && reviewText.length < MIN_REVIEW_LENGTH
                       ? 'Please select a rating and write a review'
                       : overallRating === 0

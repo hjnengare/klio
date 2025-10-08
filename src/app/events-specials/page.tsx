@@ -60,7 +60,7 @@ export default function EventsSpecialsPage() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-coral via-coral/90 to-charcoal transition-all duration-300 group-hover:from-coral/90 group-hover:to-coral relative"
+              className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-coral via-coral/90 to-charcoal transition-all duration-300 group-hover:from-coral/90 group-hover:to-coral relative"
             >
               Events & Specials
             </motion.h1>
@@ -76,7 +76,7 @@ export default function EventsSpecialsPage() {
             <div className="flex gap-2 justify-center flex-wrap">
               <button
                 onClick={() => handleFilterChange("all")}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "all"
+                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "all"
                     ? "bg-coral text-white shadow-lg"
                     : " bg-white   text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
                   }`}
@@ -85,7 +85,7 @@ export default function EventsSpecialsPage() {
               </button>
               <button
                 onClick={() => handleFilterChange("event")}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "event"
+                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "event"
                     ? "bg-coral text-white shadow-lg"
                     : " bg-white   text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
                   }`}
@@ -94,7 +94,7 @@ export default function EventsSpecialsPage() {
               </button>
               <button
                 onClick={() => handleFilterChange("special")}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "special"
+                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "special"
                     ? "bg-coral text-white shadow-lg"
                     : " bg-white   text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
                   }`}
@@ -108,7 +108,7 @@ export default function EventsSpecialsPage() {
         {/* Results count */}
         <div className="px-3 sm:px-4 md:px-6 lg:px-8 pb-2">
           <div className="max-w-[1300px] mx-auto">
-            <p className="font-urbanist text-sm text-charcoal/60">
+            <p className="font-sf text-sm text-charcoal/60">
               Showing {currentEvents.length} {selectedFilter === "all" ? "events & specials" : selectedFilter === "event" ? "events" : "specials"}
             </p>
           </div>
@@ -124,7 +124,7 @@ export default function EventsSpecialsPage() {
                   {/* Bookmark button - always visible on mobile, hover on desktop */}
                   <button
                     onClick={() => handleBookmark(event)}
-                    className="absolute top-2 right-2 w-10 h-10 bg-white  /90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-200 hover:bg-white   active:scale-95 sm:hover:scale-110 z-20"
+                    className="absolute top-2 right-2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-200 hover:bg-white   active:scale-95 sm:hover:scale-110 z-20"
                     aria-label="Bookmark event"
                   >
                     <ion-icon name="bookmark-outline" class="text-lg text-coral font-bold" />
@@ -149,7 +149,7 @@ export default function EventsSpecialsPage() {
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${currentPage === page
+                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${currentPage === page
                         ? 'bg-coral text-white shadow-lg'
                         : 'border border-charcoal/20 text-charcoal/70 hover:bg-coral/5'
                       }`}
@@ -172,8 +172,8 @@ export default function EventsSpecialsPage() {
             {currentEvents.length === 0 && (
               <div className="text-center py-12 sm:py-16 px-4">
                 <ion-icon name="calendar-outline" class="text-5xl sm:text-6xl text-charcoal/20 mb-4" />
-                <h3 className="font-urbanist font-700 text-lg sm:text-xl text-charcoal/60 mb-2">No {selectedFilter === "event" ? "events" : "specials"} found</h3>
-                <p className="font-urbanist text-sm sm:text-base text-charcoal/40">Check back later for new {selectedFilter === "event" ? "events" : "specials"}!</p>
+                <h3 className="font-sf font-700 text-lg sm:text-xl text-charcoal/60 mb-2">No {selectedFilter === "event" ? "events" : "specials"} found</h3>
+                <p className="font-sf text-sm sm:text-base text-charcoal/40">Check back later for new {selectedFilter === "event" ? "events" : "specials"}!</p>
               </div>
             )}
           </div>

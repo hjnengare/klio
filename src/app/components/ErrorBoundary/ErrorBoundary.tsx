@@ -60,10 +60,10 @@ class ErrorBoundary extends Component<Props, State> {
             <div className="w-16 h-16 mx-auto mb-6 bg-red-100 rounded-full flex items-center justify-center">
               <ion-icon name="warning-outline" style={{ color: '#dc2626', fontSize: '2rem' }}></ion-icon>
             </div>
-            <h1 className="font-urbanist text-xl font-600 text-charcoal mb-3">
+            <h1 className="font-sf text-xl font-600 text-charcoal mb-3">
               {isRepeatedError ? 'Persistent Error' : 'Something went wrong'}
             </h1>
-            <p className="font-urbanist text-sm text-charcoal/70 mb-6 leading-relaxed">
+            <p className="font-sf text-sm text-charcoal/70 mb-6 leading-relaxed">
               {isRepeatedError
                 ? 'We\'re experiencing technical difficulties. Please contact support if this continues.'
                 : 'We encountered an unexpected error. Please try again.'
@@ -73,7 +73,7 @@ class ErrorBoundary extends Component<Props, State> {
             {/* Error details in development */}
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <details className="mb-6 text-left bg-red-50 p-4 rounded-lg">
-                <summary className="font-urbanist text-sm font-600 text-red-600 cursor-pointer">
+                <summary className="font-sf text-sm font-600 text-red-600 cursor-pointer">
                   Error Details (Dev Only)
                 </summary>
                 <pre className="mt-2 text-xs text-red-800 whitespace-pre-wrap overflow-auto">
@@ -86,7 +86,7 @@ class ErrorBoundary extends Component<Props, State> {
               <button
                 onClick={this.handleRetry}
                 disabled={isRepeatedError}
-                className={`w-full font-urbanist text-base font-600 py-3 px-6 rounded-2xl transition-colors duration-300 focus:outline-none focus:ring-2 ${
+                className={`w-full font-sf text-base font-600 py-3 px-6 rounded-2xl transition-colors duration-300 focus:outline-none focus:ring-2 ${
                   isRepeatedError
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-sage text-white hover:bg-sage/90 focus:ring-sage/30'
@@ -97,7 +97,7 @@ class ErrorBoundary extends Component<Props, State> {
 
               <button
                 onClick={() => window.location.href = '/'}
-                className="w-full bg-coral text-white font-urbanist text-base font-600 py-3 px-6 rounded-2xl hover:bg-coral/90 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-coral/30"
+                className="w-full bg-coral text-white font-sf text-base font-600 py-3 px-6 rounded-2xl hover:bg-coral/90 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-coral/30"
               >
                 Go to Home
               </button>

@@ -72,7 +72,7 @@ export default function ExploreGemsPage() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
+              className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
             >
               Explore All
             </motion.h1>
@@ -87,7 +87,7 @@ export default function ExploreGemsPage() {
           <div className="max-w-[1300px] mx-auto">
             <div className="flex gap-2 flex-wrap justify-center">
               {selectedCategory !== "All Categories" && (
-                <span className="px-3 py-1 bg-sage/10 text-sage font-urbanist font-600 rounded-full text-sm flex items-center gap-2">
+                <span className="px-3 py-1 bg-sage/10 text-sage font-sf font-600 rounded-full text-sm flex items-center gap-2">
                   {selectedCategory}
                   <button onClick={() => setSelectedCategory("All Categories")}>
                     <ion-icon name="close" class="text-base" />
@@ -95,7 +95,7 @@ export default function ExploreGemsPage() {
                 </span>
               )}
               {selectedRating !== "All Ratings" && (
-                <span className="px-3 py-1 bg-coral/10 text-coral font-urbanist font-600 rounded-full text-sm flex items-center gap-2">
+                <span className="px-3 py-1 bg-coral/10 text-coral font-sf font-600 rounded-full text-sm flex items-center gap-2">
                   {selectedRating}
                   <button onClick={() => setSelectedRating("All Ratings")}>
                     <ion-icon name="close" class="text-base" />
@@ -103,7 +103,7 @@ export default function ExploreGemsPage() {
                 </span>
               )}
               {selectedDistance !== "All Distances" && (
-                <span className="px-3 py-1 bg-sage/10 text-sage font-urbanist font-600 rounded-full text-sm flex items-center gap-2">
+                <span className="px-3 py-1 bg-sage/10 text-sage font-sf font-600 rounded-full text-sm flex items-center gap-2">
                   {selectedDistance}
                   <button onClick={() => setSelectedDistance("All Distances")}>
                     <ion-icon name="close" class="text-base" />
@@ -117,7 +117,7 @@ export default function ExploreGemsPage() {
         {/* Results count */}
         <div className="px-3 sm:px-4 md:px-6 lg:px-8 pb-4">
           <div className="max-w-[1300px] mx-auto">
-            <p className="font-urbanist text-sm text-charcoal/60">
+            <p className="font-sf text-sm text-charcoal/60">
               Showing {currentBusinesses.length} of {filteredBusinesses.length} results
             </p>
           </div>
@@ -150,7 +150,7 @@ export default function ExploreGemsPage() {
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`w-10 h-10 rounded-full font-urbanist font-600 text-sm transition-all duration-200 ${
+                    className={`w-10 h-10 rounded-full font-sf font-600 text-sm transition-all duration-200 ${
                       currentPage === page
                         ? 'bg-sage text-white'
                         : 'border border-charcoal/20 text-charcoal/70 hover:bg-sage/5'
@@ -174,8 +174,8 @@ export default function ExploreGemsPage() {
             {currentBusinesses.length === 0 && (
               <div className="text-center py-16">
                 <ion-icon name="search" class="text-6xl text-charcoal/20 mb-4" />
-                <h3 className="font-urbanist font-700 text-xl text-charcoal/60 mb-2">No results found</h3>
-                <p className="font-urbanist text-charcoal/40">Try adjusting your filters or search terms</p>
+                <h3 className="font-sf font-700 text-xl text-charcoal/60 mb-2">No results found</h3>
+                <p className="font-sf text-charcoal/40">Try adjusting your filters or search terms</p>
               </div>
             )}
           </div>

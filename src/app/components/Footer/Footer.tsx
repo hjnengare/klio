@@ -55,11 +55,11 @@ export default function Footer() {
               viewport={{ once: true }}
             >
               <Link href="/" className="inline-block">
-                <h2 className="font-urbanist text-3xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4">
+                <h2 className="font-sf text-3xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4">
                   KLIO
                 </h2>
               </Link>
-              <p className="font-urbanist text-6 text-charcoal/70 leading-relaxed mb-6 max-w-sm">
+              <p className="font-sf text-6 text-charcoal/70 leading-relaxed mb-6 max-w-sm">
                 Discover trusted local businesses and authentic experiences in your community.
               </p>
 
@@ -94,13 +94,13 @@ export default function Footer() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                <h3 className="font-urbanist text-5 font-600 text-charcoal mb-4">Company</h3>
+                <h3 className="font-sf text-5 font-600 text-charcoal mb-4">Company</h3>
                 <ul className="space-y-3">
                   {footerLinks.company.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="font-urbanist text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
+                        className="font-sf text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
                       >
                         <span className="relative">
                           {link.name}
@@ -119,13 +119,13 @@ export default function Footer() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <h3 className="font-urbanist text-5 font-600 text-charcoal mb-4">Support</h3>
+                <h3 className="font-sf text-5 font-600 text-charcoal mb-4">Support</h3>
                 <ul className="space-y-3">
                   {footerLinks.support.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="font-urbanist text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
+                        className="font-sf text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
                       >
                         <span className="relative">
                           {link.name}
@@ -144,13 +144,13 @@ export default function Footer() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <h3 className="font-urbanist text-5 font-600 text-charcoal mb-4">Legal</h3>
+                <h3 className="font-sf text-5 font-600 text-charcoal mb-4">Legal</h3>
                 <ul className="space-y-3">
                   {footerLinks.legal.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="font-urbanist text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
+                        className="font-sf text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
                       >
                         <span className="relative">
                           {link.name}
@@ -176,7 +176,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             {/* Copyright */}
             <div className="flex items-center space-x-6">
-              <p className="font-urbanist text-7 text-charcoal/60">
+              <p className="font-sf text-7 text-charcoal/60">
                 © {currentYear} KLIO. All rights reserved.
               </p>
 
@@ -184,11 +184,11 @@ export default function Footer() {
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2 px-3 py-1 bg-sage/10 rounded-full">
                   <ion-icon name="shield-checkmark" style={{ color: "#749176", fontSize: "14px" }} suppressHydrationWarning />
-                  <span className="font-urbanist text-8 font-500 text-sage">Secure</span>
+                  <span className="font-sf text-8 font-500 text-sage">Secure</span>
                 </div>
                 <div className="flex items-center space-x-2 px-3 py-1 bg-coral/10 rounded-full">
                   <ion-icon name="heart" style={{ color: "#d67469", fontSize: "14px" }} suppressHydrationWarning />
-                  <span className="font-urbanist text-8 font-500 text-coral">Trusted</span>
+                  <span className="font-sf text-8 font-500 text-coral">Trusted</span>
                 </div>
               </div>
             </div>
@@ -206,9 +206,9 @@ export default function Footer() {
                     <ion-icon name="logo-apple" style={{ fontSize: "22px", color: "white" }} suppressHydrationWarning />
                   </div>
                   <div className="text-left">
-                    <div className="font-urbanist text-xs text-charcoal/60 mb-0.5">Download on the</div>
-                    <div className="font-urbanist text-sm font-700 text-charcoal">App Store</div>
-                    <div className="font-urbanist text-xs text-coral font-600 mt-0.5">Coming Soon</div>
+                    <div className="font-sf text-xs text-charcoal/60 mb-0.5">Download on the</div>
+                    <div className="font-sf text-sm font-700 text-charcoal">App Store</div>
+                    <div className="font-sf text-xs text-coral font-600 mt-0.5">Coming Soon</div>
                   </div>
                 </div>
               </motion.div>
@@ -224,9 +224,9 @@ export default function Footer() {
                     <ion-icon name="logo-google-playstore" style={{ fontSize: "22px", color: "white" }} suppressHydrationWarning />
                   </div>
                   <div className="text-left">
-                    <div className="font-urbanist text-xs text-charcoal/60 mb-0.5">Get it on</div>
-                    <div className="font-urbanist text-sm font-700 text-charcoal">Google Play</div>
-                    <div className="font-urbanist text-xs text-coral font-600 mt-0.5">Coming Soon</div>
+                    <div className="font-sf text-xs text-charcoal/60 mb-0.5">Get it on</div>
+                    <div className="font-sf text-sm font-700 text-charcoal">Google Play</div>
+                    <div className="font-sf text-xs text-coral font-600 mt-0.5">Coming Soon</div>
                   </div>
                 </div>
               </motion.div>
@@ -234,6 +234,17 @@ export default function Footer() {
           </div>
         </motion.div>
       </div>
+       {/* ✅ Inline SF Pro setup */}
+      <style jsx global>{`
+        .font-sf {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+            "SF Pro Display", "Helvetica Neue", Helvetica, Arial, system-ui,
+            sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+        }
+      `}</style>
     </footer>
   );
 }

@@ -114,10 +114,10 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-sage/10">
           <div>
-            <h2 className="font-urbanist text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+            <h2 className="font-sf text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
               KLIO Menu
             </h2>
-            <p className="font-urbanist text-sm text-charcoal/60 mt-1">
+            <p className="font-sf text-sm text-charcoal/60 mt-1">
               Navigate your local world
             </p>
           </div>
@@ -141,7 +141,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               <ion-icon name="create" class="text-coral text-lg" />
             </div>
             <div className="flex-1 text-left">
-              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Write Review
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -161,7 +161,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               <ion-icon name="bookmark" class="text-sage text-lg" />
             </div>
             <div className="flex-1 text-left">
-              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Saved Places
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -181,7 +181,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               <ion-icon name="home" class="text-sage text-lg" />
             </div>
             <div className="flex-1 text-left">
-              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Home
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -201,7 +201,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               <ion-icon name="person" class="text-sage text-lg" />
             </div>
             <div className="flex-1 text-left">
-              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Profile
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -220,7 +220,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               <ion-icon name="compass" class="text-coral text-lg" />
             </div>
             <div className="flex-1 text-left">
-              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Explore
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -246,7 +246,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               <ion-icon name="search" class="text-sage text-lg" />
             </div>
             <div className="flex-1 text-left">
-              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Search
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -265,7 +265,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 <ion-icon name="person" class="text-sage text-xl" />
               </div>
               <div>
-                <span className="font-urbanist text-base font-600 text-charcoal">
+                <span className="font-sf text-base font-600 text-charcoal">
                   {user.name || user.email?.split('@')[0] || 'User'}
                 </span>
                 <p className="text-sm text-charcoal/60">
@@ -281,7 +281,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-sage/5 transition-all duration-200 group mobile-interaction"
               >
                 <ion-icon name="settings" class="text-charcoal/60 text-base group-hover:text-sage transition-colors duration-200" />
-                <span className="font-urbanist text-sm font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
+                <span className="font-sf text-sm font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
                   Settings
                 </span>
               </button>
@@ -291,7 +291,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-sage/5 transition-all duration-200 group mobile-interaction"
               >
                 <ion-icon name="help-circle" class="text-charcoal/60 text-base group-hover:text-sage transition-colors duration-200" />
-                <span className="font-urbanist text-sm font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
+                <span className="font-sf text-sm font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
                   Help & Support
                 </span>
               </button>

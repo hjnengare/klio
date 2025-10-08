@@ -342,7 +342,7 @@ function ProfileContent() {
             <div className="max-w-4xl mx-auto space-y-6">
               <div className=" bg-white   backdrop-blur-sm p-6 border border-red-200 shadow-sm text-center">
                 <Ion name="alert-circle" className="text-red-500 text-[48px] mb-4" />
-                <h2 className="font-urbanist text-xl font-600 text-charcoal mb-2">
+                <h2 className="font-sf text-xl font-600 text-charcoal mb-2">
                   {error || 'Profile not found'}
                 </h2>
                 <p className="text-charcoal/60 mb-4">
@@ -350,7 +350,7 @@ function ProfileContent() {
                 </p>
                 <Link
                   href="/home"
-                  className="inline-flex items-center space-x-2 bg-sage text-white px-6 py-3 rounded-6 font-urbanist font-600 hover:bg-sage/90 transition-colors"
+                  className="inline-flex items-center space-x-2 bg-sage text-white px-6 py-3 rounded-6 font-sf font-600 hover:bg-sage/90 transition-colors"
                 >
                   <Ion name="chevron-back" className="text-[16px]" />
                   <span>Back to Home</span>
@@ -475,7 +475,7 @@ function ProfileContent() {
                   </div>
                   <div>
                     <div className="flex items-center space-x-2 mb-1">
-                      <h1 className="font-urbanist text-xl font-700 text-charcoal">
+                      <h1 className="font-sf text-xl font-700 text-charcoal">
                         @{profile.username || profile.display_name || 'User'}
                       </h1>
 
@@ -501,12 +501,12 @@ function ProfileContent() {
             </div>
             {/* Stats Overview */}
             <div ref={statsRef} className=" bg-white   backdrop-blur-sm p-5 border border-charcoal/10 shadow-md">
-              <h2 className="font-urbanist text-lg font-700 text-charcoal mb-4">Stats Overview</h2>
+              <h2 className="font-sf text-lg font-700 text-charcoal mb-4">Stats Overview</h2>
               <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 <div className="text-center px-1">
                   <div className="flex flex-col items-center mb-2">
                     <Ion name="star" className="text-coral text-[18px] mb-1" />
-                    <span className="font-urbanist text-xl font-700 text-charcoal leading-tight">
+                    <span className="font-sf text-xl font-700 text-charcoal leading-tight">
                       {profile.reviews_count}
                     </span>
                   </div>
@@ -515,7 +515,7 @@ function ProfileContent() {
                 <div className="text-center px-1">
                   <div className="flex flex-col items-center mb-2">
                     <Ion name="trophy" className="text-sage text-[18px] mb-1" />
-                    <span className="font-urbanist text-xl font-700 text-charcoal leading-tight">
+                    <span className="font-sf text-xl font-700 text-charcoal leading-tight">
                       {profile.badges_count}
                     </span>
                   </div>
@@ -524,7 +524,7 @@ function ProfileContent() {
                 <div className="text-center px-1">
                   <div className="flex flex-col items-center mb-2">
                     <Ion name="calendar" className="text-sage text-[18px] mb-1" />
-                    <span className="font-urbanist text-sm font-700 text-charcoal leading-tight">
+                    <span className="font-sf text-sm font-700 text-charcoal leading-tight">
                       {formatMemberSince(profile.created_at)}
                     </span>
                   </div>
@@ -536,7 +536,7 @@ function ProfileContent() {
             {/* Your Contributions */}
             <div ref={contributionsRef} className=" bg-white   backdrop-blur-sm p-5 border border-charcoal/10 shadow-md">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="font-urbanist text-lg font-700 text-charcoal">Your Contributions</h2>
+                <h2 className="font-sf text-lg font-700 text-charcoal">Your Contributions</h2>
                 <button
                   onClick={() => setShowAllReviews(!showAllReviews)}
                   className="text-sm text-coral font-500 hover:text-coral/80 transition-colors duration-200 flex items-center space-x-1"
@@ -550,7 +550,7 @@ function ProfileContent() {
                   <div key={review.id} className="flex items-center justify-between py-3 border-b border-sage/10 last:border-b-0">
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-1">
-                        <span className="font-urbanist text-base font-700 text-charcoal">
+                        <span className="font-sf text-base font-700 text-charcoal">
                           {review.business_name}
                         </span>
                         <div className="flex items-center space-x-1">
@@ -581,7 +581,7 @@ function ProfileContent() {
 
             {/* Your Achievements */}
             <div ref={achievementsRef} className=" bg-white   backdrop-blur-sm p-5 border border-charcoal/10 shadow-sm">
-              <h2 className="font-urbanist text-lg font-600 text-charcoal mb-4">Your Achievements</h2>
+              <h2 className="font-sf text-lg font-600 text-charcoal mb-4">Your Achievements</h2>
               <div className="space-y-3">
                 {achievements.map((userAchievement) => (
                   <div
@@ -595,7 +595,7 @@ function ProfileContent() {
                       />
                     </div>
                     <div className="flex-1">
-                      <span className="font-urbanist text-base font-600 text-charcoal">
+                      <span className="font-sf text-base font-600 text-charcoal">
                         {userAchievement.achievements.name}
                       </span>
                       <p className="text-sm text-charcoal/60 mt-1">
@@ -614,7 +614,7 @@ function ProfileContent() {
                 <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
                   <div className="flex items-center space-x-3">
                     <Ion name="settings-outline" className="text-gray-500 text-[20px]" />
-                    <span className="font-urbanist text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
+                    <span className="font-sf text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
                       Account Settings
                     </span>
                   </div>
@@ -624,7 +624,7 @@ function ProfileContent() {
                 <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
                   <div className="flex items-center space-x-3">
                     <Ion name="notifications-outline" className="text-gray-500 text-[20px]" />
-                    <span className="font-urbanist text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
+                    <span className="font-sf text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
                       Notifications
                     </span>
                   </div>
@@ -634,7 +634,7 @@ function ProfileContent() {
                 <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
                   <div className="flex items-center space-x-3">
                     <Ion name="lock-closed-outline" className="text-gray-500 text-[20px]" />
-                    <span className="font-urbanist text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
+                    <span className="font-sf text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
                       Privacy & Data
                     </span>
                   </div>
@@ -647,7 +647,7 @@ function ProfileContent() {
                 >
                   <div className="flex items-center space-x-3">
                     <Ion name="log-out-outline" className="text-coral text-[20px]" />
-                    <span className="font-urbanist text-base font-500 text-coral group-hover:text-coral/80 transition-colors duration-200">
+                    <span className="font-sf text-base font-500 text-coral group-hover:text-coral/80 transition-colors duration-200">
                       Log Out
                     </span>
                   </div>

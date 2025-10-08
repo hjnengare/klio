@@ -39,7 +39,7 @@ export default function BusinessRow({
 
       <div className="container mx-auto max-w-[1300px] px-4 relative z-10">
         <div className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]">
-          <h2 className="text-xl font-extrabold text-charcoal tracking-tight">
+          <h2 className="text-xl font-semibold text-charcoal tracking-tight">
             {title}
           </h2>
 

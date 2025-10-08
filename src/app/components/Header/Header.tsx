@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { User, X, Search } from "lucide-react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
+import { lockBodyScroll } from "../../utils/lockBodyScroll";
 
 const sf = {
   fontFamily:
@@ -22,8 +23,10 @@ export default function Header({ showSearch = true }: { showSearch?: boolean }) 
   const openFilters = () => {
     if (isFilterVisible) return;
     setIsFilterVisible(true);
+    // small delay so CSS can mount before animating open
     setTimeout(() => setIsFilterOpen(true), 10);
   };
+
   const closeFilters = () => {
     setIsFilterOpen(false);
     setTimeout(() => setIsFilterVisible(false), 150);
@@ -33,77 +36,70 @@ export default function Header({ showSearch = true }: { showSearch?: boolean }) 
     console.log("filters:", f);
   };
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll when mobile menu is open (with padding to avoid width shift)
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    if (!isMobileMenuOpen) return;
+    const unlock = lockBodyScroll();
+    return unlock;
   }, [isMobileMenuOpen]);
+
+  // Close search when clicking outside of the search area
+  useEffect(() => {
+    if (!showSearchBar) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!searchWrapRef.current) return;
+      if (!searchWrapRef.current.contains(e.target as Node)) {
+        setShowSearchBar(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showSearchBar]);
 
   return (
     <>
       <header
-        className="
-          fixed top-0 left-0 right-0 z-50
-          bg-[#f8f6f4] backdrop-blur-md
-          transition-all duration-300
-        "
+        className="fixed top-0 left-0 right-0 z-50 bg-[#f8f6f4] backdrop-blur-md transition-all duration-300"
         style={sf}
       >
         <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
-          {/* Row 1: Logo & Nav */}
+          {/* Top row */}
           <div className="flex items-center justify-between gap-6">
             {/* Logo */}
             <Link href="/home" className="group flex-shrink-0" aria-label="KLIO Home">
-              <span
-                className="
-                  text-xl lg:text-2xl font-bold
-                  text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal
-                "
-              >
+              <span className="text-xl lg:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
                 KLIO
               </span>
             </Link>
 
-            {/* Navigation Links - Desktop */}
+            {/* Desktop nav */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
               {["home", "all", "saved", "leaderboard"].map((route) => (
                 <Link
                   key={route}
                   href={`/${route}`}
-                  className="
-                    capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-semibold
-                    text-charcoal/80 hover:text-sage hover:bg-sage/10 transition-colors
-                  "
+                  className="capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-semibold text-charcoal/80 hover:text-sage hover:bg-sage/10 transition-colors"
                 >
                   {route === "all" ? "Explore" : route}
                 </Link>
               ))}
             </nav>
 
-            {/* Right Side Icons */}
+            {/* Right side */}
             <div className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
               {/* Search Toggle */}
               <button
-                onClick={() => setShowSearchBar((prev) => !prev)}
-                className="
-                  w-10 h-10 rounded-full flex items-center justify-center
-                  text-charcoal/80 hover:text-sage hover:bg-sage/10 transition-colors
-                "
+                onClick={() => setShowSearchBar((p) => !p)}
+                className="w-10 h-10 rounded-full flex items-center justify-center text-charcoal/80 hover:text-sage hover:bg-sage/10 transition-colors"
                 aria-label="Toggle search"
               >
                 <Search className="w-5 h-5" />
               </button>
 
-              {/* Hamburger Menu - Mobile */}
+              {/* Mobile menu toggle */}
               <button
-                data-hamburger
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="
-                  md:hidden w-10 h-10 rounded-full flex items-center justify-center
-                  hover:bg-sage/10 transition-colors
-                "
+                className="md:hidden w-10 h-10 rounded-full flex items-center justify-center hover:bg-sage/10 transition-colors"
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
@@ -117,13 +113,10 @@ export default function Header({ showSearch = true }: { showSearch?: boolean }) 
                 )}
               </button>
 
-              {/* Profile Icon */}
+              {/* Profile */}
               <Link
                 href="/profile"
-                className="
-                  hidden md:flex w-10 h-10 rounded-full items-center justify-center text-charcoal
-                  hover:text-sage hover:border-sage/40 transition-all
-                "
+                className="hidden md:flex w-10 h-10 rounded-full items-center justify-center text-charcoal hover:text-sage hover:border-sage/40 transition-all"
                 aria-label="Profile"
               >
                 <User className="w-5 h-5" />
@@ -131,30 +124,32 @@ export default function Header({ showSearch = true }: { showSearch?: boolean }) 
             </div>
           </div>
 
-          {/* Row 2: Search input (toggle) */}
+          {/* Search Input Section — transforms without shifting layout */}
           {showSearch && (
             <div
-              ref={searchWrapRef}
-              className={`
-                transition-all duration-300 overflow-hidden
-                ${showSearchBar ? "max-h-20 opacity-100 mt-3 sm:mt-4" : "max-h-0 opacity-0 mt-0"}
-              `}
+              className={`overflow-hidden transition-all duration-300 ${
+                showSearchBar ? "max-h-20 opacity-100 mt-3 sm:mt-4" : "max-h-0 opacity-0 mt-0"
+              }`}
             >
-              <SearchInput
-                variant="header"
-                placeholder="Discover exceptional local experiences, premium dining, and hidden gems..."
-                mobilePlaceholder="Search places, coffee, yoga…"
-                onSearch={(q) => console.log("search:", q)}
-                onFilterClick={openFilters}
-                onFocusOpenFilters={openFilters}
-                showFilter
-              />
+              <div ref={searchWrapRef}>
+                <SearchInput
+                  variant="header"
+                  placeholder="Discover exceptional local experiences, premium dining, and hidden gems..."
+                  mobilePlaceholder="Search places, coffee, yoga…"
+                  onSearch={(q) => console.log("search:", q)}
+                  onFilterClick={openFilters}
+                  onFocusOpenFilters={openFilters}
+                  showFilter
+                />
+              </div>
+              {/* Gentle breathing room below the input (incl. iOS safe area) */}
+              <div className="pb-3 sm:pb-4" style={{ paddingBottom: "calc(0.5rem + var(--safe-bottom))" }} />
             </div>
           )}
         </div>
       </header>
 
-      {/* Mobile Overlay */}
+      {/* Mobile overlay */}
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-[90] md:hidden"
@@ -162,9 +157,8 @@ export default function Header({ showSearch = true }: { showSearch?: boolean }) 
         />
       )}
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <div
-        data-mobile-menu
         className={`fixed top-0 right-0 h-full w-full bg-[#f4ece7] z-[100] shadow-2xl transform md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300`}
@@ -196,9 +190,7 @@ export default function Header({ showSearch = true }: { showSearch?: boolean }) 
                 {route === "all" ? "Explore" : route.charAt(0).toUpperCase() + route.slice(1)}
               </Link>
             ))}
-
             <div className="h-px bg-charcoal/10 my-4 mx-4" />
-
             <Link
               href="/profile"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -211,7 +203,7 @@ export default function Header({ showSearch = true }: { showSearch?: boolean }) 
         </div>
       </div>
 
-      {/* Filter Popover */}
+      {/* Filter Modal */}
       <FilterModal
         isOpen={isFilterOpen}
         isVisible={isFilterVisible}

@@ -88,17 +88,17 @@ function PromoRow() {
               {/* Content */}
               <div className="relative h-full p-6 flex flex-col justify-between z-10">
                 <div>
-                  <h3 className="font-urbanist text-2xl sm:text-3xl font-800 text-white mb-2">
+                  <h3 className="font-sf text-2xl sm:text-3xl font-800 text-white mb-2">
                     {card.title}
                   </h3>
-                  <p className="font-urbanist text-sm sm:text-base text-white/90">
+                  <p className="font-sf text-sm sm:text-base text-white/90">
                     {card.subtitle}
                   </p>
                 </div>
 
                 {/* CTA */}
                 <div className="flex items-center justify-between">
-                  <span className="font-urbanist text-sm sm:text-base font-700 text-white/90 transition-colors duration-300 group-hover:text-white">
+                  <span className="font-sf text-sm sm:text-base font-700 text-white/90 transition-colors duration-300 group-hover:text-white">
                     {card.cta}
                   </span>
                   <IoArrowForward className="text-white/90 text-lg transition-all duration-300 group-hover:text-white group-hover:translate-x-1" />

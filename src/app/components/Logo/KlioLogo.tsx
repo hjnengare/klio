@@ -59,7 +59,7 @@ export default function KlioLogo({
   };
 
   const logoContent = (
-    <span className={`font-urbanist font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
+    <span className={`font-sf font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
       <span style={getLetterStyle("K")}>K</span>
       <span style={getLetterStyle("L")}>L</span>
       <span style={getLetterStyle("I")}>I</span>
@@ -82,7 +82,7 @@ export default function KlioLogo({
       }}
       className="inline-block"
     >
-      <span className={`font-urbanist font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
+      <span className={`font-sf font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
         <motion.span
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

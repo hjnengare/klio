@@ -52,7 +52,7 @@ export default function CommunityHighlights({
       <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 pt-1 sm:pt-2 pb-2 sm:pb-3">
         {/* Header */}
         <div className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]">
-          <h2 className="text-xl font-extrabold text-charcoal tracking-tight">{title}</h2>
+          <h2 className="text-xl font-bold text-charcoal tracking-tight">{title}</h2>
 
           <button
             onClick={() => router.push(href)}
@@ -70,7 +70,7 @@ export default function CommunityHighlights({
         {topReviewers && topReviewers.length > 0 && (
           <div className="mt-4 sm:mt-5 md:mt-6">
             <div className="mb-2 sm:mb-3 flex flex-wrap items-center justify-between gap-[18px]">
-              <h3 className="text-base font-bold text-charcoal">Top Reviewers This Month In Claremont</h3>
+              <h3 className="text-base font-semibold text-charcoal">Top Reviewers This Month In Claremont</h3>
             </div>
 
             <ScrollableSection>
@@ -85,13 +85,13 @@ export default function CommunityHighlights({
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
           <div className="mt-4 sm:mt-5 md:mt-6">
             <div className="mb-2 sm:mb-3 flex flex-wrap items-center justify-between gap-[18px]">
-              <h3 className="text-base font-bold text-charcoal">Businesses of the Month</h3>
+              <h3 className="text-base font-semibold text-charcoal">Businesses of the Month</h3>
             </div>
 
             <div className="mb-3 sm:mb-4 text-center">
               <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-coral/10 rounded-full px-3 sm:px-4 py-1.5 sm:py-2">
-                <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-coral" />
-                <span className="font-semibold text-coral text-base">September 2025 Winners</span>
+                <Trophy className="w-4 h-4 text-coral" />
+                <span className="font-semibold text-coral text-sm">September 2025 Winners</span>
               </div>
             </div>
 

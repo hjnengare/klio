@@ -174,27 +174,27 @@ function FeaturedDeal() {
           <div className="space-y-6">
             {/* Badge */}
             <div className="flex items-center gap-3">
-              <span className="font-urbanist text-sm font-600 text-charcoal/70 uppercase tracking-wide">
+              <span className="font-sf text-sm font-600 text-charcoal/70 uppercase tracking-wide">
                 Special Offer
               </span>
-              <span className="inline-flex items-center px-3 py-1 bg-sage text-white font-urbanist font-700 text-sm rounded-full">
+              <span className="inline-flex items-center px-3 py-1 bg-sage text-white font-sf font-700 text-sm rounded-full">
                 -20%
               </span>
             </div>
 
             {/* Heading */}
-            <h2 className={`font-urbanist text-4xl sm:text-5xl lg:text-6xl font-800 text-charcoal leading-tight transition-all duration-[1200ms] ease-in-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+            <h2 className={`font-sf text-4xl sm:text-5xl lg:text-6xl font-800 text-charcoal leading-tight transition-all duration-[1200ms] ease-in-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
               {deal.title}
             </h2>
 
             {/* Description */}
-            <p className={`font-urbanist text-base sm:text-lg text-charcoal/70 leading-relaxed max-w-lg transition-all duration-[1200ms] ease-in-out delay-100 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+            <p className={`font-sf text-base sm:text-lg text-charcoal/70 leading-relaxed max-w-lg transition-all duration-[1200ms] ease-in-out delay-100 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
               {deal.description}
             </p>
 
             {/* Countdown Timer */}
             <div className="space-y-3">
-              <p className="font-urbanist text-sm font-600 text-charcoal/60 uppercase tracking-wide">
+              <p className="font-sf text-sm font-600 text-charcoal/60 uppercase tracking-wide">
                 Offer ends in
               </p>
               <div className="flex gap-3 sm:gap-4">
@@ -208,10 +208,10 @@ function FeaturedDeal() {
                     key={index}
                     className="flex flex-col items-center bg-white   shadow-2 rounded-6 px-4 py-3 min-w-[70px]"
                   >
-                    <span className="font-urbanist text-2xl sm:text-3xl font-800 text-charcoal">
+                    <span className="font-sf text-2xl sm:text-3xl font-800 text-charcoal">
                       {String(item.value).padStart(2, "0")}
                     </span>
-                    <span className="font-urbanist text-xs text-charcoal/60 uppercase tracking-wide mt-1">
+                    <span className="font-sf text-xs text-charcoal/60 uppercase tracking-wide mt-1">
                       {item.label}
                     </span>
                   </div>
@@ -222,14 +222,14 @@ function FeaturedDeal() {
             {/* CTA Button */}
             <Link
               href="/featured-deal"
-              className={`group inline-flex items-center gap-3 bg-charcoal text-white font-urbanist font-700 text-base px-8 py-4 rounded-6 transition-all duration-[1200ms] ease-in-out delay-200 hover:bg-sage hover:shadow-1 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}
+              className={`group inline-flex items-center gap-3 bg-charcoal text-white font-sf font-700 text-base px-8 py-4 rounded-6 transition-all duration-[1200ms] ease-in-out delay-200 hover:bg-sage hover:shadow-1 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}
             >
               Book Now - Only {deal.price}
               <IoArrowForward className="text-lg transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
 
             {/* Additional info */}
-            <p className={`font-urbanist text-sm text-charcoal/50 transition-all duration-[1200ms] ease-in-out delay-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+            <p className={`font-sf text-sm text-charcoal/50 transition-all duration-[1200ms] ease-in-out delay-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
               ⭐ {deal.rating} rating • {deal.reviews} verified reviews
             </p>
           </div>

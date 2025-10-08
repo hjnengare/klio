@@ -81,7 +81,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform skew-x-12 group-hover:left-full transition-all duration-700 ease-out pointer-events-none" />
 
           {/* Achievement badge */}
-          <div className="absolute left-2 top-2 z-20">
+          <div className="absolute left-2 bottom-2">
             <span
               className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-semibold shadow-sm ${badgeStyle(
                 business.badge
@@ -96,7 +96,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
 
           {/* Verified */}
           {business.verified && (
-            <div className="absolute left-2 bottom-2 z-20">
+            <div className="absolute left-2 top-2 z-10">
               <VerifiedBadge />
             </div>
           )}
@@ -137,7 +137,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
         {/* Content */}
         <div className="p-5 relative flex-shrink-0">
           <div className="mb-1">
-            <h3 className="text-base md:text-lg font-bold text-charcoal tracking-tight transition-colors duration-200 group-hover:text-sage">
+            <h3 className="text-base md:text-lg font-semibold text-charcoal tracking-tight transition-colors duration-200 group-hover:text-sage">
               <Link href={business.href || "#"} className="hover:underline decoration-2 underline-offset-2">
                 {business.name}
               </Link>

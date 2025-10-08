@@ -235,7 +235,7 @@ export default function GeneralReviewsPage() {
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center shadow-premium-sm hover:shadow-premium-md transition-all duration-premium ease-premium hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
               <ion-icon name="arrow-back" className="text-lg sm:text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-premium ease-premium" />
             </div>
-            <motion.h1 className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-premium ease-premium group-hover:from-sage/90 group-hover:to-sage relative tracking-[-0.02em]">
+            <motion.h1 className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-premium ease-premium group-hover:from-sage/90 group-hover:to-sage relative tracking-[-0.02em]">
               Community Reviews
             </motion.h1>
           </Link>
@@ -261,7 +261,7 @@ export default function GeneralReviewsPage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={`
-                    inline-flex items-center gap-2 px-4 py-2 rounded-full font-urbanist text-sm font-600
+                    inline-flex items-center gap-2 px-4 py-2 rounded-full font-sf text-sm font-600
                     transition-all duration-premium ease-premium tracking-[-0.015em]
                     ${selectedFilter === filter.id
                       ? 'bg-sage text-white shadow-premium-md'
@@ -277,13 +277,13 @@ export default function GeneralReviewsPage() {
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-3">
-              <span className="font-urbanist text-sm font-500 text-charcoal/70 tracking-[-0.015em]">
+              <span className="font-sf text-sm font-500 text-charcoal/70 tracking-[-0.015em]">
                 Sort by:
               </span>
               <select
                 value={selectedSort}
                 onChange={(e) => setSelectedSort(e.target.value)}
-                className="bg-charcoal/5 border border-charcoal/10 rounded-full px-4 py-2 font-urbanist text-sm font-600 text-charcoal focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
+                className="bg-charcoal/5 border border-charcoal/10 rounded-full px-4 py-2 font-sf text-sm font-600 text-charcoal focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
               >
                 {SORT_OPTIONS.map((option) => (
                   <option key={option.id} value={option.id}>
@@ -345,7 +345,7 @@ export default function GeneralReviewsPage() {
                         className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5  bg-white  /95 backdrop-blur-md hover:bg-white   rounded-full transition-all duration-premium shadow-premium-md hover:shadow-premium-lg hover:scale-105 z-20"
                       >
                         <ion-icon name="storefront-outline" className="text-sage" style={{ fontSize: '16px' }} />
-                        <span className="font-urbanist text-sm font-600 text-sage tracking-[-0.015em]">
+                        <span className="font-sf text-sm font-600 text-sage tracking-[-0.015em]">
                           {review.businessName}
                         </span>
                       </Link>
@@ -354,7 +354,7 @@ export default function GeneralReviewsPage() {
                       {review.images.length > 1 && (
                         <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1.5 bg-charcoal/80 backdrop-blur-md rounded-lg z-20">
                           <ion-icon name="images" className="text-white" style={{ fontSize: '16px' }} />
-                          <span className="font-urbanist text-sm font-600 text-white tracking-[-0.015em]">
+                          <span className="font-sf text-sm font-600 text-white tracking-[-0.015em]">
                             {review.images.length}
                           </span>
                         </div>
@@ -394,7 +394,7 @@ export default function GeneralReviewsPage() {
                         className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-sage/10 hover:bg-sage/20 rounded-full transition-all duration-premium"
                       >
                         <ion-icon name="storefront-outline" className="text-sage" style={{ fontSize: '16px' }} />
-                        <span className="font-urbanist text-sm font-600 text-sage tracking-[-0.015em]">
+                        <span className="font-sf text-sm font-600 text-sage tracking-[-0.015em]">
                           {review.businessName}
                         </span>
                       </Link>
@@ -418,7 +418,7 @@ export default function GeneralReviewsPage() {
                             />
                           ) : (
                             <div className="w-full h-full bg-gradient-to-br from-sage/20 to-sage/10 flex items-center justify-center">
-                              <span className="font-urbanist text-lg sm:text-xl font-700 text-sage tracking-[-0.02em]">
+                              <span className="font-sf text-lg sm:text-xl font-700 text-sage tracking-[-0.02em]">
                                 {review.avatar}
                               </span>
                             </div>
@@ -434,10 +434,10 @@ export default function GeneralReviewsPage() {
 
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                          <h3 className="font-urbanist text-lg sm:text-xl font-600 text-charcoal tracking-[-0.02em]">
+                          <h3 className="font-sf text-lg sm:text-xl font-600 text-charcoal tracking-[-0.02em]">
                             {review.author}
                           </h3>
-                          <span className="font-urbanist text-sm font-400 text-charcoal/60 tracking-[-0.015em]">
+                          <span className="font-sf text-sm font-400 text-charcoal/60 tracking-[-0.015em]">
                             {review.date}
                           </span>
                         </div>
@@ -459,7 +459,7 @@ export default function GeneralReviewsPage() {
                     </div>
 
                     {/* Review Text */}
-                    <p className="font-urbanist text-base font-400 text-charcoal/90 leading-[1.65] mb-4 tracking-[-0.015em]">
+                    <p className="font-sf text-base font-400 text-charcoal/90 leading-[1.65] mb-4 tracking-[-0.015em]">
                       {displayText}
                     </p>
 
@@ -467,7 +467,7 @@ export default function GeneralReviewsPage() {
                     {shouldTruncate && (
                       <button
                         onClick={() => toggleExpanded(review.id)}
-                        className="font-urbanist text-sm font-600 text-sage hover:text-sage/80 transition-colors duration-premium mb-4 tracking-[-0.015em]"
+                        className="font-sf text-sm font-600 text-sage hover:text-sage/80 transition-colors duration-premium mb-4 tracking-[-0.015em]"
                       >
                         {isExpanded ? "Read less" : "Read more"}
                       </button>
@@ -479,7 +479,7 @@ export default function GeneralReviewsPage() {
                         {review.tags.map((tag, tagIdx) => (
                           <span
                             key={tagIdx}
-                            className="inline-flex items-center px-3 py-1 bg-sage/10 text-sage text-sm font-500 rounded-full border border-sage/20 font-urbanist tracking-[-0.015em]"
+                            className="inline-flex items-center px-3 py-1 bg-sage/10 text-sage text-sm font-500 rounded-full border border-sage/20 font-sf tracking-[-0.015em]"
                           >
                             <span className="mr-1">@</span>
                             {tag}
@@ -493,7 +493,7 @@ export default function GeneralReviewsPage() {
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-charcoal/5 hover:bg-charcoal/10 rounded-full font-urbanist text-sm font-600 text-charcoal/70 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-charcoal/5 hover:bg-charcoal/10 rounded-full font-sf text-sm font-600 text-charcoal/70 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
                       >
                         <ion-icon name="thumbs-up-outline" className="text-base" />
                         <span>Helpful</span>
@@ -518,10 +518,10 @@ export default function GeneralReviewsPage() {
             <div className="w-20 h-20 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
               <ion-icon name="document-text-outline" style={{ fontSize: '40px', color: 'var(--charcoal-400)' }} />
             </div>
-            <h3 className="font-urbanist text-xl font-600 text-charcoal mb-2 tracking-[-0.02em]">
+            <h3 className="font-sf text-xl font-600 text-charcoal mb-2 tracking-[-0.02em]">
               No reviews found
             </h3>
-            <p className="font-urbanist text-base font-400 text-charcoal/70 tracking-[-0.015em]">
+            <p className="font-sf text-base font-400 text-charcoal/70 tracking-[-0.015em]">
               Try adjusting your filters
             </p>
           </motion.div>
