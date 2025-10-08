@@ -313,8 +313,7 @@ function InterestsContent() {
     <OnboardingLayout
       backHref="/register"
       step={1}
-      /** Match Register screen’s soft gradient + safe space */
-      className="min-h-[100dvh]  bg-white   flex flex-col relative overflow-hidden"
+      className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden"
     >
       {/* Offline indicator (same content, refined style) */}
       {!isOnline && (
