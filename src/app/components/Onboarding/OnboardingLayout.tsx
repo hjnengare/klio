@@ -2,86 +2,9 @@
 
 import Link from "next/link";
 import { ReactNode } from "react";
-
+import { ArrowLeft } from "lucide-react"; // ✅ Lucide icon import
 // Shared CSS animations for all onboarding pages
-export const onboardingStyles = `
-  @keyframes slideInFromRight {
-    from {
-      opacity: 0;
-      transform: translateX(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  @keyframes slideInFromLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  @keyframes scaleIn {
-    from {
-      transform: scale(0.9);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-  @keyframes microBounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-  @keyframes progressPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
 
-  .onboarding-enter {
-    animation: slideInFromRight 0.6s ease-out forwards;
-  }
-  .onboarding-content {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-  .onboarding-card {
-    animation: scaleIn 0.6s ease-out forwards;
-  }
-  .animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out forwards;
-  }
-  .animate-scale-in {
-    animation: scaleIn 0.4s ease-out forwards;
-  }
-  .animate-micro-bounce {
-    animation: microBounce 0.3s ease-out;
-  }
-  .progress-active {
-    animation: progressPulse 2s ease-in-out infinite;
-  }
-
-  .delay-100 { animation-delay: 0.1s; }
-  .delay-200 { animation-delay: 0.2s; }
-  .delay-300 { animation-delay: 0.3s; }
-  .delay-400 { animation-delay: 0.4s; }
-  .delay-500 { animation-delay: 0.5s; }
-`;
 
 interface OnboardingLayoutProps {
   children: ReactNode;
@@ -96,22 +19,21 @@ export default function OnboardingLayout({
   backHref,
   step,
   totalSteps = 4,
-  showProgress = true
+  showProgress = true,
 }: OnboardingLayoutProps) {
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: onboardingStyles }} />
-
-      <div className="min-h-dvh mobile-viewport bg-white  flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container mobile-scroll-container">
-
+      <div className="min-h-dvh bg-white flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container">
         {/* Back button */}
         {backHref && (
           <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 animate-fade-in-up delay-100">
             <Link
               href={backHref}
-              className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full touch-target-large"
+              aria-label="Go back"
+              className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-white  /50 rounded-lg block backdrop-blur-sm"
             >
-              <ion-icon name="arrow-back-outline" size="small"></ion-icon>
+              {/* ✅ Lucide back arrow */}
+              <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
             </Link>
           </div>
         )}
@@ -134,10 +56,10 @@ export default function OnboardingLayout({
                     key={index}
                     className={`w-3 h-3 rounded-full transition-all duration-500 ${
                       isActive
-                        ? 'bg-sage progress-active'
+                        ? "bg-sage progress-active"
                         : isCompleted
-                          ? 'bg-sage/60'
-                          : 'bg-charcoal/20'
+                        ? "bg-sage/60"
+                        : "bg-charcoal/20"
                     }`}
                   />
                 );

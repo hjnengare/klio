@@ -9,6 +9,42 @@ import { useToast } from "../contexts/ToastContext";
 import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
+import { CheckCircle, ArrowRight } from "lucide-react"; // ✅ replace ion-icons
+
+/** ---------- Local, minimal entrance animations (subtle & accessible) ---------- */
+const entranceStyles = `
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .enter-fade {
+    opacity: 0;
+    animation: fadeSlideIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  }
+  /* Stagger helper (inline style sets animation-delay) */
+  .enter-stagger { opacity: 0; animation: fadeSlideIn 0.6s ease-out forwards; }
+
+  /* Tiny haptic feedback you referenced earlier */
+  @keyframes bubbly {
+    0% { transform: translateZ(0) scale(1); }
+    40% { transform: translateZ(0) scale(1.05); }
+    100% { transform: translateZ(0) scale(1); }
+  }
+  .animate-bubbly { animation: bubbly 0.35s ease-out; }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+  }
+  .animate-shake { animation: shake 0.35s ease-in-out; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+`;
 
 /** ---------- Shared font (SF Pro) ---------- */
 const sf = {
@@ -127,7 +163,7 @@ function InterestsContent() {
     }
   }, [mounted]);
 
-  /** Little bounce helper (unchanged behavior) */
+  /** Little bounce helper */
   const triggerBounce = useCallback((id: string, ms = 700) => {
     setAnimatingIds((prev) => {
       const next = new Set(prev);
@@ -310,186 +346,194 @@ function InterestsContent() {
   const list = availableInterests.length > 0 ? availableInterests : interestsFallback;
 
   return (
-    <OnboardingLayout
-      backHref="/register"
-      step={1}
-      className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden"
-    >
-      {/* Offline indicator (same content, refined style) */}
-      {!isOnline && (
-        <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20">
-          <div
-            className="bg-orange-50/90 border border-orange-200 rounded-full px-3 py-1 flex items-center gap-2 shadow-sm"
-            style={sf}
-          >
-            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-            <span className="text-xs font-semibold text-orange-700">Offline</span>
-          </div>
-        </div>
-      )}
+    <>
+      {/* Minimal animation styles */}
+      <style dangerouslySetInnerHTML={{ __html: entranceStyles }} />
 
-      {/* Header — mirrors Register page typography & spacing */}
-      <div className="text-center mb-4 pt-4 sm:pt-6">
-        <div className="inline-block relative mb-2">
-          <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight"
-            style={sf}
-          >
-            What interests you?
-          </h2>
-        </div>
-        <p
-          className="text-sm md:text-base font-normal text-charcoal/70 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto"
-          style={sf}
-        >
-          Pick a few things you love and let&apos;s personalize your experience!
-        </p>
-      </div>
-
-      {/* Card — same rounded/soft feel as Register form card */}
-      <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm  bg-white   px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8">
-        {/* Error */}
-        {onboardingError && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4">
-            <p className="text-sm font-semibold text-red-600" style={sf}>
-              {onboardingError}
-            </p>
+      <OnboardingLayout
+        backHref="/register"
+        step={1}
+        className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden"
+      >
+        {/* Offline indicator */}
+        {!isOnline && (
+          <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 enter-fade" style={{ animationDelay: "0.1s" }}>
+            <div
+              className="bg-orange-50/90 border border-orange-200 rounded-full px-3 py-1 flex items-center gap-2 shadow-sm"
+              style={sf}
+            >
+              <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+              <span className="text-xs font-semibold text-orange-700">Offline</span>
+            </div>
           </div>
         )}
 
-        {/* Counter + helper */}
-        <div className="text-center mb-4">
-          <div
-            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-3 transition-colors duration-300 ${
-              hydratedSelected.length >= MIN_SELECTIONS
-                ? "bg-sage/10 border border-sage/30"
-                : "bg-sage/10 border border-sage/20"
-            }`}
-          >
-            <span
-              className="text-sm font-semibold text-sage"
+        {/* Header */}
+        <div className="text-center mb-4 pt-4 sm:pt-6 enter-fade" style={{ animationDelay: "0.12s" }}>
+          <div className="inline-block relative mb-2">
+            <h2
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight"
               style={sf}
-              aria-live="polite"
-              aria-atomic="true"
             >
-              {hydratedSelected.length} of {MIN_SELECTIONS}-{MAX_SELECTIONS} selected
-            </span>
-            {hydratedSelected.length >= MIN_SELECTIONS && (
-              <ion-icon name="checkmark-circle" style={{ color: "hsl(148,20%,38%)" }} />
-            )}
+              What interests you?
+            </h2>
           </div>
-          <p className="text-xs text-charcoal/60" style={sf} aria-live="polite">
-            {hydratedSelected.length < MIN_SELECTIONS
-              ? `Select ${MIN_SELECTIONS - hydratedSelected.length} more to continue`
-              : hydratedSelected.length === MAX_SELECTIONS
-              ? "Perfect! You've selected the maximum"
-              : "Great! You can continue or select more"}
+          <p
+            className="text-sm md:text-base font-normal text-charcoal/70 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto"
+            style={sf}
+          >
+            Pick a few things you love and let&apos;s personalize your experience!
           </p>
         </div>
 
-        {/* Interests grid — same circular tile shape, matched hover/press tone */}
-        <div className="grid grid-cols-2 gap-4 md:gap-6 mb-4 overflow-visible">
-          {list.map((interest) => {
-            const isSelected = hydratedSelected.includes(interest.id);
-            const isDisabled = !isSelected && hydratedSelected.length >= MAX_SELECTIONS;
+        {/* Card */}
+        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade" style={{ animationDelay: "0.18s" }}>
+          {/* Error */}
+          {onboardingError && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4 enter-fade" style={{ animationDelay: "0.22s" }}>
+              <p className="text-sm font-semibold text-red-600" style={sf}>
+                {onboardingError}
+              </p>
+            </div>
+          )}
 
-            return (
-              <button
-                key={interest.id}
-                data-interest-id={interest.id}
-                onClick={() => handleInterestToggle(interest.id)}
-                disabled={isDisabled}
-                aria-pressed={isSelected}
-                aria-label={`${interest.name}${
-                  isSelected ? " (selected)" : isDisabled ? " (maximum reached)" : ""
-                }`}
-                className={`
-                  relative z-30 w-[85%] aspect-square rounded-full transition-all duration-300 ease-out mx-auto min-h-[44px] min-w-[44px] touch-target-large
-                  focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2
-                  ${
-                    isSelected
-                      ? "bg-coral text-white shadow-[0_10px_40px_rgba(214,116,105,0.22),0_2px_8px_rgba(0,0,0,0.06)] scale-105"
-                      : isDisabled
-                      ? "bg-charcoal/5 text-charcoal/40 cursor-not-allowed opacity-60"
-                      : "bg-sage text-white hover:bg-sage/90 hover:scale-105 active:scale-95 shadow-[0_8px_24px_rgba(125,155,118,0.16)]"
-                  }
-                `}
-                suppressHydrationWarning
-                style={sf}
-              >
-                <div
-                  className={`absolute inset-0 flex flex-col items-center justify-center p-4 ${
-                    animatingIds.has(interest.id) ? "animate-bubbly" : ""
-                  }`}
-                >
-                  <span className="text-[15px] md:text-base font-semibold text-center leading-tight break-words hyphens-auto">
-                    {interest.name}
-                  </span>
-                  {isSelected && (
-                    <div className="absolute top-2 right-2">
-                      <ion-icon name="checkmark-circle" style={{ color: "white" }} />
-                    </div>
-                  )}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Actions — mirrors Register CTA shape/shadow */}
-        <div className="pt-4 space-y-4">
-          {/* Continue */}
-          <button
-            className={`
-              group block w-full text-white text-sm md:text-base font-semibold py-3.5 md:py-4 px-6 md:px-8 rounded-full transition-all duration-300 relative text-center touch-target-large
-              ${
-                canProceed
-                  ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)] shadow-[0_10px_40px_rgba(125,155,118,0.25),0_4px_12px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(125,155,118,0.35),0_8px_24px_rgba(0,0,0,0.12)] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
-                  : "bg-charcoal/10 text-charcoal/40 cursor-not-allowed"
-              }
-            `}
-            onClick={handleNext}
-            disabled={!canProceed}
-            aria-label={`Continue with ${hydratedSelected.length} selected interests`}
-            style={sf}
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2 rounded-full">
-              {(isNavigating || onboardingLoading) && (
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              )}
-              Continue {hydratedSelected.length > 0 && `(${hydratedSelected.length} selected)`}
-              <ion-icon name="arrow-forward" />
-            </span>
-            {canProceed && (
-              <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            )}
-          </button>
-
-          {/* Skip (kept) */}
-          <div className="text-center">
-            <Link
-              href="/subcategories"
-              className="inline-block text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
-              aria-label="Skip interest selection for now"
-              style={sf}
-              onClick={(e) => {
-                e.preventDefault();
-                handleSkip();
-              }}
+          {/* Counter + helper */}
+          <div className="text-center mb-4 enter-fade" style={{ animationDelay: "0.22s" }}>
+            <div
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-3 transition-colors duration-300 ${
+                hydratedSelected.length >= MIN_SELECTIONS
+                  ? "bg-sage/10 border border-sage/30"
+                  : "bg-sage/10 border border-sage/20"
+              }`}
             >
-              Skip for now
-            </Link>
-            <div className="mt-1 text-xs text-charcoal/50 max-w-sm mx-auto" style={sf}>
-              {hydratedSelected.length < MIN_SELECTIONS ? (
-                <span>We&apos;ll suggest popular local businesses instead</span>
-              ) : (
-                <span>You can always update your interests later in settings</span>
+              <span
+                className="text-sm font-semibold text-sage"
+                style={sf}
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                {hydratedSelected.length} of {MIN_SELECTIONS}-{MAX_SELECTIONS} selected
+              </span>
+              {hydratedSelected.length >= MIN_SELECTIONS && (
+                <CheckCircle className="w-4 h-4 text-[hsl(148,20%,38%)]" aria-hidden="true" />
               )}
             </div>
+            <p className="text-xs text-charcoal/60" style={sf} aria-live="polite">
+              {hydratedSelected.length < MIN_SELECTIONS
+                ? `Select ${MIN_SELECTIONS - hydratedSelected.length} more to continue`
+                : hydratedSelected.length === MAX_SELECTIONS
+                ? "Perfect! You've selected the maximum"
+                : "Great! You can continue or select more"}
+            </p>
           </div>
-        </div>
-      </OnboardingCard>
-    </OnboardingLayout>
+
+          {/* Interests grid (staggered) */}
+          <div className="grid grid-cols-2 gap-4 md:gap-6 mb-4 overflow-visible">
+            {list.map((interest, idx) => {
+              const isSelected = hydratedSelected.includes(interest.id);
+              const isDisabled = !isSelected && hydratedSelected.length >= MAX_SELECTIONS;
+              // gentle stagger up to ~0.5s
+              const delay = Math.min(idx, 8) * 0.06 + 0.24;
+
+              return (
+                <button
+                  key={interest.id}
+                  data-interest-id={interest.id}
+                  onClick={() => handleInterestToggle(interest.id)}
+                  disabled={isDisabled}
+                  aria-pressed={isSelected}
+                  aria-label={`${interest.name}${
+                    isSelected ? " (selected)" : isDisabled ? " (maximum reached)" : ""
+                  }`}
+                  className={`
+                    enter-stagger
+                    relative z-30 w-[85%] aspect-square rounded-full transition-all duration-300 ease-out mx-auto min-h-[44px] min-w-[44px] touch-target-large
+                    focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2
+                    ${
+                      isSelected
+                        ? "bg-coral text-white shadow-[0_10px_40px_rgba(214,116,105,0.22),0_2px_8px_rgba(0,0,0,0.06)] scale-105"
+                        : isDisabled
+                        ? "bg-charcoal/5 text-charcoal/40 cursor-not-allowed opacity-60"
+                        : "bg-sage text-white hover:bg-sage/90 hover:scale-105 active:scale-95 shadow-[0_8px_24px_rgba(125,155,118,0.16)]"
+                    }
+                  `}
+                  style={{ ...(sf as any), animationDelay: `${delay}s` }}
+                  suppressHydrationWarning
+                >
+                  <div
+                    className={`absolute inset-0 flex flex-col items-center justify-center p-4 ${
+                      animatingIds.has(interest.id) ? "animate-bubbly" : ""
+                    }`}
+                  >
+                    <span className="text-[15px] md:text-base font-semibold text-center leading-tight break-words hyphens-auto">
+                      {interest.name}
+                    </span>
+                    {isSelected && (
+                      <div className="absolute top-2 right-2">
+                        <CheckCircle className="w-5 h-5 text-white" aria-hidden="true" />
+                      </div>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Actions */}
+          <div className="pt-4 space-y-4 enter-fade" style={{ animationDelay: "0.3s" }}>
+            {/* Continue */}
+            <button
+              className={`
+                group block w-full text-white text-sm md:text-base font-semibold py-3.5 md:py-4 px-6 md:px-8 rounded-full transition-all duration-300 relative text-center touch-target-large
+                ${
+                  canProceed
+                    ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)] shadow-[0_10px_40px_rgba(125,155,118,0.25),0_4px_12px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(125,155,118,0.35),0_8px_24px_rgba(0,0,0,0.12)] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
+                    : "bg-charcoal/10 text-charcoal/40 cursor-not-allowed"
+                }
+              `}
+              onClick={handleNext}
+              disabled={!canProceed}
+              aria-label={`Continue with ${hydratedSelected.length} selected interests`}
+              style={sf}
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2 rounded-full">
+                {(isNavigating || onboardingLoading) && (
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                )}
+                Continue {hydratedSelected.length > 0 && `(${hydratedSelected.length} selected)`}
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </span>
+              {canProceed && (
+                <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              )}
+            </button>
+
+            {/* Skip */}
+            <div className="text-center">
+              <Link
+                href="/subcategories"
+                className="inline-block text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
+                aria-label="Skip interest selection for now"
+                style={sf}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSkip();
+                }}
+              >
+                Skip for now
+              </Link>
+              <div className="mt-1 text-xs text-charcoal/50 max-w-sm mx-auto" style={sf}>
+                {hydratedSelected.length < MIN_SELECTIONS ? (
+                  <span>We&apos;ll suggest popular local businesses instead</span>
+                ) : (
+                  <span>You can always update your interests later in settings</span>
+                )}
+              </div>
+            </div>
+          </div>
+        </OnboardingCard>
+      </OnboardingLayout>
+    </>
   );
 }
 

@@ -165,7 +165,7 @@ export default function RegisterPage() {
   const [mounted, setMounted] = useState(false);
 
   const { register, isLoading: authLoading, error: authError } = useAuth();
-  const isLoading = false; // Disabled for UI/UX design
+  const isLoading = true; 
   const { showToast } = useToast();
 
   // Prevent hydration mismatch

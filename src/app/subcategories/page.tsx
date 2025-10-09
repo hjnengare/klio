@@ -8,13 +8,38 @@ import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
+import { CheckCircle } from "lucide-react";
+
+/** ----- Minimal entrance animations (subtle & accessible) ----- */
+const entranceStyles = `
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .enter-fade {
+    opacity: 0;
+    animation: fadeSlideIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  }
+  .enter-stagger {
+    opacity: 0;
+    animation: fadeSlideIn 0.6s ease-out forwards;
+  }
+  @keyframes microBounce {
+    0%,100% { transform: scale(1); }
+    50%     { transform: scale(1.05); }
+  }
+  .animate-micro-bounce { animation: microBounce 0.28s ease-out; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+`;
 
 interface SubcategoryItem {
   id: string;
   label: string;
   interest_id: string;
 }
-
 interface GroupedSubcategories {
   [interestId: string]: {
     title: string;
@@ -52,10 +77,6 @@ const DEMO_SUBCATEGORIES: GroupedSubcategories = {
     ],
   },
 };
-
-const prefersReduced =
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const sf = {
   fontFamily:
@@ -115,7 +136,6 @@ function SubcategoriesContent() {
   const groupedSubcategories: GroupedSubcategories = DEMO_SUBCATEGORIES;
 
   const triggerMicroBounce = useCallback((id: string) => {
-    if (prefersReduced) return;
     setAnimatingIds((prev) => new Set(prev).add(id));
     setTimeout(() => {
       setAnimatingIds((prev) => {
@@ -142,15 +162,6 @@ function SubcategoriesContent() {
 
       setSelectedSubInterests(newSelection);
 
-      // Feedback disabled for simplicity
-      // if (!isCurrentlySelected) {
-      //   if (newSelection.length === MIN_SELECTIONS) {
-      //     showToast("🎉 Great! You can continue now", "sage", 2000);
-      //   } else if (newSelection.length === MAX_SELECTIONS) {
-      //     showToast("✨ Perfect selection!", "sage", 2000);
-      //   }
-      // }
-
       try {
         await fetch("/api/user/subcategories", {
           method: "POST",
@@ -172,13 +183,13 @@ function SubcategoriesContent() {
   const handleNext = useCallback(async () => {
     if (!canProceed) return;
     try {
-      // showToast(`Moving to next step with ${selectedSubInterests.length} subcategories!`, "success", 2000);
+      setIsNavigating(true);
       router.push("/deal-breakers");
     } catch (error) {
       console.error("Error proceeding to next step:", error);
-      // showToast("Failed to proceed. Please try again.", "error", 3000);
+      setIsNavigating(false);
     }
-  }, [canProceed, selectedSubInterests.length, router]);
+  }, [canProceed, router]);
 
   if (!user) {
     return (
@@ -194,104 +205,125 @@ function SubcategoriesContent() {
   const hydratedSelected = mounted ? selectedSubInterests : [];
 
   return (
-    <OnboardingLayout
-      backHref="/interests"
-      step={2}
-      className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden"
-    >
-      {!isOnline && (
-        <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20">
-          <div className="bg-orange-50/90 border border-orange-200 rounded-full px-3 py-1 flex items-center gap-2 shadow-sm">
-            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-            <span className="text-xs font-semibold text-orange-700" style={sf}>
-              Offline
-            </span>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: entranceStyles }} />
+
+      <OnboardingLayout
+        backHref="/interests"
+        step={2}
+        className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden"
+      >
+        {/* Offline chip */}
+        {!isOnline && (
+          <div
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 enter-fade"
+            style={{ animationDelay: "0.08s" }}
+          >
+            <div className="bg-orange-50/90 border border-orange-200 rounded-full px-3 py-1 flex items-center gap-2 shadow-sm">
+              <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+              <span className="text-xs font-semibold text-orange-700" style={sf}>
+                Offline
+              </span>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className="text-center mb-4 pt-4 sm:pt-6">
-        <h2
-          className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight"
-          style={sf}
-        >
-          Tell us more!
-        </h2>
-        <p
-          className="text-sm md:text-base font-normal text-charcoal/70 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto"
-          style={sf}
-        >
-          Pick at least {MIN_SELECTIONS} across any sections to personalize your experience
-        </p>
-      </div>
-
-      <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8">
-        <div className="space-y-4 mb-4">
-          {Object.entries(groupedSubcategories).map(([interestId, section]) => (
-            <section key={interestId}>
-              <h3 className="text-base md:text-lg font-semibold text-charcoal mb-3 px-1" style={sf}>
-                {section.title}
-              </h3>
-
-              <div className="flex flex-wrap gap-2 md:grid md:grid-cols-3 md:gap-3">
-                {section.items.map((subcategory) => {
-                  const isSelected = hydratedSelected.includes(subcategory.id);
-                  const isDisabled =
-                    !isSelected && hydratedSelected.length >= MAX_SELECTIONS;
-
-                  return (
-                    <button
-                      key={subcategory.id}
-                      data-subcategory-id={subcategory.id}
-                      onClick={() => handleSubcategoryToggle(subcategory.id)}
-                      disabled={isDisabled}
-                      aria-pressed={isSelected}
-                      className={`
-                        relative w-auto md:w-full py-3 md:py-4 px-4
-                        text-sm md:text-base font-semibold text-center
-                        transition-all duration-200 ease-out
-                        min-h-[44px] md:min-h-[52px] rounded-full
-                        focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
-                        disabled:cursor-not-allowed disabled:opacity-60
-                        ${animatingIds.has(subcategory.id) ? "animate-micro-bounce" : ""}
-                        ${
-                          isSelected
-                            ? "bg-coral text-white md:shadow-[0_10px_40px_rgba(214,116,105,0.22),0_2px_8px_rgba(0,0,0,0.06)]"
-                            : isDisabled
-                            ? "bg-charcoal/5 text-charcoal/40"
-                            : "bg-sage text-white hover:bg-sage/90"
-                        }
-                      `}
-                      style={sf}
-                    >
-                      <span className="whitespace-nowrap">{subcategory.label}</span>
-                      {isSelected && (
-                        <div className="absolute top-1 right-1">
-                          <ion-icon name="checkmark-circle" size="small" />
-                        </div>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
-          ))}
+        {/* Header */}
+        <div className="text-center mb-4 pt-4 sm:pt-6 enter-fade" style={{ animationDelay: "0.1s" }}>
+          <h2
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight"
+            style={sf}
+          >
+            Tell us more!
+          </h2>
+          <p
+            className="text-sm md:text-base font-normal text-charcoal/70 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto"
+            style={sf}
+          >
+            Pick at least {MIN_SELECTIONS} across any sections to personalize your experience
+          </p>
         </div>
 
-        <button
-          onClick={handleNext}
-          disabled={!canProceed}
-          className={`block w-full text-white text-sm font-semibold py-3 px-6 rounded-full transition-all duration-300 ${
-            canProceed
-              ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)]"
-              : "bg-white/90 text-charcoal/40 cursor-not-allowed"
-          }`}
-          style={sf}
+        {/* Card */}
+        <OnboardingCard
+          className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade"
+          style={{ animationDelay: "0.16s" }}
         >
-          Continue
-        </button>
-      </OnboardingCard>
-    </OnboardingLayout>
+          <div className="space-y-4 mb-4">
+            {Object.entries(groupedSubcategories).map(([interestId, section], sIdx) => {
+              const sectionDelay = 0.22 + Math.min(sIdx, 8) * 0.08; // gentle per-section stagger
+              return (
+                <section key={interestId} className="enter-fade" style={{ animationDelay: `${sectionDelay}s` }}>
+                  <h3 className="text-base md:text-lg font-semibold text-charcoal mb-3 px-1" style={sf}>
+                    {section.title}
+                  </h3>
+
+                  <div className="flex flex-wrap gap-2 md:grid md:grid-cols-3 md:gap-3">
+                    {section.items.map((subcategory, iIdx) => {
+                      const isSelected = hydratedSelected.includes(subcategory.id);
+                      const isDisabled =
+                        !isSelected && hydratedSelected.length >= MAX_SELECTIONS;
+
+                      // chip-level stagger (in addition to section delay)
+                      const chipDelay = sectionDelay + Math.min(iIdx, 6) * 0.05;
+
+                      return (
+                        <button
+                          key={subcategory.id}
+                          data-subcategory-id={subcategory.id}
+                          onClick={() => handleSubcategoryToggle(subcategory.id)}
+                          disabled={isDisabled}
+                          aria-pressed={isSelected}
+                          className={`
+                            enter-stagger
+                            relative w-auto md:w-full py-3 md:py-4 px-4
+                            text-sm md:text-base font-semibold text-center
+                            transition-all duration-200 ease-out
+                            min-h-[44px] md:min-h-[52px] rounded-full
+                            focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
+                            disabled:cursor-not-allowed disabled:opacity-60
+                            ${animatingIds.has(subcategory.id) ? "animate-micro-bounce" : ""}
+                            ${
+                              isSelected
+                                ? "bg-coral text-white md:shadow-[0_10px_40px_rgba(214,116,105,0.22),0_2px_8px_rgba(0,0,0,0.06)]"
+                                : isDisabled
+                                ? "bg-charcoal/5 text-charcoal/40"
+                                : "bg-sage text-white hover:bg-sage/90"
+                            }
+                          `}
+                          style={{ ...(sf as any), animationDelay: `${chipDelay}s` }}
+                        >
+                          <span className="whitespace-nowrap">{subcategory.label}</span>
+                          {isSelected && (
+                            <div className="absolute top-1 right-1">
+                              <CheckCircle className="w-4 h-4 text-white" aria-hidden="true" />
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+
+          {/* Continue */}
+          <button
+            onClick={handleNext}
+            disabled={!canProceed}
+            className={`enter-fade block w-full text-white text-sm font-semibold py-3 px-6 rounded-full transition-all duration-300 ${
+              canProceed
+                ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)]"
+                : "bg-white/90 text-charcoal/40 cursor-not-allowed"
+            }`}
+            style={{ ...(sf as any), animationDelay: "0.36s" }}
+          >
+            Continue
+          </button>
+        </OnboardingCard>
+      </OnboardingLayout>
+    </>
   );
 }
 
