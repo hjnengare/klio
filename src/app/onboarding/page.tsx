@@ -130,24 +130,18 @@ export default function OnboardingPage() {
                 <Link
                   href="/register"
                   className="group relative block w-[200px] mx-auto rounded-full py-3 px-2 md:px-4
-               text-base font-semibold text-charcoal text-center flex items-center justify-center
-               backdrop-blur-xl bg-gradient-to-br from-sage/40 via-sage/30 to-coral/20
-               border border-white/20 shadow-lg
+               text-base font-semibold text-white text-center flex items-center justify-center
+               bg-sage shadow-lg
                transition-all duration-500 ease-out
-               hover:scale-[1.04] hover:shadow-xl hover:border-white/40 hover:from-sage/50 hover:to-sage/30"
+               hover:scale-[1.04] hover:shadow-xl hover:bg-coral
+               focus:outline-none focus:ring-4 focus:ring-sage/30"
                   style={{
                     fontFamily:
                       '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                   }}
                 >
-                  {/* Frosted glass reflection top layer */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-t from-white/15 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500 blur-[3px]" />
-
-                  {/* Animated subtle shine sweep */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out" />
-
-                  {/* Text that changes color on hover */}
-                  <span className="relative z-10 tracking-wide transition-colors duration-500 ease-out group-hover:text-coral">
+                  {/* Text */}
+                  <span className="relative z-10 tracking-wide">
                     Get Started
                   </span>
                 </Link>
