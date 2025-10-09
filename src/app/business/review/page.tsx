@@ -245,7 +245,7 @@ export default function WriteReviewPage() {
                     {/* Business Images Carousel */}
                     <div className="mb-6 md:mb-8 -mx-4 md:-mx-8 relative">
                       <div
-                        className="relative overflow-hidden"
+                        className="relative overflow-hidden rounded-none md:rounded-2xl"
                         onTouchStart={onTouchStart}
                         onTouchMove={onTouchMove}
                         onTouchEnd={onTouchEnd}
@@ -265,7 +265,7 @@ export default function WriteReviewPage() {
                                 src={img}
                                 alt={`${businessName} photo ${idx + 1}`}
                                 fill
-                                className="object-cover"
+                                className="object-cover object-center"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 1100px"
                                 quality={90}
                                 priority={idx === 0}
@@ -453,8 +453,8 @@ export default function WriteReviewPage() {
               {/* SIDEBAR: Other users' reviews */}
               <aside className="lg:col-span-4">
                 {/* Desktop sticky */}
-                <div className="hidden lg:block sticky top-20 space-y-4 max-h-[calc(100vh-5rem)] overflow-y-auto pb-4">
-                  <h3 className="font-sf text-lg font-700 text-charcoal">What others are saying</h3>
+                <div className="hidden lg:block sticky top-24 space-y-4 max-h-[calc(100vh-7rem)] overflow-y-auto pb-4 scrollbar-thin scrollbar-thumb-sage/20 scrollbar-track-transparent">
+                  <h3 className="font-sf text-lg font-700 text-charcoal mb-2 sticky top-0 bg-white/95 backdrop-blur-sm pb-2 -mt-2 pt-2 z-10">What others are saying</h3>
                   {otherReviews.map((r) => (
                     <div
                       key={r.id}

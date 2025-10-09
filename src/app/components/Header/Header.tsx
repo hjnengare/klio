@@ -72,7 +72,10 @@ export default function Header({ showSearch = true }: { showSearch?: boolean }) 
               </span>
             </Link>
 
-            {/* Desktop nav */}
+            {/* Spacer to push nav and icons to the right */}
+            <div className="flex-1" />
+
+            {/* Desktop nav - positioned on the right */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
               {["home", "all", "saved", "leaderboard"].map((route) => (
                 <Link
