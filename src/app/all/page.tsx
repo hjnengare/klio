@@ -8,7 +8,14 @@ import BusinessCard, { Business } from "../components/BusinessCard/BusinessCard"
 import Footer from "../components/Footer/Footer";
 import { TRENDING_BUSINESSES, NEARBY_FAVORITES } from "../data/businessData";
 
-
+// lucide-react icons
+import {
+  ArrowLeft,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+} from "lucide-react";
 
 // Combine all business data
 const allBusinesses: Business[] = [...TRENDING_BUSINESSES, ...NEARBY_FAVORITES];
@@ -26,14 +33,17 @@ export default function ExploreGemsPage() {
     setSearchQuery(query);
   };
 
-  const filteredBusinesses = allBusinesses.filter(business => {
+  const filteredBusinesses = allBusinesses.filter((business) => {
     // Search query filter - searches name, category, and description
-    const searchMatch = !searchQuery ||
+    const searchMatch =
+      !searchQuery ||
       business.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       business.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (business.description && business.description.toLowerCase().includes(searchQuery.toLowerCase()));
+      (business.description &&
+        business.description.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    const categoryMatch = selectedCategory === "All Categories" || business.category === selectedCategory;
+    const categoryMatch =
+      selectedCategory === "All Categories" || business.category === selectedCategory;
 
     let ratingMatch = true;
     if (selectedRating === "4.5+ Stars") ratingMatch = business.totalRating >= 4.5;
@@ -49,7 +59,7 @@ export default function ExploreGemsPage() {
   const currentBusinesses = filteredBusinesses.slice(startIndex, endIndex);
 
   return (
-    <div className="min-h-dvh  bg-white   relative overflow-hidden">
+    <div className="min-h-dvh bg-white relative overflow-hidden">
       {/* Static background layers */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />
@@ -60,13 +70,16 @@ export default function ExploreGemsPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className=" bg-white  /80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
+        className="bg-white/80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
       >
         <div className="flex items-center justify-between max-w-[1300px] mx-auto">
           {/* Back button */}
           <Link href="/home" className="group flex items-center">
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
-              <ion-icon name="arrow-back" class="text-lg sm:text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
+              <ArrowLeft
+                className="text-charcoal/70 group-hover:text-sage transition-colors duration-300"
+                size={22}
+              />
             </div>
             <motion.h1
               initial={{ scale: 0.8, opacity: 0 }}
@@ -89,24 +102,24 @@ export default function ExploreGemsPage() {
               {selectedCategory !== "All Categories" && (
                 <span className="px-3 py-1 bg-sage/10 text-sage font-sf font-600 rounded-full text-sm flex items-center gap-2">
                   {selectedCategory}
-                  <button onClick={() => setSelectedCategory("All Categories")}>
-                    <ion-icon name="close" class="text-base" />
+                  <button onClick={() => setSelectedCategory("All Categories")} aria-label="Clear category">
+                    <X className="text-current" size={16} />
                   </button>
                 </span>
               )}
               {selectedRating !== "All Ratings" && (
                 <span className="px-3 py-1 bg-coral/10 text-coral font-sf font-600 rounded-full text-sm flex items-center gap-2">
                   {selectedRating}
-                  <button onClick={() => setSelectedRating("All Ratings")}>
-                    <ion-icon name="close" class="text-base" />
+                  <button onClick={() => setSelectedRating("All Ratings")} aria-label="Clear rating">
+                    <X className="text-current" size={16} />
                   </button>
                 </span>
               )}
               {selectedDistance !== "All Distances" && (
                 <span className="px-3 py-1 bg-sage/10 text-sage font-sf font-600 rounded-full text-sm flex items-center gap-2">
                   {selectedDistance}
-                  <button onClick={() => setSelectedDistance("All Distances")}>
-                    <ion-icon name="close" class="text-base" />
+                  <button onClick={() => setSelectedDistance("All Distances")} aria-label="Clear distance">
+                    <X className="text-current" size={16} />
                   </button>
                 </span>
               )}
@@ -138,12 +151,13 @@ export default function ExploreGemsPage() {
             {totalPages > 1 && (
               <div className="flex justify-center items-center gap-2 mt-12">
                 <button
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
                   className="w-10 h-10 rounded-full border border-charcoal/20 flex items-center justify-center hover:bg-sage/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
                   aria-label="Previous page"
+                  title="Previous"
                 >
-                  <ion-icon name="chevron-back" class="text-lg text-charcoal/70" />
+                  <ChevronLeft className="text-charcoal/70" size={20} />
                 </button>
 
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -152,30 +166,36 @@ export default function ExploreGemsPage() {
                     onClick={() => setCurrentPage(page)}
                     className={`w-10 h-10 rounded-full font-sf font-600 text-sm transition-all duration-200 ${
                       currentPage === page
-                        ? 'bg-sage text-white'
-                        : 'border border-charcoal/20 text-charcoal/70 hover:bg-sage/5'
+                        ? "bg-sage text-white"
+                        : "border border-charcoal/20 text-charcoal/70 hover:bg-sage/5"
                     }`}
+                    aria-current={currentPage === page ? "page" : undefined}
                   >
                     {page}
                   </button>
                 ))}
 
                 <button
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
                   className="w-10 h-10 rounded-full border border-charcoal/20 flex items-center justify-center hover:bg-sage/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
                   aria-label="Next page"
+                  title="Next"
                 >
-                  <ion-icon name="chevron-forward" class="text-lg text-charcoal/70" />
+                  <ChevronRight className="text-charcoal/70" size={20} />
                 </button>
               </div>
             )}
 
             {currentBusinesses.length === 0 && (
               <div className="text-center py-16">
-                <ion-icon name="search" class="text-6xl text-charcoal/20 mb-4" />
-                <h3 className="font-sf font-700 text-xl text-charcoal/60 mb-2">No results found</h3>
-                <p className="font-sf text-charcoal/40">Try adjusting your filters or search terms</p>
+                <Search className="text-charcoal/20 mx-auto mb-4" size={72} />
+                <h3 className="font-sf font-700 text-xl text-charcoal/60 mb-2">
+                  No results found
+                </h3>
+                <p className="font-sf text-charcoal/40">
+                  Try adjusting your filters or search terms
+                </p>
               </div>
             )}
           </div>
@@ -184,7 +204,6 @@ export default function ExploreGemsPage() {
 
       {/* Footer */}
       <Footer />
-
     </div>
   );
 }

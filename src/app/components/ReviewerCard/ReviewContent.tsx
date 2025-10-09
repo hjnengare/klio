@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Star, Heart } from "lucide-react";
 
 interface ReviewContentProps {
   businessName: string;
@@ -10,23 +11,29 @@ interface ReviewContentProps {
   images?: string[];
 }
 
-export default function ReviewContent({ 
-  businessName, 
-  businessType, 
-  rating, 
-  reviewText, 
-  date, 
-  likes, 
-  images 
+export default function ReviewContent({
+  businessName,
+  businessType,
+  rating,
+  reviewText,
+  date,
+  likes,
+  images,
 }: ReviewContentProps) {
   const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <ion-icon
-        key={i}
-        name={i < rating ? "star" : "star-outline"}
-        class={`text-[14px] ${i < rating ? "text-coral" : "text-charcoal/30"}`}
-      />
-    ));
+    return Array.from({ length: 5 }, (_, i) => {
+      const active = i < rating;
+      return (
+        <Star
+          key={i}
+          className={`w-[14px] h-[14px] ${
+            active ? "text-coral" : "text-charcoal/30"
+          }`}
+          style={{ fill: active ? "currentColor" : "none" }}
+          aria-hidden="true"
+        />
+      );
+    });
   };
 
   return (
@@ -36,10 +43,12 @@ export default function ReviewContent({
           <h4 className="font-sf font-700 text-charcoal">{businessName}</h4>
           <span className="text-xs text-charcoal/50 font-sf">{date}</span>
         </div>
-        
+
         <div className="flex items-center gap-2 mb-2">
           <div className="flex">{renderStars(rating)}</div>
-          <span className="text-xs text-charcoal/60 font-sf">• {businessType}</span>
+          <span className="text-xs text-charcoal/60 font-sf">
+            • {businessType}
+          </span>
         </div>
       </div>
 
@@ -61,7 +70,12 @@ export default function ReviewContent({
       )}
 
       <div className="flex items-center gap-1 text-charcoal/60">
-        <ion-icon name="heart-outline" class="text-[14px]" />
+        <Heart
+          size={14}
+          className="text-charcoal/60"
+          strokeWidth={2}
+          aria-hidden="true"
+        />
         <span className="text-xs font-sf">{likes}</span>
       </div>
     </div>

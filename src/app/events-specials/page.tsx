@@ -8,6 +8,15 @@ import Footer from "../components/Footer/Footer";
 import { EVENTS_AND_SPECIALS, Event } from "../data/eventsData";
 import { useToast } from "../contexts/ToastContext";
 
+// lucide-react icons
+import {
+  ArrowLeft,
+  Bookmark,
+  ChevronLeft,
+  ChevronRight,
+  Calendar,
+} from "lucide-react";
+
 const ITEMS_PER_PAGE = 8;
 
 export default function EventsSpecialsPage() {
@@ -16,7 +25,7 @@ export default function EventsSpecialsPage() {
   const { showToast } = useToast();
 
   // Filter events based on selected type
-  const filteredEvents = EVENTS_AND_SPECIALS.filter(event => {
+  const filteredEvents = EVENTS_AND_SPECIALS.filter((event) => {
     if (selectedFilter === "all") return true;
     return event.type === selectedFilter;
   });
@@ -37,7 +46,7 @@ export default function EventsSpecialsPage() {
   };
 
   return (
-    <div className="min-h-dvh  bg-white   relative overflow-hidden">
+    <div className="min-h-dvh bg-white relative overflow-hidden">
       {/* Static background layers */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-coral/3 via-transparent to-sage/3" />
@@ -48,13 +57,16 @@ export default function EventsSpecialsPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className=" bg-white/80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
+        className="bg-white/80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
       >
         <div className="flex items-center justify-between max-w-[1300px] mx-auto">
           {/* Back button */}
           <Link href="/home" className="group flex items-center">
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-coral/20 hover:to-coral/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-coral/20 mr-2 sm:mr-4">
-              <ion-icon name="arrow-back" class="text-lg sm:text-xl text-charcoal/70 group-hover:text-coral transition-colors duration-300" />
+              <ArrowLeft
+                className="text-charcoal/70 group-hover:text-coral transition-colors duration-300"
+                size={22}
+              />
             </div>
             <motion.h1
               initial={{ scale: 0.8, opacity: 0 }}
@@ -76,28 +88,31 @@ export default function EventsSpecialsPage() {
             <div className="flex gap-2 justify-center flex-wrap">
               <button
                 onClick={() => handleFilterChange("all")}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "all"
+                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
+                  selectedFilter === "all"
                     ? "bg-coral text-white shadow-lg"
-                    : " bg-white   text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
-                  }`}
+                    : "bg-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
+                }`}
               >
                 All
               </button>
               <button
                 onClick={() => handleFilterChange("event")}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "event"
+                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
+                  selectedFilter === "event"
                     ? "bg-coral text-white shadow-lg"
-                    : " bg-white   text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
-                  }`}
+                    : "bg-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
+                }`}
               >
                 Events
               </button>
               <button
                 onClick={() => handleFilterChange("special")}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${selectedFilter === "special"
+                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
+                  selectedFilter === "special"
                     ? "bg-coral text-white shadow-lg"
-                    : " bg-white   text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
-                  }`}
+                    : "bg-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
+                }`}
               >
                 Specials
               </button>
@@ -109,7 +124,12 @@ export default function EventsSpecialsPage() {
         <div className="px-3 sm:px-4 md:px-6 lg:px-8 pb-2">
           <div className="max-w-[1300px] mx-auto">
             <p className="font-sf text-sm text-charcoal/60">
-              Showing {currentEvents.length} {selectedFilter === "all" ? "events & specials" : selectedFilter === "event" ? "events" : "specials"}
+              Showing {currentEvents.length}{" "}
+              {selectedFilter === "all"
+                ? "events & specials"
+                : selectedFilter === "event"
+                ? "events"
+                : "specials"}
             </p>
           </div>
         </div>
@@ -124,10 +144,11 @@ export default function EventsSpecialsPage() {
                   {/* Bookmark button - always visible on mobile, hover on desktop */}
                   <button
                     onClick={() => handleBookmark(event)}
-                    className="absolute top-2 right-2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-200 hover:bg-white   active:scale-95 sm:hover:scale-110 z-20"
+                    className="absolute top-2 right-2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-200 hover:bg-white active:scale-95 sm:hover:scale-110 z-20"
                     aria-label="Bookmark event"
+                    title="Bookmark"
                   >
-                    <ion-icon name="bookmark-outline" class="text-lg text-coral font-bold" />
+                    <Bookmark className="text-coral" size={18} />
                   </button>
                 </div>
               ))}
@@ -137,43 +158,51 @@ export default function EventsSpecialsPage() {
             {totalPages > 1 && (
               <div className="flex justify-center items-center gap-1.5 sm:gap-2 mt-8 sm:mt-12 flex-wrap">
                 <button
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
                   className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-charcoal/20 flex items-center justify-center hover:bg-coral/5 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
                   aria-label="Previous page"
+                  title="Previous"
                 >
-                  <ion-icon name="chevron-back" class="text-lg sm:text-xl text-charcoal/70" />
+                  <ChevronLeft className="text-charcoal/70" size={20} />
                 </button>
 
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${currentPage === page
-                        ? 'bg-coral text-white shadow-lg'
-                        : 'border border-charcoal/20 text-charcoal/70 hover:bg-coral/5'
-                      }`}
+                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
+                      currentPage === page
+                        ? "bg-coral text-white shadow-lg"
+                        : "border border-charcoal/20 text-charcoal/70 hover:bg-coral/5"
+                    }`}
+                    aria-current={currentPage === page ? "page" : undefined}
                   >
                     {page}
                   </button>
                 ))}
 
                 <button
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
                   className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-charcoal/20 flex items-center justify-center hover:bg-coral/5 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
                   aria-label="Next page"
+                  title="Next"
                 >
-                  <ion-icon name="chevron-forward" class="text-lg sm:text-xl text-charcoal/70" />
+                  <ChevronRight className="text-charcoal/70" size={20} />
                 </button>
               </div>
             )}
 
             {currentEvents.length === 0 && (
               <div className="text-center py-12 sm:py-16 px-4">
-                <ion-icon name="calendar-outline" class="text-5xl sm:text-6xl text-charcoal/20 mb-4" />
-                <h3 className="font-sf font-700 text-lg sm:text-xl text-charcoal/60 mb-2">No {selectedFilter === "event" ? "events" : "specials"} found</h3>
-                <p className="font-sf text-sm sm:text-base text-charcoal/40">Check back later for new {selectedFilter === "event" ? "events" : "specials"}!</p>
+                <Calendar className="text-charcoal/20 mx-auto mb-4" size={64} />
+                <h3 className="font-sf font-700 text-lg sm:text-xl text-charcoal/60 mb-2">
+                  No {selectedFilter === "event" ? "events" : "specials"} found
+                </h3>
+                <p className="font-sf text-sm sm:text-base text-charcoal/40">
+                  Check back later for new {selectedFilter === "event" ? "events" : "specials"}!
+                </p>
               </div>
             )}
           </div>
@@ -182,7 +211,6 @@ export default function EventsSpecialsPage() {
 
       {/* Footer */}
       <Footer />
-
     </div>
   );
 }

@@ -52,7 +52,7 @@ export default function CommunityHighlights({
       <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 pt-1 sm:pt-2 pb-2 sm:pb-3">
         {/* Header */}
         <div className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]">
-          <h2 className="text-xl font-bold text-charcoal tracking-tight">{title}</h2>
+          <h2 className="text-xl font-semibold text-charcoal tracking-tight">{title}</h2>
 
           <button
             onClick={() => router.push(href)}

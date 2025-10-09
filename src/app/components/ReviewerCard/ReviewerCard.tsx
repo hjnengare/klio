@@ -9,15 +9,32 @@ import ReviewerStats from "./ReviewerStats";
 import ReviewContent from "./ReviewContent";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
 
+// lucide-react icons
+import {
+  User,
+  Star,
+  Check,
+  UserPlus,
+  MessageCircle,
+  Share2,
+} from "lucide-react";
+
 interface ReviewerCardProps {
   review?: Review;
   reviewer?: Reviewer;
   variant?: "reviewer" | "review";
 }
 
-export default function ReviewerCard({ review, reviewer, variant = "review" }: ReviewerCardProps) {
+export default function ReviewerCard({
+  review,
+  reviewer,
+  variant = "review",
+}: ReviewerCardProps) {
   const reviewerData = reviewer || review?.reviewer;
-  const idForSnap = useMemo(() => `reviewer-${reviewerData?.id}`, [reviewerData?.id]);
+  const idForSnap = useMemo(
+    () => `reviewer-${reviewerData?.id}`,
+    [reviewerData?.id]
+  );
   const [showActions, setShowActions] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [imgError, setImgError] = useState(false);
@@ -29,9 +46,9 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
     };
 
     checkIsDesktop();
-    window.addEventListener('resize', checkIsDesktop);
+    window.addEventListener("resize", checkIsDesktop);
 
-    return () => window.removeEventListener('resize', checkIsDesktop);
+    return () => window.removeEventListener("resize", checkIsDesktop);
   }, []);
 
   // Handle click outside to close actions on mobile
@@ -44,23 +61,25 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
         }
       };
 
-      document.addEventListener('click', handleClickOutside);
-      return () => document.removeEventListener('click', handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
+      return () => document.removeEventListener("click", handleClickOutside);
     }
   }, [showActions, isDesktop, idForSnap]);
 
   const toggleActions = () => {
-    // Only toggle on mobile
-    if (!isDesktop) {
-      setShowActions(!showActions);
-    }
+    if (!isDesktop) setShowActions(!showActions);
   };
 
   if (variant === "reviewer" || reviewer) {
     return (
-      <div id={idForSnap} className="snap-start snap-always w-[100vw] sm:w-[280px] flex-shrink-0">
-        <div className="bg-white  rounded-[8px] overflow-hidden shadow-sm group cursor-pointer h-[200px] relative border border-charcoal/10" onClick={toggleActions}>
-
+      <div
+        id={idForSnap}
+        className="snap-start snap-always w-[100vw] sm:w-[280px] flex-shrink-0"
+      >
+        <div
+          className="bg-white rounded-[8px] overflow-hidden shadow-sm group cursor-pointer h-[200px] relative border border-charcoal/10"
+          onClick={toggleActions}
+        >
           {/* Content */}
           <div className="relative z-10 p-4 h-full flex flex-col">
             {/* Header with small profile pic and rating */}
@@ -70,25 +89,25 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
                   <div className="relative">
                     <Image
                       src={reviewerData.profilePicture}
-                      alt={reviewerData?.name || 'User avatar'}
+                      alt={reviewerData?.name || "User avatar"}
                       width={48}
                       height={48}
                       className="w-12 h-12 object-cover rounded-full border-2 border-white shadow-md"
                       priority={false}
                       onError={() => setImgError(true)}
                     />
-                    {/* Instagram-style verified badge */}
-                    {reviewerData?.badge === 'verified' && (
+                    {/* Verified badge */}
+                    {reviewerData?.badge === "verified" && (
                       <div className="absolute -right-0.5 -top-0.5 z-20">
                         <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                          <ion-icon name="checkmark" class="text-white text-xs" suppressHydrationWarning />
+                          <Check className="text-white" size={12} strokeWidth={3} />
                         </div>
                       </div>
                     )}
                   </div>
                 ) : (
                   <div className="w-12 h-12 flex items-center justify-center bg-sage/20 text-sage rounded-full border-2 border-white shadow-md">
-                    <ion-icon name="person-outline" class="text-lg text-sage/70" suppressHydrationWarning />
+                    <User className="text-sage/70" size={18} />
                   </div>
                 )}
 
@@ -103,9 +122,15 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
               </div>
 
               {/* Rating badge */}
-              <div className="flex items-center gap-1 bg-white  /80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm">
-                <ion-icon name="star" class="text-coral text-xs" suppressHydrationWarning />
-                <span className="font-sf text-xs font-700 text-charcoal">{reviewerData?.rating.toFixed(1)}</span>
+              <div className="flex items-center gap-1 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm">
+                <Star
+                  className="text-coral"
+                  size={12}
+                  style={{ fill: "currentColor" }}
+                />
+                <span className="font-sf text-xs font-700 text-charcoal">
+                  {reviewerData?.rating.toFixed(1)}
+                </span>
               </div>
             </div>
 
@@ -113,11 +138,15 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
             <div className="mb-3">
               <div className="flex items-center gap-4">
                 <div className="text-center">
-                  <div className="font-sf font-800 text-lg text-charcoal">{reviewerData?.reviewCount}</div>
+                  <div className="font-sf font-800 text-lg text-charcoal">
+                    {reviewerData?.reviewCount}
+                  </div>
                   <div className="font-sf text-xs text-charcoal/60">Reviews</div>
                 </div>
                 <div className="text-center">
-                  <div className="font-sf font-800 text-lg text-sage">{reviewerData?.rating.toFixed(1)}</div>
+                  <div className="font-sf font-800 text-lg text-sage">
+                    {reviewerData?.rating.toFixed(1)}
+                  </div>
                   <div className="font-sf text-xs text-charcoal/60">Rating</div>
                 </div>
               </div>
@@ -127,53 +156,76 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
             <div className="mt-auto flex items-center justify-between">
               <div className="flex items-center gap-1 flex-wrap">
                 {reviewerData?.badge && (
-                  <div className={`px-2 py-1 rounded-full text-xs font-sf font-600 ${
-                    reviewerData.badge === 'top' ? 'bg-amber-100 text-amber-700' :
-                    reviewerData.badge === 'verified' ? 'bg-blue-100 text-blue-700' :
-                    'bg-sage/10 text-sage'
-                  }`}>
-                    {reviewerData.badge === 'top' ? '🏆' :
-                     reviewerData.badge === 'verified' ? '✓' :
-                     '📍'}
+                  <div
+                    className={`px-2 py-1 rounded-full text-xs font-sf font-600 ${
+                      reviewerData.badge === "top"
+                        ? "bg-amber-100 text-amber-700"
+                        : reviewerData.badge === "verified"
+                        ? "bg-blue-100 text-blue-700"
+                        : "bg-sage/10 text-sage"
+                    }`}
+                  >
+                    {reviewerData.badge === "top"
+                      ? "🏆"
+                      : reviewerData.badge === "verified"
+                      ? "✓"
+                      : "📍"}
                   </div>
                 )}
 
                 {reviewerData?.trophyBadge && (
-                  <div className={`px-2 py-1 rounded-full text-xs font-sf font-600 ${
-                    reviewerData.trophyBadge === 'gold' ? 'bg-yellow-50 text-yellow-700' :
-                    reviewerData.trophyBadge === 'silver' ? 'bg-gray-50 text-gray-700' :
-                    reviewerData.trophyBadge === 'bronze' ? 'bg-orange-50 text-orange-700' :
-                    reviewerData.trophyBadge === 'rising-star' ? 'bg-purple-50 text-purple-700' :
-                    'bg-pink-50 text-pink-700'
-                  }`}>
-                    {reviewerData.trophyBadge === 'gold' ? '🏆' :
-                     reviewerData.trophyBadge === 'silver' ? '🥈' :
-                     reviewerData.trophyBadge === 'bronze' ? '🥉' :
-                     reviewerData.trophyBadge === 'rising-star' ? '⭐' :
-                     '❤️'}
+                  <div
+                    className={`px-2 py-1 rounded-full text-xs font-sf font-600 ${
+                      reviewerData.trophyBadge === "gold"
+                        ? "bg-yellow-50 text-yellow-700"
+                        : reviewerData.trophyBadge === "silver"
+                        ? "bg-gray-50 text-gray-700"
+                        : reviewerData.trophyBadge === "bronze"
+                        ? "bg-orange-50 text-orange-700"
+                        : reviewerData.trophyBadge === "rising-star"
+                        ? "bg-purple-50 text-purple-700"
+                        : "bg-pink-50 text-pink-700"
+                    }`}
+                  >
+                    {reviewerData.trophyBadge === "gold"
+                      ? "🏆"
+                      : reviewerData.trophyBadge === "silver"
+                      ? "🥈"
+                      : reviewerData.trophyBadge === "bronze"
+                      ? "🥉"
+                      : reviewerData.trophyBadge === "rising-star"
+                      ? "⭐"
+                      : "❤️"}
                   </div>
                 )}
               </div>
 
               {/* Card Actions - simplified */}
-              <div className={`flex gap-1 transition-all duration-300 ease-out
-                ${isDesktop
-                  ? 'opacity-0 group-hover:opacity-100'
-                  : showActions
-                    ? 'opacity-100'
-                    : 'opacity-0'
-                }`}>
+              <div
+                className={`flex gap-1 transition-all duration-300 ease-out
+                ${
+                  isDesktop
+                    ? "opacity-0 group-hover:opacity-100"
+                    : showActions
+                    ? "opacity-100"
+                    : "opacity-0"
+                }`}
+              >
                 <button
-                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white   hover:scale-110 transition-all duration-200"
+                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
+                  aria-label="Follow"
+                  title="Follow"
                 >
-                  <ion-icon name="person-add-outline" class="text-charcoal text-sm" suppressHydrationWarning />
+                  <UserPlus className="text-charcoal" size={16} />
                 </button>
                 <button
-                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white   hover:scale-110 transition-all duration-200"
+                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
+                  aria-label="Message"
+                  title="Message"
                 >
-                  <ion-icon name="chatbubble-outline" class="text-charcoal text-sm" suppressHydrationWarning />
+                  <MessageCircle className="text-charcoal" size={16} />
                 </button>
               </div>
             </div>
@@ -183,19 +235,23 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
     );
   }
 
+  // --- REVIEW CARD VARIANT ---
   return (
     <li className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[320px] flex-shrink-0">
-      <div className="bg-white  rounded-xl p-6 shadow-sm transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10" onClick={toggleActions}>
+      <div
+        className="bg-white rounded-xl p-6 shadow-sm transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10"
+        onClick={toggleActions}
+      >
         <div className="flex items-start gap-4 mb-4">
           <div className="relative">
             <ProfilePicture
-              src={review?.reviewer.profilePicture || ''}
-              alt={review?.reviewer.name || ''}
+              src={review?.reviewer.profilePicture || ""}
+              alt={review?.reviewer.name || ""}
               size="md"
               badge={review?.reviewer.badge}
             />
-            {/* Instagram-style verified badge for profile picture */}
-            {review?.reviewer.badge === 'verified' && (
+            {/* Verified badge for profile picture */}
+            {review?.reviewer.badge === "verified" && (
               <div className="absolute -right-1 -top-1 z-20">
                 <VerifiedBadge />
               </div>
@@ -203,49 +259,60 @@ export default function ReviewerCard({ review, reviewer, variant = "review" }: R
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-sf font-700 text-charcoal truncate">{review?.reviewer.name}</h3>
+            <h3 className="font-sf font-700 text-charcoal truncate">
+              {review?.reviewer.name}
+            </h3>
             <ReviewerStats
               reviewCount={review?.reviewer.reviewCount || 0}
               rating={review?.reviewer.rating || 0}
-              location={review?.reviewer.location || ''}
+              location={review?.reviewer.location || ""}
             />
           </div>
 
           {/* Card Actions - mobile: show on click, desktop: show on hover */}
-          <div className={`absolute right-4 top-4 z-20 flex-col gap-2 transition-all duration-300 ease-out
-            ${isDesktop
-              ? 'hidden sm:flex translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'
-              : showActions
-                ? 'flex translate-x-0 opacity-100'
-                : 'flex translate-x-12 opacity-0 pointer-events-none'
-            }`}>
+          <div
+            className={`absolute right-4 top-4 z-20 flex-col gap-2 transition-all duration-300 ease-out
+            ${
+              isDesktop
+                ? "hidden sm:flex translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+                : showActions
+                ? "flex translate-x-0 opacity-100"
+                : "flex translate-x-12 opacity-0 pointer-events-none"
+            }`}
+          >
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
+              aria-label="Follow"
+              title="Follow"
             >
-              <ion-icon name="person-add-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />
+              <UserPlus className="text-charcoal" size={20} />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
+              aria-label="Message"
+              title="Message"
             >
-              <ion-icon name="chatbubble-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />
+              <MessageCircle className="text-charcoal" size={20} />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white   hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
+              aria-label="Share"
+              title="Share"
             >
-              <ion-icon name="share-outline" class="text-charcoal" style={{fontSize: '20px'}} suppressHydrationWarning />
+              <Share2 className="text-charcoal" size={20} />
             </button>
           </div>
         </div>
 
         <ReviewContent
-          businessName={review?.businessName || ''}
-          businessType={review?.businessType || ''}
+          businessName={review?.businessName || ""}
+          businessType={review?.businessType || ""}
           rating={review?.rating || 0}
-          reviewText={review?.reviewText || ''}
-          date={review?.date || ''}
+          reviewText={review?.reviewText || ""}
+          date={review?.date || ""}
           likes={review?.likes || 0}
           images={review?.images}
         />
