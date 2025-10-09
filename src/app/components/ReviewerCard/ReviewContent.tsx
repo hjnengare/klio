@@ -27,7 +27,7 @@ export default function ReviewContent({
         <Star
           key={i}
           className={`w-[14px] h-[14px] ${
-            active ? "text-coral" : "text-charcoal/30"
+            active ? "text-amber-500" : "text-charcoal/30"
           }`}
           style={{ fill: active ? "currentColor" : "none" }}
           aria-hidden="true"

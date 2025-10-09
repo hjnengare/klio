@@ -103,7 +103,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
 
           {/* Numeric rating */}
           <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[8px] bg-white/85 backdrop-blur-sm px-2 py-1 text-charcoal shadow-sm">
-            <Star className="w-3.5 h-3.5 text-coral fill-coral drop-shadow-sm" />
+            <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500 drop-shadow-sm" />
             <span className="text-sm font-semibold">{Number(displayTotal).toFixed(1)}</span>
           </span>
 

@@ -124,7 +124,7 @@ export default function ReviewerCard({
               {/* Rating badge */}
               <div className="flex items-center gap-1 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm">
                 <Star
-                  className="text-coral"
+                  className="text-amber-500"
                   size={12}
                   style={{ fill: "currentColor" }}
                 />

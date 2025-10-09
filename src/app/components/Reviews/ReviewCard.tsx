@@ -104,7 +104,7 @@ export default function ReviewCard({
                     <ion-icon
                       name={i < review.rating ? "star" : "star-outline"}
                       style={{
-                        color: i < review.rating ? "var(--coral)" : "#9ca3af",
+                        color: i < review.rating ? "#f59e0b" : "#9ca3af",
                         fontSize: '16px'
                       }}
                     />
