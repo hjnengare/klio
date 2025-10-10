@@ -70,26 +70,36 @@ export default function ExploreGemsPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="bg-white/80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
+        className="
+          backdrop-blur-xl supports-[backdrop-filter]:bg-transparent
+          shadow-sm relative z-10
+          before:content-[''] before:absolute before:inset-0 before:pointer-events-none
+          before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.70),rgba(255,255,255,0.55))]
+          before:backdrop-blur-xl
+          after:content-[''] after:absolute after:inset-0 after:pointer-events-none
+          after:bg-[radial-gradient(800px_400px_at_10%_0%,rgba(255,150,200,0.18),transparent_60%),radial-gradient(700px_350px_at_90%_0%,rgba(80,180,255,0.16),transparent_60%)]
+        "
       >
-        <div className="flex items-center justify-between max-w-[1300px] mx-auto">
-          {/* Back button */}
-          <Link href="/home" className="group flex items-center">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
-              <ArrowLeft
-                className="text-charcoal/70 group-hover:text-sage transition-colors duration-300"
-                size={22}
-              />
-            </div>
-            <motion.h1
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
-            >
-              Explore All
-            </motion.h1>
-          </Link>
+        <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+          <div className="flex items-center justify-between">
+            {/* Back button */}
+            <Link href="/home" className="group flex items-center">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
+                <ArrowLeft
+                  className="text-charcoal/70 group-hover:text-sage transition-colors duration-300"
+                  size={22}
+                />
+              </div>
+              <motion.h1
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
+              >
+                Explore All
+              </motion.h1>
+            </Link>
+          </div>
         </div>
       </motion.header>
 
