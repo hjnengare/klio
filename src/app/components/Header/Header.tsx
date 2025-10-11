@@ -13,7 +13,7 @@ const sf = {
     '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
 } as const;
 
-export default function Header({ showSearch = true }: { showSearch?: boolean }) {
+export default function Header({ showSearch = true, variant = "white" }: { showSearch?: boolean; variant?: "white" | "frosty" }) {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -56,13 +56,17 @@ export default function Header({ showSearch = true }: { showSearch?: boolean }) 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showSearchBar]);
 
+  const headerClassName = variant === "frosty"
+    ? "fixed top-0 left-0 right-0 z-50 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]"
+    : "fixed top-0 left-0 right-0 z-50 bg-white shadow-sm transition-all duration-300";
+
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 bg-[#f8f6f4] backdrop-blur-md transition-all duration-300"
+        className={headerClassName}
         style={sf}
       >
-        <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+        <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
           {/* Top row */}
           <div className="flex items-center justify-between gap-6">
             {/* Logo */}
@@ -162,7 +166,7 @@ export default function Header({ showSearch = true }: { showSearch?: boolean }) 
 
       {/* Mobile menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-full bg-[#f4ece7] z-[100] shadow-2xl transform md:hidden ${
+        className={`fixed top-0 right-0 h-full w-full bg-white/90 z-[100] shadow-2xl transform md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300`}
       >

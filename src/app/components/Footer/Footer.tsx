@@ -3,6 +3,14 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import {
+  Twitter,
+  Instagram,
+  Facebook,
+  Linkedin,
+  ShieldCheck,
+  Heart,
+} from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -29,10 +37,10 @@ export default function Footer() {
   };
 
   const socialLinks = [
-    { name: "Twitter", icon: "logo-twitter", href: "#" },
-    { name: "Instagram", icon: "logo-instagram", href: "#" },
-    { name: "Facebook", icon: "logo-facebook", href: "#" },
-    { name: "LinkedIn", icon: "logo-linkedin", href: "#" }
+    { name: "Twitter", icon: Twitter, href: "#" },
+    { name: "Instagram", icon: Instagram, href: "#" },
+    { name: "Facebook", icon: Facebook, href: "#" },
+    { name: "LinkedIn", icon: Linkedin, href: "#" }
   ];
 
   return (
@@ -65,21 +73,24 @@ export default function Footer() {
 
               {/* Social links */}
               <div className="flex space-x-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    className="w-10 h-10 bg-sage/10 hover:bg-sage/20 rounded-full flex items-center justify-center text-sage hover:text-sage/80 transition-all duration-300"
-                    aria-label={social.name}
-                  >
-                    <ion-icon name={social.icon} style={{ fontSize: "20px" }} suppressHydrationWarning />
-                  </motion.a>
-                ))}
+                {socialLinks.map((social, index) => {
+                  const Icon = social.icon;
+                  return (
+                    <motion.a
+                      key={social.name}
+                      href={social.href}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      className="w-10 h-10 bg-sage/10 hover:bg-sage/20 rounded-full flex items-center justify-center text-sage hover:text-sage/80 transition-all duration-300"
+                      aria-label={social.name}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </motion.a>
+                  );
+                })}
               </div>
             </motion.div>
           </div>
@@ -173,63 +184,22 @@ export default function Footer() {
           viewport={{ once: true }}
           className="pt-6 md:pt-8 border-t border-sage/20"
         >
-          <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+          <div className="flex flex-col md:flex-row items-center justify-center md:justify-between space-y-4 md:space-y-0">
             {/* Copyright */}
-            <div className="flex items-center space-x-6">
-              <p className="font-sf text-7 text-charcoal/60">
-                © {currentYear} KLIO. All rights reserved.
-              </p>
+            <p className="font-sf text-7 text-charcoal/60">
+              © {currentYear} KLIO. All rights reserved.
+            </p>
 
-              {/* Trust indicators */}
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2 px-3 py-1 bg-sage/10 rounded-full">
-                  <ion-icon name="shield-checkmark" style={{ color: "#749176", fontSize: "14px" }} suppressHydrationWarning />
-                  <span className="font-sf text-8 font-500 text-sage">Secure</span>
-                </div>
-                <div className="flex items-center space-x-2 px-3 py-1 bg-coral/10 rounded-full">
-                  <ion-icon name="heart" style={{ color: "#d67469", fontSize: "14px" }} suppressHydrationWarning />
-                  <span className="font-sf text-8 font-500 text-coral">Trusted</span>
-                </div>
+            {/* Trust indicators */}
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 px-3 py-1 bg-sage/10 rounded-full">
+                <ShieldCheck className="w-3.5 h-3.5 text-sage" />
+                <span className="font-sf text-8 font-500 text-sage">Secure</span>
               </div>
-            </div>
-
-            {/* App download links */}
-            <div className="flex flex-row items-center space-x-3">
-              <motion.div
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative flex items-center space-x-3 bg-gradient-to-r from-white/90 to-white/95 hover:from-white hover:to-white border border-charcoal/10 hover:border-charcoal/20 rounded-2xl px-5 py-3 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-sage/5 to-coral/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative z-10 flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-slate-800 to-black rounded-xl flex items-center justify-center shadow-sm">
-                    <ion-icon name="logo-apple" style={{ fontSize: "22px", color: "white" }} suppressHydrationWarning />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-sf text-xs text-charcoal/60 mb-0.5">Download on the</div>
-                    <div className="font-sf text-sm font-700 text-charcoal">App Store</div>
-                    <div className="font-sf text-xs text-coral font-600 mt-0.5">Coming Soon</div>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative flex items-center space-x-3 bg-gradient-to-r from-white/90 to-white/95 hover:from-white hover:to-white border border-charcoal/10 hover:border-charcoal/20 rounded-2xl px-5 py-3 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-sage/5 to-coral/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative z-10 flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-sm">
-                    <ion-icon name="logo-google-playstore" style={{ fontSize: "22px", color: "white" }} suppressHydrationWarning />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-sf text-xs text-charcoal/60 mb-0.5">Get it on</div>
-                    <div className="font-sf text-sm font-700 text-charcoal">Google Play</div>
-                    <div className="font-sf text-xs text-coral font-600 mt-0.5">Coming Soon</div>
-                  </div>
-                </div>
-              </motion.div>
+              <div className="flex items-center space-x-2 px-3 py-1 bg-coral/10 rounded-full">
+                <Heart className="w-3.5 h-3.5 text-coral" fill="currentColor" />
+                <span className="font-sf text-8 font-500 text-coral">Trusted</span>
+              </div>
             </div>
           </div>
         </motion.div>

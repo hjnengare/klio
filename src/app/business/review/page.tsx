@@ -34,6 +34,23 @@ const Footer = dynamic(() => import("../../components/Footer/Footer"), {
   ssr: false,
 });
 
+// ---------------- Frosty helpers + typography ----------------
+const frostyHeader =
+  `
+  fixed top-0 left-0 right-0 z-50
+  bg-white
+  relative
+`.replace(/\s+/g, " ");
+
+const frostyPanel =
+  `
+  relative overflow-hidden rounded-2xl
+  border border-black/5
+  backdrop-blur-xl supports-[backdrop-filter]:bg-transparent
+  before:content-[''] before:absolute before:inset-0 before:pointer-events-none
+  before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.78),rgba(255,255,255,0.62))]
+`.replace(/\s+/g, " ");
+
 // Mobile-first CSS with proper typography scale and safe areas
 const styles = `
   .text-body { font-size: 1rem; line-height: 1.5; }
@@ -66,9 +83,8 @@ type SmallReview = {
 export default function WriteReviewPage() {
   const router = useRouter();
 
-  // UI/UX DEMO MODE - Mock data for design work
+  // Mock data for design work
   const businessName = "Sample Business";
-  // Request larger images to keep things crisp; Next/Image will optimize per device via `sizes`
   const businessImages = [
     "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&h=1200&fit=crop&auto=format",
     "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&h=1200&fit=crop&auto=format",
@@ -85,7 +101,6 @@ export default function WriteReviewPage() {
   const [reviewTitle, setReviewTitle] = useState("");
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-  // Dummy “other users” sidebar data
   const otherReviews: SmallReview[] = [
     {
       id: "r1",
@@ -138,29 +153,20 @@ export default function WriteReviewPage() {
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? businessImages.length - 1 : prev - 1));
   };
-
   const handleNextImage = () => {
     setCurrentImageIndex((prev) => (prev === businessImages.length - 1 ? 0 : prev + 1));
   };
-
-  const handleDotClick = (index: number) => {
-    setCurrentImageIndex(index);
-  };
+  const handleDotClick = (index: number) => setCurrentImageIndex(index);
 
   // Touch handling for swipe
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const minSwipeDistance = 50;
-
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
+  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
@@ -171,14 +177,9 @@ export default function WriteReviewPage() {
   };
 
   const quickTags = ["Trustworthy", "On Time", "Friendly", "Good Value"];
-
-  const handleTagToggle = (tag: string) => {
+  const handleTagToggle = (tag: string) =>
     setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
-  };
-
-  const handleStarClick = (rating: number) => {
-    setOverallRating(rating);
-  };
+  const handleStarClick = (rating: number) => setOverallRating(rating);
 
   const handleSubmitReview = async () => {
     console.log("Review submitted:", {
@@ -196,53 +197,67 @@ export default function WriteReviewPage() {
 
   return (
     <>
+      {/* SF Pro + utilities */}
+      <style jsx global>{`
+        .font-sf {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+            "SF Pro Display", "Helvetica Neue", Helvetica, Arial, system-ui,
+            sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+        html, body {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+            "SF Pro Display", system-ui, sans-serif;
+        }
+      `}</style>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-dvh bg-white relative overflow-hidden">
-        {/* Static background layers */}
+
+      <div className="min-h-dvh bg-white relative overflow-hidden font-sf">
+        {/* Subtle background tint */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02]" />
         </div>
 
-        {/* Floating elements */}
+        {/* Floating elements (unchanged) */}
         <FloatingElements />
 
-        {/* Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-sage/10 px-4 py-4">
+        {/* ---------------- Header (FROSTY) ---------------- */}
+        <header className={frostyHeader + "px-4 py-4 shadow-sm"}>
           <div className="flex items-center max-w-7xl mx-auto">
             <Link href="/home" className="group flex items-center">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-3 md:mr-4">
+              <div className="w-10 h-10 md:w-12 md:h-12 z-10 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-3 md:mr-4">
                 <ArrowLeft className="text-charcoal/70 group-hover:text-sage transition-colors duration-300" size={22} />
               </div>
-              <h1 className="font-sf text-base md:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative">
+              <h1 className="text-base md:text-xl font-700 text-transparent z-10 bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage">
                 Write a Review
               </h1>
             </Link>
           </div>
         </header>
 
-        {/* Main content */}
-        <div className="relative z-10 bg-white pt-16 md:pt-20">
+        {/* ---------------- Main content ---------------- */}
+        <div className="relative z-10 bg-white pt-10">
           <div className="w-full max-w-7xl mx-auto px-0 md:px-4 py-4 md:py-6 relative z-10">
-            {/* Layout grid: main form + sidebar */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* MAIN: Form */}
               <div className="lg:col-span-8">
-                <div className="bg-white backdrop-blur-lg border-0 md:border border-sage/10 rounded-none md:rounded-lg p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col">
+                <div className="bg-white border-0 md:border border-sage/10 rounded-none md:rounded-lg p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-md">
                   <div className="relative z-10 flex-1 flex flex-col">
                     {/* Business Header */}
                     <div className="mb-4 md:mb-6 text-center px-4">
-                      <h2 className="font-sf text-xl md:text-3xl font-700 text-charcoal mb-2">{businessName}</h2>
+                      <h2 className="text-xl md:text-3xl font-700 text-charcoal mb-2">{businessName}</h2>
                       <div className="flex items-center justify-center space-x-2">
                         <div className="flex items-center space-x-1 bg-gradient-to-br from-amber-400 to-amber-600 px-3 py-1.5 rounded-full">
                           <Star size={14} className="text-white" style={{ fill: "currentColor" }} />
-                          <span className="font-sf text-sm md:text-base font-700 text-white">
+                          <span className="text-sm md:text-base font-700 text-white">
                             {businessRating.toFixed(1)}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Business Images Carousel */}
+                    {/* Images Carousel */}
                     <div className="mb-6 md:mb-8 -mx-4 md:-mx-8 relative">
                       <div
                         className="relative overflow-hidden rounded-none md:rounded-2xl"
@@ -250,7 +265,6 @@ export default function WriteReviewPage() {
                         onTouchMove={onTouchMove}
                         onTouchEnd={onTouchEnd}
                       >
-                        {/* Images Container */}
                         <div
                           className="flex transition-transform duration-500 ease-out"
                           style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
@@ -260,7 +274,6 @@ export default function WriteReviewPage() {
                               key={idx}
                               className="w-full flex-shrink-0 aspect-[4/3] md:aspect-[16/9] bg-sage/10 relative"
                             >
-                              {/* High-res cover image */}
                               <Image
                                 src={img}
                                 alt={`${businessName} photo ${idx + 1}`}
@@ -299,23 +312,22 @@ export default function WriteReviewPage() {
 
                         {/* Image Counter */}
                         <div className="absolute top-3 md:top-4 right-3 md:right-4 px-3 py-1.5 rounded-full bg-charcoal/70 backdrop-blur-sm z-10">
-                          <span className="font-sf text-xs md:text-sm font-500 text-white">
+                          <span className="text-xs md:text-sm font-500 text-white">
                             {currentImageIndex + 1} / {businessImages.length}
                           </span>
                         </div>
                       </div>
 
-                      {/* Carousel Indicators */}
+                      {/* Dots */}
                       <div className="flex items-center justify-center space-x-2 mt-4 px-4">
                         {businessImages.map((_, idx) => (
                           <button
                             key={idx}
                             onClick={() => handleDotClick(idx)}
-                            className={`transition-all duration-300 ${
-                              idx === currentImageIndex
+                            className={`transition-all duration-300 ${idx === currentImageIndex
                                 ? "w-8 h-2 bg-sage rounded-full"
                                 : "w-2 h-2 bg-sage/30 rounded-full hover:bg-sage/50"
-                            }`}
+                              }`}
                             aria-label={`Go to image ${idx + 1}`}
                           />
                         ))}
@@ -324,10 +336,7 @@ export default function WriteReviewPage() {
 
                     {/* Overall Rating */}
                     <div className="mb-6 md:mb-8 px-4">
-                      <h3 className="font-sf text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
-                        <div className="w-6 h-6 bg-gradient-to-br from-amber-400/20 to-amber-600/10 rounded-full flex items-center justify-center mr-3">
-                          <Star size={16} className="text-amber-500" style={{ fill: "currentColor" }} />
-                        </div>
+                      <h3 className="text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 text-center md:text-left">
                         Overall rating
                       </h3>
                       <div className="flex items-center justify-center space-x-1 md:space-x-2 mb-2">
@@ -349,28 +358,24 @@ export default function WriteReviewPage() {
                           );
                         })}
                       </div>
-                      <p className="text-center font-sf text-sm font-400 text-charcoal/60">Tap to select rating</p>
+                      <p className="text-center text-sm font-400 text-charcoal/60">Tap to select rating</p>
                     </div>
 
                     {/* Quick Tags */}
                     <div className="mb-6 md:mb-8 px-4">
-                      <h3 className="font-sf text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
-                        <div className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3">
-                          <Tags size={16} className="text-sage" />
-                        </div>
+                      <h3 className="text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 text-center md:text-left">
                         Choose up to 4 quick tags
                       </h3>
                       <div className="flex flex-wrap justify-center gap-2 md:gap-3">
-                        {quickTags.map((tag) => (
+                        {["Trustworthy", "On Time", "Friendly", "Good Value"].map((tag) => (
                           <button
                             key={tag}
                             onClick={() => handleTagToggle(tag)}
                             className={`
-                              px-4 md:px-6 py-3 md:py-4 rounded-full border-2 transition-all duration-300 font-sf text-sm font-600 btn-target
-                              ${
-                                selectedTags.includes(tag)
-                                  ? "bg-sage border-sage text-white shadow-lg"
-                                  : "bg-white backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10"
+                              px-4 md:px-6 py-3 md:py-4 rounded-full border-2 transition-all duration-300 text-sm font-600 btn-target
+                              ${selectedTags.includes(tag)
+                                ? "bg-sage border-sage text-white shadow-lg"
+                                : "bg-white backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10"
                               }
                               focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2
                             `}
@@ -383,10 +388,7 @@ export default function WriteReviewPage() {
 
                     {/* Review Title */}
                     <div className="mb-4 md:mb-6 px-4">
-                      <h3 className="font-sf text-base md:text-lg font-600 text-charcoal mb-3 flex items-center justify-center md:justify-start">
-                        <div className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3">
-                          <Pencil size={16} className="text-sage" />
-                        </div>
+                      <h3 className="text-base md:text-lg font-600 text-charcoal mb-3 text-center md:text-left">
                         Review Title (Optional)
                       </h3>
                       <input
@@ -394,16 +396,13 @@ export default function WriteReviewPage() {
                         value={reviewTitle}
                         onChange={(e) => setReviewTitle(e.target.value)}
                         placeholder="Summarize your experience in a few words..."
-                        className="w-full bg-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-sf text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 input-mobile"
+                        className="w-full bg-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 input-mobile"
                       />
                     </div>
 
                     {/* Review Text */}
                     <div className="mb-6 md:mb-8 px-4">
-                      <h3 className="font-sf text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
-                        <div className="w-6 h-6 bg-gradient-to-br from-coral/20 to-coral/10 rounded-full flex items-center justify-center mr-3">
-                          <Edit3 size={16} className="text-coral" />
-                        </div>
+                      <h3 className="text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 text-center md:text-left">
                         Tell us about your experience
                       </h3>
                       <textarea
@@ -411,16 +410,13 @@ export default function WriteReviewPage() {
                         onChange={(e) => setReviewText(e.target.value)}
                         placeholder="Share your thoughts and help other locals..."
                         rows={4}
-                        className="w-full bg-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 font-sf text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none flex-1 min-h-[120px] md:min-h-0 input-mobile"
+                        className="w-full bg-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none flex-1 min-h-[120px] md:min-h-0 input-mobile"
                       />
                     </div>
 
                     {/* Image Upload */}
                     <div className="mb-6 md:mb-8 px-4">
-                      <h3 className="font-sf text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 flex items-center justify-center md:justify-start">
-                        <div className="w-6 h-6 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mr-3">
-                          <Camera size={16} className="text-sage" />
-                        </div>
+                      <h3 className="text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 text-center md:text-left">
                         Add Photos (Optional)
                       </h3>
                       <ImageUpload onImagesChange={setSelectedImages} maxImages={5} disabled={false} />
@@ -430,14 +426,10 @@ export default function WriteReviewPage() {
                     <div className="px-4">
                       <button
                         onClick={handleSubmitReview}
-                        className={`
-                          w-full py-4 px-6 rounded-lg font-sf text-base md:text-lg font-600 transition-all duration-300 relative overflow-hidden btn-target btn-press
-                          ${
-                            isFormValid
-                              ? "bg-gradient-to-r from-sage to-sage/90 text-white focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 group hover:shadow-1"
-                              : "bg-charcoal/20 text-charcoal/40 cursor-not-allowed"
-                          }
-                        `}
+                        className={`w-full py-4 px-6 rounded-lg text-base md:text-lg font-600 transition-all duration-300 relative overflow-hidden btn-target btn-press ${isFormValid
+                            ? "bg-gradient-to-r from-sage to-sage/90 text-white focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 group hover:shadow-1"
+                            : "bg-charcoal/20 text-charcoal/40 cursor-not-allowed"
+                          }`}
                         disabled={!isFormValid}
                       >
                         <span className="relative z-10 flex items-center justify-center space-x-2">
@@ -450,92 +442,86 @@ export default function WriteReviewPage() {
                 </div>
               </div>
 
-              {/* SIDEBAR: Other users' reviews */}
+              {/* ------------ SIDEBAR ------------ */}
               <aside className="lg:col-span-4">
-                {/* Desktop sticky */}
-                <div className="hidden lg:block sticky top-24 space-y-4 max-h-[calc(100vh-7rem)] overflow-y-auto pb-4 scrollbar-thin scrollbar-thumb-sage/20 scrollbar-track-transparent">
-                  <h3 className="font-sf text-lg font-700 text-charcoal mb-2 sticky top-0 bg-white/95 backdrop-blur-sm pb-2 -mt-2 pt-2 z-10">What others are saying</h3>
-                  {otherReviews.map((r) => (
-                    <div
-                      key={r.id}
-                      className="bg-white border border-sage/10 rounded-lg p-4 flex gap-3"
-                    >
-                      {/* Avatar */}
-                      <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-sage/10">
-                        {r.user.avatar ? (
-                          <Image
-                            src={r.user.avatar}
-                            alt={`${r.user.name} avatar`}
-                            fill
-                            className="object-cover"
-                            sizes="48px"
-                            quality={85}
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-sage">•</div>
-                        )}
-                      </div>
-
-                      {/* Content */}
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between">
-                          <p className="font-sf text-sm font-700 text-charcoal truncate">
-                            {r.user.name}
-                          </p>
-                          <div className="flex items-center gap-1">
-                            <Star size={14} className="text-amber-500" style={{ fill: "currentColor" }} />
-                            <span className="text-xs font-sf text-charcoal/70">{r.rating}</span>
+                {/* Desktop: FIXED frosty panel */}
+                <div className={`hidden lg:block lg:fixed right-[max(1rem,calc((100vw-80rem)/2))] top-24 w-[360px] max-h-[calc(100vh-7rem)] overflow-y-auto px-4 py-6 space-y-4 scrollbar-thin scrollbar-thumb-black/10 scrollbar-track-transparent shadow-lg`}>
+                  <div className={frostyPanel}>
+                    <div className="relative z-[1]">
+                      <h3 className="text-lg font-700 text-charcoal px-3 pt-3 pb-2 sticky top-0">
+                        What others are saying
+                      </h3>
+                      <div className="px-3 pb-3 space-y-3">
+                        {otherReviews.map((r) => (
+                          <div key={r.id} className="rounded-xl border border-black/5 p-3 bg-white/70">
+                            <div className="flex gap-3">
+                              <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-sage/10">
+                                {r.user.avatar ? (
+                                  <Image
+                                    src={r.user.avatar}
+                                    alt={`${r.user.name} avatar`}
+                                    fill
+                                    className="object-cover"
+                                    sizes="48px"
+                                    quality={85}
+                                  />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-sage">•</div>
+                                )}
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center justify-between">
+                                  <p className="text-sm font-700 text-charcoal truncate">{r.user.name}</p>
+                                  <div className="flex items-center gap-1">
+                                    <Star size={14} className="text-amber-500" style={{ fill: "currentColor" }} />
+                                    <span className="text-xs text-charcoal/70">{r.rating}</span>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-2 text-xs text-charcoal/50 mt-0.5">
+                                  {r.user.location && (
+                                    <span className="inline-flex items-center gap-1">
+                                      <MapPin size={12} />
+                                      {r.user.location}
+                                    </span>
+                                  )}
+                                  <span className="inline-flex items-center gap-1">
+                                    <Calendar size={12} />
+                                    {r.date}
+                                  </span>
+                                </div>
+                                <p className="text-sm text-charcoal/80 mt-2 line-clamp-3">{r.text}</p>
+                                {r.image && (
+                                  <div className="relative mt-3 w-full h-24 rounded-md overflow-hidden">
+                                    <Image
+                                      src={r.image}
+                                      alt={`${r.business} photo`}
+                                      fill
+                                      className="object-cover"
+                                      sizes="360px"
+                                      quality={85}
+                                    />
+                                  </div>
+                                )}
+                                <div className="flex items-center gap-1 text-charcoal/60 mt-3">
+                                  <Heart size={14} />
+                                  <span className="text-xs">{r.likes}</span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex items-center gap-2 text-xs text-charcoal/50 mt-0.5">
-                          {r.user.location && (
-                            <span className="inline-flex items-center gap-1">
-                              <MapPin size={12} />
-                              {r.user.location}
-                            </span>
-                          )}
-                          <span className="inline-flex items-center gap-1">
-                            <Calendar size={12} />
-                            {r.date}
-                          </span>
-                        </div>
-
-                        <p className="font-sf text-sm text-charcoal/80 mt-2 line-clamp-3">
-                          {r.text}
-                        </p>
-
-                        {r.image && (
-                          <div className="relative mt-3 w-full h-24 rounded-md overflow-hidden">
-                            <Image
-                              src={r.image}
-                              alt={`${r.business} photo`}
-                              fill
-                              className="object-cover"
-                              sizes="(max-width: 1024px) 100vw, 360px"
-                              quality={85}
-                            />
-                          </div>
-                        )}
-
-                        <div className="flex items-center gap-1 text-charcoal/60 mt-3">
-                          <Heart size={14} />
-                          <span className="text-xs font-sf">{r.likes}</span>
-                        </div>
+                        ))}
                       </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
 
-                {/* Mobile/Tablet: horizontal scroll list below the form */}
+                {/* Mobile/Tablet horizontal list */}
                 <div className="lg:hidden mt-6">
-                  <h3 className="font-sf text-base font-700 text-charcoal px-4">What others are saying</h3>
+                  <h3 className="text-base font-700 text-charcoal px-4">What others are saying</h3>
                   <div className="mt-3 overflow-x-auto hide-scrollbar">
                     <ul className="flex gap-3 px-4 pb-2">
                       {otherReviews.map((r) => (
-                        <li
-                          key={r.id}
-                          className="min-w-[260px] max-w-[280px] bg-white border border-sage/10 rounded-lg p-4"
-                        >
+                        <li key={r.id} className="min-w-[260px] max-w-[280px] bg-white border border-sage/10 rounded-lg p-4">
                           <div className="flex items-center gap-3">
                             <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-sage/10">
                               {r.user.avatar ? (
@@ -552,7 +538,7 @@ export default function WriteReviewPage() {
                               )}
                             </div>
                             <div className="min-w-0">
-                              <p className="font-sf text-sm font-700 text-charcoal truncate">{r.user.name}</p>
+                              <p className="text-sm font-700 text-charcoal truncate">{r.user.name}</p>
                               <div className="flex items-center gap-1 text-xs text-charcoal/60">
                                 <Star size={12} className="text-amber-500" style={{ fill: "currentColor" }} />
                                 <span>{r.rating}</span>
@@ -560,7 +546,7 @@ export default function WriteReviewPage() {
                             </div>
                           </div>
 
-                          <p className="font-sf text-sm text-charcoal/80 mt-2 line-clamp-3">{r.text}</p>
+                          <p className="text-sm text-charcoal/80 mt-2 line-clamp-3">{r.text}</p>
 
                           {r.image && (
                             <div className="relative mt-3 w-full h-24 rounded-md overflow-hidden">
@@ -577,7 +563,7 @@ export default function WriteReviewPage() {
 
                           <div className="flex items-center gap-1 text-charcoal/60 mt-3">
                             <Heart size={14} />
-                            <span className="text-xs font-sf">{r.likes}</span>
+                            <span className="text-xs">{r.likes}</span>
                           </div>
                         </li>
                       ))}
@@ -588,8 +574,6 @@ export default function WriteReviewPage() {
             </div>
           </div>
 
-          {/* Footer */}
-          <Footer />
         </div>
       </div>
     </>

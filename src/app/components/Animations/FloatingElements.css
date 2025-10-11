@@ -1,0 +1,72 @@
+/* Pure CSS animations for floating elements - more performant than JS animations */
+
+@keyframes float-1 {
+  0%, 100% {
+    transform: translate(-100px, 100px);
+  }
+  50% {
+    transform: translate(100px, 50px);
+  }
+}
+
+@keyframes float-2 {
+  0%, 100% {
+    transform: translate(100px, -50px);
+  }
+  50% {
+    transform: translate(-50px, 100px);
+  }
+}
+
+@keyframes float-3 {
+  0%, 100% {
+    transform: translate(0px, 0px);
+  }
+  33% {
+    transform: translate(80px, -60px);
+  }
+  66% {
+    transform: translate(-40px, 40px);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+.floating-orb-1 {
+  animation: float-1 20s linear infinite;
+  will-change: transform;
+}
+
+.floating-orb-2 {
+  animation: float-2 25s linear infinite;
+  will-change: transform;
+}
+
+.floating-orb-3 {
+  animation: float-3 30s linear infinite;
+  will-change: transform;
+}
+
+.sparkle-animation {
+  animation: sparkle 3s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .floating-orb-1,
+  .floating-orb-2,
+  .floating-orb-3,
+  .sparkle-animation {
+    animation: none;
+  }
+}

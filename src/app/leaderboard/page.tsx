@@ -54,41 +54,40 @@ export default function LeaderboardPage() {
   const [showToast, setShowToast] = useState(true);
 
   return (
-    <div className="min-h-dvh  bg-white   pb-6 relative overflow-hidden">
+    <div className="min-h-dvh bg-gradient-to-br from-white via-sage/[0.02] to-white pb-6 relative overflow-hidden">
 
       {/* Premium background elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-sage/8 via-sage/4 to-transparent rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-br from-coral/6 via-coral/3 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-charcoal/3 via-charcoal/1 to-transparent rounded-full blur-2xl animate-pulse" style={{ animationDelay: "2s" }} />
+        {/* Premium gradient overlay for glassy effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(116,145,118,0.03),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(214,116,105,0.025),transparent_50%)]" />
       </div>
 
-      {/* Header */}
+      {/* Header with spring animation */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="
-          backdrop-blur-xl supports-[backdrop-filter]:bg-transparent
-          shadow-sm relative z-10
-          before:content-[''] before:absolute before:inset-0 before:pointer-events-none
-          before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.70),rgba(255,255,255,0.55))]
-          before:backdrop-blur-xl
-          after:content-[''] after:absolute after:inset-0 after:pointer-events-none
-          after:bg-[radial-gradient(800px_400px_at_10%_0%,rgba(255,150,200,0.18),transparent_60%),radial-gradient(700px_350px_at_90%_0%,rgba(80,180,255,0.16),transparent_60%)]
-        "
+        transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
+        className="bg-white shadow-sm relative z-10"
       >
         <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             {/* Back button */}
             <Link href="/home" className="group flex items-center">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4"
+              >
                 <ArrowLeft className="text-lg sm:text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
-              </div>
+              </motion.div>
               <motion.h1
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
+                transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.1 }}
                 className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
               >
                 Community Highlights
@@ -99,11 +98,11 @@ export default function LeaderboardPage() {
       </motion.header>
 
       <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12 relative z-10">
-        {/* Page Title */}
+        {/* Page Title with spring animation */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.15 }}
           className="text-center mb-8 sm:mb-12"
         >
           <h2 className="font-sf text-lg sm:text-xl md:text-2xl font-700 text-charcoal mb-2 sm:mb-4 px-4">
@@ -114,23 +113,18 @@ export default function LeaderboardPage() {
           </p>
         </motion.div>
 
-        {/* Top Reviewers Leaderboard */}
+        {/* Top Reviewers Leaderboard with spring */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className=" bg-white   backdrop-blur-xl shadow-xl border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 relative overflow-hidden rounded-2xl"
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 80, damping: 15, delay: 0.25 }}
+          className="bg-white backdrop-blur-xl shadow-xl border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 relative overflow-hidden rounded-2xl"
         >
           {/* Card decorative elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-2xl"></div>
 
           <div className="relative z-10">
-            <h3 className="font-sf text-base sm:text-lg font-700 text-charcoal mb-6 sm:mb-8 text-center flex items-center justify-center gap-2 sm:gap-3">
-              <Trophy className="text-base sm:text-lg text-sage" />
-              Top Reviewers
-            </h3>
-
             {/* Top 3 Podium - Professional */}
             <div className="flex flex-col sm:flex-row justify-center items-end gap-4 sm:gap-4 mb-6 sm:mb-8 md:mb-12 px-2 max-w-3xl mx-auto">
               {/* 2nd Place */}

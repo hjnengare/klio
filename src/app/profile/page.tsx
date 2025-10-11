@@ -7,20 +7,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 import { useScrollReveal } from "../hooks/useScrollReveal";
-// lucide-react icons
-import {
-  ArrowLeft
-} from "lucide-react";
-
-
-// lucide-react icons
+import { ArrowLeft } from "lucide-react";
 import {
   User as UserIcon,
   AlertCircle,
   ChevronLeft,
   ChevronRight,
   ChevronUp,
-  ChevronDown,
   Trophy,
   Star as StarIcon,
   CheckCircle,
@@ -33,77 +26,44 @@ import {
   Building2,
 } from "lucide-react";
 
-// Dynamic imports
 const Footer = dynamic(() => import("../components/Footer/Footer"), {
   loading: () => null,
   ssr: false,
 });
 
-// Types based on new database schema
-interface UserProfile {
-  user_id: string;
-  username: string | null;
-  display_name: string | null;
-  avatar_url: string | null;
-  locale: string;
-  onboarding_step: string;
-  is_top_reviewer: boolean;
-  reviews_count: number;
-  badges_count: number;
-  interests_count: number;
-  last_interests_updated: string | null;
-  created_at: string;
-  updated_at: string;
-}
+// ---------- Frosted gradient helpers ----------
+const glassHeader =
+  `
+  relative z-10
+  px-3 sm:px-4 py-4 sm:py-6
+  border-b border-black/5
+  bg-white
+`.replace(/\s+/g, " ");
 
-interface UserInterest {
-  interest_id: string;
-  interests: {
-    id: string;
-    name: string;
-  };
-}
+const glassCard =
+  `
+  relative overflow-hidden rounded-2xl
+  border border-black/5
+  backdrop-blur-xl
+  supports-[backdrop-filter]:bg-transparent
+  before:content-[''] before:absolute before:inset-0 before:pointer-events-none
+  before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))]
+  after:content-[''] after:absolute after:inset-0 after:pointer-events-none
+  after:bg-[radial-gradient(500px_280px_at_10%_0%,rgba(232,215,146,0.12),transparent_65%),radial-gradient(450px_240px_at_90%_0%,rgba(209,173,219,0.10),transparent_65%)]
+`.replace(/\s+/g, " ");
 
-interface Review {
-  id: string;
-  business_name: string;
-  rating: number;
-  review_text: string | null;
-  is_featured: boolean;
-  created_at: string;
-  // NEW: optional business thumbnail
-  business_image_url?: string | null;
-}
+// ---------------------------------------------
 
-interface Achievement {
-  id: string;
-  name: string;
-  description: string | null;
-  icon: string;
-  category: string;
-}
+// Types
+interface UserProfile { user_id: string; username: string | null; display_name: string | null; avatar_url: string | null; locale: string; onboarding_step: string; is_top_reviewer: boolean; reviews_count: number; badges_count: number; interests_count: number; last_interests_updated: string | null; created_at: string; updated_at: string; }
+interface UserInterest { interest_id: string; interests: { id: string; name: string; }; }
+interface Review { id: string; business_name: string; rating: number; review_text: string | null; is_featured: boolean; created_at: string; business_image_url?: string | null; }
+interface Achievement { id: string; name: string; description: string | null; icon: string; category: string; }
+interface UserAchievement { achievement_id: string; earned_at: string; achievements: Achievement; }
 
-interface UserAchievement {
-  achievement_id: string;
-  earned_at: string;
-  achievements: Achievement;
-}
-
-/** Avatar with graceful fallback (lucide User icon) */
-function SafeAvatar({
-  src,
-  alt,
-  size = 64,
-  className = "",
-}: {
-  src?: string | null;
-  alt: string;
-  size?: number;
-  className?: string;
-}) {
+function SafeAvatar({ src, alt, size = 64, className = "" }: { src?: string | null; alt: string; size?: number; className?: string; }) {
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-
   const showPlaceholder = !src || !src.trim() || imageError;
 
   if (showPlaceholder) {
@@ -129,7 +89,6 @@ function SafeAvatar({
         onError={() => setImageError(true)}
         onLoad={() => setImageLoaded(true)}
         placeholder="empty"
-      // unoptimized
       />
       {!imageLoaded && !imageError && (
         <div
@@ -144,25 +103,9 @@ function SafeAvatar({
   );
 }
 
-/** Business / contribution thumbnail with image or fallback */
-function BusinessThumb({
-  name,
-  imageUrl,
-  size = 40,
-  rounded = true,
-}: {
-  name: string;
-  imageUrl?: string | null;
-  size?: number;
-  rounded?: boolean;
-}) {
+function BusinessThumb({ name, imageUrl, size = 40, rounded = true }: { name: string; imageUrl?: string | null; size?: number; rounded?: boolean; }) {
   const [err, setErr] = useState(false);
-  const initials = name
-    .split(" ")
-    .map((w) => w[0]?.toUpperCase())
-    .slice(0, 2)
-    .join("");
-
+  const initials = name.split(" ").map((w) => w[0]?.toUpperCase()).slice(0, 2).join("");
   const radius = rounded ? "rounded-full" : "rounded-md";
 
   if (!imageUrl || err) {
@@ -187,7 +130,6 @@ function BusinessThumb({
         height={size}
         className="object-cover"
         onError={() => setErr(true)}
-      // unoptimized
       />
     </div>
   );
@@ -203,7 +145,6 @@ function ProfileContent() {
   const [loading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load user data (mock UX-friendly data)
   useEffect(() => {
     const mockProfile: UserProfile = {
       user_id: user?.id || "dummy-user-id",
@@ -222,97 +163,23 @@ function ProfileContent() {
     };
 
     const defaultInterests = ["food-drink", "arts-culture", "outdoors-adventure", "nightlife-entertainment"];
-    const interestsToUse = defaultInterests;
-    const mockUserInterests: UserInterest[] = interestsToUse.map((interestId) => ({
+    const mockUserInterests: UserInterest[] = defaultInterests.map((interestId) => ({
       interest_id: interestId,
-      interests: {
-        id: interestId,
-        name: interestId.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase()),
-      },
+      interests: { id: interestId, name: interestId.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase()) },
     }));
 
     const mockReviews: Review[] = [
-      {
-        id: "1",
-        business_name: "The Pot Luck Club",
-        rating: 5,
-        review_text: "Amazing rooftop dining experience with incredible city views!",
-        is_featured: true,
-        created_at: "2024-01-15T10:30:00Z",
-        business_image_url: null, // add actual URL if you have one
-      },
-      {
-        id: "2",
-        business_name: "Kirstenbosch Gardens",
-        rating: 5,
-        review_text: "Perfect place for a weekend picnic and nature walks.",
-        is_featured: false,
-        created_at: "2024-01-10T14:20:00Z",
-        business_image_url: null,
-      },
-      {
-        id: "3",
-        business_name: "La Colombe Restaurant",
-        rating: 4,
-        review_text: "Excellent wine selection and beautiful vineyard setting.",
-        is_featured: false,
-        created_at: "2024-01-05T19:45:00Z",
-        business_image_url: null,
-      },
-      {
-        id: "4",
-        business_name: "V&A Waterfront",
-        rating: 4,
-        review_text: "Great shopping and entertainment hub with harbor views.",
-        is_featured: false,
-        created_at: "2023-12-28T16:15:00Z",
-        business_image_url: null,
-      },
-      {
-        id: "5",
-        business_name: "Chapman's Peak Drive",
-        rating: 5,
-        review_text: "Breathtaking coastal drive - must do when visiting Cape Town!",
-        is_featured: true,
-        created_at: "2023-12-20T09:30:00Z",
-        business_image_url: null,
-      },
+      { id: "1", business_name: "The Pot Luck Club", rating: 5, review_text: "Amazing rooftop dining experience with incredible city views!", is_featured: true, created_at: "2024-01-15T10:30:00Z", business_image_url: null },
+      { id: "2", business_name: "Kirstenbosch Gardens", rating: 5, review_text: "Perfect place for a weekend picnic and nature walks.", is_featured: false, created_at: "2024-01-10T14:20:00Z", business_image_url: null },
+      { id: "3", business_name: "La Colombe Restaurant", rating: 4, review_text: "Excellent wine selection and beautiful vineyard setting.", is_featured: false, created_at: "2024-01-05T19:45:00Z", business_image_url: null },
+      { id: "4", business_name: "V&A Waterfront", rating: 4, review_text: "Great shopping and entertainment hub with harbor views.", is_featured: false, created_at: "2023-12-28T16:15:00Z", business_image_url: null },
+      { id: "5", business_name: "Chapman's Peak Drive", rating: 5, review_text: "Breathtaking coastal drive - must do when visiting Cape Town!", is_featured: true, created_at: "2023-12-20T09:30:00Z", business_image_url: null },
     ];
 
     const mockAchievements: UserAchievement[] = [
-      {
-        achievement_id: "1",
-        earned_at: "2024-01-01T12:00:00Z",
-        achievements: {
-          id: "1",
-          name: "Local Explorer",
-          description: "Reviewed 5 different businesses in your area",
-          icon: "map",
-          category: "discovery",
-        },
-      },
-      {
-        achievement_id: "2",
-        earned_at: "2024-01-10T12:00:00Z",
-        achievements: {
-          id: "2",
-          name: "Top Reviewer",
-          description: "Earned featured review status",
-          icon: "trophy",
-          category: "quality",
-        },
-      },
-      {
-        achievement_id: "3",
-        earned_at: "2024-01-15T12:00:00Z",
-        achievements: {
-          id: "3",
-          name: "Community Helper",
-          description: "Your reviews helped 50+ people discover great places",
-          icon: "heart",
-          category: "community",
-        },
-      },
+      { achievement_id: "1", earned_at: "2024-01-01T12:00:00Z", achievements: { id: "1", name: "Local Explorer", description: "Reviewed 5 different businesses in your area", icon: "map", category: "discovery" } },
+      { achievement_id: "2", earned_at: "2024-01-10T12:00:00Z", achievements: { id: "2", name: "Top Reviewer", description: "Earned featured review status", icon: "trophy", category: "quality" } },
+      { achievement_id: "3", earned_at: "2024-01-15T12:00:00Z", achievements: { id: "3", name: "Community Helper", description: "Your reviews helped 50+ people discover great places", icon: "heart", category: "community" } },
     ];
 
     setProfile(mockProfile);
@@ -322,56 +189,32 @@ function ProfileContent() {
     setError(null);
   }, [user]);
 
-  // Simplified scroll reveal
   const headerRef = useScrollReveal({ className: ["scroll-reveal"] });
   const statsRef = useScrollReveal({ className: ["scroll-reveal"] });
   const contributionsRef = useScrollReveal({ className: ["scroll-reveal"] });
   const achievementsRef = useScrollReveal({ className: ["scroll-reveal"] });
   const settingsRef = useScrollReveal({ className: ["scroll-reveal"] });
 
-  const handleLogout = () => {
-    logout();
-  };
+  const handleLogout = () => logout();
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, index) => {
-      const active = index < rating;
+  const renderStars = (rating: number) =>
+    Array.from({ length: 5 }, (_, i) => {
+      const active = i < rating;
       return (
         <StarIcon
-          key={index}
+          key={i}
           className={active ? "text-coral" : "text-gray-300"}
-          style={{
-            width: 16,
-            height: 16,
-            // fill to simulate "filled" star when active (lucide is outline-first)
-            fill: active ? "currentColor" : "none",
-          }}
+          style={{ width: 16, height: 16, fill: active ? "currentColor" : "none" }}
           aria-hidden
         />
       );
     });
-  };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      year: "numeric",
-    });
-    // could include day if you prefer
-  };
-
-  const formatMemberSince = (dateString: string) => {
-    const date = new Date(dateString);
+  const formatDate = (d: string) => new Date(d).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  const formatMemberSince = (d: string) => {
+    const date = new Date(d);
     const year = date.getFullYear().toString().slice(-2);
-    return (
-      date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      }) +
-      " '" +
-      year
-    );
+    return `${date.toLocaleDateString("en-US", { month: "short", day: "numeric" })} '${year}`;
   };
 
   if (loading) {
@@ -380,22 +223,24 @@ function ProfileContent() {
         <div className="pt-4 pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">
-              <div className="bg-white backdrop-blur-sm p-6 border border-charcoal/10">
-                <div className="animate-pulse">
-                  <div className="flex items-center space-x-4 mb-4">
-                    <div className="w-16 h-16 bg-charcoal/10 rounded-full"></div>
-                    <div className="space-y-2">
-                      <div className="h-6 bg-charcoal/10 rounded w-48"></div>
-                      <div className="h-4 bg-charcoal/10 rounded w-32"></div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="text-center">
-                        <div className="h-8 bg-charcoal/10 rounded mb-2"></div>
-                        <div className="h-4 bg-charcoal/10 rounded"></div>
+              <div className={`${glassCard}`}>
+                <div className="relative z-[1] p-6">
+                  <div className="animate-pulse">
+                    <div className="flex items-center space-x-4 mb-4">
+                      <div className="w-16 h-16 bg-charcoal/10 rounded-full"></div>
+                      <div className="space-y-2">
+                        <div className="h-6 bg-charcoal/10 rounded w-48"></div>
+                        <div className="h-4 bg-charcoal/10 rounded w-32"></div>
                       </div>
-                    ))}
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                      {[1, 2, 3].map((i) => (
+                        <div key={i} className="text-center">
+                          <div className="h-8 bg-charcoal/10 rounded mb-2"></div>
+                          <div className="h-4 bg-charcoal/10 rounded"></div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -413,19 +258,16 @@ function ProfileContent() {
         <div className="pt-4 pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">
-              <div className="bg-white backdrop-blur-sm p-6 border border-red-200 text-center">
-                <AlertCircle className="text-red-500 w-12 h-12 mb-4" />
-                <h2 className="font-sf text-xl font-600 text-charcoal mb-2">{error || "Profile not found"}</h2>
-                <p className="text-charcoal/60 mb-4">
-                  Please try refreshing the page or contact support if the problem persists.
-                </p>
-                <Link
-                  href="/home"
-                  className="inline-flex items-center space-x-2 bg-sage text-white px-6 py-3 rounded-6 font-sf font-600 hover:bg-sage/90 transition-colors"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                  <span>Back to Home</span>
-                </Link>
+              <div className={`${glassCard} text-center`}>
+                <div className="relative z-[1] p-6">
+                  <AlertCircle className="text-red-500 w-12 h-12 mb-4" />
+                  <h2 className="font-sf text-xl font-600 text-charcoal mb-2">{error || "Profile not found"}</h2>
+                  <p className="text-charcoal/60 mb-4">Please try refreshing the page or contact support if the problem persists.</p>
+                  <Link href="/home" className="inline-flex items-center space-x-2 bg-sage text-white px-6 py-3 rounded-6 font-sf font-600 hover:bg-sage/90 transition-colors">
+                    <ChevronLeft className="w-4 h-4" />
+                    <span>Back to Home</span>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -435,92 +277,35 @@ function ProfileContent() {
   }
 
   return (
-    <div className="min-h-dvh bg-white relative">
-      {/* Floating background elements */}
+    <div className="min-h-dvh bg-gradient-to-br from-white via-coral/[0.015] to-white relative">
+      {/* Floating background orbs remain */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Floating orbs */}
-        <motion.div
-          className="absolute w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"
-          initial={{ x: -100, y: 100 }}
-          animate={{
-            x: ["-100px", "100px", "-100px"],
-            y: ["100px", "50px", "100px"],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          style={{ top: "20%", left: "10%" }}
-        />
-
-        <motion.div
-          className="absolute w-24 h-24 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-xl"
-          initial={{ x: 100, y: -50 }}
-          animate={{
-            x: ["100px", "-50px", "100px"],
-            y: ["-50px", "100px", "-50px"],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          style={{ top: "60%", right: "15%" }}
-        />
-
-        <motion.div
-          className="absolute w-20 h-20 bg-gradient-to-br from-sage/6 to-transparent rounded-full blur-lg"
-          initial={{ x: 0, y: 0 }}
-          animate={{
-            x: ["0px", "80px", "-40px", "0px"],
-            y: ["0px", "-60px", "40px", "0px"],
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          style={{ bottom: "20%", left: "20%" }}
-        />
-
-        {/* Subtle sparkles */}
-        {Array.from({ length: 4 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-sage/20 rounded-full"
-            style={{
-              left: `${(i * 83 + 37) % 100}%`,
-              top: `${(i * 127 + 19) % 100}%`,
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0], scale: [0, 1.5, 0] }}
-            transition={{ duration: 3 + (i % 3), repeat: Infinity, delay: i * 0.4, ease: "easeInOut" }}
-          />
-        ))}
+        {/* Premium gradient overlay for glassy effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(214,116,105,0.03),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(116,145,118,0.02),transparent_50%)]" />
       </div>
 
-      {/* Header */}
+      {/* ---------- Page Header with spring animation ---------- */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="bg-white/80 px-3 sm:px-4 py-4 sm:py-6 shadow-sm relative z-10"
+        transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
+        className={glassHeader}
       >
-        <div className="flex items-center justify-between max-w-[1300px] mx-auto">
-          {/* Back button */}
+        <div className="relative z-[1] flex items-center justify-between max-w-[1300px] mx-auto">
           <Link href="/home" className="group flex items-center">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-coral/20 hover:to-coral/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-coral/20 mr-2 sm:mr-4">
-              <ArrowLeft
-                className="text-charcoal/70 group-hover:text-coral transition-colors duration-300"
-                size={22}
-              />
-            </div>
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-coral/20 hover:to-coral/10 rounded-full flex items-center justify-center border border-charcoal/5 hover:border-coral/20 mr-2 sm:mr-4"
+            >
+              <ArrowLeft className="text-charcoal/70 group-hover:text-coral transition-colors duration-300" size={22} />
+            </motion.div>
             <motion.h1
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-coral via-coral/90 to-charcoal transition-all duration-300 group-hover:from-coral/90 group-hover:to-coral relative"
+              transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.1 }}
+              className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-coral via-coral/90 to-charcoal"
             >
               Your Profile
             </motion.h1>
@@ -533,198 +318,174 @@ function ProfileContent() {
         <div className="px-4 sm:px-6 md:px-8">
           <div className="max-w-4xl mx-auto space-y-6">
             {/* Profile Header Card */}
-            <div ref={headerRef} className="p-6 border border-charcoal/10">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center space-x-4">
-                  <div className="relative">
-                    <div className="w-16 h-16">
-                      <SafeAvatar
-                        src={profile.avatar_url}
-                        alt="Profile picture"
-                        size={64}
-                        className="w-16 h-16 object-cover"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <h1 className="font-sf text-xl font-700 text-charcoal">
-                        @{profile.username || profile.display_name || "User"}
-                      </h1>
-                    </div>
-                    {profile.is_top_reviewer && (
-                      <div className="flex items-center space-x-1 mb-2">
-                        <Trophy className="text-coral w-4 h-4" />
-                        <span className="text-sm font-600 text-coral">Top Reviewer in Cape Town this Month</span>
+            <div ref={headerRef} className={glassCard}>
+              <div className="relative z-[1] p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="relative">
+                      <div className="w-16 h-16">
+                        <SafeAvatar src={profile.avatar_url} alt="Profile picture" size={64} className="w-16 h-16 object-cover" />
                       </div>
-                    )}
+                    </div>
+                    <div>
+                      <div className="flex items-center space-x-2 mb-1">
+                        <h1 className="font-sf text-xl font-700 text-charcoal">@{profile.username || profile.display_name || "User"}</h1>
+                      </div>
+                      {profile.is_top_reviewer && (
+                        <div className="flex items-center space-x-1 mb-2">
+                          <Trophy className="text-coral w-4 h-4" />
+                          <span className="text-sm font-600 text-coral">Top Reviewer in Cape Town this Month</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
+                  <button type="button" aria-label="Edit profile" className="w-8 h-8 bg-sage/10 hover:bg-sage/20 rounded-full flex items-center justify-center transition-colors duration-200">
+                    <Pencil className="text-sage w-4 h-4" />
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  aria-label="Edit profile"
-                  className="w-8 h-8 bg-sage/10 hover:bg-sage/20 rounded-full flex items-center justify-center transition-colors duration-200"
-                >
-                  <Pencil className="text-sage w-4 h-4" />
-                </button>
               </div>
             </div>
 
             {/* Stats Overview */}
-            <div ref={statsRef} className="bg-white backdrop-blur-sm p-5 border border-charcoal/10">
-              <h2 className="font-sf text-lg font-700 text-charcoal mb-4">Stats Overview</h2>
-              <div className="grid grid-cols-3 gap-2 sm:gap-4">
-                <div className="text-center px-1">
-                  <div className="flex flex-col items-center mb-2">
-                    <StarIcon className="text-coral w-5 h-5 mb-1" style={{ fill: "currentColor" }} />
-                    <span className="font-sf text-xl font-700 text-charcoal leading-tight">{profile.reviews_count}</span>
+            <div ref={statsRef} className={glassCard}>
+              <div className="relative z-[1] p-5">
+                <h2 className="font-sf text-lg font-700 text-charcoal mb-4">Stats Overview</h2>
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
+                  <div className="text-center px-1">
+                    <div className="flex flex-col items-center mb-2">
+                      <StarIcon className="text-coral w-5 h-5 mb-1" style={{ fill: "currentColor" }} />
+                      <span className="font-sf text-xl font-700 text-charcoal leading-tight">{profile.reviews_count}</span>
+                    </div>
+                    <span className="text-sm font-400 text-charcoal/60 leading-tight">reviews</span>
                   </div>
-                  <span className="text-sm font-400 text-charcoal/60 leading-tight">reviews</span>
-                </div>
-                <div className="text-center px-1">
-                  <div className="flex flex-col items-center mb-2">
-                    <Trophy className="text-sage w-5 h-5 mb-1" />
-                    <span className="font-sf text-xl font-700 text-charcoal leading-tight">{profile.badges_count}</span>
+                  <div className="text-center px-1">
+                    <div className="flex flex-col items-center mb-2">
+                      <Trophy className="text-sage w-5 h-5 mb-1" />
+                      <span className="font-sf text-xl font-700 text-charcoal leading-tight">{profile.badges_count}</span>
+                    </div>
+                    <span className="text-sm font-400 text-charcoal/60 leading-tight">badges</span>
                   </div>
-                  <span className="text-sm font-400 text-charcoal/60 leading-tight">badges</span>
-                </div>
-                <div className="text-center px-1">
-                  <div className="flex flex-col items-center mb-2">
-                    <Calendar className="text-sage w-5 h-5 mb-1" />
-                    <span className="font-sf text-sm font-700 text-charcoal leading-tight">
-                      {formatMemberSince(profile.created_at)}
-                    </span>
+                  <div className="text-center px-1">
+                    <div className="flex flex-col items-center mb-2">
+                      <Calendar className="text-sage w-5 h-5 mb-1" />
+                      <span className="font-sf text-sm font-700 text-charcoal leading-tight">{formatMemberSince(profile.created_at)}</span>
+                    </div>
+                    <span className="text-xs font-400 text-charcoal/60 leading-tight">member since</span>
                   </div>
-                  <span className="text-xs font-400 text-charcoal/60 leading-tight">member since</span>
                 </div>
               </div>
             </div>
 
             {/* Your Contributions */}
-            <div ref={contributionsRef} className="bg-white backdrop-blur-sm p-5 border border-charcoal/10">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-sf text-lg font-700 text-charcoal">Your Contributions</h2>
-                <button
-                  onClick={() => setShowAllReviews(!showAllReviews)}
-                  className="text-sm text-coral font-500 hover:text-coral/80 transition-colors duration-200 flex items-center space-x-1"
-                  aria-expanded={showAllReviews}
-                >
-                  <span>{showAllReviews ? "Hide" : "See all reviews"}</span>
-                  {showAllReviews ? <ChevronUp className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
-                </button>
-              </div>
-              <div className="space-y-3">
-                {reviews.slice(0, showAllReviews ? undefined : 2).map((review) => (
-                  <div
-                    key={review.id}
-                    className="flex items-center justify-between py-3 border-b border-sage/10 last:border-b-0"
+            <div ref={contributionsRef} className={glassCard}>
+              <div className="relative z-[1] p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="font-sf text-lg font-700 text-charcoal">Your Contributions</h2>
+                  <button
+                    onClick={() => setShowAllReviews(!showAllReviews)}
+                    className="text-sm text-coral font-500 hover:text-coral/80 transition-colors duration-200 flex items-center space-x-1"
+                    aria-expanded={showAllReviews}
                   >
-                    <div className="flex items-center gap-3 flex-1 min-w-0">
-                      {/* NEW thumbnail */}
-                      <BusinessThumb name={review.business_name} imageUrl={review.business_image_url} size={40} />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <span className="font-sf text-base font-700 text-charcoal truncate">
-                            {review.business_name}
-                          </span>
-                          <div className="flex items-center gap-1">{renderStars(review.rating)}</div>
-                          {review.is_featured && (
-                            <span className="text-xs text-coral font-600 whitespace-nowrap">(Featured)</span>
-                          )}
+                    <span>{showAllReviews ? "Hide" : "See all reviews"}</span>
+                    {showAllReviews ? <ChevronUp className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                  </button>
+                </div>
+                <div className="space-y-3">
+                  {reviews.slice(0, showAllReviews ? undefined : 2).map((review) => (
+                    <div key={review.id} className="flex items-center justify-between py-3 border-b border-sage/10 last:border-b-0">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <BusinessThumb name={review.business_name} imageUrl={review.business_image_url} size={40} />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1 flex-wrap">
+                            <span className="font-sf text-base font-700 text-charcoal truncate">{review.business_name}</span>
+                            <div className="flex items-center gap-1">{renderStars(review.rating)}</div>
+                            {review.is_featured && <span className="text-xs text-coral font-600 whitespace-nowrap">(Featured)</span>}
+                          </div>
+                          <span className="text-sm text-charcoal/60">{formatDate(review.created_at)}</span>
                         </div>
-                        <span className="text-sm text-charcoal/60">{formatDate(review.created_at)}</span>
+                      </div>
+                      <div className="text-right ml-3">
+                        <button className="text-coral text-sm font-500 hover:text-coral/80 transition-colors duration-200">Click to see</button>
+                        <div className="text-xs text-charcoal/50 mt-1">full review</div>
                       </div>
                     </div>
-                    <div className="text-right ml-3">
-                      <button className="text-coral text-sm font-500 hover:text-coral/80 transition-colors duration-200">
-                        Click to see
-                      </button>
-                      <div className="text-xs text-charcoal/50 mt-1">full review</div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Your Achievements */}
-            <div ref={achievementsRef} className="bg-white backdrop-blur-sm p-5 border border-charcoal/10">
-              <h2 className="font-sf text-lg font-600 text-charcoal mb-4">Your Achievements</h2>
-              <div className="space-y-3">
-                {achievements.map((userAchievement) => (
-                  <div
-                    key={userAchievement.achievement_id}
-                    className="flex items-center space-x-3 p-3 transition-all duration-200 bg-sage/10 border border-sage/20"
-                  >
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-sage/20">
-                      {/* Simple icon mapping by category/name; using Trophy for now */}
-                      <Trophy className="w-5 h-5 text-sage" />
+            <div ref={achievementsRef} className={glassCard}>
+              <div className="relative z-[1] p-5">
+                <h2 className="font-sf text-lg font-600 text-charcoal mb-4">Your Achievements</h2>
+                <div className="space-y-3">
+                  {achievements.map((ua) => (
+                    <div key={ua.achievement_id} className="flex items-center space-x-3 p-3 transition-all duration-200 bg-sage/10 border border-sage/20 rounded-xl">
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center bg-sage/20">
+                        <Trophy className="w-5 h-5 text-sage" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="font-sf text-base font-600 text-charcoal">{ua.achievements.name}</span>
+                        <p className="text-sm text-charcoal/60 mt-1">{ua.achievements.description}</p>
+                      </div>
+                      <CheckCircle className="text-sage w-5 h-5" />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <span className="font-sf text-base font-600 text-charcoal">
-                        {userAchievement.achievements.name}
-                      </span>
-                      <p className="text-sm text-charcoal/60 mt-1">
-                        {userAchievement.achievements.description}
-                      </p>
-                    </div>
-                    <CheckCircle className="text-sage w-5 h-5" />
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Account Settings */}
-            <div ref={settingsRef} className="bg-white backdrop-blur-sm p-5 border border-charcoal/10">
-              <div className="space-y-2">
-                <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
-                  <div className="flex items-center space-x-3">
-                    <Settings className="text-gray-500 w-5 h-5" />
-                    <span className="font-sf text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
-                      Account Settings
-                    </span>
-                  </div>
-                  <ChevronRight className="text-gray-400 w-4 h-4" />
-                </button>
+            <div ref={settingsRef} className={glassCard}>
+              <div className="relative z-[1] p-5">
+                <div className="space-y-2">
+                  <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group rounded-xl">
+                    <div className="flex items-center space-x-3">
+                      <Settings className="text-gray-500 w-5 h-5" />
+                      <span className="font-sf text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
+                        Account Settings
+                      </span>
+                    </div>
+                    <ChevronRight className="text-gray-400 w-4 h-4" />
+                  </button>
 
-                <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
-                  <div className="flex items-center space-x-3">
-                    <Bell className="text-gray-500 w-5 h-5" />
-                    <span className="font-sf text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
-                      Notifications
-                    </span>
-                  </div>
-                  <ChevronRight className="text-gray-400 w-4 h-4" />
-                </button>
+                  <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group rounded-xl">
+                    <div className="flex items-center space-x-3">
+                      <Bell className="text-gray-500 w-5 h-5" />
+                      <span className="font-sf text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
+                        Notifications
+                      </span>
+                    </div>
+                    <ChevronRight className="text-gray-400 w-4 h-4" />
+                  </button>
 
-                <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group">
-                  <div className="flex items-center space-x-3">
-                    <Lock className="text-gray-500 w-5 h-5" />
-                    <span className="font-sf text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
-                      Privacy & Data
-                    </span>
-                  </div>
-                  <ChevronRight className="text-gray-400 w-4 h-4" />
-                </button>
+                  <button className="w-full flex items-center justify-between p-4 hover:bg-sage/5 transition-colors duration-200 group rounded-xl">
+                    <div className="flex items-center space-x-3">
+                      <Lock className="text-gray-500 w-5 h-5" />
+                      <span className="font-sf text-base font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
+                        Privacy & Data
+                      </span>
+                    </div>
+                    <ChevronRight className="text-gray-400 w-4 h-4" />
+                  </button>
 
-                <button
-                  onClick={handleLogout}
-                  className="w-full flex items-center justify-between p-4 hover:bg-coral/5 transition-colors duration-200 group"
-                >
-                  <div className="flex items-center space-x-3">
-                    <LogOut className="text-coral w-5 h-5" />
-                    <span className="font-sf text-base font-500 text-coral group-hover:text-coral/80 transition-colors duration-200">
-                      Log Out
-                    </span>
-                  </div>
-                  <ChevronRight className="text-coral w-4 h-4" />
-                </button>
+                  <button onClick={handleLogout} className="w-full flex items-center justify-between p-4 hover:bg-coral/5 transition-colors duration-200 group rounded-xl">
+                    <div className="flex items-center space-x-3">
+                      <LogOut className="text-coral w-5 h-5" />
+                      <span className="font-sf text-base font-500 text-coral group-hover:text-coral/80 transition-colors duration-200">
+                        Log Out
+                      </span>
+                    </div>
+                    <ChevronRight className="text-coral w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

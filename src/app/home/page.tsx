@@ -44,17 +44,21 @@ export default function Home() {
 
   return (
     <div className="min-h-dvh bg-white relative">
-      {/* Header - Transparent at top, overlays hero */}
-      <Header showSearch={true} />
+      {/* Header - Frosty glass effect at top, overlays hero */}
+      <Header showSearch={true} variant="frosty" />
 
       {/* Hero Section - starts at pixel 0, header overlays it */}
-      <HeroCarousel />
+      <div className="animate-fade-in">
+        <HeroCarousel />
+      </div>
 
       {/* Main content */}
-      <div className="relative z-10 bg-white">
+      <div className="relative z-10 bg-gradient-to-br from-white via-sage/[0.02] to-coral/[0.02]">
         {/* Static background layers */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />
+          <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5 animate-gradient" />
+          {/* Premium gradient overlay for glassy effect */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(116,145,118,0.03),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(214,116,105,0.03),transparent_50%)]" />
         </div>
 
         {/* Floating elements without parallax */}
@@ -64,28 +68,36 @@ export default function Home() {
           {/* Promotional highlights */}
           {/* <PromoRow /> */}
 
-          <MemoizedBusinessRow
-            title="For You"
-            businesses={forYouBusinesses}
-            cta="Explore For You"
-            href="/for-you"
-          />
+          <div className="animate-slide-up-stagger" style={{ animationDelay: '0.1s' }}>
+            <MemoizedBusinessRow
+              title="For You"
+              businesses={forYouBusinesses}
+              cta="Explore For You"
+              href="/for-you"
+            />
+          </div>
 
-          <MemoizedBusinessRow
-            title="Trending Now"
-            businesses={trendingBusinesses}
-            cta="Explore Trending"
-            href="/trending"
-          />
+          <div className="animate-slide-up-stagger" style={{ animationDelay: '0.2s' }}>
+            <MemoizedBusinessRow
+              title="Trending Now"
+              businesses={trendingBusinesses}
+              cta="Explore Trending"
+              href="/trending"
+            />
+          </div>
 
-          <EventsSpecials events={EVENTS_AND_SPECIALS} />
+          <div className="animate-slide-up-stagger" style={{ animationDelay: '0.3s' }}>
+            <EventsSpecials events={EVENTS_AND_SPECIALS} />
+          </div>
 
-          <CommunityHighlights
-            reviews={FEATURED_REVIEWS}
-            topReviewers={TOP_REVIEWERS}
-            businessesOfTheMonth={BUSINESSES_OF_THE_MONTH}
-            variant="reviews"
-          />
+          <div className="animate-slide-up-stagger" style={{ animationDelay: '0.4s' }}>
+            <CommunityHighlights
+              reviews={FEATURED_REVIEWS}
+              topReviewers={TOP_REVIEWERS}
+              businessesOfTheMonth={BUSINESSES_OF_THE_MONTH}
+              variant="reviews"
+            />
+          </div>
 
           {/* Featured Deal */}
           {/* <FeaturedDeal /> */}

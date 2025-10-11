@@ -59,41 +59,40 @@ export default function ExploreGemsPage() {
   const currentBusinesses = filteredBusinesses.slice(startIndex, endIndex);
 
   return (
-    <div className="min-h-dvh bg-white relative overflow-hidden">
-      {/* Static background layers */}
+    <div className="min-h-dvh bg-gradient-to-br from-white via-sage/[0.015] to-white relative overflow-hidden">
+      {/* Static background layers with animation */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3" />
+        <div className="absolute inset-0 bg-gradient-to-br from-sage/3 via-transparent to-coral/3 animate-gradient" />
+        {/* Premium gradient overlay for glassy effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(116,145,118,0.025),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(214,116,105,0.025),transparent_60%)]" />
       </div>
 
-      {/* Header */}
+      {/* Header with spring animation */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="
-          backdrop-blur-xl supports-[backdrop-filter]:bg-transparent
-          shadow-sm relative z-10
-          before:content-[''] before:absolute before:inset-0 before:pointer-events-none
-          before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.70),rgba(255,255,255,0.55))]
-          before:backdrop-blur-xl
-          after:content-[''] after:absolute after:inset-0 after:pointer-events-none
-          after:bg-[radial-gradient(800px_400px_at_10%_0%,rgba(255,150,200,0.18),transparent_60%),radial-gradient(700px_350px_at_90%_0%,rgba(80,180,255,0.16),transparent_60%)]
-        "
+        transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
+        className="bg-white border-b border-black/5 shadow-sm relative z-10"
       >
         <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             {/* Back button */}
             <Link href="/home" className="group flex items-center">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4"
+              >
                 <ArrowLeft
                   className="text-charcoal/70 group-hover:text-sage transition-colors duration-300"
                   size={22}
                 />
-              </div>
+              </motion.div>
               <motion.h1
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
+                transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.1 }}
                 className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
               >
                 Explore All
@@ -146,14 +145,29 @@ export default function ExploreGemsPage() {
           </div>
         </div>
 
-        {/* Main businesses grid */}
+        {/* Main businesses grid with stagger animation */}
         <div className="px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="max-w-[1300px] mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {currentBusinesses.map((business) => (
-                <div key={business.id} className="animate-fade-in-up list-none">
+              {currentBusinesses.map((business, index) => (
+                <motion.div
+                  key={business.id}
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15,
+                    delay: index * 0.05
+                  }}
+                  whileHover={{
+                    scale: 1.03,
+                    transition: { type: "spring", stiffness: 400, damping: 25 }
+                  }}
+                  className="list-none"
+                >
                   <BusinessCard business={business} />
-                </div>
+                </motion.div>
               ))}
             </div>
 

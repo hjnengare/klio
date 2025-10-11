@@ -936,6 +936,164 @@
     animation-delay: 1.5s;
   }
 
+  /* ============================================
+     GradientBackground Component Animations
+     ============================================ */
+
+  /* Gradient shift animation */
+  @keyframes gradient-shift {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+
+  /* Float animation for gradient blobs */
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(10px, -10px) scale(1.05); }
+    66% { transform: translate(-10px, 10px) scale(0.95); }
+  }
+
+  .animate-gradient {
+    animation: gradient-shift 8s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 20s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 25s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 10s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* ========================================
+   * SwiftUI-Inspired Animations
+   * Natural spring-based animations with physics
+   * ======================================== */
+
+  /* Fade in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Slide up with stagger effect */
+  @keyframes slideUpStagger {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up-stagger {
+    opacity: 0;
+    animation: slideUpStagger 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Gradient animation for backgrounds */
+  @keyframes gradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+  }
+
+  /* Spring bounce effect - mimics SwiftUI spring */
+  @keyframes springBounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .animate-spring-bounce {
+    animation: springBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  /* Scale in effect with spring physics */
+  @keyframes scaleSpring {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-scale-spring {
+    animation: scaleSpring 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  }
+
+  /* Gentle pulse for attention */
+  @keyframes gentlePulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.95;
+      transform: scale(0.98);
+    }
+  }
+
+  .animate-gentle-pulse {
+    animation: gentlePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Shimmer effect for loading states */
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0)
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     * {
@@ -951,6 +1109,21 @@
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
+    }
+
+    .animate-gradient,
+    .animate-float,
+    .animate-float-delayed,
+    .animate-pulse-slow,
+    .animate-fade-in,
+    .animate-slide-up-stagger,
+    .animate-spring-bounce,
+    .animate-scale-spring,
+    .animate-gentle-pulse,
+    .animate-shimmer {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 }
