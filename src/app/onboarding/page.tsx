@@ -51,7 +51,6 @@ const styles = `
 
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
-    .shimmer-overlay::after { display: none !important; }
   }
 
   /* Safe areas / polish */
@@ -101,7 +100,7 @@ export default function OnboardingPage() {
       <style dangerouslySetInnerHTML={{ __html: styles }} />
       <div className="min-h-[100svh] md:min-h-[100dvh] bg-white flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
 
-        {/* Background shapes (same as before) */}
+        {/* Background shapes */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
           <div className="absolute -top-10 -right-10 md:-top-16 md:-right-16 w-48 h-48 md:w-72 md:h-72 rounded-full bg-gradient-to-b from-coral/30 to-coral/5 blur-lg md:blur-2xl opacity-80" />
           <div className="absolute top-0 right-0 w-40 h-40 md:w-56 md:h-56 opacity-50">
@@ -126,7 +125,7 @@ export default function OnboardingPage() {
             <div className="space-y-6 md:space-y-8">
               <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-600" : "opacity-0"}`}>
                 <h2
-                  className="shimmer-overlay text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-5 md:mb-6 leading-tight tracking-tight px-2"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-5 md:mb-6 leading-tight tracking-tight px-2 text-charcoal"
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif' }}
                 >
                   Discover local gems near you!
