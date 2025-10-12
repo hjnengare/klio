@@ -62,6 +62,17 @@ const DEMO_SUBCATEGORIES: GroupedSubcategories = {
       { id: "wine-bars", label: "Wine Bars", interest_id: "food-drink" },
     ],
   },
+  "beauty-wellness": {
+    title: "Beauty & Wellness",
+    items: [
+      { id: "hair-salons", label: "Hair Salons", interest_id: "beauty-wellness" },
+      { id: "spas", label: "Spas", interest_id: "beauty-wellness" },
+      { id: "nail-salons", label: "Nail Salons", interest_id: "beauty-wellness" },
+      { id: "barbers", label: "Barbers", interest_id: "beauty-wellness" },
+      { id: "massage", label: "Massage Therapy", interest_id: "beauty-wellness" },
+      { id: "skincare", label: "Skincare Clinics", interest_id: "beauty-wellness" },
+    ],
+  },
   "arts-culture": {
     title: "Arts & Culture",
     items: [
@@ -74,6 +85,47 @@ const DEMO_SUBCATEGORIES: GroupedSubcategories = {
       { id: "music-venues", label: "Music Venues", interest_id: "arts-culture" },
       { id: "dance-studios", label: "Dance Studios", interest_id: "arts-culture" },
       { id: "libraries", label: "Libraries", interest_id: "arts-culture" },
+    ],
+  },
+  "shopping-lifestyle": {
+    title: "Shopping & Lifestyle",
+    items: [
+      { id: "clothing", label: "Clothing Stores", interest_id: "shopping-lifestyle" },
+      { id: "boutiques", label: "Boutiques", interest_id: "shopping-lifestyle" },
+      { id: "bookstores", label: "Bookstores", interest_id: "shopping-lifestyle" },
+      { id: "home-decor", label: "Home Decor", interest_id: "shopping-lifestyle" },
+      { id: "gift-shops", label: "Gift Shops", interest_id: "shopping-lifestyle" },
+      { id: "jewelry", label: "Jewelry Stores", interest_id: "shopping-lifestyle" },
+    ],
+  },
+  "services-everyday": {
+    title: "Services & Everyday Life",
+    items: [
+      { id: "health-fitness", label: "Health & Fitness", interest_id: "services-everyday" },
+      { id: "education-learning", label: "Education & Learning", interest_id: "services-everyday" },
+      { id: "transport-travel", label: "Transport & Travel", interest_id: "services-everyday" },
+      { id: "finance-insurance", label: "Finance & Insurance", interest_id: "services-everyday" },
+    ],
+  },
+  "digital-work": {
+    title: "Digital & Work",
+    items: [
+      { id: "tech-gadgets", label: "Tech & Gadgets", interest_id: "digital-work" },
+      { id: "work-offices", label: "Work & Offices", interest_id: "digital-work" },
+    ],
+  },
+  "experiences-social": {
+    title: "Experiences & Social",
+    items: [
+      { id: "events-festivals", label: "Events & Festivals", interest_id: "experiences-social" },
+      { id: "sports-recreation", label: "Sports & Recreation", interest_id: "experiences-social" },
+    ],
+  },
+  "local-unique": {
+    title: "Local & Unique",
+    items: [
+      { id: "government-community", label: "Government & Community", interest_id: "local-unique" },
+      { id: "markets-stalls", label: "Markets & Stalls", interest_id: "local-unique" },
     ],
   },
 };
@@ -258,7 +310,7 @@ function SubcategoriesContent() {
                     {section.title}
                   </h3>
 
-                  <div className="flex flex-wrap gap-2 md:grid md:grid-cols-3 md:gap-3">
+                  <div className="flex flex-wrap gap-2 md:gap-3">
                     {section.items.map((subcategory, iIdx) => {
                       const isSelected = hydratedSelected.includes(subcategory.id);
                       const isDisabled =
@@ -276,10 +328,10 @@ function SubcategoriesContent() {
                           aria-pressed={isSelected}
                           className={`
                             enter-stagger
-                            relative w-auto md:w-full py-3 md:py-4 px-4
+                            relative inline-flex items-center justify-center py-3 md:py-4 px-5 md:px-6
                             text-sm md:text-base font-semibold text-center
                             transition-all duration-200 ease-out
-                            min-h-[44px] md:min-h-[52px] rounded-full
+                            min-h-[44px] rounded-full
                             focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
                             disabled:cursor-not-allowed disabled:opacity-60
                             ${animatingIds.has(subcategory.id) ? "animate-micro-bounce" : ""}
