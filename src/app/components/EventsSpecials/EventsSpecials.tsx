@@ -6,7 +6,6 @@ import { ArrowRight } from "lucide-react";
 import EventCard from "../EventCard/EventCard";
 import { Event } from "../../data/eventsData";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
-import { useScrollReveal } from "../../hooks/useScrollReveal";
 
 export default function EventsSpecials({
   title = "Events & Specials",
@@ -20,14 +19,11 @@ export default function EventsSpecials({
   href?: string;
 }) {
   const router = useRouter();
-  const titleRef = useScrollReveal({ className: "scroll-reveal-right" });
-  const sectionRef = useScrollReveal({ className: "scroll-reveal" });
 
   if (!events || events.length === 0) return null;
 
   return (
     <section
-      ref={sectionRef}
       className="bg-white relative"
       aria-label={title}
       data-section
@@ -37,17 +33,19 @@ export default function EventsSpecials({
       }}
     >
       {/* Subtle section decoration (non-interactive) */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none" aria-hidden="true">
+      <div
+        className="absolute inset-0 opacity-30 pointer-events-none"
+        aria-hidden="true"
+      >
         <div className="absolute top-10 left-20 w-32 h-32 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl" />
         <div className="absolute bottom-20 right-10 w-24 h-24 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-xl" />
       </div>
 
       <div className="container mx-auto max-w-[1300px] px-4 relative z-10 pt-1 sm:pt-1 pb-1 sm:pb-2">
-        <div
-          ref={titleRef}
-          className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]"
-        >
-          <h2 className="text-xl font-semibold text-charcoal tracking-tight">{title}</h2>
+        <div className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]">
+          <h2 className="text-xl font-semibold text-charcoal tracking-tight">
+            {title}
+          </h2>
 
           <button
             onClick={() => router.push(href)}
@@ -63,12 +61,8 @@ export default function EventsSpecials({
 
         <ScrollableSection className="gap-6">
           <div className="flex snap-x gap-6">
-            {events.map((event, index) => (
-              <div
-                key={event.id}
-                className={`list-none card-entrance card-entrance-${Math.min(index + 1, 6)}`}
-                data-scroll-reveal
-              >
+            {events.map((event) => (
+              <div key={event.id} className="list-none">
                 <EventCard event={event} />
               </div>
             ))}

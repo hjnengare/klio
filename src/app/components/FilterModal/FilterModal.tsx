@@ -1,10 +1,6 @@
-// src/components/FilterModal/FilterModal.tsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { lockBodyScroll } from "../../utils/lockBodyScroll";
-
-// ✅ lucide-react icon imports
 import {
   X,
   SlidersHorizontal,
@@ -13,10 +9,10 @@ import {
   ShoppingBag,
   Gamepad2,
   Wrench,
+  Star,
   Footprints,
   Car,
   Plane,
-  Star,
   MapPin,
 } from "lucide-react";
 
@@ -27,8 +23,8 @@ export interface FilterState {
 }
 
 interface FilterModalProps {
-  isOpen: boolean;          // controls animation
-  isVisible: boolean;       // mounts/unmounts
+  isOpen: boolean;          // controls enter/exit transition
+  isVisible: boolean;       // mount/unmount
   onClose: () => void;
   onApplyFilters?: (filters: FilterState) => void;
   /** element to anchor under (the search input wrapper) */
@@ -39,24 +35,6 @@ const sf = {
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
 } as const;
-
-type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
-
-// Options mapped to lucide icons
-const categoryOptions: { name: string; Icon: IconType }[] = [
-  { name: "Restaurants",   Icon: Utensils },
-  { name: "Coffee Shops",  Icon: Coffee },
-  { name: "Shopping",      Icon: ShoppingBag },
-  { name: "Entertainment", Icon: Gamepad2 },
-  { name: "Services",      Icon: Wrench },
-];
-
-const distanceOptions: { distance: string; Icon: IconType }[] = [
-  { distance: "1 mile",  Icon: Footprints },
-  { distance: "5 miles", Icon: Car },
-  { distance: "10 miles", Icon: Car },
-  { distance: "25 miles", Icon: Plane },
-];
 
 export default function FilterModal({
   isOpen,
@@ -70,57 +48,54 @@ export default function FilterModal({
   const [selectedDistance, setSelectedDistance] = useState<string | null>(null);
 
   const panelRef = useRef<HTMLDivElement>(null);
-  const firstInteractiveRef = useRef<HTMLButtonElement>(null);
 
-  // Track sheet position + computed maxHeight for full-width mode
-  const [style, setStyle] = useState<{
-    top: number;
-    left: number;
-    width: number;
-    maxHeight: number;
-  }>({
+  // computed position for anchored panel
+  const [style, setStyle] = useState<{ top: number; left: number; width: number }>({
     top: 0,
     left: 0,
-    width: 0,
-    maxHeight: 560,
+    width: 360,
   });
 
-  // position as a full-width sheet under the anchor
   const updatePosition = () => {
     const anchor = anchorRef?.current;
     if (!anchor) return;
+
     const rect = anchor.getBoundingClientRect();
-    const top = Math.max(0, rect.bottom + 8); // gap below input
-    const left = 0; // full-screen width
-    const width = window.innerWidth; // full-bleed
-    // leave a small bottom margin (16px) and cap at 640px to avoid absurd heights on big screens
-    const available = window.innerHeight - top - 16;
-    const maxHeight = Math.max(280, Math.min(available, 640));
-    setStyle({ top, left, width, maxHeight });
+
+    const gap = 8; // small space below the input
+    const leftPadding = 8;
+    const rightPadding = 8;
+
+    const left = Math.max(leftPadding, rect.left);
+    const maxWidth = window.innerWidth - left - rightPadding;
+
+    // Prefer anchor width but clamp to viewport
+    const width = Math.min(rect.width, maxWidth);
+
+    // Place directly under the anchor (account for page scroll)
+    const top = rect.bottom + gap;
+
+    setStyle({ top, left, width });
   };
 
   useEffect(() => {
     if (!isVisible) return;
     updatePosition();
-    const r = () => updatePosition();
-    window.addEventListener("resize", r);
-    window.addEventListener("scroll", r, true);
+
+    const onWin = () => updatePosition();
+    window.addEventListener("resize", onWin);
+    window.addEventListener("scroll", onWin, true);
+
     return () => {
-      window.removeEventListener("resize", r);
-      window.removeEventListener("scroll", r, true);
+      window.removeEventListener("resize", onWin);
+      window.removeEventListener("scroll", onWin, true);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
 
-  // focus management + close on outside + prevent background scroll
+  // Outside click + ESC (no body scroll lock)
   useEffect(() => {
     if (!isVisible) return;
-
-    const unlock = lockBodyScroll();
-
-    // Focus the first interactive element on open
-    const focusTimer = setTimeout(() => {
-      firstInteractiveRef.current?.focus();
-    }, 0);
 
     const onOutside = (e: Event) => {
       const target = e.target as Node;
@@ -130,20 +105,18 @@ export default function FilterModal({
     };
     const onEsc = (e: KeyboardEvent) => e.key === "Escape" && onClose();
 
-    // Delay binding so the initial click that opens the modal doesn't instantly close it
-    const bindTimer = setTimeout(() => {
-      document.addEventListener("click", onOutside);
+    // small delay so the opening click doesn't immediately close
+    const timer = setTimeout(() => {
+      document.addEventListener("mousedown", onOutside);
       document.addEventListener("touchstart", onOutside);
       document.addEventListener("keydown", onEsc);
     }, 0);
 
     return () => {
-      clearTimeout(focusTimer);
-      clearTimeout(bindTimer);
-      document.removeEventListener("click", onOutside);
+      clearTimeout(timer);
+      document.removeEventListener("mousedown", onOutside);
       document.removeEventListener("touchstart", onOutside);
       document.removeEventListener("keydown", onEsc);
-      unlock();
     };
   }, [isVisible, onClose, anchorRef]);
 
@@ -164,18 +137,28 @@ export default function FilterModal({
 
   if (!isVisible) return null;
 
+  const categoryOptions = [
+    { name: "Restaurants", Icon: Utensils },
+    { name: "Coffee Shops", Icon: Coffee },
+    { name: "Shopping", Icon: ShoppingBag },
+    { name: "Entertainment", Icon: Gamepad2 },
+    { name: "Services", Icon: Wrench },
+  ];
+
+  const distanceOptions = [
+    { distance: "1 mile", Icon: Footprints },
+    { distance: "5 miles", Icon: Car },
+    { distance: "10 miles", Icon: Car },
+    { distance: "25 miles", Icon: Plane },
+  ];
+
   return (
     <div
       className="fixed inset-0 z-[70] pointer-events-none"
       aria-hidden={!isOpen}
       style={sf}
     >
-      {/* Optional translucent backdrop for emphasis (clicks handled by document listener) */}
-      <div
-        className={`absolute inset-0 transition-opacity ${isOpen ? "opacity-100" : "opacity-0"}`}
-        style={{ background: "rgba(0,0,0,0.08)" }}
-      />
-
+      {/* Anchored panel */}
       <div
         ref={panelRef}
         role="dialog"
@@ -193,22 +176,18 @@ export default function FilterModal({
           top: style.top,
           left: style.left,
           width: style.width || 360,
-          maxWidth: "100vw",            // ✅ full screen width
-          maxHeight: style.maxHeight,   // computed from viewport & anchor
+          maxWidth: "calc(100vw - 16px)",
+          maxHeight: "min(70vh, 560px)",
           outline: "none",
         }}
       >
         {/* header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 bg-white/60 backdrop-blur-sm">
-          <div>
-            <h2 className="text-sm md:text-base font-semibold text-charcoal flex items-center gap-2">
-              <SlidersHorizontal className="w-4 h-4 text-sage" />
-              Filters
-            </h2>
-            <p className="text-xs text-charcoal/60 mt-0.5">Refine your search</p>
+        <div className="flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal className="w-4 h-4 text-sage" />
+            <h2 className="text-sm md:text-base font-semibold text-charcoal">Filters</h2>
           </div>
           <button
-            ref={firstInteractiveRef}
             onClick={onClose}
             className="w-9 h-9 rounded-full border border-charcoal/10 bg-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
             aria-label="Close filters"
@@ -220,7 +199,7 @@ export default function FilterModal({
         {/* body */}
         <div
           className="px-5 sm:px-6 py-4 space-y-4 overflow-y-auto"
-          style={{ maxHeight: style.maxHeight - 112 /* header+footer approx */ }}
+          style={{ maxHeight: "calc(70vh - 140px)" }}
         >
           {/* Category */}
           <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4">
@@ -282,7 +261,7 @@ export default function FilterModal({
                     aria-label={`${r}+ stars`}
                   >
                     <div className="flex">
-                      {Array.from({ length: r }).map((_, i) => (
+                      {[...Array(r)].map((_, i) => (
                         <Star key={i} className={`w-4 h-4 ${active ? "text-white" : "text-sage"}`} />
                       ))}
                     </div>

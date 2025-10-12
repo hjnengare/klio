@@ -2,28 +2,34 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { User, X, Search } from "lucide-react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
-import { lockBodyScroll } from "../../utils/lockBodyScroll";
 
 const sf = {
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
 } as const;
 
-export default function Header({ showSearch = true, variant = "white" }: { showSearch?: boolean; variant?: "white" | "frosty" }) {
+export default function Header({
+  showSearch = true,
+  variant = "white",
+}: {
+  showSearch?: boolean;
+  variant?: "white" | "frosty";
+}) {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
+
+  // Anchor for the dropdown FilterModal to hang under
   const searchWrapRef = useRef<HTMLDivElement>(null);
 
   const openFilters = () => {
     if (isFilterVisible) return;
     setIsFilterVisible(true);
-    // small delay so CSS can mount before animating open
     setTimeout(() => setIsFilterOpen(true), 10);
   };
 
@@ -36,36 +42,21 @@ export default function Header({ showSearch = true, variant = "white" }: { showS
     console.log("filters:", f);
   };
 
-  // Lock body scroll when mobile menu is open (with padding to avoid width shift)
-  useEffect(() => {
-    if (!isMobileMenuOpen) return;
-    const unlock = lockBodyScroll();
-    return unlock;
-  }, [isMobileMenuOpen]);
+  // NEW: when user submits the query (Enter), we close the search bar (and filters if open)
+  const handleSubmitQuery = (query: string) => {
+    console.log("submit query:", query);
+    setShowSearchBar(false);
+    if (isFilterVisible) closeFilters();
+  };
 
-  // Close search when clicking outside of the search area
-  useEffect(() => {
-    if (!showSearchBar) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (!searchWrapRef.current) return;
-      if (!searchWrapRef.current.contains(e.target as Node)) {
-        setShowSearchBar(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [showSearchBar]);
-
-  const headerClassName = variant === "frosty"
-    ? "fixed top-0 left-0 right-0 z-50 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]"
-    : "fixed top-0 left-0 right-0 z-50 bg-white shadow-sm transition-all duration-300";
+  const headerClassName =
+    variant === "frosty"
+      ? "fixed top-0 left-0 right-0 z-50 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]"
+      : "fixed top-0 left-0 right-0 z-50 bg-white shadow-sm transition-all duration-300";
 
   return (
     <>
-      <header
-        className={headerClassName}
-        style={sf}
-      >
+      <header className={headerClassName} style={sf}>
         <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
           {/* Top row */}
           <div className="flex items-center justify-between gap-6">
@@ -76,10 +67,9 @@ export default function Header({ showSearch = true, variant = "white" }: { showS
               </span>
             </Link>
 
-            {/* Spacer to push nav and icons to the right */}
             <div className="flex-1" />
 
-            {/* Desktop nav - positioned on the right */}
+            {/* Desktop nav */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
               {["home", "all", "saved", "leaderboard", "claim business"].map((route) => (
                 <Link
@@ -94,7 +84,7 @@ export default function Header({ showSearch = true, variant = "white" }: { showS
 
             {/* Right side */}
             <div className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
-              {/* Search Toggle */}
+              {/* Search Toggle (manual close/open) */}
               <button
                 onClick={() => setShowSearchBar((p) => !p)}
                 className="w-10 h-10 rounded-full flex items-center justify-center text-charcoal/80 hover:text-sage hover:bg-sage/10 transition-colors"
@@ -131,26 +121,31 @@ export default function Header({ showSearch = true, variant = "white" }: { showS
             </div>
           </div>
 
-          {/* Search Input Section — transforms without shifting layout */}
+          {/* Search Input Section — stays open until submit or manual toggle */}
           {showSearch && (
             <div
               className={`overflow-hidden transition-all duration-300 ${
                 showSearchBar ? "max-h-20 opacity-100 mt-3 sm:mt-4" : "max-h-0 opacity-0 mt-0"
               }`}
             >
+              {/* Anchor for the dropdown modal */}
               <div ref={searchWrapRef}>
                 <SearchInput
                   variant="header"
                   placeholder="Discover exceptional local experiences, premium dining, and hidden gems..."
                   mobilePlaceholder="Search places, coffee, yoga…"
-                  onSearch={(q) => console.log("search:", q)}
+                  onSearch={(q) => console.log("search change:", q)}
+                  onSubmitQuery={handleSubmitQuery}     // <-- close on Enter/submit
                   onFilterClick={openFilters}
-                  onFocusOpenFilters={openFilters}
+                  onFocusOpenFilters={openFilters}      // anchored modal opens on focus
                   showFilter
                 />
               </div>
-              {/* Gentle breathing room below the input (incl. iOS safe area) */}
-              <div className="pb-3 sm:pb-4" style={{ paddingBottom: "calc(0.5rem + var(--safe-bottom))" }} />
+
+              <div
+                className="pb-3 sm:pb-4"
+                style={{ paddingBottom: "calc(0.5rem + var(--safe-bottom))" }}
+              />
             </div>
           )}
         </div>
@@ -210,7 +205,7 @@ export default function Header({ showSearch = true, variant = "white" }: { showS
         </div>
       </div>
 
-      {/* Filter Modal */}
+      {/* Anchored Filter Modal */}
       <FilterModal
         isOpen={isFilterOpen}
         isVisible={isFilterVisible}

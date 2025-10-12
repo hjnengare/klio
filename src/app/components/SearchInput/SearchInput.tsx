@@ -7,7 +7,8 @@ import { Search, SlidersHorizontal } from "lucide-react";
 interface SearchInputProps {
   placeholder?: string;
   mobilePlaceholder?: string;
-  onSearch?: (query: string) => void;
+  onSearch?: (query: string) => void;           // fires on change
+  onSubmitQuery?: (query: string) => void;      // fires on Enter / submit
   onFilterClick?: () => void;
   onFocusOpenFilters?: () => void;
   showFilter?: boolean;
@@ -21,6 +22,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
       placeholder = "Discover exceptional local experiences, premium dining, and hidden gems...",
       mobilePlaceholder = "Search places, coffee, yoga…",
       onSearch,
+      onSubmitQuery,
       onFilterClick,
       onFocusOpenFilters,
       showFilter = true,
@@ -30,7 +32,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
     ref
   ) => {
     const [searchQuery, setSearchQuery] = useState("");
-    const [ph, setPh] = useState(placeholder); // responsive placeholder
+    const [ph, setPh] = useState(placeholder);
     const containerRef = useRef<HTMLDivElement>(null);
 
     useImperativeHandle(ref, () => containerRef.current as HTMLDivElement);
@@ -52,7 +54,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
 
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
-      onSearch?.(searchQuery);
+      onSubmitQuery?.(searchQuery);
     };
 
     const containerClass =
@@ -60,14 +62,12 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
 
     return (
       <form onSubmit={handleSubmit} className={`${containerClass} ${className}`} ref={containerRef}>
-        {/* Premium focus wrapper: gradient ring + stable border (no width change) */}
         <div
           className={`
             relative group rounded-full border border-charcoal/20 bg-white/60
             transition-shadow duration-300
             focus-within:shadow-[0_0_0_2px_rgba(125,155,118,0.25),0_8px_24px_rgba(125,155,118,0.15)]
-            focus-within:outline-none
-            focus-within:ring-0
+            focus-within:outline-none focus-within:ring-0
             before:absolute before:inset-0 before:rounded-full before:pointer-events-none
             before:opacity-0 group-focus-within:before:opacity-100 before:transition-opacity before:duration-300
             before:[background:linear-gradient(135deg,rgba(125,155,118,0.25),rgba(214,116,105,0.18))]
@@ -95,7 +95,6 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
             type="text"
             value={searchQuery}
             onChange={handleInputChange}
-            /* Open filters as soon as input gains focus */
             onFocusCapture={onFocusOpenFilters}
             onTouchStart={onFocusOpenFilters}
             placeholder={ph}

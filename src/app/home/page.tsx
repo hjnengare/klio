@@ -1,3 +1,8 @@
+// ================================
+// File: src/app/Home.tsx
+// Description: Home page with ALL scroll-reveal removed
+// ================================
+
 "use client";
 
 import { memo } from "react";
@@ -7,57 +12,50 @@ import { HeroCarousel } from "../components/Hero";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
 import { TRENDING_BUSINESSES } from "../data/businessData";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
-import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../data/communityHighlightsData";
+import {
+  FEATURED_REVIEWS,
+  TOP_REVIEWERS,
+  BUSINESSES_OF_THE_MONTH,
+} from "../data/communityHighlightsData";
 
-// Dynamic imports for below-the-fold components
-const PromoRow = dynamic(() => import("../components/PromoRow/PromoRow"), {
-  loading: () => <div className="h-64 sm:h-80  bg-white/50 animate-pulse" />,
-});
+// Removed any animation / scroll-reveal classes and imports.
 
-const EventsSpecials = dynamic(() => import("../components/EventsSpecials/EventsSpecials"), {
-  loading: () => <div className="h-96  bg-white/50 animate-pulse" />,
-});
+const EventsSpecials = dynamic(
+  () => import("../components/EventsSpecials/EventsSpecials"),
+  {
+    loading: () => <div className="h-96 bg-white/50" />,
+  }
+);
 
-const CommunityHighlights = dynamic(() => import("../components/CommunityHighlights/CommunityHighlights"), {
-  loading: () => <div className="h-96  bg-white/50 animate-pulse" />,
-});
-
-const FeaturedDeal = dynamic(() => import("../components/FeaturedDeal/FeaturedDeal"), {
-  loading: () => <div className="h-96  bg-white/50 animate-pulse" />,
-});
-
-const FloatingElements = dynamic(() => import("../components/Animations/FloatingElements"), {
-  ssr: false,
-});
+const CommunityHighlights = dynamic(
+  () => import("../components/CommunityHighlights/CommunityHighlights"),
+  {
+    loading: () => <div className="h-96 bg-white/50" />,
+  }
+);
 
 const Footer = dynamic(() => import("../components/Footer/Footer"), {
   loading: () => <div className="h-64 bg-charcoal" />,
 });
 
-// Memoized BusinessRow component
 const MemoizedBusinessRow = memo(BusinessRow);
 
 export default function Home() {
-  // Use dummy data - 10 items per section
   const forYouBusinesses = TRENDING_BUSINESSES.slice(0, 10);
   const trendingBusinesses = TRENDING_BUSINESSES.slice(10, 20);
 
   return (
     <div className="min-h-dvh bg-white relative">
-      {/* Header - Frosty glass effect at top, overlays hero */}
       <Header showSearch={true} variant="frosty" />
 
-      {/* Hero Section - starts at pixel 0, header overlays it */}
-      <div className="animate-fade-in">
+      <div>
         <HeroCarousel />
       </div>
 
-      {/* Main content */}
       <div className="relative z-10 bg-white/90">
-      
         <div className="pt-4 pb-3 relative z-10">
-         
-          <div className="animate-slide-up-stagger" style={{ animationDelay: '0.1s' }}>
+          {/* No scroll-reveal wrappers; simple static rendering */}
+          <div>
             <MemoizedBusinessRow
               title="For You"
               businesses={forYouBusinesses}
@@ -66,7 +64,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="animate-slide-up-stagger" style={{ animationDelay: '0.2s' }}>
+          <div>
             <MemoizedBusinessRow
               title="Trending Now"
               businesses={trendingBusinesses}
@@ -75,11 +73,11 @@ export default function Home() {
             />
           </div>
 
-          <div className="animate-slide-up-stagger" style={{ animationDelay: '0.3s' }}>
+          <div>
             <EventsSpecials events={EVENTS_AND_SPECIALS} />
           </div>
 
-          <div className="animate-slide-up-stagger" style={{ animationDelay: '0.4s' }}>
+          <div>
             <CommunityHighlights
               reviews={FEATURED_REVIEWS}
               topReviewers={TOP_REVIEWERS}
@@ -87,12 +85,36 @@ export default function Home() {
               variant="reviews"
             />
           </div>
-         
         </div>
 
-        {/* Footer - only on larger screens */}
         <Footer />
       </div>
     </div>
   );
 }
+
+// ================================
+// File: src/hooks/useScrollReveal.ts
+// Description: No-op stub to globally disable scroll reveal without refactors
+// ================================
+
+export type ScrollRevealOptions = {
+  rootMargin?: string;
+  threshold?: number | number[];
+};
+
+/**
+ * A no-op replacement for any previous scroll-reveal hook.
+ * Importing this hook will do nothing, preventing animations.
+ */
+export function useScrollReveal(_opts?: ScrollRevealOptions) {
+  // Intentionally empty — ensures components that call this hook won't throw
+  // and will render instantly with no IntersectionObserver created.
+  return null;
+}
+
+// If you previously had a provider or context for scroll-reveal, consider exporting
+// shadowed versions here to avoid breaking imports:
+export const ScrollRevealProvider: React.FC<React.PropsWithChildren> = ({ children }) => (
+  <>{children}</>
+);
