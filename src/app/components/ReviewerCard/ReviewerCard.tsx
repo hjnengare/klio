@@ -17,6 +17,10 @@ import {
   UserPlus,
   MessageCircle,
   Share2,
+  MapPin,
+  Trophy,
+  Medal,
+  Heart,
 } from "lucide-react";
 
 interface ReviewerCardProps {
@@ -157,7 +161,7 @@ export default function ReviewerCard({
               <div className="flex items-center gap-1 flex-wrap">
                 {reviewerData?.badge && (
                   <div
-                    className={`px-2 py-1 rounded-full text-xs font-sf font-600 ${
+                    className={`px-2 py-1 rounded-full text-xs font-sf font-600 flex items-center gap-1 ${
                       reviewerData.badge === "top"
                         ? "bg-amber-100 text-amber-700"
                         : reviewerData.badge === "verified"
@@ -165,17 +169,26 @@ export default function ReviewerCard({
                         : "bg-sage/10 text-sage"
                     }`}
                   >
-                    {reviewerData.badge === "top"
-                      ? "🏆"
-                      : reviewerData.badge === "verified"
-                      ? "✓"
-                      : "📍"}
+                    {reviewerData.badge === "top" ? (
+                      <Trophy size={12} />
+                    ) : reviewerData.badge === "verified" ? (
+                      <Check size={12} />
+                    ) : (
+                      <MapPin size={12} />
+                    )}
+                    <span className="sr-only">
+                      {reviewerData.badge === "top"
+                        ? "Top"
+                        : reviewerData.badge === "verified"
+                        ? "Verified"
+                        : "Local"}
+                    </span>
                   </div>
                 )}
 
                 {reviewerData?.trophyBadge && (
                   <div
-                    className={`px-2 py-1 rounded-full text-xs font-sf font-600 ${
+                    className={`px-2 py-1 rounded-full text-xs font-sf font-600 flex items-center gap-1 ${
                       reviewerData.trophyBadge === "gold"
                         ? "bg-yellow-50 text-yellow-700"
                         : reviewerData.trophyBadge === "silver"
@@ -187,15 +200,20 @@ export default function ReviewerCard({
                         : "bg-pink-50 text-pink-700"
                     }`}
                   >
-                    {reviewerData.trophyBadge === "gold"
-                      ? "🏆"
-                      : reviewerData.trophyBadge === "silver"
-                      ? "🥈"
-                      : reviewerData.trophyBadge === "bronze"
-                      ? "🥉"
-                      : reviewerData.trophyBadge === "rising-star"
-                      ? "⭐"
-                      : "❤️"}
+                    {reviewerData.trophyBadge === "gold" ? (
+                      <Trophy size={12} />
+                    ) : reviewerData.trophyBadge === "silver" ? (
+                      <Medal size={12} />
+                    ) : reviewerData.trophyBadge === "bronze" ? (
+                      <Medal size={12} />
+                    ) : reviewerData.trophyBadge === "rising-star" ? (
+                      <Star size={12} />
+                    ) : (
+                      <Heart size={12} />
+                    )}
+                    <span className="sr-only">
+                      {reviewerData.trophyBadge}
+                    </span>
                   </div>
                 )}
               </div>

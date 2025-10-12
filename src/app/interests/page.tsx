@@ -65,14 +65,23 @@ interface Interest {
 }
 
 const interestsFallback: Interest[] = [
+  // Original categories
   { id: "food-drink", name: "Food & Drink" },
   { id: "beauty-wellness", name: "Beauty & Wellness" },
-  { id: "home-services", name: "Home & Services" },
-  { id: "outdoors-adventure", name: "Outdoors & Adventure" },
-  { id: "nightlife-entertainment", name: "Nightlife & Entertainment" },
   { id: "arts-culture", name: "Arts & Culture" },
-  { id: "family-pets", name: "Family & Pets" },
   { id: "shopping-lifestyle", name: "Shopping & Lifestyle" },
+
+  // Services & Everyday Life
+  { id: "services-everyday", name: "Services & Everyday Life" },
+
+  // Digital & Work
+  { id: "digital-work", name: "Digital & Work" },
+
+  // Experiences & Social
+  { id: "experiences-social", name: "Experiences & Social" },
+
+  // Local & Unique
+  { id: "local-unique", name: "Local & Unique" },
 ];
 
 function InterestsContent() {
