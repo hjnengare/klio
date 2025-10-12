@@ -369,7 +369,7 @@ function SubcategoriesContent() {
                 ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)]"
                 : "bg-white/90 text-charcoal/40 cursor-not-allowed"
             }`}
-            style={{ ...(sf as any), animationDelay: "0.36s" }}
+            style={{ ...(sf as any), animationDelay: "0.25s" }}
           >
             Continue
           </button>
