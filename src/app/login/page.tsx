@@ -216,7 +216,7 @@ export default function LoginPage() {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20"
       >
-        <Link href="/onboarding" className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-white  /50 rounded-lg block backdrop-blur-sm">
+        <Link href="/onboarding" className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-white/50 rounded-lg block backdrop-blur-sm">
           <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
         </Link>
       </motion.div>

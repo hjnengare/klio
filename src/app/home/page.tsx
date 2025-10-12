@@ -11,19 +11,19 @@ import { FEATURED_REVIEWS, TOP_REVIEWERS, BUSINESSES_OF_THE_MONTH } from "../dat
 
 // Dynamic imports for below-the-fold components
 const PromoRow = dynamic(() => import("../components/PromoRow/PromoRow"), {
-  loading: () => <div className="h-64 sm:h-80  bg-white  /50 animate-pulse" />,
+  loading: () => <div className="h-64 sm:h-80  bg-white/50 animate-pulse" />,
 });
 
 const EventsSpecials = dynamic(() => import("../components/EventsSpecials/EventsSpecials"), {
-  loading: () => <div className="h-96  bg-white  /50 animate-pulse" />,
+  loading: () => <div className="h-96  bg-white/50 animate-pulse" />,
 });
 
 const CommunityHighlights = dynamic(() => import("../components/CommunityHighlights/CommunityHighlights"), {
-  loading: () => <div className="h-96  bg-white  /50 animate-pulse" />,
+  loading: () => <div className="h-96  bg-white/50 animate-pulse" />,
 });
 
 const FeaturedDeal = dynamic(() => import("../components/FeaturedDeal/FeaturedDeal"), {
-  loading: () => <div className="h-96  bg-white  /50 animate-pulse" />,
+  loading: () => <div className="h-96  bg-white/50 animate-pulse" />,
 });
 
 const FloatingElements = dynamic(() => import("../components/Animations/FloatingElements"), {
@@ -53,21 +53,10 @@ export default function Home() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 bg-gradient-to-br from-white via-sage/[0.02] to-coral/[0.02]">
-        {/* Static background layers */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5 animate-gradient" />
-          {/* Premium gradient overlay for glassy effect */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(116,145,118,0.03),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(214,116,105,0.03),transparent_50%)]" />
-        </div>
-
-        {/* Floating elements without parallax */}
-        <FloatingElements />
-
+      <div className="relative z-10 bg-white/90">
+      
         <div className="pt-4 pb-3 relative z-10">
-          {/* Promotional highlights */}
-          {/* <PromoRow /> */}
-
+         
           <div className="animate-slide-up-stagger" style={{ animationDelay: '0.1s' }}>
             <MemoizedBusinessRow
               title="For You"
@@ -98,9 +87,7 @@ export default function Home() {
               variant="reviews"
             />
           </div>
-
-          {/* Featured Deal */}
-          {/* <FeaturedDeal /> */}
+         
         </div>
 
         {/* Footer - only on larger screens */}

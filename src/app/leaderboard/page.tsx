@@ -272,7 +272,7 @@ export default function LeaderboardPage() {
                         <div className="font-sf text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
                       </div>
                     </div>
-                    <div className="bg-white  /50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
+                    <div className="bg-white/50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
                       <Star className="text-sm text-coral" />
                       <span className="font-sf text-sm font-600 text-charcoal">{user.totalRating}</span>
                     </div>
@@ -310,7 +310,7 @@ export default function LeaderboardPage() {
                           <div className="font-sf text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
                         </div>
                       </div>
-                      <div className="bg-white  /50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
+                      <div className="bg-white/50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
                         <Star className="text-sm text-coral" />
                         <span className="font-sf text-sm font-600 text-charcoal">{user.totalRating}</span>
                       </div>

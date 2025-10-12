@@ -81,7 +81,7 @@ export default function Header({ showSearch = true, variant = "white" }: { showS
 
             {/* Desktop nav - positioned on the right */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
-              {["home", "all", "saved", "leaderboard"].map((route) => (
+              {["home", "all", "saved", "leaderboard", "claim business"].map((route) => (
                 <Link
                   key={route}
                   href={`/${route}`}

@@ -9,7 +9,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { ArrowLeft } from "lucide-react";
 import {
   User as UserIcon,
-  AlertCircle,
   ChevronLeft,
   ChevronRight,
   ChevronUp,
@@ -30,12 +29,12 @@ const Footer = dynamic(() => import("../components/Footer/Footer"), {
   ssr: false,
 });
 
-// ---------- Frosted gradient helpers ----------
+// ---------- Frosted helpers (cards & header keep subtle glass look, page bg is pure white) ----------
 const glassHeader = `
   relative z-10
   px-3 sm:px-4 py-4 sm:py-6
   border-b border-black/5
-  bg-white
+  bg-white/90 shadow-md
 `.replace(/\s+/g, " ");
 
 const glassCard = `
@@ -374,6 +373,7 @@ function ProfileContent() {
     })} '${year}`;
   };
 
+  // Keep skeleton if you want; otherwise remove this block too.
   if (loading) {
     return (
       <div className="min-h-dvh bg-white relative">
@@ -409,46 +409,16 @@ function ProfileContent() {
     );
   }
 
-  if (error || !profile) {
-    return (
-      <div className="min-h-dvh bg-white relative">
-        <div className="pt-4 pb-6 relative z-10">
-          <div className="px-4 sm:px-6 md:px-8">
-            <div className="max-w-4xl mx-auto space-y-6">
-              <div className={`${glassCard} text-center`}>
-                <div className="relative z-[1] p-6">
-                  <AlertCircle className="text-red-500 w-12 h-12 mb-4" />
-                  <h2 className="font-sf text-xl font-600 text-charcoal mb-2">
-                    {error || "Profile not found"}
-                  </h2>
-                  <p className="text-charcoal/60 mb-4">
-                    Please try refreshing the page or contact support if the problem persists.
-                  </p>
-                  <Link
-                    href="/home"
-                    className="inline-flex items-center space-x-2 bg-sage text-white px-6 py-3 rounded-6 font-sf font-600 hover:bg-sage/90 transition-colors"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                    <span>Back to Home</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // ⛔️ Removed the "Profile not found" / error fallback UI entirely
+  // If you still want a silent guard, uncomment next line:
+  // if (!profile) return null;
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-white via-sage/[0.015] to-white relative">
-      {/* Floating background orbs remain */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Premium gradient overlay for glassy effect */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(116,145,118,0.03),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(214,116,105,0.02),transparent_50%)]" />
-      </div>
+    // ✅ Solid white background, no page-level gradient
+    <div className="min-h-dvh bg-white relative">
+      {/* ❌ Removed fixed radial gradient & any floating bg objects */}
 
-      {/* ---------- Page Header (kept simple motion, no scroll-reveal) ---------- */}
+      {/* ---------- Page Header ---------- */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -461,7 +431,7 @@ function ProfileContent() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4"
+              className="w-10 h-10 sm:w-12 sm:h-12 bg-charcoal/5 hover:bg-sage/10 rounded-full flex items-center justify-center border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4"
             >
               <ArrowLeft
                 className="text-charcoal/70 group-hover:text-sage transition-colors duration-300"
@@ -472,7 +442,7 @@ function ProfileContent() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.1 }}
-              className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal"
+              className="font-sf text-base sm:text-xl font-700 text-charcoal"
             >
               Your Profile
             </motion.h1>
@@ -492,7 +462,7 @@ function ProfileContent() {
                     <div className="relative">
                       <div className="w-16 h-16">
                         <SafeAvatar
-                          src={profile.avatar_url}
+                          src={profile?.avatar_url || null}
                           alt="Profile picture"
                           size={64}
                           className="w-16 h-16 object-cover"
@@ -502,10 +472,10 @@ function ProfileContent() {
                     <div>
                       <div className="flex items-center space-x-2 mb-1">
                         <h1 className="font-sf text-xl font-700 text-charcoal">
-                          @{profile.username || profile.display_name || "User"}
+                          @{profile?.username || profile?.display_name || "User"}
                         </h1>
                       </div>
-                      {profile.is_top_reviewer && (
+                      {profile?.is_top_reviewer && (
                         <div className="flex items-center space-x-1 mb-2">
                           <Trophy className="text-coral w-4 h-4" />
                           <span className="text-sm font-600 text-coral">
@@ -540,7 +510,7 @@ function ProfileContent() {
                         style={{ fill: "currentColor" }}
                       />
                       <span className="font-sf text-xl font-700 text-charcoal leading-tight">
-                        {profile.reviews_count}
+                        {profile?.reviews_count ?? 0}
                       </span>
                     </div>
                     <span className="text-sm font-400 text-charcoal/60 leading-tight">
@@ -551,7 +521,7 @@ function ProfileContent() {
                     <div className="flex flex-col items-center mb-2">
                       <Trophy className="text-sage w-5 h-5 mb-1" />
                       <span className="font-sf text-xl font-700 text-charcoal leading-tight">
-                        {profile.badges_count}
+                        {profile?.badges_count ?? 0}
                       </span>
                     </div>
                     <span className="text-sm font-400 text-charcoal/60 leading-tight">
@@ -562,7 +532,7 @@ function ProfileContent() {
                     <div className="flex flex-col items-center mb-2">
                       <Calendar className="text-sage w-5 h-5 mb-1" />
                       <span className="font-sf text-sm font-700 text-charcoal leading-tight">
-                        {formatMemberSince(profile.created_at)}
+                        {profile ? formatMemberSince(profile.created_at) : "--"}
                       </span>
                     </div>
                     <span className="text-xs font-400 text-charcoal/60 leading-tight">
@@ -594,7 +564,7 @@ function ProfileContent() {
                   </button>
                 </div>
                 <div className="space-y-3">
-                  {reviews
+                  {(reviews ?? [])
                     .slice(0, showAllReviews ? undefined : 2)
                     .map((review) => (
                       <div
@@ -647,7 +617,7 @@ function ProfileContent() {
                   Your Achievements
                 </h2>
                 <div className="space-y-3">
-                  {achievements.map((ua) => (
+                  {(achievements ?? []).map((ua) => (
                     <div
                       key={ua.achievement_id}
                       className="flex items-center space-x-3 p-3 transition-all duration-200 bg-sage/10 border border-sage/20 rounded-xl"

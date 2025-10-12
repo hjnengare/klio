@@ -20,7 +20,6 @@ const styles = `
   .delay-800 { animation-delay: .8s }
   .delay-1000 { animation-delay: 1s }
 
-  /* ✨ Premium silver shimmer overlay (text stays charcoal) */
   @keyframes shimmerSweep {
     0% { background-position: -150% 0; opacity: .2; }
     50% { opacity: .6; }
@@ -28,7 +27,7 @@ const styles = `
   }
   .shimmer-overlay {
     position: relative;
-    color: #222222; /* solid charcoal base */
+    color: #222222;
     display: inline-block;
   }
   .shimmer-overlay::after {
@@ -53,7 +52,6 @@ const styles = `
     * { animation: none !important; transition: none !important; }
   }
 
-  /* Safe areas / polish */
   .safe-area-padding {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
@@ -66,7 +64,6 @@ const styles = `
 
   .btn-press:active { transform: scale(0.98); transition: transform 0.1s ease; }
 
-  /* Premium button styling */
   .btn-premium {
     position: relative;
     background: linear-gradient(135deg, #7D9B76 0%, #6B8A64 100%);
@@ -100,27 +97,14 @@ export default function OnboardingPage() {
       <style dangerouslySetInnerHTML={{ __html: styles }} />
       <div className="min-h-[100svh] md:min-h-[100dvh] bg-white flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
 
-        {/* Background shapes */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <div className="absolute -top-10 -right-10 md:-top-16 md:-right-16 w-48 h-48 md:w-72 md:h-72 rounded-full bg-gradient-to-b from-coral/30 to-coral/5 blur-lg md:blur-2xl opacity-80" />
-          <div className="absolute top-0 right-0 w-40 h-40 md:w-56 md:h-56 opacity-50">
-            <div className="w-full h-full bg-gradient-to-b from-sage/50 to-sage/10 blur-md md:blur-xl rotate-180" style={{ clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)" }} />
-          </div>
-          <div className="absolute -bottom-16 -left-16 md:-bottom-24 md:-left-24 w-56 h-56 md:w-80 md:h-80 rounded-full bg-gradient-to-tr from-sage/35 to-sage/10 blur-lg md:blur-2xl opacity-75" />
-          <div className="absolute bottom-16 left-8 md:bottom-24 md:left-16 w-32 h-32 md:w-44 md:h-44 rounded-3xl bg-gradient-to-tl from-coral/40 to-coral/15 blur-md md:blur-xl opacity-60 rotate-12" />
-          <div className="absolute bottom-8 right-4 md:bottom-12 md:right-8 w-28 h-48 md:w-36 md:h-64 opacity-50">
-            <div className="w-full h-full bg-gradient-to-t from-sage/50 to-sage/10 blur-md md:blur-xl -rotate-6" style={{ clipPath: "inset(0% round 1rem)" }} />
-          </div>
-        </div>
-
-        {/* Content */}
+        {/* Content only — background objects removed */}
         <div className="w-full max-w-full px-3 md:max-w-4xl md:px-4 mx-auto relative z-10 flex flex-col h-full py-4 sm:py-6">
-          {/* Logo - Top on mobile, stays at top */}
+          {/* Logo */}
           <div className={`text-center mb-8 md:mb-6 flex-shrink-0 ${mounted ? "opacity-0 animate-fade-in-up delay-400" : "opacity-0"}`}>
             <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-charcoal tracking-tight">KLIO</h1>
           </div>
 
-          {/* Main content - naturally fills middle space */}
+          {/* Main content */}
           <div className="text-center flex-1 flex flex-col justify-center min-h-0 py-4">
             <div className="space-y-6 md:space-y-8">
               <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-600" : "opacity-0"}`}>
@@ -163,7 +147,7 @@ export default function OnboardingPage() {
             </div>
           </div>
 
-          {/* Trust indicators - Bottom on mobile */}
+          {/* Trust indicators */}
           <div className="flex justify-center items-start gap-3 md:gap-5 text-charcoal/60 text-center pt-8 md:pt-6 pb-4 flex-shrink-0">
             <div className={`${mounted ? "opacity-0 animate-scale-in delay-1400" : "opacity-0"} flex flex-col items-center gap-1 w-16 md:w-20`}>
               <div className="w-7 h-7 bg-sage/10 rounded-full flex items-center justify-center">
