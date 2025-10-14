@@ -150,6 +150,10 @@ export function HeroCarousel() {
       onBlur={() => setPaused(false)}
       style={{ fontFamily: FONT_STACK }}
     >
+      {/* Liquid Glass Ambient Lighting */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-sage/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.15)_0%,_transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 backdrop-blur-[1px] bg-white/5 mix-blend-overlay pointer-events-none" />
       {/* Slides */}
       {HERO_SLIDES.map((slide, index) => (
         <div
@@ -172,34 +176,45 @@ export function HeroCarousel() {
             />
           </div>
 
-          {/* Gradient Overlays for legibility (subtle but premium) */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 pointer-events-none" />
+          {/* Liquid Glass Overlays for premium depth */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-sage/10 pointer-events-none" />
+          <div className="absolute inset-0 backdrop-blur-[0.5px] bg-white/5 mix-blend-overlay pointer-events-none" />
 
           {/* Content */}
           <div className="relative z-20 h-full flex items-center pt-[112px] sm:pt-[128px] pb-20">
             <div className="container mx-auto max-w-[1300px] px-4 sm:px-6">
-              <div className="max-w-[800px]">
-                <h1
-                  className="text-white leading-[1.1] mb-4 sm:mb-6 font-bold tracking-tight"
-                  style={{
-                    fontSize: "clamp(2.4rem, 5vw, 4.75rem)",
-                    maxWidth: "13ch",
-                    textWrap: "balance" as any,
-                  }}
-                >
-                  {slide.title}
-                </h1>
-                <p
-                  className="text-white/90 leading-relaxed"
-                  style={{
-                    fontSize: "clamp(1rem, 1.5vw, 1.25rem)",
-                    maxWidth: "60ch",
-                    textWrap: "pretty" as any,
-                  }}
-                >
-                  {slide.description}
-                </p>
+              <div className="max-w-[800px] relative">
+                {/* Glass Content Container */}
+                <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 sm:p-12 shadow-2xl shadow-black/20">
+                  {/* Subtle Glass Texture */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/10 to-white/5 rounded-3xl" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,_rgba(255,255,255,0.3)_0%,_transparent_50%)] rounded-3xl" />
+                  
+                  <div className="relative z-10">
+                    <h1
+                      className="text-white leading-[1.1] mb-4 sm:mb-6 font-bold tracking-tight drop-shadow-2xl"
+                      style={{
+                        fontSize: "clamp(2.4rem, 5vw, 4.75rem)",
+                        maxWidth: "13ch",
+                        textWrap: "balance" as any,
+                      }}
+                    >
+                      {slide.title}
+                    </h1>
+                    <p
+                      className="text-white/95 leading-relaxed drop-shadow-lg"
+                      style={{
+                        fontSize: "clamp(1rem, 1.5vw, 1.25rem)",
+                        maxWidth: "60ch",
+                        textWrap: "pretty" as any,
+                      }}
+                    >
+                      {slide.description}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -218,8 +233,10 @@ export function HeroCarousel() {
             <button
               key={slide.id}
               onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent ${
-                active ? "bg-white w-8" : "bg-white/40 hover:bg-white/60 w-2"
+              className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent backdrop-blur-sm ${
+                active 
+                  ? "bg-white/90 w-8 shadow-lg shadow-white/20" 
+                  : "bg-white/40 hover:bg-white/60 w-2 hover:shadow-md hover:shadow-white/10"
               }`}
               role="tab"
               aria-selected={active}

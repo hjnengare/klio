@@ -1,12 +1,22 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  // Development optimizations
+  ...(process.env.NODE_ENV === 'development' && {
+    // Faster builds in development
+    swcMinify: false,
+    compiler: {
+      removeConsole: false,
+    },
+  }),
 
-  // Performance optimizations
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
-  },
+  // Production optimizations
+  ...(process.env.NODE_ENV === 'production' && {
+    output: 'standalone',
+    compiler: {
+      removeConsole: true,
+    },
+  }),
 
   // Image optimization
   images: {
@@ -17,16 +27,24 @@ const nextConfig: NextConfig = {
         pathname: '/photo-**',
       },
     ],
-    unoptimized: true, // Reduces build memory usage
+    unoptimized: process.env.NODE_ENV === 'development', // Faster dev builds
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
-  // Webpack optimizations
-  webpack: (config, { isServer }) => {
-    // Optimize bundle splitting
-    if (!isServer) {
+  // Webpack optimizations for faster compilation
+  webpack: (config, { dev, isServer }) => {
+    if (dev) {
+      // Development optimizations
+      config.optimization = {
+        ...config.optimization,
+        removeAvailableModules: false,
+        removeEmptyChunks: false,
+        splitChunks: false,
+      };
+    } else {
+      // Production optimizations
       config.optimization = {
         ...config.optimization,
         splitChunks: {
@@ -34,14 +52,12 @@ const nextConfig: NextConfig = {
           cacheGroups: {
             default: false,
             vendors: false,
-            // Vendor chunk
             vendor: {
               name: 'vendor',
               chunks: 'all',
               test: /node_modules/,
               priority: 20,
             },
-            // Common chunk
             common: {
               name: 'common',
               minChunks: 2,
@@ -60,6 +76,22 @@ const nextConfig: NextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['react-icons', 'framer-motion'],
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+  },
+
+  // TypeScript and ESLint optimizations
+  typescript: {
+    ignoreBuildErrors: process.env.NODE_ENV === 'development',
+  },
+  eslint: {
+    ignoreDuringBuilds: process.env.NODE_ENV === 'development',
   },
 };
 

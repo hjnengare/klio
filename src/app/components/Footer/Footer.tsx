@@ -44,11 +44,17 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-white border-t border-charcoal/10 relative overflow-hidden">
+    <footer className="relative overflow-hidden">
+      {/* Liquid Glass Background */}
+      <div className="absolute inset-0 backdrop-blur-xl bg-white/40 border-t border-white/20 shadow-2xl shadow-sage/5" />
+      <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-white/40" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_rgba(120,119,198,0.1)_0%,_transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,_rgba(255,182,193,0.08)_0%,_transparent_50%)]" />
+      
       {/* Background decorative elements */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/3 w-24 h-24 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-2xl" />
+      <div className="absolute inset-0 opacity-40 pointer-events-none">
+        <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-gradient-to-br from-sage/15 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/3 w-24 h-24 bg-gradient-to-br from-coral/12 to-transparent rounded-full blur-2xl" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
@@ -62,8 +68,8 @@ export default function Footer() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <Link href="/" className="inline-block">
-                <h2 className="font-sf text-3xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4">
+              <Link href="/" className="inline-block group">
+                <h2 className="font-sf text-3xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4 group-hover:scale-105 transition-all duration-300">
                   KLIO
                 </h2>
               </Link>
@@ -84,7 +90,7 @@ export default function Footer() {
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                       viewport={{ once: true }}
                       whileHover={{ scale: 1.1, y: -2 }}
-                      className="w-10 h-10 bg-sage/10 hover:bg-sage/20 rounded-full flex items-center justify-center text-sage hover:text-sage/80 transition-all duration-300"
+                      className="w-10 h-10 bg-sage/15 hover:bg-sage/25 backdrop-blur-sm rounded-full flex items-center justify-center text-sage hover:text-sage/80 transition-all duration-300 border border-sage/20 hover:border-sage/30 shadow-lg shadow-sage/10 hover:shadow-xl hover:shadow-sage/15"
                       aria-label={social.name}
                     >
                       <Icon className="w-5 h-5" />
@@ -182,7 +188,7 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="pt-6 md:pt-8 border-t border-sage/20"
+          className="pt-6 md:pt-8 border-t border-white/30"
         >
           <div className="flex flex-col md:flex-row items-center justify-center md:justify-between space-y-4 md:space-y-0">
             {/* Copyright */}
@@ -192,11 +198,11 @@ export default function Footer() {
 
             {/* Trust indicators */}
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 px-3 py-1 bg-sage/10 rounded-full">
+              <div className="flex items-center space-x-2 px-3 py-1 bg-sage/15 backdrop-blur-sm rounded-full border border-sage/20 shadow-lg shadow-sage/10">
                 <ShieldCheck className="w-3.5 h-3.5 text-sage" />
                 <span className="font-sf text-8 font-500 text-sage">Secure</span>
               </div>
-              <div className="flex items-center space-x-2 px-3 py-1 bg-coral/10 rounded-full">
+              <div className="flex items-center space-x-2 px-3 py-1 bg-coral/15 backdrop-blur-sm rounded-full border border-coral/20 shadow-lg shadow-coral/10">
                 <Heart className="w-3.5 h-3.5 text-coral" fill="currentColor" />
                 <span className="font-sf text-8 font-500 text-coral">Trusted</span>
               </div>

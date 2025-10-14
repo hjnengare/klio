@@ -211,24 +211,6 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
             <ion-icon name="chevron-forward" class="text-charcoal/40 text-base group-hover:text-sage transition-colors duration-200" />
           </Link>
 
-          {/* Explore */}
-          <button
-            onClick={() => handleNavigation("/explore")}
-            className="w-full flex items-center space-x-4 p-4 rounded-xl hover:bg-sage/5 transition-all duration-200 group mobile-interaction touch-target-large"
-          >
-            <div className="w-10 h-10 bg-coral/10 rounded-full flex items-center justify-center group-hover:bg-coral/20 transition-colors duration-200">
-              <ion-icon name="compass" class="text-coral text-lg" />
-            </div>
-            <div className="flex-1 text-left">
-              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
-                Explore
-              </span>
-              <p className="text-sm text-charcoal/60 mt-1">
-                Find new places to visit
-              </p>
-            </div>
-            <ion-icon name="chevron-forward" class="text-charcoal/40 text-base group-hover:text-sage transition-colors duration-200" />
-          </button>
 
           {/* Search */}
           <button

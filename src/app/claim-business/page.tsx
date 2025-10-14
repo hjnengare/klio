@@ -3,32 +3,29 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import {
+  Search,
+  Store,
+  MapPin,
+  Star,
+  ChevronLeft,
+  Check,
+} from "lucide-react";
 
 export default function ClaimBusinessPage() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBusiness, setSelectedBusiness] = useState<number | null>(null);
 
-  useEffect(() => {
-    // Preload common ion-icons
-    ["search", "storefront", "location", "star", "chevron-forward", "chevron-back", "checkmark"].forEach((n) => {
-      const el = document.createElement("ion-icon");
-      el.name = n;
-      el.style.display = "none";
-      document.body.appendChild(el);
-      setTimeout(() => document.body.contains(el) && document.body.removeChild(el), 100);
-    });
-  }, []);
-
   const unclaimedBusinesses = [
     { id: 1, name: "Artisan Bakery & Café", category: "Bakery", location: "Mission District", reviews: 45 },
     { id: 2, name: "Vintage Vinyl Records", category: "Music Store", location: "Castro", reviews: 23 },
     { id: 3, name: "Mountain View Fitness", category: "Gym", location: "SOMA", reviews: 67 },
     { id: 4, name: "Garden Fresh Market", category: "Grocery", location: "Richmond", reviews: 34 },
-    { id: 5, name: "Sunset Yoga Studio", category: "Wellness", location: "Sunset", reviews: 89 }
+    { id: 5, name: "Sunset Yoga Studio", category: "Wellness", location: "Sunset", reviews: 89 },
   ];
 
-  const filteredBusinesses = unclaimedBusinesses.filter(business =>
+  const filteredBusinesses = unclaimedBusinesses.filter((business) =>
     business.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     business.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
     business.location.toLowerCase().includes(searchQuery.toLowerCase())
@@ -36,25 +33,30 @@ export default function ClaimBusinessPage() {
 
   const handleClaimBusiness = (businessId: number) => {
     setSelectedBusiness(businessId);
-    // Here you would typically redirect to a claim form or verification process
     console.log(`Claiming business with ID: ${businessId}`);
   };
 
   return (
-    <div className="min-h-screen bg-white  /90">
+    <div
+      className="min-h-screen bg-white"
+      style={{
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+      }}
+    >
       {/* Header */}
-      <div className="bg-white  /90/95 backdrop-blur-sm border-b border-charcoal/10 sticky top-0 z-10">
+      <div className="bg-white/95 backdrop-blur-sm border-b border-charcoal/10 sticky top-0 z-10">
         <div className="max-w-[1300px] mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => router.back()}
-                className="w-10 h-10 rounded-full hover:bg-sage/5 flex items-center justify-center transition-all duration-200 mobile-interaction"
+                className="w-10 h-10 rounded-full hover:bg-sage/5 flex items-center justify-center transition-all duration-200"
                 aria-label="Go back"
               >
-                <ion-icon name="chevron-back" class="text-lg text-charcoal/70" />
+                <ChevronLeft className="w-5 h-5 text-charcoal/70" />
               </button>
-              <h1 className="font-sf text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+              <h1 className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
                 Claim Your Business
               </h1>
             </div>
@@ -66,9 +68,9 @@ export default function ClaimBusinessPage() {
         {/* Info Section */}
         <div className="mb-8 text-center">
           <div className="w-16 h-16 bg-sage/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <ion-icon name="storefront" class="text-2xl text-sage" />
+            <Store className="w-7 h-7 text-sage" />
           </div>
-          <h2 className="font-sf text-xl font-600 text-charcoal mb-2">
+          <h2 className="text-xl font-semibold text-charcoal mb-2">
             Own or manage a business?
           </h2>
           <p className="text-charcoal/60 text-sm max-w-md mx-auto">
@@ -80,15 +82,15 @@ export default function ClaimBusinessPage() {
         <div className="mb-8">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <ion-icon name="search" class="text-charcoal/40 text-base" />
+              <Search className="w-4 h-4 text-charcoal/40" />
             </div>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for your business..."
-              className="w-full pl-12 pr-4 py-4 bg-white   border border-charcoal/10 rounded-xl
-                         font-sf text-base placeholder:text-charcoal/40
+              className="w-full pl-12 pr-4 py-4 bg-white border border-charcoal/10 rounded-xl
+                         text-base placeholder:text-charcoal/40
                          focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50
                          transition-all duration-200"
             />
@@ -100,48 +102,48 @@ export default function ClaimBusinessPage() {
           {filteredBusinesses.map((business) => (
             <div
               key={business.id}
-              className="p-4 bg-white   border border-charcoal/5 rounded-xl hover:bg-sage/5
+              className="p-4 bg-white border border-charcoal/5 rounded-xl hover:bg-sage/5
                          hover:border-sage/20 transition-all duration-200 group"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-coral/10 rounded-full flex items-center justify-center
                                   group-hover:bg-coral/20 transition-colors duration-200">
-                    <ion-icon name="storefront" class="text-coral text-lg" />
+                    <Store className="w-5 h-5 text-coral" />
                   </div>
                   <div>
-                    <h3 className="font-sf text-base font-600 text-charcoal group-hover:text-sage
+                    <h3 className="text-base font-semibold text-charcoal group-hover:text-sage
                                    transition-colors duration-200">
                       {business.name}
                     </h3>
-                    <div className="flex items-center space-x-3 mt-1">
-                      <span className="text-sm text-charcoal/60">{business.category}</span>
+                    <div className="flex items-center space-x-3 mt-1 text-sm text-charcoal/60">
+                      <span>{business.category}</span>
                       <span className="text-charcoal/30">•</span>
                       <div className="flex items-center space-x-1">
-                        <ion-icon name="location" class="text-xs text-charcoal/40" />
-                        <span className="text-sm text-charcoal/60">{business.location}</span>
+                        <MapPin className="w-3 h-3 text-charcoal/40" />
+                        <span>{business.location}</span>
                       </div>
                       <span className="text-charcoal/30">•</span>
-                      <span className="text-sm text-charcoal/60">{business.reviews} reviews</span>
+                      <span>{business.reviews} reviews</span>
                     </div>
                   </div>
                 </div>
                 <button
                   onClick={() => handleClaimBusiness(business.id)}
                   disabled={selectedBusiness === business.id}
-                  className={`px-4 py-2 rounded-lg font-sf text-sm font-500 transition-all duration-200
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
                     ${selectedBusiness === business.id
-                      ? 'bg-sage text-white'
-                      : 'bg-sage/10 text-sage hover:bg-sage hover:text-white'
+                      ? "bg-sage text-white"
+                      : "bg-sage/10 text-sage hover:bg-sage hover:text-white"
                     }`}
                 >
                   {selectedBusiness === business.id ? (
                     <div className="flex items-center space-x-2">
-                      <ion-icon name="checkmark" class="text-sm" />
+                      <Check className="w-4 h-4" />
                       <span>Claimed</span>
                     </div>
                   ) : (
-                    'Claim This Business'
+                    "Claim This Business"
                   )}
                 </button>
               </div>
@@ -153,15 +155,15 @@ export default function ClaimBusinessPage() {
         {searchQuery && filteredBusinesses.length === 0 && (
           <div className="text-center py-12">
             <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ion-icon name="search" class="text-2xl text-charcoal/40" />
+              <Search className="w-6 h-6 text-charcoal/40" />
             </div>
-            <h3 className="font-sf text-lg font-600 text-charcoal mb-2">
+            <h3 className="text-lg font-semibold text-charcoal mb-2">
               Business not found
             </h3>
             <p className="text-charcoal/60 text-sm mb-6">
               Can't find your business? You can add it to our directory.
             </p>
-            <button className="px-6 py-3 bg-coral text-white rounded-lg font-sf text-sm font-500
+            <button className="px-6 py-3 bg-coral text-white rounded-lg text-sm font-medium
                                hover:bg-coral/90 transition-colors duration-200">
               Add Your Business
             </button>
@@ -169,20 +171,20 @@ export default function ClaimBusinessPage() {
         )}
 
         {/* Help Section */}
-        <div className="mt-12 p-6 bg-white   border border-charcoal/5 rounded-xl">
-          <h3 className="font-sf text-lg font-600 text-charcoal mb-3">
+        <div className="mt-12 p-6 bg-white border border-charcoal/5 rounded-xl">
+          <h3 className="text-lg font-semibold text-charcoal mb-3">
             Need help claiming your business?
           </h3>
           <p className="text-charcoal/60 text-sm mb-4">
             Our business verification process is quick and easy. You'll need to provide proof of ownership
-            or management authorization.
+            or management authorisation.
           </p>
           <div className="flex flex-wrap gap-3">
-            <button className="px-4 py-2 bg-sage/10 text-sage rounded-lg font-sf text-sm font-500
+            <button className="px-4 py-2 bg-sage/10 text-sage rounded-lg text-sm font-medium
                                hover:bg-sage hover:text-white transition-colors duration-200">
               Contact Support
             </button>
-            <button className="px-4 py-2 border border-charcoal/10 text-charcoal rounded-lg font-sf text-sm font-500
+            <button className="px-4 py-2 border border-charcoal/10 text-charcoal rounded-lg text-sm font-medium
                                hover:bg-charcoal/5 transition-colors duration-200">
               Learn More
             </button>

@@ -24,7 +24,7 @@ export default function EventsSpecials({
 
   return (
     <section
-      className="bg-white relative"
+      className="relative"
       aria-label={title}
       data-section
       style={{
@@ -41,7 +41,7 @@ export default function EventsSpecials({
         <div className="absolute bottom-20 right-10 w-24 h-24 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-xl" />
       </div>
 
-      <div className="container mx-auto max-w-[1300px] px-4 relative z-10 pt-1 sm:pt-1 pb-1 sm:pb-2">
+      <div className="container mx-auto max-w-[1300px] px-4 relative z-10 py-4">
         <div className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]">
           <h2 className="text-xl font-semibold text-charcoal tracking-tight">
             {title}
@@ -49,13 +49,15 @@ export default function EventsSpecials({
 
           <button
             onClick={() => router.push(href)}
-            className="group inline-flex items-center gap-1 text-base font-semibold text-charcoal/70 transition-all duration-300 hover:text-sage focus:outline-none focus:ring-2 focus:ring-sage/30 rounded-full px-2 -mx-2"
+            className="group inline-flex items-center gap-1 text-base font-semibold text-charcoal/70 transition-all duration-300 hover:text-sage focus:outline-none focus:ring-2 focus:ring-sage/30 rounded-full px-4 py-2 -mx-2 relative overflow-hidden"
             aria-label={`${cta}: ${title}`}
           >
-            <span className="transition-transform duration-300 group-hover:-translate-x-0.5">
+            <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 backdrop-blur-sm bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-0.5">
               {cta}
             </span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+            <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
           </button>
         </div>
 

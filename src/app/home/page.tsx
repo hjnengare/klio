@@ -45,16 +45,16 @@ export default function Home() {
   const trendingBusinesses = TRENDING_BUSINESSES.slice(10, 20);
 
   return (
-    <div className="min-h-dvh bg-white relative">
+    <div className="min-h-dvh bg-white">
       <Header showSearch={true} variant="frosty" />
 
       <div>
         <HeroCarousel />
       </div>
 
-      <div className="relative z-10 bg-white/90">
-        <div className="pt-4 pb-3 relative z-10">
-          {/* No scroll-reveal wrappers; simple static rendering */}
+      <div className="bg-white">
+        <div className="py-4">
+            {/* No scroll-reveal wrappers; simple static rendering */}
           <div>
             <MemoizedBusinessRow
               title="For You"

@@ -51,33 +51,10 @@ export default function SavedPage() {
                     Saved Gems
                   </h1>
                 </button>
-                <p className="font-sf text-sm sm:text-base text-charcoal/70 max-w-md ml-14 sm:ml-16">
-                  Your collection of favorite local spots
-                </p>
               </div>
             </ScrollReveal>
 
-            {/* Category Filter */}
-            <ScrollReveal delay={0.2}>
-              <ScrollableSection className="mb-8">
-                <div className="flex space-x-3">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => setSelectedCategory(category)}
-                      className={`px-6 py-3 rounded-full font-sf text-7 font-500 whitespace-nowrap transition-all duration-300 ${
-                        selectedCategory === category
-                          ? "bg-sage text-white shadow-lg"
-                          : " bg-white   text-charcoal/70 hover:bg-sage/10 hover:text-sage border border-charcoal/20"
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </ScrollableSection>
-            </ScrollReveal>
-
+            
             {/* Saved Businesses */}
             {savedBusinesses.length > 0 ? (
               <ScrollReveal delay={0.3}>
@@ -112,11 +89,11 @@ export default function SavedPage() {
                     Start exploring and save your favorite local businesses to see them here
                   </p>
                   <a
-                    href="/all"
+                    href="/home"
                     className="inline-flex items-center px-6 py-3 bg-sage text-white font-sf text-6 font-600 rounded-full hover:bg-sage/90 transition-all duration-300 shadow-lg"
                   >
                     <ion-icon name="search-outline" style={{ marginRight: "8px" }} />
-                    Explore Gems
+                    Discover Gems
                   </a>
                 </div>
               </ScrollReveal>

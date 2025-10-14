@@ -65,23 +65,14 @@ interface Interest {
 }
 
 const interestsFallback: Interest[] = [
-  // Original categories
-  { id: "food-drink", name: "Food & Drink" },
-  { id: "beauty-wellness", name: "Beauty & Wellness" },
-  { id: "arts-culture", name: "Arts & Culture" },
-  { id: "shopping-lifestyle", name: "Shopping & Lifestyle" },
-
-  // Services & Everyday Life
-  { id: "services-everyday", name: "Services & Everyday Life" },
-
-  // Digital & Work
-  { id: "digital-work", name: "Digital & Work" },
-
-  // Experiences & Social
-  { id: "experiences-social", name: "Experiences & Social" },
-
-  // Local & Unique
-  { id: "local-unique", name: "Local & Unique" },
+  { id: 'food-drink', name: 'Food & Drink' },
+  { id: 'beauty-wellness', name: 'Beauty & Wellness' },
+  { id: 'professional-services', name: 'Professional Services' },
+  { id: 'outdoors-adventure', name: 'Outdoors & Adventure' },
+  { id: 'experiences-entertainment', name: 'Entertainment & Experiences' },
+  { id: 'arts-culture', name: 'Arts & Culture' },
+  { id: 'family-pets', name: 'Family & Pets' },
+  { id: 'shopping-lifestyle', name: 'Shopping & Lifestyle' },
 ];
 
 function InterestsContent() {
@@ -391,7 +382,7 @@ function InterestsContent() {
             className="text-sm md:text-base font-normal text-charcoal/70 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto"
             style={sf}
           >
-            Pick a few things you love and let&apos;s personalize your experience!
+            Pick a few things you love and let's personalise your experience!
           </p>
         </div>
 
@@ -429,7 +420,7 @@ function InterestsContent() {
             </div>
             <p className="text-xs text-charcoal/60" style={sf} aria-live="polite">
               {hydratedSelected.length < MIN_SELECTIONS
-                ? `Select ${MIN_SELECTIONS - hydratedSelected.length} more to continue`
+                ? `Select ${MIN_SELECTIONS - hydratedSelected.length} or more to continue`
                 : hydratedSelected.length === MAX_SELECTIONS
                 ? "Perfect! You've selected the maximum"
                 : "Great! You can continue or select more"}

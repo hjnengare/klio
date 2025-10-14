@@ -23,7 +23,7 @@ interface OptimizedLinkProps {
 // Critical routes that should always prefetch
 const CRITICAL_ROUTES = [
   '/',
-  '/all',
+  '/home',
   '/saved',
   '/leaderboard',
 ];

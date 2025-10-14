@@ -52,7 +52,7 @@ const DEMO_SUBCATEGORIES: GroupedSubcategories = {
     title: "Food & Drink",
     items: [
       { id: "restaurants", label: "Restaurants", interest_id: "food-drink" },
-      { id: "cafes", label: "Cafes", interest_id: "food-drink" },
+      { id: "cafes", label: "Cafés", interest_id: "food-drink" },
       { id: "bars", label: "Bars", interest_id: "food-drink" },
       { id: "fast-food", label: "Fast Food", interest_id: "food-drink" },
       { id: "fine-dining", label: "Fine Dining", interest_id: "food-drink" },
@@ -70,7 +70,10 @@ const DEMO_SUBCATEGORIES: GroupedSubcategories = {
       { id: "nail-salons", label: "Nail Salons", interest_id: "beauty-wellness" },
       { id: "barbers", label: "Barbers", interest_id: "beauty-wellness" },
       { id: "massage", label: "Massage Therapy", interest_id: "beauty-wellness" },
-      { id: "skincare", label: "Skincare Clinics", interest_id: "beauty-wellness" },
+      { id: "gyms", label: "Gyms", interest_id: "gyms" },
+      { id: "yoga", label: "Yoga", interest_id: "yoga" },
+      { id: "pilates", label: "Pilates", interest_id: "pilates" },
+      { id: "martial-arts", label: "Martial Arts", interest_id: "martial-arts" },
     ],
   },
   "arts-culture": {
@@ -78,13 +81,9 @@ const DEMO_SUBCATEGORIES: GroupedSubcategories = {
     items: [
       { id: "museums", label: "Museums", interest_id: "arts-culture" },
       { id: "galleries", label: "Galleries", interest_id: "arts-culture" },
-      { id: "theaters", label: "Theaters", interest_id: "arts-culture" },
-      { id: "concerts", label: "Concerts", interest_id: "arts-culture" },
-      { id: "art-studios", label: "Art Studios", interest_id: "arts-culture" },
-      { id: "cultural-centers", label: "Cultural Centers", interest_id: "arts-culture" },
-      { id: "music-venues", label: "Music Venues", interest_id: "arts-culture" },
+      { id: "theatres", label: "Theatres", interest_id: "arts-culture" },
+      { id: "creative-workshops", label: "Creative Workshops", interest_id: "arts-culture" },
       { id: "dance-studios", label: "Dance Studios", interest_id: "arts-culture" },
-      { id: "libraries", label: "Libraries", interest_id: "arts-culture" },
     ],
   },
   "shopping-lifestyle": {
@@ -95,16 +94,24 @@ const DEMO_SUBCATEGORIES: GroupedSubcategories = {
       { id: "bookstores", label: "Bookstores", interest_id: "shopping-lifestyle" },
       { id: "home-decor", label: "Home Decor", interest_id: "shopping-lifestyle" },
       { id: "gift-shops", label: "Gift Shops", interest_id: "shopping-lifestyle" },
-      { id: "jewelry", label: "Jewelry Stores", interest_id: "shopping-lifestyle" },
+      { id: "jewellery", label: "Jewellery Stores", interest_id: "shopping-lifestyle" },
+      { id: "grocers", label: "Grocery Stores", interest_id: "shopping-lifestyle" },
+      { id: "markets", label: "Markets", interest_id: "shopping-lifestyle" },
     ],
   },
   "services-everyday": {
-    title: "Services & Everyday Life",
+    title: "Professional Services",
     items: [
-      { id: "health-fitness", label: "Health & Fitness", interest_id: "services-everyday" },
       { id: "education-learning", label: "Education & Learning", interest_id: "services-everyday" },
       { id: "transport-travel", label: "Transport & Travel", interest_id: "services-everyday" },
       { id: "finance-insurance", label: "Finance & Insurance", interest_id: "services-everyday" },
+      { id: "plumbers", label: "Plumbers", interest_id: "services-everyday" },
+      { id: "handymen", label: "Handymen", interest_id: "services-everyday" },
+      { id: "electricians", label: "Electricians", interest_id: "services-everyday" },
+      { id: "legal-services", label: "Legal Services", interest_id: "services-everyday" },
+      { id: "cleaning", label: "Cleaning Services", interest_id: "services-everyday" },
+      { id: "pest-control", label: "Pest Control", interest_id: "services-everyday" },
+      { id: "laundromat", label: "Laundromats", interest_id: "services-everyday" },
     ],
   },
   "digital-work": {
@@ -114,18 +121,33 @@ const DEMO_SUBCATEGORIES: GroupedSubcategories = {
       { id: "work-offices", label: "Work & Offices", interest_id: "digital-work" },
     ],
   },
-  "experiences-social": {
-    title: "Experiences & Social",
+  "experiences-entertainment": {
+    title: "Experiences & Entertainment",
     items: [
-      { id: "events-festivals", label: "Events & Festivals", interest_id: "experiences-social" },
-      { id: "sports-recreation", label: "Sports & Recreation", interest_id: "experiences-social" },
+      { id: "events-festivals", label: "Events & Festivals", interest_id: "experiences-entertainment" },
+      { id: "sports-recreation", label: "Sports & Recreation", interest_id: "experiences-entertainment" },
+      { id: "nightlife", label: "Nightlife", interest_id: "experiences-entertainment" },
+      { id: "comedy-clubs", label: "Comedy Clubs", interest_id: "experiences-entertainment" },
+      { id: "escape-rooms", label: "Escape Rooms", interest_id: "experiences-entertainment" },
     ],
   },
-  "local-unique": {
-    title: "Local & Unique",
+  "family & pets": {
+    title: "Family & Pets",
     items: [
-      { id: "government-community", label: "Government & Community", interest_id: "local-unique" },
-      { id: "markets-stalls", label: "Markets & Stalls", interest_id: "local-unique" },
+      { id: "kids-entertainment", label: "Kids Entertainment", interest_id: "family-pets" },
+      { id: "family-friendly-activities", label: "Family-Friendly Activities", interest_id: "family-pets" },
+      { id: "vets", label: "Vets", interest_id: "family-pets" },
+      { id: "pet-grooming-services", label: "Pet-Grooming Services", interest_id: "family-pets" },
+      { id: "pet-friendly restaurants", label: "Pet-Friendly Restaurants", interest_id: "family-pets" },
+    ],
+  },
+  "outdoors-adventure": {
+    title: "Outdoors & Adventure",
+    items: [
+      { id: "land-adventures", label: "Land Adventures", interest_id: "outdoors-adventure" },
+      { id: "water-activities", label: "Water Activities", interest_id: "outdoors-adventure" },
+      { id: "air-extreme-sports", label: "Air & Extreme Sports", interest_id: "outdoors-adventure" },
+      { id: "tourism-exploration", label: "Tourism & Exploration", interest_id: "outdoors-adventure" },
     ],
   },
 };
@@ -186,6 +208,40 @@ function SubcategoriesContent() {
   }, [selectedInterests, hasLoadedSubcategories, loadSubInterests]);
 
   const groupedSubcategories: GroupedSubcategories = DEMO_SUBCATEGORIES;
+
+  /** ----- REORDER: match requested sequence ----- */
+  const DISPLAY_ORDER = [
+    "food-drink",
+    "beauty-wellness",
+    "professional-services",
+    "outdoors-adventure",
+    "experiences-entertainment",
+    "arts-culture",
+    "family-pets",
+    "shopping-lifestyle",
+  ] as const;
+
+  // Map requested ids to existing keys in DEMO_SUBCATEGORIES
+  const KEY_ALIASES: Record<string, string> = {
+    "professional-services": "services-everyday",
+    "family-pets": "family & pets",
+  };
+
+  const orderedSections = useMemo(() => {
+    const entries: Array<[string, { title: string; items: SubcategoryItem[] }]> =
+      [];
+    for (const id of DISPLAY_ORDER) {
+      const realKey = KEY_ALIASES[id] ?? id;
+      const section = groupedSubcategories[realKey];
+      if (section) entries.push([realKey, section]);
+    }
+    // Append any sections not explicitly ordered (e.g. "digital-work")
+    for (const [k, v] of Object.entries(groupedSubcategories)) {
+      const alreadyIncluded = entries.find(([key]) => key === k);
+      if (!alreadyIncluded) entries.push([k, v]);
+    }
+    return entries;
+  }, [groupedSubcategories]);
 
   const triggerMicroBounce = useCallback((id: string) => {
     setAnimatingIds((prev) => new Set(prev).add(id));
@@ -301,8 +357,8 @@ function SubcategoriesContent() {
           className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade"
           style={{ animationDelay: "0.16s" }}
         >
-          <div className="space-y-4 mb-4">
-            {Object.entries(groupedSubcategories).map(([interestId, section], sIdx) => {
+          <div className="space-y-6 mb-4">
+            {orderedSections.map(([interestId, section], sIdx) => {
               const sectionDelay = 0.22 + Math.min(sIdx, 8) * 0.08; // gentle per-section stagger
               return (
                 <section key={interestId} className="enter-fade" style={{ animationDelay: `${sectionDelay}s` }}>
@@ -310,7 +366,17 @@ function SubcategoriesContent() {
                     {section.title}
                   </h3>
 
-                  <div className="flex flex-wrap gap-2 md:gap-3">
+                  {/* GRID: 5+ per row on larger screens */}
+                  <div
+                    className="
+                      grid gap-2 md:gap-3
+                      grid-cols-2
+                      sm:grid-cols-3
+                      md:grid-cols-4
+                      lg:grid-cols-5
+                      xl:grid-cols-6
+                    "
+                  >
                     {section.items.map((subcategory, iIdx) => {
                       const isSelected = hydratedSelected.includes(subcategory.id);
                       const isDisabled =
@@ -328,12 +394,14 @@ function SubcategoriesContent() {
                           aria-pressed={isSelected}
                           className={`
                             enter-stagger
-                            relative inline-flex items-center justify-center py-3 md:py-4 px-5 md:px-6
+                            relative inline-flex items-center justify-center
+                            py-3 md:py-4 px-5 md:px-6
                             text-sm md:text-base font-semibold text-center
                             transition-all duration-200 ease-out
                             min-h-[44px] rounded-full
                             focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
                             disabled:cursor-not-allowed disabled:opacity-60
+                            w-full
                             ${animatingIds.has(subcategory.id) ? "animate-micro-bounce" : ""}
                             ${
                               isSelected
@@ -345,7 +413,7 @@ function SubcategoriesContent() {
                           `}
                           style={{ ...(sf as any), animationDelay: `${chipDelay}s` }}
                         >
-                          <span className="whitespace-nowrap">{subcategory.label}</span>
+                          <span className="truncate">{subcategory.label}</span>
                           {isSelected && (
                             <div className="absolute top-1 right-1">
                               <CheckCircle className="w-4 h-4 text-white" aria-hidden="true" />

@@ -425,7 +425,7 @@ export default function LoginPage() {
           {/* Enhanced footer */}
           <div className="text-center mt-4 pt-4 border-t border-light-gray/30">
             <div className="font-sf text-sm sm:text-base font-400 text-charcoal/70">
-              {"Don&apos;t have an account? "}
+              {"Don't have an account? "}
               <Link
                 href="/register"
                 className="text-coral font-600 hover:text-coral/80 transition-colors duration-300 relative group"
@@ -437,56 +437,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Premium Trust Indicators with spring animations */}
-        <div className="flex justify-center items-start gap-3 md:gap-5 text-charcoal/60 text-center pt-4">
-          <FadeInUp delay={1.5} duration={0.6} distance={20}>
-            <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center gap-1 w-14 md:w-16">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.6, delay: 1.7, type: "spring", stiffness: 300 }}
-                  className="w-7 h-7 md:w-8 md:h-8 bg-sage/10 rounded-full flex items-center justify-center"
-                >
-                  <ShieldCheck className="w-4 h-4 text-sage" />
-                </motion.div>
-                <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight min-w-0 text-truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Secure</span>
-              </div>
-            </PremiumHover>
-          </FadeInUp>
-
-          <FadeInUp delay={1.7} duration={0.6} distance={20}>
-            <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center gap-1 w-14 md:w-16">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.6, delay: 1.9, type: "spring", stiffness: 300 }}
-                  className="w-7 h-7 md:w-8 md:h-8 bg-coral/10 rounded-full flex items-center justify-center"
-                >
-                  <Users className="w-4 h-4 text-coral" />
-                </motion.div>
-                <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight min-w-0 text-truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Community</span>
-              </div>
-            </PremiumHover>
-          </FadeInUp>
-
-          <FadeInUp delay={1.9} duration={0.6} distance={20}>
-            <PremiumHover scale={1.1} duration={0.3}>
-              <div className="flex flex-col items-center gap-1 w-14 md:w-16">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.6, delay: 2.1, type: "spring", stiffness: 300 }}
-                  className="w-7 h-7 md:w-8 md:h-8 bg-charcoal/10 rounded-full flex items-center justify-center"
-                >
-                  <Star className="w-4 h-4 text-charcoal" />
-                </motion.div>
-                <span className="text-[9px] md:text-[10px] font-medium tracking-tight leading-tight min-w-0 text-truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Quality</span>
-              </div>
-            </PremiumHover>
-          </FadeInUp>
-        </div>
+      
       </div>
     </div>
   );

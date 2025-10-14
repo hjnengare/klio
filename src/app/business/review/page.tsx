@@ -225,7 +225,7 @@ export default function WriteReviewPage() {
         <FloatingElements />
 
         {/* ---------------- Header (FROSTY) ---------------- */}
-        <header className={frostyHeader + "px-4 py-4 shadow-sm"}>
+        <header className={frostyHeader + "px-4 py-4 shadow-md"}>
           <div className="flex items-center max-w-7xl mx-auto">
             <Link href="/home" className="group flex items-center">
               <div className="w-10 h-10 md:w-12 md:h-12 z-10 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-3 md:mr-4">
@@ -244,7 +244,7 @@ export default function WriteReviewPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* MAIN: Form */}
               <div className="lg:col-span-8">
-                <div className="bg-white border-0 md:border border-sage/10 rounded-none md:rounded-lg p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-md">
+                <div className="bg-white border md:border border-sage/10 rounded-2xl p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-lg">
                   <div className="relative z-10 flex-1 flex flex-col">
                     {/* Business Header */}
                     <div className="mb-4 md:mb-6 text-center px-4">
@@ -447,7 +447,7 @@ export default function WriteReviewPage() {
               {/* ------------ SIDEBAR ------------ */}
               <aside className="lg:col-span-4">
                 {/* Desktop: FIXED frosty panel */}
-                <div className={`hidden lg:block lg:fixed right-[max(1rem,calc((100vw-80rem)/2))] top-24 w-[360px] max-h-[calc(100vh-7rem)] overflow-y-auto px-4 py-6 space-y-4 scrollbar-thin scrollbar-thumb-black/10 scrollbar-track-transparent shadow-lg`}>
+                <div className={`hidden lg:block lg:fixed right-[max(1rem,calc((100vw-80rem)/2))] top-24 w-[360px] max-h-[calc(100vh-7rem)] overflow-y-auto px-4 py-6 space-y-4 scrollbar-thin scrollbar-thumb-black/10 scrollbar-track-transparent`}>
                   <div className={frostyPanel}>
                     <div className="relative z-[1]">
                       <h3 className="text-lg font-700 text-charcoal px-3 pt-3 pb-2 sticky top-0">

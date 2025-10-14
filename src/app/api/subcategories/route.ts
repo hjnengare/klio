@@ -5,7 +5,7 @@ import { getServerSupabase } from "../../lib/supabase/server";
 const FALLBACK_SUBCATEGORIES = [
   // Food & Drink
   { id: "restaurants", label: "Restaurants", interest_id: "food-drink" },
-  { id: "cafes", label: "Cafes & Coffee", interest_id: "food-drink" },
+  { id: "cafes", label: "Cafés & Coffee", interest_id: "food-drink" },
   { id: "bars", label: "Bars & Pubs", interest_id: "food-drink" },
   { id: "fast-food", label: "Fast Food", interest_id: "food-drink" },
   { id: "fine-dining", label: "Fine Dining", interest_id: "food-drink" },

@@ -51,8 +51,8 @@ export default function Header({
 
   const headerClassName =
     variant === "frosty"
-      ? "fixed top-0 left-0 right-0 z-50 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]"
-      : "fixed top-0 left-0 right-0 z-50 bg-white shadow-sm transition-all duration-300";
+      ? "fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl supports-[backdrop-filter]:bg-white/20 shadow-2xl shadow-sage/10 transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-gradient-to-b from-white/40 via-white/30 to-white/20 before:backdrop-blur-2xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(800px_400px_at_10%_0%,rgba(120,119,198,0.08),transparent_70%),radial-gradient(700px_350px_at_90%_0%,rgba(255,182,193,0.06),transparent_70%)] after:backdrop-blur-sm"
+      : "fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300";
 
   return (
     <>
@@ -61,8 +61,9 @@ export default function Header({
           {/* Top row */}
           <div className="flex items-center justify-between gap-6">
             {/* Logo */}
-            <Link href="/home" className="group flex-shrink-0" aria-label="KLIO Home">
-              <span className="text-xl lg:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+            <Link href="/home" className="group flex-shrink-0 relative" aria-label="KLIO Home">
+              <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <span className="relative text-xl lg:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal drop-shadow-sm">
                 KLIO
               </span>
             </Link>
@@ -71,13 +72,15 @@ export default function Header({
 
             {/* Desktop nav */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
-              {["home", "all", "saved", "leaderboard", "claim business"].map((route) => (
+              {["home", "saved", "leaderboard", "claim-business"].map((route) => (
                 <Link
                   key={route}
                   href={`/${route}`}
-                  className="capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-semibold text-charcoal/80 hover:text-sage hover:bg-sage/10 transition-colors"
+                  className="group capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-semibold text-charcoal/80 hover:text-sage transition-all duration-300 relative overflow-hidden"
                 >
-                  {route === "all" ? "Explore" : route}
+                  <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 backdrop-blur-sm bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative z-10">{route}</span>
                 </Link>
               ))}
             </nav>
@@ -87,10 +90,12 @@ export default function Header({
               {/* Search Toggle (manual close/open) */}
               <button
                 onClick={() => setShowSearchBar((p) => !p)}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-charcoal/80 hover:text-sage hover:bg-sage/10 transition-colors"
+                className="group w-10 h-10 rounded-full flex items-center justify-center text-charcoal/80 hover:text-sage transition-all duration-300 relative overflow-hidden"
                 aria-label="Toggle search"
               >
-                <Search className="w-5 h-5" />
+                <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 backdrop-blur-sm bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <Search className="relative z-10 w-5 h-5" />
               </button>
 
               {/* Mobile menu toggle */}
@@ -113,10 +118,12 @@ export default function Header({
               {/* Profile */}
               <Link
                 href="/profile"
-                className="hidden md:flex w-10 h-10 rounded-full items-center justify-center text-charcoal hover:text-sage hover:border-sage/40 transition-all"
+                className="group hidden md:flex w-10 h-10 rounded-full items-center justify-center text-charcoal hover:text-sage transition-all duration-300 relative overflow-hidden"
                 aria-label="Profile"
               >
-                <User className="w-5 h-5" />
+                <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 backdrop-blur-sm bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <User className="relative z-10 w-5 h-5" />
               </Link>
             </div>
           </div>
@@ -154,14 +161,14 @@ export default function Header({
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-charcoal/40 backdrop-blur-sm z-[90] md:hidden"
+          className="fixed inset-0 bg-charcoal/40 backdrop-blur-xl z-[90] md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Mobile menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-full bg-white/90 z-[100] shadow-2xl transform md:hidden ${
+        className={`fixed top-0 right-0 h-full w-full backdrop-blur-2xl bg-white/80 z-[100] shadow-2xl shadow-sage/10 transform md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300`}
       >
@@ -182,14 +189,14 @@ export default function Header({
           </div>
 
           <nav className="flex flex-col py-4 px-4">
-            {["home", "all", "saved", "leaderboard"].map((route) => (
+            {["home", "saved", "leaderboard"].map((route) => (
               <Link
                 key={route}
                 href={`/${route}`}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="px-4 py-3 rounded-xl text-base font-semibold text-charcoal/80 hover:text-sage hover:bg-sage/5 transition-colors"
               >
-                {route === "all" ? "Explore" : route.charAt(0).toUpperCase() + route.slice(1)}
+                {route.charAt(0).toUpperCase() + route.slice(1)}
               </Link>
             ))}
             <div className="h-px bg-charcoal/10 my-4 mx-4" />
