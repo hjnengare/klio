@@ -65,12 +65,12 @@ export default function LeaderboardPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(116,145,118,0.03),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(214,116,105,0.025),transparent_50%)]" />
       </div>
 
-      {/* Header with spring animation */}
+      {/* Fixed Header with spring animation */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
-        className="bg-white shadow-sm relative z-10"
+        className="bg-white/95 backdrop-blur-sm shadow-sm fixed top-0 left-0 right-0 z-50 border-b border-charcoal/10"
       >
         <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
@@ -97,7 +97,7 @@ export default function LeaderboardPage() {
         </div>
       </motion.header>
 
-      <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12 relative z-10">
+      <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12 pt-24 relative z-10">
         {/* Page Title with spring animation */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

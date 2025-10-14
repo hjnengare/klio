@@ -65,12 +65,16 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
         <div
           className={`
             relative group rounded-full border border-charcoal/20 bg-white/60
-            transition-shadow duration-300
-            focus-within:shadow-[0_0_0_2px_rgba(125,155,118,0.25),0_8px_24px_rgba(125,155,118,0.15)]
+            transition-all duration-300
+            focus-within:shadow-[0_0_0_3px_rgba(125,155,118,0.3),0_8px_32px_rgba(125,155,118,0.2)]
+            focus-within:border-sage/50 focus-within:bg-white/80
             focus-within:outline-none focus-within:ring-0
             before:absolute before:inset-0 before:rounded-full before:pointer-events-none
             before:opacity-0 group-focus-within:before:opacity-100 before:transition-opacity before:duration-300
-            before:[background:linear-gradient(135deg,rgba(125,155,118,0.25),rgba(214,116,105,0.18))]
+            before:[background:linear-gradient(135deg,rgba(125,155,118,0.3),rgba(214,116,105,0.2))]
+            after:absolute after:inset-0 after:rounded-full after:pointer-events-none
+            after:opacity-0 group-focus-within:after:opacity-100 after:transition-opacity after:duration-300
+            after:border-2 after:border-sage/40
           `}
         >
           {/* left icon */}

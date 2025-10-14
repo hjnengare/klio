@@ -239,7 +239,7 @@ export default function WriteReviewPage() {
         </header>
 
         {/* ---------------- Main content ---------------- */}
-        <div className="relative z-10 bg-white pt-10">
+        <div className="relative z-10 bg-white pt-24">
           <div className="w-full max-w-7xl mx-auto px-0 md:px-4 py-4 md:py-6 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* MAIN: Form */}

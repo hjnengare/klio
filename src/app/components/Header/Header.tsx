@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { User, X, Search } from "lucide-react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
+import { useSavedItems } from "../../contexts/SavedItemsContext";
 
 const sf = {
   fontFamily:
@@ -23,6 +24,7 @@ export default function Header({
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const { savedCount } = useSavedItems();
 
   // Anchor for the dropdown FilterModal to hang under
   const searchWrapRef = useRef<HTMLDivElement>(null);
@@ -81,6 +83,11 @@ export default function Header({
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 backdrop-blur-sm bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <span className="relative z-10">{route}</span>
+                  {route === "saved" && savedCount > 0 && (
+                    <div className="absolute -top-1 -right-1 bg-coral text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-lg">
+                      {savedCount > 99 ? "99+" : savedCount}
+                    </div>
+                  )}
                 </Link>
               ))}
             </nav>
@@ -194,9 +201,16 @@ export default function Header({
                 key={route}
                 href={`/${route}`}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-3 rounded-xl text-base font-semibold text-charcoal/80 hover:text-sage hover:bg-sage/5 transition-colors"
+                className="px-4 py-3 rounded-xl text-base font-semibold text-charcoal/80 hover:text-sage hover:bg-sage/5 transition-colors relative"
               >
-                {route.charAt(0).toUpperCase() + route.slice(1)}
+                <span className="flex items-center justify-between">
+                  {route.charAt(0).toUpperCase() + route.slice(1)}
+                  {route === "saved" && savedCount > 0 && (
+                    <div className="bg-coral text-white text-xs font-bold rounded-full min-w-[20px] h-[20px] flex items-center justify-center px-1 shadow-lg">
+                      {savedCount > 99 ? "99+" : savedCount}
+                    </div>
+                  )}
+                </span>
               </Link>
             ))}
             <div className="h-px bg-charcoal/10 my-4 mx-4" />

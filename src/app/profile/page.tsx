@@ -418,12 +418,12 @@ function ProfileContent() {
     <div className="min-h-dvh bg-white relative">
       {/* ❌ Removed fixed radial gradient & any floating bg objects */}
 
-      {/* ---------- Page Header ---------- */}
+      {/* ---------- Fixed Page Header ---------- */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
-        className={glassHeader}
+        className={`${glassHeader} fixed top-0 left-0 right-0 z-50`}
       >
         <div className="relative z-[1] flex items-center justify-between max-w-[1300px] mx-auto">
           <Link href="/home" className="group flex items-center">
@@ -451,7 +451,7 @@ function ProfileContent() {
       </motion.header>
 
       {/* Main content */}
-      <div className="pt-2 pb-6 relative z-10">
+      <div className="pt-24 pb-6 relative z-10">
         <div className="px-4 sm:px-6 md:px-8">
           <div className="max-w-4xl mx-auto space-y-6">
             {/* Profile Header Card */}

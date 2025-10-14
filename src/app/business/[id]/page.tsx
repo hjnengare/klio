@@ -335,12 +335,12 @@ export default function BusinessProfilePage() {
                 />
             </div>
 
-            {/* Premium Header */}
+            {/* Fixed Premium Header */}
             <motion.header
                 initial={{ y: -80, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="relative z-10 bg-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-6 shadow-sm"
+                className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-4 shadow-sm"
             >
                 <div className="flex items-center justify-between max-w-6xl mx-auto">
                     <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
@@ -390,7 +390,7 @@ export default function BusinessProfilePage() {
                 </div>
             </motion.header>
 
-            <div className="max-w-6xl mx-auto px-4 py-6 relative z-10">
+            <div className="max-w-6xl mx-auto px-4 py-6 pt-24 relative z-10">
                 {/* Two-column layout: main content + reviews sidebar */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* MAIN (span 2) */}

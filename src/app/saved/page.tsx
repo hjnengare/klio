@@ -34,15 +34,15 @@ export default function SavedPage() {
       </div>
 
       {/* Main content */}
-      <div className="pt-4 pb-6 relative z-10">
+      <div className="pt-24 pb-6 relative z-10">
         <div className="px-4 sm:px-6 md:px-8 mb-6">
           <div className="max-w-[1300px] mx-auto">
-            {/* Header with gradient text */}
-            <ScrollReveal delay={0.1}>
-              <div className="mb-8">
+            {/* Fixed Header */}
+            <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-charcoal/10">
+              <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
                 <button
                   onClick={() => router.back()}
-                  className="group flex items-center mb-6"
+                  className="group flex items-center"
                 >
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-3 sm:mr-4">
                     <ion-icon name="arrow-back" class="text-lg sm:text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
@@ -52,7 +52,7 @@ export default function SavedPage() {
                   </h1>
                 </button>
               </div>
-            </ScrollReveal>
+            </div>
 
             
             {/* Saved Businesses */}

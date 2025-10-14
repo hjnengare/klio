@@ -8,7 +8,7 @@ import {
   Store,
   MapPin,
   Star,
-  ChevronLeft,
+  ArrowLeft,
   Check,
 } from "lucide-react";
 
@@ -45,7 +45,7 @@ export default function ClaimBusinessPage() {
       }}
     >
       {/* Header */}
-      <div className="bg-white/95 backdrop-blur-sm border-b border-charcoal/10 sticky top-0 z-10">
+      <div className="bg-white/95 backdrop-blur-sm border-b border-charcoal/10 fixed top-0 left-0 right-0 z-50">
         <div className="max-w-[1300px] mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -54,9 +54,9 @@ export default function ClaimBusinessPage() {
                 className="w-10 h-10 rounded-full hover:bg-sage/5 flex items-center justify-center transition-all duration-200"
                 aria-label="Go back"
               >
-                <ChevronLeft className="w-5 h-5 text-charcoal/70" />
+                <ArrowLeft className="w-6 h-6 text-charcoal/70" strokeWidth={2.5} />
               </button>
-              <h1 className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+              <h1 className="font-sf text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
                 Claim Your Business
               </h1>
             </div>
@@ -64,16 +64,16 @@ export default function ClaimBusinessPage() {
         </div>
       </div>
 
-      <div className="max-w-[800px] mx-auto px-4 py-8">
+      <div className="max-w-[800px] mx-auto px-4 py-8 pt-24">
         {/* Info Section */}
         <div className="mb-8 text-center">
           <div className="w-16 h-16 bg-sage/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <Store className="w-7 h-7 text-sage" />
           </div>
-          <h2 className="text-xl font-semibold text-charcoal mb-2">
+          <h2 className="font-sf text-xl font-semibold text-charcoal mb-2">
             Own or manage a business?
           </h2>
-          <p className="text-charcoal/60 text-sm max-w-md mx-auto">
+          <p className="font-sf text-charcoal/60 text-sm max-w-md mx-auto">
             Claim your business profile to respond to reviews, update information, and connect with customers
           </p>
         </div>
@@ -112,11 +112,11 @@ export default function ClaimBusinessPage() {
                     <Store className="w-5 h-5 text-coral" />
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-charcoal group-hover:text-sage
+                    <h3 className="font-sf text-base font-semibold text-charcoal group-hover:text-sage
                                    transition-colors duration-200">
                       {business.name}
                     </h3>
-                    <div className="flex items-center space-x-3 mt-1 text-sm text-charcoal/60">
+                    <div className="flex items-center space-x-3 mt-1 font-sf text-sm text-charcoal/60">
                       <span>{business.category}</span>
                       <span className="text-charcoal/30">•</span>
                       <div className="flex items-center space-x-1">
@@ -157,10 +157,10 @@ export default function ClaimBusinessPage() {
             <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="w-6 h-6 text-charcoal/40" />
             </div>
-            <h3 className="text-lg font-semibold text-charcoal mb-2">
+            <h3 className="font-sf text-lg font-semibold text-charcoal mb-2">
               Business not found
             </h3>
-            <p className="text-charcoal/60 text-sm mb-6">
+            <p className="font-sf text-charcoal/60 text-sm mb-6">
               Can't find your business? You can add it to our directory.
             </p>
             <button className="px-6 py-3 bg-coral text-white rounded-lg text-sm font-medium
@@ -172,10 +172,10 @@ export default function ClaimBusinessPage() {
 
         {/* Help Section */}
         <div className="mt-12 p-6 bg-white border border-charcoal/5 rounded-xl">
-          <h3 className="text-lg font-semibold text-charcoal mb-3">
+          <h3 className="font-sf text-lg font-semibold text-charcoal mb-3">
             Need help claiming your business?
           </h3>
-          <p className="text-charcoal/60 text-sm mb-4">
+          <p className="font-sf text-charcoal/60 text-sm mb-4">
             Our business verification process is quick and easy. You'll need to provide proof of ownership
             or management authorisation.
           </p>
