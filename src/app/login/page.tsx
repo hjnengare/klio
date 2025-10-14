@@ -242,7 +242,15 @@ export default function LoginPage() {
 
 
         {/* Form Card */}
-        <div className="bg-white rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 shadow-md">
+        <div
+          className="
+            bg-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden
+            border border-white/30 backdrop-blur-lg
+            shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)]
+            hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)]
+            transition-shadow duration-300
+          "
+        >
           
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
@@ -378,7 +386,7 @@ export default function LoginPage() {
                       )}
                       {isSubmitting || isLoading ? "Signing in..." : "Sign In"}
                     </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
                   </motion.button>
                 </PremiumHover>
               </div>

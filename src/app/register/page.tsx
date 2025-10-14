@@ -165,8 +165,19 @@ export default function RegisterPage() {
   const [mounted, setMounted] = useState(false);
 
   const { register, isLoading: authLoading, error: authError } = useAuth();
-  const isLoading = true; 
+  const isLoading = authLoading; 
   const { showToast } = useToast();
+
+  // Validation functions
+  const validateUsername = (username: string) => {
+    const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+    return usernameRegex.test(username);
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   // Prevent hydration mismatch
   useEffect(() => {
@@ -193,16 +204,6 @@ export default function RegisterPage() {
       window.removeEventListener('offline', updateOnlineStatus);
     };
   }, []);
-
-  const validateUsername = (username: string) => {
-    const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-    return usernameRegex.test(username);
-  };
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const validatePassword = (password: string) => {
     if (password.length < 8) return "🔐 Password must be at least 8 characters long";
@@ -459,7 +460,15 @@ export default function RegisterPage() {
 
 
         {/* Form Card */}
-        <div className="bg-white rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 shadow-md">
+        <div
+          className="
+            bg-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden
+            border border-white/30 backdrop-blur-lg
+            shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)]
+            hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)]
+            transition-shadow duration-300
+          "
+        >
 
           <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
             {/* Error Message */}
@@ -666,7 +675,7 @@ export default function RegisterPage() {
                       )}
                       {isFormDisabled ? "Creating account..." : "Create account"}
                     </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
                   </motion.button>
                 </PremiumHover>
               </div>

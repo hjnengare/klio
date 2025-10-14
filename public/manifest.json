@@ -16,7 +16,7 @@
       "name": "Search Businesses",
       "short_name": "Search",
       "description": "Find local businesses near you",
-      "url": "/all"
+      "url": "/home"
     },
     {
       "name": "Leaderboard",

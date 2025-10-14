@@ -15,7 +15,6 @@ interface ProtectedRouteProps {
 export default function ProtectedRoute({
   children,
   requiresAuth = true,
-  requiresOnboarding = false,
   allowedOnboardingSteps = [],
   redirectTo
 }: ProtectedRouteProps) {
