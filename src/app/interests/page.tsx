@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
-// import { useAuth } from "../contexts/AuthContext"; // Disabled for UI/UX design
+import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
 import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import { CheckCircle, ArrowRight } from "lucide-react"; // ✅ replace ion-icons
 
 /** ---------- Local, minimal entrance animations (subtle & accessible) ---------- */
@@ -538,5 +539,9 @@ function InterestsContent() {
 }
 
 export default function InterestsPage() {
-  return <InterestsContent />;
+  return (
+    <ProtectedRoute requiresAuth={true}>
+      <InterestsContent />
+    </ProtectedRoute>
+  );
 }

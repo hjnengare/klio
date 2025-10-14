@@ -108,7 +108,10 @@ function BusinessCard({
           '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
-      <div className="relative bg-white/80 backdrop-blur-xl rounded-[16px] overflow-hidden shadow-xl shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-2xl hover:shadow-sage/15 hover:scale-[1.02] hover:border-white/40">
+      <div 
+        className="relative bg-white/80 backdrop-blur-xl rounded-[16px] overflow-hidden shadow-xl shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-2xl hover:shadow-sage/15 hover:scale-[1.02] hover:border-white/40"
+        style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
+      >
         {/* Liquid Glass Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-white/40 to-white/50 rounded-[16px]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,_rgba(255,255,255,0.4)_0%,_transparent_50%)] rounded-[16px]" />

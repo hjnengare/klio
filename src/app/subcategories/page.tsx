@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-// import { useAuth } from "../contexts/AuthContext"; // Disabled for UI/UX design
+import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import { CheckCircle } from "lucide-react";
 
 /** ----- Minimal entrance animations (subtle & accessible) ----- */
@@ -449,17 +450,19 @@ function SubcategoriesContent() {
 
 export default function SubcategoriesPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-dvh bg-white flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="font-sf text-base text-charcoal/70">Loading subcategories...</p>
+    <ProtectedRoute requiresAuth={true}>
+      <Suspense
+        fallback={
+          <div className="min-h-dvh bg-white flex items-center justify-center">
+            <div className="text-center">
+              <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="font-sf text-base text-charcoal/70">Loading subcategories...</p>
+            </div>
           </div>
-        </div>
-      }
-    >
-      <SubcategoriesContent />
-    </Suspense>
+        }
+      >
+        <SubcategoriesContent />
+      </Suspense>
+    </ProtectedRoute>
   );
 }

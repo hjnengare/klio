@@ -5,6 +5,7 @@ import { useState, useCallback, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import {
   ShieldCheck,
   Clock,
@@ -296,5 +297,9 @@ function DealBreakersContent() {
 }
 
 export default function DealBreakersPage() {
-  return <DealBreakersContent />;
+  return (
+    <ProtectedRoute requiresAuth={true}>
+      <DealBreakersContent />
+    </ProtectedRoute>
+  );
 }

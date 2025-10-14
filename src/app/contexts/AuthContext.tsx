@@ -79,7 +79,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (authUser.profile?.onboarding_complete) {
           router.push('/home');
         } else {
-          router.push(`/${authUser.profile?.onboarding_step || 'interests'}`);
+          // Always redirect to interests page after login
+          router.push('/interests');
         }
       }
 

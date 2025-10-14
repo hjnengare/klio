@@ -15,8 +15,9 @@
     "dev:clean": "npm run clean && npm run dev"
   },
   "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/ssr": "^0.7.0",
-    "@supabase/supabase-js": "^2.57.4",
+    "@supabase/supabase-js": "^2.75.0",
     "canvas-confetti": "^1.9.3",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.544.0",

@@ -48,8 +48,10 @@ export default function Home() {
     <div className="min-h-dvh bg-white">
       <Header showSearch={true} variant="frosty" />
 
-      <div>
-        <HeroCarousel />
+      <div className="pt-32 px-4 pb-4">
+        <div className="rounded-3xl overflow-hidden">
+          <HeroCarousel />
+        </div>
       </div>
 
       <div className="bg-white">

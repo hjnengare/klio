@@ -52,7 +52,10 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
-      <div className="bg-white rounded-[12px] overflow-hidden shadow-sm transition-all duration-300 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10">
+      <div 
+        className="bg-white rounded-[12px] overflow-hidden shadow-sm transition-all duration-300 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10"
+        style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
+      >
         {/* Media */}
         <div className="relative overflow-hidden rounded-t-[12px] flex-1 sm:flex-initial">
           {!imgError && displayImage ? (

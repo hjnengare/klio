@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useEffect } from "react";
 import confetti from "canvas-confetti";
 import { Smile, Sparkles, Check, ArrowRight, CheckCircle } from "lucide-react";
-// import { useAuth } from "../contexts/AuthContext"; // Disabled for UI/UX design
+import { useAuth } from "../contexts/AuthContext";
 import { useReducedMotion } from "../utils/useReducedMotion";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 
 // 🎨 Additional animations + highlight removal
 const completeStyles = `
@@ -38,10 +39,8 @@ const sf = {
     '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
 } as const;
 
-export default function CompletePage() {
-  // const { updateUser, user } = useAuth(); // Disabled for UI/UX design
-  const user = { id: "dummy-user-id" };
-  const updateUser = () => {};
+function CompletePageContent() {
+  const { updateUser, user } = useAuth();
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -164,5 +163,13 @@ export default function CompletePage() {
         </div>
       </OnboardingLayout>
     </>
+  );
+}
+
+export default function CompletePage() {
+  return (
+    <ProtectedRoute requiresAuth={true}>
+      <CompletePageContent />
+    </ProtectedRoute>
   );
 }
