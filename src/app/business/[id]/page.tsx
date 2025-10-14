@@ -348,7 +348,7 @@ export default function BusinessProfilePage() {
                             href="/home"
                             className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full"
                         >
-                            <ArrowLeft className="w-5 h-5" />
+                            <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
                         </Link>
                     </motion.div>
 
@@ -390,7 +390,7 @@ export default function BusinessProfilePage() {
                 </div>
             </motion.header>
 
-            <div className="max-w-6xl mx-auto px-4 py-6 pt-24 relative z-10">
+            <div className="max-w-6xl mx-auto px-4 py-6 pt-32 relative z-10">
                 {/* Two-column layout: main content + reviews sidebar */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* MAIN (span 2) */}

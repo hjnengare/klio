@@ -53,7 +53,7 @@ export default function Header({
 
   const headerClassName =
     variant === "frosty"
-      ? "fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl supports-[backdrop-filter]:bg-white/20 shadow-2xl shadow-sage/10 transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-gradient-to-b from-white/40 via-white/30 to-white/20 before:backdrop-blur-2xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(800px_400px_at_10%_0%,rgba(120,119,198,0.08),transparent_70%),radial-gradient(700px_350px_at_90%_0%,rgba(255,182,193,0.06),transparent_70%)] after:backdrop-blur-sm"
+      ? "fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl supports-[backdrop-filter]:bg-white/20 shadow-sm shadow-gray-400/20 border-b border-white/5 transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-gradient-to-b from-white/40 via-white/30 to-white/20 before:backdrop-blur-2xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(800px_400px_at_10%_0%,rgba(120,119,198,0.08),transparent_70%),radial-gradient(700px_350px_at_90%_0%,rgba(255,182,193,0.06),transparent_70%)] after:backdrop-blur-sm"
       : "fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300";
 
   return (
