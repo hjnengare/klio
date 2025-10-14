@@ -198,7 +198,7 @@ export function HeroCarousel() {
                       style={{
                         fontSize: "clamp(2.4rem, 5vw, 4.75rem)",
                         maxWidth: "13ch",
-                        textWrap: "balance" as any,
+                        textWrap: "balance" as React.CSSProperties["textWrap"],
                       }}
                     >
                       {slide.title}
@@ -208,7 +208,7 @@ export function HeroCarousel() {
                       style={{
                         fontSize: "clamp(1rem, 1.5vw, 1.25rem)",
                         maxWidth: "60ch",
-                        textWrap: "pretty" as any,
+                        textWrap: "pretty" as React.CSSProperties["textWrap"],
                       }}
                     >
                       {slide.description}

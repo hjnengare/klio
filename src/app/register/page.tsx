@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Mail, AlertCircle, CheckCircle, Lock, Eye, EyeOff, User as UserIcon, Circle, ShieldCheck, Users, Star } from "lucide-react";
+import { ArrowLeft, Mail, AlertCircle, CheckCircle, Lock, User as UserIcon, Circle, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
 import { motion } from "framer-motion";
@@ -276,12 +276,6 @@ export default function RegisterPage() {
     return "";
   };
 
-  const getPasswordError = () => {
-    if (!passwordTouched) return "";
-    if (!password) return "Password is required";
-    const validation = validatePassword(password);
-    return validation;
-  };
 
   const handleUsernameChange = (value: string) => {
     setUsername(value);
@@ -595,10 +589,11 @@ export default function RegisterPage() {
                 className="absolute right-4 sm:right-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 hover:text-charcoal transition-colors duration-300 p-1 z-10 rounded-full"
                 disabled={isFormDisabled}
               >
-                <ion-icon
-                  name={showPassword ? "eye-off-outline" : "eye-outline"}
-                  size="small"
-                ></ion-icon>
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
               </button>
             </div>
 
@@ -624,7 +619,11 @@ export default function RegisterPage() {
                   ))}
                 </div>
                 {passwordStrength.feedback && (
-                  <span className={`text-xs font-500 ${passwordStrength.color}`}>
+                  <span className={`text-xs font-500 ${
+                    passwordStrength.score >= 3 ? 'text-sage' :
+                    passwordStrength.score > 0 ? 'text-orange-500' :
+                    'text-charcoal/60'
+                  }`}>
                     {passwordStrength.feedback}
                   </span>
                 )}

@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
@@ -169,7 +167,6 @@ function SubcategoriesContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const user = { id: "dummy-user-id" };
-  const { showToast } = useToast();
   const {
     selectedSubInterests,
     setSelectedSubInterests,
@@ -412,7 +409,7 @@ function SubcategoriesContent() {
                                 : "bg-sage text-white hover:bg-sage/90"
                             }
                           `}
-                          style={{ ...(sf as any), animationDelay: `${chipDelay}s` }}
+                          style={{ ...(sf as React.CSSProperties), animationDelay: `${chipDelay}s` }}
                         >
                           <span className="truncate">{subcategory.label}</span>
                           {isSelected && (
@@ -438,7 +435,7 @@ function SubcategoriesContent() {
                 ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)]"
                 : "bg-white/90 text-charcoal/40 cursor-not-allowed"
             }`}
-            style={{ ...(sf as any), animationDelay: "0.25s" }}
+            style={{ ...(sf as React.CSSProperties), animationDelay: "0.25s" }}
           >
             Continue
           </button>

@@ -3,9 +3,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import Header from "../components/Header/Header";
 import BusinessCard from "../components/BusinessCard/BusinessCard";
-import ScrollableSection from "../components/ScrollableSection/ScrollableSection";
 import { TRENDING_BUSINESSES } from "../data/businessData";
 
 const ScrollReveal = dynamic(() => import("../components/Animations/ScrollReveal"), {
@@ -18,12 +16,10 @@ const Footer = dynamic(() => import("../components/Footer/Footer"), {
 });
 
 export default function SavedPage() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const router = useRouter();
 
   // Mock saved businesses - in real app this would come from user data
   const savedBusinesses = TRENDING_BUSINESSES.slice(0, 3);
-  const categories = ["All", "Restaurants", "Services", "Shopping"];
 
   return (
     <div className="min-h-dvh bg-white relative">

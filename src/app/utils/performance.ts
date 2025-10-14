@@ -1,6 +1,6 @@
 // Performance monitoring utilities
 
-export function reportWebVitals(metric: any) {
+export function reportWebVitals(metric: { name: string; value: number; id: string; delta: number }) {
   // Log to console in development
   if (process.env.NODE_ENV === 'development') {
     console.log(`[Performance] ${metric.name}:`, metric.value);
@@ -42,7 +42,7 @@ export function preloadResource(url: string, type: 'image' | 'font' | 'script' |
 }
 
 // Debounce function for performance optimization
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -63,7 +63,7 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 // Throttle function for scroll/resize events
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {

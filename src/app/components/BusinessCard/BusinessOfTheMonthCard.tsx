@@ -13,9 +13,9 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
   const idForSnap = useMemo(() => `business-month-${business.id}`, [business.id]);
   const [imgError, setImgError] = useState(false);
 
-  const displayImage = business.image || (business as any).image_url || "";
+  const displayImage = business.image || (business as Record<string, unknown>).image_url as string || "";
   const displayAlt = business.alt || business.name;
-  const displayTotal = typeof business.totalRating === "number" ? business.totalRating : (business as any).rating || 0;
+  const displayTotal = typeof business.totalRating === "number" ? business.totalRating : (business as Record<string, unknown>).rating as number || 0;
 
   const badgeStyle = (badge: string) => {
     switch (badge) {

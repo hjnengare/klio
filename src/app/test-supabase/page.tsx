@@ -5,7 +5,17 @@ import { getBrowserSupabase } from '../lib/supabase/client';
 
 export default function TestSupabasePage() {
   const [connectionStatus, setConnectionStatus] = useState<string>('Testing...');
-  const [envVars, setEnvVars] = useState<any>({});
+  const [envVars, setEnvVars] = useState<{
+    url: string;
+    anonKey: string;
+    urlValue: string;
+    anonKeyValue: string;
+  }>({
+    url: '',
+    anonKey: '',
+    urlValue: '',
+    anonKeyValue: ''
+  });
 
   useEffect(() => {
     const testConnection = async () => {
@@ -28,7 +38,7 @@ export default function TestSupabasePage() {
 
         // Test Supabase connection
         const supabase = getBrowserSupabase();
-        const { data, error } = await supabase.auth.getSession();
+        const { error } = await supabase.auth.getSession();
         
         if (error) {
           setConnectionStatus(`❌ Connection error: ${error.message}`);

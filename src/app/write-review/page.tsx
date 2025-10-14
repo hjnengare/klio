@@ -8,7 +8,6 @@ import Image from "next/image";
 export default function WriteReviewPage() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  const [recentBusinesses, setRecentBusinesses] = useState([]);
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
@@ -174,7 +173,7 @@ export default function WriteReviewPage() {
               No businesses found
             </h3>
             <p className="text-charcoal/60 text-sm mb-6">
-              Can't find the business you're looking for? Try a different search term.
+              Can&apos;t find the business you&apos;re looking for? Try a different search term.
             </p>
             <button className="px-6 py-3 bg-sage text-white rounded-lg font-sf text-sm font-500
                                hover:bg-sage/90 transition-colors duration-200">
