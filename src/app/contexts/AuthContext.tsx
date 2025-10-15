@@ -52,6 +52,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (event === 'SIGNED_IN' && session?.user) {
         const currentUser = await AuthService.getCurrentUser();
         setUser(currentUser);
+        
+        // Don't auto-redirect during email verification flow
+        // Let the callback handler manage redirects
       } else if (event === 'SIGNED_OUT') {
         setUser(null);
       }

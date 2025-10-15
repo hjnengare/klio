@@ -50,12 +50,19 @@ export async function GET(request: Request) {
           .eq('user_id', user.id)
           .single();
 
-        // Redirect based on onboarding status
+        // Redirect based on onboarding status and email verification
         if (profile?.onboarding_step === 'complete') {
           return NextResponse.redirect(new URL('/home', request.url));
         } else {
-          // New OAuth user needs to complete onboarding
-          return NextResponse.redirect(new URL('/interests', request.url));
+          // Check if this is an email verification callback
+          const type = requestUrl.searchParams.get('type');
+          if (type === 'signup') {
+            // Email verification successful - redirect to interests with a success parameter
+            return NextResponse.redirect(new URL('/interests?verified=true', request.url));
+          } else {
+            // OAuth or other auth flow - redirect to interests
+            return NextResponse.redirect(new URL('/interests', request.url));
+          }
         }
       }
 
