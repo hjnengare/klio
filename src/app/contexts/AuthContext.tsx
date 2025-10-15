@@ -50,14 +50,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('AuthContext: Auth state change', { event, user_id: session?.user?.id });
+      console.log('AuthContext: Auth state change', { 
+        event, 
+        user_id: session?.user?.id,
+        session_exists: !!session,
+        is_registering: isRegistering,
+        email_confirmed_at: session?.user?.email_confirmed_at
+      });
       
       if (event === 'SIGNED_IN' && session?.user) {
         const currentUser = await AuthService.getCurrentUser();
         console.log('AuthContext: User signed in', {
           email: currentUser?.email,
           email_verified: currentUser?.email_verified,
-          user_id: currentUser?.id
+          user_id: currentUser?.id,
+          is_registering: isRegistering
         });
         setUser(currentUser);
         
@@ -78,7 +85,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase]);
+  }, [supabase, isRegistering]);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
@@ -142,7 +149,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
           email: authUser.email,
           email_verified: authUser.email_verified,
           user_id: authUser.id,
-          has_session: !!session
+          has_session: !!session,
+          session_data: session
         });
         
         setUser(authUser);
