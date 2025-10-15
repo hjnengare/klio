@@ -29,6 +29,19 @@ const entranceStyles = `
   }
   .animate-micro-bounce { animation: microBounce 0.28s ease-out; }
 
+  /* Ensure 3 pills per row with flexible widths */
+  .pills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .pills-container > button {
+    flex: 1 1 calc(33.333% - 0.375rem);
+    max-width: calc(33.333% - 0.375rem);
+    min-width: 0;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
   }
@@ -319,8 +332,6 @@ function SubcategoriesContent() {
         step={2}
         className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden"
       >
-        {/* Override the max-width constraint for subcategories */}
-        <div className="w-full max-w-none sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto relative z-10 flex-1 flex flex-col justify-center py-4 onboarding-content">
         {/* Offline chip */}
         {!isOnline && (
           <div
@@ -354,7 +365,7 @@ function SubcategoriesContent() {
 
         {/* Card */}
         <OnboardingCard
-          className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade w-full max-w-full"
+          className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade"
           style={{ animationDelay: "0.16s" }}
         >
           <div className="space-y-6 mb-4">
@@ -366,18 +377,8 @@ function SubcategoriesContent() {
                     {section.title}
                   </h3>
 
-                  {/* GRID: More columns to utilize wider space */}
-                  <div
-                    className="
-                      grid gap-2 md:gap-3
-                      grid-cols-2
-                      sm:grid-cols-4
-                      md:grid-cols-5
-                      lg:grid-cols-6
-                      xl:grid-cols-7
-                      2xl:grid-cols-8
-                    "
-                  >
+                  {/* GRID: 3 columns with flexible pill widths */}
+                  <div className="pills-container">
                     {section.items.map((subcategory, iIdx) => {
                       const isSelected = hydratedSelected.includes(subcategory.id);
                       const isDisabled =
@@ -396,13 +397,13 @@ function SubcategoriesContent() {
                           className={`
                             enter-stagger
                             relative inline-flex items-center justify-center
-                            py-2.5 md:py-3 px-4 md:px-5
-                            text-xs md:text-sm font-semibold text-center
+                            py-3 md:py-4 px-4 md:px-6
+                            text-sm md:text-base font-semibold text-center
                             transition-all duration-200 ease-out
-                            min-h-[40px] md:min-h-[44px] rounded-full
+                            min-h-[44px] rounded-full
                             focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
                             disabled:cursor-not-allowed disabled:opacity-60
-                            w-full
+                            flex-shrink-0
                             ${animatingIds.has(subcategory.id) ? "animate-micro-bounce" : ""}
                             ${
                               isSelected
@@ -443,7 +444,6 @@ function SubcategoriesContent() {
             Continue
           </button>
         </OnboardingCard>
-        </div>
       </OnboardingLayout>
     </>
   );
