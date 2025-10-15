@@ -1,15 +1,109 @@
-// AUTH BACKEND DISABLED - Middleware commented out for now
-// Uncomment when you want to enable Supabase authentication
-
+import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-  // Passthrough - no authentication checks
-  return NextResponse.next({
+  let response = NextResponse.next({
     request: {
       headers: request.headers,
     },
   });
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value;
+        },
+        set(name: string, value: string, options: any) {
+          request.cookies.set({
+            name,
+            value,
+            ...options,
+          });
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          });
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          });
+        },
+        remove(name: string, options: any) {
+          request.cookies.set({
+            name,
+            value: '',
+            ...options,
+          });
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          });
+          response.cookies.set({
+            name,
+            value: '',
+            ...options,
+          });
+        },
+      },
+    }
+  );
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  console.log('Middleware: Checking route', {
+    pathname: request.nextUrl.pathname,
+    user_exists: !!user,
+    email_confirmed_at: user?.email_confirmed_at
+  });
+
+  // Protected routes - require authentication AND email verification
+  const protectedRoutes = ['/interests', '/subcategories', '/deal-breakers', '/complete', '/home', '/profile', '/reviews', '/write-review', '/leaderboard', '/saved'];
+  const isProtectedRoute = protectedRoutes.some(route =>
+    request.nextUrl.pathname.startsWith(route)
+  );
+
+  // Auth routes - redirect authenticated users away
+  const authRoutes = ['/login', '/register', '/onboarding'];
+  const isAuthRoute = authRoutes.some(route =>
+    request.nextUrl.pathname.startsWith(route)
+  );
+
+  // Redirect unauthenticated users from protected routes
+  if (isProtectedRoute && !user) {
+    console.log('Middleware: Redirecting unauthenticated user to onboarding');
+    const redirectUrl = new URL('/onboarding', request.url);
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  // Redirect authenticated users without email verification from protected routes
+  if (isProtectedRoute && user && !user.email_confirmed_at) {
+    console.log('Middleware: Redirecting unverified user to verify-email');
+    const redirectUrl = new URL('/verify-email', request.url);
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  // Redirect authenticated users from auth pages
+  if (isAuthRoute && user) {
+    if (user.email_confirmed_at) {
+      console.log('Middleware: Redirecting verified user to interests');
+      const redirectUrl = new URL('/interests', request.url);
+      return NextResponse.redirect(redirectUrl);
+    } else {
+      console.log('Middleware: Redirecting unverified user to verify-email');
+      const redirectUrl = new URL('/verify-email', request.url);
+      return NextResponse.redirect(redirectUrl);
+    }
+  }
+
+  return response;
 }
 
 /* ORIGINAL AUTH MIDDLEWARE - COMMENTED OUT
