@@ -121,7 +121,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setError(null);
 
     try {
-      const { user: authUser, error: authError } = await AuthService.signUp({ email, password });
+      const { user: authUser, session, error: authError } = await AuthService.signUp({ email, password });
 
       if (authError) {
         // Handle specific error cases
@@ -138,12 +138,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
         console.log('AuthContext: Registration successful', {
           email: authUser.email,
           email_verified: authUser.email_verified,
-          user_id: authUser.id
+          user_id: authUser.id,
+          has_session: !!session
         });
+        
         setUser(authUser);
-        // Navigate to email verification page after registration
-        console.log('AuthContext: Redirecting to /verify-email');
-        router.push('/verify-email');
+
+        // Check if user has an active session (email verified)
+        if (session) {
+          // User already verified (rare, only if email confirmations are disabled)
+          console.log('AuthContext: User already verified, redirecting to interests');
+          router.push('/interests');
+        } else {
+          // No session yet → user must verify email
+          console.log('AuthContext: User needs email verification, redirecting to verify-email');
+          router.push('/verify-email');
+        }
       }
 
       setIsLoading(false);

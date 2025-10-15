@@ -6,13 +6,14 @@ export class AuthService {
     return getBrowserSupabase();
   }
 
-  static async signUp({ email, password }: SignUpData): Promise<{ user: AuthUser | null; error: AuthError | null }> {
+  static async signUp({ email, password }: SignUpData): Promise<{ user: AuthUser | null; session: any | null; error: AuthError | null }> {
     const supabase = this.getClient();
     try {
       // Basic validation
       if (!email?.trim() || !password?.trim()) {
         return {
           user: null,
+          session: null,
           error: { message: 'Email and password are required' }
         };
       }
@@ -20,6 +21,7 @@ export class AuthService {
       if (!this.isValidEmail(email)) {
         return {
           user: null,
+          session: null,
           error: { message: 'Please enter a valid email address' }
         };
       }
@@ -27,6 +29,7 @@ export class AuthService {
       if (password.length < 8) {
         return {
           user: null,
+          session: null,
           error: { message: 'Password must be at least 8 characters long' }
         };
       }
@@ -34,6 +37,7 @@ export class AuthService {
       if (!this.isStrongPassword(password)) {
         return {
           user: null,
+          session: null,
           error: { message: 'Password must contain at least one uppercase letter, one lowercase letter, and one number' }
         };
       }
@@ -50,6 +54,7 @@ export class AuthService {
         console.error('Supabase signup error:', error);
         return {
           user: null,
+          session: null,
           error: this.handleSupabaseError(error)
         };
       }
@@ -57,6 +62,7 @@ export class AuthService {
       if (!data.user) {
         return {
           user: null,
+          session: null,
           error: { message: 'Registration failed. Please try again.' }
         };
       }
@@ -71,11 +77,13 @@ export class AuthService {
           created_at: data.user.created_at,
           updated_at: data.user.updated_at || data.user.created_at
         },
+        session: data.session, // This will be null until email is verified
         error: null
       };
     } catch (error: unknown) {
       return {
         user: null,
+        session: null,
         error: {
           message: error instanceof Error ? error.message : 'An unexpected error occurred',
           details: error
