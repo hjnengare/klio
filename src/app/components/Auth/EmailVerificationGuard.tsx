@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';
 import { AuthService } from '../../lib/auth';
 import { useToast } from '../../contexts/ToastContext';
-import { Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, CheckCircle, AlertCircle, Loader2, ExternalLink } from 'lucide-react';
 
 interface EmailVerificationGuardProps {
   children: React.ReactNode;
@@ -101,24 +102,45 @@ export default function EmailVerificationGuard({
             </ul>
           </div>
 
-          {/* Resend Button */}
-          <button
-            onClick={handleResendVerification}
-            disabled={isResending}
-            className="w-full bg-sage text-white font-sf text-sm font-600 py-3 px-4 rounded-xl hover:bg-sage/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          >
-            {isResending ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Sending...
-              </>
-            ) : (
-              <>
-                <Mail className="w-4 h-4" />
-                Resend Verification Email
-              </>
-            )}
-          </button>
+          {/* Action Buttons */}
+          <div className="space-y-3">
+            {/* Open Gmail Button */}
+            <button
+              onClick={() => window.open('https://mail.google.com', '_blank')}
+              className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-sf text-sm font-600 py-3 px-4 rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <Mail className="w-4 h-4" />
+              Open Gmail
+              <ExternalLink className="w-3 h-3" />
+            </button>
+
+            {/* Resend Button */}
+            <button
+              onClick={handleResendVerification}
+              disabled={isResending}
+              className="w-full bg-sage text-white font-sf text-sm font-600 py-3 px-4 rounded-xl hover:bg-sage/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              {isResending ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Mail className="w-4 h-4" />
+                  Resend Verification Email
+                </>
+              )}
+            </button>
+
+            {/* Go to Verify Email Page */}
+            <Link
+              href="/verify-email"
+              className="block w-full bg-white border border-charcoal/20 text-charcoal font-sf text-sm font-600 py-3 px-4 rounded-xl hover:bg-charcoal/5 transition-all duration-300 text-center"
+            >
+              Go to Email Verification Page
+            </Link>
+          </div>
 
           {/* Help Text */}
           <p className="font-sf text-xs text-charcoal/50 mt-4">

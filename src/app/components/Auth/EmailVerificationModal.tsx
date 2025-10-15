@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
-import { Mail, X, CheckCircle, Loader2 } from 'lucide-react';
+import { Mail, X, CheckCircle, Loader2, ExternalLink } from 'lucide-react';
 
 interface EmailVerificationModalProps {
   isOpen: boolean;
@@ -95,30 +96,51 @@ export default function EmailVerificationModal({
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3">
+          <div className="space-y-3">
+            {/* Open Gmail Button */}
             <button
+              onClick={() => window.open('https://mail.google.com', '_blank')}
+              className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-sf text-sm font-600 py-2.5 px-4 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <Mail className="w-4 h-4" />
+              Open Gmail
+              <ExternalLink className="w-3 h-3" />
+            </button>
+
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={onClose}
+                className="px-4 py-2.5 border border-charcoal/20 text-charcoal/70 font-sf text-sm font-500 rounded-lg hover:bg-charcoal/5 transition-colors duration-200"
+              >
+                Later
+              </button>
+              <button
+                onClick={handleResendVerification}
+                disabled={isResending}
+                className="bg-sage text-white font-sf text-sm font-600 py-2.5 px-4 rounded-lg hover:bg-sage/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isResending ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span className="hidden sm:inline">Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <Mail className="w-4 h-4" />
+                    <span className="hidden sm:inline">Resend</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Go to Verify Email Page */}
+            <Link
+              href="/verify-email"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 border border-charcoal/20 text-charcoal/70 font-sf text-sm font-500 rounded-lg hover:bg-charcoal/5 transition-colors duration-200"
+              className="block w-full bg-white border border-sage/30 text-sage font-sf text-sm font-600 py-2.5 px-4 rounded-lg hover:bg-sage/5 transition-all duration-300 text-center"
             >
-              I'll verify later
-            </button>
-            <button
-              onClick={handleResendVerification}
-              disabled={isResending}
-              className="flex-1 bg-sage text-white font-sf text-sm font-600 py-2.5 px-4 rounded-lg hover:bg-sage/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {isResending ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Mail className="w-4 h-4" />
-                  Resend Email
-                </>
-              )}
-            </button>
+              Go to Verification Page
+            </Link>
           </div>
 
           {/* Help Text */}
