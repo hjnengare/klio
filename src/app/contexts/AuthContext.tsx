@@ -27,6 +27,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isRegistering, setIsRegistering] = useState(false);
   const router = useRouter();
   const supabase = getBrowserSupabase();
 
@@ -60,8 +61,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
         setUser(currentUser);
         
-        // Show success message if email was just verified
-        if (currentUser?.email_verified && event === 'SIGNED_IN') {
+        // Only handle redirects for actual sign-ins (not during registration flow)
+        // The register() function will handle its own redirects
+        if (currentUser?.email_verified && event === 'SIGNED_IN' && !isRegistering) {
           console.log('AuthContext: Email verified successfully');
           // The callback handler will manage redirects
         }
@@ -119,6 +121,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const register = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     setError(null);
+    setIsRegistering(true);
 
     try {
       const { user: authUser, session, error: authError } = await AuthService.signUp({ email, password });
@@ -157,11 +160,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       setIsLoading(false);
+      setIsRegistering(false);
       return true;
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Registration failed';
       setError(message);
       setIsLoading(false);
+      setIsRegistering(false);
       return false;
     }
   };

@@ -478,10 +478,8 @@ export default function RegisterPage() {
         // Show success toast with email verification message
         showToast("✅ Account created! Check your email to confirm your account.", 'success', 5000);
 
-        // Navigate to verify-email page after short delay
-        setTimeout(() => {
-          router.replace("/verify-email");
-        }, 2000);
+        // AuthContext will handle the redirect based on verification status
+        // No need for manual redirect here
       } else {
         // Handle registration failure
         if (authError) {
