@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
@@ -97,7 +97,20 @@ function InterestsContent() {
   // const { user } = useAuth(); // Disabled for UI/UX design
   const user = { id: "dummy-user-id" }; // Dummy user for UI/UX design
   const router = useRouter();
-  const { showToast } = useToast();
+  const searchParams = useSearchParams();
+  const { showToast, showToastOnce } = useToast();
+
+  // Handle verification success from URL flag (backup for direct access)
+  useEffect(() => {
+    if (searchParams.get('verified') === '1') {
+      showToastOnce('email-verified-v1', '🎉 You\'re verified! Your account is now secured and ready.', 'success', 4000);
+      
+      // Clean the URL flag so refreshes don't retrigger
+      const url = new URL(window.location.href);
+      url.searchParams.delete('verified');
+      router.replace(url.pathname + (url.search ? '?' + url.searchParams.toString() : ''), { scroll: false });
+    }
+  }, [searchParams, router, showToastOnce]);
 
   const MIN_SELECTIONS = 3;
   const MAX_SELECTIONS = 6;

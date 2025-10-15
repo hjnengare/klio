@@ -69,13 +69,17 @@ export async function GET(request: Request) {
           // Check if this is an email verification callback
           const type = requestUrl.searchParams.get('type');
           if (type === 'signup') {
-            // Email verification successful - redirect to verify-email page to show success
-            return NextResponse.redirect(new URL('/verify-email?verified=true', request.url));
+            // Email verification successful - redirect to verify-email page with success flag
+            const dest = new URL('/verify-email', request.url);
+            dest.searchParams.set('verified', '1'); // one-time signal
+            return NextResponse.redirect(dest);
           } else {
             // OAuth or other auth flow - check if email is verified
             if (user.email_confirmed_at) {
-              // Email is verified, proceed to interests
-              return NextResponse.redirect(new URL('/interests', request.url));
+              // Email is verified, proceed to interests with verification flag
+              const dest = new URL('/interests', request.url);
+              dest.searchParams.set('verified', '1'); // one-time signal
+              return NextResponse.redirect(dest);
             } else {
               // Email not verified, redirect to verify-email page
               return NextResponse.redirect(new URL('/verify-email', request.url));

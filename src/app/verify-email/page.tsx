@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
@@ -214,8 +214,9 @@ const styles = `
 
 export default function VerifyEmailPage() {
   const { user, resendVerificationEmail } = useAuth();
-  const { showToast } = useToast();
+  const { showToast, showToastOnce } = useToast();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isResending, setIsResending] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -234,25 +235,39 @@ export default function VerifyEmailPage() {
     }
   }, [user, router]);
 
-  // Redirect if email is already verified
+  // Handle verification success from URL flag
   useEffect(() => {
-    console.log('VerifyEmail: Checking email verification status', {
-      user: user?.email,
-      email_verified: user?.email_verified,
-      user_exists: !!user
-    });
-    
-    if (user?.email_verified) {
-      console.log('VerifyEmail: Email verified successfully!');
-      // Show success message briefly before redirecting
-      showToast('🎉 You\'re verified! Your account is now secured and ready.', 'success', 3000);
+    if (searchParams.get('verified') === '1') {
+      console.log('VerifyEmail: Email verification success from URL flag');
+      showToastOnce('email-verified-v1', '🎉 You\'re verified! Your account is now secured and ready.', 'success', 4000);
+      
+      // Clean the URL flag so refreshes don't retrigger
+      const url = new URL(window.location.href);
+      url.searchParams.delete('verified');
+      router.replace(url.pathname + (url.search ? '?' + url.searchParams.toString() : ''), { scroll: false });
       
       // Redirect to interests after showing success message
       setTimeout(() => {
         router.push('/interests');
       }, 2000);
     }
-  }, [user, router]); // Removed showToast from dependencies
+  }, [searchParams, router, showToastOnce]);
+
+  // Track email verification status changes (fallback for direct page access)
+  const prevVerifiedRef = useRef<boolean>(false);
+  useEffect(() => {
+    const now = Boolean(user?.email_verified);
+    if (now && !prevVerifiedRef.current && !searchParams.get('verified')) {
+      prevVerifiedRef.current = true;
+      console.log('VerifyEmail: Email verified via auth state change');
+      showToastOnce('email-verified-v1', '🎉 You\'re verified! Your account is now secured and ready.', 'success', 4000);
+      
+      // Redirect to interests after showing success message
+      setTimeout(() => {
+        router.push('/interests');
+      }, 2000);
+    }
+  }, [user?.email_verified, searchParams, router, showToastOnce]);
 
   const handleResendVerification = async () => {
     if (!user?.email) return;

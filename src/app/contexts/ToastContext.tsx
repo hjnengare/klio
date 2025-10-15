@@ -12,6 +12,7 @@ interface Toast {
 
 interface ToastContextType {
   showToast: (message: string, type?: Toast['type'], duration?: number) => void;
+  showToastOnce: (key: string, message: string, type?: Toast['type'], duration?: number) => void;
   removeToast: (id: string) => void;
 }
 
@@ -23,6 +24,11 @@ interface ToastProviderProps {
 
 export function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useState<Toast[]>([]);
+
+  // Track shown toasts to prevent duplicates
+  const seenToasts = typeof window !== 'undefined'
+    ? new Set<string>(JSON.parse(sessionStorage.getItem('shown-toasts') || '[]'))
+    : new Set<string>();
 
   // Generate unique ID to prevent collisions
   const generateUniqueId = () => {
@@ -39,6 +45,17 @@ export function ToastProvider({ children }: ToastProviderProps) {
     setTimeout(() => {
       removeToast(id);
     }, duration);
+  };
+
+  const showToastOnce = (key: string, message: string, type: Toast['type'] = 'info', duration = 4000) => {
+    if (seenToasts.has(key)) return;
+    
+    seenToasts.add(key);
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('shown-toasts', JSON.stringify(Array.from(seenToasts)));
+    }
+    
+    showToast(message, type, duration);
   };
 
   const removeToast = (id: string) => {
@@ -78,6 +95,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
 
   const value: ToastContextType = {
     showToast,
+    showToastOnce,
     removeToast
   };
 
