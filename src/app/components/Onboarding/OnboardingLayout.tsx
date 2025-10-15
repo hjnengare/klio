@@ -3,7 +3,108 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 import { ArrowLeft } from "lucide-react"; // ✅ Lucide icon import
+
 // Shared CSS animations for all onboarding pages
+const globalAnimations = `
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Animation classes */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.8s ease-out forwards;
+  }
+
+  .delay-100 {
+    animation-delay: 0.1s;
+    opacity: 0;
+  }
+
+  .delay-500 {
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
+
+  /* Progress indicator animation */
+  .progress-active {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in-up,
+    .animate-slide-in-left,
+    .animate-scale-in,
+    .progress-active {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  /* Safe area support */
+  .pb-safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .mb-safe-interaction {
+    margin-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .safe-area-container {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+`;
 
 
 interface OnboardingLayoutProps {
@@ -23,6 +124,7 @@ export default function OnboardingLayout({
 }: OnboardingLayoutProps) {
   return (
     <>
+      <style dangerouslySetInnerHTML={{ __html: globalAnimations }} />
       <div className="min-h-dvh bg-white flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container">
         {/* Back button */}
         {backHref && (

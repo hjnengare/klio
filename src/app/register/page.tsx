@@ -6,9 +6,6 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Mail, AlertCircle, CheckCircle, Lock, User as UserIcon, Circle, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
-import { motion } from "framer-motion";
-import FadeInUp from "../components/Animations/FadeInUp";
-import PremiumHover from "../components/Animations/PremiumHover";
 import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion";
 
 // Mobile-first CSS with proper typography scale and safe areas
@@ -134,6 +131,68 @@ const styles = `
       scroll-snap-align: center;
       flex-shrink: 0;
     }
+  }
+
+  /* CSS Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Animation classes */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.8s ease-out forwards;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+
+  .animate-delay-400 {
+    animation-delay: 0.4s;
+    opacity: 0;
+  }
+
+  .animate-delay-700 {
+    animation-delay: 0.7s;
+    opacity: 0;
   }
 `;
 
@@ -424,32 +483,23 @@ export default function RegisterPage() {
       <style dangerouslySetInnerHTML={{ __html: styles }} />
       <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh]  bg-white   flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
       {/* Back button with entrance animation */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20"
-      >
+      <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 animate-slide-in-left animate-delay-200">
         <Link href="/onboarding" className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-white/50 rounded-lg block backdrop-blur-sm">
           <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
         </Link>
-      </motion.div>
+      </div>
 
       <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
         {/* Header with premium styling and animations */}
         <div className="text-center mb-4">
-          <FadeInUp delay={0.4} duration={1} distance={60}>
-            <div className="inline-block relative mb-4">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-                Create your account
-              </h2>
-            </div>
-          </FadeInUp>
-          <FadeInUp delay={0.7} duration={0.8} distance={30}>
-            <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-              Sign up today - share honest reviews, climb leaderboards, and rate any business!
-            </p>
-          </FadeInUp>
+          <div className="inline-block relative mb-4 animate-fade-in-up animate-delay-400">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              Create your account
+            </h2>
+          </div>
+          <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+            Sign up today - share honest reviews, climb leaderboards, and rate any business!
+          </p>
         </div>
 
 
@@ -461,6 +511,7 @@ export default function RegisterPage() {
             shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)]
             hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)]
             transition-shadow duration-300
+            animate-scale-in
           "
         >
 
@@ -655,28 +706,24 @@ export default function RegisterPage() {
             {/* Sign Up Button with premium effects */}
             <div className="pt-4 flex justify-center">
               <div className="w-full">
-                <PremiumHover scale={1.02} shadowIntensity="strong">
-                  <motion.button
-                    type="submit"
-                    disabled={isSubmitDisabled}
-                    style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
-                    className={`group block w-full text-base font-semibold py-3 px-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap ${
-                      isSubmitDisabled
-                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
-                        : 'btn-premium text-white focus:ring-sage/30'
-                    }`}
-                    whileTap={{ scale: isFormDisabled ? 1 : 0.98 }}
-                    transition={{ duration: 0.1 }}
-                  >
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                      {isFormDisabled && (
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      )}
-                      {isFormDisabled ? "Creating account..." : "Create account"}
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-                  </motion.button>
-                </PremiumHover>
+                <button
+                  type="submit"
+                  disabled={isSubmitDisabled}
+                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                  className={`group block w-full text-base font-semibold py-3 px-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap transform hover:scale-105 active:scale-95 ${
+                    isSubmitDisabled
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                      : 'btn-premium text-white focus:ring-sage/30'
+                  }`}
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    {isFormDisabled && (
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    )}
+                    {isFormDisabled ? "Creating account..." : "Create account"}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
+                </button>
               </div>
             </div>
 
