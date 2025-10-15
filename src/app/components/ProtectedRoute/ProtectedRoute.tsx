@@ -35,8 +35,16 @@ export default function ProtectedRoute({
     if (!requiresAuth && user) {
       if (user.onboardingComplete) {
         router.push('/home');
+      } else if (!user.email_verified) {
+        // User needs to verify email first
+        router.push('/verify-email');
       } else {
-        router.push(`/${user.onboardingStep}`);
+        // User is verified, redirect to appropriate onboarding step
+        if (user.onboardingStep === 'start') {
+          router.push('/interests');
+        } else {
+          router.push(`/${user.onboardingStep}`);
+        }
       }
       return;
     }

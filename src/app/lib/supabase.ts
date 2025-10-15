@@ -37,7 +37,7 @@ export const createProfile = async (userId: string) => {
     .insert([
       {
         user_id: userId,
-        onboarding_step: 'interests',
+        onboarding_step: 'start',
         onboarding_complete: false,
         interests: [],
         sub_interests: [],
