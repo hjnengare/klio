@@ -230,6 +230,13 @@ export default function VerifyEmailPage() {
 
   // Redirect if user is not logged in (but wait for loading to complete)
   useEffect(() => {
+    console.log('VerifyEmail: Checking user state', { 
+      isLoading, 
+      user: user?.email, 
+      email_verified: user?.email_verified,
+      user_exists: !!user 
+    });
+    
     if (!isLoading && user === null) {
       console.log('VerifyEmail: No user found, redirecting to login');
       router.push('/login');
@@ -256,6 +263,12 @@ export default function VerifyEmailPage() {
 
   // Check if user is already verified (redirect to interests)
   useEffect(() => {
+    console.log('VerifyEmail: Checking verification status', {
+      user_exists: !!user,
+      email_verified: user?.email_verified,
+      has_verified_flag: !!searchParams.get('verified')
+    });
+    
     if (user && user.email_verified && !searchParams.get('verified')) {
       console.log('VerifyEmail: User already verified, redirecting to interests');
       showToastOnce('email-verified-v1', '🎉 You\'re verified! Your account is now secured and ready.', 'success', 4000);

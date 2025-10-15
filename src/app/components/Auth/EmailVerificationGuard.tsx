@@ -18,21 +18,43 @@ export default function EmailVerificationGuard({
   fallback,
   onVerificationRequired 
 }: EmailVerificationGuardProps) {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const { showToast } = useToast();
   const [isResending, setIsResending] = useState(false);
 
+  console.log('EmailVerificationGuard: Checking access', {
+    user_exists: !!user,
+    email: user?.email,
+    email_verified: user?.email_verified,
+    isLoading
+  });
+
+  // Show loading while auth state is being determined
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="font-sf text-base text-charcoal/70">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   // If user is not logged in, show children (they'll be handled by ProtectedRoute)
   if (!user) {
+    console.log('EmailVerificationGuard: No user, allowing access (ProtectedRoute will handle)');
     return <>{children}</>;
   }
 
   // If email is verified, show children
   if (user.email_verified) {
+    console.log('EmailVerificationGuard: Email verified, allowing access');
     return <>{children}</>;
   }
 
   // If email is not verified, show verification prompt
+  console.log('EmailVerificationGuard: Email not verified, blocking access');
   const handleResendVerification = async () => {
     if (!user.email) return;
 

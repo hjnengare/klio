@@ -25,24 +25,39 @@ export default function ProtectedRoute({
   useEffect(() => {
     if (isLoading) return; // Wait for auth state to load
 
+    console.log('ProtectedRoute: Checking route protection', {
+      requiresAuth,
+      user_exists: !!user,
+      user_email: user?.email,
+      email_verified: user?.email_verified,
+      onboarding_step: user?.onboardingStep,
+      onboarding_complete: user?.onboardingComplete
+    });
+
     // If authentication is required and user is not logged in
     if (requiresAuth && !user) {
+      console.log('ProtectedRoute: No user, redirecting to login');
       router.push(redirectTo || '/login');
       return;
     }
 
     // If user is logged in but route doesn't require auth (e.g., login/register pages)
     if (!requiresAuth && user) {
+      console.log('ProtectedRoute: User on non-auth route, checking redirects');
       if (user.onboardingComplete) {
+        console.log('ProtectedRoute: Onboarding complete, redirecting to home');
         router.push('/home');
       } else if (!user.email_verified) {
-        // User needs to verify email first
+        console.log('ProtectedRoute: Email not verified, redirecting to verify-email');
         router.push('/verify-email');
       } else {
+        console.log('ProtectedRoute: Email verified, redirecting to onboarding step');
         // User is verified, redirect to appropriate onboarding step
         if (user.onboardingStep === 'start') {
+          console.log('ProtectedRoute: Redirecting to interests');
           router.push('/interests');
         } else {
+          console.log('ProtectedRoute: Redirecting to', user.onboardingStep);
           router.push(`/${user.onboardingStep}`);
         }
       }
