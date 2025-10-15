@@ -79,7 +79,7 @@ export default function VerifyEmailPage() {
   // Show loading if user data is still loading
   if (user === undefined) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-sage/5 to-white flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="w-12 h-12 border-4 border-sage/20 border-t-sage rounded-full animate-spin"></div>
       </div>
     );
@@ -91,7 +91,7 @@ export default function VerifyEmailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sage/5 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <div className="max-w-lg w-full">
         {/* Back Button */}
         <div className="mb-6">
