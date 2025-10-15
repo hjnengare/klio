@@ -49,13 +49,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('AuthContext: Auth state change', { event, user_id: session?.user?.id });
+      
       if (event === 'SIGNED_IN' && session?.user) {
         const currentUser = await AuthService.getCurrentUser();
+        console.log('AuthContext: User signed in', {
+          email: currentUser?.email,
+          email_verified: currentUser?.email_verified,
+          user_id: currentUser?.id
+        });
         setUser(currentUser);
         
         // Don't auto-redirect during email verification flow
         // Let the callback handler manage redirects
       } else if (event === 'SIGNED_OUT') {
+        console.log('AuthContext: User signed out');
         setUser(null);
       }
     });
@@ -120,8 +128,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       if (authUser) {
+        console.log('AuthContext: Registration successful', {
+          email: authUser.email,
+          email_verified: authUser.email_verified,
+          user_id: authUser.id
+        });
         setUser(authUser);
         // Navigate to email verification page after registration
+        console.log('AuthContext: Redirecting to /verify-email');
         router.push('/verify-email');
       }
 

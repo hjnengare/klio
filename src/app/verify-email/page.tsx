@@ -23,7 +23,14 @@ export default function VerifyEmailPage() {
 
   // Redirect if email is already verified
   useEffect(() => {
+    console.log('VerifyEmail: Checking email verification status', {
+      user: user?.email,
+      email_verified: user?.email_verified,
+      user_exists: !!user
+    });
+    
     if (user?.email_verified) {
+      console.log('VerifyEmail: Email already verified, redirecting to interests');
       router.push('/interests');
     }
   }, [user, router]);
