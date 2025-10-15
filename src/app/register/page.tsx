@@ -384,8 +384,24 @@ export default function RegisterPage() {
       }
 
       if (!validateEmail(email.trim())) {
-        setError("Please enter a valid email address");
-        showToast("Please enter a valid email address", 'sage', 3000);
+        setError("📧 Please enter a valid email address (e.g., user@example.com)");
+        showToast("📧 Please enter a valid email address", 'sage', 3000);
+        setSubmitting(false);
+        return;
+      }
+
+      // Additional email validation checks
+      if (email.trim().length > 254) {
+        setError("📧 Email address is too long (maximum 254 characters)");
+        showToast("📧 Email address is too long", 'sage', 3000);
+        setSubmitting(false);
+        return;
+      }
+
+      // Check for suspicious email patterns
+      if (email.trim().includes('..') || email.trim().startsWith('.') || email.trim().endsWith('.')) {
+        setError("📧 Email address format is invalid");
+        showToast("📧 Email address format is invalid", 'sage', 3000);
         setSubmitting(false);
         return;
       }
@@ -409,8 +425,25 @@ export default function RegisterPage() {
       // Check password strength
       const strength = checkPasswordStrength(password);
       if (strength.score < 3) {
-        setError("Please create a stronger password");
-        showToast("Please create a stronger password", 'sage', 3000);
+        setError("🔐 Please create a stronger password");
+        showToast("🔐 Please create a stronger password", 'sage', 3000);
+        setSubmitting(false);
+        return;
+      }
+
+      // Final validation check - ensure all criteria are met before submission
+      const isFormValid = username.trim() && 
+                         email.trim() && 
+                         password.trim() && 
+                         validateUsername(username.trim()) &&
+                         validateEmail(email.trim()) &&
+                         !validatePassword(password) &&
+                         strength.score >= 3 &&
+                         consent;
+
+      if (!isFormValid) {
+        setError("❌ Please complete all fields correctly before submitting");
+        showToast("❌ Please complete all fields correctly before submitting", 'sage', 3000);
         setSubmitting(false);
         return;
       }
@@ -454,18 +487,27 @@ export default function RegisterPage() {
         // Handle registration failure
         if (authError) {
           if (authError.includes('fetch') || authError.includes('network')) {
-            setError('Connection error. Please check your internet connection and try again.');
-            showToast('Connection error. Please check your internet connection and try again.', 'sage', 4000);
+            setError('🌐 Connection error. Please check your internet connection and try again.');
+            showToast('🌐 Connection error. Please check your internet connection and try again.', 'sage', 4000);
           } else if (authError.includes('already registered') || authError.includes('already exists')) {
-            setError('This email is already registered. Try logging in instead.');
-            showToast('This email is already registered. Try logging in instead.', 'sage', 4000);
+            setError('❌ This email is already registered. Try logging in instead.');
+            showToast('❌ This email is already registered. Try logging in instead.', 'sage', 4000);
+          } else if (authError.includes('invalid email') || authError.includes('email address') && authError.includes('invalid')) {
+            setError('📧 The email address format is invalid. Please check and try again.');
+            showToast('📧 The email address format is invalid. Please check and try again.', 'sage', 4000);
+          } else if (authError.includes('password') && (authError.includes('weak') || authError.includes('requirements'))) {
+            setError('🔐 Password doesn\'t meet security requirements. Use 8+ characters with uppercase, lowercase, and numbers.');
+            showToast('🔐 Password doesn\'t meet security requirements', 'sage', 4000);
+          } else if (authError.includes('too many requests') || authError.includes('rate limit')) {
+            setError('⏰ Too many attempts. Please wait a moment and try again.');
+            showToast('⏰ Too many attempts. Please wait a moment and try again.', 'sage', 4000);
           } else {
             setError(authError);
             showToast(authError, 'sage', 4000);
           }
         } else {
-          setError("Registration failed. Please try again.");
-          showToast("Registration failed. Please try again.", 'sage', 4000);
+          setError("❌ Registration failed. Please try again.");
+          showToast("❌ Registration failed. Please try again.", 'sage', 4000);
         }
       }
     } catch (error: unknown) {

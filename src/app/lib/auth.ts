@@ -210,8 +210,9 @@ export class AuthService {
   }
 
   private static isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    // More comprehensive email validation
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    return emailRegex.test(email.trim().toLowerCase()) && email.length <= 254;
   }
 
   private static isStrongPassword(password: string): boolean {
@@ -250,6 +251,10 @@ export class AuthService {
 
     if (message.includes('email') && (message.includes('invalid') || message.includes('format'))) {
       return { message: '📧 Please enter a valid email address (e.g., user@example.com).', code: 'invalid_email' };
+    }
+
+    if (message.includes('email address') && message.includes('invalid')) {
+      return { message: '📧 The email address format is invalid. Please check and try again.', code: 'invalid_email_format' };
     }
 
     if (message.includes('fetch') || message.includes('network') || message.includes('connection')) {
