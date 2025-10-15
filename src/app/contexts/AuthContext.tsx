@@ -27,7 +27,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isRegistering, setIsRegistering] = useState(false);
   const router = useRouter();
   const supabase = getBrowserSupabase();
 
@@ -48,44 +47,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     initializeAuth();
 
-    // Listen for auth changes
+    // Listen for auth changes - SIMPLIFIED APPROACH
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log('AuthContext: Auth state change', { 
         event, 
         user_id: session?.user?.id,
         session_exists: !!session,
-        is_registering: isRegistering,
         email_confirmed_at: session?.user?.email_confirmed_at
       });
       
-      if (event === 'SIGNED_IN' && session?.user) {
+      // Only update user state, don't handle redirects here
+      // Let individual pages handle their own redirect logic
+      if (session?.user) {
         const currentUser = await AuthService.getCurrentUser();
-        console.log('AuthContext: User signed in', {
+        console.log('AuthContext: User state updated', {
           email: currentUser?.email,
           email_verified: currentUser?.email_verified,
-          user_id: currentUser?.id,
-          is_registering: isRegistering
+          user_id: currentUser?.id
         });
         setUser(currentUser);
-        
-        // Only handle redirects for actual sign-ins (not during registration flow)
-        // The register() function will handle its own redirects
-        if (currentUser?.email_verified && event === 'SIGNED_IN' && !isRegistering) {
-          console.log('AuthContext: Email verified successfully');
-          // The callback handler will manage redirects
-        }
-      } else if (event === 'SIGNED_OUT') {
+      } else {
         console.log('AuthContext: User signed out');
         setUser(null);
-      } else if (event === 'TOKEN_REFRESHED' && session?.user) {
-        // Handle token refresh to update user state
-        const currentUser = await AuthService.getCurrentUser();
-        setUser(currentUser);
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase, isRegistering]);
+  }, [supabase]);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
@@ -128,12 +116,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const register = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     setError(null);
-    setIsRegistering(true);
 
     try {
+      console.log('AuthContext: Starting registration...');
+      
       const { user: authUser, session, error: authError } = await AuthService.signUp({ email, password });
 
       if (authError) {
+        console.log('AuthContext: Registration error', authError);
         // Handle specific error cases
         let errorMessage = authError.message;
         if (authError.message.includes('User already registered') || authError.message.includes('already registered')) {
@@ -153,28 +143,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
           session_data: session
         });
         
+        // Set user state - this will trigger auth state change
         setUser(authUser);
 
-        // Check if user has an active session (email verified)
-        if (session) {
-          // User already verified (rare, only if email confirmations are disabled)
-          console.log('AuthContext: User already verified, redirecting to interests');
-          router.push('/interests');
-        } else {
-          // No session yet → user must verify email
-          console.log('AuthContext: User needs email verification, redirecting to verify-email');
-          router.push('/verify-email');
-        }
+        // ALWAYS redirect to verify-email page after registration
+        // The verify-email page will handle checking if user is already verified
+        console.log('AuthContext: Redirecting to verify-email page');
+        router.push('/verify-email');
       }
 
       setIsLoading(false);
-      setIsRegistering(false);
       return true;
     } catch (error: unknown) {
+      console.log('AuthContext: Registration exception', error);
       const message = error instanceof Error ? error.message : 'Registration failed';
       setError(message);
       setIsLoading(false);
-      setIsRegistering(false);
       return false;
     }
   };

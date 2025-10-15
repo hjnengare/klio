@@ -213,7 +213,7 @@ const styles = `
 `;
 
 export default function VerifyEmailPage() {
-  const { user, resendVerificationEmail } = useAuth();
+  const { user, resendVerificationEmail, isLoading } = useAuth();
   const { showToast, showToastOnce } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -228,12 +228,13 @@ export default function VerifyEmailPage() {
     setMounted(true);
   }, []);
 
-  // Redirect if user is not logged in
+  // Redirect if user is not logged in (but wait for loading to complete)
   useEffect(() => {
-    if (user === null) {
+    if (!isLoading && user === null) {
+      console.log('VerifyEmail: No user found, redirecting to login');
       router.push('/login');
     }
-  }, [user, router]);
+  }, [user, isLoading, router]);
 
   // Handle verification success from URL flag
   useEffect(() => {
@@ -253,13 +254,10 @@ export default function VerifyEmailPage() {
     }
   }, [searchParams, router, showToastOnce]);
 
-  // Track email verification status changes (fallback for direct page access)
-  const prevVerifiedRef = useRef<boolean>(false);
+  // Check if user is already verified (redirect to interests)
   useEffect(() => {
-    const now = Boolean(user?.email_verified);
-    if (now && !prevVerifiedRef.current && !searchParams.get('verified')) {
-      prevVerifiedRef.current = true;
-      console.log('VerifyEmail: Email verified via auth state change');
+    if (user && user.email_verified && !searchParams.get('verified')) {
+      console.log('VerifyEmail: User already verified, redirecting to interests');
       showToastOnce('email-verified-v1', '🎉 You\'re verified! Your account is now secured and ready.', 'success', 4000);
       
       // Redirect to interests after showing success message
@@ -267,7 +265,7 @@ export default function VerifyEmailPage() {
         router.push('/interests');
       }, 2000);
     }
-  }, [user?.email_verified, searchParams, router, showToastOnce]);
+  }, [user, searchParams, router, showToastOnce]);
 
   const handleResendVerification = async () => {
     if (!user?.email) return;
@@ -305,7 +303,7 @@ export default function VerifyEmailPage() {
   };
 
   // Show loading if user data is still loading
-  if (user === undefined) {
+  if (isLoading) {
     return (
       <>
         <style dangerouslySetInnerHTML={{ __html: styles }} />
