@@ -29,7 +29,7 @@ const entranceStyles = `
   }
   .animate-micro-bounce { animation: microBounce 0.28s ease-out; }
 
-  /* Ensure 3 pills per row with flexible widths */
+  /* Flexible pills that size to their text content */
   .pills-container {
     display: flex;
     flex-wrap: wrap;
@@ -37,9 +37,9 @@ const entranceStyles = `
   }
   
   .pills-container > button {
-    flex: 1 1 calc(33.333% - 0.375rem);
-    max-width: calc(33.333% - 0.375rem);
-    min-width: 0;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: auto;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -377,7 +377,7 @@ function SubcategoriesContent() {
                     {section.title}
                   </h3>
 
-                  {/* GRID: 3 columns with flexible pill widths */}
+                  {/* Flexible pills that size to their text content */}
                   <div className="pills-container">
                     {section.items.map((subcategory, iIdx) => {
                       const isSelected = hydratedSelected.includes(subcategory.id);
@@ -403,7 +403,6 @@ function SubcategoriesContent() {
                             min-h-[44px] rounded-full
                             focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
                             disabled:cursor-not-allowed disabled:opacity-60
-                            flex-shrink-0
                             ${animatingIds.has(subcategory.id) ? "animate-micro-bounce" : ""}
                             ${
                               isSelected
@@ -415,7 +414,7 @@ function SubcategoriesContent() {
                           `}
                           style={{ ...(sf as React.CSSProperties), animationDelay: `${chipDelay}s` }}
                         >
-                          <span className="truncate">{subcategory.label}</span>
+                          <span>{subcategory.label}</span>
                           {isSelected && (
                             <div className="absolute top-1 right-1">
                               <CheckCircle className="w-4 h-4 text-white" aria-hidden="true" />
