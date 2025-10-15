@@ -30,10 +30,16 @@ export default function VerifyEmailPage() {
     });
     
     if (user?.email_verified) {
-      console.log('VerifyEmail: Email already verified, redirecting to interests');
-      router.push('/interests');
+      console.log('VerifyEmail: Email verified successfully!');
+      // Show success message briefly before redirecting
+      showToast('🎉 You\'re verified! Your account is now secured and ready.', 'success', 3000);
+      
+      // Redirect to interests after showing success message
+      setTimeout(() => {
+        router.push('/interests');
+      }, 2000);
     }
-  }, [user, router]);
+  }, [user, router, showToast]);
 
   const handleResendVerification = async () => {
     if (!user?.email) return;
@@ -114,24 +120,24 @@ export default function VerifyEmailPage() {
           </div>
 
           {/* Title */}
-          <h1 className="font-sf text-2xl font-700 text-charcoal mb-3">
-            Verify Your Email
-          </h1>
+                <h1 className="font-sf text-2xl font-700 text-charcoal mb-3">
+                  Check Your Email
+                </h1>
 
-          {/* Description */}
-          <p className="font-sf text-base text-charcoal/70 mb-6 leading-relaxed">
-            A verification link has been sent to
-          </p>
-          
-          <div className="bg-sage/5 rounded-lg p-4 mb-6 border border-sage/20">
-            <p className="font-sf text-lg font-600 text-charcoal">
-              {user.email}
-            </p>
-          </div>
+                {/* Description */}
+                <p className="font-sf text-base text-charcoal/70 mb-6 leading-relaxed">
+                  We've sent a confirmation email to
+                </p>
 
-          <p className="font-sf text-sm text-charcoal/70 mb-8 leading-relaxed">
-            Please check your email and click the verification link to activate your account. The link will automatically redirect you back to the app once verified.
-          </p>
+                <div className="bg-sage/5 rounded-lg p-4 mb-6 border border-sage/20">
+                  <p className="font-sf text-lg font-600 text-charcoal">
+                    {user.email}
+                  </p>
+                </div>
+
+                <p className="font-sf text-sm text-charcoal/70 mb-8 leading-relaxed">
+                  Please verify your email to unlock full app features like posting reviews and appearing on leaderboards. The verification link will redirect you back to the app automatically.
+                </p>
 
           {/* Benefits */}
           <div className="bg-gradient-to-r from-sage/5 to-coral/5 rounded-lg p-6 mb-8 text-left border border-sage/10">

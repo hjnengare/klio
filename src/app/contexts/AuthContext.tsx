@@ -60,11 +60,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
         setUser(currentUser);
         
-        // Don't auto-redirect during email verification flow
-        // Let the callback handler manage redirects
+        // Show success message if email was just verified
+        if (currentUser?.email_verified && event === 'SIGNED_IN') {
+          console.log('AuthContext: Email verified successfully');
+          // The callback handler will manage redirects
+        }
       } else if (event === 'SIGNED_OUT') {
         console.log('AuthContext: User signed out');
         setUser(null);
+      } else if (event === 'TOKEN_REFRESHED' && session?.user) {
+        // Handle token refresh to update user state
+        const currentUser = await AuthService.getCurrentUser();
+        setUser(currentUser);
       }
     });
 

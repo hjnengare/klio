@@ -11,6 +11,7 @@ import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
+import EmailVerificationBanner from "../components/Auth/EmailVerificationBanner";
 import { CheckCircle, ArrowRight } from "lucide-react"; // ✅ replace ion-icons
 
 /** ---------- Local, minimal entrance animations (subtle & accessible) ---------- */
@@ -352,11 +353,13 @@ function InterestsContent() {
       {/* Minimal animation styles */}
       <style dangerouslySetInnerHTML={{ __html: entranceStyles }} />
 
-      <OnboardingLayout
-        backHref="/register"
-        step={1}
-        className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden"
-      >
+          <OnboardingLayout
+            backHref="/register"
+            step={1}
+            className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden"
+          >
+            {/* Email Verification Banner */}
+            <EmailVerificationBanner className="mb-4" />
         {/* Offline indicator */}
         {!isOnline && (
           <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 enter-fade" style={{ animationDelay: "0.1s" }}>

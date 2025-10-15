@@ -475,14 +475,13 @@ export default function RegisterPage() {
           }
         });
 
-        // Show success toast with celebration
-        showToast("🎉 Welcome to KLIO! Your account has been created successfully!", 'success', 4000);
+        // Show success toast with email verification message
+        showToast("✅ Account created! Check your email to confirm your account.", 'success', 5000);
 
-        // Navigate to interests page after short delay
+        // Navigate to verify-email page after short delay
         setTimeout(() => {
-          showToast("Let's personalize your experience! 🌟", 'info', 2000);
-          router.replace("/interests?from=register");
-        }, 1500);
+          router.replace("/verify-email");
+        }, 2000);
       } else {
         // Handle registration failure
         if (authError) {

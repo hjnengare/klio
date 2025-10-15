@@ -12,6 +12,18 @@ export async function GET(request: Request) {
   // Handle OAuth errors
   if (error) {
     console.error('OAuth error:', error, error_description);
+    
+    // Handle specific OAuth errors
+    if (error === 'access_denied') {
+      return NextResponse.redirect(
+        new URL('/auth/auth-code-error?error=Access denied. Please try again.', request.url)
+      );
+    } else if (error === 'invalid_request') {
+      return NextResponse.redirect(
+        new URL('/auth/auth-code-error?error=Invalid request. Please try again.', request.url)
+      );
+    }
+    
     return NextResponse.redirect(
       new URL(`/auth/auth-code-error?error=${encodeURIComponent(error_description || error)}`, request.url)
     );
@@ -57,11 +69,17 @@ export async function GET(request: Request) {
           // Check if this is an email verification callback
           const type = requestUrl.searchParams.get('type');
           if (type === 'signup') {
-            // Email verification successful - redirect to interests with a success parameter
-            return NextResponse.redirect(new URL('/interests?verified=true', request.url));
+            // Email verification successful - redirect to verify-email page to show success
+            return NextResponse.redirect(new URL('/verify-email?verified=true', request.url));
           } else {
-            // OAuth or other auth flow - redirect to interests
-            return NextResponse.redirect(new URL('/interests', request.url));
+            // OAuth or other auth flow - check if email is verified
+            if (user.email_confirmed_at) {
+              // Email is verified, proceed to interests
+              return NextResponse.redirect(new URL('/interests', request.url));
+            } else {
+              // Email not verified, redirect to verify-email page
+              return NextResponse.redirect(new URL('/verify-email', request.url));
+            }
           }
         }
       }
