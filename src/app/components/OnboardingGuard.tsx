@@ -45,9 +45,14 @@ export default function OnboardingGuard({ children }: OnboardingGuardProps) {
       return;
     }
 
-    // For registration flow - allow progression
+    // For registration flow - check email verification first
     if (user && pathname === "/interests") {
-      // User is logged in and going to interests - allow it
+      // User must have verified email to access interests
+      if (!user.email_verified) {
+        router.replace("/verify-email");
+        return;
+      }
+      // User is logged in and email verified - allow it
       return;
     }
 

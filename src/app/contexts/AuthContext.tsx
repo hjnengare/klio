@@ -76,11 +76,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (authUser) {
         setUser(authUser);
 
-        // Redirect based on onboarding status
+        // Redirect based on onboarding status and email verification
         if (authUser.profile?.onboarding_complete) {
           router.push('/home');
+        } else if (!authUser.email_verified) {
+          // Redirect to email verification if not verified
+          router.push('/verify-email');
         } else {
-          // Always redirect to interests page after login
+          // Redirect to interests page after login (email verified)
           router.push('/interests');
         }
       }
