@@ -71,7 +71,7 @@ export async function middleware(request: NextRequest) {
   );
 
   // Auth routes - redirect authenticated users away
-  const authRoutes = ['/login', '/register', '/onboarding'];
+  const authRoutes = ['/login', '/register', '/onboarding', '/verify-email'];
   const isAuthRoute = authRoutes.some(route =>
     request.nextUrl.pathname.startsWith(route)
   );
@@ -92,6 +92,12 @@ export async function middleware(request: NextRequest) {
 
   // Redirect authenticated users from auth pages
   if (isAuthRoute && user) {
+    // Allow access to verify-email page regardless of verification status
+    if (request.nextUrl.pathname.startsWith('/verify-email')) {
+      console.log('Middleware: Allowing access to verify-email page');
+      return response;
+    }
+    
     if (user.email_confirmed_at) {
       console.log('Middleware: Redirecting verified user to interests');
       const redirectUrl = new URL('/interests', request.url);
