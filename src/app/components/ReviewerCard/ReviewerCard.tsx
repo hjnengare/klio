@@ -125,33 +125,16 @@ export default function ReviewerCard({
                 </div>
               </div>
 
-              {/* Rating badge */}
-              <div className="flex items-center gap-1 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm">
-                <Star
-                  className="text-amber-500"
-                  size={12}
-                  style={{ fill: "currentColor" }}
-                />
-                <span className="font-sf text-xs font-700 text-charcoal">
-                  {reviewerData?.rating.toFixed(1)}
-                </span>
-              </div>
             </div>
 
             {/* Stats */}
             <div className="mb-3">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center justify-center">
                 <div className="text-center">
                   <div className="font-sf font-800 text-lg text-charcoal">
                     {reviewerData?.reviewCount}
                   </div>
                   <div className="font-sf text-xs text-charcoal/60">Reviews</div>
-                </div>
-                <div className="text-center">
-                  <div className="font-sf font-800 text-lg text-sage">
-                    {reviewerData?.rating.toFixed(1)}
-                  </div>
-                  <div className="font-sf text-xs text-charcoal/60">Rating</div>
                 </div>
               </div>
             </div>
@@ -282,7 +265,6 @@ export default function ReviewerCard({
             </h3>
             <ReviewerStats
               reviewCount={review?.reviewer.reviewCount || 0}
-              rating={review?.reviewer.rating || 0}
               location={review?.reviewer.location || ""}
             />
           </div>
@@ -328,7 +310,6 @@ export default function ReviewerCard({
         <ReviewContent
           businessName={review?.businessName || ""}
           businessType={review?.businessType || ""}
-          rating={review?.rating || 0}
           reviewText={review?.reviewText || ""}
           date={review?.date || ""}
           likes={review?.likes || 0}

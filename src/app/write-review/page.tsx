@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 
 export default function WriteReviewPage() {
   const router = useRouter();
@@ -58,7 +59,8 @@ export default function WriteReviewPage() {
   );
 
   return (
-    <div className="min-h-screen  bg-white   relative overflow-hidden">
+    <EmailVerificationGuard>
+      <div className="min-h-screen  bg-white   relative overflow-hidden">
       {/* Static background layers */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />
@@ -182,6 +184,7 @@ export default function WriteReviewPage() {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </EmailVerificationGuard>
   );
 }

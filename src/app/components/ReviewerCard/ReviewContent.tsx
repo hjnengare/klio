@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { Star, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 
 interface ReviewContentProps {
   businessName: string;
   businessType: string;
-  rating: number;
   reviewText: string;
   date: string;
   likes: number;
@@ -14,27 +13,11 @@ interface ReviewContentProps {
 export default function ReviewContent({
   businessName,
   businessType,
-  rating,
   reviewText,
   date,
   likes,
   images,
 }: ReviewContentProps) {
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => {
-      const active = i < rating;
-      return (
-        <Star
-          key={i}
-          className={`w-[14px] h-[14px] ${
-            active ? "text-amber-500" : "text-charcoal/30"
-          }`}
-          style={{ fill: active ? "currentColor" : "none" }}
-          aria-hidden="true"
-        />
-      );
-    });
-  };
 
   return (
     <div className="flex-1">
@@ -45,9 +28,8 @@ export default function ReviewContent({
         </div>
 
         <div className="flex items-center gap-2 mb-2">
-          <div className="flex">{renderStars(rating)}</div>
           <span className="text-xs text-charcoal/60 font-sf">
-            • {businessType}
+            {businessType}
           </span>
         </div>
       </div>

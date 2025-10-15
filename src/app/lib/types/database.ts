@@ -1,6 +1,7 @@
 export interface User {
   id: string;
   email: string;
+  email_verified?: boolean;
   name?: string;
   avatar_url?: string;
   created_at: string;
@@ -13,6 +14,8 @@ export interface Profile {
   onboarding_complete: boolean;
   interests_count: number;
   last_interests_updated?: string;
+  interests?: string[];
+  sub_interests?: string[];
   created_at: string;
   updated_at: string;
 }

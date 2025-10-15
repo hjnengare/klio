@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import BusinessCard from "../components/BusinessCard/BusinessCard";
 import { TRENDING_BUSINESSES } from "../data/businessData";
+import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 
 const ScrollReveal = dynamic(() => import("../components/Animations/ScrollReveal"), {
   ssr: false,
@@ -22,7 +23,8 @@ export default function SavedPage() {
   const savedBusinesses = TRENDING_BUSINESSES.slice(0, 3);
 
   return (
-    <div className="min-h-dvh bg-white relative">
+    <EmailVerificationGuard>
+      <div className="min-h-dvh bg-white relative">
       {/* Background decorative elements */}
       <div className="fixed inset-0 pointer-events-none opacity-20">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-3xl" />
@@ -100,6 +102,7 @@ export default function SavedPage() {
 
       {/* Footer */}
       <Footer />
-    </div>
+      </div>
+    </EmailVerificationGuard>
   );
 }

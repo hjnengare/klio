@@ -12,6 +12,7 @@ interface AuthContextType {
   register: (email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
   updateUser: (userData: Partial<AuthUser>) => Promise<void>;
+  resendVerificationEmail: (email: string) => Promise<boolean>;
   isLoading: boolean;
   error: string | null;
 }
@@ -224,12 +225,35 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const resendVerificationEmail = async (email: string): Promise<boolean> => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { error } = await AuthService.resendVerificationEmail(email);
+      
+      if (error) {
+        setError(error.message);
+        return false;
+      }
+
+      return true;
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Failed to resend verification email';
+      setError(message);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const value: AuthContextType = {
     user,
     login,
     register,
     logout,
     updateUser,
+    resendVerificationEmail,
     isLoading,
     error
   };

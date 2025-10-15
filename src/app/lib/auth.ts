@@ -42,7 +42,7 @@ export class AuthService {
         email: email.trim().toLowerCase(),
         password: password,
         options: {
-          emailRedirectTo: undefined, // Disable email confirmation for now
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         }
       });
 
@@ -119,6 +119,7 @@ export class AuthService {
         user: {
           id: data.user.id,
           email: data.user.email!,
+          email_verified: data.user.email_confirmed_at !== null,
           created_at: data.user.created_at,
           updated_at: data.user.updated_at || data.user.created_at,
           profile: profile
@@ -168,6 +169,7 @@ export class AuthService {
       return {
         id: user.id,
         email: user.email!,
+        email_verified: user.email_confirmed_at !== null,
         created_at: user.created_at,
         updated_at: user.updated_at || user.created_at,
         profile: profile
@@ -262,5 +264,35 @@ export class AuthService {
       message: error.message || '❌ Something went wrong. Please try again in a moment.',
       code: error.error_code || 'unknown_error'
     };
+  }
+
+  static async resendVerificationEmail(email: string): Promise<{ error: AuthError | null }> {
+    const supabase = this.getClient();
+    
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email.trim().toLowerCase(),
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        }
+      });
+
+      if (error) {
+        console.error('Error resending verification email:', error);
+        return {
+          error: this.handleSupabaseError(error)
+        };
+      }
+
+      return { error: null };
+    } catch (error: unknown) {
+      console.error('Error in resendVerificationEmail:', error);
+      return {
+        error: {
+          message: error instanceof Error ? error.message : 'Failed to resend verification email'
+        }
+      };
+    }
   }
 }

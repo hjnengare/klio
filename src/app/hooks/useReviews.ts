@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
+import { useEmailVerification } from './useEmailVerification';
 import {
   DUMMY_REVIEWS,
   simulateDelay,
@@ -153,11 +154,17 @@ export function useReviewSubmission() {
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
   const { showToast } = useToast();
+  const { checkEmailVerification } = useEmailVerification();
 
   const submitReview = async (reviewData: ReviewFormData): Promise<boolean> => {
     if (!user) {
       setError('You must be logged in to submit a review');
       showToast('Please log in to submit a review', 'error');
+      return false;
+    }
+
+    if (!checkEmailVerification('submit reviews')) {
+      setError('You must verify your email to submit reviews');
       return false;
     }
 
