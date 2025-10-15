@@ -39,7 +39,7 @@ export default function VerifyEmailPage() {
         router.push('/interests');
       }, 2000);
     }
-  }, [user, router, showToast]);
+  }, [user, router]); // Removed showToast from dependencies
 
   const handleResendVerification = async () => {
     if (!user?.email) return;
