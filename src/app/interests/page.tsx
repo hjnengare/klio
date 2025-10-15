@@ -10,6 +10,7 @@ import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion"
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
+import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 import { CheckCircle, ArrowRight } from "lucide-react"; // ✅ replace ion-icons
 
 /** ---------- Local, minimal entrance animations (subtle & accessible) ---------- */
@@ -347,7 +348,7 @@ function InterestsContent() {
   const list = availableInterests.length > 0 ? availableInterests : interestsFallback;
 
   return (
-    <>
+    <EmailVerificationGuard>
       {/* Minimal animation styles */}
       <style dangerouslySetInnerHTML={{ __html: entranceStyles }} />
 
@@ -534,7 +535,7 @@ function InterestsContent() {
           </div>
         </OnboardingCard>
       </OnboardingLayout>
-    </>
+    </EmailVerificationGuard>
   );
 }
 

@@ -115,8 +115,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       if (authUser) {
         setUser(authUser);
-        // Navigate to interests page after registration
-        router.push('/interests');
+        // Navigate to email verification page after registration
+        router.push('/verify-email');
       }
 
       setIsLoading(false);

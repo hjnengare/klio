@@ -67,6 +67,7 @@ export class AuthService {
         user: {
           id: data.user.id,
           email: data.user.email!,
+          email_verified: data.user.email_confirmed_at !== null,
           created_at: data.user.created_at,
           updated_at: data.user.updated_at || data.user.created_at
         },

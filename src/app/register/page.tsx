@@ -493,13 +493,13 @@ export default function RegisterPage() {
         {/* Header with premium styling and animations */}
         <div className="text-center mb-4">
           <div className="inline-block relative mb-4 animate-fade-in-up animate-delay-400">
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-              Create your account
-            </h2>
-          </div>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                Create your account
+              </h2>
+            </div>
           <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-            Sign up today - share honest reviews, climb leaderboards, and rate any business!
-          </p>
+              Sign up today - share honest reviews, climb leaderboards, and rate any business!
+            </p>
         </div>
 
 
@@ -707,22 +707,22 @@ export default function RegisterPage() {
             <div className="pt-4 flex justify-center">
               <div className="w-full">
                 <button
-                  type="submit"
-                  disabled={isSubmitDisabled}
-                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                    type="submit"
+                    disabled={isSubmitDisabled}
+                    style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                   className={`group block w-full text-base font-semibold py-3 px-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap transform hover:scale-105 active:scale-95 ${
-                    isSubmitDisabled
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
-                      : 'btn-premium text-white focus:ring-sage/30'
-                  }`}
-                >
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    {isFormDisabled && (
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    )}
-                    {isFormDisabled ? "Creating account..." : "Create account"}
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
+                      isSubmitDisabled
+                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
+                        : 'btn-premium text-white focus:ring-sage/30'
+                    }`}
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      {isFormDisabled && (
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      )}
+                      {isFormDisabled ? "Creating account..." : "Create account"}
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
                 </button>
               </div>
             </div>
