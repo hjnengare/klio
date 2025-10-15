@@ -53,18 +53,18 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       }}
     >
       <div 
-        className="bg-white rounded-[12px] overflow-hidden shadow-sm transition-all duration-300 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10"
+        className="bg-white rounded-2xl overflow-hidden shadow-md transition-all duration-300 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Media */}
-        <div className="relative overflow-hidden rounded-t-[12px] flex-1 sm:flex-initial">
+        <div className="relative overflow-hidden rounded-t-2xl flex-1 sm:flex-initial">
           {!imgError && displayImage ? (
             <Image
               src={displayImage}
               alt={displayAlt}
               width={400}
               height={320}
-              className="h-full sm:h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-[12px]"
+              className="h-full sm:h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-2xl"
               priority={false}
               loading="lazy"
               quality={85}
@@ -72,7 +72,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               sizes="(max-width: 640px) 100vw, 320px"
             />
           ) : (
-            <div className="h-full sm:h-[200px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[12px]">
+            <div className="h-full sm:h-[200px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-2xl">
               <ImageOff className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
             </div>
           )}

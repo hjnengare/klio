@@ -109,7 +109,7 @@ function BusinessCard({
       }}
     >
       <div 
-        className="relative bg-white/80 backdrop-blur-xl rounded-[16px] overflow-hidden shadow-xl shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-2xl hover:shadow-sage/15 hover:scale-[1.02] hover:border-white/40"
+        className="relative bg-white/80 backdrop-blur-xl rounded-[16px] overflow-hidden shadow-md shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-lg hover:shadow-sage/15 hover:scale-[1.02] hover:border-white/40"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Liquid Glass Background */}

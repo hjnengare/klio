@@ -81,7 +81,7 @@ export default function ReviewerCard({
         className="snap-start snap-always w-[100vw] sm:w-[280px] flex-shrink-0"
       >
         <div
-          className="bg-white rounded-[8px] overflow-hidden shadow-sm group cursor-pointer h-[200px] relative border border-charcoal/10"
+          className="bg-white rounded-2xl overflow-hidden shadow-md group cursor-pointer h-[200px] relative border border-charcoal/10"
           onClick={toggleActions}
         >
           {/* Content */}
@@ -257,7 +257,7 @@ export default function ReviewerCard({
   return (
     <li className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[320px] flex-shrink-0">
       <div
-        className="bg-white rounded-xl p-6 shadow-sm transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10"
+        className="bg-white rounded-xl p-6 shadow-md transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10"
         onClick={toggleActions}
       >
         <div className="flex items-start gap-4 mb-4">
