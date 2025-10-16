@@ -46,7 +46,7 @@ export class AuthService {
         email: email.trim().toLowerCase(),
         password: password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?type=signup`,
         }
       });
 
@@ -288,7 +288,7 @@ export class AuthService {
         type: 'signup',
         email: email.trim().toLowerCase(),
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?type=signup`,
         }
       });
 

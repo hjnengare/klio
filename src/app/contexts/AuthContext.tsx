@@ -141,13 +141,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
             has_session: !!session,
             session_data: session
           });
-          
+
           // Set user state - this will trigger auth state change
           setUser(authUser);
 
-          // Middleware will handle the redirect based on email verification status
-          // No manual redirect needed here
-          console.log('AuthContext: Registration complete, middleware will handle routing');
+          // Store email in sessionStorage for verify-email page (in case AuthContext state is lost)
+          if (typeof window !== 'undefined') {
+            sessionStorage.setItem('pendingVerificationEmail', authUser.email);
+          }
+
+          // Redirect to verify-email page since user won't have a session until email is verified
+          console.log('AuthContext: Registration complete, redirecting to verify-email');
+          router.push('/verify-email');
         }
 
         setIsLoading(false);

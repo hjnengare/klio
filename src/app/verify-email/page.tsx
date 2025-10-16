@@ -220,12 +220,21 @@ export default function VerifyEmailPage() {
   const [isResending, setIsResending] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReduced = usePrefersReducedMotion();
 
-  // Prevent hydration mismatch
+  // Prevent hydration mismatch and load pending email from sessionStorage
   useEffect(() => {
     setMounted(true);
+
+    // Check for pending verification email in sessionStorage
+    if (typeof window !== 'undefined') {
+      const stored = sessionStorage.getItem('pendingVerificationEmail');
+      if (stored) {
+        setPendingEmail(stored);
+      }
+    }
   }, []);
 
   // Middleware handles redirects - just log the state
@@ -246,12 +255,17 @@ export default function VerifyEmailPage() {
     if (searchParams.get('verified') === '1') {
       console.log('VerifyEmail: Email verification success from URL flag');
       showToastOnce('email-verified-v1', '🎉 You\'re verified! Your account is now secured and ready.', 'success', 4000);
-      
+
+      // Clear pending verification email from sessionStorage
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem('pendingVerificationEmail');
+      }
+
       // Clean the URL flag so refreshes don't retrigger
       const url = new URL(window.location.href);
       url.searchParams.delete('verified');
       router.replace(url.pathname + (url.search ? '?' + url.searchParams.toString() : ''), { scroll: false });
-      
+
       // Redirect to interests after showing success message
       setTimeout(() => {
         router.push('/interests');
@@ -277,11 +291,12 @@ export default function VerifyEmailPage() {
   }, [user, searchParams, showToastOnce]);
 
   const handleResendVerification = async () => {
-    if (!user?.email) return;
+    const email = user?.email || pendingEmail;
+    if (!email) return;
 
     setIsResending(true);
     try {
-      const success = await resendVerificationEmail(user.email);
+      const success = await resendVerificationEmail(email);
       if (success) {
         showToast('Verification email sent! Check your inbox and spam folder.', 'success');
       }
@@ -326,8 +341,25 @@ export default function VerifyEmailPage() {
     );
   }
 
-  // If user is null after loading, redirect to login (handled by useEffect)
-  if (!user) return null;
+  // Use either user from AuthContext or pending email from sessionStorage
+  const displayEmail = user?.email || pendingEmail;
+
+  // If no user and no pending email after loading, show error message
+  if (!isLoading && !displayEmail) {
+    return (
+      <>
+        <style dangerouslySetInnerHTML={{ __html: styles }} />
+        <div className="min-h-[100dvh] bg-white flex items-center justify-center ios-inertia hide-scrollbar safe-area-full">
+          <div className="text-center max-w-md mx-auto p-6">
+            <p className="text-lg text-charcoal mb-4">No verification pending.</p>
+            <Link href="/register" className="text-sage hover:text-sage/80 underline">
+              Go to registration
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -367,7 +399,7 @@ export default function VerifyEmailPage() {
               {/* Email Display */}
               <div className="bg-sage/5 rounded-lg p-4 mb-6 border border-sage/20">
                 <p className="font-sf text-lg font-600 text-charcoal">
-                  {user.email}
+                  {displayEmail}
                 </p>
               </div>
             </div>
@@ -398,7 +430,7 @@ export default function VerifyEmailPage() {
               {/* Open Gmail Button */}
               <button
                 onClick={handleOpenGmail}
-                className="w-full btn-premium text-white font-sf text-sm font-600 py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 btn-target btn-press"
+                className="w-full btn-premium text-white font-sf text-sm font-600 py-3 px-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2 btn-target btn-press"
               >
                 <Mail className="w-4 h-4" />
                 Open Gmail
@@ -409,7 +441,7 @@ export default function VerifyEmailPage() {
               <button
                 onClick={handleResendVerification}
                 disabled={isResending}
-                className="w-full bg-sage text-white font-sf text-sm font-600 py-3 px-4 rounded-xl hover:bg-sage/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
+                className="w-full bg-sage text-white font-sf text-sm font-600 py-3 px-4 rounded-full hover:bg-sage/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
               >
                 {isResending ? (
                   <>
@@ -428,7 +460,7 @@ export default function VerifyEmailPage() {
               <button
                 onClick={handleRefreshUser}
                 disabled={isChecking}
-                className="w-full bg-charcoal text-white font-sf text-sm font-600 py-3 px-4 rounded-xl hover:bg-charcoal/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
+                className="w-full bg-charcoal text-white font-sf text-sm font-600 py-3 px-4 rounded-full hover:bg-charcoal/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
               >
                 {isChecking ? (
                   <>
