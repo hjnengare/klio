@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { colors } from '@/app/design-system/tokens';
 
 interface KlioLogoProps {
   size?: "small" | "medium" | "large" | "xl";
@@ -24,12 +25,12 @@ export default function KlioLogo({
     xl: "text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
   };
 
-  // Color mappings for each letter
+  // Color mappings for each letter using design system tokens
   const letterColors = {
-    K: "#749176", // Sage
-    L: "#d67469", // Coral
-    I: "#f2e3da", // Off-white
-    O: "#211e1d"  // Charcoal (optional accent)
+    K: colors.primary.sage[500],     // Sage
+    L: colors.primary.coral[500],   // Coral
+    I: colors.neutral['off-white'][100], // Off-white
+    O: colors.neutral.charcoal[500]  // Charcoal
   };
 
   // Variant styles

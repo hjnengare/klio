@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth } from "../contexts/AuthContext";
+// import { useAuth } from "../contexts/AuthContext"; // Unused
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
 import { usePrefersReducedMotion } from "../utils/hooks/usePrefersReducedMotion";
@@ -80,7 +80,7 @@ const interestsFallback: Interest[] = [
 
 function InterestsContent() {
   const mounted = useMounted();
-  const prefersReduced = usePrefersReducedMotion();
+  // const prefersReduced = usePrefersReducedMotion(); // Unused
 
   const [isNavigating, setIsNavigating] = useState(false);
   const [hasPrefetched, setHasPrefetched] = useState(false);
@@ -115,6 +115,62 @@ function InterestsContent() {
   const MIN_SELECTIONS = 3;
   const MAX_SELECTIONS = 6;
 
+  const {
+    interests: availableInterests,
+    selectedInterests,
+    setSelectedInterests,
+    nextStep,
+    loadInterests,
+    isLoading: onboardingLoading,
+    error: onboardingError,
+  } = useOnboarding();
+
+  /** Save interests (unchanged behavior) */
+  const saveInterests = useCallback(
+    async (selections: string[], retries = 3): Promise<boolean> => {
+      if (!isOnline) {
+        offlineQueue.current = selections;
+        console.log("Queued interests for offline sync:", selections);
+        return true;
+      }
+
+      for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+          const response = await fetch("/api/user/interests", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ selections }),
+            keepalive: true,
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            console.log("Interests saved successfully:", result);
+            return true;
+          }
+        } catch (error) {
+          console.error(`Save attempt ${attempt} failed:`, error);
+
+          const isNetworkError =
+            error instanceof TypeError && error.message.includes("fetch");
+          if (isNetworkError) {
+            offlineQueue.current = selections;
+            setIsOnline(false);
+            return true;
+          }
+
+          if (attempt < retries) {
+            await new Promise((resolve) =>
+              setTimeout(resolve, 200 * attempt * attempt)
+            );
+          }
+        }
+      }
+      return false;
+    },
+    [isOnline]
+  );
+
   /** Online/offline status — same behavior, softer UI */
   useEffect(() => {
     const updateOnlineStatus = () => {
@@ -132,7 +188,7 @@ function InterestsContent() {
         });
       } else if (!nowOnline) {
         showToast(
-          "Working offline — changes will sync when you’re back online",
+          "Working offline — changes will sync when you're back online",
           "warning",
           4000
         );
@@ -147,17 +203,7 @@ function InterestsContent() {
       window.removeEventListener("online", updateOnlineStatus);
       window.removeEventListener("offline", updateOnlineStatus);
     };
-  }, [isOnline, showToast]);
-
-  const {
-    interests: availableInterests,
-    selectedInterests,
-    setSelectedInterests,
-    nextStep,
-    loadInterests,
-    isLoading: onboardingLoading,
-    error: onboardingError,
-  } = useOnboarding();
+  }, [isOnline, showToast, saveInterests]);
 
   /** Load interests (unchanged logic) */
   useEffect(() => {
@@ -223,52 +269,6 @@ function InterestsContent() {
     }
   }, [selectedInterests.length, router, hasPrefetched]);
 
-  /** Save interests (unchanged behavior) */
-  const saveInterests = useCallback(
-    async (selections: string[], retries = 3): Promise<boolean> => {
-      if (!isOnline) {
-        offlineQueue.current = selections;
-        console.log("Queued interests for offline sync:", selections);
-        return true;
-      }
-
-      for (let attempt = 1; attempt <= retries; attempt++) {
-        try {
-          const response = await fetch("/api/user/interests", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ selections }),
-            keepalive: true,
-          });
-
-          if (response.ok) {
-            const result = await response.json();
-            console.log("Interests saved successfully:", result);
-            return true;
-          }
-        } catch (error) {
-          console.error(`Save attempt ${attempt} failed:`, error);
-
-          const isNetworkError =
-            error instanceof TypeError && error.message.includes("fetch");
-          if (isNetworkError) {
-            offlineQueue.current = selections;
-            setIsOnline(false);
-            return true;
-          }
-
-          if (attempt < retries) {
-            await new Promise((resolve) =>
-              setTimeout(resolve, 200 * attempt * attempt)
-            );
-          }
-        }
-      }
-      return false;
-    },
-    [isOnline]
-  );
-
   /** Toggle with same rules, premium feedback */
   const handleInterestToggle = useCallback(
     async (interestId: string) => {
@@ -320,7 +320,7 @@ function InterestsContent() {
     const hasMinimumSelection = selectedInterests.length >= MIN_SELECTIONS;
     const hasUser = !!user;
     return hasMinimumSelection && !isNavigating && (REQUIRE_LOGIN ? hasUser : true);
-  }, [selectedInterests.length, isNavigating, user]);
+  }, [selectedInterests.length, isNavigating, user, REQUIRE_LOGIN]);
 
   const handleNext = useCallback(async () => {
     if (!canProceed || onboardingLoading) return;
@@ -356,7 +356,7 @@ function InterestsContent() {
       console.error("Error skipping:", error);
       setIsNavigating(false);
     }
-  }, [isNavigating, router, selectedInterests.length]);
+  }, [isNavigating, router, selectedInterests]);
 
   const hydratedSelected = mounted ? selectedInterests : [];
   const list = availableInterests.length > 0 ? availableInterests : interestsFallback;
@@ -400,7 +400,7 @@ function InterestsContent() {
             className="text-sm md:text-base font-normal text-charcoal/70 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto"
             style={sf}
           >
-            Pick a few things you love and let's personalise your experience!
+            Pick a few things you love and let&apos;s personalise your experience!
           </p>
         </div>
 
@@ -475,7 +475,7 @@ function InterestsContent() {
                         : "bg-sage text-white hover:bg-sage/90 hover:scale-105 active:scale-95 shadow-[0_8px_24px_rgba(125,155,118,0.16)]"
                     }
                   `}
-                  style={{ ...(sf as any), animationDelay: `${delay}s` }}
+                  style={{ ...sf, animationDelay: `${delay}s` }}
                   suppressHydrationWarning
                 >
                   <div

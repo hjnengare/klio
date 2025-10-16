@@ -7,6 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import { usePrefersReducedMotion } from '../utils/hooks/usePrefersReducedMotion';
 import { Mail, CheckCircle, Loader2, ExternalLink, ArrowLeft } from 'lucide-react';
+import KlioLoader from '../components/KlioLoader/KlioLoader';
 
 const styles = `
   /* Mobile-first typography scale - Body text ≥ 16px */
@@ -307,8 +308,28 @@ export default function VerifyEmailPage() {
     }
   };
 
-  const handleOpenGmail = () => {
-    window.open('https://mail.google.com', '_blank');
+  const handleOpenInbox = () => {
+    const email = user?.email || pendingEmail;
+    if (!email) return;
+
+    // Detect email provider and open appropriate inbox
+    const domain = email.split('@')[1]?.toLowerCase();
+    let inboxUrl = 'https://mail.google.com'; // default to Gmail
+
+    if (domain?.includes('gmail')) {
+      inboxUrl = 'https://mail.google.com';
+    } else if (domain?.includes('outlook') || domain?.includes('hotmail') || domain?.includes('live')) {
+      inboxUrl = 'https://outlook.live.com/mail';
+    } else if (domain?.includes('yahoo')) {
+      inboxUrl = 'https://mail.yahoo.com';
+    } else if (domain?.includes('icloud') || domain?.includes('me.com')) {
+      inboxUrl = 'https://www.icloud.com/mail';
+    } else {
+      // For other providers, try to construct a webmail URL
+      inboxUrl = `https://${domain}`;
+    }
+
+    window.open(inboxUrl, '_blank');
   };
 
   const handleRefreshUser = async () => {
@@ -331,11 +352,20 @@ export default function VerifyEmailPage() {
     return (
       <>
         <style dangerouslySetInnerHTML={{ __html: styles }} />
-        <div className="min-h-[100dvh] bg-white flex items-center justify-center ios-inertia hide-scrollbar safe-area-full">
-          <div className="text-center">
-            <div className="w-12 h-12 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="font-sf text-base text-charcoal/70">Loading...</p>
-          </div>
+        <div className="min-h-[100dvh] bg-white flex items-center justify-center ios-inertia hide-scrollbar">
+          <KlioLoader size="lg" text="Loading..." />
+        </div>
+      </>
+    );
+  }
+
+  // Show full-page loader when resending email
+  if (isResending) {
+    return (
+      <>
+        <style dangerouslySetInnerHTML={{ __html: styles }} />
+        <div className="min-h-[100dvh] bg-white flex items-center justify-center ios-inertia hide-scrollbar">
+          <KlioLoader size="lg" text="Sending verification email..." />
         </div>
       </>
     );
@@ -383,25 +413,29 @@ export default function VerifyEmailPage() {
               </h2>
             </div>
             <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-              We've sent a confirmation email to verify your account and unlock full features!
+              We&apos;ve sent a confirmation email to verify your account and unlock full features!
             </p>
           </div>
 
           {/* Main Card */}
-          <div className="bg-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)] transition-shadow duration-300 animate-scale-in">
+          <div className="bg-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-sm transition-shadow duration-300 animate-scale-in">
             
             {/* Email Icon */}
             <div className="text-center mb-6">
-              <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-amber-100 to-amber-50 rounded-full flex items-center justify-center shadow-sm">
-                <Mail className="w-10 h-10 text-amber-600" />
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center">
+                <Mail className="w-10 h-10 text-charcoal" />
               </div>
-              
-              {/* Email Display */}
-              <div className="bg-sage/5 rounded-lg p-4 mb-6 border border-sage/20">
-                <p className="font-sf text-lg font-600 text-charcoal">
+
+              {/* Email Display - Clickable */}
+              <button
+                onClick={handleOpenInbox}
+                className="bg-sage/5 rounded-lg p-4 mb-6 border border-sage/20 w-full hover:bg-sage/10 hover:border-sage/30 transition-all duration-300 cursor-pointer group"
+              >
+                <p className="font-sf text-lg font-600 text-charcoal group-hover:text-sage transition-colors duration-300 flex items-center justify-center gap-2">
                   {displayEmail}
+                  <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </p>
-              </div>
+              </button>
             </div>
 
             {/* Instructions */}
@@ -426,41 +460,22 @@ export default function VerifyEmailPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="space-y-3">
-              {/* Open Gmail Button */}
-              <button
-                onClick={handleOpenGmail}
-                className="w-full btn-premium text-white font-sf text-sm font-600 py-3 px-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2 btn-target btn-press"
-              >
-                <Mail className="w-4 h-4" />
-                Open Gmail
-                <ExternalLink className="w-3 h-3" />
-              </button>
-
+            <div className="space-y-3 mb-6">
               {/* Resend Button */}
               <button
                 onClick={handleResendVerification}
                 disabled={isResending}
-                className="w-full bg-sage text-white font-sf text-sm font-600 py-3 px-4 rounded-full hover:bg-sage/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
+                className="w-full bg-sage text-white font-sf text-sm font-600 py-3 px-4 rounded-full hover:bg-coral transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
               >
-                {isResending ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Mail className="w-4 h-4" />
-                    Resend Verification Email
-                  </>
-                )}
+                <Mail className="w-4 h-4" />
+                Resend Verification Email
               </button>
 
               {/* I've Verified Button */}
               <button
                 onClick={handleRefreshUser}
                 disabled={isChecking}
-                className="w-full bg-charcoal text-white font-sf text-sm font-600 py-3 px-4 rounded-full hover:bg-charcoal/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
+                className="w-full bg-charcoal text-white font-sf text-sm font-600 py-3 px-4 rounded-full hover:bg-coral transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
               >
                 {isChecking ? (
                   <>
@@ -470,15 +485,15 @@ export default function VerifyEmailPage() {
                 ) : (
                   <>
                     <CheckCircle className="w-4 h-4" />
-                    I've Verified My Email
+                    I&apos;ve Verified My Email
                   </>
                 )}
               </button>
             </div>
 
             {/* Help Text */}
-            <p className="font-sf text-xs text-charcoal/50 mt-6 text-center">
-              Didn't receive the email? Check your spam folder or try resending.
+            <p className="font-sf text-xs text-charcoal/50 text-center">
+              Didn&apos;t receive the email? Check your spam folder or try resending.
             </p>
           </div>
         </div>

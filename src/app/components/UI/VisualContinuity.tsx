@@ -392,9 +392,9 @@ export const BrandedElement: React.FC<BrandedElementProps> = ({
   elevation = 'none',
 }) => {
   const brandClasses = {
-    primary: 'border-blue-200 bg-gradient-to-br from-blue-50 to-blue-100',
-    secondary: 'border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100',
-    accent: 'border-green-200 bg-gradient-to-br from-green-50 to-green-100',
+    primary: 'border-sage-200 bg-gradient-to-br from-sage-50 to-sage-100',
+    secondary: 'border-charcoal-200 bg-gradient-to-br from-charcoal-50 to-charcoal-100',
+    accent: 'border-coral-200 bg-gradient-to-br from-coral-50 to-coral-100',
   };
 
   const elevationClasses = {

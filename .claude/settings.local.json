@@ -29,7 +29,8 @@
       "Bash(then echo \"File exists at general/reviews\")",
       "Bash(else echo \"File does not exist at general/reviews\")",
       "Bash(rm:*)",
-      "Bash(npm cache clean:*)"
+      "Bash(npm cache clean:*)",
+      "Bash(start http://localhost:3001/register)"
     ],
     "deny": [],
     "ask": []

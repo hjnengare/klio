@@ -118,7 +118,7 @@ export default function OnboardingPage() {
 
               <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-800" : "opacity-0"}`}>
                 <p className="text-base md:text-lg font-normal text-charcoal/70 leading-relaxed max-w-sm md:max-w-lg lg:max-w-xl mx-auto px-4">
-                   Explore trusted businesses, leave reviews and see what's trending around you
+                   Explore trusted businesses, leave reviews and see what&apos;s trending around you
                 </p>
               </div>
 

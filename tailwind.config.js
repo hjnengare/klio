@@ -8,11 +8,77 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Primary Brand Colors
-        'charcoal': '#211e1d',      // Dark neutral base for text & navbars
-        'sage': '#749176',          // Signature brand green - accents, buttons, highlights
-        'coral': '#d67469',         // Secondary accent - CTAs, saved/bookmarked, errors
-        'off-white': '#f2e3da',     // Main background - soft, premium feel
+        // KLIO Design System Colors - Primary Brand Colors
+        sage: {
+          50: 'hsl(148, 20%, 95%)',
+          100: 'hsl(148, 20%, 88%)',
+          200: 'hsl(148, 20%, 75%)',
+          300: 'hsl(148, 20%, 60%)',
+          400: 'hsl(148, 20%, 45%)',
+          500: 'hsl(148, 20%, 38%)', // Main sage
+          600: 'hsl(148, 20%, 30%)',
+          700: 'hsl(148, 20%, 22%)',
+          800: 'hsl(148, 20%, 15%)',
+          900: 'hsl(148, 20%, 8%)',
+        },
+        coral: {
+          50: 'hsl(16, 100%, 95%)',
+          100: 'hsl(16, 100%, 88%)',
+          200: 'hsl(16, 100%, 80%)',
+          300: 'hsl(16, 100%, 72%)',
+          400: 'hsl(16, 100%, 66%)',
+          500: 'hsl(16, 100%, 60%)', // Main coral
+          600: 'hsl(16, 90%, 54%)',
+          700: 'hsl(16, 80%, 48%)',
+          800: 'hsl(16, 70%, 42%)',
+          900: 'hsl(16, 60%, 36%)',
+        },
+        charcoal: {
+          50: 'hsl(0, 0%, 95%)',
+          100: 'hsl(0, 0%, 88%)',
+          200: 'hsl(0, 0%, 75%)',
+          300: 'hsl(0, 0%, 60%)',
+          400: 'hsl(0, 0%, 45%)',
+          500: 'hsl(0, 0%, 25%)', // Main charcoal
+          600: 'hsl(0, 0%, 20%)',
+          700: 'hsl(0, 0%, 15%)',
+          800: 'hsl(0, 0%, 10%)',
+          900: 'hsl(0, 0%, 5%)',
+        },
+        'off-white': {
+          50: 'hsl(0, 0%, 100%)',
+          100: '#f2e3da', // Main off-white
+          200: 'hsl(25, 25%, 92%)',
+          300: 'hsl(25, 25%, 88%)',
+          400: 'hsl(25, 25%, 84%)',
+          500: 'hsl(25, 25%, 80%)',
+        },
+        
+        // Semantic colors
+        success: {
+          50: 'hsl(142, 76%, 95%)',
+          100: 'hsl(142, 76%, 88%)',
+          500: 'hsl(142, 76%, 36%)',
+          600: 'hsl(142, 76%, 30%)',
+        },
+        error: {
+          50: 'hsl(0, 86%, 95%)',
+          100: 'hsl(0, 86%, 88%)',
+          500: 'hsl(0, 86%, 59%)',
+          600: 'hsl(0, 86%, 53%)',
+        },
+        warning: {
+          50: 'hsl(38, 92%, 95%)',
+          100: 'hsl(38, 92%, 88%)',
+          500: 'hsl(38, 92%, 50%)',
+          600: 'hsl(38, 92%, 44%)',
+        },
+        info: {
+          50: 'hsl(198, 93%, 95%)',
+          100: 'hsl(198, 93%, 88%)',
+          500: 'hsl(198, 93%, 60%)',
+          600: 'hsl(198, 93%, 54%)',
+        },
 
         // Instagram blue for verified badge
         'blue-500': '#3b82f6',

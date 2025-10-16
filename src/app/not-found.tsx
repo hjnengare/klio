@@ -58,7 +58,7 @@ export default function NotFound() {
 
           <FadeInUp delay={0.4}>
             <p className="font-sf text-lg md:text-xl font-400 text-charcoal/70 mb-8 max-w-lg mx-auto leading-relaxed">
-              The page you're looking for seems to have wandered off. Let's get you back on track!
+              The page you&apos;re looking for seems to have wandered off. Let&apos;s get you back on track!
             </p>
           </FadeInUp>
 

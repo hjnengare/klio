@@ -220,8 +220,8 @@ function ProfileContent() {
       user_id: user?.id || "dummy-user-id",
       username: user?.email?.split("@")[0] || "foodie_explorer",
       display_name:
-        (user as any)?.name || user?.email?.split("@")[0] || "Alex Johnson",
-      avatar_url: (user as any)?.avatar_url || null,
+        (user as { name?: string })?.name || user?.email?.split("@")[0] || "Alex Johnson",
+      avatar_url: (user as { avatar_url?: string })?.avatar_url || null,
       locale: "en_US",
       onboarding_step: "complete",
       is_top_reviewer: true,

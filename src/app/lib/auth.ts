@@ -1,12 +1,13 @@
 import { getBrowserSupabase } from './supabase/client';
 import type { AuthUser, SignUpData, SignInData, AuthError } from './types/database';
+import type { Session } from '@supabase/supabase-js';
 
 export class AuthService {
   private static getClient() {
     return getBrowserSupabase();
   }
 
-  static async signUp({ email, password }: SignUpData): Promise<{ user: AuthUser | null; session: any | null; error: AuthError | null }> {
+  static async signUp({ email, password }: SignUpData): Promise<{ user: AuthUser | null; session: Session | null; error: AuthError | null }> {
     const supabase = this.getClient();
     try {
       // Basic validation
@@ -15,7 +16,8 @@ export class AuthService {
           user: null,
           session: null,
           error: { message: 'Email and password are required' }
-        };
+        };no 
+        
       }
 
       if (!this.isValidEmail(email)) {

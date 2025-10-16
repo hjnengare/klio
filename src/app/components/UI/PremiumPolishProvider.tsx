@@ -202,23 +202,28 @@ export const PremiumPolishProvider: React.FC<PremiumPolishProviderProps> = ({
           --line-height-normal: 1.5;
           --line-height-relaxed: 1.75;
 
-          /* Color tokens */
-          --color-primary-50: #eff6ff;
-          --color-primary-100: #dbeafe;
-          --color-primary-500: #3b82f6;
-          --color-primary-600: #2563eb;
-          --color-primary-700: #1d4ed8;
+          /* KLIO Design System Color tokens */
+          --color-sage-50: hsl(148, 20%, 95%);
+          --color-sage-100: hsl(148, 20%, 88%);
+          --color-sage-500: hsl(148, 20%, 38%);
+          --color-sage-600: hsl(148, 20%, 30%);
+          --color-sage-700: hsl(148, 20%, 22%);
 
-          --color-gray-50: #f9fafb;
-          --color-gray-100: #f3f4f6;
-          --color-gray-200: #e5e7eb;
-          --color-gray-300: #d1d5db;
-          --color-gray-400: #9ca3af;
-          --color-gray-500: #6b7280;
-          --color-gray-600: #4b5563;
-          --color-gray-700: #374151;
-          --color-gray-800: #1f2937;
-          --color-gray-900: #111827;
+          --color-coral-50: hsl(16, 100%, 95%);
+          --color-coral-100: hsl(16, 100%, 88%);
+          --color-coral-500: hsl(16, 100%, 66%);
+          --color-coral-600: hsl(16, 90%, 54%);
+          --color-coral-700: hsl(16, 80%, 48%);
+
+          --color-charcoal-50: hsl(0, 0%, 95%);
+          --color-charcoal-100: hsl(0, 0%, 88%);
+          --color-charcoal-500: hsl(0, 0%, 25%);
+          --color-charcoal-600: hsl(0, 0%, 20%);
+          --color-charcoal-700: hsl(0, 0%, 15%);
+
+          --color-off-white-50: hsl(0, 0%, 100%);
+          --color-off-white-100: #f2e3da;
+          --color-off-white-200: hsl(25, 25%, 92%);
         }
 
         /* Premium reset */
@@ -239,14 +244,14 @@ export const PremiumPolishProvider: React.FC<PremiumPolishProviderProps> = ({
         }
 
         body {
-          background-color: var(--color-gray-50);
-          color: var(--color-gray-900);
+          background-color: var(--color-off-white-100);
+          color: var(--color-charcoal-500);
           font-feature-settings: 'kern' 1;
         }
 
         /* Premium focus management */
         :focus {
-          outline: 2px solid var(--color-primary-500);
+          outline: 2px solid var(--color-sage-500);
           outline-offset: 2px;
           border-radius: var(--radius-sm);
         }
@@ -279,8 +284,8 @@ export const PremiumPolishProvider: React.FC<PremiumPolishProviderProps> = ({
 
         input:focus, textarea:focus, select:focus {
           outline: none;
-          border-color: var(--color-primary-500);
-          box-shadow: 0 0 0 2px var(--color-primary-500), 0 0 0 4px rgba(59, 130, 246, 0.1);
+          border-color: var(--color-sage-500);
+          box-shadow: 0 0 0 2px var(--color-sage-500), 0 0 0 4px hsla(148, 20%, 38%, 0.1);
         }
 
         /* Premium images */
@@ -297,24 +302,24 @@ export const PremiumPolishProvider: React.FC<PremiumPolishProviderProps> = ({
         }
 
         ::-webkit-scrollbar-track {
-          background: var(--color-gray-100);
+          background: var(--color-sage-50);
           border-radius: var(--radius-full);
         }
 
         ::-webkit-scrollbar-thumb {
-          background: var(--color-gray-300);
+          background: var(--color-sage-300);
           border-radius: var(--radius-full);
           transition: background-color var(--duration-normal) var(--ease-out);
         }
 
         ::-webkit-scrollbar-thumb:hover {
-          background: var(--color-gray-400);
+          background: var(--color-sage-400);
         }
 
         /* Premium selection */
         ::selection {
-          background-color: var(--color-primary-100);
-          color: var(--color-primary-900);
+          background-color: var(--color-sage-100);
+          color: var(--color-charcoal-700);
         }
 
         /* Premium animations */
@@ -387,7 +392,7 @@ export const PremiumPolishProvider: React.FC<PremiumPolishProviderProps> = ({
         }
 
         .premium-gradient {
-          background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+          background: linear-gradient(135deg, var(--color-sage-500), var(--color-coral-500));
         }
 
         /* Premium responsive design */
@@ -448,20 +453,20 @@ export const PremiumPolishProvider: React.FC<PremiumPolishProviderProps> = ({
         /* Premium high contrast */
         @media (prefers-contrast: high) {
           :root {
-            --color-gray-50: #ffffff;
-            --color-gray-100: #f0f0f0;
-            --color-gray-200: #e0e0e0;
-            --color-gray-300: #c0c0c0;
-            --color-gray-400: #808080;
-            --color-gray-500: #606060;
-            --color-gray-600: #404040;
-            --color-gray-700: #202020;
-            --color-gray-800: #101010;
-            --color-gray-900: #000000;
+            --color-charcoal-50: #ffffff;
+            --color-charcoal-100: #f0f0f0;
+            --color-charcoal-200: #e0e0e0;
+            --color-charcoal-300: #c0c0c0;
+            --color-charcoal-400: #808080;
+            --color-charcoal-500: #606060;
+            --color-charcoal-600: #404040;
+            --color-charcoal-700: #202020;
+            --color-charcoal-800: #101010;
+            --color-charcoal-900: #000000;
           }
 
           button, input, select, textarea {
-            border: 2px solid var(--color-gray-900) !important;
+            border: 2px solid var(--color-charcoal-900) !important;
           }
         }
       `}</style>
