@@ -83,7 +83,6 @@ function CompletePageContent() {
       <OnboardingLayout
         step={4}
         showProgress={false}
-        className="min-h-[100dvh] bg-gradient-to-b from-[#faeee8] to-[#f7e3db] flex flex-col"
       >
         <div
           className="text-center animate-fade-in-up flex-1 flex flex-col justify-center px-4"

@@ -284,7 +284,7 @@ export class AuthService {
 
   static async resendVerificationEmail(email: string): Promise<{ error: AuthError | null }> {
     const supabase = this.getClient();
-    
+
     try {
       const { error } = await supabase.auth.resend({
         type: 'signup',
@@ -307,6 +307,39 @@ export class AuthService {
       return {
         error: {
           message: error instanceof Error ? error.message : 'Failed to resend verification email'
+        }
+      };
+    }
+  }
+
+  static async signInWithGoogle(): Promise<{ error: AuthError | null }> {
+    const supabase = this.getClient();
+
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback?type=oauth`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
+        },
+      });
+
+      if (error) {
+        console.error('Google OAuth error:', error);
+        return {
+          error: this.handleSupabaseError(error)
+        };
+      }
+
+      return { error: null };
+    } catch (error: unknown) {
+      console.error('Error in signInWithGoogle:', error);
+      return {
+        error: {
+          message: error instanceof Error ? error.message : 'Failed to sign in with Google'
         }
       };
     }

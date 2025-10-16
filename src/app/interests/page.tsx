@@ -67,7 +67,8 @@ interface Interest {
   name: string;
 }
 
-const interestsFallback: Interest[] = [
+// Hardcoded interests - no need for API calls
+const INTERESTS: Interest[] = [
   { id: 'food-drink', name: 'Food & Drink' },
   { id: 'beauty-wellness', name: 'Beauty & Wellness' },
   { id: 'professional-services', name: 'Professional Services' },
@@ -86,7 +87,7 @@ function InterestsContent() {
   const [hasPrefetched, setHasPrefetched] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
-  const hasLoadedInterests = useRef(false);
+  // Removed hasLoadedInterests - no longer needed with hardcoded interests
   const offlineQueue = useRef<string[]>([]);
   const analyticsTracked = useRef({
     impression: false,
@@ -116,11 +117,9 @@ function InterestsContent() {
   const MAX_SELECTIONS = 6;
 
   const {
-    interests: availableInterests,
     selectedInterests,
     setSelectedInterests,
     nextStep,
-    loadInterests,
     isLoading: onboardingLoading,
     error: onboardingError,
   } = useOnboarding();
@@ -205,17 +204,7 @@ function InterestsContent() {
     };
   }, [isOnline, showToast, saveInterests]);
 
-  /** Load interests (unchanged logic) */
-  useEffect(() => {
-    if (
-      !hasLoadedInterests.current &&
-      availableInterests.length === 0 &&
-      !onboardingLoading
-    ) {
-      hasLoadedInterests.current = true;
-      loadInterests();
-    }
-  }, [loadInterests, availableInterests.length, onboardingLoading]);
+  // No need to load interests - they're hardcoded
 
   /** Analytics (unchanged) */
   useEffect(() => {
@@ -359,7 +348,7 @@ function InterestsContent() {
   }, [isNavigating, router, selectedInterests]);
 
   const hydratedSelected = mounted ? selectedInterests : [];
-  const list = availableInterests.length > 0 ? availableInterests : interestsFallback;
+  const list = INTERESTS; // Use hardcoded interests directly
 
   return (
     <EmailVerificationGuard>
@@ -369,7 +358,6 @@ function InterestsContent() {
           <OnboardingLayout
             backHref="/register"
             step={1}
-            className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden"
           >
             {/* Email Verification Banner */}
             <EmailVerificationBanner className="mb-4" />
@@ -405,7 +393,7 @@ function InterestsContent() {
         </div>
 
         {/* Card */}
-        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade" style={{ animationDelay: "0.18s" }}>
+        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
           {/* Error */}
           {onboardingError && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4 enter-fade" style={{ animationDelay: "0.22s" }}>

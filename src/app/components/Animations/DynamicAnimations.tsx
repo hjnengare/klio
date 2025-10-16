@@ -11,7 +11,7 @@ export const DynamicFloatingElements = dynamic(
   () => import("./FloatingElements"),
   {
     ssr: false, // No SSR for animations
-    loading: () => null, // No loading state needed for decorative elements
+    loading: null, // No loading state needed for decorative elements
   }
 );
 
@@ -20,33 +20,18 @@ export const DynamicPremiumHover = dynamic(
   () => import("./PremiumHover"),
   {
     ssr: false,
-    loading: () => NullFallback,
+    loading: NullFallback,
   }
 );
 
-// Dynamic PremiumButton with fallback to regular button
-export const DynamicPremiumButton = dynamic(
-  () => import("./PremiumButton"),
-  {
-    ssr: false,
-    loading: ({ children, ...props }: ComponentProps<'button'>) => (
-      <button {...props} className={`transition-colors ${props.className || ''}`}>
-        {children}
-      </button>
-    ),
-  }
-);
+// PremiumButton component removed - not needed
 
 // Dynamic MagneticButton with fallback to regular button
 export const DynamicMagneticButton = dynamic(
   () => import("./MagneticButton"),
   {
     ssr: false,
-    loading: ({ children, ...props }: ComponentProps<'button'>) => (
-      <button {...props} className={`transition-all ${props.className || ''}`}>
-        {children}
-      </button>
-    ),
+    loading: null,
   }
 );
 

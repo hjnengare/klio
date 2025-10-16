@@ -27,8 +27,6 @@ export async function POST(req: Request) {
       )
     );
 
-    // Skip validation for now - let the RPC handle it
-    // The interests table may not be seeded yet
     console.log('Processing interest selections:', cleaned);
 
     const validSelections = cleaned;
@@ -85,7 +83,7 @@ export async function POST(req: Request) {
 
           if (insertError) {
             console.error('Error inserting user interests:', insertError);
-            // Handle FK violation explicitly
+            // Handle FK violation explicitly (shouldn't happen with hardcoded interests)
             if (insertError.code === '23503') {
               return NextResponse.json({ error: 'Invalid interest id(s).' }, { status: 400 });
             }
