@@ -3,8 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Development optimizations
   ...(process.env.NODE_ENV === 'development' && {
-    // Faster builds in development
-    swcMinify: false,
     compiler: {
       removeConsole: false,
     },
@@ -76,14 +74,6 @@ const nextConfig: NextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['react-icons', 'framer-motion'],
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
   },
 
   // TypeScript and ESLint optimizations
