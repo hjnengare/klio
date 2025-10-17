@@ -90,7 +90,6 @@ export default function FilterModal({
       window.removeEventListener("resize", onWin);
       window.removeEventListener("scroll", onWin, true);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
 
   // Outside click + ESC (no body scroll lock)

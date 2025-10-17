@@ -74,18 +74,17 @@ const nextConfig: NextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['react-icons', 'framer-motion', 'lucide-react'],
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
+    optimizeCss: true,
+  },
+
+  // Turbopack configuration (moved from experimental)
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
       },
     },
-    // Faster builds
-    swcMinify: true,
-    // Reduce bundle size
-    optimizeCss: true,
   },
 
   // TypeScript and ESLint optimizations
@@ -99,6 +98,9 @@ const nextConfig: NextConfig = {
   // Additional performance optimizations
   poweredByHeader: false,
   compress: true,
+  
+  // Handle Supabase Edge Runtime warnings
+  transpilePackages: ['@supabase/supabase-js', '@supabase/ssr'],
   
   // Faster development builds
   ...(process.env.NODE_ENV === 'development' && {

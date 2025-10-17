@@ -603,6 +603,7 @@ export const SafeImage: React.FC<SafeImageProps> = ({
       <img
         {...props}
         src={currentSrc}
+        alt={props.alt || ""}
         onError={handleError}
         onLoad={handleLoad}
         style={{

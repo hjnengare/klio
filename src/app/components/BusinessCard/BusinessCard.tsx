@@ -238,9 +238,9 @@ function BusinessCard({
 
           {business.percentiles && (
             <div className="flex items-center gap-2">
-              <PercentileChip label="Speed" value={business.percentiles.service} />
-              <PercentileChip label="Hospitality" value={business.percentiles.price} />
-              <PercentileChip label="Quality" value={business.percentiles.ambience} />
+              <PercentileChip label="speed" value={business.percentiles.service} />
+              <PercentileChip label="hospitality" value={business.percentiles.price} />
+              <PercentileChip label="quality" value={business.percentiles.ambience} />
             </div>
           )}
         </div>

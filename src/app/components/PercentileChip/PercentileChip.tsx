@@ -1,4 +1,7 @@
+"use client";
+
 import { Zap, Heart, Star, CheckCircle } from "lucide-react";
+import { memo } from "react";
 
 interface PercentileChipProps {
   label: string;
@@ -18,7 +21,7 @@ const getIconForLabel = (label: string) => {
   }
 };
 
-export default function PercentileChip({ label, value }: PercentileChipProps) {
+function PercentileChip({ label, value }: PercentileChipProps) {
   const IconComponent = getIconForLabel(label);
 
   return (
@@ -28,3 +31,5 @@ export default function PercentileChip({ label, value }: PercentileChipProps) {
     </div>
   );
 }
+
+export default memo(PercentileChip);

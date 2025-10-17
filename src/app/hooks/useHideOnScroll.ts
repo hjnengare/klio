@@ -90,7 +90,6 @@ export function useHideOnScroll(opts?: {
       window.removeEventListener("touchend", onWheelOrTouchEnd);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forceShow, topSafe, hysteresis, throttleMs]);
 
   return { visible };
