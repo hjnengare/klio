@@ -16,24 +16,26 @@ function PercentileChip({ label, value }: PercentileChipProps) {
     labelLowerCase: label.toLowerCase()
   });
 
-  // Render icon based on label
+  // Render icon based on label with inline fill styles for better visibility
   const renderIcon = () => {
+    const iconClasses = "w-3.5 h-3.5 text-sage flex-shrink-0";
+
     switch (label.toLowerCase()) {
       case 'speed':
-        return <Zap className="w-4 h-4 text-red-500" />;
+        return <Zap className={iconClasses} fill="currentColor" />;
       case 'hospitality':
-        return <Heart className="w-4 h-4 text-red-500" />;
+        return <Heart className={iconClasses} fill="currentColor" />;
       case 'quality':
-        return <Star className="w-4 h-4 text-red-500" />;
+        return <Star className={iconClasses} fill="currentColor" />;
       default:
-        return <CheckCircle className="w-4 h-4 text-red-500" />;
+        return <CheckCircle className={iconClasses} />;
     }
   };
 
   return (
-    <div className="flex items-center gap-1 rounded-full bg-white px-3 py-1.5 shadow-sm border border-white/60 backdrop-blur-sm transition-all duration-200 hover:shadow-md hover:scale-105">
+    <div className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm border border-white/60 backdrop-blur-sm transition-all duration-200 hover:shadow-md hover:scale-105">
       {renderIcon()}
-      <span className="text-sm font-bold text-green-600">{value}%</span>
+      <span className="text-sm font-700 text-sage whitespace-nowrap">{value}%</span>
     </div>
   );
 }
