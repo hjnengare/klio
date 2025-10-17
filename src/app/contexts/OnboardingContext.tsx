@@ -73,13 +73,58 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
   const router = useRouter();
   const [interests, setInterests] = useState<Interest[]>([]);
   const [subInterests, setSubInterests] = useState<Subcategory[]>([]);
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  const [selectedSubInterests, setSelectedSubInterests] = useState<string[]>([]);
-  const [selectedDealbreakers, setSelectedDealbreakers] = useState<string[]>([]);
+
+  // Load initial state from localStorage
+  const [selectedInterests, setSelectedInterestsState] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('onboarding_interests');
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
+
+  const [selectedSubInterests, setSelectedSubInterestsState] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('onboarding_subcategories');
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
+
+  const [selectedDealbreakers, setSelectedDealbreakerssState] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('onboarding_dealbreakers');
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const currentStep = user?.profile?.onboarding_step || 'interests';
+
+  // Wrapper functions that persist to localStorage
+  const setSelectedInterests = useCallback((interests: string[]) => {
+    setSelectedInterestsState(interests);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('onboarding_interests', JSON.stringify(interests));
+    }
+  }, []);
+
+  const setSelectedSubInterests = useCallback((subcategories: string[]) => {
+    setSelectedSubInterestsState(subcategories);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('onboarding_subcategories', JSON.stringify(subcategories));
+    }
+  }, []);
+
+  const setSelectedDealbreakers = useCallback((dealbreakers: string[]) => {
+    setSelectedDealbreakerssState(dealbreakers);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('onboarding_dealbreakers', JSON.stringify(dealbreakers));
+    }
+  }, []);
 
   const loadInterests = useCallback(async () => {
     try {
@@ -220,6 +265,13 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
 
       // Note: All selections are now saved locally via updateUser
 
+      // Clear localStorage after successful completion
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('onboarding_interests');
+        localStorage.removeItem('onboarding_subcategories');
+        localStorage.removeItem('onboarding_dealbreakers');
+      }
+
       // Show completion toast
       showToast('🎉 Welcome to KLIO! Your profile is now complete.', 'success', 4000);
     } catch (error) {
@@ -230,12 +282,18 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
     }
   }, [user, selectedInterests, selectedSubInterests, selectedDealbreakers, updateUser, showToast]);
 
-  const resetOnboarding = () => {
+  const resetOnboarding = useCallback(() => {
     setSelectedInterests([]);
     setSelectedSubInterests([]);
     setSelectedDealbreakers([]);
     setError(null);
-  };
+    // Clear localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('onboarding_interests');
+      localStorage.removeItem('onboarding_subcategories');
+      localStorage.removeItem('onboarding_dealbreakers');
+    }
+  }, [setSelectedInterests, setSelectedSubInterests, setSelectedDealbreakers]);
 
   const value: OnboardingContextType = {
     // Data

@@ -37,11 +37,11 @@ export const createProfile = async (userId: string) => {
     .insert([
       {
         user_id: userId,
-        onboarding_step: 'start',
+        onboarding_step: 'interests',
         onboarding_complete: false,
-        interests: [],
-        sub_interests: [],
-        dealbreakers: []
+        interests_count: 0,
+        subcategories_count: 0,
+        dealbreakers_count: 0
       }
     ])
     .select()

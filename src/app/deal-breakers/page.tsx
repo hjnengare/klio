@@ -1,36 +1,33 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useCallback, useMemo, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useCallback, useMemo, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
+import { useToast } from "../contexts/ToastContext";
 import {
   ShieldCheck,
   Clock,
   Smile,
   BadgeDollarSign,
   CheckCircle,
-  ArrowRight,
-  Star,
 } from "lucide-react";
 
 interface DealBreaker {
   id: string;
   label: string;
-  icon: string; // legacy field; mapped below
+  description: string;
+  icon: string;
 }
 
-// ✅ Demo data
 const DEMO_DEAL_BREAKERS: DealBreaker[] = [
-  { id: "trustworthiness", label: "Trustworthiness", icon: "shield-checkmark" },
-  { id: "punctuality", label: "Punctuality", icon: "time" },
-  { id: "friendliness", label: "Friendliness", icon: "happy" },
-  { id: "value-for-money", label: "Value for Money", icon: "cash-outline" },
+  { id: "trustworthiness", label: "Trustworthiness", description: "Reliable and honest service", icon: "shield-checkmark" },
+  { id: "punctuality", label: "Punctuality", description: "On-time and respects your schedule", icon: "time" },
+  { id: "friendliness", label: "Friendliness", description: "Welcoming and helpful staff", icon: "happy" },
+  { id: "value-for-money", label: "Value for Money", description: "Fair pricing and good quality", icon: "cash-outline" },
 ];
 
-/** ---------- Minimal entrance animations (subtle & accessible) ---------- */
 const entranceStyles = `
   @keyframes fadeSlideIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -44,251 +41,209 @@ const entranceStyles = `
     opacity: 0;
     animation: fadeSlideIn 0.6s ease-out forwards;
   }
+  @keyframes microBounce {
+    0%,100% { transform: scale(1); }
+    50%     { transform: scale(1.03); }
+  }
+  .animate-micro-bounce { animation: microBounce 0.28s ease-out; }
+
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
   }
 `;
 
-/** ---------- Shared font (SF Pro) ---------- */
 const sf = {
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
 };
 
-function useMounted() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  return mounted;
-}
-
-// Map our ids (or legacy icon strings) to lucide icons
-const getIconFor = (idOrIcon: string) => {
-  switch (idOrIcon) {
-    case "trustworthiness":
-    case "shield-checkmark":
-      return ShieldCheck;
-    case "punctuality":
-    case "time":
-      return Clock;
-    case "friendliness":
-    case "happy":
-      return Smile;
-    case "value-for-money":
-    case "cash-outline":
-      return BadgeDollarSign;
-    default:
-      return Star;
-  }
+const iconMap = {
+  "shield-checkmark": ShieldCheck,
+  "time": Clock,
+  "happy": Smile,
+  "cash-outline": BadgeDollarSign,
 };
 
 function DealBreakersContent() {
-  const mounted = useMounted();
-  const [selected, setSelected] = useState<string[]>([]);
-  const [isNavigating, setIsNavigating] = useState(false);
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const { showToast } = useToast();
 
-  const MIN_SELECTIONS = 2;
-  const MAX_SELECTIONS = 3;
+  const [selectedDealbreakers, setSelectedDealbreakers] = useState<string[]>([]);
+  const [isNavigating, setIsNavigating] = useState(false);
 
-  const saveSelections = useCallback(async (selections: string[]) => {
-    try {
-      await fetch("/api/user/deal-breakers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ selections }),
-      });
-    } catch (error) {
-      console.error("Error saving deal-breakers:", error);
+  const subcategories = useMemo(() => {
+    const subcategoriesParam = searchParams.get('subcategories');
+    return subcategoriesParam ? subcategoriesParam.split(',').map(s => s.trim()) : [];
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (subcategories.length === 0) {
+      router.push('/subcategories');
+      return;
     }
+  }, [subcategories, router]);
+
+  const handleDealbreakerToggle = useCallback((dealbreakerId: string) => {
+    setSelectedDealbreakers(prev => {
+      if (prev.includes(dealbreakerId)) {
+        return prev.filter(id => id !== dealbreakerId);
+      } else {
+        return [...prev, dealbreakerId];
+      }
+    });
   }, []);
 
-  const handleToggle = useCallback(
-    (id: string) => {
-      const isCurrentlySelected = selected.includes(id);
-      if (!isCurrentlySelected && selected.length >= MAX_SELECTIONS) {
-        return;
+  const handleNext = useCallback(async () => {
+    setIsNavigating(true);
+
+    try {
+      const response = await fetch('/api/user/onboarding', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          step: 'complete',
+          dealbreakers: selectedDealbreakers
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to complete onboarding');
       }
 
-      const newSelection = isCurrentlySelected
-        ? selected.filter((x) => x !== id)
-        : [...selected, id];
-
-      setSelected(newSelection);
-      saveSelections(newSelection);
-    },
-    [selected, saveSelections]
-  );
-
-  const canContinue = useMemo(
-    () =>
-      selected.length >= MIN_SELECTIONS &&
-      selected.length <= MAX_SELECTIONS &&
-      !isNavigating,
-    [selected.length, isNavigating]
-  );
-
-  const handleNext = useCallback(() => {
-    if (!canContinue) return;
-    try {
-      setIsNavigating(true);
-      router.push("/complete");
+      router.push('/complete');
     } catch (error) {
-      console.error("Error proceeding to next step:", error);
+      console.error('Error completing onboarding:', error);
+      showToast('Failed to complete onboarding', 'error');
       setIsNavigating(false);
     }
-  }, [canContinue, router]);
+  }, [selectedDealbreakers, router, showToast]);
 
-  const hydratedSelected = mounted ? selected : [];
+  const canProceed = selectedDealbreakers.length > 0 && !isNavigating;
 
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: entranceStyles }} />
-      <OnboardingLayout backHref="/subcategories" step={3}>
-        {/* Header */}
-        <div className="text-center mb-4 pt-4 sm:pt-6 enter-fade" style={{ animationDelay: "0.1s" }}>
-          <div className="inline-block relative mb-2">
-            <h2
-              className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight"
-              style={sf}
-            >
-              Your deal-breakers
-            </h2>
-          </div>
-          <p
-            className="text-sm md:text-base font-normal text-charcoal/70 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto"
+      <OnboardingLayout step={3} backHref="/subcategories">
+        <div className="text-center mb-6 pt-4 sm:pt-6 enter-fade">
+          <h2
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 tracking-tight"
             style={sf}
           >
-            Pick 2–3 that matter most to you
+            What are your deal-breakers?
+          </h2>
+          <p
+            className="text-sm md:text-base text-charcoal/70 leading-relaxed px-4 max-w-2xl mx-auto"
+            style={sf}
+          >
+            Select what matters most to you in a business
           </p>
         </div>
 
-        {/* Card */}
-        <OnboardingCard
-          className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade"
-          style={{ animationDelay: "0.16s" }}
-        >
-          {/* Counter */}
-          <div className="text-center mb-4 enter-fade" style={{ animationDelay: "0.2s" }}>
-            <div
-              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-3 transition-colors duration-300 ${
-                hydratedSelected.length >= MIN_SELECTIONS
-                  ? "bg-sage/10 border border-sage/30"
-                  : "bg-sage/10 border border-sage/20"
-              }`}
-            >
+        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
+          <div className="text-center mb-4">
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-2 bg-sage/10 border border-sage/20">
               <span className="text-sm font-semibold text-sage" style={sf}>
-                {hydratedSelected.length} of {MIN_SELECTIONS}-{MAX_SELECTIONS} selected
+                {selectedDealbreakers.length} selected
               </span>
-              {hydratedSelected.length >= MIN_SELECTIONS && (
-                <CheckCircle className="w-4 h-4 text-[hsl(148,20%,38%)]" aria-hidden="true" />
+              {selectedDealbreakers.length > 0 && (
+                <CheckCircle className="w-4 h-4 text-sage" />
               )}
             </div>
+            <p className="text-xs text-charcoal/60" style={sf}>
+              {selectedDealbreakers.length === 0
+                ? "Select at least one deal-breaker to continue"
+                : "Great! Select more or complete setup"}
+            </p>
           </div>
 
-          {/* Grid (staggered) */}
-          <div className="grid grid-cols-2 gap-6 md:gap-8 mb-4 justify-items-center">
-            {DEMO_DEAL_BREAKERS.map((item, idx) => {
-              const isSelected = hydratedSelected.includes(item.id);
-              const isDisabled =
-                !isSelected && hydratedSelected.length >= MAX_SELECTIONS;
-              const Icon = getIconFor(item.id || item.icon);
-              const delay = Math.min(idx, 8) * 0.06 + 0.24; // gentle stagger
+          <div className="space-y-3 mb-6">
+            {DEMO_DEAL_BREAKERS.map((dealbreaker, index) => {
+              const isSelected = selectedDealbreakers.includes(dealbreaker.id);
+              const IconComponent = iconMap[dealbreaker.icon as keyof typeof iconMap] || CheckCircle;
 
               return (
                 <button
-                  key={item.id}
-                  onClick={() => handleToggle(item.id)}
-                  disabled={isDisabled}
-                  aria-pressed={isSelected}
-                  aria-label={`${item.label} deal-breaker${
-                    isSelected ? " (selected)" : isDisabled ? " (maximum reached)" : ""
-                  }`}
+                  key={dealbreaker.id}
+                  onClick={() => handleDealbreakerToggle(dealbreaker.id)}
                   className={`
                     enter-stagger
-                    relative w-full max-w-[220px] sm:max-w-[240px] aspect-square
-                    transition-transform duration-500 ease-out
-                    focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
-                    disabled:cursor-not-allowed disabled:opacity-60
+                    group relative flex w-full items-center gap-4 rounded-2xl border-2 p-4 md:p-5 text-left transition-all duration-200
+                    focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2
+                    ${isSelected
+                      ? 'border-coral bg-coral text-white shadow-[0_8px_24px_rgba(214,116,105,0.25)] scale-[1.02]'
+                      : 'border-sage/30 bg-sage/5 text-sage hover:bg-sage/10 hover:border-sage/40 hover:scale-[1.02]'
+                    }
                   `}
-                  style={{ perspective: "1200px", ...(sf as any), animationDelay: `${delay}s` }}
+                  style={{ ...sf, animationDelay: `${index * 0.08}s` }}
                 >
-                  {/* Flipper */}
                   <div
-                    className="
-                      relative w-full h-full rounded-2xl
-                      transition-transform duration-500 ease-out will-change-transform
-                      [transform-style:preserve-3d]
-                      shadow-[0_8px_24px_rgba(0,0,0,0.06)]
-                    "
-                    style={{
-                      transform: isSelected ? "rotateY(180deg)" : "rotateY(0deg)",
-                    }}
+                    className={`
+                      flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-xl transition-colors flex-shrink-0
+                      ${isSelected ? 'bg-white/20' : 'bg-sage/20'}
+                    `}
                   >
-                    {/* FRONT */}
-                    <div
-                      className="
-                        absolute inset-0 rounded-2xl flex flex-col items-center justify-center
-                        bg-sage text-white
-                        [backface-visibility:hidden]
-                      "
+                    <IconComponent className={`h-6 w-6 md:h-7 md:w-7 ${isSelected ? 'text-white' : 'text-sage'}`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3
+                      className={`
+                        text-base md:text-lg font-semibold transition-colors mb-0.5
+                        ${isSelected ? 'text-white' : 'text-charcoal'}
+                      `}
                     >
-                      <span className="text-base sm:text-lg font-semibold text-center px-5">
-                        {item.label}
-                      </span>
-                    </div>
-
-                    {/* BACK */}
-                    <div
-                      className="
-                        absolute inset-0 rounded-2xl flex items-center justify-center
-                        bg-coral text-white
-                        [transform:rotateY(180deg)]
-                        [backface-visibility:hidden]
-                        shadow-[0_10px_40px_rgba(214,116,105,0.22),0_2px_8px_rgba(0,0,0,0.06)]
-                      "
+                      {dealbreaker.label}
+                    </h3>
+                    <p
+                      className={`
+                        text-xs md:text-sm transition-colors
+                        ${isSelected ? 'text-white/80' : 'text-charcoal/60'}
+                      `}
                     >
-                      <Icon className="w-14 h-14 text-white" aria-hidden="true" />
-                    </div>
+                      {dealbreaker.description}
+                    </p>
+                  </div>
+                  <div
+                    className={`
+                      flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all flex-shrink-0
+                      ${isSelected
+                        ? 'border-white bg-white'
+                        : 'border-sage/30 bg-white'
+                      }
+                    `}
+                  >
+                    {isSelected && (
+                      <CheckCircle className="h-4 w-4 text-coral" />
+                    )}
                   </div>
                 </button>
               );
             })}
           </div>
 
-          {/* Continue Button */}
-          <div className="pt-4 space-y-3 enter-fade" style={{ animationDelay: "0.32s" }}>
+          <div className="pt-2">
             <button
               className={`
-                group block w-full text-white text-sm font-semibold py-3 px-6 rounded-full transition-all duration-300 relative text-center
-                ${
-                  canContinue
-                    ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)] shadow-[0_10px_40px_rgba(125,155,118,0.25),0_4px_12px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(125,155,118,0.35),0_8px_24px_rgba(0,0,0,0.12)] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
-                    : "bg-white/90 text-charcoal/40 cursor-not-allowed"
+                group block w-full text-white text-sm md:text-base font-semibold py-3.5 md:py-4 px-6 md:px-8 rounded-full transition-all duration-300 relative text-center
+                ${canProceed
+                  ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)] shadow-[0_10px_40px_rgba(125,155,118,0.25),0_4px_12px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(125,155,118,0.35),0_8px_24px_rgba(0,0,0,0.12)] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
+                  : "bg-charcoal/10 text-charcoal/40 cursor-not-allowed"
                 }
               `}
               onClick={handleNext}
-              disabled={!canContinue}
+              disabled={!canProceed}
               style={sf}
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
-                Continue {hydratedSelected.length > 0 && `(${hydratedSelected.length} selected)`}
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                {isNavigating && (
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                )}
+                Complete Setup {selectedDealbreakers.length > 0 && `(${selectedDealbreakers.length} selected)`}
               </span>
+              {canProceed && (
+                <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              )}
             </button>
-
-            {/* Skip Option */}
-            <div className="text-center">
-              <Link
-                href="/complete"
-                className="inline-block text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
-                style={sf}
-              >
-                Skip for now
-              </Link>
-              <div className="mt-1 text-xs text-charcoal/50 max-w-sm mx-auto" style={sf}>
-                <span>You can always update your preferences later</span>
-              </div>
-            </div>
           </div>
         </OnboardingCard>
       </OnboardingLayout>
@@ -299,7 +254,15 @@ function DealBreakersContent() {
 export default function DealBreakersPage() {
   return (
     <ProtectedRoute requiresAuth={true}>
-      <DealBreakersContent />
+      <Suspense fallback={
+        <OnboardingLayout step={3} backHref="/subcategories">
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="animate-pulse text-charcoal/60">Loading...</div>
+          </div>
+        </OnboardingLayout>
+      }>
+        <DealBreakersContent />
+      </Suspense>
     </ProtectedRoute>
   );
 }

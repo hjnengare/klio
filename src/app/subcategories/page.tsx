@@ -9,7 +9,6 @@ import OnboardingCard from "../components/Onboarding/OnboardingCard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import { CheckCircle } from "lucide-react";
 
-/** ----- Minimal entrance animations (subtle & accessible) ----- */
 const entranceStyles = `
   @keyframes fadeSlideIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -29,13 +28,12 @@ const entranceStyles = `
   }
   .animate-micro-bounce { animation: microBounce 0.28s ease-out; }
 
-  /* Flexible pills that size to their text content */
   .pills-container {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-  
+
   .pills-container > button {
     flex: 0 0 auto;
     width: auto;
@@ -47,11 +45,17 @@ const entranceStyles = `
   }
 `;
 
+const sf = {
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+};
+
 interface SubcategoryItem {
   id: string;
   label: string;
   interest_id: string;
 }
+
 interface GroupedSubcategories {
   [interestId: string]: {
     title: string;
@@ -59,389 +63,247 @@ interface GroupedSubcategories {
   };
 }
 
-const DEMO_SUBCATEGORIES: GroupedSubcategories = {
-  "food-drink": {
-    title: "Food & Drink",
-    items: [
-      { id: "restaurants", label: "Restaurants", interest_id: "food-drink" },
-      { id: "cafes", label: "Cafés", interest_id: "food-drink" },
-      { id: "bars", label: "Bars", interest_id: "food-drink" },
-      { id: "fast-food", label: "Fast Food", interest_id: "food-drink" },
-      { id: "fine-dining", label: "Fine Dining", interest_id: "food-drink" },
-      { id: "food-trucks", label: "Food Trucks", interest_id: "food-drink" },
-      { id: "bakeries", label: "Bakeries", interest_id: "food-drink" },
-      { id: "breweries", label: "Breweries", interest_id: "food-drink" },
-      { id: "wine-bars", label: "Wine Bars", interest_id: "food-drink" },
-    ],
-  },
-  "beauty-wellness": {
-    title: "Beauty & Wellness",
-    items: [
-      { id: "hair-salons", label: "Hair Salons", interest_id: "beauty-wellness" },
-      { id: "spas", label: "Spas", interest_id: "beauty-wellness" },
-      { id: "nail-salons", label: "Nail Salons", interest_id: "beauty-wellness" },
-      { id: "barbers", label: "Barbers", interest_id: "beauty-wellness" },
-      { id: "massage", label: "Massage Therapy", interest_id: "beauty-wellness" },
-      { id: "gyms", label: "Gyms", interest_id: "gyms" },
-      { id: "yoga", label: "Yoga", interest_id: "yoga" },
-      { id: "pilates", label: "Pilates", interest_id: "pilates" },
-      { id: "martial-arts", label: "Martial Arts", interest_id: "martial-arts" },
-    ],
-  },
-  "arts-culture": {
-    title: "Arts & Culture",
-    items: [
-      { id: "museums", label: "Museums", interest_id: "arts-culture" },
-      { id: "galleries", label: "Galleries", interest_id: "arts-culture" },
-      { id: "theatres", label: "Theatres", interest_id: "arts-culture" },
-      { id: "creative-workshops", label: "Creative Workshops", interest_id: "arts-culture" },
-      { id: "dance-studios", label: "Dance Studios", interest_id: "arts-culture" },
-    ],
-  },
-  "shopping-lifestyle": {
-    title: "Shopping & Lifestyle",
-    items: [
-      { id: "clothing", label: "Clothing Stores", interest_id: "shopping-lifestyle" },
-      { id: "boutiques", label: "Boutiques", interest_id: "shopping-lifestyle" },
-      { id: "bookstores", label: "Bookstores", interest_id: "shopping-lifestyle" },
-      { id: "home-decor", label: "Home Decor", interest_id: "shopping-lifestyle" },
-      { id: "gift-shops", label: "Gift Shops", interest_id: "shopping-lifestyle" },
-      { id: "jewellery", label: "Jewellery Stores", interest_id: "shopping-lifestyle" },
-      { id: "grocers", label: "Grocery Stores", interest_id: "shopping-lifestyle" },
-      { id: "markets", label: "Markets", interest_id: "shopping-lifestyle" },
-    ],
-  },
-  "services-everyday": {
-    title: "Professional Services",
-    items: [
-      { id: "education-learning", label: "Education & Learning", interest_id: "services-everyday" },
-      { id: "transport-travel", label: "Transport & Travel", interest_id: "services-everyday" },
-      { id: "finance-insurance", label: "Finance & Insurance", interest_id: "services-everyday" },
-      { id: "plumbers", label: "Plumbers", interest_id: "services-everyday" },
-      { id: "handymen", label: "Handymen", interest_id: "services-everyday" },
-      { id: "electricians", label: "Electricians", interest_id: "services-everyday" },
-      { id: "legal-services", label: "Legal Services", interest_id: "services-everyday" },
-      { id: "cleaning", label: "Cleaning Services", interest_id: "services-everyday" },
-      { id: "pest-control", label: "Pest Control", interest_id: "services-everyday" },
-      { id: "laundromat", label: "Laundromats", interest_id: "services-everyday" },
-    ],
-  },
-  "digital-work": {
-    title: "Digital & Work",
-    items: [
-      { id: "tech-gadgets", label: "Tech & Gadgets", interest_id: "digital-work" },
-      { id: "work-offices", label: "Work & Offices", interest_id: "digital-work" },
-    ],
-  },
-  "experiences-entertainment": {
-    title: "Experiences & Entertainment",
-    items: [
-      { id: "events-festivals", label: "Events & Festivals", interest_id: "experiences-entertainment" },
-      { id: "sports-recreation", label: "Sports & Recreation", interest_id: "experiences-entertainment" },
-      { id: "nightlife", label: "Nightlife", interest_id: "experiences-entertainment" },
-      { id: "comedy-clubs", label: "Comedy Clubs", interest_id: "experiences-entertainment" },
-      { id: "escape-rooms", label: "Escape Rooms", interest_id: "experiences-entertainment" },
-    ],
-  },
-  "family & pets": {
-    title: "Family & Pets",
-    items: [
-      { id: "kids-entertainment", label: "Kids Entertainment", interest_id: "family-pets" },
-      { id: "family-friendly-activities", label: "Family-Friendly Activities", interest_id: "family-pets" },
-      { id: "vets", label: "Vets", interest_id: "family-pets" },
-      { id: "pet-grooming-services", label: "Pet-Grooming Services", interest_id: "family-pets" },
-      { id: "pet-friendly restaurants", label: "Pet-Friendly Restaurants", interest_id: "family-pets" },
-    ],
-  },
-  "outdoors-adventure": {
-    title: "Outdoors & Adventure",
-    items: [
-      { id: "land-adventures", label: "Land Adventures", interest_id: "outdoors-adventure" },
-      { id: "water-activities", label: "Water Activities", interest_id: "outdoors-adventure" },
-      { id: "air-extreme-sports", label: "Air & Extreme Sports", interest_id: "outdoors-adventure" },
-      { id: "tourism-exploration", label: "Tourism & Exploration", interest_id: "outdoors-adventure" },
-    ],
-  },
+const INTEREST_TITLES: { [key: string]: string } = {
+  'food-drink': 'Food & Drink',
+  'beauty-wellness': 'Beauty & Wellness',
+  'professional-services': 'Professional Services',
+  'outdoors-adventure': 'Outdoors & Adventure',
+  'experiences-entertainment': 'Entertainment & Experiences',
+  'arts-culture': 'Arts & Culture',
+  'family-pets': 'Family & Pets',
+  'shopping-lifestyle': 'Shopping & Lifestyle',
 };
-
-const sf = {
-  fontFamily:
-    '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
-};
-
-function useMounted() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  return mounted;
-}
 
 function SubcategoriesContent() {
-  const mounted = useMounted();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const user = { id: "dummy-user-id" };
-  const {
-    selectedSubInterests,
-    setSelectedSubInterests,
-    loadSubInterests,
-  } = useOnboarding();
+  const { showToast } = useToast();
+  const { selectedSubInterests: selectedSubcategories, setSelectedSubInterests: setSelectedSubcategories, isLoading, error } = useOnboarding();
 
+  const [subcategories, setSubcategories] = useState<SubcategoryItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [isNavigating, setIsNavigating] = useState(false);
-  const [isOnline, setIsOnline] = useState(true);
-  const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
-  const [hasLoadedSubcategories, setHasLoadedSubcategories] = useState(false);
-
-  const MIN_SELECTIONS = 3;
-  const MAX_SELECTIONS = 12;
 
   const selectedInterests = useMemo(() => {
-    const fromUrl =
-      searchParams?.get("interests")?.split(",").filter(Boolean) || [];
-    return fromUrl;
+    const interestsParam = searchParams.get('interests');
+    return interestsParam ? interestsParam.split(',').map(s => s.trim()) : [];
   }, [searchParams]);
 
   useEffect(() => {
-    const updateOnlineStatus = () => setIsOnline(navigator.onLine);
-    updateOnlineStatus();
-    window.addEventListener("online", updateOnlineStatus);
-    window.addEventListener("offline", updateOnlineStatus);
-    return () => {
-      window.removeEventListener("online", updateOnlineStatus);
-      window.removeEventListener("offline", updateOnlineStatus);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!hasLoadedSubcategories) {
-      setHasLoadedSubcategories(true);
-      loadSubInterests(selectedInterests);
-    }
-  }, [selectedInterests, hasLoadedSubcategories, loadSubInterests]);
-
-  const groupedSubcategories: GroupedSubcategories = DEMO_SUBCATEGORIES;
-
-  /** ----- REORDER: match requested sequence ----- */
-  const DISPLAY_ORDER = [
-    "food-drink",
-    "beauty-wellness",
-    "professional-services",
-    "outdoors-adventure",
-    "experiences-entertainment",
-    "arts-culture",
-    "family-pets",
-    "shopping-lifestyle",
-  ] as const;
-
-  // Map requested ids to existing keys in DEMO_SUBCATEGORIES
-  const KEY_ALIASES: Record<string, string> = {
-    "professional-services": "services-everyday",
-    "family-pets": "family & pets",
-  };
-
-  const orderedSections = useMemo(() => {
-    const entries: Array<[string, { title: string; items: SubcategoryItem[] }]> =
-      [];
-    for (const id of DISPLAY_ORDER) {
-      const realKey = KEY_ALIASES[id] ?? id;
-      const section = groupedSubcategories[realKey];
-      if (section) entries.push([realKey, section]);
-    }
-    // Append any sections not explicitly ordered (e.g. "digital-work")
-    for (const [k, v] of Object.entries(groupedSubcategories)) {
-      const alreadyIncluded = entries.find(([key]) => key === k);
-      if (!alreadyIncluded) entries.push([k, v]);
-    }
-    return entries;
-  }, [groupedSubcategories]);
-
-  const triggerMicroBounce = useCallback((id: string) => {
-    setAnimatingIds((prev) => new Set(prev).add(id));
-    setTimeout(() => {
-      setAnimatingIds((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-    }, 300);
-  }, []);
-
-  const handleSubcategoryToggle = useCallback(
-    async (subcategoryId: string) => {
-      const isCurrentlySelected = selectedSubInterests.includes(subcategoryId);
-      triggerMicroBounce(subcategoryId);
-
-      if (!isCurrentlySelected && selectedSubInterests.length >= MAX_SELECTIONS) {
-        // showToast(`Maximum ${MAX_SELECTIONS} subcategories allowed`, "warning", 2000);
+    const loadSubcategories = async () => {
+      if (selectedInterests.length === 0) {
+        router.push('/interests');
         return;
       }
 
-      const newSelection = isCurrentlySelected
-        ? selectedSubInterests.filter((id) => id !== subcategoryId)
-        : [...selectedSubInterests, subcategoryId];
-
-      setSelectedSubInterests(newSelection);
-
       try {
-        await fetch("/api/user/subcategories", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ selections: newSelection }),
-        });
-      } catch (error) {
-        console.error("Error saving subcategories:", error);
-        // showToast("Failed to save subcategories", "error", 3000);
-      }
-    },
-    [selectedSubInterests, setSelectedSubInterests, triggerMicroBounce]
-  );
+        setLoading(true);
+        const response = await fetch(`/api/subcategories?interests=${selectedInterests.join(',')}`);
 
-  const canProceed = useMemo(() => {
-    return selectedSubInterests.length >= MIN_SELECTIONS && !isNavigating && !!user;
-  }, [selectedSubInterests.length, isNavigating, user]);
+        if (!response.ok) {
+          throw new Error('Failed to load subcategories');
+        }
+
+        const data = await response.json();
+        setSubcategories(data.subcategories || []);
+      } catch (error) {
+        console.error('Error loading subcategories:', error);
+        showToast('Failed to load subcategories', 'error');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSubcategories();
+  }, [selectedInterests, router, showToast]);
+
+  const groupedSubcategories = useMemo(() => {
+    const grouped: GroupedSubcategories = {};
+
+    subcategories.forEach(sub => {
+      if (!grouped[sub.interest_id]) {
+        grouped[sub.interest_id] = {
+          title: INTEREST_TITLES[sub.interest_id] || sub.interest_id,
+          items: []
+        };
+      }
+      grouped[sub.interest_id].items.push(sub);
+    });
+
+    return grouped;
+  }, [subcategories]);
+
+  const handleSubcategoryToggle = useCallback((subcategoryId: string, interestId: string) => {
+    const isSelected = selectedSubcategories.some(s => s.id === subcategoryId);
+
+    if (isSelected) {
+      setSelectedSubcategories(prev => prev.filter(s => s.id !== subcategoryId));
+    } else {
+      setSelectedSubcategories(prev => [...prev, { id: subcategoryId, interest_id: interestId }]);
+    }
+  }, [selectedSubcategories, setSelectedSubcategories]);
 
   const handleNext = useCallback(async () => {
-    if (!canProceed) return;
+    if (selectedSubcategories.length === 0) return;
+
+    setIsNavigating(true);
+
     try {
-      setIsNavigating(true);
-      router.push("/deal-breakers");
+      const response = await fetch('/api/user/onboarding', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          step: 'subcategories',
+          interests: selectedInterests,
+          subcategories: selectedSubcategories.map(s => ({
+            subcategory_id: s.id,
+            interest_id: s.interest_id
+          }))
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save subcategories');
+      }
+
+      const subcategoryIds = selectedSubcategories.map(s => s.id).join(',');
+      router.push(`/deal-breakers?subcategories=${subcategoryIds}`);
     } catch (error) {
-      console.error("Error proceeding to next step:", error);
+      console.error('Error saving subcategories:', error);
+      showToast('Failed to save subcategories', 'error');
       setIsNavigating(false);
     }
-  }, [canProceed, router]);
+  }, [selectedSubcategories, selectedInterests, router, showToast]);
 
-  if (!user) {
+  const canProceed = selectedSubcategories.length > 0 && !isNavigating;
+
+  if (loading) {
     return (
-      <div className="min-h-dvh bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="font-sf text-base text-charcoal/70">Checking authentication...</p>
+      <OnboardingLayout step={2} backHref="/interests">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="animate-pulse text-charcoal/60">Loading subcategories...</div>
         </div>
-      </div>
+      </OnboardingLayout>
     );
   }
-
-  const hydratedSelected = mounted ? selectedSubInterests : [];
 
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: entranceStyles }} />
-
-      <OnboardingLayout
-        backHref="/interests"
-        step={2}
-        className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden"
-      >
-        {/* Offline chip */}
-        {!isOnline && (
-          <div
-            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 enter-fade"
-            style={{ animationDelay: "0.08s" }}
-          >
-            <div className="bg-orange-50/90 border border-orange-200 rounded-full px-3 py-1 flex items-center gap-2 shadow-sm">
-              <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-              <span className="text-xs font-semibold text-orange-700" style={sf}>
-                Offline
-              </span>
-            </div>
-          </div>
-        )}
-
-        {/* Header */}
-        <div className="text-center mb-4 pt-4 sm:pt-6 enter-fade" style={{ animationDelay: "0.1s" }}>
+      <OnboardingLayout step={2} backHref="/interests">
+        <div className="text-center mb-6 pt-4 sm:pt-6 enter-fade">
           <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 tracking-tight"
             style={sf}
           >
-            Tell us more!
+            Choose your subcategories
           </h2>
           <p
-            className="text-sm md:text-base font-normal text-charcoal/70 leading-relaxed px-4 max-w-lg md:max-w-2xl mx-auto"
+            className="text-sm md:text-base text-charcoal/70 leading-relaxed px-4 max-w-2xl mx-auto"
             style={sf}
           >
-            Pick at least {MIN_SELECTIONS} across any sections to personalize your experience
+            Select specific areas within your interests
           </p>
         </div>
 
-        {/* Card */}
-        <OnboardingCard
-          className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade"
-          style={{ animationDelay: "0.16s" }}
-        >
-          <div className="space-y-6 mb-4">
-            {orderedSections.map(([interestId, section], sIdx) => {
-              const sectionDelay = 0.22 + Math.min(sIdx, 8) * 0.08; // gentle per-section stagger
-              return (
-                <section key={interestId} className="enter-fade" style={{ animationDelay: `${sectionDelay}s` }}>
-                  <h3 className="text-base md:text-lg font-semibold text-charcoal mb-3 px-1" style={sf}>
-                    {section.title}
-                  </h3>
+        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4">
+              <p className="text-sm font-semibold text-red-600" style={sf}>
+                {error}
+              </p>
+            </div>
+          )}
 
-                  {/* Flexible pills that size to their text content */}
-                  <div className="pills-container">
-                    {section.items.map((subcategory, iIdx) => {
-                      const isSelected = hydratedSelected.includes(subcategory.id);
-                      const isDisabled =
-                        !isSelected && hydratedSelected.length >= MAX_SELECTIONS;
-
-                      // chip-level stagger (in addition to section delay)
-                      const chipDelay = sectionDelay + Math.min(iIdx, 6) * 0.05;
-
-                      return (
-                        <button
-                          key={subcategory.id}
-                          data-subcategory-id={subcategory.id}
-                          onClick={() => handleSubcategoryToggle(subcategory.id)}
-                          disabled={isDisabled}
-                          aria-pressed={isSelected}
-                          className={`
-                            enter-stagger
-                            relative inline-flex items-center justify-center
-                            py-3 md:py-4 px-4 md:px-6
-                            text-sm md:text-base font-semibold text-center
-                            transition-all duration-200 ease-out
-                            min-h-[44px] rounded-full
-                            focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2
-                            disabled:cursor-not-allowed disabled:opacity-60
-                            ${animatingIds.has(subcategory.id) ? "animate-micro-bounce" : ""}
-                            ${
-                              isSelected
-                                ? "bg-coral text-white md:shadow-[0_10px_40px_rgba(214,116,105,0.22),0_2px_8px_rgba(0,0,0,0.06)]"
-                                : isDisabled
-                                ? "bg-charcoal/5 text-charcoal/40"
-                                : "bg-sage text-white hover:bg-sage/90"
-                            }
-                          `}
-                          style={{ ...(sf as React.CSSProperties), animationDelay: `${chipDelay}s` }}
-                        >
-                          <span>{subcategory.label}</span>
-                          {isSelected && (
-                            <div className="absolute top-1 right-1">
-                              <CheckCircle className="w-4 h-4 text-white" aria-hidden="true" />
-                            </div>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </section>
-              );
-            })}
+          <div className="text-center mb-4">
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-2 bg-sage/10 border border-sage/20">
+              <span className="text-sm font-semibold text-sage" style={sf}>
+                {selectedSubcategories.length} selected
+              </span>
+              {selectedSubcategories.length > 0 && (
+                <CheckCircle className="w-4 h-4 text-sage" />
+              )}
+            </div>
+            <p className="text-xs text-charcoal/60" style={sf}>
+              {selectedSubcategories.length === 0
+                ? "Select at least one subcategory to continue"
+                : "Great! Select more or continue"}
+            </p>
           </div>
 
-          {/* Continue */}
-          <button
-            onClick={handleNext}
-            disabled={!canProceed}
-            className={`enter-fade block w-full text-white text-sm font-semibold py-3 px-6 rounded-full transition-all duration-300 ${
-              canProceed
-                ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)]"
-                : "bg-white/90 text-charcoal/40 cursor-not-allowed"
-            }`}
-            style={{ ...(sf as React.CSSProperties), animationDelay: "0.25s" }}
-          >
-            Continue
-          </button>
+          <div className="space-y-6">
+            {Object.entries(groupedSubcategories).map(([interestId, group], groupIndex) => (
+              <div
+                key={interestId}
+                className="enter-stagger"
+                style={{ animationDelay: `${groupIndex * 0.08}s` }}
+              >
+                <h3
+                  className="text-base md:text-lg font-semibold text-charcoal mb-3"
+                  style={sf}
+                >
+                  {group.title}
+                </h3>
+                <div className="pills-container">
+                  {group.items.map((subcategory) => {
+                    const isSelected = selectedSubcategories.some(s => s.id === subcategory.id);
+
+                    return (
+                      <button
+                        key={subcategory.id}
+                        onClick={() => handleSubcategoryToggle(subcategory.id, subcategory.interest_id)}
+                        className={`
+                          relative flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-medium transition-all duration-200
+                          focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2
+                          ${isSelected
+                            ? 'border-coral bg-coral text-white shadow-sm scale-105'
+                            : 'border-sage/30 bg-sage/5 text-sage hover:bg-sage/10 hover:border-sage/40 hover:scale-105'
+                          }
+                        `}
+                        style={sf}
+                      >
+                        <span>{subcategory.label}</span>
+                        {isSelected && (
+                          <CheckCircle className="h-4 w-4" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {subcategories.length === 0 && !loading && (
+              <div className="text-center text-charcoal/60 py-8" style={sf}>
+                <p>No subcategories found for your selected interests.</p>
+              </div>
+            )}
+          </div>
+
+          <div className="pt-6">
+            <button
+              className={`
+                group block w-full text-white text-sm md:text-base font-semibold py-3.5 md:py-4 px-6 md:px-8 rounded-full transition-all duration-300 relative text-center
+                ${canProceed
+                  ? "bg-[linear-gradient(135deg,#7D9B76_0%,#6B8A64_100%)] shadow-[0_10px_40px_rgba(125,155,118,0.25),0_4px_12px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(125,155,118,0.35),0_8px_24px_rgba(0,0,0,0.12)] focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
+                  : "bg-charcoal/10 text-charcoal/40 cursor-not-allowed"
+                }
+              `}
+              onClick={handleNext}
+              disabled={!canProceed}
+              style={sf}
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                {(isLoading || isNavigating) && (
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                )}
+                Continue {selectedSubcategories.length > 0 && `(${selectedSubcategories.length} selected)`}
+              </span>
+              {canProceed && (
+                <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              )}
+            </button>
+          </div>
         </OnboardingCard>
       </OnboardingLayout>
     </>
@@ -451,16 +313,13 @@ function SubcategoriesContent() {
 export default function SubcategoriesPage() {
   return (
     <ProtectedRoute requiresAuth={true}>
-      <Suspense
-        fallback={
-          <div className="min-h-dvh bg-white flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-8 h-8 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="font-sf text-base text-charcoal/70">Loading subcategories...</p>
-            </div>
+      <Suspense fallback={
+        <OnboardingLayout step={2} backHref="/interests">
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="animate-pulse text-charcoal/60">Loading...</div>
           </div>
-        }
-      >
+        </OnboardingLayout>
+      }>
         <SubcategoriesContent />
       </Suspense>
     </ProtectedRoute>

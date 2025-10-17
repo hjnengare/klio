@@ -39,6 +39,15 @@ const globalAnimations = `
     }
   }
 
+  @keyframes progressBarGrow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
   /* Animation classes */
   .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out forwards;
@@ -78,12 +87,19 @@ const globalAnimations = `
     }
   }
 
+  /* Progress bar animation */
+  .progress-bar-fill {
+    animation: progressBarGrow 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transform-origin: left;
+  }
+
   /* Respect reduced motion preferences */
   @media (prefers-reduced-motion: reduce) {
     .animate-fade-in-up,
     .animate-slide-in-left,
     .animate-scale-in,
-    .progress-active {
+    .progress-active,
+    .progress-bar-fill {
       animation: none !important;
       opacity: 1 !important;
       transform: none !important;
@@ -122,10 +138,27 @@ export default function OnboardingLayout({
   totalSteps = 4,
   showProgress = true,
 }: OnboardingLayoutProps) {
+  const progressPercentage = (step / totalSteps) * 100;
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: globalAnimations }} />
       <div className="min-h-dvh bg-white flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container">
+        {/* Linear Progress Bar at Top */}
+        {showProgress && (
+          <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-charcoal/10">
+            <div
+              className="h-full bg-sage transition-all duration-700 ease-out progress-bar-fill"
+              style={{ width: `${progressPercentage}%` }}
+              role="progressbar"
+              aria-valuenow={step}
+              aria-valuemin={1}
+              aria-valuemax={totalSteps}
+              aria-label={`Step ${step} of ${totalSteps}`}
+            />
+          </div>
+        )}
+
         {/* Back button */}
         {backHref && (
           <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 animate-fade-in-up delay-100">
