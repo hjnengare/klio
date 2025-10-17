@@ -42,7 +42,7 @@ export default function EmailVerificationModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl border border-charcoal/10 max-w-md w-full mx-4">
+      <div className="bg-off-white rounded-2xl shadow-2xl border border-charcoal/10 max-w-md w-full mx-4">
         {/* Header */}
         <div className="flex items-center justify-between p-6 pb-4">
           <div className="flex items-center gap-3">
@@ -137,7 +137,7 @@ export default function EmailVerificationModal({
             <Link
               href="/verify-email"
               onClick={onClose}
-              className="block w-full bg-white border border-sage/30 text-sage font-sf text-sm font-600 py-2.5 px-4 rounded-lg hover:bg-sage/5 transition-all duration-300 text-center"
+              className="block w-full bg-off-white border border-sage/30 text-sage font-sf text-sm font-600 py-2.5 px-4 rounded-lg hover:bg-sage/5 transition-all duration-300 text-center"
             >
               Go to Verification Page
             </Link>

@@ -1,9 +1,10 @@
 'use client';
 
 import { ButtonHTMLAttributes } from 'react';
+import { LucideIcon } from 'lucide-react';
 
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: string;
+  icon: LucideIcon;
   label: string;
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   size?: 'small' | 'medium' | 'large';
@@ -11,7 +12,7 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export default function IconButton({
-  icon,
+  icon: Icon,
   label,
   variant = 'primary',
   size = 'medium',
@@ -32,6 +33,12 @@ export default function IconButton({
     large: 'p-4 text-6'
   };
 
+  const iconSizes = {
+    small: 'w-4 h-4',
+    medium: 'w-5 h-5',
+    large: 'w-6 h-6'
+  };
+
   return (
     <button
       className={`
@@ -43,7 +50,7 @@ export default function IconButton({
       aria-label={label}
       {...props}
     >
-      <ion-icon name={icon} size={size === 'small' ? 'small' : 'medium'}></ion-icon>
+      <Icon className={iconSizes[size]} />
       {children && <span className="ml-2">{children}</span>}
     </button>
   );

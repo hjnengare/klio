@@ -7,7 +7,6 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import { usePrefersReducedMotion } from '../utils/hooks/usePrefersReducedMotion';
 import { Mail, CheckCircle, Loader2, ExternalLink, ArrowLeft } from 'lucide-react';
-import KlioLoader from '../components/KlioLoader/KlioLoader';
 
 const styles = `
   /* Mobile-first typography scale - Body text ≥ 16px */
@@ -352,8 +351,11 @@ export default function VerifyEmailPage() {
     return (
       <>
         <style dangerouslySetInnerHTML={{ __html: styles }} />
-        <div className="min-h-[100dvh] bg-white flex items-center justify-center ios-inertia hide-scrollbar">
-          <KlioLoader size="lg" text="Loading..." />
+        <div className="min-h-[100dvh] bg-off-white flex items-center justify-center ios-inertia hide-scrollbar">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="font-sf text-base text-charcoal/70">Loading...</p>
+          </div>
         </div>
       </>
     );
@@ -364,8 +366,11 @@ export default function VerifyEmailPage() {
     return (
       <>
         <style dangerouslySetInnerHTML={{ __html: styles }} />
-        <div className="min-h-[100dvh] bg-white flex items-center justify-center ios-inertia hide-scrollbar">
-          <KlioLoader size="lg" text="Sending verification email..." />
+        <div className="min-h-[100dvh] bg-off-white flex items-center justify-center ios-inertia hide-scrollbar">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="font-sf text-base text-charcoal/70">Sending verification email...</p>
+          </div>
         </div>
       </>
     );
@@ -379,7 +384,7 @@ export default function VerifyEmailPage() {
     return (
       <>
         <style dangerouslySetInnerHTML={{ __html: styles }} />
-        <div className="min-h-[100dvh] bg-white flex items-center justify-center ios-inertia hide-scrollbar safe-area-full">
+        <div className="min-h-[100dvh] bg-off-white flex items-center justify-center ios-inertia hide-scrollbar safe-area-full">
           <div className="text-center max-w-md mx-auto p-6">
             <p className="text-lg text-charcoal mb-4">No verification pending.</p>
             <Link href="/register" className="text-sage hover:text-sage/80 underline">
@@ -394,11 +399,11 @@ export default function VerifyEmailPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
+      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh] bg-off-white flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
         
         {/* Back button with entrance animation */}
         <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 animate-slide-in-left animate-delay-200">
-          <Link href="/home" className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-white/50 rounded-lg block backdrop-blur-sm">
+          <Link href="/home" className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-off-white/50 rounded-lg block backdrop-blur-sm">
             <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
           </Link>
         </div>
@@ -418,7 +423,7 @@ export default function VerifyEmailPage() {
           </div>
 
           {/* Main Card */}
-          <div className="bg-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-sm transition-shadow duration-300 animate-scale-in">
+          <div className="bg-off-white rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 shadow-sm transition-shadow duration-300 animate-scale-in">
             
             {/* Email Icon */}
             <div className="text-center mb-6">

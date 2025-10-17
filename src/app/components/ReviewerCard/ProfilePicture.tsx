@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { User, Trophy, CheckCircle, MapPin } from 'lucide-react';
 
 interface ProfilePictureProps {
   src: string;
@@ -30,13 +31,13 @@ export default function ProfilePicture({
   const getBadgeIcon = (badgeType: string) => {
     switch (badgeType) {
       case "top":
-        return "trophy";
+        return Trophy;
       case "verified":
-        return "checkmark-circle";
+        return CheckCircle;
       case "local":
-        return "location";
+        return MapPin;
       default:
-        return "";
+        return User;
     }
   };
 
@@ -58,17 +59,15 @@ export default function ProfilePicture({
     return (
       <div className="relative inline-block">
         <div className={`${sizeClasses[size]} rounded-full bg-sage/10 flex items-center justify-center border-2 border-white shadow-md`}>
-          <ion-icon
-            name="person-outline"
-            class={`${size === 'sm' ? 'text-lg' : size === 'md' ? 'text-xl' : 'text-2xl'} text-sage/70`}
+          <User
+            className={`${size === 'sm' ? 'w-4 h-4' : size === 'md' ? 'w-5 h-5' : 'w-6 h-6'} text-sage/70`}
           />
         </div>
         {badge && (
-          <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white   rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-            <ion-icon
-              name={getBadgeIcon(badge)}
-              class={`text-[14px] ${getBadgeColor(badge)}`}
-            />
+          <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-off-white   rounded-full flex items-center justify-center shadow-lg border border-gray-100">
+            {React.createElement(getBadgeIcon(badge), { 
+              className: `w-3.5 h-3.5 ${getBadgeColor(badge)}` 
+            })}
           </div>
         )}
       </div>
@@ -88,11 +87,10 @@ export default function ProfilePicture({
       />
       
       {badge && (
-        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white   rounded-full flex items-center justify-center shadow-lg border border-gray-100">
-          <ion-icon
-            name={getBadgeIcon(badge)}
-            class={`text-[14px] ${getBadgeColor(badge)}`}
-          />
+        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-off-white   rounded-full flex items-center justify-center shadow-lg border border-gray-100">
+          {React.createElement(getBadgeIcon(badge), { 
+            className: `w-3.5 h-3.5 ${getBadgeColor(badge)}` 
+          })}
         </div>
       )}
     </div>

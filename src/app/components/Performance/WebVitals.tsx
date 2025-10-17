@@ -27,8 +27,6 @@ function WebVitals() {
         // onFID is deprecated in favor of onINP in newer versions
         if (webVitals.onINP) {
           webVitals.onINP(reportMetric);
-        } else if (webVitals.onFID) {
-          webVitals.onFID(reportMetric);
         }
         webVitals.onFCP?.(reportMetric);
         webVitals.onLCP?.(reportMetric);

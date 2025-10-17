@@ -235,10 +235,6 @@ export class AuthService {
     // Handle specific error messages from Supabase
     const message = error.message.toLowerCase();
 
-    if (message.includes('database error') || message.includes('trigger') || message.includes('profiles')) {
-      return { message: '🔧 Database setup incomplete. Please ensure the database trigger is installed in Supabase.', code: 'database_error' };
-    }
-
     if (message.includes('user already registered') || message.includes('email already exists') || message.includes('already been registered')) {
       return { message: '❌ This email address is already taken. Try logging in instead.', code: 'user_exists' };
     }

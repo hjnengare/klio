@@ -1,7 +1,6 @@
 "use client";
 
-import { ReactNode, useState, useEffect, ComponentType } from "react";
-import { useInView } from "../hooks/useInView";
+import { ReactNode, useState, useEffect } from "react";
 
 interface OptimizedFadeInUpProps {
   children: ReactNode;
@@ -9,80 +8,45 @@ interface OptimizedFadeInUpProps {
   duration?: number;
   distance?: number;
   className?: string;
-  useFramerMotion?: boolean;
 }
 
 export default function OptimizedFadeInUp({
   children,
   delay = 0,
-  duration = 0.6,
+  duration = 600,
   distance = 30,
   className = "",
-  useFramerMotion = false,
 }: OptimizedFadeInUpProps) {
-  const [ref, inView] = useInView({ threshold: 0.1 });
+  const [ref, setRef] = useState<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [FramerMotionComponent, setFramerMotionComponent] = useState<ComponentType<{
-    ref: React.RefObject<HTMLDivElement>;
-    initial: object;
-    animate: object;
-    transition: object;
-    className: string;
-    children: ReactNode;
-  }> | null>(null);
 
   useEffect(() => {
-    if (inView && !isVisible) {
-      const timer = setTimeout(() => setIsVisible(true), delay * 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [inView, delay, isVisible]);
+    if (!ref) return;
 
-  useEffect(() => {
-    if (useFramerMotion && inView && !FramerMotionComponent) {
-      import("framer-motion").then((module) => {
-        setFramerMotionComponent(() => module.motion.div);
-      });
-    }
-  }, [useFramerMotion, inView, FramerMotionComponent]);
-
-  // Use CSS-based animation for better performance
-  if (!useFramerMotion) {
-    return (
-      <div
-        ref={ref}
-        className={`transition-all duration-${Math.round(duration * 1000)} ease-out ${
-          isVisible
-            ? "opacity-100 translate-y-0"
-            : `opacity-0 translate-y-${distance >= 30 ? "8" : "4"}`
-        } ${className}`}
-      >
-        {children}
-      </div>
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          const timer = setTimeout(() => setIsVisible(true), delay);
+          return () => clearTimeout(timer);
+        }
+      },
+      { threshold: 0.1 }
     );
-  }
 
-  // Fallback to Framer Motion when needed
-  if (FramerMotionComponent) {
-    return (
-      <FramerMotionComponent
-        ref={ref}
-        initial={{ opacity: 0, y: distance }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: distance }}
-        transition={{
-          duration,
-          delay,
-          ease: [0.25, 0.25, 0.25, 0.75],
-        }}
-        className={className}
-      >
-        {children}
-      </FramerMotionComponent>
-    );
-  }
+    observer.observe(ref);
+    return () => observer.disconnect();
+  }, [ref, delay, isVisible]);
 
   return (
-    <div ref={ref} className={className}>
+    <div
+      ref={setRef}
+      className={`transition-all ease-out ${
+        isVisible
+          ? "opacity-100 translate-y-0"
+          : `opacity-0 translate-y-${distance >= 30 ? "8" : "4"}`
+      } ${className}`}
+      style={{ transitionDuration: `${duration}ms` }}
+    >
       {children}
     </div>
   );

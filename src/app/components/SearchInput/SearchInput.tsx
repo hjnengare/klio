@@ -64,21 +64,13 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
       <form onSubmit={handleSubmit} className={`${containerClass} ${className}`} ref={containerRef}>
         <div
           className={`
-            relative group rounded-full border border-charcoal/20 bg-white/60
+            relative group rounded-full border border-sage bg-off-white/60
             transition-all duration-300
-            focus-within:shadow-[0_0_0_3px_rgba(125,155,118,0.3),0_8px_32px_rgba(125,155,118,0.2)]
-            focus-within:border-sage/50 focus-within:bg-white/80
             focus-within:outline-none focus-within:ring-0
-            before:absolute before:inset-0 before:rounded-full before:pointer-events-none
-            before:opacity-0 group-focus-within:before:opacity-100 before:transition-opacity before:duration-300
-            before:[background:linear-gradient(135deg,rgba(125,155,118,0.3),rgba(214,116,105,0.2))]
-            after:absolute after:inset-0 after:rounded-full after:pointer-events-none
-            after:opacity-0 group-focus-within:after:opacity-100 after:transition-opacity after:duration-300
-            after:border-2 after:border-sage/40
           `}
         >
           {/* left icon */}
-          <div className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-charcoal/60 group-focus-within:text-sage transition-colors z-10">
+          <div className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-charcoal/60 z-10">
             <Search className="w-4 h-4" />
           </div>
 

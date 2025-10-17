@@ -49,6 +49,17 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
     setMounted(true);
   }, []);
 
+  // Validation functions
+  const validateUsername = (username: string) => {
+    const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+    return usernameRegex.test(username);
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   // Hydration-safe disabled state
   const isFormDisabled = mounted ? (submitting || isLoading) : false;
   const isSubmitDisabled = mounted ? (submitting || isLoading || !consent || passwordStrength.score < 3 || !username || !email || !password || !validateUsername(username) || !validateEmail(email)) : true;
@@ -68,16 +79,6 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
       window.removeEventListener('offline', updateOnlineStatus);
     };
   }, []);
-
-  const validateUsername = (username: string) => {
-    const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-    return usernameRegex.test(username);
-  };
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const validatePassword = (password: string) => {
     if (password.length < 8) return "🔐 Password must be at least 8 characters long";
@@ -335,7 +336,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
             getUsernameError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
             username && !getUsernameError() && usernameTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white  '
+            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
           }`}
           disabled={isFormDisabled}
         />
@@ -375,7 +376,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
             getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
             email && !getEmailError() && emailTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white  '
+            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
           }`}
           disabled={isFormDisabled}
         />
@@ -415,7 +416,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
             passwordStrength.score >= 3 && passwordTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
             passwordStrength.score > 0 && passwordStrength.score < 3 ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
-            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white  '
+            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
           }`}
           disabled={isFormDisabled}
         />
@@ -425,10 +426,11 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           className="absolute right-4 sm:right-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 hover:text-charcoal transition-colors duration-300 p-1 z-10 rounded-full"
           disabled={isFormDisabled}
         >
-          <ion-icon
-            name={showPassword ? "eye-off-outline" : "eye-outline"}
-            size="small"
-          ></ion-icon>
+          {showPassword ? (
+            <EyeOff className="w-4 h-4" />
+          ) : (
+            <Eye className="w-4 h-4" />
+          )}
         </button>
       </div>
 
@@ -454,7 +456,12 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             ))}
           </div>
           {passwordStrength.feedback && (
-            <span className={`text-xs font-500 ${passwordStrength.color}`}>
+            <span className={`text-xs font-500 ${
+              passwordStrength.score >= 3 ? 'text-sage' :
+              passwordStrength.score >= 2 ? 'text-orange-500' :
+              passwordStrength.score >= 1 ? 'text-red-500' :
+              'text-gray-500'
+            }`}>
               {passwordStrength.feedback}
             </span>
           )}

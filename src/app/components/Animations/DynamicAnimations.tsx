@@ -35,25 +35,14 @@ export const DynamicMagneticButton = dynamic(
   }
 );
 
-// Dynamic PageTransition for route changes
-export const DynamicPageTransition = dynamic(
-  () => import("./PageTransition"),
-  {
-    ssr: false,
-    loading: ({ children }: { children: React.ReactNode }) => (
-      <div className="min-h-screen">{children}</div>
-    ),
-  }
-);
+// PageTransition component removed - not needed
 
 // Dynamic FadeInUp with intersection observer
 export const DynamicFadeInUp = dynamic(
   () => import("./OptimizedFadeInUp"),
   {
     ssr: false,
-    loading: ({ children }: { children: React.ReactNode }) => (
-      <div className="opacity-0 animate-fade-in">{children}</div>
-    ),
+    loading: () => null,
   }
 );
 
@@ -61,8 +50,6 @@ export const DynamicFadeInUp = dynamic(
 export {
   DynamicFloatingElements as FloatingElements,
   DynamicPremiumHover as PremiumHover,
-  DynamicPremiumButton as PremiumButton,
   DynamicMagneticButton as MagneticButton,
-  DynamicPageTransition as PageTransition,
   DynamicFadeInUp as FadeInUp,
 };

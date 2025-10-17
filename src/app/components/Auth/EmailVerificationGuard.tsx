@@ -32,7 +32,7 @@ export default function EmailVerificationGuard({
   // Show loading while auth state is being determined
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-off-white flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
           <p className="font-sf text-base text-charcoal/70">Loading...</p>
@@ -79,9 +79,9 @@ export default function EmailVerificationGuard({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sage/5 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-off-white flex items-center justify-center px-4">
       <div className="max-w-md w-full">
-        <div className="bg-white rounded-2xl shadow-lg border border-charcoal/10 p-8 text-center">
+        <div className="bg-off-white rounded-2xl shadow-lg border border-charcoal/10 p-8 text-center">
           {/* Icon */}
           <div className="w-16 h-16 mx-auto mb-6 bg-amber-100 rounded-full flex items-center justify-center">
             <Mail className="w-8 h-8 text-amber-600" />
@@ -158,7 +158,7 @@ export default function EmailVerificationGuard({
             {/* Go to Verify Email Page */}
             <Link
               href="/verify-email"
-              className="block w-full bg-white border border-charcoal/20 text-charcoal font-sf text-sm font-600 py-3 px-4 rounded-xl hover:bg-charcoal/5 transition-all duration-300 text-center"
+              className="block w-full bg-off-white border border-charcoal/20 text-charcoal font-sf text-sm font-600 py-3 px-4 rounded-xl hover:bg-charcoal/5 transition-all duration-300 text-center"
             >
               Go to Email Verification Page
             </Link>

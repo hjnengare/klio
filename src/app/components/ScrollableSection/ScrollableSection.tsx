@@ -93,11 +93,11 @@ export default function ScrollableSection({
                 scroll-arrow scroll-arrow-left
                 absolute left-2 top-1/2 -translate-y-1/2 z-10
                 w-10 h-10 sm:w-12 sm:h-12
-                bg-white/90 backdrop-blur-sm
+                bg-off-white/90 backdrop-blur-sm
                 rounded-full shadow-lg border border-sage/20
                 flex items-center justify-center
                 transition-all duration-300 ease-out
-                hover:bg-white   hover:shadow-xl hover:border-sage/40
+                hover:bg-off-white   hover:shadow-xl hover:border-sage/40
                 active:scale-95
                 ${arrowColor}
               `}
@@ -125,11 +125,11 @@ export default function ScrollableSection({
                 scroll-arrow scroll-arrow-right
                 absolute right-2 top-1/2 -translate-y-1/2 z-10
                 w-10 h-10 sm:w-12 sm:h-12
-                bg-white/90 backdrop-blur-sm
+                bg-off-white/90 backdrop-blur-sm
                 rounded-full shadow-lg border border-sage/20
                 flex items-center justify-center
                 transition-all duration-300 ease-out
-                hover:bg-white   hover:shadow-xl hover:border-sage/40
+                hover:bg-off-white   hover:shadow-xl hover:border-sage/40
                 active:scale-95
                 ${arrowColor}
               `}

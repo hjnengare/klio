@@ -59,7 +59,7 @@ export default function EventsSpecialsPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
-        className="bg-white shadow-sm relative z-10"
+        className="bg-off-white shadow-sm relative z-10"
       >
         <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
@@ -95,7 +95,7 @@ export default function EventsSpecialsPage() {
                 className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
                   selectedFilter === "all"
                     ? "bg-coral text-white shadow-lg"
-                    : "bg-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
+                    : "bg-off-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
                 }`}
               >
                 All
@@ -105,7 +105,7 @@ export default function EventsSpecialsPage() {
                 className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
                   selectedFilter === "event"
                     ? "bg-coral text-white shadow-lg"
-                    : "bg-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
+                    : "bg-off-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
                 }`}
               >
                 Events
@@ -115,7 +115,7 @@ export default function EventsSpecialsPage() {
                 className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-sf font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
                   selectedFilter === "special"
                     ? "bg-coral text-white shadow-lg"
-                    : "bg-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
+                    : "bg-off-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
                 }`}
               >
                 Specials
@@ -148,7 +148,7 @@ export default function EventsSpecialsPage() {
                   {/* Bookmark button - always visible on mobile, hover on desktop */}
                   <button
                     onClick={() => handleBookmark(event)}
-                    className="absolute top-2 right-2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-200 hover:bg-white active:scale-95 sm:hover:scale-110 z-20"
+                    className="absolute top-2 right-2 w-10 h-10 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-200 hover:bg-off-white active:scale-95 sm:hover:scale-110 z-20"
                     aria-label="Bookmark event"
                     title="Bookmark"
                   >

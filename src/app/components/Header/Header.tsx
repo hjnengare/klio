@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { User, X, Search } from "lucide-react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
@@ -24,10 +24,52 @@ export default function Header({
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const { savedCount } = useSavedItems();
 
   // Anchor for the dropdown FilterModal to hang under
   const searchWrapRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-based header visibility
+  useEffect(() => {
+    const controlHeader = () => {
+      const currentScrollY = window.scrollY;
+      const scrollThreshold = 100; // Minimum scroll distance to trigger hide/show
+      
+      // Don't hide header if we're near the top
+      if (currentScrollY < scrollThreshold) {
+        setIsHeaderVisible(true);
+      } else {
+        // Hide when scrolling down, show when scrolling up
+        if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
+          setIsHeaderVisible(false);
+        } else if (currentScrollY < lastScrollY) {
+          setIsHeaderVisible(true);
+        }
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    // Add scroll event listener with throttling
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          controlHeader();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', throttledScroll);
+    };
+  }, [lastScrollY]);
 
   const openFilters = () => {
     if (isFilterVisible) return;
@@ -53,8 +95,12 @@ export default function Header({
 
   const headerClassName =
     variant === "frosty"
-      ? "fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl supports-[backdrop-filter]:bg-white/20 shadow-sm shadow-gray-400/20 border-b border-white/5 transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-gradient-to-b from-white/40 via-white/30 to-white/20 before:backdrop-blur-2xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(800px_400px_at_10%_0%,rgba(120,119,198,0.08),transparent_70%),radial-gradient(700px_350px_at_90%_0%,rgba(255,182,193,0.06),transparent_70%)] after:backdrop-blur-sm"
-      : "fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300";
+      ? `fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl supports-[backdrop-filter]:bg-off-white/90 shadow-sm shadow-gray-400/20 border-b border-white/5 transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-gradient-to-b from-white/40 via-white/30 to-white/20 before:backdrop-blur-2xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(800px_400px_at_10%_0%,rgba(120,119,198,0.08),transparent_70%),radial-gradient(700px_350px_at_90%_0%,rgba(255,182,193,0.06),transparent_70%)] after:backdrop-blur-sm ${
+          isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
+        }`
+      : `fixed top-0 left-0 right-0 z-50 bg-off-white/90 backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 ${
+          isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
+        }`;
 
   return (
     <>
@@ -81,7 +127,7 @@ export default function Header({
                   className="group capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-semibold text-charcoal/80 hover:text-sage transition-all duration-300 relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute inset-0 backdrop-blur-sm bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <span className="relative z-10">{route}</span>
                   {route === "saved" && savedCount > 0 && (
                     <div className="absolute -top-1 -right-1 bg-coral text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-lg">
@@ -101,7 +147,7 @@ export default function Header({
                 aria-label="Toggle search"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 backdrop-blur-sm bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 backdrop-blur-sm bg-off-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <Search className="relative z-10 w-5 h-5" />
               </button>
 
@@ -129,7 +175,7 @@ export default function Header({
                 aria-label="Profile"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 backdrop-blur-sm bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 backdrop-blur-sm bg-off-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <User className="relative z-10 w-5 h-5" />
               </Link>
             </div>
@@ -175,7 +221,7 @@ export default function Header({
 
       {/* Mobile menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-full backdrop-blur-2xl bg-white/80 z-[100] shadow-2xl shadow-sage/10 transform md:hidden ${
+        className={`fixed top-0 right-0 h-full w-full backdrop-blur-2xl bg-off-white/80 z-[100] shadow-2xl shadow-sage/10 transform md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300`}
       >

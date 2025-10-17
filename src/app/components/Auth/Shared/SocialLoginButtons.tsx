@@ -38,7 +38,7 @@ export function SocialLoginButtons() {
           <div className="w-full border-t border-light-gray/50"></div>
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-4 bg-white text-charcoal/60 font-medium" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>or continue with</span>
+          <span className="px-4 bg-off-white text-charcoal/60 font-medium" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>or continue with</span>
         </div>
       </div>
 
@@ -48,7 +48,7 @@ export function SocialLoginButtons() {
           type="button"
           onClick={handleGoogleSignIn}
           disabled={isGoogleLoading}
-          className="flex items-center justify-center bg-white border border-light-gray/50 rounded-full px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 text-sm font-medium text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center bg-off-white border border-light-gray/50 rounded-full px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 text-sm font-medium text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press disabled:opacity-50 disabled:cursor-not-allowed"
           style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
         >
           {isGoogleLoading ? (
@@ -68,7 +68,7 @@ export function SocialLoginButtons() {
         <button
           type="button"
           onClick={handleAppleSignIn}
-          className="flex items-center justify-center bg-white border border-light-gray/50 rounded-full px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 text-sm font-medium text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
+          className="flex items-center justify-center bg-off-white border border-light-gray/50 rounded-full px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 text-sm font-medium text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
           style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
         >
           <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">

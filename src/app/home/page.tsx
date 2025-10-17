@@ -17,20 +17,21 @@ import {
   TOP_REVIEWERS,
   BUSINESSES_OF_THE_MONTH,
 } from "../data/communityHighlightsData";
+import { useOnboarding } from "../contexts/OnboardingContext";
 
 // Removed any animation / scroll-reveal classes and imports.
 
 const EventsSpecials = dynamic(
   () => import("../components/EventsSpecials/EventsSpecials"),
   {
-    loading: () => <div className="h-96 bg-white/50" />,
+    loading: () => <div className="h-96 bg-off-white/50" />,
   }
 );
 
 const CommunityHighlights = dynamic(
   () => import("../components/CommunityHighlights/CommunityHighlights"),
   {
-    loading: () => <div className="h-96 bg-white/50" />,
+    loading: () => <div className="h-96 bg-off-white/50" />,
   }
 );
 
@@ -41,21 +42,18 @@ const Footer = dynamic(() => import("../components/Footer/Footer"), {
 const MemoizedBusinessRow = memo(BusinessRow);
 
 export default function Home() {
+  const { selectedInterests } = useOnboarding();
   const forYouBusinesses = TRENDING_BUSINESSES.slice(0, 10);
   const trendingBusinesses = TRENDING_BUSINESSES.slice(10, 20);
 
   return (
-    <div className="min-h-dvh bg-white">
+    <div className="min-h-dvh bg-off-white">
       <Header showSearch={true} variant="frosty" />
 
-      <div className="pt-32 px-4 pb-4">
-        <div className="rounded-3xl overflow-hidden">
-          <HeroCarousel />
-        </div>
-      </div>
+      <HeroCarousel userInterests={selectedInterests} />
 
-      <div className="bg-white">
-        <div className="py-4">
+      <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
+        <div className="py-8">
             {/* No scroll-reveal wrappers; simple static rendering */}
           <div>
             <MemoizedBusinessRow

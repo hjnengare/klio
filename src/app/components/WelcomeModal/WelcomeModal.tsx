@@ -69,7 +69,7 @@ export default function WelcomeModal() {
                 stiffness: 300,
                 damping: 25
               }}
-              className=" bg-white   rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto relative border border-charcoal/10"
+              className=" bg-off-white   rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto relative border border-charcoal/10"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}

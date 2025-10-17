@@ -1,32 +1,31 @@
+import { Brush, Pizza, Scissors, Music, Wine, Dumbbell, Calendar } from "lucide-react";
+
 interface EventIconProps {
   iconName?: string;
   className?: string;
 }
 
 export default function EventIcon({ iconName, className = "w-16 h-16 text-sage drop-shadow-sm" }: EventIconProps) {
-  const getIonIcon = (name: string) => {
+  const getIconComponent = (name: string) => {
     switch (name) {
       case "paint-brush-outline":
-        return "brush-outline";
+        return Brush;
       case "pizza-outline":
-        return "pizza-outline";
+        return Pizza;
       case "cut-outline":
-        return "cut-outline";
+        return Scissors;
       case "musical-notes-outline":
-        return "musical-notes-outline";
+        return Music;
       case "wine-outline":
-        return "wine-outline";
+        return Wine;
       case "body-outline":
-        return "fitness-outline";
+        return Dumbbell;
       default:
-        return "calendar-outline";
+        return Calendar;
     }
   };
 
-  return (
-    <ion-icon
-      name={getIonIcon(iconName || "")}
-      class={className}
-    />
-  );
+  const IconComponent = getIconComponent(iconName || "");
+
+  return <IconComponent className={className} />;
 }

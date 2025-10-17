@@ -1,6 +1,7 @@
 "use client";
 
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { AlertTriangle } from 'lucide-react';
 
 interface Props {
   children: ReactNode;
@@ -55,10 +56,10 @@ class ErrorBoundary extends Component<Props, State> {
       const isRepeatedError = this.state.retryCount >= 2;
 
       return (
-        <div className="min-h-dvh flex items-center justify-center  bg-white   px-4">
+        <div className="min-h-dvh flex items-center justify-center  bg-off-white   px-4">
           <div className="max-w-md w-full text-center">
             <div className="w-16 h-16 mx-auto mb-6 bg-red-100 rounded-full flex items-center justify-center">
-              <ion-icon name="warning-outline" style={{ color: '#dc2626', fontSize: '2rem' }}></ion-icon>
+              <AlertTriangle className="w-8 h-8 text-red-600" />
             </div>
             <h1 className="font-sf text-xl font-600 text-charcoal mb-3">
               {isRepeatedError ? 'Persistent Error' : 'Something went wrong'}

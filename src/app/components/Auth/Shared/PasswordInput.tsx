@@ -59,7 +59,7 @@ export function PasswordInput({
           className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
             isStrong ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
             isWeak ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
-            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white'
+            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white'
           }`}
           disabled={disabled}
         />

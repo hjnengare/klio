@@ -143,7 +143,7 @@ export default function OnboardingLayout({
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: globalAnimations }} />
-      <div className="min-h-dvh bg-white flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container">
+      <div className="min-h-dvh bg-off-white flex flex-col px-4 py-4 pb-safe-area-bottom relative overflow-y-auto onboarding-enter safe-area-container">
         {/* Linear Progress Bar at Top */}
         {showProgress && (
           <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-charcoal/10">
@@ -165,7 +165,7 @@ export default function OnboardingLayout({
             <Link
               href={backHref}
               aria-label="Go back"
-              className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-white/50 rounded-lg block backdrop-blur-sm"
+              className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-off-white/50 rounded-lg block backdrop-blur-sm"
             >
               {/* ✅ Lucide back arrow */}
               <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />

@@ -16,10 +16,10 @@ export interface CardProps {
 }
 
 const variantStyles: Record<CardVariant, string> = {
-  default: 'bg-white border border-black/5 shadow-md',
-  glass: 'bg-white/90 border border-black/5 backdrop-blur-xl',
-  premium: 'bg-white/95 border border-white/30 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)]',
-  bordered: 'bg-white border-2 border-light-gray',
+  default: 'bg-off-white border border-black/5 shadow-md',
+  glass: 'bg-off-white/90 border border-black/5 backdrop-blur-xl',
+  premium: 'bg-off-white/95 border border-white/30 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)]',
+  bordered: 'bg-off-white border-2 border-light-gray',
 };
 
 const paddingStyles: Record<CardPadding, string> = {

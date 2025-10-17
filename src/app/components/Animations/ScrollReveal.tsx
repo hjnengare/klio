@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, useAnimation, useInView } from "framer-motion";
-import { ReactNode, useRef, useEffect, useCallback } from "react";
+import { ReactNode, useState, useEffect } from "react";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -17,63 +16,55 @@ interface ScrollRevealProps {
 export default function ScrollReveal({
   children,
   delay = 0,
-  duration = 0.7,
+  duration = 700,
   distance = 50,
   direction = "up",
-  className,
+  className = "",
   threshold = 0.1,
   once = true,
 }: ScrollRevealProps) {
-  const controls = useAnimation();
-  const ref = useRef(null);
-  const inView = useInView(ref, { threshold, once });
-
-  // Memoize direction offset to prevent recalculation
-  const directionOffset = useCallback(() => ({
-    up: { x: 0, y: distance },
-    down: { x: 0, y: -distance },
-    left: { x: distance, y: 0 },
-    right: { x: -distance, y: 0 },
-  }), [distance]);
-
-  // Memoize transition object
-  const transition = useCallback(() => ({
-    duration,
-    delay,
-    ease: [0.25, 0.25, 0.25, 0.75] as const,
-  }), [duration, delay]);
+  const [ref, setRef] = useState<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const offset = directionOffset();
+    if (!ref) return;
 
-    if (inView) {
-      controls.start({
-        opacity: 1,
-        x: 0,
-        y: 0,
-        transition: transition(),
-      });
-    } else if (!once) {
-      controls.start({
-        opacity: 0,
-        ...offset[direction],
-      });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          const timer = setTimeout(() => setIsVisible(true), delay);
+          return () => clearTimeout(timer);
+        }
+      },
+      { threshold }
+    );
+
+    observer.observe(ref);
+    return () => observer.disconnect();
+  }, [ref, delay, isVisible, threshold]);
+
+  const getTransformClass = () => {
+    if (!isVisible) {
+      switch (direction) {
+        case "up": return "translate-y-8";
+        case "down": return "-translate-y-8";
+        case "left": return "translate-x-8";
+        case "right": return "-translate-x-8";
+        default: return "translate-y-8";
+      }
     }
-  }, [inView, controls, direction, once, directionOffset, transition]);
-
-  const initialValues = {
-    opacity: 0,
-    ...directionOffset()[direction],
+    return "translate-x-0 translate-y-0";
   };
 
   return (
-    <motion.div
-      ref={ref}
-      initial={initialValues}
-      animate={controls}
-      className={className}
+    <div
+      ref={setRef}
+      className={`transition-all ease-out ${getTransformClass()} ${
+        isVisible ? "opacity-100" : "opacity-0"
+      } ${className}`}
+      style={{ transitionDuration: `${duration}ms` }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

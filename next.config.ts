@@ -73,7 +73,19 @@ const nextConfig: NextConfig = {
 
   // Enable experimental features for better performance
   experimental: {
-    optimizePackageImports: ['react-icons', 'framer-motion'],
+    optimizePackageImports: ['react-icons', 'framer-motion', 'lucide-react'],
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+    // Faster builds
+    swcMinify: true,
+    // Reduce bundle size
+    optimizeCss: true,
   },
 
   // TypeScript and ESLint optimizations
@@ -83,6 +95,18 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: process.env.NODE_ENV === 'development',
   },
+
+  // Additional performance optimizations
+  poweredByHeader: false,
+  compress: true,
+  
+  // Faster development builds
+  ...(process.env.NODE_ENV === 'development' && {
+    onDemandEntries: {
+      maxInactiveAge: 25 * 1000,
+      pagesBufferLength: 2,
+    },
+  }),
 };
 
 export default nextConfig;

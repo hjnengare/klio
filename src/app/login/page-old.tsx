@@ -269,10 +269,10 @@ export default function LoginPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div ref={containerRef} className="min-h-[100dvh]  bg-white   flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
+      <div ref={containerRef} className="min-h-[100dvh]  bg-off-white   flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
       {/* Back button with entrance animation */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 animate-slide-in-left animate-delay-200">
-        <Link href="/onboarding" className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-white/50 rounded-lg block backdrop-blur-sm">
+        <Link href="/onboarding" className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-off-white/50 rounded-lg block backdrop-blur-sm">
           <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
         </Link>
       </div>
@@ -295,7 +295,7 @@ export default function LoginPage() {
         {/* Form Card */}
         <div
           className="
-            bg-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden
+            bg-off-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden
             border border-white/30 backdrop-blur-lg
             shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)]
             hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)]
@@ -335,7 +335,7 @@ export default function LoginPage() {
                 className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   email && !getEmailError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white  '
+                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
                 }`}
                 disabled={isSubmitting || isLoading}
               />
@@ -378,7 +378,7 @@ export default function LoginPage() {
                 className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getPasswordError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   password && !getPasswordError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white  '
+                  'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
                 }`}
                 disabled={isSubmitting || isLoading}
               />
@@ -446,7 +446,7 @@ export default function LoginPage() {
                 <div className="w-full border-t border-light-gray/50"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4  bg-white   text-charcoal/60 font-medium" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>or continue with</span>
+                <span className="px-4  bg-off-white   text-charcoal/60 font-medium" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>or continue with</span>
               </div>
             </div>
 
@@ -454,7 +454,7 @@ export default function LoginPage() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
               <button
                 type="button"
-                className="flex items-center justify-center bg-white border border-light-gray/50 rounded-full px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 text-sm font-medium text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
+                className="flex items-center justify-center bg-off-white border border-light-gray/50 rounded-full px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 text-sm font-medium text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
                 style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">
@@ -467,7 +467,7 @@ export default function LoginPage() {
               </button>
               <button
                 type="button"
-                className="flex items-center justify-center bg-white   border border-light-gray/50 rounded-full px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 text-sm font-medium text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
+                className="flex items-center justify-center bg-off-white   border border-light-gray/50 rounded-full px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 text-sm font-medium text-charcoal hover:border-sage/50 hover:bg-sage/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 group btn-target btn-press"
                 style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" viewBox="0 0 24 24" fill="currentColor">

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ImageIcon } from "lucide-react";
 import EventIcon from "./EventIcon";
 import EventBadge from "./EventBadge";
 import RatingBadge from "./RatingBadge";
@@ -42,10 +43,7 @@ export default function EventBanner({
         </>
       ) : (
         <div className="h-full w-full bg-sage/10 flex items-center justify-center text-sage rounded-t-[6px]">
-          <ion-icon
-            name="image-outline"
-            class="text-4xl md:text-5xl text-sage/70"
-          />
+          <ImageIcon className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
         </div>
       )}
 

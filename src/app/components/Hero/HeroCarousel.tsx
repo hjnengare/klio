@@ -14,32 +14,142 @@ interface HeroSlide {
 const HERO_SLIDES: HeroSlide[] = [
   {
     id: "1",
-    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=85",
-    title: "Discover Local Experiences",
-    description: "Explore authentic reviews and find the perfect spots curated by your community",
+    image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=2560&q=95&auto=format&fit=crop",
+    title: "Find the Best Restaurants",
+    description: "Discover top-rated dining experiences, from cozy cafes to fine dining establishments in your area",
   },
   {
     id: "2",
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=85",
-    title: "Share Your Story",
-    description: "Connect with others through honest reviews and meaningful recommendations",
+    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2560&q=95&auto=format&fit=crop",
+    title: "Trusted Healthcare Professionals",
+    description: "Connect with verified dentists, doctors, and wellness professionals recommended by your community",
   },
   {
     id: "3",
-    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=85",
-    title: "Build Trust Together",
-    description: "Join a community that values authenticity and real experiences",
+    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=2560&q=95&auto=format&fit=crop",
+    title: "Reliable Home Services",
+    description: "Find skilled plumbers, electricians, and contractors for all your home improvement needs",
+  },
+  {
+    id: "4",
+    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=2560&q=95&auto=format&fit=crop",
+    title: "Beauty & Wellness",
+    description: "Explore salons, spas, gyms, and wellness centers that prioritize your health and happiness",
+  },
+  {
+    id: "5",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=2560&q=95&auto=format&fit=crop",
+    title: "Professional Services",
+    description: "Connect with lawyers, accountants, consultants, and other professionals you can trust",
   },
 ];
 
 const FONT_STACK =
   '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif';
 
-export function HeroCarousel() {
+interface HeroCarouselProps {
+  userInterests?: string[];
+}
+
+export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLElement>(null);
+
+  // Generate slides based on user interests
+  const generateSlidesFromInterests = (interests: string[]): HeroSlide[] => {
+    const interestToSlides: { [key: string]: HeroSlide[] } = {
+      'food-drink': [
+        {
+          id: "food-1",
+          image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=2560&q=95&auto=format&fit=crop",
+          title: "Find the Best Restaurants",
+          description: "Discover top-rated dining experiences, from cozy cafes to fine dining establishments in your area",
+        },
+        {
+          id: "food-2",
+          image: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=2560&q=95&auto=format&fit=crop",
+          title: "Local Food Gems",
+          description: "Explore hidden culinary treasures and authentic flavors recommended by your community",
+        },
+      ],
+      'beauty-wellness': [
+        {
+          id: "beauty-1",
+          image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=2560&q=95&auto=format&fit=crop",
+          title: "Beauty & Wellness",
+          description: "Explore salons, spas, gyms, and wellness centers that prioritize your health and happiness",
+        },
+        {
+          id: "beauty-2",
+          image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=2560&q=95&auto=format&fit=crop",
+          title: "Self-Care Made Easy",
+          description: "Find trusted professionals for your beauty and wellness needs",
+        },
+      ],
+      'healthcare': [
+        {
+          id: "health-1",
+          image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2560&q=95&auto=format&fit=crop",
+          title: "Trusted Healthcare",
+          description: "Connect with verified dentists, doctors, and wellness professionals recommended by your community",
+        },
+        {
+          id: "health-2",
+          image: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=2560&q=95&auto=format&fit=crop",
+          title: "Your Health Matters",
+          description: "Find healthcare providers you can trust for all your medical needs",
+        },
+      ],
+      'home-services': [
+        {
+          id: "home-1",
+          image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=2560&q=95&auto=format&fit=crop",
+          title: "Reliable Home Services",
+          description: "Find skilled plumbers, electricians, and contractors for all your home improvement needs",
+        },
+        {
+          id: "home-2",
+          image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=2560&q=95&auto=format&fit=crop",
+          title: "Professional Contractors",
+          description: "Connect with trusted professionals for repairs, renovations, and maintenance",
+        },
+      ],
+      'professional-services': [
+        {
+          id: "prof-1",
+          image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=2560&q=95&auto=format&fit=crop",
+          title: "Professional Services",
+          description: "Connect with lawyers, accountants, consultants, and other professionals you can trust",
+        },
+        {
+          id: "prof-2",
+          image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=2560&q=95&auto=format&fit=crop",
+          title: "Expert Guidance",
+          description: "Find qualified professionals for your business and personal needs",
+        },
+      ],
+    };
+
+    // If no interests selected, show default slides
+    if (interests.length === 0) {
+      return HERO_SLIDES;
+    }
+
+    // Flatten all slides from selected interests
+    const slides: HeroSlide[] = [];
+    interests.forEach(interest => {
+      if (interestToSlides[interest]) {
+        slides.push(...interestToSlides[interest]);
+      }
+    });
+
+    // If no matching slides found, return default
+    return slides.length > 0 ? slides : HERO_SLIDES;
+  };
+
+  const slides = generateSlidesFromInterests(userInterests);
 
   // respect reduced motion
   const prefersReduced =
@@ -48,11 +158,11 @@ export function HeroCarousel() {
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const next = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % HERO_SLIDES.length);
-  }, []);
+    setCurrentIndex((prev) => (prev + 1) % slides.length);
+  }, [slides.length]);
   const prev = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
-  }, []);
+    setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+  }, [slides.length]);
 
   // autoplay (paused on reduced motion / hover / focus / tab hidden)
   useEffect(() => {
@@ -155,7 +265,7 @@ export function HeroCarousel() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.15)_0%,_transparent_70%)] pointer-events-none" />
       <div className="absolute inset-0 backdrop-blur-[1px] bg-off-white/5 mix-blend-overlay pointer-events-none" />
       {/* Slides */}
-      {HERO_SLIDES.map((slide, index) => (
+      {slides.map((slide, index) => (
         <div
           key={slide.id}
           aria-hidden={index !== currentIndex}
@@ -163,52 +273,61 @@ export function HeroCarousel() {
             index === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
-          {/* Background Image */}
-          <div className="absolute inset-0 w-full h-full">
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              priority={index === 0}
-              quality={85}
-              className="object-cover"
-              sizes="100vw"
-            />
-          </div>
+           {/* Mobile: Background Image */}
+           <div className="absolute inset-0 lg:hidden">
+             <Image
+               src={slide.image}
+               alt={slide.title}
+               fill
+               priority={index === 0}
+               quality={100}
+               className="object-cover"
+               sizes="100vw"
+             />
+             {/* Overlay for text readability */}
+             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
+           </div>
 
-          {/* Liquid Glass Overlays for premium depth */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-sage/10 pointer-events-none" />
-          <div className="absolute inset-0 backdrop-blur-[0.5px] bg-off-white/5 mix-blend-overlay pointer-events-none" />
+           {/* Content - Split Layout: Text Left, Image Right */}
+           <div className="absolute inset-0 z-20 flex items-center pt-20 pb-8 lg:bg-off-white">
+             <div className="container mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 items-center">
+                 {/* Left: Text Content */}
+                 <div className="relative">
+                   <h1
+                     className="text-off-white lg:text-charcoal leading-[1.1] mb-4 sm:mb-6 font-bold tracking-tight"
+                     style={{
+                       fontSize: "clamp(2.4rem, 5vw, 4.75rem)",
+                       maxWidth: "13ch",
+                       textWrap: "balance" as React.CSSProperties["textWrap"],
+                     }}
+                   >
+                     {slide.title}
+                   </h1>
+                   <p
+                     className="text-off-white/90 lg:text-charcoal/80 leading-relaxed"
+                     style={{
+                       fontSize: "clamp(1rem, 1.5vw, 1.25rem)",
+                       maxWidth: "60ch",
+                       textWrap: "pretty" as React.CSSProperties["textWrap"],
+                     }}
+                   >
+                     {slide.description}
+                   </p>
+                 </div>
 
-           {/* Content - Static Text Overlay */}
-           <div className="absolute inset-0 z-20 flex items-center pt-20 pb-20">
-             <div className="container mx-auto max-w-[1300px] px-4 sm:px-6">
-               <div className="max-w-[800px] relative">
-                 {/* Content Container */}
-                 <div className="relative bg-off-white rounded-3xl p-8 sm:p-12 shadow-2xl shadow-black/20">
-                   <div className="relative z-10">
-                     <h1
-                       className="text-charcoal leading-[1.1] mb-4 sm:mb-6 font-bold tracking-tight"
-                       style={{
-                         fontSize: "clamp(2.4rem, 5vw, 4.75rem)",
-                         maxWidth: "13ch",
-                         textWrap: "balance" as React.CSSProperties["textWrap"],
-                       }}
-                     >
-                       Discover local experiences
-                     </h1>
-                     <p
-                       className="text-charcoal/80 leading-relaxed"
-                       style={{
-                         fontSize: "clamp(1rem, 1.5vw, 1.25rem)",
-                         maxWidth: "60ch",
-                         textWrap: "pretty" as React.CSSProperties["textWrap"],
-                       }}
-                     >
-                       Find exceptional local businesses, premium dining, and hidden gems in your neighborhood. Connect with your community through authentic experiences.
-                     </p>
+                 {/* Right: Carousel Image - Desktop Only */}
+                 <div className="hidden lg:block relative p-8">
+                   <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl">
+                     <Image
+                       src={slide.image}
+                       alt={slide.title}
+                       fill
+                       priority={index === 0}
+                       quality={100}
+                       className="object-cover"
+                       sizes="60vw"
+                     />
                    </div>
                  </div>
                </div>
@@ -223,16 +342,16 @@ export function HeroCarousel() {
         role="tablist"
         aria-label="Carousel navigation"
       >
-        {HERO_SLIDES.map((slide, index) => {
+        {slides.map((slide, index) => {
           const active = index === currentIndex;
           return (
             <button
               key={slide.id}
               onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent backdrop-blur-sm ${
-                active 
-                  ? "bg-off-white/90 w-8 shadow-lg shadow-white/20" 
-                  : "bg-off-white/40 hover:bg-off-white/60 w-2 hover:shadow-md hover:shadow-white/10"
+              className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 focus:ring-offset-transparent backdrop-blur-sm ${
+                active
+                  ? "bg-sage w-8 shadow-lg shadow-sage/30"
+                  : "bg-sage/40 hover:bg-sage/60 w-2 hover:shadow-md hover:shadow-sage/20"
               }`}
               role="tab"
               aria-selected={active}
@@ -244,7 +363,7 @@ export function HeroCarousel() {
 
       {/* Accessible live region (announces slide title) */}
       <div className="sr-only" aria-live="polite">
-        {HERO_SLIDES[currentIndex].title}
+        {slides[currentIndex]?.title}
       </div>
     </section>
   );

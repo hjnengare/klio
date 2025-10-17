@@ -167,7 +167,7 @@ export default function FilterModal({
         tabIndex={-1}
         className={`pointer-events-auto
                     rounded-2xl overflow-hidden
-                    bg-white/95 backdrop-blur-xl
+                    bg-off-white/95 backdrop-blur-xl
                     border border-white/60 shadow-xl
                     transition-all duration-200
                     ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"}`}
@@ -182,14 +182,14 @@ export default function FilterModal({
         }}
       >
         {/* header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
+        <div className="flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 bg-off-white">
           <div className="flex items-center gap-2">
             <SlidersHorizontal className="w-4 h-4 text-sage" />
             <h2 className="text-sm md:text-base font-semibold text-charcoal">Filters</h2>
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full border border-charcoal/10 bg-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="w-9 h-9 rounded-full border border-charcoal/10 bg-off-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
             aria-label="Close filters"
           >
             <X className="w-4 h-4" />
@@ -202,7 +202,7 @@ export default function FilterModal({
           style={{ maxHeight: "calc(70vh - 140px)" }}
         >
           {/* Category */}
-          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4">
+          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4">
             <h3 className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2">
               <Utensils className="w-4 h-4 text-sage" />
               Category
@@ -223,7 +223,7 @@ export default function FilterModal({
                       ${
                         active
                           ? "bg-sage text-white border-sage shadow-sm"
-                          : "bg-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
+                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
                       }
                     focus:outline-none focus:ring-2 focus:ring-sage/30`}
                     aria-pressed={active}
@@ -237,7 +237,7 @@ export default function FilterModal({
           </section>
 
           {/* Rating */}
-          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4">
+          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4">
             <h3 className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2">
               <Star className="w-4 h-4 text-sage" />
               Minimum Rating
@@ -254,7 +254,7 @@ export default function FilterModal({
                       ${
                         active
                           ? "bg-sage text-white border-sage shadow-sm"
-                          : "bg-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
+                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
                       }
                     focus:outline-none focus:ring-2 focus:ring-sage/30`}
                     aria-pressed={active}
@@ -273,7 +273,7 @@ export default function FilterModal({
           </section>
 
           {/* Distance */}
-          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4">
+          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4">
             <h3 className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2">
               <MapPin className="w-4 h-4 text-sage" />
               Distance
@@ -290,7 +290,7 @@ export default function FilterModal({
                       ${
                         active
                           ? "bg-coral text-white border-coral shadow-sm"
-                          : "bg-white text-charcoal border-charcoal/10 hover:border-coral/40 hover:bg-coral/5"
+                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-coral/40 hover:bg-coral/5"
                       }
                     focus:outline-none focus:ring-2 focus:ring-coral/30`}
                     aria-pressed={active}
@@ -305,10 +305,10 @@ export default function FilterModal({
         </div>
 
         {/* footer */}
-        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-white/60 bg-white/80 backdrop-blur-sm">
+        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm">
           <button
             onClick={handleClearAll}
-            className="flex-1 rounded-full bg-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
           >
             Clear
           </button>

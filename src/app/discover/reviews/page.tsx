@@ -216,7 +216,7 @@ export default function GeneralReviewsPage() {
   };
 
   return (
-    <div className="min-h-screen  bg-white   relative overflow-hidden">
+    <div className="min-h-screen  bg-off-white   relative overflow-hidden">
       {/* Premium background elements */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-sage/8 via-sage/4 to-transparent rounded-full blur-3xl" />
@@ -228,7 +228,7 @@ export default function GeneralReviewsPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="sticky top-0 z-50  bg-white  /80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-premium-md"
+        className="sticky top-0 z-50  bg-off-white  /80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-premium-md"
       >
         <div className="flex items-center justify-between max-w-[1300px] mx-auto">
           <Link href="/home" className="group flex items-center">
@@ -249,7 +249,7 @@ export default function GeneralReviewsPage() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className=" bg-white   backdrop-blur-lg rounded-2xl shadow-premium-md border border-charcoal/10 p-4 sm:p-6 mb-6 relative overflow-hidden"
+          className=" bg-off-white   backdrop-blur-lg rounded-2xl shadow-premium-md border border-charcoal/10 p-4 sm:p-6 mb-6 relative overflow-hidden"
         >
           <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
             {/* Filters */}
@@ -312,7 +312,7 @@ export default function GeneralReviewsPage() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -20, opacity: 0 }}
                   transition={{ delay: 0.1 * index, duration: 0.5 }}
-                  className=" bg-white   backdrop-blur-lg rounded-2xl shadow-premium-md hover:shadow-premium-lg border border-charcoal/10 relative overflow-hidden transition-all duration-premium ease-premium break-inside-avoid mb-4 sm:mb-6 group"
+                  className=" bg-off-white   backdrop-blur-lg rounded-2xl shadow-premium-md hover:shadow-premium-lg border border-charcoal/10 relative overflow-hidden transition-all duration-premium ease-premium break-inside-avoid mb-4 sm:mb-6 group"
                 >
                   {/* Hero Image Section - Instagram-like Carousel */}
                   {review.images && review.images.length > 0 && (
@@ -342,7 +342,7 @@ export default function GeneralReviewsPage() {
                       {/* Business Name Badge - Floating on image */}
                       <Link
                         href={`/business/${review.businessId}`}
-                        className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5  bg-white  /95 backdrop-blur-md hover:bg-white   rounded-full transition-all duration-premium shadow-premium-md hover:shadow-premium-lg hover:scale-105 z-20"
+                        className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5  bg-off-white  /95 backdrop-blur-md hover:bg-off-white   rounded-full transition-all duration-premium shadow-premium-md hover:shadow-premium-lg hover:scale-105 z-20"
                       >
                         <ion-icon name="storefront-outline" className="text-sage" style={{ fontSize: '16px' }} />
                         <span className="font-sf text-sm font-600 text-sage tracking-[-0.015em]">
@@ -372,8 +372,8 @@ export default function GeneralReviewsPage() {
                               }}
                               className={`transition-all duration-premium ${
                                 idx === (currentImageIndex[review.id] || 0)
-                                  ? 'w-2 h-2 bg-white  '
-                                  : 'w-1.5 h-1.5 bg-white  /60 hover:bg-white  /80'
+                                  ? 'w-2 h-2 bg-off-white  '
+                                  : 'w-1.5 h-1.5 bg-off-white  /60 hover:bg-off-white  /80'
                               } rounded-full`}
                             />
                           ))}
@@ -513,7 +513,7 @@ export default function GeneralReviewsPage() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className=" bg-white   backdrop-blur-lg rounded-2xl shadow-premium-md border border-charcoal/10 p-12 text-center"
+            className=" bg-off-white   backdrop-blur-lg rounded-2xl shadow-premium-md border border-charcoal/10 p-12 text-center"
           >
             <div className="w-20 h-20 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
               <ion-icon name="document-text-outline" style={{ fontSize: '40px', color: 'var(--charcoal-400)' }} />

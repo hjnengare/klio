@@ -34,7 +34,7 @@ export function Example1_FullPageSubtle() {
 // Use case: Dashboard, content pages, forms with visual interest
 export function Example2_AnimatedBlobs() {
   return (
-    <div className="min-h-screen relative bg-white">
+    <div className="min-h-screen relative bg-off-white">
       {/* Animated gradient blobs */}
       <GradientBackground
         variant="blobs"
@@ -63,7 +63,7 @@ export function Example2_AnimatedBlobs() {
 // Use case: Hero sections, feature highlights, CTAs
 export function Example3_RadialStrong() {
   return (
-    <div className="min-h-[600px] relative bg-white">
+    <div className="min-h-[600px] relative bg-off-white">
       {/* Strong radial gradient from top-left */}
       <GradientBackground
         variant="radial"
@@ -96,7 +96,7 @@ export function Example3_RadialStrong() {
 // Use case: About pages, informational sections, subtle backgrounds
 export function Example4_MeshSubtle() {
   return (
-    <div className="min-h-screen relative bg-white">
+    <div className="min-h-screen relative bg-off-white">
       {/* Mesh gradient - multiple gradient points */}
       <GradientBackground
         variant="mesh"
@@ -107,13 +107,13 @@ export function Example4_MeshSubtle() {
 
       {/* Your content */}
       <div className="relative z-10 max-w-6xl mx-auto p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-charcoal/10">
+        <div className="bg-off-white/80 backdrop-blur-sm rounded-lg p-6 border border-charcoal/10">
           <h2 className="text-2xl font-bold text-charcoal mb-4">About Us</h2>
           <p className="text-charcoal/70">
             Mesh gradients create depth without being overwhelming
           </p>
         </div>
-        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-charcoal/10">
+        <div className="bg-off-white/80 backdrop-blur-sm rounded-lg p-6 border border-charcoal/10">
           <h2 className="text-2xl font-bold text-charcoal mb-4">Our Mission</h2>
           <p className="text-charcoal/70">
             Perfect for content-heavy pages
@@ -130,7 +130,7 @@ export function Example4_MeshSubtle() {
 // Use case: Complex layouts, multi-section pages
 export function Example5_LayeredColors() {
   return (
-    <div className="min-h-screen relative bg-white">
+    <div className="min-h-screen relative bg-off-white">
       {/* Layer 1: Sage blobs (subtle) */}
       <GradientBackground
         variant="blobs"
@@ -170,7 +170,7 @@ export function Example5_LayeredColors() {
 // Use case: Individual sections within a page
 export function Example6_SectionGradient() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-off-white">
       {/* Section 1: No gradient */}
       <section className="py-20 px-8">
         <h2 className="text-3xl font-bold text-charcoal mb-4">
@@ -226,7 +226,7 @@ export function Example7_CardGradient() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
       {/* Card with internal gradient */}
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden relative">
+      <div className="w-full max-w-md bg-off-white rounded-2xl shadow-xl overflow-hidden relative">
         {/* Gradient inside card */}
         <GradientBackground
           variant="radial"

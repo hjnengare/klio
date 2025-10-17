@@ -91,17 +91,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://unpkg.com" crossOrigin="anonymous" />
         <link rel="canonical" href="/" />
-        {/* Ionicons: Simple and reliable setup */}
-        <Script
-          src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-          type="module"
-          strategy="afterInteractive"
-        />
-        <Script
-          src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-          noModule
-          strategy="afterInteractive"
-        />
       </head>
       <body className={`${urbanist.className} no-layout-shift`}>
         <WebVitals />

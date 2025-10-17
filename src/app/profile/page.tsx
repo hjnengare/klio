@@ -34,7 +34,7 @@ const glassHeader = `
   relative z-10
   px-3 sm:px-4 py-4 sm:py-6
   border-b border-black/5
-  bg-white/90 shadow-md
+  bg-off-white/90 shadow-md
 `.replace(/\s+/g, " ");
 
 const glassCard = `
@@ -376,7 +376,7 @@ function ProfileContent() {
   // Keep skeleton if you want; otherwise remove this block too.
   if (loading) {
     return (
-      <div className="min-h-dvh bg-white relative">
+      <div className="min-h-dvh bg-off-white relative">
         <div className="pt-4 pb-6 relative z-10">
           <div className="px-4 sm:px-6 md:px-8">
             <div className="max-w-4xl mx-auto space-y-6">
@@ -415,7 +415,7 @@ function ProfileContent() {
 
   return (
     // ✅ Solid white background, no page-level gradient
-    <div className="min-h-dvh bg-white relative">
+    <div className="min-h-dvh bg-off-white relative">
       {/* ❌ Removed fixed radial gradient & any floating bg objects */}
 
       {/* ---------- Fixed Page Header ---------- */}

@@ -5,6 +5,21 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  // Performance optimizations
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+  // Reduce CSS output size
+  corePlugins: {
+    // Disable unused plugins to reduce CSS size
+    preflight: true,
+    container: false,
+    float: false,
+    clear: false,
+    skew: false,
+    caretColor: false,
+    sepia: false,
+  },
   theme: {
     extend: {
       colors: {

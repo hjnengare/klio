@@ -123,7 +123,7 @@ function FeaturedDeal() {
 
   return (
     <section
-      className="py-6 sm:py-8 bg-white  relative overflow-hidden"
+      className="py-6 sm:py-8 bg-off-white  relative overflow-hidden"
       aria-label="featured deal"
       data-section
     >
@@ -206,7 +206,7 @@ function FeaturedDeal() {
                 ].map((item, index) => (
                   <div
                     key={index}
-                    className="flex flex-col items-center bg-white   shadow-2 rounded-6 px-4 py-3 min-w-[70px]"
+                    className="flex flex-col items-center bg-off-white   shadow-2 rounded-6 px-4 py-3 min-w-[70px]"
                   >
                     <span className="font-sf text-2xl sm:text-3xl font-800 text-charcoal">
                       {String(item.value).padStart(2, "0")}

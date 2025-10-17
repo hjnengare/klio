@@ -44,7 +44,7 @@ const PROMO_CARDS: PromoCard[] = [
 function PromoRow() {
   return (
     <section
-      className="py-1 sm:py-2 bg-white  relative"
+      className="py-1 sm:py-2 bg-off-white  relative"
       aria-label="promotional highlights"
       data-section
     >
@@ -78,7 +78,7 @@ function PromoRow() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 transition-opacity duration-300 group-hover:opacity-80" />
 
               {/* Glassy Overlay */}
-              <div className="absolute inset-0 backdrop-blur-[0.5px] bg-white  /3 transition-all duration-300 group-hover:backdrop-blur-0 group-hover:bg-white  /0" />
+              <div className="absolute inset-0 backdrop-blur-[0.5px] bg-off-white  /3 transition-all duration-300 group-hover:backdrop-blur-0 group-hover:bg-off-white  /0" />
 
               {/* Silver Shine Effect on Hover */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">

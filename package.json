@@ -5,14 +5,17 @@
   "scripts": {
     "dev": "next dev --turbo",
     "dev:fast": "next dev --turbo --port 3000",
+    "dev:perf": "node scripts/dev-performance.js && npm run dev:fast",
     "build": "next build",
     "build:analyze": "ANALYZE=true next build",
+    "build:fast": "NODE_ENV=development next build",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf .next out dist",
-    "dev:clean": "npm run clean && npm run dev"
+    "dev:clean": "npm run clean && npm run dev",
+    "perf:check": "node scripts/dev-performance.js"
   },
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.10.0",

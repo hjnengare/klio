@@ -4,7 +4,12 @@ import { useEffect, useMemo, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { ONBOARDING_STEPS, OnboardingStep } from "../contexts/onboarding-steps";
-import PageLoading from "./Loading/PageLoading";
+// Simple loading component
+const PageLoading = () => (
+  <div className="min-h-screen flex items-center justify-center bg-off-white">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sage"></div>
+  </div>
+);
 
 interface OnboardingGuardProps {
   children: React.ReactNode;
@@ -34,7 +39,7 @@ export default function OnboardingGuard({ children }: OnboardingGuardProps) {
     if (!isOnboardingRoute) return;
 
     // If user is already onboarded and trying to access onboarding steps, redirect to home
-    if (user?.onboardingComplete && pathname !== "/complete") {
+    if (user?.profile?.onboarding_complete && pathname !== "/complete") {
       router.replace("/home");
       return;
     }
@@ -62,12 +67,13 @@ export default function OnboardingGuard({ children }: OnboardingGuardProps) {
       return;
     }
 
-    if (pathname === "/deal-breakers" && user && (!user.subInterests || user.subInterests.length === 0)) {
+    if (pathname === "/deal-breakers" && user && (!user.profile?.sub_interests || user.profile.sub_interests.length === 0)) {
       router.replace("/subcategories");
       return;
     }
 
-    if (pathname === "/complete" && user && (!user.dealbreakers || user.dealbreakers.length < 2)) {
+    // For now, just check if user is authenticated for complete page
+    if (pathname === "/complete" && !user) {
       router.replace("/deal-breakers");
       return;
     }

@@ -13,9 +13,9 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
   const idForSnap = useMemo(() => `business-month-${business.id}`, [business.id]);
   const [imgError, setImgError] = useState(false);
 
-  const displayImage = business.image || (business as Record<string, unknown>).image_url as string || "";
+  const displayImage = business.image || (business as any).image_url || "";
   const displayAlt = business.alt || business.name;
-  const displayTotal = typeof business.totalRating === "number" ? business.totalRating : (business as Record<string, unknown>).rating as number || 0;
+  const displayTotal = typeof business.totalRating === "number" ? business.totalRating : (business as any).rating || 0;
 
   const badgeStyle = (badge: string) => {
     switch (badge) {
@@ -53,7 +53,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       }}
     >
       <div 
-        className="bg-white rounded-2xl overflow-hidden shadow-md transition-all duration-300 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10"
+        className="bg-off-white rounded-2xl overflow-hidden shadow-md transition-all duration-300 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Media */}
@@ -105,7 +105,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           )}
 
           {/* Numeric rating */}
-          <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[8px] bg-white/85 backdrop-blur-sm px-2 py-1 text-charcoal shadow-sm">
+          <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[8px] bg-off-white/85 backdrop-blur-sm px-2 py-1 text-charcoal shadow-sm">
             <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500 drop-shadow-sm" />
             <span className="text-sm font-semibold">{Number(displayTotal).toFixed(1)}</span>
           </span>
@@ -114,21 +114,21 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           <div className="hidden sm:flex absolute right-2 bottom-2 z-20 flex-col gap-2 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">
             <Link
               href="/business/review"
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30"
+              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30"
               aria-label="Write a review"
               title="Write a review"
             >
               <Edit className="w-4 h-4 md:w-5 md:h-5 text-charcoal" />
             </Link>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30"
+              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30"
               aria-label="Save"
               title="Save"
             >
               <Bookmark className="w-4 h-4 md:w-5 md:h-5 text-charcoal" />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30"
+              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30"
               aria-label="Share"
               title="Share"
             >
@@ -161,7 +161,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           {/* Month chip (dynamic if you prefer) */}
           <div className="flex items-center gap-2">
             <div className="px-2 py-1 rounded-full bg-coral/10 text-coral text-xs font-semibold">
-              {business.monthLabel || "September Winner"}
+              {(business as any).monthLabel || "September Winner"}
             </div>
           </div>
         </div>

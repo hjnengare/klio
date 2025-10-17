@@ -52,7 +52,7 @@ export const effectClasses = {
   // Cards
   card: 'rounded-2xl border border-black/5 shadow-md',
   cardPremium: 'rounded-3xl border border-white/30 backdrop-blur-xl shadow-premium hover:shadow-premiumHover',
-  cardGlass: 'rounded-2xl border border-black/5 backdrop-blur-xl bg-white/90',
+  cardGlass: 'rounded-2xl border border-black/5 backdrop-blur-xl bg-off-white/90',
 
   // Buttons
   buttonShadow: 'shadow-md hover:shadow-lg transition-shadow',

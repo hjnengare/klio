@@ -45,19 +45,8 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden">
-      {/* Liquid Glass Background */}
-      <div className="absolute inset-0 backdrop-blur-xl bg-white/40 border-t border-white/20 shadow-2xl shadow-sage/5" />
-      <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-white/40" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_rgba(120,119,198,0.1)_0%,_transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,_rgba(255,182,193,0.08)_0%,_transparent_50%)]" />
-      
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 opacity-40 pointer-events-none">
-        <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-gradient-to-br from-sage/15 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/3 w-24 h-24 bg-gradient-to-br from-coral/12 to-transparent rounded-full blur-2xl" />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
+   
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 md:pt-16">
         {/* Main footer content */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
           {/* Brand section */}

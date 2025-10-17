@@ -215,7 +215,7 @@ export default function WriteReviewPage() {
       `}</style>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
 
-      <div className="min-h-dvh bg-white relative overflow-hidden font-sf">
+      <div className="min-h-dvh bg-off-white relative overflow-hidden font-sf">
         {/* Subtle background tint */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02]" />
@@ -239,12 +239,12 @@ export default function WriteReviewPage() {
         </header>
 
         {/* ---------------- Main content ---------------- */}
-        <div className="relative z-10 bg-white pt-24">
+        <div className="relative z-10 bg-off-white pt-24">
           <div className="w-full max-w-7xl mx-auto px-0 md:px-4 py-4 md:py-6 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* MAIN: Form */}
               <div className="lg:col-span-8">
-                <div className="bg-white border md:border border-sage/10 rounded-2xl p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-lg">
+                <div className="bg-off-white border md:border border-sage/10 rounded-2xl p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-lg">
                   <div className="relative z-10 flex-1 flex flex-col">
                     {/* Business Header */}
                     <div className="mb-4 md:mb-6 text-center px-4">
@@ -377,7 +377,7 @@ export default function WriteReviewPage() {
                               px-4 md:px-6 py-3 md:py-4 rounded-full border-2 transition-all duration-300 text-sm font-600 btn-target
                               ${selectedTags.includes(tag)
                                 ? "bg-sage border-sage text-white shadow-lg"
-                                : "bg-white backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10"
+                                : "bg-off-white backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10"
                               }
                               focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2
                             `}
@@ -398,7 +398,7 @@ export default function WriteReviewPage() {
                         value={reviewTitle}
                         onChange={(e) => setReviewTitle(e.target.value)}
                         placeholder="Summarize your experience in a few words..."
-                        className="w-full bg-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 input-mobile"
+                        className="w-full bg-off-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 text-body md:text-lg font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 input-mobile"
                       />
                     </div>
 
@@ -412,7 +412,7 @@ export default function WriteReviewPage() {
                         onChange={(e) => setReviewText(e.target.value)}
                         placeholder="Share your thoughts and help other locals..."
                         rows={4}
-                        className="w-full bg-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none flex-1 min-h-[120px] md:min-h-0 input-mobile"
+                        className="w-full bg-off-white backdrop-blur-sm border border-sage/20 rounded-6 px-4 md:px-6 py-3 md:py-4 text-body md:text-xl font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:border-sage transition-all duration-300 resize-none flex-1 min-h-[120px] md:min-h-0 input-mobile"
                       />
                     </div>
 
@@ -455,7 +455,7 @@ export default function WriteReviewPage() {
                       </h3>
                       <div className="px-3 pb-3 space-y-3">
                         {otherReviews.map((r) => (
-                          <div key={r.id} className="rounded-xl border border-black/5 p-3 bg-white/70">
+                          <div key={r.id} className="rounded-xl border border-black/5 p-3 bg-off-white/70">
                             <div className="flex gap-3">
                               <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-sage/10">
                                 {r.user.avatar ? (
@@ -523,7 +523,7 @@ export default function WriteReviewPage() {
                   <div className="mt-3 overflow-x-auto hide-scrollbar">
                     <ul className="flex gap-3 px-4 pb-2">
                       {otherReviews.map((r) => (
-                        <li key={r.id} className="min-w-[260px] max-w-[280px] bg-white border border-sage/10 rounded-lg p-4">
+                        <li key={r.id} className="min-w-[260px] max-w-[280px] bg-off-white border border-sage/10 rounded-lg p-4">
                           <div className="flex items-center gap-3">
                             <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-sage/10">
                               {r.user.avatar ? (

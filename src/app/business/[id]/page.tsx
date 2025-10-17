@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useMemo, useState, useCallback } from "react";
 import {
@@ -27,10 +25,39 @@ import {
     MoreHorizontal,
 } from "lucide-react";
 
-// Dynamic imports for premium animations
-const FadeInUp = dynamic(() => import("../../components/Animations/FadeInUp"), {
-    ssr: false,
-});
+// CSS animations to replace framer-motion
+const animations = `
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideInFromTop {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+  
+  .animate-slide-in-top {
+    animation: slideInFromTop 0.5s ease-out forwards;
+  }
+  
+  .animate-delay-100 { animation-delay: 0.1s; opacity: 0; }
+  .animate-delay-200 { animation-delay: 0.2s; opacity: 0; }
+  .animate-delay-300 { animation-delay: 0.3s; opacity: 0; }
+`;
 
 /* ============================================================
    Minimal, dependency-free carousel WITH caption overlay
@@ -54,16 +81,15 @@ function ImageCarousel({
     const go = useCallback((i: number) => setIndex(i), []);
 
     return (
-        <div className="relative w-full overflow-hidden rounded-[10px] border border-sage/10 bg-white">
+        <div className="relative w-full overflow-hidden rounded-[10px] border border-sage/10 bg-off-white">
             {/* Slides */}
-            <div className="relative aspect-[16/9]">
+            <div className="relative aspect-[16/9] overflow-hidden">
                 {images.map((src, i) => (
-                    <motion.div
+                    <div
                         key={src}
-                        className="absolute inset-0"
-                        initial={false}
-                        animate={{ x: (i - index) * 100 + "%" }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        className={`absolute inset-0 transition-opacity duration-300 ${
+                            i === index ? 'opacity-100' : 'opacity-0'
+                        }`}
                     >
                         <Image
                             src={src}
@@ -71,16 +97,17 @@ function ImageCarousel({
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 768px"
-                            unoptimized
+                            priority={i === 0}
+                            loading={i === 0 ? "eager" : "lazy"}
                         />
-                    </motion.div>
+                    </div>
                 ))}
             </div>
 
             {/* Caption overlay: rating + metrics */}
             <div className="pointer-events-none absolute left-0 right-0 bottom-0 p-3 sm:p-4">
                 <div className="mx-auto max-w-none">
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 rounded-[12px] border border-white/40 bg-white/70 backdrop-blur-md px-3 sm:px-4 py-2 shadow-sm">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 rounded-[12px] border border-white/40 bg-off-white/70 backdrop-blur-md px-3 sm:px-4 py-2 shadow-sm">
                         {/* Rating badge */}
                         <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 px-3 py-1 text-white text-sm font-semibold shadow">
                             <Star className="h-4 w-4" />
@@ -112,20 +139,20 @@ function ImageCarousel({
             <button
                 aria-label="Previous image"
                 onClick={prev}
-                className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/80 hover:bg-white p-2 shadow-sm border border-black/5"
+                className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-off-white/80 hobg-off-whiteff-white p-2 shadow-sm border border-black/5"
             >
                 <ChevronLeft className="w-5 h-5" />
             </button>
             <button
                 aria-label="Next image"
                 onClick={next}
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/80 hover:bg-white p-2 shadow-sm border border-black/5"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-off-white/80 hobg-off-whiteff-white p-2 shadow-sm border border-black/5"
             >
                 <ChevronRight className="w-5 h-5" />
             </button>
 
             {/* Dots */}
-            <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
+            <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 pt-4">
                 {images.map((_, i) => (
                     <button
                         key={i}
@@ -163,13 +190,7 @@ function PremiumReviewCard({
     const rounded = Math.round(rating);
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.45 }}
-            className="relative overflow-hidden rounded-xl border border-sage/10 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md p-4"
-        >
+        <div className="relative overflow-hidden rounded-xl border border-sage/10 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md p-4">
             {/* subtle glows */}
             <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-2xl" />
             <span className="pointer-events-none absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-coral/10 blur-2xl" />
@@ -181,7 +202,7 @@ function PremiumReviewCard({
                         <span className="text-sage font-semibold">{author?.[0]?.toUpperCase() || "U"}</span>
                     </div>
                     {verified && (
-                        <span className="absolute -bottom-1 -right-1 grid h-5 w-5 place-items-center rounded-full bg-white shadow ring-1 ring-sage/20">
+                        <span className="absolute -bottom-1 -right-1 grid h-5 w-5 place-items-center rounded-full bg-off-white shadow ring-1 ring-sage/20">
                             <BadgeCheck className="h-3.5 w-3.5 text-sage" />
                         </span>
                     )}
@@ -261,7 +282,7 @@ function PremiumReviewCard({
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 }
 
@@ -312,61 +333,32 @@ export default function BusinessProfilePage() {
     }, [businessId]);
 
     return (
+        <>
+            <style dangerouslySetInnerHTML={{ __html: animations }} />
         <div
-            className="min-h-dvh bg-white/90 relative overflow-hidden"
+                className="min-h-dvh bg-off-white/90 relative overflow-hidden"
             style={{
                 fontFamily:
                     '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
             }}
         >
-            {/* Ambient background elements */}
-            <div className="absolute inset-0 opacity-20">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-                    className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sage/30 to-sage/10 rounded-full blur-3xl"
-                />
-                <motion.div
-                    initial={{ opacity: 0, scale: 1.2 }}
-                    animate={{ opacity: 1, scale: 0.8 }}
-                    transition={{ duration: 3, delay: 1, repeat: Infinity, repeatType: "reverse" }}
-                    className="absolute bottom-32 right-16 w-40 h-40 bg-gradient-to-br from-coral/20 to-coral/5 rounded-full blur-3xl"
-                />
-            </div>
 
             {/* Fixed Premium Header */}
-            <motion.header
-                initial={{ y: -80, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-4 shadow-sm"
-            >
+            <header className="fixed top-0 left-0 right-0 z-50 bg-off-white/90 backdrop-blur-xl border-b border-sage/10 px-4 py-4 shadow-sm animate-slide-in-top">
                 <div className="flex items-center justify-between max-w-6xl mx-auto">
-                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
                         <Link
                             href="/home"
                             className="text-charcoal/60 hover:text-charcoal transition-colors duration-300 p-2 hover:bg-charcoal/5 rounded-full"
                         >
                             <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
                         </Link>
-                    </motion.div>
 
-                    <motion.h1
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.3, duration: 0.6 }}
-                        className="text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal"
-                    >
+                    <h1 className="text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal animate-delay-100 animate-fade-in">
                         {business.name}
-                    </motion.h1>
+                    </h1>
 
                     {/* Profile Picture Placeholder */}
-                    <motion.div
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.4, duration: 0.6 }}
-                    >
+                    <div>
                         {business.image && business.image.startsWith("/images/") ? (
                             <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sage/20 bg-gradient-to-br from-sage/20 to-coral/20 flex items-center justify-center">
                                 <Store className="w-5 h-5 text-sage" />
@@ -386,9 +378,9 @@ export default function BusinessProfilePage() {
                                 />
                             </div>
                         )}
-                    </motion.div>
+                    </div>
                 </div>
-            </motion.header>
+            </header>
 
             <div className="max-w-6xl mx-auto px-4 py-6 pt-32 relative z-10">
                 {/* Two-column layout: main content + reviews sidebar */}
@@ -396,21 +388,15 @@ export default function BusinessProfilePage() {
                     {/* MAIN (span 2) */}
                     <div className="lg:col-span-2 space-y-6">
                         {/* Photos (with metrics caption overlay) */}
-                        <FadeInUp delay={0.1}>
-                            <div className="bg-white/90 backdrop-blur-lg rounded-[10px] shadow-sm border border-sage/10 p-5 relative overflow-hidden">
+                        <div className="bg-off-white/90 backdrop-blur-lg rounded-[10px] shadow-sm border border-sage/10 p-5 relative overflow-hidden animate-fade-in-up animate-delay-100">
                                 <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />
                                 <div className="relative z-10">
-                                    <motion.h3
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.15, duration: 0.5 }}
-                                        className="text-lg font-600 text-charcoal mb-4 flex items-center gap-3"
-                                    >
+                                <h3 className="text-lg font-600 text-charcoal mb-4 flex items-center gap-3">
                                         <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
                                             <Images className="w-4 h-4 text-sage" />
                                         </span>
                                         Photos
-                                    </motion.h3>
+                                </h3>
 
                                     <ImageCarousel
                                         images={business.images || [business.image]}
@@ -424,36 +410,25 @@ export default function BusinessProfilePage() {
                                     />
                                 </div>
                             </div>
-                        </FadeInUp>
 
                         {/* Specials & Events */}
-                        <FadeInUp delay={0.2}>
-                            <div className="bg-white/90 backdrop-blur-lg rounded-[10px] shadow-sm border border-sage/10 p-6 relative overflow-hidden">
+                        <div className="bg-off-white/90 backdrop-blur-lg rounded-[10px] shadow-sm border border-sage/10 p-6 relative overflow-hidden animate-fade-in-up animate-delay-200">
                                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl" />
 
                                 <div className="relative z-10">
-                                    <motion.h3
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.2, duration: 0.5 }}
-                                        className="text-lg font-600 text-charcoal mb-6 flex items-center gap-3"
-                                    >
+                                <h3 className="text-lg font-600 text-charcoal mb-6 flex items-center gap-3">
                                         <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10">
                                             <Calendar className="w-4 h-4 text-coral" />
                                         </span>
                                         Specials & Events
-                                    </motion.h3>
+                                </h3>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                        {business.specials.map((special, index) => {
+                                    {business.specials.map((special) => {
                                             const Icon = special.icon === "pizza" ? Pizza : Music;
                                             return (
-                                                <motion.div
+                                            <div
                                                     key={special.id}
-                                                    initial={{ opacity: 0, y: 14 }}
-                                                    whileInView={{ opacity: 1, y: 0 }}
-                                                    viewport={{ once: true }}
-                                                    transition={{ delay: 0.25 + index * 0.05, duration: 0.45 }}
                                                     className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-[10px] p-5 border border-sage/10"
                                                 >
                                                     <div className="flex items-center gap-4">
@@ -465,18 +440,17 @@ export default function BusinessProfilePage() {
                                                             <p className="text-sm text-charcoal/70">{special.description}</p>
                                                         </div>
                                                     </div>
-                                                </motion.div>
+                                            </div>
                                             );
                                         })}
                                     </div>
                                 </div>
                             </div>
-                        </FadeInUp>
                     </div>
 
                     {/* SIDEBAR: Reviews */}
                     <aside className="lg:col-span-1">
-                        <div className="bg-white/90 backdrop-blur-lg rounded-[12px] shadow-sm border border-sage/10 p-5 h-[75vh] overflow-y-auto custom-scroll">
+                        <div className="sticky top-32 bg-off-white/90 backdrop-blur-lg rounded-[12px] shadow-sm border border-sage/10 p-5 h-[75vh] overflow-y-auto custom-scroll animate-fade-in-up animate-delay-300">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-3">
                                     <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
@@ -520,5 +494,6 @@ export default function BusinessProfilePage() {
                 </div>
             </div>
         </div>
+        </>
     );
 }

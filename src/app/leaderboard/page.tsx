@@ -55,23 +55,14 @@ export default function LeaderboardPage() {
 
   return (
     <EmailVerificationGuard>
-      <div className="min-h-dvh bg-gradient-to-br from-white via-sage/[0.02] to-white pb-6 relative overflow-hidden">
-
-      {/* Premium background elements */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-sage/8 via-sage/4 to-transparent rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-br from-coral/6 via-coral/3 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-charcoal/3 via-charcoal/1 to-transparent rounded-full blur-2xl animate-pulse" style={{ animationDelay: "2s" }} />
-        {/* Premium gradient overlay for glassy effect */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(116,145,118,0.03),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(214,116,105,0.025),transparent_50%)]" />
-      </div>
+      <div className="min-h-dvh bg-off-white pb-6 relative overflow-hidden">
 
       {/* Fixed Header with spring animation */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
-        className="bg-white/95 backdrop-blur-sm shadow-sm fixed top-0 left-0 right-0 z-50 border-b border-charcoal/10"
+        className="bg-off-white/95 backdrop-blur-sm shadow-sm fixed top-0 left-0 right-0 z-50 border-b border-charcoal/10"
       >
         <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
@@ -104,7 +95,7 @@ export default function LeaderboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.15 }}
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-8 sm:mb-12 pt-12"
         >
           <h2 className="font-sf text-lg sm:text-xl md:text-2xl font-700 text-charcoal mb-2 sm:mb-4 px-4">
             Top Contributors This Month
@@ -119,7 +110,7 @@ export default function LeaderboardPage() {
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ type: "spring", stiffness: 80, damping: 15, delay: 0.25 }}
-          className="bg-white backdrop-blur-xl shadow-xl border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 relative overflow-hidden rounded-2xl"
+          className="bg-off-white backdrop-blur-xl shadow-xl border border-charcoal/10 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 relative overflow-hidden rounded-2xl"
         >
           {/* Card decorative elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"></div>
@@ -239,7 +230,7 @@ export default function LeaderboardPage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
-                  className="group  bg-white   rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer border border-charcoal/10"
+                  className="group  bg-off-white   rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer border border-charcoal/10"
                 >
                   <div className="flex items-center justify-between p-3 sm:p-4">
                     <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
@@ -261,7 +252,7 @@ export default function LeaderboardPage() {
                         <div className="font-sf text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
                       </div>
                     </div>
-                    <div className="bg-white/50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
+                    <div className="bg-off-white/50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
                       <Star className="text-sm text-coral" />
                       <span className="font-sf text-sm font-600 text-charcoal">{user.totalRating}</span>
                     </div>
@@ -277,7 +268,7 @@ export default function LeaderboardPage() {
                     animate={{ opacity: 1, height: 'auto', y: 0 }}
                     exit={{ opacity: 0, height: 0, y: -20 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className="group  bg-white   rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer border border-charcoal/10"
+                    className="group  bg-off-white   rounded-lg sm:rounded-xl overflow-hidden shadow-sm cursor-pointer border border-charcoal/10"
                   >
                     <div className="flex items-center justify-between p-3 sm:p-4">
                       <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
@@ -299,7 +290,7 @@ export default function LeaderboardPage() {
                           <div className="font-sf text-xs sm:text-sm text-charcoal/60"><span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span></div>
                         </div>
                       </div>
-                      <div className="bg-white/50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
+                      <div className="bg-off-white/50 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-sm border border-white/30 flex items-center gap-1 flex-shrink-0">
                         <Star className="text-sm text-coral" />
                         <span className="font-sf text-sm font-600 text-charcoal">{user.totalRating}</span>
                       </div>

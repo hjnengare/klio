@@ -330,7 +330,7 @@ export const PremiumPolishProvider: React.FC<PremiumPolishProviderProps> = ({
 
       {/* Development polish report */}
       {process.env.NODE_ENV === 'development' && (
-        <div className="fixed bottom-4 right-4 bg-white   border border-gray-300 rounded-lg p-3 shadow-lg text-xs z-50">
+        <div className="fixed bottom-4 right-4 bg-off-white   border border-gray-300 rounded-lg p-3 shadow-lg text-xs z-50">
           <div className="font-semibold mb-1">Polish Score: {polishReport.score}/100</div>
           <div className="text-gray-600">Issues: {polishReport.issues}</div>
           {polishReport.recommendations.length > 0 && (

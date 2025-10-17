@@ -9,7 +9,7 @@ import PremiumHover from "./components/Animations/PremiumHover";
 
 export default function NotFound() {
   return (
-    <div className="min-h-dvh bg-white relative overflow-hidden" style={{
+    <div className="min-h-dvh bg-off-white relative overflow-hidden" style={{
       fontFamily:
         '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
     }}>
@@ -38,7 +38,7 @@ export default function NotFound() {
 
               {/* Floating search icon */}
               <motion.div
-                className="absolute -top-4 -right-4 p-3 bg-white  /80 backdrop-blur-sm rounded-full shadow-lg border border-sage/10"
+                className="absolute -top-4 -right-4 p-3 bg-off-white  /80 backdrop-blur-sm rounded-full shadow-lg border border-sage/10"
                 initial={{ rotate: -15, opacity: 0 }}
                 animate={{ rotate: 0, opacity: 1 }}
                 transition={{ delay: 0.8, duration: 0.6 }}
@@ -81,7 +81,7 @@ export default function NotFound() {
               <PremiumHover scale={1.02}>
                 <button
                   onClick={() => window.history.back()}
-                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto py-4 px-8 bg-white  /80 backdrop-blur-sm text-charcoal font-sf font-600 text-lg rounded-2xl border border-sage/20 shadow-sm transition-all duration-300 hover:shadow-md hover:bg-white/90 group"
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto py-4 px-8 bg-off-white  /80 backdrop-blur-sm text-charcoal font-sf font-600 text-lg rounded-2xl border border-sage/20 shadow-sm transition-all duration-300 hover:shadow-md hover:bg-off-white/90 group"
                 >
                   <IoArrowBack className="w-5 h-5 transition-transform group-hover:-translate-x-0.5" />
                   Go Back

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { CheckCircle, AlertTriangle, Info, X } from 'lucide-react';
 
 interface Toast {
   id: string;
@@ -14,7 +15,7 @@ interface AnimatedToastProps {
   toast: Toast;
   onRemove: (id: string) => void;
   getToastStyles: (type: Toast['type']) => string;
-  getToastIcon: (type: Toast['type']) => string;
+  getToastIcon: (type: Toast['type']) => React.ReactElement;
 }
 
 export default function AnimatedToast({ toast, onRemove, getToastStyles, getToastIcon }: AnimatedToastProps) {
@@ -38,10 +39,7 @@ export default function AnimatedToast({ toast, onRemove, getToastStyles, getToas
     >
       <div className="flex items-center gap-3">
         <div className="flex-shrink-0">
-          <ion-icon
-            name={getToastIcon(toast.type)}
-            style={{ fontSize: '24px' }}
-          />
+          {getToastIcon(toast.type)}
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-sf text-sm font-600 leading-tight">
@@ -52,7 +50,7 @@ export default function AnimatedToast({ toast, onRemove, getToastStyles, getToas
           onClick={() => onRemove(toast.id)}
           className="flex-shrink-0 ml-2 opacity-70 hover:opacity-100 transition-opacity duration-200"
         >
-          <ion-icon name="close" style={{ fontSize: '20px' }} />
+          <X className="w-5 h-5" />
         </button>
       </div>
     </motion.div>

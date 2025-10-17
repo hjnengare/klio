@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { User, ImageIcon } from "lucide-react";
 
 interface FallbackImageProps {
   src: string;
@@ -43,15 +44,13 @@ export default function FallbackImage({
     return (
       <div className={`bg-gradient-to-br from-sage/10 to-coral/10 flex items-center justify-center ${className}`}>
         {fallbackType === "profile" ? (
-          <ion-icon
-            name="person-outline"
-            class="text-charcoal/40"
+          <User
+            className="text-charcoal/40"
             style={{ fontSize: fill ? "2rem" : "1.5rem" }}
           />
         ) : (
-          <ion-icon
-            name="image-outline"
-            class="text-charcoal/40"
+          <ImageIcon
+            className="text-charcoal/40"
             style={{ fontSize: fill ? "2.5rem" : "2rem" }}
           />
         )}

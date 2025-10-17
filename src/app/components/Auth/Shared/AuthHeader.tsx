@@ -14,7 +14,7 @@ export function AuthHeader({ backLink, title, subtitle }: AuthHeaderProps) {
     <>
       {/* Back button with entrance animation */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 animate-slide-in-left animate-delay-200">
-        <Link href={backLink} className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-white/50 rounded-lg block backdrop-blur-sm">
+        <Link href={backLink} className="text-charcoal hover:text-charcoal/80 transition-colors duration-300 p-2 hover:bg-off-white/50 rounded-lg block backdrop-blur-sm">
           <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
         </Link>
       </div>

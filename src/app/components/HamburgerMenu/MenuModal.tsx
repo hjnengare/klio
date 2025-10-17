@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { X, Edit, ChevronRight, Bookmark, Home, User, Search, Settings, HelpCircle } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 
 interface MenuModalProps {
@@ -106,7 +107,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
         aria-label="Navigation menu"
         className={`
           modal-slide-left w-80 max-w-[80vw] no-layout-shift
-          bg-white /98 backdrop-blur-md shadow-2xl
+          bg-off-white /98 backdrop-blur-md shadow-2xl
           mobile-scroll-container safe-area-container overflow-y-auto
           ${isOpen ? "open" : ""}
         `}
@@ -126,7 +127,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
             className="w-10 h-10 border border-charcoal/10 bg-charcoal/5 hover:bg-sage/10 flex items-center justify-center rounded-full transition-all duration-200 touch-target-large"
             aria-label="Close menu"
           >
-            <ion-icon name="close" class="text-base text-charcoal/70" />
+            <X className="w-4 h-4 text-charcoal/70" />
           </button>
         </div>
 
@@ -138,7 +139,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
             className="w-full flex items-center space-x-4 p-4 rounded-xl hover:bg-sage/5 transition-all duration-200 group mobile-interaction touch-target-large"
           >
             <div className="w-10 h-10 bg-coral/10 rounded-full flex items-center justify-center group-hover:bg-coral/20 transition-colors duration-200">
-              <ion-icon name="create" class="text-coral text-lg" />
+              <Edit className="w-5 h-5 text-coral" />
             </div>
             <div className="flex-1 text-left">
               <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
@@ -148,7 +149,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 Share your local experiences
               </p>
             </div>
-            <ion-icon name="chevron-forward" class="text-charcoal/40 text-base group-hover:text-sage transition-colors duration-200" />
+            <ChevronRight className="w-4 h-4 text-charcoal/40 group-hover:text-sage transition-colors duration-200" />
           </button>
 
           {/* Saved Places */}
@@ -158,7 +159,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
             className="w-full flex items-center space-x-4 p-4 rounded-xl hover:bg-sage/5 transition-all duration-200 group mobile-interaction touch-target-large"
           >
             <div className="w-10 h-10 bg-sage/10 rounded-full flex items-center justify-center group-hover:bg-sage/20 transition-colors duration-200">
-              <ion-icon name="bookmark" class="text-sage text-lg" />
+              <Bookmark className="w-5 h-5 text-sage" />
             </div>
             <div className="flex-1 text-left">
               <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
@@ -168,7 +169,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 Your favorite local gems
               </p>
             </div>
-            <ion-icon name="chevron-forward" class="text-charcoal/40 text-base group-hover:text-sage transition-colors duration-200" />
+            <ChevronRight className="w-4 h-4 text-charcoal/40 group-hover:text-sage transition-colors duration-200" />
           </Link>
 
           {/* Home */}
@@ -178,7 +179,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
             className="w-full flex items-center space-x-4 p-4 rounded-xl hover:bg-sage/5 transition-all duration-200 group mobile-interaction touch-target-large"
           >
             <div className="w-10 h-10 bg-sage/10 rounded-full flex items-center justify-center group-hover:bg-sage/20 transition-colors duration-200">
-              <ion-icon name="home" class="text-sage text-lg" />
+              <Home className="w-5 h-5 text-sage" />
             </div>
             <div className="flex-1 text-left">
               <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
@@ -188,7 +189,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 Discover local businesses
               </p>
             </div>
-            <ion-icon name="chevron-forward" class="text-charcoal/40 text-base group-hover:text-sage transition-colors duration-200" />
+            <ChevronRight className="w-4 h-4 text-charcoal/40 group-hover:text-sage transition-colors duration-200" />
           </Link>
 
           {/* Profile */}
@@ -198,7 +199,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
             className="w-full flex items-center space-x-4 p-4 rounded-xl hover:bg-sage/5 transition-all duration-200 group mobile-interaction touch-target-large"
           >
             <div className="w-10 h-10 bg-sage/10 rounded-full flex items-center justify-center group-hover:bg-sage/20 transition-colors duration-200">
-              <ion-icon name="person" class="text-sage text-lg" />
+              <User className="w-5 h-5 text-sage" />
             </div>
             <div className="flex-1 text-left">
               <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
@@ -208,7 +209,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 Your reviews and settings
               </p>
             </div>
-            <ion-icon name="chevron-forward" class="text-charcoal/40 text-base group-hover:text-sage transition-colors duration-200" />
+            <ChevronRight className="w-4 h-4 text-charcoal/40 group-hover:text-sage transition-colors duration-200" />
           </Link>
 
 
@@ -225,7 +226,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
             className="w-full flex items-center space-x-4 p-4 rounded-xl hover:bg-sage/5 transition-all duration-200 group mobile-interaction touch-target-large"
           >
             <div className="w-10 h-10 bg-sage/10 rounded-full flex items-center justify-center group-hover:bg-sage/20 transition-colors duration-200">
-              <ion-icon name="search" class="text-sage text-lg" />
+              <Search className="w-5 h-5 text-sage" />
             </div>
             <div className="flex-1 text-left">
               <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
@@ -235,7 +236,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 Find specific businesses
               </p>
             </div>
-            <ion-icon name="chevron-forward" class="text-charcoal/40 text-base group-hover:text-sage transition-colors duration-200" />
+            <ChevronRight className="w-4 h-4 text-charcoal/40 group-hover:text-sage transition-colors duration-200" />
           </button>
         </div>
 
@@ -244,7 +245,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
           <div className="mt-8 p-6 border-t border-sage/10">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-12 h-12 bg-sage/10 rounded-full flex items-center justify-center">
-                <ion-icon name="person" class="text-sage text-xl" />
+                <User className="w-6 h-6 text-sage" />
               </div>
               <div>
                 <span className="font-sf text-base font-600 text-charcoal">
@@ -262,7 +263,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 onClick={() => handleNavigation("/settings")}
                 className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-sage/5 transition-all duration-200 group mobile-interaction"
               >
-                <ion-icon name="settings" class="text-charcoal/60 text-base group-hover:text-sage transition-colors duration-200" />
+                <Settings className="w-4 h-4 text-charcoal/60 group-hover:text-sage transition-colors duration-200" />
                 <span className="font-sf text-sm font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
                   Settings
                 </span>
@@ -272,7 +273,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 onClick={() => handleNavigation("/help")}
                 className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-sage/5 transition-all duration-200 group mobile-interaction"
               >
-                <ion-icon name="help-circle" class="text-charcoal/60 text-base group-hover:text-sage transition-colors duration-200" />
+                <HelpCircle className="w-4 h-4 text-charcoal/60 group-hover:text-sage transition-colors duration-200" />
                 <span className="font-sf text-sm font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
                   Help & Support
                 </span>

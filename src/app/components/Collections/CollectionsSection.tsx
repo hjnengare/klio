@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Star, MapPin, ChevronRight, Award } from "lucide-react";
 
 interface BusinessCollection {
   id: number;
@@ -80,14 +81,7 @@ export default function CollectionsSection() {
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
 
   useEffect(() => {
-    // Preload ion-icons
-    ["star", "location", "chevron-forward", "ribbon"].forEach((n) => {
-      const el = document.createElement("ion-icon");
-      el.name = n;
-      el.style.display = "none";
-      document.body.appendChild(el);
-      setTimeout(() => document.body.contains(el) && document.body.removeChild(el), 100);
-    });
+    // Icons are now imported from Lucide React, no preloading needed
 
     // Staggered animation for cards
     const timer = setTimeout(() => {
@@ -103,23 +97,22 @@ export default function CollectionsSection() {
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <ion-icon
+      <Star
         key={i}
-        name="star"
-        class={`text-sm ${
-          i < Math.floor(rating) ? 'text-coral' : 'text-charcoal/20'
+        className={`w-4 h-4 ${
+          i < Math.floor(rating) ? 'text-coral fill-coral' : 'text-charcoal/20'
         }`}
       />
     ));
   };
 
   return (
-    <section className="py-12 bg-white  /90">
+    <section className="py-12 bg-off-white  /90">
       <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-sage/10 text-sage text-sm font-sf font-500 mb-4">
-            <ion-icon name="ribbon" class="mr-2 text-base" />
+            <Award className="w-4 h-4 mr-2" />
             Featured Collections
           </div>
           <h2 className="font-sf text-3xl md:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-charcoal/90 to-sage mb-4">
@@ -135,7 +128,7 @@ export default function CollectionsSection() {
           {businessCollections.map((business, index) => (
             <div
               key={business.id}
-              className={`group relative bg-white   rounded-2xl shadow-sm hover:shadow-xl border border-charcoal/5 overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
+              className={`group relative bg-off-white   rounded-2xl shadow-sm hover:shadow-xl border border-charcoal/5 overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
                 visibleCards.includes(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
@@ -162,7 +155,7 @@ export default function CollectionsSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
                 {/* Rating Badge */}
-                <div className="absolute bottom-4 left-4 flex items-center space-x-1 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                <div className="absolute bottom-4 left-4 flex items-center space-x-1 bg-off-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
                   {renderStars(business.rating)}
                   <span className="ml-1 text-sm font-sf font-600 text-charcoal">
                     {business.rating}
@@ -186,7 +179,7 @@ export default function CollectionsSection() {
                     </span>
                     <span className="text-charcoal/30">•</span>
                     <div className="flex items-center space-x-1">
-                      <ion-icon name="location" class="text-xs text-charcoal/40" />
+                      <MapPin className="w-3 h-3 text-charcoal/40" />
                       <span className="text-sm text-charcoal/60">
                         {business.location}
                       </span>
@@ -220,7 +213,7 @@ export default function CollectionsSection() {
                   className="inline-flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-sage to-sage/90 hover:from-sage/90 hover:to-sage text-white rounded-xl font-sf text-sm font-600 transition-all duration-300 hover:scale-105 hover:shadow-lg group/btn"
                 >
                   {business.ctaText}
-                  <ion-icon name="chevron-forward" class="ml-2 text-base group-hover/btn:translate-x-1 transition-transform duration-300" />
+                  <ChevronRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" />
                 </Link>
               </div>
             </div>
@@ -234,7 +227,7 @@ export default function CollectionsSection() {
             className="inline-flex items-center px-8 py-4 border border-sage text-sage hover:bg-sage hover:text-white rounded-xl font-sf text-base font-600 transition-all duration-300 hover:scale-105 group"
           >
             View All Collections
-            <ion-icon name="chevron-forward" class="ml-2 text-lg group-hover:translate-x-1 transition-transform duration-300" />
+            <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
       </div>

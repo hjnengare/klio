@@ -65,15 +65,15 @@ export function ToastProvider({ children }: ToastProviderProps) {
   const getToastStyles = (type: Toast['type']) => {
     switch (type) {
       case 'success':
-        return 'bg-white   text-sage';
+        return 'bg-off-white   text-sage';
       case 'sage':
-        return 'bg-white   text-sage';
+        return 'bg-off-white   text-sage';
       case 'error':
-        return 'bg-white   text-red-500';
+        return 'bg-off-white   text-red-500';
       case 'warning':
-        return 'bg-white   text-amber-500';
+        return 'bg-off-white   text-amber-500';
       default:
-        return 'bg-white   text-charcoal';
+        return 'bg-off-white   text-charcoal';
     }
   };
 

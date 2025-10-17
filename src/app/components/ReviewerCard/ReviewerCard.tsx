@@ -81,7 +81,7 @@ export default function ReviewerCard({
         className="snap-start snap-always w-[100vw] sm:w-[280px] flex-shrink-0"
       >
         <div
-          className="bg-white rounded-2xl overflow-hidden shadow-md group cursor-pointer h-[200px] relative border border-charcoal/10"
+          className="bg-off-white rounded-2xl overflow-hidden shadow-md group cursor-pointer h-[200px] relative border border-charcoal/10"
           onClick={toggleActions}
         >
           {/* Content */}
@@ -213,7 +213,7 @@ export default function ReviewerCard({
                 }`}
               >
                 <button
-                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white hover:scale-110 transition-all duration-200"
+                  className="w-7 h-7 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-off-white hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Follow"
                   title="Follow"
@@ -221,7 +221,7 @@ export default function ReviewerCard({
                   <UserPlus className="text-charcoal" size={16} />
                 </button>
                 <button
-                  className="w-7 h-7 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-white hover:scale-110 transition-all duration-200"
+                  className="w-7 h-7 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-off-white hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Message"
                   title="Message"
@@ -240,7 +240,7 @@ export default function ReviewerCard({
   return (
     <li className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[320px] flex-shrink-0">
       <div
-        className="bg-white rounded-xl p-6 shadow-md transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10"
+        className="bg-off-white rounded-xl p-6 shadow-md transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10"
         onClick={toggleActions}
       >
         <div className="flex items-start gap-4 mb-4">
@@ -281,7 +281,7 @@ export default function ReviewerCard({
             }`}
           >
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-off-white hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
               aria-label="Follow"
               title="Follow"
@@ -289,7 +289,7 @@ export default function ReviewerCard({
               <UserPlus className="text-charcoal" size={20} />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-off-white hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
               aria-label="Message"
               title="Message"
@@ -297,7 +297,7 @@ export default function ReviewerCard({
               <MessageCircle className="text-charcoal" size={20} />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-off-white hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
               aria-label="Share"
               title="Share"

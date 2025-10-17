@@ -102,7 +102,7 @@ This guide helps migrate existing Blabbr components to use the new design system
     className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-sf text-sm sm:text-base font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 ${
       getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
       email && !getEmailError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-      'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-white  '
+      'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
     }`}
   />
 </div>
@@ -170,7 +170,7 @@ This guide helps migrate existing Blabbr components to use the new design system
 **Before:**
 ```tsx
 // Old card patterns
-<div className=" bg-white   rounded-none sm:rounded-[6px] overflow-hidden shadow-none sm:shadow-sm group cursor-pointer">
+<div className=" bg-off-white   rounded-none sm:rounded-[6px] overflow-hidden shadow-none sm:shadow-sm group cursor-pointer">
   <div className="relative overflow-hidden rounded-t-none sm:rounded-t-[6px]">
     <motion.div
       animate={{ scale: showActions ? 1.05 : 1 }}

@@ -3,7 +3,7 @@
 
 import Image from "next/image";
 import React, { useMemo, useState, useEffect, memo } from "react";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import { useRouter } from "next/navigation";
 import { ImageOff, Star, Edit, Heart, Share2 } from "lucide-react";
 import Stars from "../Stars/Stars";
@@ -109,13 +109,9 @@ function BusinessCard({
       }}
     >
       <div 
-        className="relative bg-white/80 backdrop-blur-xl rounded-[16px] overflow-hidden shadow-md shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-lg hover:shadow-sage/15 hover:scale-[1.02] hover:border-white/40"
+        className="relative bg-off-white rounded-[16px] overflow-hidden shadow-md shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-lg hover:shadow-sage/15 hover:scale-[1.02] hover:border-white/40"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
-        {/* Liquid Glass Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-white/40 to-white/50 rounded-[16px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,_rgba(255,255,255,0.4)_0%,_transparent_50%)] rounded-[16px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,_rgba(120,119,198,0.05)_0%,_transparent_50%)] rounded-[16px]" />
         {/* MEDIA */}
         <div
           className="relative overflow-hidden rounded-t-[16px] flex-1 sm:flex-initial z-10"
@@ -128,11 +124,7 @@ function BusinessCard({
             }
           }}
         >
-          <motion.div
-            animate={{ scale: showActions ? 1.05 : 1 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="relative h-full"
-          >
+          <div className="relative h-full">
             {!imgError ? (
               <Image
                 src={displayImage}
@@ -151,7 +143,7 @@ function BusinessCard({
                 <ImageOff className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-sage/70" />
               </div>
             )}
-          </motion.div>
+          </div>
 
           {/* Liquid Glass overlay gradient */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
@@ -169,7 +161,7 @@ function BusinessCard({
 
           {/* rating badge */}
           {!hideStar && (
-            <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-white/90 backdrop-blur-xl px-3 py-1.5 text-charcoal shadow-lg shadow-amber-500/20 border border-white/30">
+            <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 backdrop-blur-xl px-3 py-1.5 text-charcoal shadow-lg shadow-amber-500/20 border border-white/30">
               <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
               <span className="text-sm font-semibold">
                 {Number(displayRating).toFixed(1)}
@@ -189,7 +181,7 @@ function BusinessCard({
               }`}
           >
             <button
-              className="w-10 h-10 bg-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
               onClick={(e) => {
                 e.stopPropagation();
                 handleWriteReview();
@@ -200,7 +192,7 @@ function BusinessCard({
               <Edit className="w-4 h-4 text-charcoal" />
             </button>
             <button
-              className="w-10 h-10 bg-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
               onClick={(e) => {
                 e.stopPropagation();
                 handleBookmark();
@@ -211,7 +203,7 @@ function BusinessCard({
               <Heart className="w-4 h-4 text-charcoal" />
             </button>
             <button
-              className="w-10 h-10 bg-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
               onClick={(e) => {
                 e.stopPropagation();
                 handleShare();
