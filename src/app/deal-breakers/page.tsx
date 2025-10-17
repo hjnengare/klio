@@ -72,17 +72,44 @@ function DealBreakersContent() {
   const [selectedDealbreakers, setSelectedDealbreakers] = useState<string[]>([]);
   const [isNavigating, setIsNavigating] = useState(false);
 
+  // Get all data from URL parameters
+  const interests = useMemo(() => {
+    const interestsParam = searchParams.get('interests');
+    return interestsParam ? interestsParam.split(',').map(s => s.trim()) : [];
+  }, [searchParams]);
+
   const subcategories = useMemo(() => {
     const subcategoriesParam = searchParams.get('subcategories');
     return subcategoriesParam ? subcategoriesParam.split(',').map(s => s.trim()) : [];
   }, [searchParams]);
 
   useEffect(() => {
-    if (subcategories.length === 0) {
-      router.push('/subcategories');
+    if (interests.length === 0 && subcategories.length === 0) {
+      // No data passed, redirect to start
+      router.push('/interests');
       return;
     }
-  }, [subcategories, router]);
+  }, [interests, subcategories, router]);
+
+  // Helper function to get interest_id for a subcategory
+  const getInterestIdForSubcategory = useCallback((subcategoryId: string): string => {
+    // This is a simplified mapping - you might want to load subcategories from API to get the actual mapping
+    // For now, we'll return a default or try to infer from the subcategory ID
+    const interestMapping: { [key: string]: string } = {
+      'restaurants': 'food-drink',
+      'cafes': 'food-drink',
+      'bars': 'food-drink',
+      'fast-food': 'food-drink',
+      'fine-dining': 'food-drink',
+      'gyms': 'beauty-wellness',
+      'spas': 'beauty-wellness',
+      'salons': 'beauty-wellness',
+      'wellness': 'beauty-wellness',
+      'nail-salons': 'beauty-wellness',
+      // Add more mappings as needed
+    };
+    return interestMapping[subcategoryId] || 'food-drink'; // Default fallback
+  }, []);
 
   const handleDealbreakerToggle = useCallback((dealbreakerId: string) => {
     setSelectedDealbreakers(prev => {
@@ -98,17 +125,34 @@ function DealBreakersContent() {
     setIsNavigating(true);
 
     try {
+      // Prepare the data
+      const requestData = {
+        step: 'complete',
+        interests: interests,
+        subcategories: subcategories.map(subId => ({
+          subcategory_id: subId,
+          interest_id: getInterestIdForSubcategory(subId)
+        })),
+        dealbreakers: selectedDealbreakers
+      };
+
+      console.log('Sending onboarding data:', requestData);
+
+      // Save ALL onboarding data at once - interests, subcategories, and dealbreakers
       const response = await fetch('/api/user/onboarding', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          step: 'complete',
-          dealbreakers: selectedDealbreakers
-        })
+        body: JSON.stringify(requestData)
       });
 
       if (!response.ok) {
-        throw new Error('Failed to complete onboarding');
+        const errorData = await response.json().catch(() => ({}));
+        console.error('API Error Response:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData
+        });
+        throw new Error(`Failed to complete onboarding: ${errorData.error || response.statusText}`);
       }
 
       router.push('/complete');
@@ -117,7 +161,7 @@ function DealBreakersContent() {
       showToast('Failed to complete onboarding', 'error');
       setIsNavigating(false);
     }
-  }, [selectedDealbreakers, router, showToast]);
+  }, [interests, subcategories, selectedDealbreakers, getInterestIdForSubcategory, router, showToast]);
 
   const canProceed = selectedDealbreakers.length > 0 && !isNavigating;
 
@@ -140,7 +184,7 @@ function DealBreakersContent() {
           </p>
         </div>
 
-        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
+        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
           <div className="text-center mb-4">
             <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-2 bg-sage/10 border border-sage/20">
               <span className="text-sm font-semibold text-sage" style={sf}>
@@ -157,66 +201,71 @@ function DealBreakersContent() {
             </p>
           </div>
 
-          <div className="space-y-3 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
             {DEMO_DEAL_BREAKERS.map((dealbreaker, index) => {
               const isSelected = selectedDealbreakers.includes(dealbreaker.id);
               const IconComponent = iconMap[dealbreaker.icon as keyof typeof iconMap] || CheckCircle;
 
               return (
-                <button
+                <div
                   key={dealbreaker.id}
-                  onClick={() => handleDealbreakerToggle(dealbreaker.id)}
                   className={`
                     enter-stagger
-                    group relative flex w-full items-center gap-4 rounded-2xl border-2 p-4 md:p-5 text-left transition-all duration-200
-                    focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2
-                    ${isSelected
-                      ? 'border-coral bg-coral text-white shadow-[0_8px_24px_rgba(214,116,105,0.25)] scale-[1.02]'
-                      : 'border-sage/30 bg-sage/5 text-sage hover:bg-sage/10 hover:border-sage/40 hover:scale-[1.02]'
-                    }
+                    perspective-1000
+                    ${isSelected ? 'scale-105' : 'scale-100'}
+                    transition-transform duration-300 ease-out
                   `}
-                  style={{ ...sf, animationDelay: `${index * 0.08}s` }}
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div
                     className={`
-                      flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-xl transition-colors flex-shrink-0
-                      ${isSelected ? 'bg-white/20' : 'bg-sage/20'}
+                      relative w-full h-32 cursor-pointer
+                      ${isSelected ? 'flip' : ''}
                     `}
+                    onClick={() => handleDealbreakerToggle(dealbreaker.id)}
+                    style={{
+                      transformStyle: 'preserve-3d',
+                      transition: 'transform 0.6s',
+                      transform: isSelected ? 'rotateY(180deg)' : 'rotateY(0deg)'
+                    }}
                   >
-                    <IconComponent className={`h-6 w-6 md:h-7 md:w-7 ${isSelected ? 'text-white' : 'text-sage'}`} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3
+                    {/* Front of card - Text only */}
+                    <div
                       className={`
-                        text-base md:text-lg font-semibold transition-colors mb-0.5
-                        ${isSelected ? 'text-white' : 'text-charcoal'}
+                        absolute inset-0 w-full h-full rounded-2xl border-2 p-4 flex flex-col justify-center items-center text-center
+                        bg-gradient-to-br from-sage/10 to-sage/5 border-sage/30 hover:border-sage/50
+                        transition-all duration-200 hover:shadow-lg
                       `}
+                      style={{ backfaceVisibility: 'hidden' }}
                     >
-                      {dealbreaker.label}
-                    </h3>
-                    <p
+                      <h3 className="text-base font-semibold text-charcoal mb-2" style={sf}>
+                        {dealbreaker.label}
+                      </h3>
+                      <p className="text-xs text-charcoal/60 leading-relaxed px-2" style={sf}>
+                        {dealbreaker.description}
+                      </p>
+                    </div>
+
+                    {/* Back of card - Icon only */}
+                    <div
                       className={`
-                        text-xs md:text-sm transition-colors
-                        ${isSelected ? 'text-white/80' : 'text-charcoal/60'}
+                        absolute inset-0 w-full h-full rounded-2xl border-2 p-4 flex flex-col justify-center items-center text-center
+                        bg-gradient-to-br from-coral to-coral/90 border-coral shadow-[0_8px_24px_rgba(214,116,105,0.25)]
                       `}
+                      style={{ 
+                        backfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg)'
+                      }}
                     >
-                      {dealbreaker.description}
-                    </p>
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 mb-3">
+                        <IconComponent className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white">
+                        <CheckCircle className="h-4 w-4 text-coral" />
+                      </div>
+                    </div>
                   </div>
-                  <div
-                    className={`
-                      flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all flex-shrink-0
-                      ${isSelected
-                        ? 'border-white bg-white'
-                        : 'border-sage/30 bg-white'
-                      }
-                    `}
-                  >
-                    {isSelected && (
-                      <CheckCircle className="h-4 w-4 text-coral" />
-                    )}
-                  </div>
-                </button>
+                </div>
               );
             })}
           </div>

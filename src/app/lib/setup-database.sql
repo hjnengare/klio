@@ -113,6 +113,7 @@ CREATE TABLE public.user_dealbreakers (
   PRIMARY KEY (user_id, dealbreaker_id)
 );
 
+
 -- =============================================
 -- STEP 5: ENABLE RLS ON USER TABLES
 -- =============================================
@@ -120,6 +121,7 @@ CREATE TABLE public.user_dealbreakers (
 ALTER TABLE public.user_interests ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_subcategories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_dealbreakers ENABLE ROW LEVEL SECURITY;
+
 
 -- Drop existing policies if they exist
 DROP POLICY IF EXISTS "Users can manage their own interests" ON public.user_interests;
@@ -150,6 +152,7 @@ CREATE POLICY "Users can manage their own dealbreakers"
 DROP FUNCTION IF EXISTS public.replace_user_interests(UUID, TEXT[]);
 DROP FUNCTION IF EXISTS public.replace_user_subcategories(UUID, JSONB[]);
 DROP FUNCTION IF EXISTS public.replace_user_dealbreakers(UUID, TEXT[]);
+DROP FUNCTION IF EXISTS public.complete_onboarding_atomic(UUID, TEXT[], JSONB[], TEXT[]);
 
 -- Function to replace user interests
 CREATE OR REPLACE FUNCTION public.replace_user_interests(
@@ -245,6 +248,65 @@ BEGIN
 END;
 $$;
 
+-- Atomic function to complete entire onboarding process
+CREATE OR REPLACE FUNCTION public.complete_onboarding_atomic(
+  p_user_id UUID,
+  p_interest_ids TEXT[],
+  p_subcategory_data JSONB[],
+  p_dealbreaker_ids TEXT[]
+)
+RETURNS VOID
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  -- Start transaction for atomic operation
+  
+  -- 1. Clear existing data
+  DELETE FROM public.user_interests WHERE user_id = p_user_id;
+  DELETE FROM public.user_subcategories WHERE user_id = p_user_id;
+  DELETE FROM public.user_dealbreakers WHERE user_id = p_user_id;
+  
+  -- 2. Insert interests
+  IF array_length(p_interest_ids, 1) > 0 THEN
+    INSERT INTO public.user_interests (user_id, interest_id)
+    SELECT p_user_id, unnest(p_interest_ids);
+  END IF;
+  
+  -- 3. Insert subcategories
+  IF array_length(p_subcategory_data, 1) > 0 THEN
+    INSERT INTO public.user_subcategories (user_id, subcategory_id, interest_id)
+    SELECT
+      p_user_id,
+      (item->>'subcategory_id')::TEXT,
+      (item->>'interest_id')::TEXT
+    FROM unnest(p_subcategory_data) AS item;
+  END IF;
+  
+  -- 4. Insert dealbreakers
+  IF array_length(p_dealbreaker_ids, 1) > 0 THEN
+    INSERT INTO public.user_dealbreakers (user_id, dealbreaker_id)
+    SELECT p_user_id, unnest(p_dealbreaker_ids);
+  END IF;
+  
+  -- 5. Update profile with final counts and completion status
+  UPDATE public.profiles
+  SET
+    interests_count = COALESCE(array_length(p_interest_ids, 1), 0),
+    subcategories_count = COALESCE(array_length(p_subcategory_data, 1), 0),
+    dealbreakers_count = COALESCE(array_length(p_dealbreaker_ids, 1), 0),
+    last_interests_updated = NOW(),
+    last_subcategories_updated = NOW(),
+    last_dealbreakers_updated = NOW(),
+    onboarding_step = 'complete',
+    onboarding_complete = TRUE,
+    updated_at = NOW()
+  WHERE user_id = p_user_id;
+  
+END;
+$$;
+
 -- =============================================
 -- STEP 7: GRANT PERMISSIONS
 -- =============================================
@@ -253,6 +315,7 @@ $$;
 GRANT EXECUTE ON FUNCTION public.replace_user_interests(UUID, TEXT[]) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.replace_user_subcategories(UUID, JSONB[]) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.replace_user_dealbreakers(UUID, TEXT[]) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.complete_onboarding_atomic(UUID, TEXT[], JSONB[], TEXT[]) TO authenticated;
 
 -- =============================================
 -- SETUP COMPLETE

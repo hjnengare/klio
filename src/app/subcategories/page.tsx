@@ -144,38 +144,30 @@ function SubcategoriesContent() {
   }, [selectedSubcategories, setSelectedSubcategories]);
 
   const handleNext = useCallback(async () => {
-    if (selectedSubcategories.length === 0) return;
+    if (!selectedSubcategories || selectedSubcategories.length === 0) return;
 
     setIsNavigating(true);
 
     try {
-      const response = await fetch('/api/user/onboarding', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          step: 'subcategories',
-          interests: selectedInterests,
-          subcategories: selectedSubcategories.map(s => ({
-            subcategory_id: s.id,
-            interest_id: s.interest_id
-          }))
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to save subcategories');
-      }
-
-      const subcategoryIds = selectedSubcategories.map(s => s.id).join(',');
-      router.push(`/deal-breakers?subcategories=${subcategoryIds}`);
+      // Pass both interests and subcategories via URL - NO SAVING
+      const interestParams = selectedInterests.length > 0 
+        ? `interests=${selectedInterests.join(',')}` 
+        : '';
+      const subcategoryParams = selectedSubcategories.map(s => s.id).join(',');
+      
+      const urlParams = [interestParams, `subcategories=${subcategoryParams}`]
+        .filter(Boolean)
+        .join('&');
+      
+      router.push(`/deal-breakers?${urlParams}`);
     } catch (error) {
-      console.error('Error saving subcategories:', error);
-      showToast('Failed to save subcategories', 'error');
+      console.error('Error navigating to deal-breakers:', error);
+      showToast('Failed to navigate to next step', 'error');
       setIsNavigating(false);
     }
   }, [selectedSubcategories, selectedInterests, router, showToast]);
 
-  const canProceed = selectedSubcategories.length > 0 && !isNavigating;
+  const canProceed = (selectedSubcategories?.length || 0) > 0 && !isNavigating;
 
   if (loading) {
     return (
@@ -206,7 +198,7 @@ function SubcategoriesContent() {
           </p>
         </div>
 
-        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
+        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4">
               <p className="text-sm font-semibold text-red-600" style={sf}>
@@ -218,14 +210,14 @@ function SubcategoriesContent() {
           <div className="text-center mb-4">
             <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-2 bg-sage/10 border border-sage/20">
               <span className="text-sm font-semibold text-sage" style={sf}>
-                {selectedSubcategories.length} selected
+                {selectedSubcategories?.length || 0} selected
               </span>
-              {selectedSubcategories.length > 0 && (
+              {(selectedSubcategories?.length || 0) > 0 && (
                 <CheckCircle className="w-4 h-4 text-sage" />
               )}
             </div>
             <p className="text-xs text-charcoal/60" style={sf}>
-              {selectedSubcategories.length === 0
+              {(selectedSubcategories?.length || 0) === 0
                 ? "Select at least one subcategory to continue"
                 : "Great! Select more or continue"}
             </p>
@@ -297,7 +289,7 @@ function SubcategoriesContent() {
                 {(isLoading || isNavigating) && (
                   <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 )}
-                Continue {selectedSubcategories.length > 0 && `(${selectedSubcategories.length} selected)`}
+                Continue {(selectedSubcategories?.length || 0) > 0 && `(${selectedSubcategories?.length || 0} selected)`}
               </span>
               {canProceed && (
                 <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

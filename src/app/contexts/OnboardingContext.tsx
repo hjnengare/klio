@@ -74,30 +74,11 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
   const [interests, setInterests] = useState<Interest[]>([]);
   const [subInterests, setSubInterests] = useState<Subcategory[]>([]);
 
-  // Load initial state from localStorage
-  const [selectedInterests, setSelectedInterestsState] = useState<string[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('onboarding_interests');
-      return saved ? JSON.parse(saved) : [];
-    }
-    return [];
-  });
+  // Start with empty state - no preselected content
+  const [selectedInterests, setSelectedInterestsState] = useState<string[]>([]);
 
-  const [selectedSubInterests, setSelectedSubInterestsState] = useState<string[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('onboarding_subcategories');
-      return saved ? JSON.parse(saved) : [];
-    }
-    return [];
-  });
-
-  const [selectedDealbreakers, setSelectedDealbreakerssState] = useState<string[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('onboarding_dealbreakers');
-      return saved ? JSON.parse(saved) : [];
-    }
-    return [];
-  });
+  const [selectedSubInterests, setSelectedSubInterestsState] = useState<string[]>([]);
+  const [selectedDealbreakers, setSelectedDealbreakerssState] = useState<string[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -197,6 +178,12 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
     }
   }, [selectedInterests.length, selectedSubInterests.length, selectedDealbreakers.length]);
 
+  // Helper function to get interest_id for a subcategory
+  const getInterestIdForSubcategory = useCallback((subcategoryId: string): string => {
+    const subcategory = subInterests.find(sub => sub.id === subcategoryId);
+    return subcategory?.interest_id || '';
+  }, [subInterests]);
+
   const nextStep = useCallback(async () => {
     if (!user) return;
 
@@ -206,26 +193,11 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
 
       const nextStepName = getNextStep(currentStep);
 
-      // Save current step data
-      const profileUpdates: Record<string, unknown> = {
-        onboarding_step: nextStepName
-      };
-
-      if (currentStep === 'interests') {
-        profileUpdates.interests = selectedInterests;
-      } else if (currentStep === 'subcategories') {
-        profileUpdates.sub_interests = selectedSubInterests;
-      } else if (currentStep === 'deal-breakers') {
-        profileUpdates.dealbreakers = selectedDealbreakers;
-      }
-
-      await updateUser({ profile: profileUpdates });
-
       // Show success toast for step completion
       const completionMessage = getStepCompletionMessage(currentStep);
       showToast(completionMessage, 'success', 3000);
 
-      // Navigate to the next step
+      // Navigate to the next step - NO SAVING until final step
       if (nextStepName === 'complete') {
         router.push('/home');
       } else if (nextStepName === 'subcategories' && currentStep === 'interests') {
@@ -239,11 +211,11 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
       }
     } catch (error) {
       console.error('Error proceeding to next step:', error);
-      setError('Failed to save progress');
+      setError('Failed to navigate to next step');
     } finally {
       setIsLoading(false);
     }
-  }, [user, currentStep, selectedInterests, selectedSubInterests, selectedDealbreakers, updateUser, showToast, getStepCompletionMessage, router]);
+  }, [user, currentStep, selectedInterests, showToast, getStepCompletionMessage, router]);
 
   const completeOnboarding = useCallback(async () => {
     if (!user) return;
@@ -252,18 +224,24 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
       setIsLoading(true);
       setError(null);
 
-      // Mark onboarding as complete with all final data
-      await updateUser({
-        profile: {
-          onboarding_complete: true,
-          onboarding_step: 'complete',
+      // Use unified onboarding API to save all final data
+      const response = await fetch('/api/user/onboarding', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          step: 'complete',
           interests: selectedInterests,
-          sub_interests: selectedSubInterests,
+          subcategories: selectedSubInterests.map(subId => ({
+            subcategory_id: subId,
+            interest_id: getInterestIdForSubcategory(subId)
+          })),
           dealbreakers: selectedDealbreakers
-        }
+        })
       });
 
-      // Note: All selections are now saved locally via updateUser
+      if (!response.ok) {
+        throw new Error('Failed to complete onboarding');
+      }
 
       // Clear localStorage after successful completion
       if (typeof window !== 'undefined') {
@@ -280,7 +258,7 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [user, selectedInterests, selectedSubInterests, selectedDealbreakers, updateUser, showToast]);
+  }, [user, selectedInterests, selectedSubInterests, selectedDealbreakers, getInterestIdForSubcategory, showToast]);
 
   const resetOnboarding = useCallback(() => {
     setSelectedInterests([]);

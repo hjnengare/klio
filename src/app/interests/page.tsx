@@ -19,9 +19,9 @@ const entranceStyles = `
   }
   .enter-fade {
     opacity: 0;
-    animation: fadeSlideIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+    animation: fadeSlideIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
   }
-  .enter-stagger { opacity: 0; animation: fadeSlideIn 0.6s ease-out forwards; }
+  .enter-stagger { opacity: 0; animation: fadeSlideIn 0.25s ease-out forwards; }
 
   @keyframes bubbly {
     0% { transform: translateZ(0) scale(1); }
@@ -192,7 +192,7 @@ function InterestsContent() {
   }, [selectedInterests.length, isNavigating]);
 
   const handleNext = useCallback(async () => {
-    if (!canProceed || onboardingLoading) return;
+    if (!canProceed) return;
     setIsNavigating(true);
 
     console.log("Analytics: Next button clicked", {
@@ -205,7 +205,7 @@ function InterestsContent() {
       console.error("Error proceeding to next step:", error);
       setIsNavigating(false);
     }
-  }, [canProceed, nextStep, onboardingLoading, selectedInterests.length]);
+  }, [canProceed, nextStep, selectedInterests.length]);
 
   const handleSkip = useCallback(async () => {
     if (isNavigating) return;
@@ -252,7 +252,7 @@ function InterestsContent() {
           </div>
         )}
 
-        <div className="text-center mb-4 pt-4 sm:pt-6 enter-fade" style={{ animationDelay: "0.12s" }}>
+        <div className="text-center mb-4 pt-4 sm:pt-6 enter-fade" style={{ animationDelay: "0.05s" }}>
           <div className="inline-block relative mb-2">
             <h2
               className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight"
@@ -269,16 +269,16 @@ function InterestsContent() {
           </p>
         </div>
 
-        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
+        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
           {onboardingError && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4 enter-fade" style={{ animationDelay: "0.22s" }}>
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4 enter-fade" style={{ animationDelay: "0.1s" }}>
               <p className="text-sm font-semibold text-red-600" style={sf}>
                 {onboardingError}
               </p>
             </div>
           )}
 
-          <div className="text-center mb-4 enter-fade" style={{ animationDelay: "0.22s" }}>
+          <div className="text-center mb-4 enter-fade" style={{ animationDelay: "0.1s" }}>
             <div
               className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-3 transition-colors duration-300 ${
                 hydratedSelected.length >= MIN_SELECTIONS
@@ -311,7 +311,7 @@ function InterestsContent() {
             {list.map((interest, idx) => {
               const isSelected = hydratedSelected.includes(interest.id);
               const isDisabled = !isSelected && hydratedSelected.length >= MAX_SELECTIONS;
-              const delay = Math.min(idx, 8) * 0.06 + 0.24;
+              const delay = Math.min(idx, 8) * 0.03 + 0.1;
 
               return (
                 <button
@@ -357,7 +357,7 @@ function InterestsContent() {
             })}
           </div>
 
-          <div className="pt-4 space-y-4 enter-fade" style={{ animationDelay: "0.3s" }}>
+          <div className="pt-4 space-y-4 enter-fade" style={{ animationDelay: "0.15s" }}>
             <button
               className={`
                 group block w-full text-white text-sm md:text-base font-semibold py-3.5 md:py-4 px-6 md:px-8 rounded-full transition-all duration-300 relative text-center touch-target-large
@@ -373,7 +373,7 @@ function InterestsContent() {
               style={sf}
             >
               <span className="relative z-10 flex items-center justify-center gap-2 rounded-full">
-                {(isNavigating || onboardingLoading) && (
+                {isNavigating && (
                   <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 )}
                 Continue {hydratedSelected.length > 0 && `(${hydratedSelected.length} selected)`}

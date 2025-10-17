@@ -12,60 +12,147 @@ export async function POST(req: Request) {
   try {
     const { step, interests, subcategories, dealbreakers } = await req.json();
 
-    // Save interests
-    if (interests && Array.isArray(interests)) {
-      const { error } = await supabase.rpc('replace_user_interests', {
-        p_user_id: user.id,
-        p_interest_ids: interests
-      });
-      if (error) {
-        console.error('Error saving interests:', error);
-        throw error;
+    if (step === 'complete') {
+      // Complete entire onboarding atomically
+      if (!interests || !Array.isArray(interests) || 
+          !subcategories || !Array.isArray(subcategories) || 
+          !dealbreakers || !Array.isArray(dealbreakers)) {
+        return NextResponse.json(
+          { error: 'All data arrays are required for completion' },
+          { status: 400 }
+        );
       }
-    }
 
-    // Save subcategories with their parent interest IDs
-    if (subcategories && Array.isArray(subcategories)) {
+      // Map subcategories to the format expected by the atomic function
       const subcategoryData = subcategories.map(sub => ({
-        subcategory_id: sub.id,
+        subcategory_id: sub.subcategory_id || sub.id,
         interest_id: sub.interest_id
       }));
-      
-      const { error } = await supabase.rpc('replace_user_subcategories', {
-        p_user_id: user.id,
-        p_subcategory_data: subcategoryData
-      });
-      if (error) {
-        console.error('Error saving subcategories:', error);
-        throw error;
-      }
-    }
 
-    // Save dealbreakers
-    if (dealbreakers && Array.isArray(dealbreakers)) {
-      const { error } = await supabase.rpc('replace_user_dealbreakers', {
+      // Try atomic function first, fallback to individual steps if function doesn't exist
+      let useAtomic = true;
+      const { error: completeError } = await supabase.rpc('complete_onboarding_atomic', {
         p_user_id: user.id,
+        p_interest_ids: interests,
+        p_subcategory_data: subcategoryData,
         p_dealbreaker_ids: dealbreakers
       });
-      if (error) {
-        console.error('Error saving dealbreakers:', error);
-        throw error;
+
+      if (completeError) {
+        console.error('Atomic function failed, falling back to individual steps:', completeError);
+        useAtomic = false;
+        
+        // Fallback to individual step saving
+        // Save interests
+        if (interests && Array.isArray(interests)) {
+          const { error: interestsError } = await supabase.rpc('replace_user_interests', {
+            p_user_id: user.id,
+            p_interest_ids: interests
+          });
+          if (interestsError) {
+            console.error('Error saving interests:', interestsError);
+            throw interestsError;
+          }
+        }
+
+        // Save subcategories
+        if (subcategoryData && Array.isArray(subcategoryData)) {
+          const { error: subcategoriesError } = await supabase.rpc('replace_user_subcategories', {
+            p_user_id: user.id,
+            p_subcategory_data: subcategoryData
+          });
+          if (subcategoriesError) {
+            console.error('Error saving subcategories:', subcategoriesError);
+            throw subcategoriesError;
+          }
+        }
+
+        // Save dealbreakers
+        if (dealbreakers && Array.isArray(dealbreakers)) {
+          const { error: dealbreakersError } = await supabase.rpc('replace_user_dealbreakers', {
+            p_user_id: user.id,
+            p_dealbreaker_ids: dealbreakers
+          });
+          if (dealbreakersError) {
+            console.error('Error saving dealbreakers:', dealbreakersError);
+            throw dealbreakersError;
+          }
+        }
+
+        // Update profile
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .update({
+            onboarding_step: 'complete',
+            onboarding_complete: true,
+            updated_at: new Date().toISOString()
+          })
+          .eq('user_id', user.id);
+
+        if (profileError) {
+          console.error('Error updating profile:', profileError);
+          throw profileError;
+        }
       }
-    }
 
-    // Update profile step
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .update({
-        onboarding_step: step,
-        onboarding_complete: step === 'complete',
-        updated_at: new Date().toISOString()
-      })
-      .eq('user_id', user.id);
+    } else {
+      // Handle individual steps (keeping for backward compatibility)
+      
+      // Save interests
+      if (interests && Array.isArray(interests)) {
+        const { error } = await supabase.rpc('replace_user_interests', {
+          p_user_id: user.id,
+          p_interest_ids: interests
+        });
+        if (error) {
+          console.error('Error saving interests:', error);
+          throw error;
+        }
+      }
 
-    if (profileError) {
-      console.error('Error updating profile:', profileError);
-      throw profileError;
+      // Save subcategories with their parent interest IDs
+      if (subcategories && Array.isArray(subcategories)) {
+        const subcategoryData = subcategories.map(sub => ({
+          subcategory_id: sub.id,
+          interest_id: sub.interest_id
+        }));
+        
+        const { error } = await supabase.rpc('replace_user_subcategories', {
+          p_user_id: user.id,
+          p_subcategory_data: subcategoryData
+        });
+        if (error) {
+          console.error('Error saving subcategories:', error);
+          throw error;
+        }
+      }
+
+      // Save dealbreakers
+      if (dealbreakers && Array.isArray(dealbreakers)) {
+        const { error } = await supabase.rpc('replace_user_dealbreakers', {
+          p_user_id: user.id,
+          p_dealbreaker_ids: dealbreakers
+        });
+        if (error) {
+          console.error('Error saving dealbreakers:', error);
+          throw error;
+        }
+      }
+
+      // Update profile step (only for individual steps)
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          onboarding_step: step,
+          onboarding_complete: step === 'complete',
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id);
+
+      if (profileError) {
+        console.error('Error updating profile:', profileError);
+        throw profileError;
+      }
     }
 
     return NextResponse.json({ 
