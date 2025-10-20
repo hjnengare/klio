@@ -162,9 +162,14 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             </h3>
           </div>
 
-          <p className="mb-3 text-sm font-medium text-charcoal/60 transition-colors duration-300 md:group-hover:text-charcoal/70">
-            {business.category} · {business.location}
-          </p>
+          <div className="mb-3 flex items-center gap-2 flex-wrap">
+            <span className="inline-flex items-center rounded-full bg-sage/10 px-2.5 py-1 text-xs font-semibold text-sage border border-sage/20">
+              {business.category}
+            </span>
+            <span className="text-sm font-medium text-charcoal/60">
+              {business.location}
+            </span>
+          </div>
 
           <div className="mb-4 flex items-center gap-2">
             <Stars value={business.rating} />

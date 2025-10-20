@@ -106,7 +106,7 @@ export default function CommunityHighlights({
           <div className="mt-4 sm:mt-5 md:mt-6">
             <div className="mb-2 sm:mb-3 flex flex-wrap items-center justify-between gap-[18px]">
               <h3 className="text-base font-semibold text-charcoal">
-                Businesses of the Month
+                Businesses of the Month by Category
               </h3>
             </div>
 
@@ -117,6 +117,9 @@ export default function CommunityHighlights({
                   September 2025 Winners
                 </span>
               </div>
+              <p className="mt-2 text-xs text-charcoal/60">
+                Top-rated businesses competing within their categories
+              </p>
             </div>
 
             <ScrollableSection className="list-none">

@@ -135,6 +135,7 @@ export interface BusinessOfTheMonth {
 }
 
 export const BUSINESSES_OF_THE_MONTH: BusinessOfTheMonth[] = [
+  // Coffee Shops Category
   {
     id: "1",
     name: "Artisan Coffee Roasters",
@@ -146,10 +147,11 @@ export const BUSINESSES_OF_THE_MONTH: BusinessOfTheMonth[] = [
     totalRating: 4.9,
     reviews: 234,
     badge: "winner",
-    monthAchievement: "Most Loved Coffee Shop",
+    monthAchievement: "Best Coffee Shop",
     verified: true,
     href: "/business/artisan-coffee"
   },
+  // Restaurants Category
   {
     id: "2",
     name: "Luna's Garden Bistro",
@@ -160,27 +162,14 @@ export const BUSINESSES_OF_THE_MONTH: BusinessOfTheMonth[] = [
     rating: 5,
     totalRating: 4.8,
     reviews: 189,
-    badge: "runner-up",
-    monthAchievement: "Outstanding Service",
+    badge: "winner",
+    monthAchievement: "Best Restaurant",
     verified: true,
     href: "/business/lunas-garden"
   },
+  // Wellness Category
   {
     id: "3",
-    name: "The Book & Brew",
-    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=400&fit=crop&auto=format",
-    alt: "The Book & Brew bookstore cafe",
-    category: "Bookstore & Cafe",
-    location: "University District",
-    rating: 5,
-    totalRating: 4.7,
-    reviews: 156,
-    badge: "featured",
-    monthAchievement: "Community Favorite",
-    href: "/business/book-and-brew"
-  },
-  {
-    id: "4",
     name: "Green Valley Yoga Studio",
     image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop&auto=format",
     alt: "Green Valley Yoga Studio interior",
@@ -189,9 +178,58 @@ export const BUSINESSES_OF_THE_MONTH: BusinessOfTheMonth[] = [
     rating: 5,
     totalRating: 4.8,
     reviews: 98,
-    badge: "featured",
-    monthAchievement: "Wellness Champion",
-    href: "/business/green-valley-yoga"
+    badge: "winner",
+    monthAchievement: "Best Wellness Center",
+    href: "/business/green-valley-yoga",
+    verified: true
+  },
+  // Bookstores Category
+  {
+    id: "4",
+    name: "The Book & Brew",
+    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=400&fit=crop&auto=format",
+    alt: "The Book & Brew bookstore cafe",
+    category: "Bookstore",
+    location: "University District",
+    rating: 5,
+    totalRating: 4.7,
+    reviews: 156,
+    badge: "winner",
+    monthAchievement: "Best Bookstore",
+    href: "/business/book-and-brew",
+    verified: true
+  },
+  // Fitness Category
+  {
+    id: "5",
+    name: "Iron & Steel Fitness",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=400&fit=crop&auto=format",
+    alt: "Iron & Steel Fitness gym",
+    category: "Fitness",
+    location: "Industrial Park",
+    rating: 5,
+    totalRating: 4.7,
+    reviews: 176,
+    badge: "winner",
+    monthAchievement: "Best Gym",
+    href: "/business/iron-steel-fitness",
+    verified: true
+  },
+  // Bakery Category
+  {
+    id: "6",
+    name: "Sweet Dreams Patisserie",
+    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=400&fit=crop&auto=format",
+    alt: "Sweet Dreams Patisserie",
+    category: "Bakery",
+    location: "French Quarter",
+    rating: 5,
+    totalRating: 4.9,
+    reviews: 412,
+    badge: "winner",
+    monthAchievement: "Best Bakery",
+    href: "/business/sweet-dreams-patisserie",
+    verified: true
   }
 ];
 
