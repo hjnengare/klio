@@ -212,7 +212,7 @@ function ImageCarousel({
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Close Button */}
-                        <button
+                    <button
                             onClick={closeModal}
                             className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors duration-200"
                             aria-label="Close modal"
@@ -264,7 +264,7 @@ function ImageCarousel({
                         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm font-medium">
                             {index + 1} / {images.length}
                         </div>
-                    </div>
+            </div>
                 </div>
             )}
         </div>

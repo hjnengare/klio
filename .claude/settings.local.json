@@ -30,7 +30,14 @@
       "Bash(else echo \"File does not exist at general/reviews\")",
       "Bash(rm:*)",
       "Bash(npm cache clean:*)",
-      "Bash(start http://localhost:3001/register)"
+      "Bash(start http://localhost:3001/register)",
+      "Bash(start http://localhost:3002/profile)",
+      "Bash(timeout 10 bash:*)",
+      "Bash(timeout:*)",
+      "Bash(start http://localhost:3003/profile)",
+      "Bash(start http://localhost:3000/forgot-password)",
+      "Bash(start http://localhost:3004/profile)",
+      "Bash(start http://localhost:3005/forgot-password)"
     ],
     "deny": [],
     "ask": []

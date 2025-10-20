@@ -422,7 +422,7 @@ export default function InterestsPage() {
           </div>
         </OnboardingLayout>
       }>
-        <InterestsContent />
+      <InterestsContent />
       </Suspense>
     </ProtectedRoute>
   );

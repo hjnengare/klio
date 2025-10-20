@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AuthService } from "../lib/auth";
 import { useToast } from "../contexts/ToastContext";
+import { AlertCircle } from "lucide-react";
 
 // Import shared components
 import { authStyles } from "../components/Auth/Shared/authStyles";
@@ -48,7 +49,7 @@ export default function ResetPasswordPage() {
     };
 
     checkToken();
-  }, [showToast]);
+  }, []); // Remove showToast from dependencies to prevent infinite re-renders
 
   const getPasswordError = () => {
     if (!passwordTouched) return "";
@@ -271,8 +272,13 @@ export default function ResetPasswordPage() {
                 placeholder="Enter new password"
                 showStrength={true}
                 touched={passwordTouched}
-                error={getPasswordError()}
               />
+              {getPasswordError() && passwordTouched && (
+                <p className="text-xs text-red-600 flex items-center gap-1 mt-1" role="alert">
+                  <AlertCircle className="w-3 h-3" />
+                  {getPasswordError()}
+                </p>
+              )}
 
               {/* Confirm Password Input */}
               <PasswordInput
@@ -286,8 +292,13 @@ export default function ResetPasswordPage() {
                 placeholder="Confirm new password"
                 showStrength={false}
                 touched={confirmPasswordTouched}
-                error={getConfirmPasswordError()}
               />
+              {getConfirmPasswordError() && confirmPasswordTouched && (
+                <p className="text-xs text-red-600 flex items-center gap-1 mt-1" role="alert">
+                  <AlertCircle className="w-3 h-3" />
+                  {getConfirmPasswordError()}
+                </p>
+              )}
 
               {/* Submit Button */}
               <div className="pt-2 flex justify-center">

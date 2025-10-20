@@ -158,7 +158,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
         <div className="p-5 relative flex-shrink-0 cursor-pointer z-10">
           <div className="mb-1">
             <h3 className="text-base md:text-lg font-semibold text-charcoal tracking-tight transition-colors duration-300 md:group-hover:text-sage">
-              {business.name}
+                {business.name}
             </h3>
           </div>
 

@@ -24,6 +24,7 @@ interface ToastProviderProps {
 
 export function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const [toastQueue, setToastQueue] = useState<Toast[]>([]);
 
   // Track shown toasts to prevent duplicates
   const seenToasts = typeof window !== 'undefined'
@@ -39,12 +40,18 @@ export function ToastProvider({ children }: ToastProviderProps) {
     const id = generateUniqueId();
     const newToast: Toast = { id, message, type, duration };
 
-    setToasts(prev => [...prev, newToast]);
-
-    // Auto remove toast after duration
-    setTimeout(() => {
-      removeToast(id);
-    }, duration);
+    // If no toasts are currently showing, show immediately
+    if (toasts.length === 0) {
+      setToasts([newToast]);
+      
+      // Auto remove toast after duration
+      setTimeout(() => {
+        removeToast(id);
+      }, duration);
+    } else {
+      // Add to queue if toasts are already showing
+      setToastQueue(prev => [...prev, newToast]);
+    }
   };
 
   const showToastOnce = (key: string, message: string, type: Toast['type'] = 'info', duration = 4000) => {
@@ -59,7 +66,24 @@ export function ToastProvider({ children }: ToastProviderProps) {
   };
 
   const removeToast = (id: string) => {
-    setToasts(prev => prev.filter(toast => toast.id !== id));
+    setToasts(prev => {
+      const filtered = prev.filter(toast => toast.id !== id);
+      
+      // If no toasts are showing and there are queued toasts, show the next one
+      if (filtered.length === 0 && toastQueue.length > 0) {
+        const nextToast = toastQueue[0];
+        setToastQueue(prevQueue => prevQueue.slice(1));
+        
+        // Auto remove the next toast after its duration
+        setTimeout(() => {
+          removeToast(nextToast.id);
+        }, nextToast.duration || 4000);
+        
+        return [nextToast];
+      }
+      
+      return filtered;
+    });
   };
 
   const getToastStyles = (type: Toast['type']) => {
