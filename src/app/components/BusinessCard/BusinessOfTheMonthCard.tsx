@@ -46,42 +46,43 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
   return (
     <li
       id={idForSnap}
-      className="snap-start w-[100vw] sm:w-[320px] flex-shrink-0"
+      className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
       style={{
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
       <div 
-        className="bg-off-white rounded-2xl overflow-hidden shadow-md transition-all duration-300 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-charcoal/10"
+        className="relative bg-off-white rounded-[16px] overflow-hidden shadow-md shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-lg hover:shadow-sage/15 hover:scale-[1.02] hover:border-white/40"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Media */}
-        <div className="relative overflow-hidden rounded-t-2xl flex-1 sm:flex-initial">
+        <div className="relative overflow-hidden rounded-t-[16px] flex-1 sm:flex-initial z-10">
           {!imgError && displayImage ? (
             <Image
               src={displayImage}
               alt={displayAlt}
               width={400}
               height={320}
-              className="h-full sm:h-[200px] w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-2xl"
+              className="h-full sm:h-[320px] md:h-[320px] lg:h-[280px] w-full object-cover transition-transform duration-500 md:group-hover:scale-105 rounded-t-[16px]"
               priority={false}
               loading="lazy"
               quality={85}
               onError={() => setImgError(true)}
-              sizes="(max-width: 640px) 100vw, 320px"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           ) : (
-            <div className="h-full sm:h-[200px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-2xl">
+            <div className="h-full sm:h-[320px] md:h-[320px] lg:h-[280px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[16px]">
               <ImageOff className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
             </div>
           )}
 
-          {/* Overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+          {/* Liquid Glass overlay gradient */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-sage/5 opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
 
-          {/* Shimmer */}
-          <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform skew-x-12 group-hover:left-full transition-all duration-700 ease-out pointer-events-none" />
+          {/* Premium shimmer effect */}
+          <div className="pointer-events-none absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/40 to-transparent transform skew-x-12 md:group-hover:left-full transition-all duration-700 ease-out" />
 
           {/* Achievement badge */}
           <div className="absolute left-2 bottom-2">
@@ -104,58 +105,73 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             </div>
           )}
 
-          {/* Numeric rating */}
-          <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[8px] bg-off-white/85 backdrop-blur-sm px-2 py-1 text-charcoal shadow-sm">
-            <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500 drop-shadow-sm" />
-            <span className="text-sm font-semibold">{Number(displayTotal).toFixed(1)}</span>
+          {/* rating badge */}
+          <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 backdrop-blur-xl px-3 py-1.5 text-charcoal shadow-lg shadow-amber-500/20 border border-white/30">
+            <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+            <span className="text-sm font-semibold">
+              {Number(displayTotal).toFixed(1)}
+            </span>
           </span>
 
-          {/* Actions (desktop only) */}
-          <div className="hidden sm:flex absolute right-2 bottom-2 z-20 flex-col gap-2 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">
-            <Link
-              href="/business/review"
-              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30"
-              aria-label="Write a review"
+          {/* actions */}
+          <div
+            className={`absolute right-2 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-2 transition-all duration-300 ease-out
+              hidden sm:flex translate-x-12 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100`}
+          >
+            <button
+              className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              onClick={(e) => {
+                e.stopPropagation();
+                // Handle write review
+              }}
+              aria-label={`Write a review for ${business.name}`}
               title="Write a review"
             >
-              <Edit className="w-4 h-4 md:w-5 md:h-5 text-charcoal" />
-            </Link>
-            <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30"
-              aria-label="Save"
-              title="Save"
-            >
-              <Bookmark className="w-4 h-4 md:w-5 md:h-5 text-charcoal" />
+              <Edit className="w-4 h-4 text-charcoal" />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30"
-              aria-label="Share"
+              className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              onClick={(e) => {
+                e.stopPropagation();
+                // Handle bookmark
+              }}
+              aria-label={`Save ${business.name}`}
+              title="Save"
+            >
+              <Bookmark className="w-4 h-4 text-charcoal" />
+            </button>
+            <button
+              className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              onClick={(e) => {
+                e.stopPropagation();
+                // Handle share
+              }}
+              aria-label={`Share ${business.name}`}
               title="Share"
             >
-              <Share2 className="w-4 h-4 md:w-5 md:h-5 text-charcoal" />
+              <Share2 className="w-4 h-4 text-charcoal" />
             </button>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="p-5 relative flex-shrink-0">
+        {/* CONTENT */}
+        <div className="p-5 relative flex-shrink-0 cursor-pointer z-10">
           <div className="mb-1">
-            <h3 className="text-base md:text-lg font-semibold text-charcoal tracking-tight transition-colors duration-200 group-hover:text-sage">
-              <Link href={business.href || "#"} className="hover:underline decoration-2 underline-offset-2">
-                {business.name}
-              </Link>
+            <h3 className="text-base md:text-lg font-semibold text-charcoal tracking-tight transition-colors duration-300 md:group-hover:text-sage">
+              {business.name}
             </h3>
           </div>
 
-          <p className="mb-3 text-sm font-medium text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/80">
-            {business.category} • {business.location}
+          <p className="mb-3 text-sm font-medium text-charcoal/60 transition-colors duration-300 md:group-hover:text-charcoal/70">
+            {business.category} · {business.location}
           </p>
 
           <div className="mb-4 flex items-center gap-2">
             <Stars value={business.rating} />
-            <p className="text-sm text-charcoal/70 transition-colors duration-200">
-              {business.reviews} reviews
+            <p className="text-sm font-semibold leading-none text-charcoal">
+              {business.reviews}
             </p>
+            <p className="text-sm leading-none text-charcoal/60">reviews</p>
           </div>
 
           {/* Month chip (dynamic if you prefer) */}

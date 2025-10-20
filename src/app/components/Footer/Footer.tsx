@@ -44,7 +44,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden">
+    <footer className="relative overflow-hidden pb-safe-area-bottom">
    
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 md:pt-16">
         {/* Main footer content */}

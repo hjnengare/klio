@@ -24,26 +24,20 @@ export default function EventBanner({
   endDate 
 }: EventBannerProps) {
   return (
-    <div className="relative overflow-hidden rounded-t-[6px] h-[180px] flex-shrink-0">
+    <div className="relative overflow-hidden rounded-t-2xl h-[180px]">
       {/* Image or Icon placeholder */}
       {image ? (
-        <>
-          <Image
-            src={image}
-            alt={alt || title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 md:group-hover:scale-105 rounded-t-[6px]"
-            priority={false}
-          />
-          {/* Subtle overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-300" />
-          {/* Silver shimmer effect on hover */}
-          <div className="absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/30 to-transparent transform skew-x-12 md:group-hover:left-full transition-transform duration-700 ease-out" />
-        </>
+        <Image
+          src={image}
+          alt={alt || title}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          priority={false}
+        />
       ) : (
-        <div className="h-full w-full bg-sage/10 flex items-center justify-center text-sage rounded-t-[6px]">
-          <ImageIcon className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
+        <div className="h-full w-full flex items-center justify-center bg-sage/10 text-sage">
+          <ImageIcon className="w-12 h-12 text-sage/70" />
         </div>
       )}
 

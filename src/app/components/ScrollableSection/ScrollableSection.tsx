@@ -57,28 +57,35 @@ export default function ScrollableSection({
 
   const scrollRight = () => {
     if (!scrollRef.current) return;
-    const scrollAmount = scrollRef.current.clientWidth * 0.75;
-    scrollRef.current.scrollLeft += scrollAmount;
+    const container = scrollRef.current;
+    const cardWidth = container.clientWidth * 0.52; // Match the card min-width (52% on sm)
+    const gap = 24; // 6 * 4px (gap-6)
+    const scrollAmount = cardWidth + gap;
+    container.scrollLeft += scrollAmount;
   };
 
   const scrollLeft = () => {
     if (!scrollRef.current) return;
-    const scrollAmount = scrollRef.current.clientWidth * 0.75;
-    scrollRef.current.scrollLeft -= scrollAmount;
+    const container = scrollRef.current;
+    const cardWidth = container.clientWidth * 0.52; // Match the card min-width (52% on sm)
+    const gap = 24; // 6 * 4px (gap-6)
+    const scrollAmount = cardWidth + gap;
+    container.scrollLeft -= scrollAmount;
   };
 
   return (
     <div className="relative overflow-hidden">
       <div
         ref={scrollRef}
-        className={`horizontal-scroll flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 ${className}`}
+        className={`horizontal-scroll flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 snap-x snap-mandatory ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
           WebkitScrollbar: { display: 'none' },
           WebkitOverflowScrolling: 'touch',
-          overscrollBehaviorX: 'auto',
+          overscrollBehaviorX: 'contain',
           touchAction: 'pan-x',
+          scrollSnapType: 'x mandatory',
         }}
       >
         {children}

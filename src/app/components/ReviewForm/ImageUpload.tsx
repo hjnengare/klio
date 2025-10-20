@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { Camera, Upload, Images, AlertCircle, X } from 'lucide-react';
 import { ImageUploadService } from '../../lib/services/imageUploadService';
 
 interface ImageUploadProps {
@@ -156,10 +157,11 @@ export default function ImageUpload({
             transition={{ duration: 0.3 }}
             className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center"
           >
-            <ion-icon
-              name={dragActive ? "cloud-upload" : "camera"}
-              style={{ fontSize: '24px', color: 'var(--sage)' }}
-            />
+            {dragActive ? (
+              <Upload className="w-6 h-6 text-sage" />
+            ) : (
+              <Camera className="w-6 h-6 text-sage" />
+            )}
           </motion.div>
 
           {selectedImages.length >= maxImages ? (
@@ -196,7 +198,7 @@ export default function ImageUpload({
                 transition={{ duration: 1, repeat: Infinity }}
                 className="text-sage"
               >
-                <ion-icon name="cloud-upload-outline" style={{ fontSize: '48px' }} />
+                <Upload className="w-12 h-12" />
               </motion.div>
             </motion.div>
           )}
@@ -213,7 +215,7 @@ export default function ImageUpload({
             className="bg-red-50 border border-red-200 rounded-lg p-3"
           >
             <div className="flex items-center space-x-2 text-red-700">
-              <ion-icon name="alert-circle" style={{ fontSize: '18px' }} />
+              <AlertCircle className="w-4 h-4" />
               <span className="font-sf text-sm font-500">{uploadError}</span>
             </div>
           </motion.div>
@@ -230,7 +232,7 @@ export default function ImageUpload({
             className="space-y-3"
           >
             <h4 className="font-sf text-sm font-600 text-charcoal flex items-center">
-              <ion-icon name="images" style={{ fontSize: '16px', marginRight: '6px' }} />
+              <Images className="w-4 h-4 mr-2" />
               Selected Images ({selectedImages.length})
             </h4>
 
@@ -267,7 +269,7 @@ export default function ImageUpload({
                     className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-red-600 transition-colors duration-200"
                     disabled={disabled}
                   >
-                    <ion-icon name="close" style={{ fontSize: '14px' }} />
+                    <X className="w-3 h-3" />
                   </motion.button>
 
                   {/* File Info Overlay */}

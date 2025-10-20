@@ -225,7 +225,7 @@ export default function WriteReviewPage() {
         <FloatingElements />
 
         {/* ---------------- Header (FROSTY) ---------------- */}
-        <header className={frostyHeader + "px-4 py-4 shadow-md"}>
+        <header className={frostyHeader + "px-4 py-4 shadow-md fixed top-0 left-0 right-0 z-50"}>
           <div className="flex items-center max-w-7xl mx-auto">
             <Link href="/home" className="group flex items-center">
               <div className="w-10 h-10 md:w-12 md:h-12 z-10 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-3 md:mr-4">
@@ -239,7 +239,7 @@ export default function WriteReviewPage() {
         </header>
 
         {/* ---------------- Main content ---------------- */}
-        <div className="relative z-10 bg-off-white pt-24">
+        <div className="relative z-10 bg-off-white pt-20">
           <div className="w-full max-w-7xl mx-auto px-0 md:px-4 py-4 md:py-6 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* MAIN: Form */}
