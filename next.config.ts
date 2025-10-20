@@ -33,6 +33,18 @@ const nextConfig: NextConfig = {
 
   // Webpack optimizations for faster compilation
   webpack: (config, { dev, isServer }) => {
+    // Handle Supabase packages for Edge Runtime compatibility
+    config.resolve = {
+      ...config.resolve,
+      fallback: {
+        ...config.resolve?.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+      },
+    };
+
     if (dev) {
       // Development optimizations
       config.optimization = {
@@ -102,10 +114,14 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
-  swcMinify: true,
   
   // Handle Supabase Edge Runtime warnings
-  transpilePackages: ['@supabase/supabase-js', '@supabase/ssr'],
+  transpilePackages: ['@supabase/supabase-js', '@supabase/ssr', '@supabase/realtime-js'],
+  
+  // Configure runtime for specific routes to avoid Edge Runtime issues
+  ...(process.env.NODE_ENV === 'production' && {
+    output: 'standalone',
+  }),
   
   // Faster development builds
   ...(process.env.NODE_ENV === 'development' && {
