@@ -344,4 +344,86 @@ export class AuthService {
       };
     }
   }
+
+  static async resetPasswordForEmail(email: string): Promise<{ error: AuthError | null }> {
+    const supabase = this.getClient();
+
+    try {
+      if (!email?.trim()) {
+        return {
+          error: { message: 'Email is required' }
+        };
+      }
+
+      if (!this.isValidEmail(email)) {
+        return {
+          error: { message: 'Please enter a valid email address' }
+        };
+      }
+
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+
+      if (error) {
+        console.error('Reset password error:', error);
+        return {
+          error: this.handleSupabaseError(error)
+        };
+      }
+
+      return { error: null };
+    } catch (error: unknown) {
+      console.error('Error in resetPasswordForEmail:', error);
+      return {
+        error: {
+          message: error instanceof Error ? error.message : 'Failed to send password reset email'
+        }
+      };
+    }
+  }
+
+  static async updatePassword(newPassword: string): Promise<{ error: AuthError | null }> {
+    const supabase = this.getClient();
+
+    try {
+      if (!newPassword?.trim()) {
+        return {
+          error: { message: 'Password is required' }
+        };
+      }
+
+      if (newPassword.length < 8) {
+        return {
+          error: { message: 'Password must be at least 8 characters long' }
+        };
+      }
+
+      if (!this.isStrongPassword(newPassword)) {
+        return {
+          error: { message: 'Password must contain at least one uppercase letter, one lowercase letter, and one number' }
+        };
+      }
+
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword
+      });
+
+      if (error) {
+        console.error('Update password error:', error);
+        return {
+          error: this.handleSupabaseError(error)
+        };
+      }
+
+      return { error: null };
+    } catch (error: unknown) {
+      console.error('Error in updatePassword:', error);
+      return {
+        error: {
+          message: error instanceof Error ? error.message : 'Failed to update password'
+        }
+      };
+    }
+  }
 }

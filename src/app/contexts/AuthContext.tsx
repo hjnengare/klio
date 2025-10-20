@@ -33,14 +33,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // Initialize auth state
   useEffect(() => {
     const initializeAuth = async () => {
+      console.log('AuthContext: Initializing auth...');
       setIsLoading(true);
 
       try {
         const currentUser = await AuthService.getCurrentUser();
+        console.log('AuthContext: Got current user:', currentUser ? {
+          id: currentUser.id,
+          email: currentUser.email,
+          has_profile: !!currentUser.profile
+        } : null);
         setUser(currentUser);
       } catch (error) {
         console.error('Error initializing auth:', error);
       } finally {
+        console.log('AuthContext: Initialization complete, isLoading = false');
         setIsLoading(false);
       }
     };
