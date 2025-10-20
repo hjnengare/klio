@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { X, Edit, ChevronRight, Bookmark, Home, User, Search, Settings, HelpCircle } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useSavedItems } from "../../contexts/SavedItemsContext";
 
 interface MenuModalProps {
   isOpen: boolean;
@@ -14,6 +15,7 @@ interface MenuModalProps {
 
 export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps) {
   const { user } = useAuth();
+  const { savedCount } = useSavedItems();
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -156,10 +158,15 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
           <Link
             href="/saved"
             onClick={onClose}
-            className="w-full flex items-center space-x-4 p-4 rounded-xl hover:bg-sage/5 transition-all duration-200 group mobile-interaction touch-target-large"
+            className="w-full flex items-center space-x-4 p-4 rounded-xl hover:bg-sage/5 transition-all duration-200 group mobile-interaction touch-target-large relative"
           >
-            <div className="w-10 h-10 bg-sage/10 rounded-full flex items-center justify-center group-hover:bg-sage/20 transition-colors duration-200">
+            <div className="w-10 h-10 bg-sage/10 rounded-full flex items-center justify-center group-hover:bg-sage/20 transition-colors duration-200 relative">
               <Bookmark className="w-5 h-5 text-sage" />
+              {savedCount > 0 && (
+                <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-sage text-white text-[11px] font-semibold rounded-full shadow-md">
+                  {savedCount > 99 ? '99+' : savedCount}
+                </span>
+              )}
             </div>
             <div className="flex-1 text-left">
               <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
