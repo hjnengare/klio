@@ -1,3 +1,5 @@
+// Global type declarations
+
 // Type definitions for ion-icon custom element
 declare namespace JSX {
   interface IntrinsicElements {
