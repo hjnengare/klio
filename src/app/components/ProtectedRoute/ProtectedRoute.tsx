@@ -83,7 +83,7 @@ export default function ProtectedRoute({
   // Show loading state while checking authentication
   if (isLoading) {
     return (
-      <div className="min-h-dvh flex items-center justify-center bg-off-white ">
+      <div className="min-h-screen flex items-center justify-center bg-off-white">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-sage/20 border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
           <p className="font-sf text-base text-charcoal/70">Loading...</p>

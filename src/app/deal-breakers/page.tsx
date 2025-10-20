@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
@@ -295,6 +296,22 @@ function DealBreakersContent() {
             </button>
           </div>
         </OnboardingCard>
+
+        {/* Skip for now */}
+        <div className="text-center mt-3">
+          <Link
+            href="/home"
+            className="inline-block text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
+            aria-label="Skip deal-breakers for now"
+            style={sf}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push('/home');
+            }}
+          >
+            Skip for now
+          </Link>
+        </div>
       </OnboardingLayout>
     </>
   );
@@ -306,7 +323,7 @@ export default function DealBreakersPage() {
       <Suspense fallback={
         <OnboardingLayout step={3} backHref="/subcategories">
           <div className="flex items-center justify-center min-h-[400px]">
-            <div className="animate-pulse text-charcoal/60">Loading...</div>
+            <div className="animate-pulse text-charcoal/60">Loading deal-breakers...</div>
           </div>
         </OnboardingLayout>
       }>

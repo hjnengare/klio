@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
@@ -415,7 +415,15 @@ function InterestsContent() {
 export default function InterestsPage() {
   return (
     <ProtectedRoute requiresAuth={true}>
-      <InterestsContent />
+      <Suspense fallback={
+        <OnboardingLayout backHref="/register" step={1}>
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="animate-pulse text-charcoal/60">Loading interests...</div>
+          </div>
+        </OnboardingLayout>
+      }>
+        <InterestsContent />
+      </Suspense>
     </ProtectedRoute>
   );
 }
