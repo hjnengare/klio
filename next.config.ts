@@ -75,6 +75,9 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['react-icons', 'framer-motion', 'lucide-react'],
     optimizeCss: true,
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
   },
 
   // Turbopack configuration (moved from experimental)
@@ -98,6 +101,8 @@ const nextConfig: NextConfig = {
   // Additional performance optimizations
   poweredByHeader: false,
   compress: true,
+  reactStrictMode: true,
+  swcMinify: true,
   
   // Handle Supabase Edge Runtime warnings
   transpilePackages: ['@supabase/supabase-js', '@supabase/ssr'],
