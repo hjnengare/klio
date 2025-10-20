@@ -18,6 +18,8 @@ import {
   BUSINESSES_OF_THE_MONTH,
 } from "../data/communityHighlightsData";
 import { useOnboarding } from "../contexts/OnboardingContext";
+import NewsletterModal from "../components/NewsletterModal/NewsletterModal";
+import { useNewsletterModal } from "../hooks/useNewsletterModal";
 
 // Removed any animation / scroll-reveal classes and imports.
 
@@ -45,10 +47,16 @@ export default function Home() {
   const { selectedInterests } = useOnboarding();
   const forYouBusinesses = TRENDING_BUSINESSES.slice(0, 10);
   const trendingBusinesses = TRENDING_BUSINESSES.slice(10, 20);
+  const { showModal, closeModal } = useNewsletterModal({
+    threshold: 300,
+    scrollUpAmount: 100,
+  });
 
   return (
     <div className="min-h-dvh bg-off-white">
       <Header showSearch={true} variant="frosty" />
+
+      <NewsletterModal isOpen={showModal} onClose={closeModal} />
 
       <HeroCarousel userInterests={selectedInterests} />
 
