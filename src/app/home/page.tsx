@@ -20,6 +20,8 @@ import {
 import { useOnboarding } from "../contexts/OnboardingContext";
 import NewsletterModal from "../components/NewsletterModal/NewsletterModal";
 import { useNewsletterModal } from "../hooks/useNewsletterModal";
+import ToastContainer from "../components/ToastNotification/ToastContainer";
+import { useToastNotifications } from "../hooks/useToastNotifications";
 
 // Removed any animation / scroll-reveal classes and imports.
 
@@ -51,12 +53,24 @@ export default function Home() {
     threshold: 300,
     scrollUpAmount: 100,
   });
+  const { notifications, removeNotification } = useToastNotifications({
+    interval: 15000, // Show a notification every 15 seconds
+    maxToasts: 3,
+    enabled: true,
+  });
 
   return (
     <div className="min-h-dvh bg-off-white">
       <Header showSearch={true} variant="frosty" />
 
       <NewsletterModal isOpen={showModal} onClose={closeModal} />
+
+      <ToastContainer
+        notifications={notifications}
+        onRemove={removeNotification}
+        position="bottom-right"
+        duration={5000}
+      />
 
       <HeroCarousel userInterests={selectedInterests} />
 
