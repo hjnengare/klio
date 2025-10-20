@@ -55,7 +55,7 @@ export default function Home() {
   });
   const { notifications, removeNotification } = useToastNotifications({
     interval: 15000, // Show a notification every 15 seconds
-    maxToasts: 1,
+    maxToasts: 3,
     enabled: true,
   });
 
