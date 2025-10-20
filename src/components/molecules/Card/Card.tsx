@@ -17,7 +17,7 @@ export interface CardProps {
 
 const variantStyles: Record<CardVariant, string> = {
   default: 'bg-off-white border border-black/5 shadow-md',
-  glass: 'bg-off-white/90 border border-black/5 backdrop-blur-xl shadow-md',
+  glass: 'bg-off-white/90 border border-black/5 backdrop-blur-xl shadow-sm',
   premium: 'bg-off-white/95 border border-white/30 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)]',
   bordered: 'bg-off-white border-2 border-light-gray',
 };
