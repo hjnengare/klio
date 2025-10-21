@@ -84,13 +84,22 @@ function DealBreakersContent() {
     return subcategoriesParam ? subcategoriesParam.split(',').map(s => s.trim()) : [];
   }, [searchParams]);
 
-  useEffect(() => {
-    if (interests.length === 0 && subcategories.length === 0) {
-      // No data passed, redirect to start
-      router.push('/interests');
-      return;
+  // Determine back href based on whether user has interests selected
+  const backHref = useMemo(() => {
+    if (interests.length > 0) {
+      return `/subcategories?interests=${interests.join(',')}`;
     }
-  }, [interests, subcategories, router]);
+    return '/interests';
+  }, [interests]);
+
+  // Remove the redirect - allow users to skip directly to deal-breakers
+  // useEffect(() => {
+  //   if (interests.length === 0 && subcategories.length === 0) {
+  //     // No data passed, redirect to start
+  //     router.push('/interests');
+  //     return;
+  //   }
+  // }, [interests, subcategories, router]);
 
   // Helper function to get interest_id for a subcategory
   const getInterestIdForSubcategory = useCallback((subcategoryId: string): string => {
@@ -169,7 +178,7 @@ function DealBreakersContent() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: entranceStyles }} />
-      <OnboardingLayout step={3} backHref="/subcategories">
+      <OnboardingLayout step={3} backHref={backHref}>
         <div className="text-center mb-6 pt-4 sm:pt-6 enter-fade">
           <h2
             className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 tracking-tight"
@@ -299,18 +308,22 @@ function DealBreakersContent() {
 
         {/* Skip for now */}
         <div className="text-center mt-3">
-          <Link
-            href="/home"
+          <button
+            type="button"
             className="inline-block text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
             aria-label="Skip deal-breakers for now"
             style={sf}
-            onClick={(e) => {
-              e.preventDefault();
-              router.push('/home');
+            onClick={async () => {
+              try {
+                // For the last step, still complete the onboarding
+                await nextStep();
+              } catch (error) {
+                console.error("Error skipping deal-breakers:", error);
+              }
             }}
           >
             Skip for now
-          </Link>
+          </button>
         </div>
       </OnboardingLayout>
     </>
@@ -321,7 +334,7 @@ export default function DealBreakersPage() {
   return (
     <ProtectedRoute requiresAuth={true}>
       <Suspense fallback={
-        <OnboardingLayout step={3} backHref="/subcategories">
+        <OnboardingLayout step={3} backHref="/interests">
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="animate-pulse text-charcoal/60">Loading deal-breakers...</div>
           </div>

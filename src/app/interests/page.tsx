@@ -216,16 +216,13 @@ function InterestsContent() {
     });
 
     try {
-      const interestParams =
-        selectedInterests.length > 0
-          ? `?interests=${selectedInterests.join(",")}`
-          : "";
-      router.push(`/subcategories${interestParams}`);
+      // Move to next step in onboarding workflow
+      await nextStep();
     } catch (error) {
       console.error("Error skipping:", error);
       setIsNavigating(false);
     }
-  }, [isNavigating, router, selectedInterests]);
+  }, [isNavigating, nextStep]);
 
   const hydratedSelected = mounted ? selectedInterests : [];
   const list = INTERESTS;
@@ -385,18 +382,16 @@ function InterestsContent() {
             </button>
 
             <div className="text-center">
-              <Link
-                href="/subcategories"
+              <button
+                type="button"
                 className="inline-block text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
                 aria-label="Skip interest selection for now"
                 style={sf}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleSkip();
-                }}
+                onClick={handleSkip}
+                disabled={isNavigating}
               >
                 Skip for now
-              </Link>
+              </button>
               <div className="mt-1 text-xs text-charcoal/50 max-w-sm mx-auto" style={sf}>
                 {hydratedSelected.length < MIN_SELECTIONS ? (
                   <span>We&apos;ll suggest popular local businesses instead</span>

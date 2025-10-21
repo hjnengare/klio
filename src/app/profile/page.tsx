@@ -1,46 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 import { ArrowLeft, Star as StarIcon, Trophy, Calendar, Settings, Bell, Lock, LogOut, Upload, X } from "lucide-react";
 import { getBrowserSupabase } from "../lib/supabase/client";
 
-// Lazy load components for better performance
-const Footer = dynamic(() => import("../components/Footer/Footer"), {
-  loading: () => null,
-  ssr: false,
-});
-
-const ProfileHeader = dynamic(() => import("@/components/molecules/ProfileHeader").then(mod => ({ default: mod.ProfileHeader })), {
-  ssr: false,
-});
-
-const ProfileStatsSection = dynamic(() => import("@/components/organisms/ProfileStatsSection").then(mod => ({ default: mod.ProfileStatsSection })), {
-  ssr: false,
-});
-
-const ReviewsList = dynamic(() => import("@/components/organisms/ReviewsList").then(mod => ({ default: mod.ReviewsList })), {
-  ssr: false,
-});
-
-const AchievementsList = dynamic(() => import("@/components/organisms/AchievementsList").then(mod => ({ default: mod.AchievementsList })), {
-  ssr: false,
-});
-
-const SettingsMenu = dynamic(() => import("@/components/organisms/SettingsMenu").then(mod => ({ default: mod.SettingsMenu })), {
-  ssr: false,
-});
-
-const Card = dynamic(() => import("@/components/molecules/Card").then(mod => ({ default: mod.Card })), {
-  ssr: false,
-});
-
-const Skeleton = dynamic(() => import("@/components/atoms/Skeleton").then(mod => ({ default: mod.Skeleton })), {
-  ssr: false,
-});
+// Import components directly for faster loading
+import Footer from "../components/Footer/Footer";
+import { ProfileHeader } from "@/components/molecules/ProfileHeader";
+import { ProfileStatsSection } from "@/components/organisms/ProfileStatsSection";
+import { ReviewsList } from "@/components/organisms/ReviewsList";
+import { AchievementsList } from "@/components/organisms/AchievementsList";
+import { SettingsMenu } from "@/components/organisms/SettingsMenu";
+import { Card } from "@/components/molecules/Card";
+import { Skeleton } from "@/components/atoms/Skeleton";
 
 // Glass effect styles
 const glassHeader = `
@@ -92,10 +67,7 @@ interface UserAchievement {
 }
 
 function ProfileContent() {
-  const { user, updateUser, isLoading } = useAuth();
-
-  console.log('ProfileContent render - isLoading:', isLoading);
-  console.log('ProfileContent render - user:', user);
+  const { user, updateUser, logout, isLoading } = useAuth();
 
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -116,8 +88,6 @@ function ProfileContent() {
     created_at: rawProfile.created_at ?? (user?.created_at ?? new Date().toISOString()),
     ...rawProfile,
   } as any;
-
-  console.log('Profile data:', profile);
 
   useEffect(() => {
     if (isEditOpen) {
@@ -199,23 +169,8 @@ function ProfileContent() {
     }
   };
 
-  const handleLogout = () => {
-    // This function is now handled by the useAuth context's logout
-    // The original code had a direct logout call here, which is now redundant
-    // if updateUser is the primary way to log out.
-    // Keeping it for now as it was in the original file, but it might be removed
-    // if updateUser is the only way to manage auth state.
-    // For now, it's kept as per instruction 5.
-    // The original code had `logout();` here.
-    // Since `updateUser` is now the primary way to manage auth state,
-    // this function might become obsolete or need to be re-evaluated.
-    // However, the instruction is to only apply the new_code, not refactor.
-    // So, I will keep the original `logout();` call, but it will be removed
-    // from the `useAuth` hook in a subsequent edit if `updateUser` is the only way.
-    // For now, I will keep the original `logout();` call as it was in the original file.
-    // The `updateUser` function in `useAuth` is the primary way to log out.
-    // The `logout` function from `lucide-react` is no longer needed here.
-    // I will remove the `logout();` call.
+  const handleLogout = async () => {
+    await logout();
   };
 
   const formatMemberSince = (d: string) => {
@@ -229,7 +184,6 @@ function ProfileContent() {
 
   // Loading skeleton
   if (isLoading) {
-    console.log('Showing loading skeleton');
     return (
       <div className="min-h-dvh bg-off-white relative">
         <div className="pt-24 pb-6 relative z-10">
@@ -260,8 +214,6 @@ function ProfileContent() {
       </div>
     );
   }
-
-  console.log('Rendering main profile content');
 
   // Prepare stats data
   const stats = [
@@ -331,10 +283,6 @@ function ProfileContent() {
     },
   ];
 
-  console.log('About to render JSX - stats:', stats);
-  console.log('About to render JSX - reviewsData length:', reviewsData.length);
-  console.log('About to render JSX - achievementsData length:', achievementsData.length);
-
   return (
     <div className="relative min-h-dvh bg-off-white">
       {/* Header */}
@@ -375,7 +323,6 @@ function ProfileContent() {
           <div className="max-w-4xl mx-auto space-y-6">
             {/* Profile Header Card */}
             <Card variant="glass" padding="md">
-              {console.log('Rendering ProfileHeader')}
               <ProfileHeader
                 username={profile.username || profile.display_name || "User"}
                 displayName={profile.display_name || undefined}
@@ -387,11 +334,9 @@ function ProfileContent() {
             </Card>
 
             {/* Stats Overview */}
-            {console.log('Rendering ProfileStatsSection')}
             <ProfileStatsSection stats={stats} title="Stats Overview" />
 
             {/* Your Contributions */}
-            {console.log('Rendering ReviewsList')}
             <ReviewsList
               reviews={reviewsData}
               title="Your Contributions"
@@ -400,11 +345,9 @@ function ProfileContent() {
             />
 
             {/* Your Achievements */}
-            {console.log('Rendering AchievementsList')}
             <AchievementsList achievements={achievementsData} title="Your Achievements" />
 
             {/* Account Settings */}
-            {console.log('Rendering SettingsMenu')}
             <SettingsMenu menuItems={settingsMenuItems} />
           </div>
         </div>

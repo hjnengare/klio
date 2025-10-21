@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { AuthService } from "../lib/auth";
 import { useToast } from "../contexts/ToastContext";
 import { AlertCircle } from "lucide-react";
+import { getBrowserSupabase } from "../lib/supabase/client";
 
 // Import shared components
 import { authStyles } from "../components/Auth/Shared/authStyles";
@@ -27,29 +28,44 @@ export default function ResetPasswordPage() {
   const { showToast } = useToast();
 
   useEffect(() => {
-    // Check if we have a valid recovery token in the URL hash
-    const checkToken = () => {
-      const hashParams = new URLSearchParams(window.location.hash.substring(1));
-      const accessToken = hashParams.get('access_token');
-      const type = hashParams.get('type');
+    // Check if we have a valid session (should be set by auth callback)
+    const checkSession = async () => {
+      try {
+        const supabase = getBrowserSupabase();
 
-      console.log('Reset password page - token check:', {
-        hasAccessToken: !!accessToken,
-        type,
-        hash: window.location.hash
-      });
+        // Check for existing session (from callback redirect)
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
-      if (accessToken && type === 'recovery') {
-        setIsValidToken(true);
-      } else {
-        setError("Invalid or expired reset link. Please request a new one.");
-        showToast("Invalid or expired reset link", 'sage', 4000);
+        console.log('Reset password page - session check:', {
+          hasSession: !!session,
+          error: sessionError
+        });
+
+        if (session) {
+          // Valid session exists, user can reset password
+          setIsValidToken(true);
+          
+          // Clear the verified parameter from URL for security
+          const searchParams = new URLSearchParams(window.location.search);
+          if (searchParams.has('verified')) {
+            window.history.replaceState(null, '', window.location.pathname);
+          }
+        } else {
+          setError("Invalid or expired reset link. Please request a new one.");
+          showToast("Invalid or expired reset link", 'sage', 4000);
+        }
+      } catch (err) {
+        console.error('Error checking session:', err);
+        setError("Failed to verify reset link. Please try again.");
+        showToast("Failed to verify reset link", 'sage', 4000);
+      } finally {
+        setIsChecking(false);
       }
-      setIsChecking(false);
     };
 
-    checkToken();
-  }, []); // Remove showToast from dependencies to prevent infinite re-renders
+    checkSession();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
 
   const getPasswordError = () => {
     if (!passwordTouched) return "";
@@ -100,25 +116,32 @@ export default function ResetPasswordPage() {
     }
 
     try {
+      console.log('Starting password update...');
       const { error: updateError } = await AuthService.updatePassword(password);
+      console.log('Password update response:', { error: updateError });
 
       if (updateError) {
+        console.error('Password update error:', updateError);
         setError(updateError.message);
         showToast(updateError.message, 'sage', 4000);
+        setIsSubmitting(false);
       } else {
+        console.log('Password updated successfully');
+        
         setResetComplete(true);
         showToast("Password reset successful!", 'success', 3000);
 
-        // Redirect to login after 2 seconds
+        // Redirect to home after 2 seconds
         setTimeout(() => {
-          router.push('/login');
+          console.log('Redirecting to home...');
+          router.push('/home');
         }, 2000);
       }
     } catch (error: unknown) {
+      console.error('Exception during password reset:', error);
       const errorMsg = error instanceof Error ? error.message : 'Failed to reset password';
       setError(errorMsg);
       showToast(errorMsg, 'sage', 4000);
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -212,16 +235,16 @@ export default function ResetPasswordPage() {
                     Password reset!
                   </h2>
                   <p className="font-sf text-sm text-charcoal/70">
-                    Your password has been successfully reset. You can now sign in with your new password.
+                    Your password has been successfully reset. Redirecting you to home...
                   </p>
                 </div>
 
                 <div className="pt-4">
                   <button
-                    onClick={() => router.push('/login')}
+                    onClick={() => router.push('/home')}
                     className="w-full btn-premium text-white text-base font-semibold py-3 px-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/30 transform hover:scale-105 active:scale-95"
                   >
-                    Continue to Login
+                    Continue to Home
                   </button>
                 </div>
               </div>

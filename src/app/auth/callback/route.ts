@@ -62,12 +62,22 @@ export async function GET(request: Request) {
           .eq('user_id', user.id)
           .single();
 
+        // Check callback type first
+        const type = requestUrl.searchParams.get('type');
+
+        // Handle password recovery
+        if (type === 'recovery' || type === 'password_recovery') {
+          console.log('Password recovery callback - redirecting to reset-password');
+          const resetUrl = new URL('/reset-password', request.url);
+          resetUrl.searchParams.set('verified', '1');
+          return NextResponse.redirect(resetUrl);
+        }
+
         // Redirect based on onboarding status and email verification
         if (profile?.onboarding_step === 'complete') {
           return NextResponse.redirect(new URL('/home', request.url));
         } else {
           // Check if this is an email verification callback
-          const type = requestUrl.searchParams.get('type');
           if (type === 'signup') {
             // Email verification successful - redirect to verify-email page with success flag
             const dest = new URL('/verify-email', request.url);

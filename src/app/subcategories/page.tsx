@@ -93,7 +93,8 @@ function SubcategoriesContent() {
   useEffect(() => {
     const loadSubcategories = async () => {
       if (selectedInterests.length === 0) {
-        router.push('/interests');
+        // If no interests selected, redirect to deal-breakers
+        router.push('/deal-breakers');
         return;
       }
 
@@ -301,21 +302,21 @@ function SubcategoriesContent() {
 
         {/* Skip for now */}
         <div className="text-center mt-3">
-          <Link
-            href="/deal-breakers"
+          <button
+            type="button"
             className="inline-block text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
             aria-label="Skip subcategory selection for now"
             style={sf}
-            onClick={(e) => {
-              e.preventDefault();
-              const interestParams = selectedInterests.length > 0
-                ? `?interests=${selectedInterests.join(',')}`
-                : '';
-              router.push(`/deal-breakers${interestParams}`);
+            onClick={async () => {
+              try {
+                await nextStep();
+              } catch (error) {
+                console.error("Error skipping subcategories:", error);
+              }
             }}
           >
             Skip for now
-          </Link>
+          </button>
         </div>
       </OnboardingLayout>
     </>

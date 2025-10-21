@@ -76,6 +76,18 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(route)
   );
 
+  // Password reset routes - allow access regardless of auth status
+  const passwordResetRoutes = ['/forgot-password', '/reset-password'];
+  const isPasswordResetRoute = passwordResetRoutes.some(route =>
+    request.nextUrl.pathname.startsWith(route)
+  );
+
+  // Allow password reset routes regardless of auth status
+  if (isPasswordResetRoute) {
+    console.log('Middleware: Allowing access to password reset route');
+    return response;
+  }
+
   // Redirect unauthenticated users from protected routes
   if (isProtectedRoute && !user) {
     console.log('Middleware: Redirecting unauthenticated user to onboarding');
@@ -97,7 +109,7 @@ export async function middleware(request: NextRequest) {
       console.log('Middleware: Allowing access to verify-email page');
       return response;
     }
-    
+
     if (user.email_confirmed_at) {
       console.log('Middleware: Redirecting verified user to interests');
       const redirectUrl = new URL('/interests', request.url);
