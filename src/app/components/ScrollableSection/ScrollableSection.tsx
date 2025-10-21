@@ -81,12 +81,11 @@ export default function ScrollableSection({
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-          WebkitScrollbar: { display: 'none' },
           WebkitOverflowScrolling: 'touch',
           overscrollBehaviorX: 'contain',
           touchAction: 'pan-x',
           scrollSnapType: 'x mandatory',
-        }}
+        } as React.CSSProperties}
       >
         {children}
       </div>

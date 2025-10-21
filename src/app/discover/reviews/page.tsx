@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
+import { ArrowLeft, Store, Images, ThumbsUp, FileText, Star } from "lucide-react";
 import VerifiedBadge from "../../components/VerifiedBadge/VerifiedBadge";
 
 // Mock reviews data - in production this would come from API
@@ -233,7 +234,7 @@ export default function GeneralReviewsPage() {
         <div className="flex items-center justify-between max-w-[1300px] mx-auto">
           <Link href="/home" className="group flex items-center">
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center shadow-premium-sm hover:shadow-premium-md transition-all duration-premium ease-premium hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
-              <ion-icon name="arrow-back" className="text-lg sm:text-xl text-charcoal/70 group-hover:text-sage transition-colors duration-premium ease-premium" />
+              <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-charcoal/70 group-hover:text-sage transition-colors duration-premium ease-premium" />
             </div>
             <motion.h1 className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-premium ease-premium group-hover:from-sage/90 group-hover:to-sage relative tracking-[-0.02em]">
               Community Reviews
@@ -269,7 +270,10 @@ export default function GeneralReviewsPage() {
                     }
                   `}
                 >
-                  <ion-icon name={filter.icon} className="text-base" />
+                  {filter.id === "all" && <FileText className="w-4 h-4" />}
+                  {filter.id === "5" && <Star className="w-4 h-4" />}
+                  {filter.id === "4" && <Star className="w-4 h-4" />}
+                  {filter.id === "photos" && <Images className="w-4 h-4" />}
                   <span>{filter.label}</span>
                 </motion.button>
               ))}
@@ -344,7 +348,7 @@ export default function GeneralReviewsPage() {
                         href={`/business/${review.businessId}`}
                         className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5  bg-off-white  /95 backdrop-blur-md hover:bg-off-white   rounded-full transition-all duration-premium shadow-premium-md hover:shadow-premium-lg hover:scale-105 z-20"
                       >
-                        <ion-icon name="storefront-outline" className="text-sage" style={{ fontSize: '16px' }} />
+                        <Store className="w-4 h-4 text-sage" />
                         <span className="font-sf text-sm font-600 text-sage tracking-[-0.015em]">
                           {review.businessName}
                         </span>
@@ -353,7 +357,7 @@ export default function GeneralReviewsPage() {
                       {/* Gallery Icon with count (top right) */}
                       {review.images.length > 1 && (
                         <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1.5 bg-charcoal/80 backdrop-blur-md rounded-lg z-20">
-                          <ion-icon name="images" className="text-white" style={{ fontSize: '16px' }} />
+                          <Images className="w-4 h-4 text-white" />
                           <span className="font-sf text-sm font-600 text-white tracking-[-0.015em]">
                             {review.images.length}
                           </span>
@@ -393,7 +397,7 @@ export default function GeneralReviewsPage() {
                         href={`/business/${review.businessId}`}
                         className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-sage/10 hover:bg-sage/20 rounded-full transition-all duration-premium"
                       >
-                        <ion-icon name="storefront-outline" className="text-sage" style={{ fontSize: '16px' }} />
+                        <Store className="w-4 h-4 text-sage" />
                         <span className="font-sf text-sm font-600 text-sage tracking-[-0.015em]">
                           {review.businessName}
                         </span>
@@ -445,13 +449,11 @@ export default function GeneralReviewsPage() {
                         {/* Star Rating */}
                         <div className="flex items-center gap-1 mb-3">
                           {[...Array(5)].map((_, i) => (
-                            <ion-icon
+                            <Star
                               key={i}
-                              name={i < review.rating ? "star" : "star-outline"}
-                              style={{
-                                color: i < review.rating ? "var(--amber-500)" : "var(--charcoal-300)",
-                                fontSize: '18px'
-                              }}
+                              className="w-[18px] h-[18px]"
+                              fill={i < review.rating ? "var(--amber-500)" : "transparent"}
+                              stroke={i < review.rating ? "var(--amber-500)" : "var(--charcoal-300)"}
                             />
                           ))}
                         </div>
@@ -495,7 +497,7 @@ export default function GeneralReviewsPage() {
                         whileTap={{ scale: 0.95 }}
                         className="inline-flex items-center gap-2 px-4 py-2 bg-charcoal/5 hover:bg-charcoal/10 rounded-full font-sf text-sm font-600 text-charcoal/70 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
                       >
-                        <ion-icon name="thumbs-up-outline" className="text-base" />
+                        <ThumbsUp className="w-4 h-4" />
                         <span>Helpful</span>
                         <span className="text-charcoal/50">({review.helpful})</span>
                       </motion.button>
@@ -516,7 +518,7 @@ export default function GeneralReviewsPage() {
             className=" bg-off-white   backdrop-blur-lg rounded-2xl shadow-premium-md border border-charcoal/10 p-12 text-center"
           >
             <div className="w-20 h-20 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ion-icon name="document-text-outline" style={{ fontSize: '40px', color: 'var(--charcoal-400)' }} />
+              <FileText className="w-10 h-10 text-charcoal/40" />
             </div>
             <h3 className="font-sf text-xl font-600 text-charcoal mb-2 tracking-[-0.02em]">
               No reviews found

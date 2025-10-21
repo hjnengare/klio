@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { ChevronLeft, Search, Building2, MapPin, ChevronRight } from "lucide-react";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 
 export default function WriteReviewPage() {
@@ -11,16 +12,6 @@ export default function WriteReviewPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
-  useEffect(() => {
-    // Preload common ion-icons
-    ["search", "business", "location", "star", "chevron-forward", "chevron-back"].forEach((n) => {
-      const el = document.createElement("ion-icon");
-      el.name = n;
-      el.style.display = "none";
-      document.body.appendChild(el);
-      setTimeout(() => document.body.contains(el) && document.body.removeChild(el), 100);
-    });
-  }, []);
 
   const mockBusinesses = [
     {
@@ -76,7 +67,7 @@ export default function WriteReviewPage() {
                 className="w-10 h-10 rounded-full hover:bg-sage/5 flex items-center justify-center transition-all duration-200 mobile-interaction"
                 aria-label="Go back"
               >
-                <ion-icon name="chevron-back" class="text-lg text-charcoal/70" />
+                <ChevronLeft className="w-5 h-5 text-charcoal/70" />
               </button>
               <h1 className="font-sf text-2xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
                 Write Review
@@ -100,7 +91,7 @@ export default function WriteReviewPage() {
 
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <ion-icon name="search" class="text-charcoal/40 text-base" />
+              <Search className="w-4 h-4 text-charcoal/40" />
             </div>
             <input
               type="text"
@@ -139,7 +130,7 @@ export default function WriteReviewPage() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <ion-icon name="business" class="text-sage text-lg" />
+                        <Building2 className="w-5 h-5 text-sage" />
                       </div>
                     )}
                   </div>
@@ -152,14 +143,13 @@ export default function WriteReviewPage() {
                       <span className="text-sm text-charcoal/60">{business.category}</span>
                       <span className="text-charcoal/30">•</span>
                       <div className="flex items-center space-x-1">
-                        <ion-icon name="location" class="text-xs text-charcoal/40" />
+                        <MapPin className="w-3 h-3 text-charcoal/40" />
                         <span className="text-sm text-charcoal/60">{business.location}</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <ion-icon name="chevron-forward" class="text-charcoal/40 text-base
-                                                         group-hover:text-sage transition-colors duration-200" />
+                <ChevronRight className="w-4 h-4 text-charcoal/40 group-hover:text-sage transition-colors duration-200" />
               </div>
             </Link>
           ))}
@@ -169,7 +159,7 @@ export default function WriteReviewPage() {
         {searchQuery && filteredBusinesses.length === 0 && (
           <div className="text-center py-12">
             <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ion-icon name="search" class="text-2xl text-charcoal/40" />
+              <Search className="w-8 h-8 text-charcoal/40" />
             </div>
             <h3 className="font-sf text-lg font-600 text-charcoal mb-2">
               No businesses found

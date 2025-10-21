@@ -1,4 +1,4 @@
-export default function HomeLoading() {
+export default function RegisterLoading() {
   return (
     <div className="min-h-dvh bg-off-white flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
@@ -8,3 +8,4 @@ export default function HomeLoading() {
     </div>
   );
 }
+

@@ -15,7 +15,8 @@
     "type-check": "tsc --noEmit",
     "clean": "rm -rf .next out dist",
     "dev:clean": "npm run clean && npm run dev",
-    "perf:check": "node scripts/dev-performance.js"
+    "perf:check": "node scripts/dev-performance.js",
+    "perf:audit": "node scripts/performance-audit.js"
   },
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.10.0",

@@ -16,7 +16,7 @@ interface SearchInputProps {
   variant?: "header" | "page";
 }
 
-const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
+const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
   (
     {
       placeholder = "Discover exceptional local experiences, premium dining, and hidden gems...",
@@ -33,9 +33,8 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
   ) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [ph, setPh] = useState(placeholder);
-    const containerRef = useRef<HTMLDivElement>(null);
 
-    useImperativeHandle(ref, () => containerRef.current as HTMLDivElement);
+    // ref is now the form ref
 
     useEffect(() => {
       const setByViewport = () => {
@@ -61,7 +60,7 @@ const SearchInput = forwardRef<HTMLDivElement, SearchInputProps>(
       variant === "header" ? "w-full" : "relative group w-full sm:w-[90%] md:w-[85%] lg:w-[75%]";
 
     return (
-      <form onSubmit={handleSubmit} className={`${containerClass} ${className}`} ref={containerRef}>
+      <form onSubmit={handleSubmit} className={`${containerClass} ${className}`} ref={ref}>
         <div
           className={`
             relative group rounded-full border border-sage bg-off-white/60

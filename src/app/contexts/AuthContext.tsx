@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { getBrowserSupabase } from '../lib/supabase/client';
 import { AuthService } from '../lib/auth';
@@ -291,7 +291,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const value: AuthContextType = {
+  // Memoize context value to prevent unnecessary re-renders
+  const value: AuthContextType = useMemo(() => ({
     user,
     login,
     register,
@@ -300,7 +301,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     resendVerificationEmail,
     isLoading,
     error
-  };
+  }), [user, isLoading, error]);
 
   return (
     <AuthContext.Provider value={value}>

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
+import { Trash2, Images, ChevronUp, Heart, X } from 'lucide-react';
 import type { ReviewWithUser } from '../../lib/types/database';
 import { useAuth } from '../../contexts/AuthContext';
 import { useReviewSubmission } from '../../hooks/useReviews';
@@ -133,7 +134,7 @@ export default function ReviewCard({
                   onClick={handleDelete}
                   className="text-red-500 hover:text-red-600 transition-colors duration-200"
                 >
-                  <ion-icon name="trash-outline" style={{ fontSize: '16px' }} />
+                  <Trash2 size={16} />
                 </motion.button>
               )}
             </div>
@@ -211,7 +212,7 @@ export default function ReviewCard({
                   onClick={() => setShowAllImages(true)}
                   className="text-sage hover:text-sage/80 font-sf text-sm font-500 flex items-center space-x-1"
                 >
-                  <ion-icon name="images-outline" style={{ fontSize: '16px' }} />
+                  <Images size={16} />
                   <span>Show {review.images.length - 3} more images</span>
                 </motion.button>
               )}
@@ -223,7 +224,7 @@ export default function ReviewCard({
                   onClick={() => setShowAllImages(false)}
                   className="text-charcoal/60 hover:text-charcoal font-sf text-sm font-500 flex items-center space-x-1"
                 >
-                  <ion-icon name="chevron-up-outline" style={{ fontSize: '16px' }} />
+                  <ChevronUp size={16} />
                   <span>Show less</span>
                 </motion.button>
               )}
@@ -243,10 +244,7 @@ export default function ReviewCard({
               }`}
               disabled={!user}
             >
-              <ion-icon
-                name={isLiked ? "heart" : "heart-outline"}
-                style={{ fontSize: '18px' }}
-              />
+              <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
               <span className="font-sf text-sm font-500">
                 Helpful ({helpfulCount})
               </span>
@@ -289,9 +287,9 @@ export default function ReviewCard({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setSelectedImageIndex(null)}
-                className="absolute -top-4 -right-4 w-8 h-8 bg-off-white   text-black rounded-full flex items-center justify-center shadow-lg"
+                className="absolute -top-4 -right-4 w-8 h-8 bg-off-white text-black rounded-full flex items-center justify-center shadow-lg"
               >
-                <ion-icon name="close" style={{ fontSize: '20px' }} />
+                <X size={20} />
               </motion.button>
             </motion.div>
           </motion.div>

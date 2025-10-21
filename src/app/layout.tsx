@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
-import Script from "next/script";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { OnboardingProvider } from "./contexts/OnboardingContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import { SavedItemsProvider } from "./contexts/SavedItemsContext";
-import PageTransitionProvider from "./components/Providers/PageTransitionProvider";
-import WebVitals from "./components/Performance/WebVitals";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
-import BusinessNotifications from "./components/Notifications/BusinessNotifications";
+
+// Lazy load non-critical components for faster initial load
+const PageTransitionProvider = dynamic(() => import("./components/Providers/PageTransitionProvider"), {
+  ssr: true,
+});
+const WebVitals = dynamic(() => import("./components/Performance/WebVitals"), {
+  ssr: false,
+});
+const BusinessNotifications = dynamic(() => import("./components/Notifications/BusinessNotifications"), {
+  ssr: false,
+});
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -87,9 +95,15 @@ export default function RootLayout({
 
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
+        
+        {/* Preconnect to external domains for faster resource loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://unpkg.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_SUPABASE_URL} />
+        
+        {/* Preload critical resources */}
+        <link rel="preload" href="/globals.css" as="style" />
+        
         <link rel="canonical" href="/" />
       </head>
       <body className={`${urbanist.className} no-layout-shift`}>

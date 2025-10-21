@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { AlertCircle, MessageCircle } from 'lucide-react';
 import ReviewCard from './ReviewCard';
 import type { ReviewWithUser } from '../../lib/types/database';
 
@@ -62,10 +63,7 @@ export default function ReviewsList({
         className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center"
       >
         <div className="flex items-center justify-center mb-3">
-          <ion-icon
-            name="alert-circle-outline"
-            style={{ fontSize: '24px', color: '#ef4444' }}
-          />
+          <AlertCircle size={24} className="text-red-500" />
         </div>
         <h3 className="font-sf text-lg font-600 text-red-800 mb-2">
           Unable to load reviews
@@ -96,10 +94,7 @@ export default function ReviewsList({
           }}
           className="w-16 h-16 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center mx-auto mb-4"
         >
-          <ion-icon
-            name="chatbubbles-outline"
-            style={{ fontSize: '32px', color: 'var(--sage)' }}
-          />
+          <MessageCircle size={32} className="text-sage" />
         </motion.div>
         <h3 className="font-sf text-xl font-600 text-charcoal mb-2">
           No reviews yet

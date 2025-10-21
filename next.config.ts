@@ -85,11 +85,15 @@ const nextConfig: NextConfig = {
 
   // Enable experimental features for better performance
   experimental: {
-    optimizePackageImports: ['react-icons', 'framer-motion', 'lucide-react'],
+    optimizePackageImports: ['react-icons', 'framer-motion', 'lucide-react', 'date-fns'],
     optimizeCss: true,
     serverActions: {
       bodySizeLimit: '2mb',
     },
+    // Enable PPR for better performance
+    ppr: false, // Set to true when ready for Partial Prerendering
+    // Optimize server component loading
+    serverComponentsExternalPackages: ['@supabase/supabase-js'],
   },
 
   // Turbopack configuration (moved from experimental)
@@ -114,6 +118,51 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
+  
+  // Add security and performance headers
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin'
+          },
+        ],
+      },
+      {
+        source: '/fonts/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
   
   // Handle Supabase Edge Runtime warnings
   transpilePackages: ['@supabase/supabase-js', '@supabase/ssr', '@supabase/realtime-js'],
