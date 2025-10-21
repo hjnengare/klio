@@ -124,13 +124,13 @@ export default function Header({
                 <Link
                   key={route}
                   href={`/${route}`}
-                  className="group capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-semibold text-charcoal/80 hover:text-sage transition-all duration-300 relative overflow-hidden"
+                  className="group capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-semibold text-charcoal/80 hover:text-sage transition-all duration-300 relative"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <span className="relative z-10">{route}</span>
                   {route === "saved" && savedCount > 0 && (
-                    <div className="absolute -top-1 -right-1 bg-coral text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-lg">
+                    <div className="absolute -top-1 -right-1 bg-sage text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-lg z-20">
                       {savedCount > 99 ? "99+" : savedCount}
                     </div>
                   )}

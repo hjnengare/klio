@@ -7,6 +7,7 @@ import { ArrowLeft, Bookmark, Search } from "lucide-react";
 import BusinessCard from "../components/BusinessCard/BusinessCard";
 import { TRENDING_BUSINESSES } from "../data/businessData";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
+import { useSavedItems } from "../contexts/SavedItemsContext";
 
 const ScrollReveal = dynamic(() => import("../components/Animations/ScrollReveal"), {
   ssr: false,
@@ -19,9 +20,12 @@ const Footer = dynamic(() => import("../components/Footer/Footer"), {
 
 export default function SavedPage() {
   const router = useRouter();
+  const { savedItems } = useSavedItems();
 
-  // Mock saved businesses - in real app this would come from user data
-  const savedBusinesses = TRENDING_BUSINESSES.slice(0, 3);
+  // Get saved businesses from the saved items context
+  const savedBusinesses = TRENDING_BUSINESSES.filter(business =>
+    savedItems.includes(business.id)
+  );
 
   return (
     <EmailVerificationGuard>
