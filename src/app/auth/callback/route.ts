@@ -73,27 +73,38 @@ export async function GET(request: Request) {
           return NextResponse.redirect(resetUrl);
         }
 
+        // Check if this is an email verification callback
+        if (type === 'signup') {
+          console.log('Email verification callback - checking verification status');
+          
+          // Check if email is actually verified now
+          if (user.email_confirmed_at) {
+            console.log('Email verified - redirecting to interests');
+            // Email is verified, proceed directly to interests
+            const dest = new URL('/interests', request.url);
+            dest.searchParams.set('verified', '1'); // one-time signal
+            dest.searchParams.set('email_verified', 'true'); // additional flag for client-side
+            return NextResponse.redirect(dest);
+          } else {
+            console.log('Email not yet verified - redirecting to verify-email');
+            // Email not verified, redirect to verify-email page
+            return NextResponse.redirect(new URL('/verify-email', request.url));
+          }
+        }
+
         // Redirect based on onboarding status and email verification
         if (profile?.onboarding_step === 'complete') {
           return NextResponse.redirect(new URL('/home', request.url));
         } else {
-          // Check if this is an email verification callback
-          if (type === 'signup') {
-            // Email verification successful - redirect to verify-email page with success flag
-            const dest = new URL('/verify-email', request.url);
+          // OAuth or other auth flow - check if email is verified
+          if (user.email_confirmed_at) {
+            // Email is verified, proceed to interests with verification flag
+            const dest = new URL('/interests', request.url);
             dest.searchParams.set('verified', '1'); // one-time signal
             return NextResponse.redirect(dest);
           } else {
-            // OAuth or other auth flow - check if email is verified
-            if (user.email_confirmed_at) {
-              // Email is verified, proceed to interests with verification flag
-              const dest = new URL('/interests', request.url);
-              dest.searchParams.set('verified', '1'); // one-time signal
-              return NextResponse.redirect(dest);
-            } else {
-              // Email not verified, redirect to verify-email page
-              return NextResponse.redirect(new URL('/verify-email', request.url));
-            }
+            // Email not verified, redirect to verify-email page
+            return NextResponse.redirect(new URL('/verify-email', request.url));
           }
         }
       }

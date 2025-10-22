@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface ProtectedRouteProps {
@@ -21,6 +21,7 @@ export default function ProtectedRoute({
 }: ProtectedRouteProps) {
   const { user, isLoading } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (isLoading) return; // Wait for auth state to load
@@ -44,10 +45,15 @@ export default function ProtectedRoute({
     // If user is logged in but route doesn't require auth (e.g., login/register pages)
     if (!requiresAuth && user) {
       console.log('ProtectedRoute: User on non-auth route, checking redirects');
+      
+      // Check if user is coming from successful email verification
+      const emailVerified = searchParams.get('email_verified') === 'true';
+      const verified = searchParams.get('verified') === '1';
+      
       if (user.profile?.onboarding_complete) {
         console.log('ProtectedRoute: Onboarding complete, redirecting to home');
         router.push('/home');
-      } else if (!user.email_verified) {
+      } else if (!user.email_verified && !emailVerified && !verified) {
         console.log('ProtectedRoute: Email not verified, redirecting to verify-email');
         router.push('/verify-email');
       } else {
