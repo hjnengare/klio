@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
@@ -78,16 +78,20 @@ function ProfileContent() {
   const supabase = getBrowserSupabase();
 
   const rawProfile: any = user?.profile || {};
-  const profile = {
-    username: rawProfile.username ?? (user?.email ? user.email.split('@')[0] : 'user'),
-    display_name: rawProfile.display_name ?? null,
-    avatar_url: rawProfile.avatar_url ?? null,
-    is_top_reviewer: rawProfile.is_top_reviewer ?? false,
-    reviews_count: rawProfile.reviews_count ?? 0,
-    badges_count: rawProfile.badges_count ?? 0,
-    created_at: rawProfile.created_at ?? (user?.created_at ?? new Date().toISOString()),
-    ...rawProfile,
-  } as any;
+  const profile = React.useMemo(() => {
+    const profileData = {
+      username: rawProfile.username ?? (user?.email ? user.email.split('@')[0] : 'user'),
+      display_name: rawProfile.display_name ?? null,
+      avatar_url: rawProfile.avatar_url ?? null,
+      is_top_reviewer: rawProfile.is_top_reviewer ?? false,
+      reviews_count: rawProfile.reviews_count ?? 0,
+      badges_count: rawProfile.badges_count ?? 0,
+      created_at: rawProfile.created_at ?? (user?.created_at ?? new Date().toISOString()),
+      ...rawProfile,
+    };
+    console.log('Profile data updated:', profileData.avatar_url);
+    return profileData;
+  }, [user?.profile, user?.email, user?.created_at]);
 
   useEffect(() => {
     if (isEditOpen) {
@@ -129,13 +133,15 @@ function ProfileContent() {
 
       let avatar_url = profile.avatar_url || null;
       if (avatarFile) {
-        const path = `${user.id}/avatar-${Date.now()}`;
+        const timestamp = Date.now();
+        const path = `${user.id}/avatar-${timestamp}`;
         const { error: uploadErr } = await supabase.storage
           .from('avatars')
           .upload(path, avatarFile, { upsert: true, cacheControl: '3600' });
         if (uploadErr) throw uploadErr;
         const { data: pub } = supabase.storage.from('avatars').getPublicUrl(path);
-        avatar_url = pub.publicUrl;
+        // Add cache-busting query parameter to force browser refresh
+        avatar_url = `${pub.publicUrl}?t=${timestamp}`;
       }
 
       const updates: Record<string, any> = {
@@ -161,6 +167,7 @@ function ProfileContent() {
         } as any,
       });
 
+      console.log('Profile updated with avatar_url:', updates.avatar_url ?? avatar_url);
       setIsEditOpen(false);
     } catch (e: any) {
       setError(e?.message || 'Failed to save profile');
@@ -324,6 +331,7 @@ function ProfileContent() {
             {/* Profile Header Card */}
             <Card variant="glass" padding="md">
               <ProfileHeader
+                key={profile.avatar_url || 'no-avatar'}
                 username={profile.username || profile.display_name || "User"}
                 displayName={profile.display_name || undefined}
                 avatarUrl={profile.avatar_url}

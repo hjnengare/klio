@@ -31,6 +31,12 @@ export const Avatar: React.FC<AvatarProps> = ({
   const [imageError, setImageError] = React.useState(false);
   const { container, text } = sizeStyles[size];
 
+  // Reset error state when src changes
+  React.useEffect(() => {
+    console.log('Avatar src changed:', src);
+    setImageError(false);
+  }, [src]);
+
   const initials = React.useMemo(() => {
     if (fallback) {
       return fallback
