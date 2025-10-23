@@ -92,8 +92,6 @@ const nextConfig: NextConfig = {
     },
     // Enable PPR for better performance
     ppr: false, // Set to true when ready for Partial Prerendering
-    // Optimize server component loading
-    serverComponentsExternalPackages: ['@supabase/supabase-js'],
   },
 
   // Turbopack configuration (moved from experimental)
@@ -165,7 +163,7 @@ const nextConfig: NextConfig = {
   },
   
   // Handle Supabase Edge Runtime warnings
-  transpilePackages: ['@supabase/supabase-js', '@supabase/ssr', '@supabase/realtime-js'],
+  transpilePackages: ['@supabase/ssr', '@supabase/realtime-js'],
   
   // Configure runtime for specific routes to avoid Edge Runtime issues
   ...(process.env.NODE_ENV === 'production' && {

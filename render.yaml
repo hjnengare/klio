@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: klio
+    name: sayso
     runtime: node
     region: oregon
     plan: starter

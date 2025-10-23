@@ -12,12 +12,8 @@ import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 const PageTransitionProvider = dynamic(() => import("./components/Providers/PageTransitionProvider"), {
   ssr: true,
 });
-const WebVitals = dynamic(() => import("./components/Performance/WebVitals"), {
-  ssr: false,
-});
-const BusinessNotifications = dynamic(() => import("./components/Notifications/BusinessNotifications"), {
-  ssr: false,
-});
+const WebVitals = dynamic(() => import("./components/Performance/WebVitals"));
+const BusinessNotifications = dynamic(() => import("./components/Notifications/BusinessNotifications"));
 
 const urbanist = Urbanist({
   subsets: ["latin"],
