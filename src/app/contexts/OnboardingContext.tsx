@@ -251,7 +251,7 @@ export function OnboardingProvider({ children }: OnboardingProviderProps) {
       }
 
       // Show completion toast
-      showToast('🎉 Welcome to KLIO! Your profile is now complete.', 'success', 4000);
+      showToast('🎉 Welcome to sayso! Your profile is now complete.', 'success', 4000);
     } catch (error) {
       console.error('Error completing onboarding:', error);
       setError('Failed to complete onboarding');

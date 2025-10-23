@@ -20,15 +20,17 @@ export default function ReviewContent({
 }: ReviewContentProps) {
 
   return (
-    <div className="flex-1">
+    <div className="flex-1 text-center">
       <div className="mb-3">
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-center mb-2">
           <h4 className="font-sf font-700 text-charcoal">{businessName}</h4>
-          <span className="text-xs text-charcoal/50 font-sf">{date}</span>
+        </div>
+        <div className="flex items-center justify-center mb-2">
+          <span className="text-xs font-600 text-charcoal/60 font-sf">{date}</span>
         </div>
 
-        <div className="flex items-center gap-2 mb-2">
-          <span className="text-xs text-charcoal/60 font-sf">
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <span className="text-xs font-600 text-charcoal/70 font-sf">
             {businessType}
           </span>
         </div>
@@ -51,10 +53,10 @@ export default function ReviewContent({
         </div>
       )}
 
-      <div className="flex items-center gap-1 text-charcoal/60">
+      <div className="flex items-center justify-center gap-1 text-primary/70">
         <Heart
           size={14}
-          className="text-charcoal/60"
+          className="text-primary/70"
           strokeWidth={2}
           aria-hidden="true"
         />

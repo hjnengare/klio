@@ -11,9 +11,9 @@ const NOTIFICATION_MESSAGES = {
   ],
   business: [
     "New business added",
-    "Just joined KLIO",
+    "Just joined sayso",
     "New in your area",
-    "Fresh on KLIO",
+    "Fresh on sayso",
   ],
   user: [
     "Someone just saved",

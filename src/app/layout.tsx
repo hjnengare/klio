@@ -24,23 +24,23 @@ const urbanist = Urbanist({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://local-gems.vercel.app'),
-  title: "KLIO - Discover trusted KLIO near you",
+  title: "sayso - Discover trusted sayso near you",
   description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
-  keywords: "local business, restaurants, reviews, recommendations, KLIO",
-  authors: [{ name: "KLIO" }],
-  creator: "KLIO",
+  keywords: "local business, restaurants, reviews, recommendations, sayso",
+  authors: [{ name: "sayso" }],
+  creator: "sayso",
   openGraph: {
-    title: "KLIO - Discover trusted local gems near you!",
+    title: "sayso - Discover trusted local gems near you!",
     description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
     url: "/",
-    siteName: "KLIO",
+    siteName: "sayso",
     images: [],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "KLIO - Discover trusted KLIO near you",
+    title: "sayso - Discover trusted sayso near you",
     description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
   },
   robots: {
@@ -68,19 +68,19 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="KLIO" />
-        <meta name="theme-color" content="#749176" />
-        <meta name="theme-color" content="#749176" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#749176" media="(prefers-color-scheme: dark)" />
-        <meta name="msapplication-TileColor" content="#749176" />
+        <meta name="apple-mobile-web-app-title" content="sayso" />
+        <meta name="theme-color" content="#9DAB9B" />
+        <meta name="theme-color" content="#9DAB9B" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#9DAB9B" media="(prefers-color-scheme: dark)" />
+        <meta name="msapplication-TileColor" content="#9DAB9B" />
         <meta name="apple-touch-fullscreen" content="yes" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="apple-mobile-web-app-orientation" content="portrait" />
 
         {/* Enhanced mobile experience meta tags */}
-        <meta name="mobile-web-app-title" content="KLIO" />
-        <meta name="application-name" content="KLIO" />
+        <meta name="mobile-web-app-title" content="sayso" />
+        <meta name="application-name" content="sayso" />
         <meta name="apple-touch-fullscreen" content="yes" />
         <meta name="full-screen" content="yes" />
         <meta name="browsermode" content="application" />

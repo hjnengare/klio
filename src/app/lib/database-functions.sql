@@ -1,4 +1,4 @@
--- KLIO Database Functions
+-- sayso Database Functions
 -- Run these in your Supabase SQL editor
 
 -- =============================================

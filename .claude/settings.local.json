@@ -37,7 +37,10 @@
       "Bash(start http://localhost:3003/profile)",
       "Bash(start http://localhost:3000/forgot-password)",
       "Bash(start http://localhost:3004/profile)",
-      "Bash(start http://localhost:3005/forgot-password)"
+      "Bash(start http://localhost:3005/forgot-password)",
+      "Bash(find:*)",
+      "Bash(start http://localhost:3002)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

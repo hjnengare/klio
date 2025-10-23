@@ -21,8 +21,8 @@ import { Skeleton } from "@/components/atoms/Skeleton";
 const glassHeader = `
   relative z-10
   px-3 sm:px-4 py-4 sm:py-6
-  border-b border-black/5
-  bg-off-white/90 shadow-md
+  border-b border-white/5
+  bg-navbar-bg backdrop-blur-xl shadow-lg shadow-sage/5
 `.replace(/\s+/g, " ");
 
 // Types
@@ -305,10 +305,10 @@ function ProfileContent() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="w-10 h-10 sm:w-12 sm:h-12 bg-charcoal/5 hover:bg-sage/10 rounded-full flex items-center justify-center border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4"
+              className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center border border-white/10 hover:border-white/30 mr-2 sm:mr-4"
             >
               <ArrowLeft
-                className="text-charcoal/70 group-hover:text-sage transition-colors duration-300"
+                className="text-white group-hover:text-white/90 transition-colors duration-300"
                 size={22}
               />
             </motion.div>
@@ -316,7 +316,7 @@ function ProfileContent() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.1 }}
-              className="font-sf text-base sm:text-xl font-700 text-charcoal"
+              className="font-sf text-base sm:text-xl font-700 text-white"
             >
               Your Profile
             </motion.h1>

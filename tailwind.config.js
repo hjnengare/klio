@@ -23,91 +23,52 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // KLIO Design System Colors - Primary Brand Colors
-        sage: {
-          50: 'hsl(148, 20%, 95%)',
-          100: 'hsl(148, 20%, 88%)',
-          200: 'hsl(148, 20%, 75%)',
-          300: 'hsl(148, 20%, 60%)',
-          400: 'hsl(148, 20%, 45%)',
-          500: 'hsl(148, 20%, 38%)', // Main sage
-          600: 'hsl(148, 20%, 30%)',
-          700: 'hsl(148, 20%, 22%)',
-          800: 'hsl(148, 20%, 15%)',
-          900: 'hsl(148, 20%, 8%)',
-        },
-        coral: {
-          50: 'hsl(16, 100%, 95%)',
-          100: 'hsl(16, 100%, 88%)',
-          200: 'hsl(16, 100%, 80%)',
-          300: 'hsl(16, 100%, 72%)',
-          400: 'hsl(16, 100%, 66%)',
-          500: 'hsl(16, 100%, 60%)', // Main coral
-          600: 'hsl(16, 90%, 54%)',
-          700: 'hsl(16, 80%, 48%)',
-          800: 'hsl(16, 70%, 42%)',
-          900: 'hsl(16, 60%, 36%)',
-        },
-        charcoal: {
-          50: 'hsl(0, 0%, 95%)',
-          100: 'hsl(0, 0%, 88%)',
-          200: 'hsl(0, 0%, 75%)',
-          300: 'hsl(0, 0%, 60%)',
-          400: 'hsl(0, 0%, 45%)',
-          500: 'hsl(0, 0%, 25%)', // Main charcoal
-          600: 'hsl(0, 0%, 20%)',
-          700: 'hsl(0, 0%, 15%)',
-          800: 'hsl(0, 0%, 10%)',
-          900: 'hsl(0, 0%, 5%)',
-        },
-        'off-white': {
-          50: 'hsl(0, 0%, 100%)',
-          100: '#f2e3da', // Main off-white
-          200: 'hsl(25, 25%, 92%)',
-          300: 'hsl(25, 25%, 88%)',
-          400: 'hsl(25, 25%, 84%)',
-          500: 'hsl(25, 25%, 80%)',
-        },
-        
+        // sayso Color Palette
+        'page-bg': '#E5E0E5', // Page background
+        'card-bg': '#9DAB9B', // Card background
+        'navbar-bg': '#7D0F2A', // Navbar background
+
         // Semantic colors
         success: {
           50: 'hsl(142, 76%, 95%)',
           100: 'hsl(142, 76%, 88%)',
           500: 'hsl(142, 76%, 36%)',
           600: 'hsl(142, 76%, 30%)',
+          DEFAULT: 'hsl(142, 76%, 36%)',
         },
         error: {
           50: 'hsl(0, 86%, 95%)',
           100: 'hsl(0, 86%, 88%)',
           500: 'hsl(0, 86%, 59%)',
           600: 'hsl(0, 86%, 53%)',
+          DEFAULT: 'hsl(0, 86%, 59%)',
         },
         warning: {
           50: 'hsl(38, 92%, 95%)',
           100: 'hsl(38, 92%, 88%)',
           500: 'hsl(38, 92%, 50%)',
           600: 'hsl(38, 92%, 44%)',
+          DEFAULT: 'hsl(38, 92%, 50%)',
         },
         info: {
           50: 'hsl(198, 93%, 95%)',
           100: 'hsl(198, 93%, 88%)',
           500: 'hsl(198, 93%, 60%)',
           600: 'hsl(198, 93%, 54%)',
+          DEFAULT: 'hsl(198, 93%, 60%)',
         },
 
         // Instagram blue for verified badge
         'blue-500': '#3b82f6',
 
-        // Legacy colors (for compatibility during migration)
-        'hoockers-green': '#749176',
-        'hoockers-green-20': 'rgba(116, 145, 118, 0.2)',
-        'pale-spring-bud': 'hsl(60, 68%, 85%)',
-        'spanish-gray': 'hsl(0, 0%, 61%)',
-        'light-gray': 'hsl(0, 0%, 80%)',
-        'cultured-1': 'hsl(0, 0%, 97%)',
-        'cultured-2': 'hsl(60, 6%, 93%)',
-        'gray-web': 'hsl(0, 0%, 49%)',
-        'white-30': 'hsl(0, 0%, 100%, 0.3)',
+        // Text colors for proper contrast
+        'text-primary': '#2D2D2D', // Dark text for light backgrounds
+        'text-secondary': '#5A5A5A', // Medium text
+        'text-light': '#FFFFFF', // Light text for dark backgrounds
+        'text-muted': '#8A8A8A', // Muted text
+
+        // Utility colors
+        'white-30': 'hsla(255, 255, 255, 0.3)',
         'black-70': 'hsla(0, 0%, 0%, 0.7)',
         'black-50': 'hsla(0, 0%, 0%, 0.5)',
         'black-15': 'hsla(0, 0%, 0%, 0.15)',

@@ -59,7 +59,7 @@ export default function Footer() {
             >
               <Link href="/" className="inline-block group">
                 <h2 className="font-sf text-3xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4 group-hover:scale-105 transition-all duration-300">
-                  KLIO
+                  sayso
                 </h2>
               </Link>
               <p className="font-sf text-6 text-charcoal/70 leading-relaxed mb-6 max-w-sm">
@@ -182,7 +182,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-center md:justify-between space-y-4 md:space-y-0">
             {/* Copyright */}
             <p className="font-sf text-7 text-charcoal/60">
-              © {currentYear} KLIO. All rights reserved.
+              © {currentYear} sayso. All rights reserved.
             </p>
 
             {/* Trust indicators */}

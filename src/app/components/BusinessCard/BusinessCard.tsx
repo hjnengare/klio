@@ -102,14 +102,14 @@ function BusinessCard({
   return (
     <li
       id={idForSnap}
-      className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
+      className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[28%] md:min-w-[28%] xl:min-w-[28%] flex-shrink-0"
       style={{
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
-      <div 
-        className="relative bg-off-white rounded-[16px] overflow-hidden shadow-md shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-lg hover:shadow-sage/15 hover:scale-[1.02] hover:border-white/40"
+      <div
+        className="relative bg-card-bg rounded-[16px] overflow-hidden shadow-md shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-lg hover:shadow-sage/15 hover:border-white/40"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* MEDIA */}
@@ -126,31 +126,45 @@ function BusinessCard({
         >
           <div className="relative h-full">
             {!imgError ? (
-              <Image
-                src={displayImage}
-                alt={displayAlt}
-                width={400}
-                height={320}
-                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="h-full sm:h-[320px] md:h-[320px] lg:h-[280px] w-full object-cover transition-transform duration-500 md:group-hover:scale-105 rounded-t-[16px]"
-                priority={false}
-                loading="lazy"
-                quality={85}
-                onError={() => setImgError(true)}
-              />
+              displayImage?.endsWith('.png') ? (
+                // Display PNG files as icons with white background
+                <div className="h-[500px] md:h-[320px] w-full flex items-center justify-center bg-white rounded-t-[16px]">
+                  <Image
+                    src={displayImage}
+                    alt={displayAlt}
+                    width={120}
+                    height={120}
+                    sizes="120px"
+                    className="w-32 h-32 object-contain"
+                    priority={false}
+                    loading="lazy"
+                    quality={85}
+                    onError={() => setImgError(true)}
+                  />
+                </div>
+              ) : (
+                // Regular full image for other businesses
+                <Image
+                  src={displayImage}
+                  alt={displayAlt}
+                  width={320}
+                  height={320}
+                  sizes="320px"
+                  className="w-full h-[500px] md:h-[320px] object-cover transition-transform duration-500 rounded-t-[16px]"
+                  priority={false}
+                  loading="lazy"
+                  quality={85}
+                  onError={() => setImgError(true)}
+                />
+              )
             ) : (
-              <div className="h-full sm:h-[320px] md:h-[320px] lg:h-[280px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[16px]">
+              <div className="h-[500px] md:h-[320px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[16px]">
                 <ImageOff className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-sage/70" />
               </div>
             )}
           </div>
 
-          {/* Liquid Glass overlay gradient */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-sage/5 opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
 
-          {/* Premium shimmer effect */}
-          <div className="pointer-events-none absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/40 to-transparent transform skew-x-12 md:group-hover:left-full transition-all duration-700 ease-out" />
 
           {/* verified badge */}
           {business.verified && (
@@ -161,8 +175,8 @@ function BusinessCard({
 
           {/* rating badge */}
           {!hideStar && (
-            <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 backdrop-blur-xl px-3 py-1.5 text-charcoal shadow-lg shadow-amber-500/20 border border-white/30">
-              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+            <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 backdrop-blur-xl px-3 py-1.5 text-charcoal shadow-lg border border-white/30">
+              <Star className="w-3.5 h-3.5 text-navbar-bg fill-navbar-bg" />
               <span className="text-sm font-semibold">
                 {Number(displayRating).toFixed(1)}
               </span>
@@ -189,7 +203,7 @@ function BusinessCard({
               aria-label={`Write a review for ${business.name}`}
               title="Write a review"
             >
-              <Edit className="w-4 h-4 text-charcoal" />
+              <Edit className="w-4 h-4 text-primary" />
             </button>
             <button
               className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
@@ -200,7 +214,7 @@ function BusinessCard({
               aria-label={`Save ${business.name}`}
               title="Save"
             >
-              <Heart className="w-4 h-4 text-charcoal" />
+              <Heart className="w-4 h-4 text-primary" />
             </button>
             <button
               className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
@@ -211,33 +225,33 @@ function BusinessCard({
               aria-label={`Share ${business.name}`}
               title="Share"
             >
-              <Share2 className="w-4 h-4 text-charcoal" />
+              <Share2 className="w-4 h-4 text-primary" />
             </button>
           </div>
         </div>
 
         {/* CONTENT */}
-        <div className="p-5 relative flex-shrink-0 cursor-pointer z-10" onClick={handleCardClick}>
+        <div className="px-3 sm:px-6 pt-3 pb-6 relative flex-shrink-0 cursor-pointer z-10" onClick={handleCardClick}>
           <div className="mb-1">
-            <h3 className="text-base md:text-lg font-semibold text-charcoal tracking-tight transition-colors duration-300 md:group-hover:text-sage">
+            <h3 className="text-base sm:text-lg font-600 text-navbar-bg/90 group-hover:text-charcoal transition-colors duration-300 text-center pt-4" style={{ fontFamily: "'Lobster Two', cursive" }}>
               {business.name}
             </h3>
           </div>
 
-          <p className="mb-3 text-sm font-medium text-charcoal/60 transition-colors duration-300 md:group-hover:text-charcoal/70">
+          <p className="mb-3 text-sm font-600 text-charcoal transition-colors duration-300 text-center">
             {business.category} · {business.location}
           </p>
 
-          <div className="mb-4 flex items-center gap-2">
-            <Stars value={displayRating} />
-            <p className="text-sm font-semibold leading-none text-charcoal">
+          <div className="mb-4 flex items-center justify-center gap-2">
+            <Stars value={displayRating} color="navbar-bg" />
+            <p className="text-sm font-600 leading-none text-charcoal">
               {business.reviews}
             </p>
-            <p className="text-sm leading-none text-charcoal/60">reviews</p>
+            <p className="text-sm font-600 leading-none text-charcoal/60">reviews</p>
           </div>
 
           {business.percentiles && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               <PercentileChip label="speed" value={business.percentiles.service} />
               <PercentileChip label="hospitality" value={business.percentiles.price} />
               <PercentileChip label="quality" value={business.percentiles.ambience} />

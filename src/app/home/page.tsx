@@ -18,8 +18,6 @@ import {
   BUSINESSES_OF_THE_MONTH,
 } from "../data/communityHighlightsData";
 import { useOnboarding } from "../contexts/OnboardingContext";
-import NewsletterModal from "../components/NewsletterModal/NewsletterModal";
-import { useNewsletterModal } from "../hooks/useNewsletterModal";
 import ToastContainer from "../components/ToastNotification/ToastContainer";
 import { useToastNotifications } from "../hooks/useToastNotifications";
 
@@ -49,10 +47,6 @@ export default function Home() {
   const { selectedInterests } = useOnboarding();
   const forYouBusinesses = TRENDING_BUSINESSES.slice(0, 10);
   const trendingBusinesses = TRENDING_BUSINESSES.slice(10, 20);
-  const { showModal, closeModal } = useNewsletterModal({
-    threshold: 300,
-    scrollUpAmount: 100,
-  });
   const { notifications, removeNotification } = useToastNotifications({
     interval: 15000, // Show a notification every 15 seconds
     maxToasts: 1,
@@ -63,7 +57,6 @@ export default function Home() {
     <div className="min-h-dvh bg-off-white">
       <Header showSearch={true} variant="frosty" />
 
-      <NewsletterModal isOpen={showModal} onClose={closeModal} />
 
       <ToastContainer
         notifications={notifications}
@@ -75,7 +68,7 @@ export default function Home() {
       <HeroCarousel userInterests={selectedInterests} />
 
       <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
-        <div className="py-8">
+        <div className="py-2">
             {/* No scroll-reveal wrappers; simple static rendering */}
           <div>
             <MemoizedBusinessRow

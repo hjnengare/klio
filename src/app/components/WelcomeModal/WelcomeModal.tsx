@@ -89,7 +89,7 @@ export default function WelcomeModal() {
                   </div>
                 </div>
                 <h2 className="font-sf text-2xl sm:text-3xl font-700 text-charcoal text-center mb-2">
-                  Welcome to KLIO
+                  Welcome to sayso
                 </h2>
                 <p className="font-sf text-sm sm:text-base font-400 text-charcoal/70 text-center">
                   Discover places real locals love
@@ -100,10 +100,10 @@ export default function WelcomeModal() {
               <div className="p-6 sm:p-8 pt-6 space-y-6">
                 <div>
                   <h3 className="font-sf text-lg font-600 text-charcoal mb-4">
-                    What is KLIO?
+                    What is sayso?
                   </h3>
                   <p className="font-sf text-sm text-charcoal/70 leading-relaxed">
-                    KLIO is a community-driven platform where locals share their favorite spots—from hidden cafes to trending restaurants. No ads, no sponsored content—just authentic recommendations from real people.
+                    sayso is a community-driven platform where locals share their favorite spots—from hidden cafes to trending restaurants. No ads, no sponsored content—just authentic recommendations from real people.
                   </p>
                 </div>
 

@@ -46,14 +46,14 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
   return (
     <li
       id={idForSnap}
-      className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[52%] md:min-w-[36%] xl:min-w-[22%] flex-shrink-0"
+      className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[25%] md:min-w-[25%] xl:min-w-[25%] flex-shrink-0"
       style={{
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
-      <div 
-        className="relative bg-off-white rounded-[16px] overflow-hidden shadow-md shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-lg hover:shadow-sage/15 hover:scale-[1.02] hover:border-white/40"
+      <div
+        className="relative bg-card-bg rounded-[16px] overflow-hidden shadow-md shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-lg hover:shadow-sage/15 hover:border-white/40"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Media */}
@@ -64,7 +64,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               alt={displayAlt}
               width={400}
               height={320}
-              className="h-full sm:h-[320px] md:h-[320px] lg:h-[280px] w-full object-cover transition-transform duration-500 md:group-hover:scale-105 rounded-t-[16px]"
+              className="h-[500px] md:h-[320px] w-full object-cover transition-transform duration-500 md:group-hover:scale-105 rounded-t-[16px]"
               priority={false}
               loading="lazy"
               quality={85}
@@ -77,12 +77,6 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             </div>
           )}
 
-          {/* Liquid Glass overlay gradient */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-sage/5 opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
-
-          {/* Premium shimmer effect */}
-          <div className="pointer-events-none absolute inset-0 -left-full bg-gradient-to-r from-transparent via-white/40 to-transparent transform skew-x-12 md:group-hover:left-full transition-all duration-700 ease-out" />
 
           {/* Achievement badge */}
           <div className="absolute left-2 bottom-2">
@@ -106,8 +100,8 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           )}
 
           {/* rating badge */}
-          <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 backdrop-blur-xl px-3 py-1.5 text-charcoal shadow-lg shadow-amber-500/20 border border-white/30">
-            <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+          <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 px-3 py-1.5 text-charcoal shadow-lg border border-white/30">
+            <Star className="w-3.5 h-3.5 text-navbar-bg fill-navbar-bg" />
             <span className="text-sm font-semibold">
               {Number(displayTotal).toFixed(1)}
             </span>
@@ -119,7 +113,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               hidden sm:flex translate-x-12 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100`}
           >
             <button
-              className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle write review
@@ -127,10 +121,10 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               aria-label={`Write a review for ${business.name}`}
               title="Write a review"
             >
-              <Edit className="w-4 h-4 text-charcoal" />
+              <Edit className="w-4 h-4 text-primary" />
             </button>
             <button
-              className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle bookmark
@@ -138,10 +132,10 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               aria-label={`Save ${business.name}`}
               title="Save"
             >
-              <Bookmark className="w-4 h-4 text-charcoal" />
+              <Bookmark className="w-4 h-4 text-primary" />
             </button>
             <button
-              className="w-10 h-10 bg-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle share
@@ -149,29 +143,29 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               aria-label={`Share ${business.name}`}
               title="Share"
             >
-              <Share2 className="w-4 h-4 text-charcoal" />
+              <Share2 className="w-4 h-4 text-primary" />
             </button>
           </div>
         </div>
 
         {/* CONTENT */}
-        <div className="p-5 relative flex-shrink-0 cursor-pointer z-10">
-          <div className="mb-1">
-            <h3 className="text-base md:text-lg font-semibold text-charcoal tracking-tight transition-colors duration-300 md:group-hover:text-sage">
+        <div className="px-1 sm:px-4 pt-3 pb-4 relative flex-shrink-0 cursor-pointer z-10">
+          <div className="mb-1 text-center">
+            <h3 className="text-base sm:text-lg font-600 text-navbar-bg/90 group-hover:text-charcoal transition-colors duration-300 pt-4" style={{ fontFamily: "'Lobster Two', cursive" }}>
                 {business.name}
             </h3>
           </div>
 
-          <div className="mb-3 flex items-center gap-2 flex-wrap">
-            <span className="inline-flex items-center rounded-full bg-sage/10 px-2.5 py-1 text-xs font-semibold text-sage border border-sage/20">
+          <div className="mb-3 flex items-center justify-center gap-2 flex-wrap">
+            <span className="inline-flex items-center rounded-full bg-sage/10 px-2.5 py-1 text-xs font-600 text-sage border border-sage/20">
               {business.category}
             </span>
-            <span className="text-sm font-medium text-charcoal/60">
+            <span className="text-sm font-600 text-charcoal">
               {business.location}
             </span>
           </div>
 
-          <div className="mb-4 flex items-center gap-2">
+          <div className="mb-4 flex items-center justify-center gap-2">
             <Stars value={business.rating} />
             <p className="text-sm font-semibold leading-none text-charcoal">
               {business.reviews}
@@ -180,7 +174,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           </div>
 
           {/* Month chip (dynamic if you prefer) */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <div className="px-2 py-1 rounded-full bg-coral/10 text-coral text-xs font-semibold">
               {(business as any).monthLabel || "September Winner"}
             </div>

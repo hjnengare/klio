@@ -4,7 +4,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440001",
     name: "The Green Table",
-    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "/museum.png",
     alt: "The Green Table restaurant",
     category: "Restaurant",
     location: "Downtown",
@@ -21,7 +21,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440002",
     name: "Artisan Coffee Co.",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2047&q=80",
+    image: "/plate.png",
     alt: "Artisan Coffee Co.",
     category: "Coffee Shop",
     location: "Arts District",
@@ -37,7 +37,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440003",
     name: "Bloom Yoga Studio",
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2021&q=80",
+    image: "/restaurant.png",
     alt: "Bloom Yoga Studio",
     category: "Wellness",
     location: "Riverside",
@@ -53,7 +53,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440004",
     name: "Vintage & Vine",
-    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2086&q=80",
+    image: "/table.png",
     alt: "Vintage & Vine bookstore",
     category: "Bookstore",
     location: "Old Town",
@@ -69,7 +69,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440005",
     name: "Sunset Ceramics",
-    image: "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2012&q=80",
+    image: "/wine.png",
     alt: "Sunset Ceramics studio",
     category: "Art Studio",
     location: "Westside",
@@ -86,7 +86,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440006",
     name: "Morning Glory Bakery",
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
+    image: "/bar.png",
     alt: "Morning Glory Bakery",
     category: "Bakery",
     location: "Main Street",
@@ -102,7 +102,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440021",
     name: "Ocean View Bistro",
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80",
+    image: "/car.png",
     alt: "Ocean View Bistro restaurant",
     category: "Restaurant",
     location: "Waterfront",
@@ -119,7 +119,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440022",
     name: "Urban Roastery",
-    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "/cocktail.png",
     alt: "Urban Roastery coffee shop",
     category: "Coffee Shop",
     location: "Industrial District",

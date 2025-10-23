@@ -45,7 +45,7 @@ export default function ClaimBusinessPage() {
       }}
     >
       {/* Header */}
-      <div className="bg-off-white/95 backdrop-blur-sm border-b border-charcoal/10 fixed top-0 left-0 right-0 z-50">
+      <div className="bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 fixed top-0 left-0 right-0 z-50">
         <div className="max-w-[1300px] mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -56,7 +56,7 @@ export default function ClaimBusinessPage() {
               >
                 <ArrowLeft className="w-6 h-6 text-charcoal/70" strokeWidth={2.5} />
               </button>
-              <h1 className="font-sf text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+              <h1 className="font-sf text-sm font-semibold text-white">
                 Claim Your Business
               </h1>
             </div>

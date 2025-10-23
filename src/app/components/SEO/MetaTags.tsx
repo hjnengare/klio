@@ -9,7 +9,7 @@ interface MetaTagsProps {
 }
 
 export function generateMetadata({
-  title = "KLIO - Discover Amazing Local Businesses",
+  title = "sayso - Discover Amazing Local Businesses",
   description = "Find and review the best local businesses in your area. Discover hidden gems, read authentic reviews, and connect with your local community.",
   keywords = ["local business", "reviews", "community", "discover", "restaurants", "services"],
   ogImage = "/og-image.jpg",
@@ -19,13 +19,13 @@ export function generateMetadata({
     title,
     description,
     keywords: keywords.join(", "),
-    authors: [{ name: "KLIO Team" }],
+    authors: [{ name: "sayso Team" }],
     openGraph: {
       title,
       description,
       images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
       type: "website",
-      siteName: "KLIO",
+      siteName: "sayso",
     },
     twitter: {
       card: "summary_large_image",

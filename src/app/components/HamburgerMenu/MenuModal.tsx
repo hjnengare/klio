@@ -118,7 +118,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
         <div className="flex items-center justify-between p-6 border-b border-sage/10">
           <div>
             <h2 className="font-sf text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
-              KLIO Menu
+              sayso Menu
             </h2>
             <p className="font-sf text-sm text-charcoal/60 mt-1">
               Navigate your local world
@@ -292,7 +292,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
         {/* Footer */}
         <div className="mt-auto p-6 border-t border-sage/10">
           <p className="text-xs text-charcoal/40 text-center">
-            KLIO - Discover trusted local gems
+            sayso - Discover trusted local gems
           </p>
         </div>
       </div>

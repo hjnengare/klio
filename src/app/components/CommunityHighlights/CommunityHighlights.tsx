@@ -51,28 +51,20 @@ export default function CommunityHighlights({
       }}
     >
       {/* Subtle section decoration (non-interactive) */}
-      <div
-        className="absolute inset-0 opacity-30 pointer-events-none"
-        aria-hidden="true"
-      >
-        <div className="absolute top-10 right-20 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />
-        <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-xl" />
-      </div>
 
-      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10 py-4">
+      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10 pt-2 pb-1">
         {/* Header */}
-        <div className="mb-3 sm:mb-5 flex flex-wrap items-center justify-between gap-[18px]">
-          <h2 className="text-xl font-semibold text-charcoal tracking-tight">
+        <div className="mb-1 flex flex-wrap items-center justify-between gap-[18px]">
+          <h2 className="font-sf text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-4 sm:px-6 py-2 hover:bg-sage/5 rounded-lg cursor-default">
             {title}
           </h2>
 
           <button
             onClick={() => router.push(href)}
-            className="group inline-flex items-center gap-1 text-base font-semibold text-charcoal/70 transition-all duration-300 hover:text-sage focus:outline-none focus:ring-2 focus:ring-sage/30 rounded-full px-4 py-2 -mx-2 relative overflow-hidden"
+            className="group inline-flex items-center gap-1 text-sm font-semibold text-primary/80 transition-all duration-300 hover:text-sage focus:outline-none focus:ring-2 focus:ring-sage/30 rounded-full px-4 py-2 -mx-2 relative overflow-hidden"
             aria-label={`${cta}: ${title}`}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-0.5">
               {cta}
             </span>
@@ -82,9 +74,9 @@ export default function CommunityHighlights({
 
         {/* Top Reviewers */}
         {topReviewers && topReviewers.length > 0 && (
-          <div className="mt-4 sm:mt-5 md:mt-6">
-            <div className="mb-2 sm:mb-3 flex flex-wrap items-center justify-between gap-[18px]">
-              <h3 className="text-base font-semibold text-charcoal">
+          <div className="mt-1">
+            <div className="mb-1 flex flex-wrap items-center justify-between gap-[18px]">
+              <h3 className="font-sf text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-4 sm:px-6 py-2 hover:bg-sage/5 rounded-lg cursor-default">
                 Top Reviewers This Month In Claremont
               </h3>
             </div>
@@ -105,19 +97,19 @@ export default function CommunityHighlights({
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
           <div className="mt-4 sm:mt-5 md:mt-6">
             <div className="mb-2 sm:mb-3 flex flex-wrap items-center justify-between gap-[18px]">
-              <h3 className="text-base font-semibold text-charcoal">
+              <h3 className="font-sf text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-4 sm:px-6 py-[3px] hover:bg-sage/5 rounded-lg cursor-default">
                 Businesses of the Month by Category
               </h3>
             </div>
 
             <div className="mb-3 sm:mb-4 text-center">
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-coral/15 backdrop-blur-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 border border-coral/20 shadow-lg shadow-coral/10">
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-coral/15 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 border border-coral/20 shadow-lg shadow-coral/10">
                 <Trophy className="w-4 h-4 text-coral" />
                 <span className="font-semibold text-coral text-sm">
                   September 2025 Winners
                 </span>
               </div>
-              <p className="mt-2 text-xs text-charcoal/60">
+              <p className="mt-2 text-xs text-primary/70">
                 Top-rated businesses competing within their categories
               </p>
             </div>

@@ -93,17 +93,15 @@ export default function Header({
     if (isFilterVisible) closeFilters();
   };
 
-  const headerClassName =
-    variant === "frosty"
-      ? `fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl supports-[backdrop-filter]:bg-off-white/90 shadow-sm shadow-gray-400/20 border-b border-white/5 transition-all duration-500 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-gradient-to-b from-white/40 via-white/30 to-white/20 before:backdrop-blur-2xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(800px_400px_at_10%_0%,rgba(120,119,198,0.08),transparent_70%),radial-gradient(700px_350px_at_90%_0%,rgba(255,182,193,0.06),transparent_70%)] after:backdrop-blur-sm ${
-          isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
-        }`
-      : `fixed top-0 left-0 right-0 z-50 bg-off-white/90 backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 ${
-          isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
-        }`;
+  const headerClassName = `fixed top-0 left-0 right-0 z-50 bg-navbar-bg backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 translate-y-0`;
 
   return (
     <>
+      {/* Google Fonts for logo and typography */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Shadows+Into+Light&display=swap" rel="stylesheet" />
+
       <header className={headerClassName} style={sf}>
         <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
           {/* Top row */}
@@ -111,20 +109,18 @@ export default function Header({
             {/* Logo */}
             <Link href="/home" className="group flex-shrink-0 relative" aria-label="KLIO Home">
               <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <span className="relative text-xl lg:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal drop-shadow-sm">
-                KLIO
+              <span className="relative text-3xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal drop-shadow-sm" style={{ fontFamily: "'Italianno', cursive" }}>
+               sayso
               </span>
             </Link>
 
-            <div className="flex-1" />
-
-            {/* Desktop nav */}
-            <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+            {/* Desktop nav - centered */}
+            <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 flex-1 justify-center">
               {["home", "saved", "leaderboard", "claim-business"].map((route) => (
                 <Link
                   key={route}
                   href={`/${route}`}
-                  className="group capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-semibold text-charcoal/80 hover:text-sage transition-all duration-300 relative"
+                  className="group capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-600 text-white hover:text-white transition-all duration-300 relative"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -143,7 +139,7 @@ export default function Header({
               {/* Search Toggle (manual close/open) */}
               <button
                 onClick={() => setShowSearchBar((p) => !p)}
-                className="group w-10 h-10 rounded-full flex items-center justify-center text-charcoal/80 hover:text-sage transition-all duration-300 relative overflow-hidden"
+                className="group w-10 h-10 rounded-full flex items-center justify-center text-white hover:text-white transition-all duration-300 relative overflow-hidden"
                 aria-label="Toggle search"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -158,12 +154,12 @@ export default function Header({
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
-                  <X className="w-6 h-6 text-charcoal/80" />
+                  <X className="w-6 h-6 text-white" />
                 ) : (
                   <div className="flex flex-col items-center justify-center gap-[5px]">
-                    <span className="w-5 h-[2px] bg-charcoal/80 rounded-full" />
-                    <span className="w-6 h-[2px] bg-charcoal/80 rounded-full" />
-                    <span className="w-5 h-[2px] bg-charcoal/80 rounded-full" />
+                    <span className="w-5 h-[2px] bg-white rounded-full" />
+                    <span className="w-6 h-[2px] bg-white rounded-full" />
+                    <span className="w-5 h-[2px] bg-white rounded-full" />
                   </div>
                 )}
               </button>
@@ -171,7 +167,7 @@ export default function Header({
               {/* Profile */}
               <Link
                 href="/profile"
-                className="group hidden md:flex w-10 h-10 rounded-full items-center justify-center text-charcoal hover:text-sage transition-all duration-300 relative overflow-hidden"
+                className="group hidden md:flex w-10 h-10 rounded-full items-center justify-center text-white hover:text-white transition-all duration-300 relative overflow-hidden"
                 aria-label="Profile"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -227,17 +223,17 @@ export default function Header({
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between px-6 py-6 border-b border-charcoal/10">
-            <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
-              KLIO
+            <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal" style={{ fontFamily: "'Italianno', cursive" }}>
+              sayso
             </span>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] text-charcoal/70 hover:bg-sage/10 group"
+              className="w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] text-white hover:bg-sage/10 group"
               aria-label="Close menu"
             >
-              <span className="w-5 h-[2px] bg-charcoal/70 rounded-full group-hover:bg-sage" />
-              <span className="w-6 h-[2px] bg-charcoal/70 rounded-full group-hover:bg-sage" />
-              <span className="w-5 h-[2px] bg-charcoal/70 rounded-full group-hover:bg-sage" />
+              <span className="w-5 h-[2px] bg-white rounded-full group-hover:bg-sage" />
+              <span className="w-6 h-[2px] bg-white rounded-full group-hover:bg-sage" />
+              <span className="w-5 h-[2px] bg-white rounded-full group-hover:bg-sage" />
             </button>
           </div>
 
@@ -247,7 +243,7 @@ export default function Header({
                 key={route}
                 href={`/${route}`}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-3 rounded-xl text-base font-semibold text-charcoal/80 hover:text-sage hover:bg-sage/5 transition-colors relative"
+                className="px-4 py-3 rounded-xl text-base font-600 text-charcoal hover:text-charcoal hover:bg-sage/5 transition-colors relative"
               >
                 <span className="flex items-center justify-between">
                   {route.charAt(0).toUpperCase() + route.slice(1)}
@@ -263,7 +259,7 @@ export default function Header({
             <Link
               href="/profile"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl text-base font-semibold text-charcoal/80 hover:text-sage hover:bg-sage/5 flex items-center gap-3 transition-all duration-200"
+              className="px-4 py-3 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-sage/5 flex items-center gap-3 transition-all duration-200"
             >
               <User className="w-5 h-5" />
               Profile

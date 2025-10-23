@@ -93,7 +93,7 @@ export default function LoginPage() {
         <AuthHeader
           backLink="/onboarding"
           title="Welcome back"
-          subtitle="Sign in to continue discovering KLIO"
+          subtitle="Sign in to continue discovering sayso"
         />
 
         <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">

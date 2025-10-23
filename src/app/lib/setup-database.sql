@@ -1,5 +1,5 @@
 -- =============================================
--- KLIO Database Setup Script
+-- sayso Database Setup Script
 -- Run this FIRST in your Supabase SQL Editor
 -- =============================================
 

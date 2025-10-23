@@ -249,17 +249,23 @@ export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
   };
 
   return (
-    <section
-      ref={containerRef as React.RefObject<HTMLElement>}
-      className="relative min-h-[100vh] w-full overflow-hidden outline-none"
-      aria-label="Hero carousel"
-      tabIndex={0}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-      style={{ fontFamily: FONT_STACK }}
-    >
+    <>
+      {/* Google Fonts for Lobster Two */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+      
+      <section
+        ref={containerRef as React.RefObject<HTMLElement>}
+        className="relative min-h-[100vh] w-full overflow-hidden outline-none"
+        aria-label="Hero carousel"
+        tabIndex={0}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onBlur={() => setPaused(false)}
+        style={{ fontFamily: FONT_STACK }}
+      >
       {/* Liquid Glass Ambient Lighting */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-sage/10 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.15)_0%,_transparent_70%)] pointer-events-none" />
@@ -273,8 +279,8 @@ export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
             index === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
-           {/* Mobile: Background Image */}
-           <div className="absolute inset-0 lg:hidden">
+           {/* Full Background Image - All Screen Sizes */}
+           <div className="absolute inset-0">
              <Image
                src={slide.image}
                alt={slide.title}
@@ -285,27 +291,26 @@ export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
                sizes="100vw"
              />
              {/* Overlay for text readability */}
-             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
+             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
            </div>
 
-           {/* Content - Split Layout: Text Left, Image Right */}
-           <div className="absolute inset-0 z-20 flex items-center pt-20 pb-8 lg:bg-off-white">
+           {/* Content - Text Left Aligned */}
+           <div className="absolute inset-0 z-20 flex items-center pt-20 pb-8">
              <div className="container mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
-               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 items-center">
-                 {/* Left: Text Content */}
+               <div className="max-w-2xl">
+                 {/* Text Content */}
                  <div className="relative">
                    <h1
-                     className="text-off-white lg:text-charcoal leading-[1.1] mb-4 sm:mb-6 font-bold tracking-tight"
+                     className="text-off-white leading-[1.1] mb-4 sm:mb-6 font-bold tracking-tight whitespace-nowrap"
                      style={{
-                       fontSize: "clamp(2.4rem, 5vw, 4.75rem)",
-                       maxWidth: "13ch",
-                       textWrap: "balance" as React.CSSProperties["textWrap"],
+                       fontFamily: "'Lobster Two', cursive",
+                       fontSize: "clamp(2.4rem, 5vw, 6rem)",
                      }}
                    >
                      {slide.title}
                    </h1>
                    <p
-                     className="text-off-white/90 lg:text-charcoal/80 leading-relaxed"
+                     className="text-off-white/90 leading-relaxed"
                      style={{
                        fontSize: "clamp(1rem, 1.5vw, 1.25rem)",
                        maxWidth: "60ch",
@@ -314,21 +319,6 @@ export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
                    >
                      {slide.description}
                    </p>
-                 </div>
-
-                 {/* Right: Carousel Image - Desktop Only */}
-                 <div className="hidden lg:block relative p-8">
-                   <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl">
-                     <Image
-                       src={slide.image}
-                       alt={slide.title}
-                       fill
-                       priority={index === 0}
-                       quality={100}
-                       className="object-cover"
-                       sizes="60vw"
-                     />
-                   </div>
                  </div>
                </div>
              </div>
@@ -366,5 +356,6 @@ export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
         {slides[currentIndex]?.title}
       </div>
     </section>
+    </>
   );
 }

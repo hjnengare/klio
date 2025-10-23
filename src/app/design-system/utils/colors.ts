@@ -1,7 +1,7 @@
 /**
- * KLIO DESIGN SYSTEM - COLOR UTILITIES
+ * sayso DESIGN SYSTEM - COLOR UTILITIES
  *
- * Utility functions for consistent color usage across the KLIO app
+ * Utility functions for consistent color usage across the sayso app
  * Provides easy access to design system colors with proper TypeScript support
  */
 

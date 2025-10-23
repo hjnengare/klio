@@ -101,7 +101,7 @@ export default function OnboardingPage() {
         <div className="w-full max-w-full px-3 md:max-w-4xl md:px-4 mx-auto relative z-10 flex flex-col h-full py-4 sm:py-6">
           {/* Logo */}
           <div className={`text-center mb-8 md:mb-6 flex-shrink-0 ${mounted ? "opacity-0 animate-fade-in-up delay-400" : "opacity-0"}`}>
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-charcoal tracking-tight">KLIO</h1>
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-charcoal tracking-tight">sayso</h1>
           </div>
 
           {/* Main content */}

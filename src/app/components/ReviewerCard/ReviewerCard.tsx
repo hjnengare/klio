@@ -81,7 +81,7 @@ export default function ReviewerCard({
         className="snap-start snap-always w-[100vw] sm:w-[280px] flex-shrink-0"
       >
         <div
-          className="bg-off-white rounded-2xl overflow-hidden shadow-md group cursor-pointer h-[200px] relative border border-charcoal/10"
+          className="bg-card-bg rounded-2xl overflow-hidden shadow-md group cursor-pointer h-[200px] relative border border-charcoal/10"
           onClick={toggleActions}
         >
           {/* Content */}
@@ -116,10 +116,10 @@ export default function ReviewerCard({
                 )}
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-sf text-sm font-700 text-charcoal truncate">
+                  <h3 className="font-sf text-sm font-700 text-primary truncate">
                     {reviewerData?.name}
                   </h3>
-                  <p className="font-sf text-xs font-600 text-charcoal/60">
+                  <p className="font-sf text-xs font-600 text-primary/70">
                     {reviewerData?.location}
                   </p>
                 </div>
@@ -131,10 +131,10 @@ export default function ReviewerCard({
             <div className="mb-3">
               <div className="flex items-center justify-center">
                 <div className="text-center">
-                  <div className="font-sf font-800 text-lg text-charcoal">
+                  <div className="font-sf font-800 text-lg text-primary">
                     {reviewerData?.reviewCount}
                   </div>
-                  <div className="font-sf text-xs text-charcoal/60">Reviews</div>
+                  <div className="font-sf text-xs text-primary/70">Reviews</div>
                 </div>
               </div>
             </div>
@@ -213,20 +213,20 @@ export default function ReviewerCard({
                 }`}
               >
                 <button
-                  className="w-7 h-7 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-off-white hover:scale-110 transition-all duration-200"
+                  className="w-7 h-7 bg-card-bg/90  rounded-full flex items-center justify-center shadow-sm hover:bg-card-bg hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Follow"
                   title="Follow"
                 >
-                  <UserPlus className="text-charcoal" size={16} />
+                  <UserPlus className="text-primary" size={16} />
                 </button>
                 <button
-                  className="w-7 h-7 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:bg-off-white hover:scale-110 transition-all duration-200"
+                  className="w-7 h-7 bg-card-bg/90  rounded-full flex items-center justify-center shadow-sm hover:bg-card-bg hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Message"
                   title="Message"
                 >
-                  <MessageCircle className="text-charcoal" size={16} />
+                  <MessageCircle className="text-primary" size={16} />
                 </button>
               </div>
             </div>
@@ -240,7 +240,7 @@ export default function ReviewerCard({
   return (
     <li className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[320px] flex-shrink-0">
       <div
-        className="bg-off-white rounded-xl p-6 shadow-md transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10"
+        className="bg-card-bg rounded-xl p-6 shadow-md transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10"
         onClick={toggleActions}
       >
         <div className="flex items-start gap-4 mb-4">
@@ -260,7 +260,7 @@ export default function ReviewerCard({
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-sf font-700 text-charcoal truncate">
+            <h3 className="font-sf font-700 text-primary truncate">
               {review?.reviewer.name}
             </h3>
             <ReviewerStats
@@ -281,28 +281,28 @@ export default function ReviewerCard({
             }`}
           >
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-off-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-card-bg/90  rounded-full flex items-center justify-center shadow-lg hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
               aria-label="Follow"
               title="Follow"
             >
-              <UserPlus className="text-charcoal" size={20} />
+              <UserPlus className="text-primary" size={20} />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-off-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-card-bg/90  rounded-full flex items-center justify-center shadow-lg hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
               aria-label="Message"
               title="Message"
             >
-              <MessageCircle className="text-charcoal" size={20} />
+              <MessageCircle className="text-primary" size={20} />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-off-white hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-8 h-8 md:w-10 md:h-10 bg-card-bg/90  rounded-full flex items-center justify-center shadow-lg hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
               aria-label="Share"
               title="Share"
             >
-              <Share2 className="text-charcoal" size={20} />
+              <Share2 className="text-primary" size={20} />
             </button>
           </div>
         </div>

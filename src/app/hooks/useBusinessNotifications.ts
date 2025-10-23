@@ -29,7 +29,7 @@ export function useBusinessNotifications() {
       // Show toast notification
       const businessName = payload.new?.name || 'A new business';
       showToast(
-        `${businessName} just joined KLIO! 🎉`,
+        `${businessName} just joined sayso! 🎉`,
         'sage',
         6000
       );

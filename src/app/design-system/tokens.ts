@@ -1,5 +1,5 @@
 /**
- * BLABBR DESIGN SYSTEM - DESIGN TOKENS
+ * SAYSO DESIGN SYSTEM - DESIGN TOKENS
  *
  * Single source of truth for all design values
  * Following design system requirements from CLAUDE.md
@@ -10,37 +10,39 @@
 // =============================================================================
 
 export const colors = {
-  // Primary brand colors
+  // Primary brand colors - based on new palette
   primary: {
+    // Sage-like green from card background (#9DAB9B)
     sage: {
-      50: 'hsl(148, 20%, 95%)',   // Very light sage for backgrounds
-      100: 'hsl(148, 20%, 88%)',  // Light sage for hover states
-      200: 'hsl(148, 20%, 75%)',  // Medium light sage
-      300: 'hsl(148, 20%, 60%)',  // Medium sage
-      400: 'hsl(148, 20%, 45%)',  // Default sage
-      500: 'hsl(148, 20%, 38%)',  // Main sage (brand primary)
-      600: 'hsl(148, 20%, 30%)',  // Dark sage for hover
-      700: 'hsl(148, 20%, 22%)',  // Darker sage
-      800: 'hsl(148, 20%, 15%)',  // Very dark sage
-      900: 'hsl(148, 20%, 8%)',   // Deepest sage
-      DEFAULT: 'hsl(148, 20%, 38%)', // Main brand color
+      50: '#F4F6F5',    // Very light sage
+      100: '#E8EBE9',   // Light sage
+      200: '#D1D8D3',   // Medium light sage
+      300: '#BAC4BC',   // Medium sage
+      400: '#A3B0A6',   // Default sage
+      500: '#9DAB9B',   // Main sage (card background)
+      600: '#7E8D7C',   // Dark sage
+      700: '#5F6A5D',   // Darker sage
+      800: '#3F463E',   // Very dark sage
+      900: '#20231F',   // Deepest sage
+      DEFAULT: '#9DAB9B', // Main brand color
     },
+    // Burgundy/wine from navbar (#7D0F2A)
     coral: {
-      50: 'hsl(16, 100%, 95%)',   // Very light coral for backgrounds
-      100: 'hsl(16, 100%, 88%)',  // Light coral for hover states
-      200: 'hsl(16, 100%, 80%)',  // Medium light coral
-      300: 'hsl(16, 100%, 72%)',  // Medium coral
-      400: 'hsl(16, 100%, 66%)',  // Default coral
-      500: 'hsl(16, 100%, 60%)',  // Main coral (brand secondary)
-      600: 'hsl(16, 90%, 54%)',   // Dark coral for hover
-      700: 'hsl(16, 80%, 48%)',   // Darker coral
-      800: 'hsl(16, 70%, 42%)',   // Very dark coral
-      900: 'hsl(16, 60%, 36%)',   // Deepest coral
-      DEFAULT: 'hsl(16, 100%, 66%)', // Secondary brand color
+      50: '#FAE6EB',    // Very light burgundy
+      100: '#F5CDD7',   // Light burgundy
+      200: '#EB9BAF',   // Medium light burgundy
+      300: '#E16987',   // Medium burgundy
+      400: '#D7375F',   // Default burgundy
+      500: '#B21E40',   // Main burgundy
+      600: '#8E1833',   // Dark burgundy
+      700: '#7D0F2A',   // Navbar burgundy
+      800: '#5A0B1E',   // Very dark burgundy
+      900: '#370712',   // Deepest burgundy
+      DEFAULT: '#7D0F2A', // Secondary brand color (navbar)
     }
   },
 
-  // Neutral colors
+  // Neutral colors - based on new page background
   neutral: {
     charcoal: {
       50: 'hsl(0, 0%, 95%)',      // Very light charcoal
@@ -57,12 +59,12 @@ export const colors = {
     },
     'off-white': {
       50: 'hsl(0, 0%, 100%)',     // Pure white
-      100: '#f2e3da',             // Main off-white (background) - #f2e3da
-      200: 'hsl(25, 25%, 92%)',   // Slightly darker off-white
-      300: 'hsl(25, 25%, 88%)',   // Medium off-white
-      400: 'hsl(25, 25%, 84%)',   // Darker off-white
-      500: 'hsl(25, 25%, 80%)',   // Medium gray
-      DEFAULT: '#f2e3da',         // Main background color - #f2e3da
+      100: '#E5E0E5',             // Main page background
+      200: '#D5CED5',             // Slightly darker
+      300: '#C5BCC5',             // Medium
+      400: '#B5AAB5',             // Darker
+      500: '#A598A5',             // Medium gray
+      DEFAULT: '#E5E0E5',         // Main background color
     }
   },
 
@@ -254,15 +256,15 @@ export const boxShadow = {
   lg: '0 10px 15px hsla(0, 0%, 0%, 0.1), 0 4px 6px hsla(0, 0%, 0%, 0.05)',
   xl: '0 20px 25px hsla(0, 0%, 0%, 0.1), 0 10px 10px hsla(0, 0%, 0%, 0.04)',
 
-  // Branded shadows (using design system colors)
-  'sage-sm': '0 4px 10px hsla(148, 20%, 38%, 0.15)',
-  'sage-md': '0 8px 16px hsla(148, 20%, 38%, 0.2)',
-  'coral-sm': '0 4px 10px hsla(16, 100%, 66%, 0.15)',
-  'coral-md': '0 8px 16px hsla(16, 100%, 66%, 0.2)',
+  // Branded shadows (using new palette)
+  'sage-sm': '0 4px 10px rgba(157, 171, 155, 0.15)',
+  'sage-md': '0 8px 16px rgba(157, 171, 155, 0.2)',
+  'coral-sm': '0 4px 10px rgba(125, 15, 42, 0.15)',
+  'coral-md': '0 8px 16px rgba(125, 15, 42, 0.2)',
 
   // Interactive shadows
-  'hover-subtle': '0 8px 25px hsla(148, 20%, 38%, 0.15)',
-  'hover-strong': '0 16px 40px hsla(148, 20%, 38%, 0.25)',
+  'hover-subtle': '0 8px 25px rgba(157, 171, 155, 0.15)',
+  'hover-strong': '0 16px 40px rgba(157, 171, 155, 0.25)',
 
   // Special shadows
   inner: 'inset 0 2px 4px hsla(0, 0%, 0%, 0.06)',

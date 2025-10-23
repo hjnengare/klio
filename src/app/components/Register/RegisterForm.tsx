@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { ArrowLeft, Mail, AlertCircle, CheckCircle, Lock, Eye, EyeOff, User as UserIcon, Circle, ShieldCheck, Users, Star } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useToast } from "../../contexts/ToastContext";
-import { motion } from "framer-motion";
-import FadeInUp from "../Animations/FadeInUp";
-import PremiumHover from "../Animations/PremiumHover";
-import { usePrefersReducedMotion } from "../../utils/hooks/usePrefersReducedMotion";
+import FormField from "./FormField";
+import ValidationMessage from "./ValidationMessage";
+import PasswordStrength from "./PasswordStrength";
+import ConsentCheckbox from "./ConsentCheckbox";
+import SubmitButton from "./SubmitButton";
+import ProgressIndicator from "./ProgressIndicator";
+import ErrorMessage from "./ErrorMessage";
 
 interface RegisterFormProps {
   onSuccess: () => void;
@@ -265,7 +267,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
         });
 
         // Show success toast with celebration
-        showToast("🎉 Welcome to KLIO! Your account has been created successfully!", 'success', 4000);
+        showToast("🎉 Welcome to sayso! Your account has been created successfully!", 'success', 4000);
 
         // Navigate to interests page after short delay
         setTimeout(() => {
@@ -302,246 +304,81 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
-      {/* Error Message */}
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-          <p className="font-sf text-[14px] font-600 text-red-600">{error}</p>
-        </div>
-      )}
+      <ErrorMessage error={error} isOffline={!isOnline} />
 
-      {/* Offline Message */}
-      {!isOnline && !error && (
-        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
-          <p className="font-sf text-[14px] font-600 text-orange-600">You&apos;re offline. We&apos;ll try again when you&apos;re back online.</p>
-        </div>
-      )}
-
-      {/* Username with icon */}
-      <div className="relative group">
-        <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
-          getUsernameError() ? 'text-red-500' :
-          username && !getUsernameError() && usernameTouched ? 'text-sage' :
-          'text-charcoal/40 group-focus-within:text-sage'
-        }`}>
-          {getUsernameError() ? <AlertCircle className="w-5 h-5" /> :
-            username && !getUsernameError() && usernameTouched ? <CheckCircle className="w-5 h-5" /> :
-            <UserIcon className="w-5 h-5" />}
-        </div>
-        <input
+      {/* Username Field */}
+      <FormField
           type="text"
           placeholder="Choose a username"
           value={username}
-          onChange={(e) => handleUsernameChange(e.target.value)}
+        onChange={handleUsernameChange}
           onBlur={() => setUsernameTouched(true)}
-          className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
-            getUsernameError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
-            username && !getUsernameError() && usernameTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
-          }`}
+        error={getUsernameError()}
+        isValid={!getUsernameError()}
+        touched={usernameTouched}
           disabled={isFormDisabled}
         />
-      </div>
+      <ValidationMessage
+        error={getUsernameError()}
+        isValid={!getUsernameError()}
+        touched={usernameTouched}
+        value={username}
+        successMessage="Username looks good!"
+      />
 
-      {/* Username validation feedback */}
-      {getUsernameError() && (
-        <p className="text-xs text-red-600 flex items-center gap-1 mt-1" role="alert">
-          <AlertCircle className="w-3 h-3" />
-          {getUsernameError()}
-        </p>
-      )}
-      {username && !getUsernameError() && usernameTouched && (
-        <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status">
-          <CheckCircle className="w-3 h-3" />
-          Username looks good!
-        </p>
-      )}
-
-      {/* Email with icon */}
-      <div className="relative group">
-        <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
-          getEmailError() ? 'text-red-500' :
-          email && !getEmailError() && emailTouched ? 'text-sage' :
-          'text-charcoal/40 group-focus-within:text-sage'
-        }`}>
-          {getEmailError() ? <AlertCircle className="w-5 h-5" /> :
-            email && !getEmailError() && emailTouched ? <CheckCircle className="w-5 h-5" /> :
-            <Mail className="w-5 h-5" />}
-        </div>
-        <input
+      {/* Email Field */}
+      <FormField
           type="email"
           placeholder="you@example.com"
           value={email}
-          onChange={(e) => handleEmailChange(e.target.value)}
+        onChange={handleEmailChange}
           onBlur={() => setEmailTouched(true)}
-          className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
-            getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
-            email && !getEmailError() && emailTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
-          }`}
+        error={getEmailError()}
+        isValid={!getEmailError()}
+        touched={emailTouched}
           disabled={isFormDisabled}
         />
-      </div>
+      <ValidationMessage
+        error={getEmailError()}
+        isValid={!getEmailError()}
+        touched={emailTouched}
+        value={email}
+        successMessage="Email looks good!"
+      />
 
-      {/* Email validation feedback */}
-      {getEmailError() && (
-        <p className="text-xs text-red-600 flex items-center gap-1 mt-1" role="alert">
-          <AlertCircle className="w-3 h-3" />
-          {getEmailError()}
-        </p>
-      )}
-      {email && !getEmailError() && emailTouched && (
-        <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status">
-          <CheckCircle className="w-3 h-3" />
-          Email looks good!
-        </p>
-      )}
-
-      {/* Password with enhanced styling */}
-      <div className="relative group">
-        <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
-          passwordStrength.score >= 3 && passwordTouched ? 'text-sage' :
-          passwordStrength.score > 0 && passwordStrength.score < 3 ? 'text-orange-500' :
-          'text-charcoal/40 group-focus-within:text-sage'
-        }`}>
-          {passwordStrength.score >= 3 && passwordTouched ? <CheckCircle className="w-5 h-5" /> :
-            passwordStrength.score > 0 && passwordStrength.score < 3 ? <AlertCircle className="w-5 h-5" /> :
-            <Lock className="w-5 h-5" />}
-        </div>
-        <input
-          type={showPassword ? "text" : "password"}
+      {/* Password Field */}
+      <FormField
+        type="password"
           placeholder="Create a strong password"
           value={password}
-          onChange={(e) => handlePasswordChange(e.target.value)}
+        onChange={handlePasswordChange}
           onBlur={() => setPasswordTouched(true)}
-          className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
-            passwordStrength.score >= 3 && passwordTouched ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-            passwordStrength.score > 0 && passwordStrength.score < 3 ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
-            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
-          }`}
+        error={getPasswordError()}
+        isValid={passwordStrength.score >= 3}
+        touched={passwordTouched}
           disabled={isFormDisabled}
-        />
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-4 sm:right-5 top-1/2 transform -translate-y-1/2 text-charcoal/40 hover:text-charcoal transition-colors duration-300 p-1 z-10 rounded-full"
-          disabled={isFormDisabled}
-        >
-          {showPassword ? (
-            <EyeOff className="w-4 h-4" />
-          ) : (
-            <Eye className="w-4 h-4" />
-          )}
-        </button>
-      </div>
+        showPassword={showPassword}
+        onTogglePassword={() => setShowPassword(!showPassword)}
+      />
+      <PasswordStrength password={password} strength={passwordStrength} />
 
-      {/* Password strength indicator */}
-      {password.length > 0 && (
-        <div className="h-5 mt-1 flex items-center gap-2">
-          <div className="flex-1 flex gap-1" role="progressbar" aria-valuenow={passwordStrength.score} aria-valuemin={0} aria-valuemax={4}>
-            {[1, 2, 3, 4].map((level) => (
-              <div
-                key={level}
-                className={`h-1 flex-1 transition-all duration-300 ${
-                  level <= passwordStrength.score
-                    ? level === 1
-                      ? 'bg-red-400'
-                      : level === 2
-                      ? 'bg-orange-400'
-                      : level === 3
-                      ? 'bg-yellow-400'
-                      : 'bg-sage'
-                    : 'bg-gray-200'
-                }`}
-              />
-            ))}
-          </div>
-          {passwordStrength.feedback && (
-            <span className={`text-xs font-500 ${
-              passwordStrength.score >= 3 ? 'text-sage' :
-              passwordStrength.score >= 2 ? 'text-orange-500' :
-              passwordStrength.score >= 1 ? 'text-red-500' :
-              'text-gray-500'
-            }`}>
-              {passwordStrength.feedback}
-            </span>
-          )}
-        </div>
-      )}
+      {/* Consent Checkbox */}
+      <ConsentCheckbox checked={consent} onChange={setConsent} />
 
-      {/* Terms consent */}
-      <div className="pt-2">
-        <label className="flex items-start gap-3 text-xs text-charcoal/70 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={consent}
-            onChange={(e) => setConsent(e.target.checked)}
-            className="mt-1 w-4 h-4 border-gray-300 text-sage focus:ring-sage/30 focus:ring-offset-0"
-          />
-          <span className="flex-1 leading-relaxed">
-            I agree to the{" "}
-            <a href="/terms" className="underline text-sage hover:text-coral transition-colors">
-              Terms of Use
-            </a>{" "}
-            and{" "}
-            <a href="/privacy" className="underline text-sage hover:text-coral transition-colors">
-              Privacy Policy
-            </a>
-          </span>
-        </label>
-      </div>
+      {/* Submit Button */}
+      <SubmitButton
+        disabled={isSubmitDisabled}
+        isSubmitting={isFormDisabled}
+        onSubmit={handleSubmit}
+      />
 
-      {/* Sign Up Button with premium effects */}
-      <div className="pt-4 flex justify-center">
-        <div className="w-full">
-          <PremiumHover scale={1.02} shadowIntensity="strong">
-            <motion.button
-              type="submit"
-              disabled={isSubmitDisabled}
-              style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
-              className={`group block w-full text-base font-semibold py-3 px-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap ${
-                isSubmitDisabled
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
-                  : 'btn-premium text-white focus:ring-sage/30'
-              }`}
-              whileTap={{ scale: isFormDisabled ? 1 : 0.98 }}
-              transition={{ duration: 0.1 }}
-            >
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                {isFormDisabled && (
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                )}
-                {isFormDisabled ? "Creating account..." : "Create account"}
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </motion.button>
-          </PremiumHover>
-        </div>
-      </div>
-
-      {/* Registration progress indicator */}
-      <div className="text-center space-y-2 pt-4">
-        <div className="flex items-center justify-center gap-3 text-xs">
-          <div className={`flex items-center gap-1 min-w-0 ${username && !getUsernameError() ? 'text-sage' : 'text-gray-400'}`}>
-            {username && !getUsernameError() ? <CheckCircle className="w-3.5 h-3.5" /> : <Circle className="w-3.5 h-3.5" />}
-            <span className="text-truncate">Username</span>
-          </div>
-          <div className={`flex items-center gap-1 min-w-0 ${email && !getEmailError() ? 'text-sage' : 'text-gray-400'}`}>
-            {email && !getEmailError() ? <CheckCircle className="w-3.5 h-3.5" /> : <Circle className="w-3.5 h-3.5" />}
-            <span className="text-truncate">Email</span>
-          </div>
-          <div className={`flex items-center gap-1 min-w-0 ${passwordStrength.score >= 3 ? 'text-sage' : 'text-gray-400'}`}>
-            {passwordStrength.score >= 3 ? <CheckCircle className="w-3.5 h-3.5" /> : <Circle className="w-3.5 h-3.5" />}
-            <span className="text-truncate">Password</span>
-          </div>
-          <div className={`flex items-center gap-1 min-w-0 ${consent ? 'text-sage' : 'text-gray-400'}`}>
-            {consent ? <CheckCircle className="w-3.5 h-3.5" /> : <Circle className="w-3.5 h-3.5" />}
-            <span className="text-truncate">Terms</span>
-          </div>
-        </div>
-        <p className="text-xs text-charcoal/60">
-          Next - Pick your interests
-        </p>
-      </div>
+      {/* Progress Indicator */}
+      <ProgressIndicator
+        username={{ value: username, isValid: !getUsernameError(), error: getUsernameError() }}
+        email={{ value: email, isValid: !getEmailError(), error: getEmailError() }}
+        password={{ strength: passwordStrength.score }}
+        consent={consent}
+      />
     </form>
   );
 }

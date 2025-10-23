@@ -170,7 +170,7 @@ export default function CollectionsSection() {
               <div className="p-6">
                 {/* Header Section */}
                 <div className="text-center mb-4">
-                  <h3 className="font-sf text-xl font-700 text-charcoal group-hover:text-sage transition-colors duration-300 mb-2">
+                  <h3 className="font-sf text-sm sm:text-base font-600 text-charcoal group-hover:text-navbar-bg transition-colors duration-300 mb-2">
                     {business.name}
                   </h3>
                   <div className="flex items-center justify-center space-x-2">
