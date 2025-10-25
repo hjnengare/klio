@@ -19,7 +19,7 @@ export default function Logo({
     default: "text-lg lg:text-5xl",
     mobile: "text-lg",
     footer: "text-lg lg:text-lg",
-    onboarding: "text-xl md:text-lg lg:text-lg"
+    onboarding: "text-3xl md:text-4xl lg:text-5xl"
   };
 
   const domainSizeClasses = {

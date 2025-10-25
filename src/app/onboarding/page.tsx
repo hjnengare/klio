@@ -181,28 +181,6 @@ export default function OnboardingPage() {
               </div>
             </div>
           </div>
-
-          {/* Trust indicators */}
-          <div className="flex justify-center items-start gap-3 md:gap-5 text-charcoal/60 text-center pt-8 md:pt-6 pb-4 flex-shrink-0">
-            <div className={`${mounted ? "opacity-0 animate-scale-in delay-1400" : "opacity-0"} flex flex-col items-center gap-1 w-16 md:w-20`}>
-              <div className="w-7 h-7 bg-sage/10 rounded-full flex items-center justify-center">
-                <div className="w-2.5 h-2.5 bg-sage rounded-full" />
-              </div>
-              <span className="text-lgont-medium tracking-tight leading-tight whitespace-nowrap" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Earn points</span>
-            </div>
-            <div className={`${mounted ? "opacity-0 animate-scale-in delay-1600" : "opacity-0"} flex flex-col items-center gap-1 w-16 md:w-20`}>
-              <div className="w-7 h-7 bg-coral/10 rounded-full flex items-center justify-center">
-                <div className="w-2.5 h-2.5 bg-coral rounded-full" />
-              </div>
-              <span className="text-lgont-medium tracking-tight leading-tight whitespace-nowrap" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Trusted opinions</span>
-            </div>
-            <div className={`${mounted ? "opacity-0 animate-scale-in delay-1800" : "opacity-0"} flex flex-col items-center gap-1 w-20 md:w-24`}>
-              <div className="w-7 h-7 bg-charcoal/10 rounded-full flex items-center justify-center">
-                <div className="w-2.5 h-2.5 bg-charcoal rounded-full" />
-              </div>
-              <span className="text-lgont-medium tracking-tight leading-tight whitespace-nowrap" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Community favourites</span>
-            </div>
-          </div>
         </div>
       </div>
     </>
