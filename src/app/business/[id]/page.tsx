@@ -101,9 +101,13 @@ export default function BusinessProfilePage() {
     return (
         <>
             <style dangerouslySetInnerHTML={{ __html: animations }} />
+            {/* Google Fonts */}
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+            <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
             {/* SF Pro Font Setup */}
             <style jsx global>{`
-                .font-sf {
+                .font-urbanist {
                     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
                         "SF Pro Display", "Helvetica Neue", Helvetica, Arial, system-ui,
                         sans-serif;
@@ -113,7 +117,7 @@ export default function BusinessProfilePage() {
                 }
             `}</style>
         <div
-                className="min-h-dvh bg-off-white/90 relative overflow-hidden font-sf"
+                className="min-h-dvh bg-off-white/90 relative overflow-hidden font-urbanist"
             style={{
                 fontFamily:
                     '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
@@ -121,8 +125,13 @@ export default function BusinessProfilePage() {
         >
 
             {/* Fixed Premium Header */}
-            <header className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg backdrop-blur-xl border-b border-white/5 px-4 py-4 shadow-lg shadow-sage/5 animate-slide-in-top">
-                <div className="flex items-center justify-between max-w-6xl mx-auto">
+            <header className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
+                style={{
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                }}
+            >
+                <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+                    <div className="flex items-center justify-between">
                         <Link
                             href="/home"
                             className="text-white/90 hover:text-white transition-colors duration-300 p-2 hover:bg-white/10 rounded-full"
@@ -130,7 +139,7 @@ export default function BusinessProfilePage() {
                             <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
                         </Link>
 
-                    <h1 className="font-sf text-sm font-700 text-white animate-delay-100 animate-fade-in">
+                    <h1 className="font-urbanist text-sm font-700 text-white animate-delay-100 animate-fade-in">
                         {business.name}
                     </h1>
 
@@ -156,118 +165,217 @@ export default function BusinessProfilePage() {
                             </div>
                         )}
                     </div>
+                    </div>
                 </div>
             </header>
 
             <div className="max-w-6xl mx-auto px-4 py-6 pt-32 relative z-10">
-                {/* Two-column layout: main content + reviews sidebar */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* MAIN (span 2) */}
-                    <div className="lg:col-span-2 space-y-6">
-                        {/* Photos (with metrics caption overlay) */}
-                        <div className="bg-off-white/90 backdrop-blur-lg rounded-[10px] shadow-sm border border-sage/10 p-5 relative overflow-hidden animate-fade-in-up animate-delay-100">
-                                <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />
-                                <div className="relative z-10">
-                                <h3 className="text-lg font-600 text-charcoal mb-4 flex items-center gap-3">
-                                        <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
-                                            <Images className="w-4 h-4 text-sage" />
-                                        </span>
-                                        Photos
-                                </h3>
+                {/* Full width layout */}
+                <div className="space-y-6">
+                        {/* Photos and Specials Row */}
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+                            {/* Photos Section */}
+                            <div className="lg:col-span-3">
+                                {/* Photos (with metrics caption overlay) */}
+                                <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 p-5 relative overflow-hidden animate-fade-in-up animate-delay-100">
+                                    <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg" />
+                                    <div className="relative z-10">
+                                        <h3 className="text-lg font-600 text-charcoal mb-4 flex items-center gap-3">
+                                            <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
+                                                <Images className="w-4 h-4 text-sage" />
+                                            </span>
+                                            Photos
+                                        </h3>
 
-                                    <ImageCarousel
-                                        images={business.images || [business.image]}
-                                        altBase={business.name}
-                                        rating={business.rating}
-                                        metrics={[
-                                            { label: "Trust", value: business.trust, color: "sage" },
-                                            { label: "Punctuality", value: business.punctuality, color: "coral" },
-                                            { label: "Friendliness", value: business.friendliness, color: "sage" },
-                                        ]}
-                                    />
-                                </div>
-                            </div>
-
-                        {/* Specials & Events */}
-                        <div className="bg-off-white/90 backdrop-blur-lg rounded-[10px] shadow-sm border border-sage/10 p-6 relative overflow-hidden animate-fade-in-up animate-delay-200">
-                                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-2xl" />
-
-                                <div className="relative z-10">
-                                <h3 className="text-lg font-600 text-charcoal mb-6 flex items-center gap-3">
-                                        <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10">
-                                            <Calendar className="w-4 h-4 text-coral" />
-                                        </span>
-                                        Specials & Events
-                                </h3>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    {business.specials.map((special) => {
-                                            const Icon = special.icon === "pizza" ? Pizza : Music;
-                                            return (
-                                            <div
-                                                    key={special.id}
-                                                    className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-[10px] p-5 border border-sage/10"
-                                                >
-                                                    <div className="flex items-center gap-4">
-                                                        <div className="w-14 h-14 grid place-items-center bg-gradient-to-br from-sage/20 to-sage/10 rounded-[10px]">
-                                                            <Icon className="w-6 h-6 text-sage" />
-                                                        </div>
-                                                        <div>
-                                                            <h4 className="text-base font-600 text-charcoal mb-0.5">{special.name}</h4>
-                                                            <p className="text-sm text-charcoal/70">{special.description}</p>
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                            );
-                                        })}
+                                        <ImageCarousel
+                                            images={business.images || [business.image]}
+                                            altBase={business.name}
+                                            rating={business.rating}
+                                            metrics={[
+                                                { label: "Trust", value: business.trust, color: "sage" },
+                                                { label: "Punctuality", value: business.punctuality, color: "coral" },
+                                                { label: "Friendliness", value: business.friendliness, color: "sage" },
+                                            ]}
+                                        />
                                     </div>
                                 </div>
                             </div>
-                    </div>
 
-                    {/* SIDEBAR: Reviews */}
-                    <aside className="lg:col-span-1">
-                        <div className="sticky top-32 bg-off-white/90 backdrop-blur-lg rounded-[12px] shadow-sm border border-sage/10 p-5 h-[75vh] overflow-y-auto custom-scroll animate-fade-in-up animate-delay-300">
-                            <div className="flex items-center justify-between mb-4">
+                            {/* Specials & Events - Right Aligned */}
+                            <div className="lg:col-span-1">
+                                <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 p-6 relative overflow-hidden animate-fade-in-up animate-delay-200">
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-lg" />
+
+                                    <div className="relative z-10">
+                                        <h3 className="text-lg font-600 text-charcoal mb-6 flex items-center gap-3" style={{ fontFamily: "'Lobster Two', cursive" }}>
+                                            <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10">
+                                                <Calendar className="w-4 h-4 text-coral" />
+                                            </span>
+                                            Specials & Events
+                                        </h3>
+
+                                        <div className="grid grid-cols-1 gap-4">
+                                            {business.specials.map((special) => {
+                                                const Icon = special.icon === "pizza" ? Pizza : Music;
+                                                return (
+                                                    <div
+                                                        key={special.id}
+                                                        className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-[10px] p-4 border border-sage/10"
+                                                    >
+                                                        <div className="flex items-center gap-4">
+                                                            <div className="w-12 h-12 grid place-items-center bg-gradient-to-br from-sage/20 to-sage/10 rounded-[10px]">
+                                                                <Icon className="w-5 h-5 text-sage" />
+                                                            </div>
+                                                                <div>
+                                                                    <h4 className="text-sm font-600 text-charcoal mb-0.5" style={{ fontFamily: "'Lobster Two', cursive" }}>{special.name}</h4>
+                                                                    <p className="text-xs text-charcoal/70">{special.description}</p>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Reviews Section - Full Width Underneath */}
+                        <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 p-6 relative overflow-hidden animate-fade-in-up animate-delay-300">
+                            <div className="flex items-center justify-between mb-6">
                                 <div className="flex items-center gap-3">
                                     <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
                                         <MessageSquareText className="w-4 h-4 text-sage" />
                                     </span>
-                                    <h3 className="text-base sm:text-lg font-700 text-charcoal">Community Reviews</h3>
+                                    <h3 className="text-lg font-700 text-charcoal">Community Reviews</h3>
                                 </div>
                                 <Link
                                     href={`/business/${business.id}/review`}
-                                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sage to-sage/90 text-white text-xs sm:text-sm font-600 py-2 px-3 sm:px-4"
+                                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sage to-sage/90 text-white text-sm font-600 py-2 px-4"
                                 >
                                     <Pencil className="w-4 h-4" />
-                                    Write
+                                    Write Review
                                 </Link>
                             </div>
 
-                            {/* Review Cards */}
-                            <div className="space-y-3">
-                                <PremiumReviewCard
-                                    author={business.reviews[0].author}
-                                    rating={business.reviews[0].rating}
-                                    text={business.reviews[0].text}
-                                    date={business.reviews[0].date}
-                                    tags={business.reviews[0].tags}
-                                    highlight="Top Reviewer"
-                                    verified
-                                />
-                                <PremiumReviewCard
-                                    author={business.reviews[1].author}
-                                    rating={business.reviews[1].rating}
-                                    text={business.reviews[1].text}
-                                    date={business.reviews[1].date}
-                                    tags={business.reviews[1].tags}
-                                    highlight="Local Guide"
-                                    verified={false}
-                                />
+                            {/* Review Cards - Scrollable Container (4 at a time) */}
+                            <div className="h-[600px] overflow-y-auto custom-scroll">
+                                <div className="space-y-4">
+                                    <PremiumReviewCard
+                                        author={business.reviews[0].author}
+                                        rating={business.reviews[0].rating}
+                                        text={business.reviews[0].text}
+                                        date={business.reviews[0].date}
+                                        tags={business.reviews[0].tags}
+                                        highlight="Top Reviewer"
+                                        verified
+                                        profileImage="https://images.unsplash.com/photo-1494790108755-2616b332e234?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                        reviewImages={[
+                                            "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                                            "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                        ]}
+                                    />
+                                    <PremiumReviewCard
+                                        author={business.reviews[1].author}
+                                        rating={business.reviews[1].rating}
+                                        text={business.reviews[1].text}
+                                        date={business.reviews[1].date}
+                                        tags={business.reviews[1].tags}
+                                        highlight="Local Guide"
+                                        verified={false}
+                                        profileImage="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                        reviewImages={[
+                                            "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                        ]}
+                                    />
+                                    <PremiumReviewCard
+                                        author="Maria Garcia"
+                                        rating={5}
+                                        text="Amazing food and great service! The staff was very friendly and the atmosphere was perfect for a family dinner. Highly recommend the pasta dishes."
+                                        date="Jan 2024"
+                                        tags={["friendly", "family-friendly", "great food"]}
+                                        highlight="Foodie"
+                                        verified
+                                        profileImage="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80"
+                                        reviewImages={[
+                                            "https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                                            "https://images.unsplash.com/photo-1563379091339-03246963d0b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                                            "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                        ]}
+                                    />
+                                    <PremiumReviewCard
+                                        author="Alex Chen"
+                                        rating={4}
+                                        text="Good food but service was a bit slow during peak hours. The pizza was delicious though, worth the wait."
+                                        date="Dec 2023"
+                                        tags={["slow service", "good food"]}
+                                        highlight="Regular"
+                                        verified={false}
+                                        profileImage="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                        reviewImages={[
+                                            "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                        ]}
+                                    />
+                                    <PremiumReviewCard
+                                        author="Sarah Johnson"
+                                        rating={5}
+                                        text="Absolutely fantastic! The ambiance is perfect for a date night. The wine selection is excellent and the staff knows their stuff. Will definitely be back!"
+                                        date="Feb 2024"
+                                        tags={["romantic", "great wine", "excellent service"]}
+                                        highlight="Wine Expert"
+                                        verified
+                                        profileImage="https://broken-image-url.com/profile.jpg"
+                                        reviewImages={[
+                                            "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                                            "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                        ]}
+                                    />
+                                    <PremiumReviewCard
+                                        author="Mike Rodriguez"
+                                        rating={3}
+                                        text="Food was decent but the wait time was too long. The place was packed and understaffed. Good food when it finally arrived though."
+                                        date="Jan 2024"
+                                        tags={["long wait", "understaffed", "decent food"]}
+                                        highlight="Regular"
+                                        verified={false}
+                                        profileImage=""
+                                        reviewImages={[
+                                            "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                        ]}
+                                    />
+                                    <PremiumReviewCard
+                                        author="Emma Wilson"
+                                        rating={5}
+                                        text="Best restaurant in town! The chef's special was incredible and the presentation was beautiful. Service was impeccable from start to finish."
+                                        date="Feb 2024"
+                                        tags={["chef's special", "beautiful presentation", "impeccable service"]}
+                                        highlight="Food Critic"
+                                        verified
+                                        profileImage="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                        reviewImages={[
+                                            "https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                                            "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                                            "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                                            "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                        ]}
+                                    />
+                                    <PremiumReviewCard
+                                        author="David Kim"
+                                        rating={4}
+                                        text="Great atmosphere and friendly staff. The menu has good variety and the prices are reasonable. Parking can be a bit tricky during peak hours."
+                                        date="Jan 2024"
+                                        tags={["great atmosphere", "friendly staff", "reasonable prices"]}
+                                        highlight="Local Guide"
+                                        verified
+                                        profileImage="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                        reviewImages={[
+                                            "https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                                            "https://images.unsplash.com/photo-1563379091339-03246963d0b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                        ]}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </aside>
-
                 </div>
             </div>
         </div>

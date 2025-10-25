@@ -5,7 +5,7 @@ export default function Loading() {
         <div className="w-12 h-12 mx-auto mb-4">
           <div className="w-full h-full border-4 border-sage border-t-transparent rounded-full animate-spin"></div>
         </div>
-        <h2 className="font-sf text-base font-600 text-charcoal/80">
+        <h2 className="font-urbanist text-base font-600 text-charcoal/80">
           Loading...
         </h2>
       </div>

@@ -40,7 +40,9 @@
       "Bash(start http://localhost:3005/forgot-password)",
       "Bash(find:*)",
       "Bash(start http://localhost:3002)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(netstat:*)",
+      "Bash(start:*)"
     ],
     "deny": [],
     "ask": []

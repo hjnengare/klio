@@ -152,7 +152,7 @@ export default function ResetPasswordPage() {
         <style dangerouslySetInnerHTML={{ __html: authStyles }} />
         <div className="min-h-[100dvh] bg-off-white flex flex-col items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage"></div>
-          <p className="mt-4 font-sf text-sm text-charcoal/70">Verifying reset link...</p>
+          <p className="mt-4 font-urbanist text-sm text-charcoal/70">Verifying reset link...</p>
         </div>
       </>
     );
@@ -170,7 +170,7 @@ export default function ResetPasswordPage() {
           />
 
           <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
-            <div className="bg-off-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] animate-scale-in">
+            <div className="bg-off-white/95 rounded-lg p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] animate-scale-in">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto bg-red-50 rounded-full flex items-center justify-center">
                   <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,10 +179,10 @@ export default function ResetPasswordPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <h2 className="font-sf text-xl font-700 text-charcoal">
+                  <h2 className="font-urbanist text-xl font-700 text-charcoal">
                     Link expired
                   </h2>
-                  <p className="font-sf text-sm text-charcoal/70">
+                  <p className="font-urbanist text-sm text-charcoal/70">
                     This password reset link is invalid or has expired. Please request a new one.
                   </p>
                 </div>
@@ -222,7 +222,7 @@ export default function ResetPasswordPage() {
           />
 
           <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
-            <div className="bg-off-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] animate-scale-in">
+            <div className="bg-off-white/95 rounded-lg p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] animate-scale-in">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto bg-green-50 rounded-full flex items-center justify-center">
                   <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -231,10 +231,10 @@ export default function ResetPasswordPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <h2 className="font-sf text-xl font-700 text-charcoal">
+                  <h2 className="font-urbanist text-xl font-700 text-charcoal">
                     Password reset!
                   </h2>
-                  <p className="font-sf text-sm text-charcoal/70">
+                  <p className="font-urbanist text-sm text-charcoal/70">
                     Your password has been successfully reset. Redirecting you to home...
                   </p>
                 </div>
@@ -267,18 +267,18 @@ export default function ResetPasswordPage() {
         />
 
         <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
-          <div className="bg-off-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)] transition-shadow duration-300 animate-scale-in">
+          <div className="bg-off-white/95 rounded-lg p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)] transition-shadow duration-300 animate-scale-in">
 
             <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
               {/* Error Message */}
               {error && (
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-                  <p className="font-sf text-[14px] font-600 text-red-600">{error}</p>
+                  <p className="font-urbanist text-[14px] font-600 text-red-600">{error}</p>
                 </div>
               )}
 
               <div className="mb-4 text-center">
-                <p className="font-sf text-sm text-charcoal/70">
+                <p className="font-urbanist text-sm text-charcoal/70">
                   Create a strong password with at least 8 characters, including uppercase, lowercase, and numbers.
                 </p>
               </div>
@@ -350,7 +350,7 @@ export default function ResetPasswordPage() {
 
             {/* Footer */}
             <div className="text-center mt-4 pt-4 border-t border-light-gray/30">
-              <div className="font-sf text-sm sm:text-base font-400 text-charcoal/70">
+              <div className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70">
                 Remember your password?{" "}
                 <Link
                   href="/login"

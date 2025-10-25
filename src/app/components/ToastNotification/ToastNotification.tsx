@@ -50,7 +50,7 @@ export default function ToastNotification({
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 100, scale: 0.8 }}
       transition={{ type: "spring", damping: 25, stiffness: 300 }}
-      className="notification-toast relative bg-white rounded-lg shadow-2xl overflow-hidden w-80 max-w-[calc(100vw-2rem)]"
+      className="notification-toast relative bg-white rounded-lg shadow-lg overflow-hidden w-80 max-w-[calc(100vw-2rem)]"
     >
       {/* Progress bar */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-sage/10">
@@ -99,15 +99,15 @@ export default function ToastNotification({
 
         {/* Details */}
         <div className="toast-detail flex-1 min-w-0">
-          <p className="toast-message font-sf text-6 font-400 text-charcoal/60 mb-1">
+          <p className="toast-message font-urbanist text-6 font-400 text-charcoal/60 mb-1">
             {notification.message}
           </p>
 
-          <p className="toast-title font-sf text-5 font-600 text-charcoal line-clamp-2 mb-1">
+          <p className="toast-title font-urbanist text-5 font-600 text-charcoal line-clamp-2 mb-1">
             {notification.title}
           </p>
 
-          <p className="toast-meta font-sf text-7 font-400 text-charcoal/50">
+          <p className="toast-meta font-urbanist text-7 font-400 text-charcoal/50">
             <time>{notification.timeAgo}</time> ago
           </p>
         </div>

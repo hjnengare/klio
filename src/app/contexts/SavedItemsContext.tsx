@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback, useMemo } from "react";
 import { useAuth } from "./AuthContext";
 
 interface SavedItemsContextType {
@@ -19,6 +19,15 @@ interface SavedItemsProviderProps {
 }
 
 export function SavedItemsProvider({ children }: SavedItemsProviderProps) {
+  // Dummy saved items for testing
+  const DUMMY_SAVED_ITEMS = [
+    "550e8400-e29b-41d4-a716-446655440001", // The Green Table
+    "550e8400-e29b-41d4-a716-446655440002", // Artisan Coffee Co.
+    "550e8400-e29b-41d4-a716-446655440003", // Bloom Yoga Studio
+    "550e8400-e29b-41d4-a716-446655440005", // Sunset Ceramics
+    "550e8400-e29b-41d4-a716-446655440006", // Morning Glory Bakery
+  ];
+
   const [savedItems, setSavedItems] = useState<string[]>([]);
   const { user } = useAuth();
 
@@ -28,11 +37,15 @@ export function SavedItemsProvider({ children }: SavedItemsProviderProps) {
       const saved = localStorage.getItem("savedItems");
       if (saved) {
         try {
-          setSavedItems(JSON.parse(saved));
+          const parsed = JSON.parse(saved);
+          setSavedItems(parsed);
         } catch (error) {
           console.error("Error parsing saved items:", error);
-          setSavedItems([]);
+          setSavedItems(DUMMY_SAVED_ITEMS);
         }
+      } else {
+        // If no saved items in localStorage, use dummy data
+        setSavedItems(DUMMY_SAVED_ITEMS);
       }
     }
   }, []);
@@ -44,41 +57,41 @@ export function SavedItemsProvider({ children }: SavedItemsProviderProps) {
     }
   }, [savedItems]);
 
-  const addSavedItem = (itemId: string) => {
+  const addSavedItem = useCallback((itemId: string) => {
     setSavedItems(prev => {
       if (!prev.includes(itemId)) {
         return [...prev, itemId];
       }
       return prev;
     });
-  };
+  }, []);
 
-  const removeSavedItem = (itemId: string) => {
+  const removeSavedItem = useCallback((itemId: string) => {
     setSavedItems(prev => prev.filter(id => id !== itemId));
-  };
+  }, []);
 
-  const isItemSaved = (itemId: string) => {
+  const isItemSaved = useCallback((itemId: string) => {
     return savedItems.includes(itemId);
-  };
+  }, [savedItems]);
 
-  const toggleSavedItem = (itemId: string) => {
+  const toggleSavedItem = useCallback((itemId: string) => {
     if (isItemSaved(itemId)) {
       removeSavedItem(itemId);
     } else {
       addSavedItem(itemId);
     }
-  };
+  }, [isItemSaved, removeSavedItem, addSavedItem]);
 
-  const savedCount = savedItems.length;
+  const savedCount = useMemo(() => savedItems.length, [savedItems]);
 
-  const value: SavedItemsContextType = {
+  const value: SavedItemsContextType = useMemo(() => ({
     savedItems,
     savedCount,
     addSavedItem,
     removeSavedItem,
     isItemSaved,
     toggleSavedItem,
-  };
+  }), [savedItems, savedCount, addSavedItem, removeSavedItem, isItemSaved, toggleSavedItem]);
 
   return (
     <SavedItemsContext.Provider value={value}>

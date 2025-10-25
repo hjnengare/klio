@@ -20,12 +20,12 @@ export default function RatingSelector({ overallRating, onRatingChange }: Rating
             <button
               key={star}
               onClick={() => onRatingChange(star)}
-              className="p-1 md:p-2 focus:outline-none transition-all duration-300 rounded-full hover:bg-amber-50"
+              className="p-1 md:p-2 focus:outline-none transition-all duration-300 rounded-full hover:bg-navbar-bg/10"
               aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
             >
               <Star
                 size={32}
-                className={active ? "text-amber-500" : "text-gray-400"}
+                className={active ? "text-navbar-bg" : "text-gray-400"}
                 style={{ fill: active ? "currentColor" : "none" }}
               />
             </button>

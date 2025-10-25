@@ -46,7 +46,7 @@ export default function BusinessCarousel({ businessName, businessImages }: Busin
   return (
     <div className="mb-6 md:mb-8 -mx-4 md:-mx-8 relative">
       <div
-        className="relative overflow-hidden rounded-none md:rounded-2xl"
+        className="relative overflow-hidden rounded-none md:rounded-lg"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -58,17 +58,18 @@ export default function BusinessCarousel({ businessName, businessImages }: Busin
           {businessImages.map((img, idx) => (
             <div
               key={idx}
-              className="w-full flex-shrink-0 aspect-[4/3] md:aspect-[16/9] bg-sage/10 relative"
+              className="w-full flex-shrink-0 aspect-[4/3] md:aspect-[16/9] bg-sage/10 relative overflow-hidden"
             >
               <Image
                 src={img}
                 alt={`${businessName} photo ${idx + 1}`}
                 fill
-                className="object-cover object-center"
+                className="object-cover"
                 sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 1100px"
                 quality={90}
                 priority={idx === 0}
                 onError={() => setImageError((prev) => ({ ...prev, [idx]: true }))}
+                style={{ objectPosition: 'center' }}
               />
               {imageError[idx] && (
                 <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-sage/5">

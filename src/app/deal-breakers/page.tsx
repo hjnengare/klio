@@ -151,7 +151,7 @@ function DealBreakersContent() {
       <OnboardingLayout step={3} backHref={backHref}>
         <DealBreakerHeader />
 
-        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
+        <OnboardingCard className="rounded-lg border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
           <DealBreakerSelection selectedCount={selectedDealbreakers.length}>
             <DealBreakerGrid 
               dealbreakers={DEMO_DEAL_BREAKERS}

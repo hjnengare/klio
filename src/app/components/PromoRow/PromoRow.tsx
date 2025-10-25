@@ -50,8 +50,8 @@ function PromoRow() {
     >
       {/* Subtle background decoration */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="absolute top-1/2 left-1/4 w-40 h-40 bg-gradient-to-br from-sage/20 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/3 w-32 h-32 bg-gradient-to-br from-coral/15 to-transparent rounded-full blur-2xl" />
+        <div className="absolute top-1/2 left-1/4 w-40 h-40 bg-gradient-to-br from-sage/20 to-transparent rounded-full blur-lg" />
+        <div className="absolute bottom-1/4 right-1/3 w-32 h-32 bg-gradient-to-br from-coral/15 to-transparent rounded-full blur-lg" />
       </div>
 
       <div className="container mx-auto max-w-[1300px] px-4 relative z-10">
@@ -88,17 +88,17 @@ function PromoRow() {
               {/* Content */}
               <div className="relative h-full p-6 flex flex-col justify-between z-10">
                 <div>
-                  <h3 className="font-sf text-2xl sm:text-3xl font-800 text-white mb-2">
+                  <h3 className="font-urbanist text-lg sm:text-lg font-800 text-white mb-2">
                     {card.title}
                   </h3>
-                  <p className="font-sf text-sm sm:text-base text-white/90">
+                  <p className="font-urbanist text-sm sm:text-base text-white/90">
                     {card.subtitle}
                   </p>
                 </div>
 
                 {/* CTA */}
                 <div className="flex items-center justify-between">
-                  <span className="font-sf text-sm sm:text-base font-700 text-white/90 transition-colors duration-300 group-hover:text-white">
+                  <span className="font-urbanist text-sm sm:text-base font-700 text-white/90 transition-colors duration-300 group-hover:text-white">
                     {card.cta}
                   </span>
                   <IoArrowForward className="text-white/90 text-lg transition-all duration-300 group-hover:text-white group-hover:translate-x-1" />

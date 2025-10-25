@@ -109,7 +109,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
         aria-label="Navigation menu"
         className={`
           modal-slide-left w-80 max-w-[80vw] no-layout-shift
-          bg-off-white /98 backdrop-blur-md shadow-2xl
+          bg-off-white /98 backdrop-blur-md shadow-lg
           mobile-scroll-container safe-area-container overflow-y-auto
           ${isOpen ? "open" : ""}
         `}
@@ -117,10 +117,10 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-sage/10">
           <div>
-            <h2 className="font-sf text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+            <h2 className="font-urbanist text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
               sayso Menu
             </h2>
-            <p className="font-sf text-sm text-charcoal/60 mt-1">
+            <p className="font-urbanist text-sm text-charcoal/60 mt-1">
               Navigate your local world
             </p>
           </div>
@@ -144,7 +144,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               <Edit className="w-5 h-5 text-coral" />
             </div>
             <div className="flex-1 text-left">
-              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Write Review
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -169,7 +169,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               )}
             </div>
             <div className="flex-1 text-left">
-              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Saved Places
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -189,7 +189,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               <Home className="w-5 h-5 text-sage" />
             </div>
             <div className="flex-1 text-left">
-              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Home
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -209,7 +209,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               <User className="w-5 h-5 text-sage" />
             </div>
             <div className="flex-1 text-left">
-              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Profile
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -236,7 +236,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
               <Search className="w-5 h-5 text-sage" />
             </div>
             <div className="flex-1 text-left">
-              <span className="font-sf text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
+              <span className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200">
                 Search
               </span>
               <p className="text-sm text-charcoal/60 mt-1">
@@ -255,7 +255,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 <User className="w-6 h-6 text-sage" />
               </div>
               <div>
-                <span className="font-sf text-base font-600 text-charcoal">
+                <span className="font-urbanist text-base font-600 text-charcoal">
                   {user.name || user.email?.split('@')[0] || 'User'}
                 </span>
                 <p className="text-sm text-charcoal/60">
@@ -271,7 +271,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-sage/5 transition-all duration-200 group mobile-interaction"
               >
                 <Settings className="w-4 h-4 text-charcoal/60 group-hover:text-sage transition-colors duration-200" />
-                <span className="font-sf text-sm font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
+                <span className="font-urbanist text-sm font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
                   Settings
                 </span>
               </button>
@@ -281,7 +281,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
                 className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-sage/5 transition-all duration-200 group mobile-interaction"
               >
                 <HelpCircle className="w-4 h-4 text-charcoal/60 group-hover:text-sage transition-colors duration-200" />
-                <span className="font-sf text-sm font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
+                <span className="font-urbanist text-sm font-500 text-charcoal group-hover:text-sage transition-colors duration-200">
                   Help & Support
                 </span>
               </button>

@@ -61,16 +61,10 @@ const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
 
     return (
       <form onSubmit={handleSubmit} className={`${containerClass} ${className}`} ref={ref}>
-        <div
-          className={`
-            relative group rounded-full border border-sage bg-off-white/60
-            transition-all duration-300
-            focus-within:outline-none focus-within:ring-0
-          `}
-        >
+        <div className="relative">
           {/* left icon */}
-          <div className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-charcoal/60 z-10">
-            <Search className="w-4 h-4" />
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Search className="w-4 h-4 text-charcoal/60" />
           </div>
 
           {/* right icon (filters) */}
@@ -78,7 +72,7 @@ const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
             <button
               type="button"
               onClick={onFilterClick}
-              className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-charcoal/60 hover:text-sage transition-colors z-10 p-2"
+              className="absolute inset-y-0 right-0 pr-4 flex items-center text-charcoal/60 hover:text-sage transition-colors z-10"
               aria-label="Open filters"
             >
               <SlidersHorizontal className="w-4 h-4" />
@@ -94,12 +88,16 @@ const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
             onTouchStart={onFocusOpenFilters}
             placeholder={ph}
             className={`
-              w-full bg-transparent rounded-full
-              ${showFilter && onFilterClick ? "pl-12 pr-12 sm:pl-14 sm:pr-12" : "pl-12 pr-4"}
-              ${variant === "header" ? "py-3 text-base lg:text-lg" : "py-2 text-sm md:text-base"}
-              text-charcoal placeholder-charcoal/40
-              outline-none ring-0 focus:ring-0 border-0
+              w-full bg-white/80 backdrop-blur-sm border-2 border-charcoal/20 rounded-xl
+              text-sm placeholder:text-charcoal/50 font-urbanist text-charcoal
+              focus:outline-none focus:border-sage focus:ring-2 focus:ring-sage/20
+              hover:border-charcoal/30 transition-all duration-200
+              ${showFilter && onFilterClick ? "pl-12 pr-12" : "pl-12 pr-4"}
+              ${variant === "header" ? "py-3.5" : "py-3"}
             `}
+            style={{
+              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+            }}
             aria-label="Search"
           />
         </div>

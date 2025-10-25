@@ -7,7 +7,7 @@ export default function Loading() {
       {/* Profile Content */}
       <div className="container mx-auto max-w-4xl px-4 py-8">
         {/* Profile Header Skeleton */}
-        <div className="bg-white rounded-2xl p-6 mb-6 shadow-sm border border-sage/10 animate-pulse">
+        <div className="bg-white rounded-lg p-6 mb-6 shadow-sm border border-sage/10 animate-pulse">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-20 h-20 rounded-full bg-sage/10" />
             <div className="space-y-2 flex-1">

@@ -78,48 +78,48 @@ export default function ReviewerCard({
     return (
       <div
         id={idForSnap}
-        className="snap-start snap-always w-[100vw] sm:w-[280px] flex-shrink-0"
+        className="snap-start snap-always w-[100vw] sm:w-[187px] flex-shrink-0"
       >
         <div
-          className="bg-card-bg rounded-2xl overflow-hidden shadow-md group cursor-pointer h-[200px] relative border border-charcoal/10"
+          className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden group cursor-pointer h-[133px] relative border border-white/50 backdrop-blur-md ring-1 ring-white/20"
           onClick={toggleActions}
         >
           {/* Content */}
-          <div className="relative z-10 p-4 h-full flex flex-col">
+          <div className="relative z-10 p-2 h-full flex flex-col">
             {/* Header with small profile pic and rating */}
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-3">
+            <div className="flex items-start justify-between mb-1">
+                <div className="flex items-center gap-1.5">
                 {!imgError && reviewerData?.profilePicture ? (
                   <div className="relative">
                     <Image
                       src={reviewerData.profilePicture}
                       alt={reviewerData?.name || "User avatar"}
-                      width={48}
-                      height={48}
-                      className="w-12 h-12 object-cover rounded-full border-2 border-white shadow-md"
+                      width={32}
+                      height={32}
+                      className="w-8 h-8 object-cover rounded-full border-2 border-white ring-2 ring-white/50"
                       priority={false}
                       onError={() => setImgError(true)}
                     />
                     {/* Verified badge */}
                     {reviewerData?.badge === "verified" && (
                       <div className="absolute -right-0.5 -top-0.5 z-20">
-                        <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                          <Check className="text-white" size={12} strokeWidth={3} />
+                        <div className="w-3 h-3 bg-blue-500 rounded-full flex items-center justify-center ring-1 ring-white/50">
+                          <Check className="text-white" size={8} strokeWidth={3} />
                         </div>
                       </div>
                     )}
                   </div>
                 ) : (
-                  <div className="w-12 h-12 flex items-center justify-center bg-sage/20 text-sage rounded-full border-2 border-white shadow-md">
-                    <User className="text-sage/70" size={18} />
+                  <div className="w-8 h-8 flex items-center justify-center bg-sage/20 text-sage rounded-full border-2 border-white ring-2 ring-white/50">
+                    <User className="text-sage/70" size={14} />
                   </div>
                 )}
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-sf text-sm font-700 text-primary truncate">
+                  <h3 className="font-urbanist text-xs font-600 text-charcoal truncate">
                     {reviewerData?.name}
                   </h3>
-                  <p className="font-sf text-xs font-600 text-primary/70">
+                  <p className="font-urbanist text-xs text-charcoal/70">
                     {reviewerData?.location}
                   </p>
                 </div>
@@ -128,13 +128,13 @@ export default function ReviewerCard({
             </div>
 
             {/* Stats */}
-            <div className="mb-3">
+            <div className="mb-1">
               <div className="flex items-center justify-center">
                 <div className="text-center">
-                  <div className="font-sf font-800 text-lg text-primary">
+                  <div className="font-urbanist font-600 text-xs text-charcoal">
                     {reviewerData?.reviewCount}
                   </div>
-                  <div className="font-sf text-xs text-primary/70">Reviews</div>
+                  <div className="font-urbanist text-[10px] text-charcoal/70">Reviews</div>
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function ReviewerCard({
               <div className="flex items-center gap-1 flex-wrap">
                 {reviewerData?.badge && (
                   <div
-                    className={`px-2 py-1 rounded-full text-xs font-sf font-600 flex items-center gap-1 ${
+                    className={`px-1.5 py-0.5 rounded-full text-[10px] font-urbanist font-600 flex items-center gap-0.5 ${
                       reviewerData.badge === "top"
                         ? "bg-amber-100 text-amber-700"
                         : reviewerData.badge === "verified"
@@ -153,11 +153,11 @@ export default function ReviewerCard({
                     }`}
                   >
                     {reviewerData.badge === "top" ? (
-                      <Trophy size={12} />
+                      <Trophy size={10} />
                     ) : reviewerData.badge === "verified" ? (
-                      <Check size={12} />
+                      <Check size={10} />
                     ) : (
-                      <MapPin size={12} />
+                      <MapPin size={10} />
                     )}
                     <span className="sr-only">
                       {reviewerData.badge === "top"
@@ -171,7 +171,7 @@ export default function ReviewerCard({
 
                 {reviewerData?.trophyBadge && (
                   <div
-                    className={`px-2 py-1 rounded-full text-xs font-sf font-600 flex items-center gap-1 ${
+                    className={`px-1.5 py-0.5 rounded-full text-[10px] font-urbanist font-600 flex items-center gap-0.5 ${
                       reviewerData.trophyBadge === "gold"
                         ? "bg-yellow-50 text-yellow-700"
                         : reviewerData.trophyBadge === "silver"
@@ -184,15 +184,15 @@ export default function ReviewerCard({
                     }`}
                   >
                     {reviewerData.trophyBadge === "gold" ? (
-                      <Trophy size={12} />
+                      <Trophy size={10} />
                     ) : reviewerData.trophyBadge === "silver" ? (
-                      <Medal size={12} />
+                      <Medal size={10} />
                     ) : reviewerData.trophyBadge === "bronze" ? (
-                      <Medal size={12} />
+                      <Medal size={10} />
                     ) : reviewerData.trophyBadge === "rising-star" ? (
-                      <Star size={12} />
+                      <Star size={10} />
                     ) : (
-                      <Heart size={12} />
+                      <Heart size={10} />
                     )}
                     <span className="sr-only">
                       {reviewerData.trophyBadge}
@@ -213,20 +213,20 @@ export default function ReviewerCard({
                 }`}
               >
                 <button
-                  className="w-7 h-7 bg-card-bg/90  rounded-full flex items-center justify-center shadow-sm hover:bg-card-bg hover:scale-110 transition-all duration-200"
+                  className="w-6 h-6 bg-card-bg/90  rounded-full flex items-center justify-center hover:bg-card-bg hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Follow"
                   title="Follow"
                 >
-                  <UserPlus className="text-primary" size={16} />
+                  <UserPlus className="text-primary" size={12} />
                 </button>
                 <button
-                  className="w-7 h-7 bg-card-bg/90  rounded-full flex items-center justify-center shadow-sm hover:bg-card-bg hover:scale-110 transition-all duration-200"
+                  className="w-6 h-6 bg-card-bg/90  rounded-full flex items-center justify-center hover:bg-card-bg hover:scale-110 transition-all duration-200"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Message"
                   title="Message"
                 >
-                  <MessageCircle className="text-primary" size={16} />
+                  <MessageCircle className="text-primary" size={12} />
                 </button>
               </div>
             </div>
@@ -238,12 +238,12 @@ export default function ReviewerCard({
 
   // --- REVIEW CARD VARIANT ---
   return (
-    <li className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[320px] flex-shrink-0">
+    <li className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[213px] flex-shrink-0">
       <div
-        className="bg-card-bg rounded-xl p-6 shadow-md transition-all duration-300 group cursor-pointer h-[280px] flex flex-col relative overflow-hidden border border-charcoal/10"
+        className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/50 backdrop-blur-md ring-1 ring-white/20"
         onClick={toggleActions}
       >
-        <div className="flex items-start gap-4 mb-4">
+        <div className="flex items-start gap-1.5 mb-2 p-2">
           <div className="relative">
             <ProfilePicture
               src={review?.reviewer.profilePicture || ""}
@@ -260,7 +260,7 @@ export default function ReviewerCard({
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-sf font-700 text-primary truncate">
+            <h3 className="font-urbanist text-xs font-600 text-charcoal truncate">
               {review?.reviewer.name}
             </h3>
             <ReviewerStats
@@ -281,28 +281,28 @@ export default function ReviewerCard({
             }`}
           >
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-card-bg/90  rounded-full flex items-center justify-center shadow-lg hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-6 h-6 bg-card-bg/90 rounded-full flex items-center justify-center hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
               aria-label="Follow"
               title="Follow"
             >
-              <UserPlus className="text-primary" size={20} />
+              <UserPlus className="text-primary" size={12} />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-card-bg/90  rounded-full flex items-center justify-center shadow-lg hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-6 h-6 bg-card-bg/90 rounded-full flex items-center justify-center hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
               aria-label="Message"
               title="Message"
             >
-              <MessageCircle className="text-primary" size={20} />
+              <MessageCircle className="text-primary" size={12} />
             </button>
             <button
-              className="w-8 h-8 md:w-10 md:h-10 bg-card-bg/90  rounded-full flex items-center justify-center shadow-lg hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-6 h-6 bg-card-bg/90 rounded-full flex items-center justify-center hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
               onClick={(e) => e.stopPropagation()}
               aria-label="Share"
               title="Share"
             >
-              <Share2 className="text-primary" size={20} />
+              <Share2 className="text-primary" size={12} />
             </button>
           </div>
         </div>

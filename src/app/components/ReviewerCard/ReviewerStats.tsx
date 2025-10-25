@@ -10,19 +10,19 @@ export default function ReviewerStats({
   location,
 }: ReviewerStatsProps) {
   return (
-    <div className="text-[14px] text-charcoal/70 space-y-1">
+    <div className="text-xs text-charcoal/70 space-y-0.5">
       <div className="flex items-center gap-2">
-        <span className="font-sf">{reviewCount} reviews</span>
+        <span className="font-urbanist">{reviewCount} reviews</span>
       </div>
 
       <div className="flex items-center gap-1.5">
         <MapPin
-          size={14}
-          className="text-sage"
+          size={12}
+          className="text-charcoal/60"
           strokeWidth={2.5}
           aria-hidden="true"
         />
-        <span className="font-sf">{location}</span>
+        <span className="font-urbanist">{location}</span>
       </div>
     </div>
   );

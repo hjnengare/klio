@@ -69,7 +69,7 @@ export default function WelcomeModal() {
                 stiffness: 300,
                 damping: 25
               }}
-              className=" bg-off-white   rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto relative border border-charcoal/10"
+              className=" bg-off-white   rounded-lg shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto relative border border-charcoal/10"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}
@@ -84,14 +84,14 @@ export default function WelcomeModal() {
               {/* Header with gradient */}
               <div className="bg-gradient-to-br from-sage/10 via-coral/5 to-sage/10 p-6 sm:p-8 pb-6">
                 <div className="flex items-center justify-center mb-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-sage to-coral rounded-2xl flex items-center justify-center shadow-lg">
+                  <div className="w-16 h-16 bg-gradient-to-br from-sage to-coral rounded-lg flex items-center justify-center shadow-lg">
                     <MapPin className="w-8 h-8 text-white" />
                   </div>
                 </div>
-                <h2 className="font-sf text-2xl sm:text-3xl font-700 text-charcoal text-center mb-2">
+                <h2 className="font-urbanist text-lg sm:text-lg font-700 text-charcoal text-center mb-2">
                   Welcome to sayso
                 </h2>
-                <p className="font-sf text-sm sm:text-base font-400 text-charcoal/70 text-center">
+                <p className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70 text-center">
                   Discover places real locals love
                 </p>
               </div>
@@ -99,17 +99,17 @@ export default function WelcomeModal() {
               {/* Content */}
               <div className="p-6 sm:p-8 pt-6 space-y-6">
                 <div>
-                  <h3 className="font-sf text-lg font-600 text-charcoal mb-4">
+                  <h3 className="font-urbanist text-lg font-600 text-charcoal mb-4">
                     What is sayso?
                   </h3>
-                  <p className="font-sf text-sm text-charcoal/70 leading-relaxed">
+                  <p className="font-urbanist text-sm text-charcoal/70 leading-relaxed">
                     sayso is a community-driven platform where locals share their favorite spots—from hidden cafes to trending restaurants. No ads, no sponsored content—just authentic recommendations from real people.
                   </p>
                 </div>
 
                 {/* Features */}
                 <div className="space-y-4">
-                  <h3 className="font-sf text-lg font-600 text-charcoal">
+                  <h3 className="font-urbanist text-lg font-600 text-charcoal">
                     How you can contribute:
                   </h3>
 
@@ -118,10 +118,10 @@ export default function WelcomeModal() {
                       <Star className="w-5 h-5 text-sage" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-sf text-sm font-600 text-charcoal mb-1">
+                      <h4 className="font-urbanist text-sm font-600 text-charcoal mb-1">
                         Leave Reviews
                       </h4>
-                      <p className="font-sf text-xs text-charcoal/60 leading-relaxed">
+                      <p className="font-urbanist text-xs text-charcoal/60 leading-relaxed">
                         Share your experiences and help others discover great places
                       </p>
                     </div>
@@ -132,10 +132,10 @@ export default function WelcomeModal() {
                       <Heart className="w-5 h-5 text-coral" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-sf text-sm font-600 text-charcoal mb-1">
+                      <h4 className="font-urbanist text-sm font-600 text-charcoal mb-1">
                         Save Favorites
                       </h4>
-                      <p className="font-sf text-xs text-charcoal/60 leading-relaxed">
+                      <p className="font-urbanist text-xs text-charcoal/60 leading-relaxed">
                         Create lists of your favorite spots to revisit anytime
                       </p>
                     </div>
@@ -146,10 +146,10 @@ export default function WelcomeModal() {
                       <MessageCircle className="w-5 h-5 text-charcoal" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-sf text-sm font-600 text-charcoal mb-1">
+                      <h4 className="font-urbanist text-sm font-600 text-charcoal mb-1">
                         Join the Community
                       </h4>
-                      <p className="font-sf text-xs text-charcoal/60 leading-relaxed">
+                      <p className="font-urbanist text-xs text-charcoal/60 leading-relaxed">
                         Connect with fellow locals and share recommendations
                       </p>
                     </div>
@@ -159,12 +159,12 @@ export default function WelcomeModal() {
                 {/* CTA Button */}
                 <button
                   onClick={handleClose}
-                  className="w-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-sf text-base font-600 py-3.5 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/20"
+                  className="w-full bg-gradient-to-r from-sage to-sage/90 hover:from-coral hover:to-coral/90 text-white font-urbanist text-base font-600 py-3.5 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-sage/20"
                 >
                   Start Exploring
                 </button>
 
-                <p className="text-center font-sf text-xs text-charcoal/50">
+                <p className="text-center font-urbanist text-xs text-charcoal/50">
                   You can always find this info in Settings
                 </p>
               </div>

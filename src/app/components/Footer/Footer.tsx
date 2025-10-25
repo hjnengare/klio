@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Heart,
 } from "lucide-react";
+import Logo from "../Logo/Logo";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -58,11 +59,11 @@ export default function Footer() {
               viewport={{ once: true }}
             >
               <Link href="/" className="inline-block group">
-                <h2 className="font-sf text-3xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-sage to-charcoal mb-4 group-hover:scale-105 transition-all duration-300">
-                  sayso
-                </h2>
+                <div className="mb-4 group-hover:scale-105 transition-all duration-300">
+                  <Logo variant="footer" />
+                </div>
               </Link>
-              <p className="font-sf text-6 text-charcoal/70 leading-relaxed mb-6 max-w-sm">
+              <p className="font-urbanist text-6 text-charcoal/70 leading-relaxed mb-6 max-w-sm">
                 Discover trusted local businesses and authentic experiences in your community.
               </p>
 
@@ -100,13 +101,13 @@ export default function Footer() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                <h3 className="font-sf text-5 font-600 text-charcoal mb-4">Company</h3>
+                <h3 className="font-urbanist text-5 font-600 text-charcoal mb-4">Company</h3>
                 <ul className="space-y-3">
                   {footerLinks.company.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="font-sf text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
+                        className="font-urbanist text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
                       >
                         <span className="relative">
                           {link.name}
@@ -125,13 +126,13 @@ export default function Footer() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <h3 className="font-sf text-5 font-600 text-charcoal mb-4">Support</h3>
+                <h3 className="font-urbanist text-5 font-600 text-charcoal mb-4">Support</h3>
                 <ul className="space-y-3">
                   {footerLinks.support.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="font-sf text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
+                        className="font-urbanist text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
                       >
                         <span className="relative">
                           {link.name}
@@ -150,13 +151,13 @@ export default function Footer() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <h3 className="font-sf text-5 font-600 text-charcoal mb-4">Legal</h3>
+                <h3 className="font-urbanist text-5 font-600 text-charcoal mb-4">Legal</h3>
                 <ul className="space-y-3">
                   {footerLinks.legal.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="font-sf text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
+                        className="font-urbanist text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
                       >
                         <span className="relative">
                           {link.name}
@@ -181,7 +182,7 @@ export default function Footer() {
         >
           <div className="flex flex-col md:flex-row items-center justify-center md:justify-between space-y-4 md:space-y-0">
             {/* Copyright */}
-            <p className="font-sf text-7 text-charcoal/60">
+            <p className="font-urbanist text-7 text-charcoal/60">
               © {currentYear} sayso. All rights reserved.
             </p>
 
@@ -189,22 +190,20 @@ export default function Footer() {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2 px-3 py-1 bg-sage/15 backdrop-blur-sm rounded-full border border-sage/20 shadow-lg shadow-sage/10">
                 <ShieldCheck className="w-3.5 h-3.5 text-sage" />
-                <span className="font-sf text-8 font-500 text-sage">Secure</span>
+                <span className="font-urbanist text-8 font-500 text-sage">Secure</span>
               </div>
               <div className="flex items-center space-x-2 px-3 py-1 bg-coral/15 backdrop-blur-sm rounded-full border border-coral/20 shadow-lg shadow-coral/10">
                 <Heart className="w-3.5 h-3.5 text-coral" fill="currentColor" />
-                <span className="font-sf text-8 font-500 text-coral">Trusted</span>
+                <span className="font-urbanist text-8 font-500 text-coral">Trusted</span>
               </div>
             </div>
           </div>
         </motion.div>
       </div>
-       {/* ✅ Inline SF Pro setup */}
+       {/* ✅ SF Pro font setup */}
       <style jsx global>{`
-        .font-sf {
-          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-            "SF Pro Display", "Helvetica Neue", Helvetica, Arial, system-ui,
-            sans-serif;
+        .font-urbanist {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
           font-feature-settings: "kern" 1, "liga" 1, "calt" 1;

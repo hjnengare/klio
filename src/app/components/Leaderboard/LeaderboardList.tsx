@@ -1,5 +1,6 @@
 "use client";
 
+import { memo, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import LeaderboardUser from "./LeaderboardUser";
@@ -19,13 +20,21 @@ interface LeaderboardListProps {
   onToggleFullLeaderboard: () => void;
 }
 
-export default function LeaderboardList({ 
+function LeaderboardList({ 
   users, 
   showFullLeaderboard, 
   onToggleFullLeaderboard 
 }: LeaderboardListProps) {
-  const visibleUsers = showFullLeaderboard ? users : users.slice(0, 5);
-  const hiddenUsers = users.slice(5);
+  // Memoize the user arrays to prevent unnecessary recalculations
+  const visibleUsers = useMemo(() => 
+    showFullLeaderboard ? users : users.slice(0, 5), 
+    [users, showFullLeaderboard]
+  );
+  
+  const hiddenUsers = useMemo(() => 
+    users.slice(5), 
+    [users]
+  );
 
   return (
     <>
@@ -59,7 +68,7 @@ export default function LeaderboardList({
       <div className="text-center mt-6 sm:mt-8">
         <button
           onClick={onToggleFullLeaderboard}
-          className="font-sf text-sm sm:text-base font-600 text-sage hover:text-sage/80 transition-all duration-300 px-4 sm:px-6 py-2 hover:bg-sage/5 rounded-full flex items-center gap-2 mx-auto"
+          className="font-urbanist text-sm sm:text-base font-700 text-white transition-all duration-300 px-6 sm:px-8 py-3 bg-gradient-to-br from-sage to-sage/90 rounded-full flex items-center gap-2 mx-auto shadow-[0_8px_30px_rgba(0,0,0,0.2)] border border-sage ring-1 ring-white/30"
         >
           {showFullLeaderboard ? (
             <>
@@ -77,3 +86,5 @@ export default function LeaderboardList({
     </>
   );
 }
+
+export default memo(LeaderboardList);

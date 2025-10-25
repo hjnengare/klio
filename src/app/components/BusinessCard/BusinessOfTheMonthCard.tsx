@@ -4,7 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { ImageOff, Star, Edit, Bookmark, Share2 } from "lucide-react";
+import { ImageOff, Star, Edit, Bookmark, Share2, MapPin } from "lucide-react";
 import Stars from "../Stars/Stars";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
 import { BusinessOfTheMonth } from "../../data/communityHighlightsData";
@@ -53,18 +53,18 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       }}
     >
       <div
-        className="relative bg-card-bg rounded-[16px] overflow-hidden shadow-md shadow-sage/10 group cursor-pointer h-[70vh] sm:h-auto flex flex-col border border-white/30 transition-all duration-500 hover:shadow-lg hover:shadow-sage/15 hover:border-white/40"
+        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden group cursor-pointer h-[400px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Media */}
-        <div className="relative overflow-hidden rounded-t-[16px] flex-1 sm:flex-initial z-10">
+        <div className="relative overflow-hidden rounded-t-lg flex-1 sm:flex-initial z-10">
           {!imgError && displayImage ? (
             <Image
               src={displayImage}
               alt={displayAlt}
               width={400}
               height={320}
-              className="h-[500px] md:h-[320px] w-full object-cover transition-transform duration-500 md:group-hover:scale-105 rounded-t-[16px]"
+              className="h-[320px] md:h-[220px] w-full object-cover rounded-t-lg"
               priority={false}
               loading="lazy"
               quality={85}
@@ -72,7 +72,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           ) : (
-            <div className="h-full sm:h-[320px] md:h-[320px] lg:h-[280px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[16px]">
+            <div className="h-[320px] md:h-[220px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-lg">
               <ImageOff className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
             </div>
           )}
@@ -81,14 +81,14 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           {/* Achievement badge */}
           <div className="absolute left-2 bottom-2">
             <span
-              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-semibold shadow-sm ${badgeStyle(
+              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-semibold ${badgeStyle(
                 business.badge
               )}`}
               aria-label={`${business.monthAchievement} ${business.badge}`}
               title={`${business.monthAchievement} — ${business.badge}`}
             >
               <span>{badgeIcon(business.badge)}</span>
-              <span className="drop-shadow-sm">{business.monthAchievement}</span>
+              <span>{business.monthAchievement}</span>
             </span>
           </div>
 
@@ -100,7 +100,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           )}
 
           {/* rating badge */}
-          <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 px-3 py-1.5 text-charcoal shadow-lg border border-white/30">
+          <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
             <Star className="w-3.5 h-3.5 text-navbar-bg fill-navbar-bg" />
             <span className="text-sm font-semibold">
               {Number(displayTotal).toFixed(1)}
@@ -149,33 +149,33 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
         </div>
 
         {/* CONTENT */}
-        <div className="px-1 sm:px-4 pt-3 pb-4 relative flex-shrink-0 cursor-pointer z-10">
-          <div className="mb-1 text-center">
-            <h3 className="text-base sm:text-lg font-600 text-navbar-bg/90 group-hover:text-charcoal transition-colors duration-300 pt-4" style={{ fontFamily: "'Lobster Two', cursive" }}>
-                {business.name}
+        <div className="px-4 pt-4 pb-6 relative flex-shrink-0 cursor-pointer z-10">
+          <div className="mb-2">
+            <h3 className="text-sm font-600 text-charcoal group-hover:text-charcoal/80 transition-colors duration-300 text-center font-urbanist truncate">
+              {business.name}
             </h3>
           </div>
 
-          <div className="mb-3 flex items-center justify-center gap-2 flex-wrap">
-            <span className="inline-flex items-center rounded-full bg-sage/10 px-2.5 py-1 text-xs font-600 text-sage border border-sage/20">
-              {business.category}
-            </span>
-            <span className="text-sm font-600 text-charcoal">
-              {business.location}
-            </span>
+          <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 font-urbanist">
+            <span>{business.category}</span>
+            <span>·</span>
+            <div className="flex items-center gap-1">
+              <MapPin className="w-3 h-3 text-charcoal/60" />
+              <span>{business.location}</span>
+            </div>
           </div>
 
           <div className="mb-4 flex items-center justify-center gap-2">
-            <Stars value={business.rating} />
-            <p className="text-sm font-semibold leading-none text-charcoal">
+            <Stars value={business.rating} color="navbar-bg" />
+            <p className="text-xs font-600 leading-none text-charcoal font-urbanist">
               {business.reviews}
             </p>
-            <p className="text-sm leading-none text-charcoal/60">reviews</p>
+            <p className="text-xs leading-none text-charcoal/60 font-urbanist">reviews</p>
           </div>
 
-          {/* Month chip (dynamic if you prefer) */}
-          <div className="flex items-center justify-center gap-2">
-            <div className="px-2 py-1 rounded-full bg-coral/10 text-coral text-xs font-semibold">
+          {/* Month chip */}
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="px-3 py-1.5 rounded-full bg-white/40 text-charcoal text-xs font-600 font-urbanist shadow-sm border border-white/40">
               {(business as any).monthLabel || "September Winner"}
             </div>
           </div>

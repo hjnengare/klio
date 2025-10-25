@@ -111,14 +111,14 @@ export default function CollectionsSection() {
       <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-sage/10 text-sage text-sm font-sf font-500 mb-4">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-sage/10 text-sage text-sm font-urbanist font-500 mb-4">
             <Award className="w-4 h-4 mr-2" />
             Featured Collections
           </div>
-          <h2 className="font-sf text-3xl md:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-charcoal/90 to-sage mb-4">
+          <h2 className="font-urbanist text-lg md:text-4xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-charcoal via-charcoal/90 to-sage mb-4">
             Businesses You'll Love
           </h2>
-          <p className="text-charcoal/60 text-lg max-w-2xl mx-auto">
+          <p className="text-charcoal/60 text-lg max-w-lg mx-auto">
             Discover exceptional local businesses that are proud to serve the Cape Town community
           </p>
         </div>
@@ -128,7 +128,7 @@ export default function CollectionsSection() {
           {businessCollections.map((business, index) => (
             <div
               key={business.id}
-              className={`group relative bg-off-white   rounded-2xl shadow-sm hover:shadow-xl border border-charcoal/5 overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
+              className={`group relative bg-off-white   rounded-lg shadow-sm hover:shadow-xl border border-charcoal/5 overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
                 visibleCards.includes(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
@@ -139,7 +139,7 @@ export default function CollectionsSection() {
             >
               {/* Sponsored Badge */}
               {business.isSponsored && (
-                <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-coral text-white text-xs font-sf font-600 rounded-full">
+                <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-coral text-white text-xs font-urbanist font-600 rounded-full">
                   Sponsored
                 </div>
               )}
@@ -157,7 +157,7 @@ export default function CollectionsSection() {
                 {/* Rating Badge */}
                 <div className="absolute bottom-4 left-4 flex items-center space-x-1 bg-off-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
                   {renderStars(business.rating)}
-                  <span className="ml-1 text-sm font-sf font-600 text-charcoal">
+                  <span className="ml-1 text-sm font-urbanist font-600 text-charcoal">
                     {business.rating}
                   </span>
                   <span className="text-xs text-charcoal/60">
@@ -170,11 +170,11 @@ export default function CollectionsSection() {
               <div className="p-6">
                 {/* Header Section */}
                 <div className="text-center mb-4">
-                  <h3 className="font-sf text-sm sm:text-base font-600 text-charcoal group-hover:text-navbar-bg transition-colors duration-300 mb-2">
+                  <h3 className="font-urbanist text-sm sm:text-base font-600 text-charcoal group-hover:text-navbar-bg transition-colors duration-300 mb-2">
                     {business.name}
                   </h3>
                   <div className="flex items-center justify-center space-x-2">
-                    <span className="text-sm font-sf font-500 text-coral">
+                    <span className="text-sm font-urbanist font-500 text-coral">
                       {business.category}
                     </span>
                     <span className="text-charcoal/30">•</span>
@@ -198,7 +198,7 @@ export default function CollectionsSection() {
                 <div className="mb-4 min-h-[60px] flex items-center">
                   {business.promotionalText ? (
                     <div className="w-full p-3 bg-sage/5 border border-sage/20 rounded-lg">
-                      <p className="text-sage text-sm font-sf font-500 text-center">
+                      <p className="text-sage text-sm font-urbanist font-500 text-center">
                         🎉 {business.promotionalText}
                       </p>
                     </div>
@@ -210,7 +210,7 @@ export default function CollectionsSection() {
                 {/* CTA Button */}
                 <Link
                   href={business.ctaLink}
-                  className="inline-flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-sage to-sage/90 hover:from-sage/90 hover:to-sage text-white rounded-xl font-sf text-sm font-600 transition-all duration-300 hover:scale-105 hover:shadow-lg group/btn"
+                  className="inline-flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-sage to-sage/90 hover:from-sage/90 hover:to-sage text-white rounded-xl font-urbanist text-sm font-600 transition-all duration-300 hover:scale-105 hover:shadow-lg group/btn"
                 >
                   {business.ctaText}
                   <ChevronRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" />
@@ -224,7 +224,7 @@ export default function CollectionsSection() {
         <div className="text-center mt-10">
           <Link
             href="/collections"
-            className="inline-flex items-center px-8 py-4 border border-sage text-sage hover:bg-sage hover:text-white rounded-xl font-sf text-base font-600 transition-all duration-300 hover:scale-105 group"
+            className="inline-flex items-center px-8 py-4 border border-sage text-sage hover:bg-sage hover:text-white rounded-xl font-urbanist text-base font-600 transition-all duration-300 hover:scale-105 group"
           >
             View All Collections
             <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />

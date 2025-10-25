@@ -53,7 +53,7 @@ export default function DealBreakerCard({
         {/* Front of card - Text only */}
         <div
           className={`
-            absolute inset-0 w-full h-full rounded-2xl border-2 p-4 flex flex-col justify-center items-center text-center
+            absolute inset-0 w-full h-full rounded-lg border-2 p-4 flex flex-col justify-center items-center text-center
             bg-gradient-to-br from-sage/10 to-sage/5 border-sage/30 hover:border-sage/50
             transition-all duration-200 hover:shadow-lg
           `}
@@ -70,7 +70,7 @@ export default function DealBreakerCard({
         {/* Back of card - Icon only */}
         <div
           className={`
-            absolute inset-0 w-full h-full rounded-2xl border-2 p-4 flex flex-col justify-center items-center text-center
+            absolute inset-0 w-full h-full rounded-lg border-2 p-4 flex flex-col justify-center items-center text-center
             bg-gradient-to-br from-coral to-coral/90 border-coral shadow-[0_8px_24px_rgba(214,116,105,0.25)]
           `}
           style={{ 
@@ -78,7 +78,7 @@ export default function DealBreakerCard({
             transform: 'rotateY(180deg)'
           }}
         >
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 mb-3">
+          <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-white/20 mb-3">
             <IconComponent className="h-8 w-8 text-white" />
           </div>
           <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white">

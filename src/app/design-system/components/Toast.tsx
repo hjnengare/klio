@@ -67,7 +67,7 @@ const toastVariants = {
     'transition-all duration-normal',
 
     // Dark mode support
-    'dark:shadow-2xl',
+    'dark:shadow-lg',
   ],
 
   variants: {

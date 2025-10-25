@@ -14,16 +14,8 @@ import { ProfileStatsSection } from "@/components/organisms/ProfileStatsSection"
 import { ReviewsList } from "@/components/organisms/ReviewsList";
 import { AchievementsList } from "@/components/organisms/AchievementsList";
 import { SettingsMenu } from "@/components/organisms/SettingsMenu";
-import { Card } from "@/components/molecules/Card";
 import { Skeleton } from "@/components/atoms/Skeleton";
 
-// Glass effect styles
-const glassHeader = `
-  relative z-10
-  px-3 sm:px-4 py-4 sm:py-6
-  border-b border-white/5
-  bg-navbar-bg backdrop-blur-xl shadow-lg shadow-sage/5
-`.replace(/\s+/g, " ");
 
 // Types
 interface UserProfile {
@@ -192,30 +184,39 @@ function ProfileContent() {
   // Loading skeleton
   if (isLoading) {
     return (
-      <div className="min-h-dvh bg-off-white relative">
-        <div className="pt-24 pb-6 relative z-10">
-          <div className="px-4 sm:px-6 md:px-8">
-            <div className="max-w-4xl mx-auto space-y-6">
-              <Card variant="glass" padding="md">
-                <div className="animate-pulse">
-                  <div className="flex items-center space-x-4 mb-4">
-                    <Skeleton variant="circular" width={64} height={64} />
-                    <div className="space-y-2">
-                      <Skeleton variant="text" width={200} height={24} />
-                      <Skeleton variant="text" width={150} height={16} />
+      <div className="min-h-dvh bg-off-white">
+        <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
+          <div className="py-1 pt-24">
+            <section
+              className="relative"
+              style={{
+                fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+              }}
+            >
+              <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
+                <div className="max-w-[800px] mx-auto pt-8">
+                  <div className="p-6 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 mb-6">
+                    <div className="animate-pulse">
+                      <div className="flex items-center space-x-4 mb-4">
+                        <Skeleton variant="circular" width={64} height={64} />
+                        <div className="space-y-2">
+                          <Skeleton variant="text" width={200} height={24} />
+                          <Skeleton variant="text" width={150} height={16} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-6 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 mb-12">
+                    <Skeleton variant="text" width={150} height={20} className="mb-4" />
+                    <div className="grid grid-cols-3 gap-4">
+                      {[1, 2, 3].map((i) => (
+                        <Skeleton key={i} variant="rectangular" height={80} />
+                      ))}
                     </div>
                   </div>
                 </div>
-              </Card>
-              <Card variant="glass" padding="md">
-                <Skeleton variant="text" width={150} height={20} className="mb-4" />
-                <div className="grid grid-cols-3 gap-4">
-                  {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} variant="rectangular" height={80} />
-                  ))}
-                </div>
-              </Card>
-            </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>
@@ -291,153 +292,167 @@ function ProfileContent() {
   ];
 
   return (
-    <div className="relative min-h-dvh bg-off-white">
+    <div className="min-h-dvh bg-off-white">
       {/* Header */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
-        className={`${glassHeader} fixed top-0 left-0 right-0 z-50`}
+        className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10"
+        style={{
+          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        }}
       >
-        <div className="relative z-[1] flex items-center justify-between max-w-[1300px] mx-auto">
-          <Link href="/home" className="group flex items-center">
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center border border-white/10 hover:border-white/30 mr-2 sm:mr-4"
-            >
-              <ArrowLeft
-                className="text-white group-hover:text-white/90 transition-colors duration-300"
-                size={22}
-              />
-            </motion.div>
-            <motion.h1
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.1 }}
-              className="font-sf text-base sm:text-xl font-700 text-white"
-            >
-              Your Profile
-            </motion.h1>
-          </Link>
+        <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/home" className="group flex items-center">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-3 sm:mr-4">
+                <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-charcoal/70 group-hover:text-sage transition-colors duration-300" />
+              </div>
+              <h1 className="font-urbanist text-sm font-700 text-white transition-all duration-300 group-hover:text-white/80 relative">
+                Your Profile
+              </h1>
+            </Link>
+          </div>
         </div>
       </motion.header>
 
       {/* Main content */}
-      <div className="pt-20 pb-6 relative z-10">
-        <div className="px-4 sm:px-6 md:px-8">
-          <div className="max-w-4xl mx-auto space-y-6">
-            {/* Profile Header Card */}
-            <Card variant="glass" padding="md">
-              <ProfileHeader
-                key={profile.avatar_url || 'no-avatar'}
-                username={profile.username || profile.display_name || "User"}
-                displayName={profile.display_name || undefined}
-                avatarUrl={profile.avatar_url}
-                isTopReviewer={profile.is_top_reviewer}
-                topReviewerBadgeText="Top Reviewer in Cape Town this Month"
-                onEditClick={() => setIsEditOpen(true)}
-              />
-            </Card>
+      <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
+        <div className="py-1 pt-20">
+          <section
+            className="relative"
+            style={{
+              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+            }}
+          >
+            <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
+              <div className="max-w-[800px] mx-auto pt-8">
+                {/* Profile Header Card */}
+                <div className="p-6 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 mb-6">
+                  <ProfileHeader
+                    key={profile.avatar_url || 'no-avatar'}
+                    username={profile.username || profile.display_name || "User"}
+                    displayName={profile.display_name || undefined}
+                    avatarUrl={profile.avatar_url}
+                    isTopReviewer={profile.is_top_reviewer}
+                    topReviewerBadgeText="Top Reviewer in Cape Town this Month"
+                    onEditClick={() => setIsEditOpen(true)}
+                  />
+                </div>
 
-            {/* Stats Overview */}
-            <ProfileStatsSection stats={stats} title="Stats Overview" />
+                {/* Stats Overview */}
+                <ProfileStatsSection stats={stats} title="Stats Overview" />
 
-            {/* Your Contributions */}
-            <ReviewsList
-              reviews={reviewsData}
-              title="Your Contributions"
-              initialDisplayCount={2}
-              showToggle={true}
-            />
+                {/* Your Contributions */}
+                <ReviewsList
+                  reviews={reviewsData}
+                  title="Your Contributions"
+                  initialDisplayCount={2}
+                  showToggle={true}
+                />
 
-            {/* Your Achievements */}
-            <AchievementsList achievements={achievementsData} title="Your Achievements" />
+                {/* Your Achievements */}
+                <AchievementsList achievements={achievementsData} title="Your Achievements" />
 
-            {/* Account Settings */}
-            <SettingsMenu menuItems={settingsMenuItems} />
-          </div>
+                {/* Account Settings */}
+                <SettingsMenu menuItems={settingsMenuItems} />
+              </div>
+            </div>
+          </section>
         </div>
+
+        <Footer />
       </div>
 
       {/* Edit Profile Modal */}
       {isEditOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50" onClick={() => !saving && setIsEditOpen(false)} />
-          <div className="relative z-10 w-full max-w-md rounded-2xl bg-off-white border border-sage/20 shadow-xl p-5">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-sf text-lg font-700 text-charcoal">Edit profile</h3>
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => !saving && setIsEditOpen(false)} />
+          <div className="relative z-10 w-full max-w-md bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 shadow-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-urbanist text-lg font-600 text-charcoal">Edit Profile</h3>
               <button
-                className="p-2 rounded-full hover:bg-charcoal/5"
+                className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-charcoal/5 transition-colors duration-200"
                 onClick={() => !saving && setIsEditOpen(false)}
                 aria-label="Close"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5 text-charcoal/70" />
               </button>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-600 text-charcoal mb-1">Username</label>
+                <label className="block text-sm font-600 text-charcoal mb-2">Username</label>
                 <input
                   type="text"
                   value={usernameInput}
                   onChange={(e) => setUsernameInput(e.target.value)}
                   placeholder="yourname"
-                  className="w-full rounded-lg border border-sage/30 bg-white px-3 py-2 text-charcoal outline-none focus:ring-2 focus:ring-sage/30"
+                  className="w-full rounded-xl border-2 border-charcoal/20 bg-white/80 backdrop-blur-sm px-4 py-3 text-sm text-charcoal placeholder:text-charcoal/50 font-urbanist
+                             focus:outline-none focus:border-sage focus:ring-2 focus:ring-sage/20
+                             hover:border-charcoal/30 transition-all duration-200"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-600 text-charcoal mb-1">Display name</label>
+                <label className="block text-sm font-600 text-charcoal mb-2">Display Name</label>
                 <input
                   type="text"
                   value={displayNameInput}
                   onChange={(e) => setDisplayNameInput(e.target.value)}
                   placeholder="Your Name"
-                  className="w-full rounded-lg border border-sage/30 bg-white px-3 py-2 text-charcoal outline-none focus:ring-2 focus:ring-sage/30"
+                  className="w-full rounded-xl border-2 border-charcoal/20 bg-white/80 backdrop-blur-sm px-4 py-3 text-sm text-charcoal placeholder:text-charcoal/50 font-urbanist
+                             focus:outline-none focus:border-sage focus:ring-2 focus:ring-sage/20
+                             hover:border-charcoal/30 transition-all duration-200"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-600 text-charcoal mb-1">Profile photo</label>
+                <label className="block text-sm font-600 text-charcoal mb-2">Profile Photo</label>
                 <div className="flex items-center gap-3">
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => setAvatarFile(e.target.files?.[0] || null)}
-                    className="block w-full text-sm text-charcoal/70 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-sage/10 file:text-sage hover:file:bg-sage/20"
+                    className="block w-full text-sm text-charcoal/70 font-urbanist
+                               file:mr-3 file:py-2.5 file:px-4 file:rounded-full file:border-0
+                               file:text-sm file:font-600 file:bg-white/40 file:text-charcoal
+                               hover:file:bg-charcoal hover:file:text-white file:transition-all file:duration-300 file:shadow-sm"
                   />
                 </div>
               </div>
 
               {error && (
-                <div className="text-sm text-coral">{error}</div>
+                <div className="p-3 rounded-lg bg-coral/10 border border-coral/20">
+                  <p className="text-sm text-coral font-urbanist">{error}</p>
+                </div>
               )}
 
-              <div className="flex justify-end gap-2 pt-2">
+              <div className="flex justify-end gap-3 pt-2">
                 <button
-                  className="px-4 py-2 rounded-lg border border-charcoal/10 text-charcoal hover:bg-charcoal/5"
+                  className="px-4 py-2 rounded-full text-sm font-600 font-urbanist bg-white/40 text-charcoal
+                             hover:bg-charcoal hover:text-white transition-all duration-300 shadow-sm
+                             disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={() => setIsEditOpen(false)}
                   disabled={saving}
                 >
                   Cancel
                 </button>
                 <button
-                  className="px-4 py-2 rounded-lg bg-sage text-white font-600 hover:bg-sage/90 disabled:opacity-60"
+                  className="px-6 py-2 rounded-full text-sm font-600 font-urbanist bg-charcoal text-white
+                             hover:bg-charcoal/90 transition-all duration-300 shadow-lg
+                             disabled:opacity-60 disabled:cursor-not-allowed"
                   onClick={handleSaveProfile}
                   disabled={saving}
                 >
-                  {saving ? 'Saving…' : 'Save changes'}
+                  {saving ? 'Saving…' : 'Save Changes'}
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
-
-      <Footer />
     </div>
   );
 }

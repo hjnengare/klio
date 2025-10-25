@@ -58,8 +58,8 @@ export default function ScrollableSection({
   const scrollRight = () => {
     if (!scrollRef.current) return;
     const container = scrollRef.current;
-    const cardWidth = container.clientWidth * 0.52; // Match the card min-width (52% on sm)
-    const gap = 24; // 6 * 4px (gap-6)
+    const cardWidth = container.clientWidth * 0.25; // Match the card min-width (25% on sm+)
+    const gap = 12; // 3 * 4px (gap-3)
     const scrollAmount = cardWidth + gap;
     container.scrollLeft += scrollAmount;
   };
@@ -67,8 +67,8 @@ export default function ScrollableSection({
   const scrollLeft = () => {
     if (!scrollRef.current) return;
     const container = scrollRef.current;
-    const cardWidth = container.clientWidth * 0.52; // Match the card min-width (52% on sm)
-    const gap = 24; // 6 * 4px (gap-6)
+    const cardWidth = container.clientWidth * 0.25; // Match the card min-width (25% on sm+)
+    const gap = 12; // 3 * 4px (gap-3)
     const scrollAmount = cardWidth + gap;
     container.scrollLeft -= scrollAmount;
   };
@@ -77,7 +77,7 @@ export default function ScrollableSection({
     <div className="relative overflow-hidden">
       <div
         ref={scrollRef}
-        className={`horizontal-scroll flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto pb-4 sm:pb-5 md:pb-6 snap-x snap-mandatory ${className}`}
+        className={`horizontal-scroll flex gap-3 overflow-x-auto pb-4 sm:pb-5 md:pb-6 snap-x snap-mandatory ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -100,10 +100,10 @@ export default function ScrollableSection({
                 absolute left-2 top-1/2 -translate-y-1/2 z-10
                 w-10 h-10 sm:w-12 sm:h-12
                 bg-off-white/90 backdrop-blur-sm
-                rounded-full shadow-lg border border-sage/20
+                rounded-full shadow-lg 
                 flex items-center justify-center
                 transition-all duration-300 ease-out
-                hover:bg-off-white   hover:shadow-xl hover:border-sage/40
+                hover:bg-card-bg hover:shadow-xl hover:border-card-bg/40
                 active:scale-95
                 ${arrowColor}
               `}
@@ -132,10 +132,10 @@ export default function ScrollableSection({
                 absolute right-2 top-1/2 -translate-y-1/2 z-10
                 w-10 h-10 sm:w-12 sm:h-12
                 bg-off-white/90 backdrop-blur-sm
-                rounded-full shadow-lg border border-sage/20
+                rounded-full shadow-lg 
                 flex items-center justify-center
                 transition-all duration-300 ease-out
-                hover:bg-off-white   hover:shadow-xl hover:border-sage/40
+                hover:bg-card-bg  hover:shadow-xl 
                 active:scale-95
                 ${arrowColor}
               `}

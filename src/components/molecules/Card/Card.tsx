@@ -38,7 +38,7 @@ export const Card: React.FC<CardProps> = ({
   className = '',
   children,
 }) => {
-  const baseStyles = 'rounded-2xl transition-all duration-300';
+  const baseStyles = 'rounded-lg transition-all duration-300';
 
   const hoverStyles = hoverable || clickable
     ? 'hover:shadow-lg hover:-translate-y-0.5'

@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
           />
 
           <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
-            <div className="bg-off-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] animate-scale-in">
+            <div className="bg-off-white/95 rounded-lg p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] animate-scale-in">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto bg-sage/10 rounded-full flex items-center justify-center">
                   <svg className="w-8 h-8 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,27 +96,27 @@ export default function ForgotPasswordPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <h2 className="font-sf text-xl font-700 text-charcoal">
+                  <h2 className="font-urbanist text-xl font-700 text-charcoal">
                     Email sent!
                   </h2>
-                  <p className="font-sf text-sm text-charcoal/70">
+                  <p className="font-urbanist text-sm text-charcoal/70">
                     We&apos;ve sent password reset instructions to:
                   </p>
-                  <p className="font-sf text-base font-600 text-sage">
+                  <p className="font-urbanist text-base font-600 text-sage">
                     {email}
                   </p>
                 </div>
 
                 <div className="bg-sage/5 rounded-xl p-4 text-left space-y-2">
-                  <p className="font-sf text-xs text-charcoal/70">
+                  <p className="font-urbanist text-xs text-charcoal/70">
                     <strong className="text-charcoal">Next steps:</strong>
                   </p>
-                  <ol className="font-sf text-xs text-charcoal/70 space-y-1 list-decimal list-inside">
+                  <ol className="font-urbanist text-xs text-charcoal/70 space-y-1 list-decimal list-inside">
                     <li>Check your inbox (and spam folder)</li>
                     <li>Click the reset link in the email</li>
                     <li>Create a new password</li>
                   </ol>
-                  <p className="font-sf text-xs text-charcoal/60 italic pt-2">
+                  <p className="font-urbanist text-xs text-charcoal/60 italic pt-2">
                     The reset link expires in 60 minutes
                   </p>
                 </div>
@@ -160,18 +160,18 @@ export default function ForgotPasswordPage() {
         />
 
         <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
-          <div className="bg-off-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)] transition-shadow duration-300 animate-scale-in">
+          <div className="bg-off-white/95 rounded-lg p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)] transition-shadow duration-300 animate-scale-in">
 
             <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
               {/* Error Message */}
               {error && (
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-                  <p className="font-sf text-[14px] font-600 text-red-600">{error}</p>
+                  <p className="font-urbanist text-[14px] font-600 text-red-600">{error}</p>
                 </div>
               )}
 
               <div className="mb-4 text-center">
-                <p className="font-sf text-sm text-charcoal/70">
+                <p className="font-urbanist text-sm text-charcoal/70">
                   Enter the email address associated with your account and we&apos;ll send you a link to reset your password.
                 </p>
               </div>
@@ -216,7 +216,7 @@ export default function ForgotPasswordPage() {
 
             {/* Footer */}
             <div className="text-center mt-4 pt-4 border-t border-light-gray/30">
-              <div className="font-sf text-sm sm:text-base font-400 text-charcoal/70">
+              <div className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70">
                 Remember your password?{" "}
                 <Link
                   href="/login"

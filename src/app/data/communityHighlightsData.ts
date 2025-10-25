@@ -70,6 +70,84 @@ export const TOP_REVIEWERS: Reviewer[] = [
     rating: 4.6,
     trophyBadge: "rising-star",
     location: "Westside"
+  },
+  {
+    id: "5",
+    name: "Amanda Foster",
+    profilePicture: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    reviewCount: 203,
+    rating: 4.9,
+    badge: "top",
+    trophyBadge: "gold",
+    location: "Riverside"
+  },
+  {
+    id: "6",
+    name: "James Wilson",
+    profilePicture: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    reviewCount: 95,
+    rating: 4.5,
+    badge: "verified",
+    trophyBadge: "community-favorite",
+    location: "Northside"
+  },
+  {
+    id: "7",
+    name: "Priya Patel",
+    profilePicture: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    reviewCount: 142,
+    rating: 4.8,
+    badge: "local",
+    trophyBadge: "silver",
+    location: "East Village"
+  },
+  {
+    id: "8",
+    name: "Alex Thompson",
+    profilePicture: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    reviewCount: 68,
+    rating: 4.4,
+    trophyBadge: "rising-star",
+    location: "Southside"
+  },
+  {
+    id: "9",
+    name: "Maya Santos",
+    profilePicture: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    reviewCount: 178,
+    rating: 4.7,
+    badge: "top",
+    trophyBadge: "bronze",
+    location: "Historic District"
+  },
+  {
+    id: "10",
+    name: "Ryan O'Connor",
+    profilePicture: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    reviewCount: 84,
+    rating: 4.6,
+    badge: "verified",
+    trophyBadge: "community-favorite",
+    location: "University District"
+  },
+  {
+    id: "11",
+    name: "Zoe Chen",
+    profilePicture: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    reviewCount: 156,
+    rating: 4.8,
+    badge: "local",
+    trophyBadge: "silver",
+    location: "Tech Quarter"
+  },
+  {
+    id: "12",
+    name: "Carlos Mendez",
+    profilePicture: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    reviewCount: 92,
+    rating: 4.5,
+    trophyBadge: "rising-star",
+    location: "Waterfront"
   }
 ];
 

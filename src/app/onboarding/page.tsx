@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
 import { useMounted } from "../hooks/useMounted";
+import Logo from "../components/Logo/Logo";
 
 const styles = `
   @keyframes fadeInUp {
@@ -46,6 +48,11 @@ const styles = `
     mix-blend-mode: lighten;
     pointer-events: none;
     border-radius: 0.25rem;
+  }
+  
+  .lobster-two-font {
+    font-family: 'Lobster Two', cursive !important;
+    font-weight: 700 !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -92,6 +99,31 @@ const styles = `
 export default function OnboardingPage() {
   const mounted = useMounted();
 
+  useEffect(() => {
+    // Load Google Fonts
+    const link1 = document.createElement('link');
+    link1.rel = 'preconnect';
+    link1.href = 'https://fonts.googleapis.com';
+    document.head.appendChild(link1);
+
+    const link2 = document.createElement('link');
+    link2.rel = 'preconnect';
+    link2.href = 'https://fonts.gstatic.com';
+    link2.crossOrigin = 'anonymous';
+    document.head.appendChild(link2);
+
+    const link3 = document.createElement('link');
+    link3.rel = 'stylesheet';
+    link3.href = 'https://fonts.googleapis.com/css2?family=Italianno&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap';
+    document.head.appendChild(link3);
+
+    return () => {
+      document.head.removeChild(link1);
+      document.head.removeChild(link2);
+      document.head.removeChild(link3);
+    };
+  }, []);
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
@@ -100,8 +132,8 @@ export default function OnboardingPage() {
         {/* Content only — background objects removed */}
         <div className="w-full max-w-full px-3 md:max-w-4xl md:px-4 mx-auto relative z-10 flex flex-col h-full py-4 sm:py-6">
           {/* Logo */}
-          <div className={`text-center mb-8 md:mb-6 flex-shrink-0 ${mounted ? "opacity-0 animate-fade-in-up delay-400" : "opacity-0"}`}>
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-charcoal tracking-tight">sayso</h1>
+          <div className={`text-center mb-8 md:mb-6 flex-shrink-0 flex justify-center ${mounted ? "opacity-0 animate-fade-in-up delay-400" : "opacity-0"}`}>
+            <Logo variant="onboarding" />
           </div>
 
           {/* Main content */}
@@ -109,15 +141,16 @@ export default function OnboardingPage() {
             <div className="space-y-6 md:space-y-8">
               <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-600" : "opacity-0"}`}>
                 <h2
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-5 md:mb-6 leading-tight tracking-tight px-2 text-charcoal"
-                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif' }}
+                  className="text-lg sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-5 md:mb-6 leading-tight tracking-tight px-2 text-charcoal"
+                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                   Discover local gems near you!
                 </h2>
               </div>
 
               <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-800" : "opacity-0"}`}>
-                <p className="text-base md:text-lg font-normal text-charcoal/70 leading-relaxed max-w-sm md:max-w-lg lg:max-w-xl mx-auto px-4">
+                <p className="text-base md:text-lg font-normal text-charcoal/70 leading-relaxed max-w-sm md:max-w-lg lg:max-w-xl mx-auto px-4"
+                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                    Explore trusted businesses, leave reviews and see what&apos;s trending around you
                 </p>
               </div>
@@ -127,6 +160,7 @@ export default function OnboardingPage() {
                   <Link
                     href="/register"
                     className="group relative block w-[200px] mx-auto rounded-full py-3 text-base font-semibold text-white text-center flex items-center justify-center bg-sage shadow-lg btn-press transition-all duration-500 ease-out hover:scale-[1.04] hover:shadow-xl hover:bg-coral focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                    style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                   >
                     <span className="relative z-10 tracking-wide">Get Started</span>
                   </Link>
@@ -136,6 +170,7 @@ export default function OnboardingPage() {
                   <Link
                     href="/login"
                     className="group block w-full text-coral hover:text-coral/80 text-base font-semibold min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white relative text-center flex items-center justify-center"
+                    style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                   >
                     <span className="relative z-10">
                       Log in
@@ -153,19 +188,19 @@ export default function OnboardingPage() {
               <div className="w-7 h-7 bg-sage/10 rounded-full flex items-center justify-center">
                 <div className="w-2.5 h-2.5 bg-sage rounded-full" />
               </div>
-              <span className="text-[9px] font-medium tracking-tight leading-tight whitespace-nowrap">Earn points</span>
+              <span className="text-lgont-medium tracking-tight leading-tight whitespace-nowrap" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Earn points</span>
             </div>
             <div className={`${mounted ? "opacity-0 animate-scale-in delay-1600" : "opacity-0"} flex flex-col items-center gap-1 w-16 md:w-20`}>
               <div className="w-7 h-7 bg-coral/10 rounded-full flex items-center justify-center">
                 <div className="w-2.5 h-2.5 bg-coral rounded-full" />
               </div>
-              <span className="text-[9px] font-medium tracking-tight leading-tight whitespace-nowrap">Trusted opinions</span>
+              <span className="text-lgont-medium tracking-tight leading-tight whitespace-nowrap" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Trusted opinions</span>
             </div>
             <div className={`${mounted ? "opacity-0 animate-scale-in delay-1800" : "opacity-0"} flex flex-col items-center gap-1 w-20 md:w-24`}>
               <div className="w-7 h-7 bg-charcoal/10 rounded-full flex items-center justify-center">
                 <div className="w-2.5 h-2.5 bg-charcoal rounded-full" />
               </div>
-              <span className="text-[9px] font-medium tracking-tight leading-tight whitespace-nowrap">Community favourites</span>
+              <span className="text-lgont-medium tracking-tight leading-tight whitespace-nowrap" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Community favourites</span>
             </div>
           </div>
         </div>

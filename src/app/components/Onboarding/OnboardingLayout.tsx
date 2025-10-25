@@ -202,7 +202,7 @@ export default function OnboardingLayout({
             </div>
 
             <div className="text-center mt-1">
-              <p className="font-sf text-xs font-400 text-charcoal/50">
+              <p className="text-xs font-400 text-charcoal/50" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Step {step} of {totalSteps}
               </p>
             </div>

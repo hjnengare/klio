@@ -99,8 +99,8 @@ module.exports = {
         base: ['0.875rem', { lineHeight: '1.6' }],                          // 14px
         lg: ['1rem', { lineHeight: '1.55' }],                               // 16px
         xl: ['1.125rem', { lineHeight: '1.45' }],                           // 18px
-        '2xl': ['1.25rem', { lineHeight: '1.35' }],                         // 20px
-        '3xl': ['1.5rem', { lineHeight: '1.25' }],                          // 24px
+        'lg': ['1.25rem', { lineHeight: '1.35' }],                         // 20px
+        'lg': ['1.5rem', { lineHeight: '1.25' }],                          // 24px
         '4xl': ['1.875rem', { lineHeight: '1.2' }],                         // 30px
         '5xl': ['2.25rem', { lineHeight: '1.1' }],                          // 36px
         '6xl': ['3rem', { lineHeight: '1.05' }],                            // 48px

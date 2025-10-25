@@ -32,7 +32,7 @@ export default function AnimatedToast({ toast, onRemove, getToastStyles, getToas
         duration: 0.3
       }}
       className={`
-        pointer-events-auto max-w-sm w-full backdrop-blur-xl border rounded-xl p-4 shadow-2xl
+        pointer-events-auto max-w-sm w-full backdrop-blur-xl border rounded-xl p-4 shadow-lg
         ${getToastStyles(toast.type)}
       `}
       layout
@@ -42,7 +42,7 @@ export default function AnimatedToast({ toast, onRemove, getToastStyles, getToas
           {getToastIcon(toast.type)}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-sf text-sm font-600 leading-tight">
+          <p className="font-urbanist text-sm font-600 leading-tight">
             {toast.message}
           </p>
         </div>

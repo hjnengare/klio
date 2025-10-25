@@ -158,7 +158,7 @@ function SubcategoriesContent() {
       <OnboardingLayout step={2} backHref="/interests">
         <SubcategoryHeader />
 
-        <OnboardingCard className="rounded-3xl border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
+        <OnboardingCard className="rounded-lg border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4">
               <p className="text-sm font-semibold text-red-600">

@@ -220,8 +220,8 @@ export default function GeneralReviewsPage() {
     <div className="min-h-screen  bg-off-white   relative overflow-hidden">
       {/* Premium background elements */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-sage/8 via-sage/4 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 left-1/4 w-80 h-80 bg-gradient-to-br from-coral/6 via-coral/3 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-sage/8 via-sage/4 to-transparent rounded-full blur-lg" />
+        <div className="absolute bottom-1/3 left-1/4 w-80 h-80 bg-gradient-to-br from-coral/6 via-coral/3 to-transparent rounded-full blur-lg" />
       </div>
 
       {/* Premium Header */}
@@ -236,7 +236,7 @@ export default function GeneralReviewsPage() {
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center shadow-premium-sm hover:shadow-premium-md transition-all duration-premium ease-premium hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
               <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-charcoal/70 group-hover:text-sage transition-colors duration-premium ease-premium" />
             </div>
-            <motion.h1 className="font-sf text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-premium ease-premium group-hover:from-sage/90 group-hover:to-sage relative tracking-[-0.02em]">
+            <motion.h1 className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-premium ease-premium group-hover:from-sage/90 group-hover:to-sage relative tracking-[-0.02em]">
               Community Reviews
             </motion.h1>
           </Link>
@@ -250,7 +250,7 @@ export default function GeneralReviewsPage() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className=" bg-off-white   backdrop-blur-lg rounded-2xl shadow-premium-md border border-charcoal/10 p-4 sm:p-6 mb-6 relative overflow-hidden"
+          className=" bg-off-white   backdrop-blur-lg rounded-lg shadow-premium-md border border-charcoal/10 p-4 sm:p-6 mb-6 relative overflow-hidden"
         >
           <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
             {/* Filters */}
@@ -262,7 +262,7 @@ export default function GeneralReviewsPage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={`
-                    inline-flex items-center gap-2 px-4 py-2 rounded-full font-sf text-sm font-600
+                    inline-flex items-center gap-2 px-4 py-2 rounded-full font-urbanist text-sm font-600
                     transition-all duration-premium ease-premium tracking-[-0.015em]
                     ${selectedFilter === filter.id
                       ? 'bg-sage text-white shadow-premium-md'
@@ -281,13 +281,13 @@ export default function GeneralReviewsPage() {
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-3">
-              <span className="font-sf text-sm font-500 text-charcoal/70 tracking-[-0.015em]">
+              <span className="font-urbanist text-sm font-500 text-charcoal/70 tracking-[-0.015em]">
                 Sort by:
               </span>
               <select
                 value={selectedSort}
                 onChange={(e) => setSelectedSort(e.target.value)}
-                className="bg-charcoal/5 border border-charcoal/10 rounded-full px-4 py-2 font-sf text-sm font-600 text-charcoal focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
+                className="bg-charcoal/5 border border-charcoal/10 rounded-full px-4 py-2 font-urbanist text-sm font-600 text-charcoal focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
               >
                 {SORT_OPTIONS.map((option) => (
                   <option key={option.id} value={option.id}>
@@ -316,7 +316,7 @@ export default function GeneralReviewsPage() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -20, opacity: 0 }}
                   transition={{ delay: 0.1 * index, duration: 0.5 }}
-                  className=" bg-off-white   backdrop-blur-lg rounded-2xl shadow-premium-md hover:shadow-premium-lg border border-charcoal/10 relative overflow-hidden transition-all duration-premium ease-premium break-inside-avoid mb-4 sm:mb-6 group"
+                  className=" bg-off-white   backdrop-blur-lg rounded-lg shadow-premium-md hover:shadow-premium-lg border border-charcoal/10 relative overflow-hidden transition-all duration-premium ease-premium break-inside-avoid mb-4 sm:mb-6 group"
                 >
                   {/* Hero Image Section - Instagram-like Carousel */}
                   {review.images && review.images.length > 0 && (
@@ -349,7 +349,7 @@ export default function GeneralReviewsPage() {
                         className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5  bg-off-white  /95 backdrop-blur-md hover:bg-off-white   rounded-full transition-all duration-premium shadow-premium-md hover:shadow-premium-lg hover:scale-105 z-20"
                       >
                         <Store className="w-4 h-4 text-sage" />
-                        <span className="font-sf text-sm font-600 text-sage tracking-[-0.015em]">
+                        <span className="font-urbanist text-sm font-600 text-sage tracking-[-0.015em]">
                           {review.businessName}
                         </span>
                       </Link>
@@ -358,7 +358,7 @@ export default function GeneralReviewsPage() {
                       {review.images.length > 1 && (
                         <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1.5 bg-charcoal/80 backdrop-blur-md rounded-lg z-20">
                           <Images className="w-4 h-4 text-white" />
-                          <span className="font-sf text-sm font-600 text-white tracking-[-0.015em]">
+                          <span className="font-urbanist text-sm font-600 text-white tracking-[-0.015em]">
                             {review.images.length}
                           </span>
                         </div>
@@ -398,7 +398,7 @@ export default function GeneralReviewsPage() {
                         className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-sage/10 hover:bg-sage/20 rounded-full transition-all duration-premium"
                       >
                         <Store className="w-4 h-4 text-sage" />
-                        <span className="font-sf text-sm font-600 text-sage tracking-[-0.015em]">
+                        <span className="font-urbanist text-sm font-600 text-sage tracking-[-0.015em]">
                           {review.businessName}
                         </span>
                       </Link>
@@ -422,7 +422,7 @@ export default function GeneralReviewsPage() {
                             />
                           ) : (
                             <div className="w-full h-full bg-gradient-to-br from-sage/20 to-sage/10 flex items-center justify-center">
-                              <span className="font-sf text-lg sm:text-xl font-700 text-sage tracking-[-0.02em]">
+                              <span className="font-urbanist text-lg sm:text-xl font-700 text-sage tracking-[-0.02em]">
                                 {review.avatar}
                               </span>
                             </div>
@@ -438,10 +438,10 @@ export default function GeneralReviewsPage() {
 
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                          <h3 className="font-sf text-lg sm:text-xl font-600 text-charcoal tracking-[-0.02em]">
+                          <h3 className="font-urbanist text-lg sm:text-xl font-600 text-charcoal tracking-[-0.02em]">
                             {review.author}
                           </h3>
-                          <span className="font-sf text-sm font-400 text-charcoal/60 tracking-[-0.015em]">
+                          <span className="font-urbanist text-sm font-400 text-charcoal/60 tracking-[-0.015em]">
                             {review.date}
                           </span>
                         </div>
@@ -461,7 +461,7 @@ export default function GeneralReviewsPage() {
                     </div>
 
                     {/* Review Text */}
-                    <p className="font-sf text-base font-400 text-charcoal/90 leading-[1.65] mb-4 tracking-[-0.015em]">
+                    <p className="font-urbanist text-base font-400 text-charcoal/90 leading-[1.65] mb-4 tracking-[-0.015em]">
                       {displayText}
                     </p>
 
@@ -469,7 +469,7 @@ export default function GeneralReviewsPage() {
                     {shouldTruncate && (
                       <button
                         onClick={() => toggleExpanded(review.id)}
-                        className="font-sf text-sm font-600 text-sage hover:text-sage/80 transition-colors duration-premium mb-4 tracking-[-0.015em]"
+                        className="font-urbanist text-sm font-600 text-sage hover:text-sage/80 transition-colors duration-premium mb-4 tracking-[-0.015em]"
                       >
                         {isExpanded ? "Read less" : "Read more"}
                       </button>
@@ -481,7 +481,7 @@ export default function GeneralReviewsPage() {
                         {review.tags.map((tag, tagIdx) => (
                           <span
                             key={tagIdx}
-                            className="inline-flex items-center px-3 py-1 bg-sage/10 text-sage text-sm font-500 rounded-full border border-sage/20 font-sf tracking-[-0.015em]"
+                            className="inline-flex items-center px-3 py-1 bg-sage/10 text-sage text-sm font-500 rounded-full border border-sage/20 font-urbanist tracking-[-0.015em]"
                           >
                             <span className="mr-1">@</span>
                             {tag}
@@ -495,7 +495,7 @@ export default function GeneralReviewsPage() {
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-charcoal/5 hover:bg-charcoal/10 rounded-full font-sf text-sm font-600 text-charcoal/70 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-charcoal/5 hover:bg-charcoal/10 rounded-full font-urbanist text-sm font-600 text-charcoal/70 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
                       >
                         <ThumbsUp className="w-4 h-4" />
                         <span>Helpful</span>
@@ -515,15 +515,15 @@ export default function GeneralReviewsPage() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className=" bg-off-white   backdrop-blur-lg rounded-2xl shadow-premium-md border border-charcoal/10 p-12 text-center"
+            className=" bg-off-white   backdrop-blur-lg rounded-lg shadow-premium-md border border-charcoal/10 p-12 text-center"
           >
             <div className="w-20 h-20 bg-gradient-to-br from-charcoal/10 to-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
               <FileText className="w-10 h-10 text-charcoal/40" />
             </div>
-            <h3 className="font-sf text-xl font-600 text-charcoal mb-2 tracking-[-0.02em]">
+            <h3 className="font-urbanist text-xl font-600 text-charcoal mb-2 tracking-[-0.02em]">
               No reviews found
             </h3>
-            <p className="font-sf text-base font-400 text-charcoal/70 tracking-[-0.015em]">
+            <p className="font-urbanist text-base font-400 text-charcoal/70 tracking-[-0.015em]">
               Try adjusting your filters
             </p>
           </motion.div>

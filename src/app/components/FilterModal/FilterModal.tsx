@@ -165,7 +165,7 @@ export default function FilterModal({
         aria-modal="true"
         tabIndex={-1}
         className={`pointer-events-auto
-                    rounded-2xl overflow-hidden
+                    rounded-lg overflow-hidden
                     bg-off-white/95 backdrop-blur-xl
                     border border-white/60 shadow-xl
                     transition-all duration-200

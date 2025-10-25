@@ -46,16 +46,14 @@ export default function CommunityHighlights({
       aria-label={title}
       data-section
       style={{
-        fontFamily:
-          '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
-      {/* Subtle section decoration (non-interactive) */}
 
-      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10 pt-2 pb-1">
+      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
         {/* Header */}
-        <div className="mb-1 flex flex-wrap items-center justify-between gap-[18px]">
-          <h2 className="font-sf text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-4 sm:px-6 py-2 hover:bg-sage/5 rounded-lg cursor-default">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-urbanist text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
             {title}
           </h2>
 
@@ -75,13 +73,13 @@ export default function CommunityHighlights({
         {/* Top Reviewers */}
         {topReviewers && topReviewers.length > 0 && (
           <div className="mt-1">
-            <div className="mb-1 flex flex-wrap items-center justify-between gap-[18px]">
-              <h3 className="font-sf text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-4 sm:px-6 py-2 hover:bg-sage/5 rounded-lg cursor-default">
+            <div className="mb-0.5 flex flex-wrap items-center justify-between gap-2">
+              <h3 className="font-urbanist text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
                 Top Reviewers This Month In Claremont
               </h3>
             </div>
 
-            <ScrollableSection>
+            <ScrollableSection className="gap-3">
               {topReviewers.map((reviewer) => (
                 <ReviewerCard
                   key={reviewer.id}
@@ -95,26 +93,26 @@ export default function CommunityHighlights({
 
         {/* Businesses of the Month */}
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
-          <div className="mt-4 sm:mt-5 md:mt-6">
-            <div className="mb-2 sm:mb-3 flex flex-wrap items-center justify-between gap-[18px]">
-              <h3 className="font-sf text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-4 sm:px-6 py-[3px] hover:bg-sage/5 rounded-lg cursor-default">
+          <div className="mt-3">
+            <div className="mb-0.5 flex flex-wrap items-center justify-between gap-2">
+              <h3 className="font-urbanist text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
                 Businesses of the Month by Category
               </h3>
             </div>
 
-            <div className="mb-3 sm:mb-4 text-center">
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-coral/15 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 border border-coral/20 shadow-lg shadow-coral/10">
-                <Trophy className="w-4 h-4 text-coral" />
-                <span className="font-semibold text-coral text-sm">
+            <div className="mb-2 text-center">
+              <div className="inline-flex items-center gap-1.5 bg-coral/15 rounded-full px-3 py-1.5 border border-coral/20 shadow-lg shadow-coral/10">
+                <Trophy className="w-3.5 h-3.5 text-coral" />
+                <span className="font-semibold text-coral text-xs">
                   September 2025 Winners
                 </span>
               </div>
-              <p className="mt-2 text-xs text-primary/70">
+              <p className="mt-1 text-xs text-primary/70">
                 Top-rated businesses competing within their categories
               </p>
             </div>
 
-            <ScrollableSection className="list-none">
+            <ScrollableSection className="list-none gap-3">
               {businessesOfTheMonth.map((business) => (
                 <BusinessOfTheMonthCard
                   key={business.id}

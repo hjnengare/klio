@@ -20,14 +20,14 @@ export default function EventContent({ title, location, description, href }: Eve
       </h3>
 
       {/* Location */}
-      <p className="text-sm font-600 text-charcoal/70 mb-3 flex items-center justify-center">
+      <p className="text-sm font-600 text-charcoal/70 mb-3 flex items-center justify-center font-urbanist">
         <MapPin className="w-4 h-4 text-sage mr-1.5 flex-shrink-0" aria-hidden="true" />
         <span className="truncate">{location}</span>
       </p>
 
       {/* Description */}
       {description && (
-        <p className="text-sm font-600 text-charcoal/70 leading-relaxed line-clamp-3">
+        <p className="text-sm font-600 text-charcoal/70 leading-relaxed line-clamp-3 font-urbanist">
           {description}
         </p>
       )}

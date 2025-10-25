@@ -14,6 +14,7 @@ const PageTransitionProvider = dynamic(() => import("./components/Providers/Page
 });
 const WebVitals = dynamic(() => import("./components/Performance/WebVitals"));
 const BusinessNotifications = dynamic(() => import("./components/Notifications/BusinessNotifications"));
+const ClientLayoutWrapper = dynamic(() => import("./components/Performance/ClientLayoutWrapper"));
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -100,10 +101,30 @@ export default function RootLayout({
         {/* Preload critical resources */}
         <link rel="preload" href="/globals.css" as="style" />
         
+        {/* Service Worker Registration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                      console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                      console.log('SW registration failed: ', registrationError);
+                    });
+                });
+              }
+            `,
+          }}
+        />
+        
         <link rel="canonical" href="/" />
       </head>
       <body className={`${urbanist.className} no-layout-shift`}>
         <WebVitals />
+        <ClientLayoutWrapper />
         <ErrorBoundary>
           <ToastProvider>
             <AuthProvider>

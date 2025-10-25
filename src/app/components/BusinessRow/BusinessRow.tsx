@@ -23,23 +23,16 @@ export default function BusinessRow({
 
   return (
     <section
-      className="pt-1 pb-1 relative"
+      className="relative"
       aria-label={title}
       data-section
       style={{
-        fontFamily:
-          '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
-      {/* Subtle section decoration (non-interactive) */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-10 right-20 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />
-        <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-xl" />
-      </div>
-
       <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
-        <div className="mb-1 flex flex-wrap items-center justify-between gap-[18px]">
-          <h2 className="font-sf text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-4 sm:px-6 py-2 hover:bg-sage/5 rounded-lg cursor-default">
+        <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-urbanist text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
             {title}
           </h2>
 

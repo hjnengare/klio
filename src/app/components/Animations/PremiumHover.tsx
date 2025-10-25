@@ -23,7 +23,7 @@ export default function PremiumHover({
   const shadowClasses = {
     light: "hover:shadow-lg",
     medium: "",
-    strong: "hover:shadow-2xl",
+    strong: "hover:shadow-lg",
   };
 
   return (

@@ -42,7 +42,7 @@ export default function EmailVerificationModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-off-white rounded-2xl shadow-2xl border border-charcoal/10 max-w-md w-full mx-4">
+      <div className="bg-off-white rounded-lg shadow-lg border border-charcoal/10 max-w-md w-full mx-4">
         {/* Header */}
         <div className="flex items-center justify-between p-6 pb-4">
           <div className="flex items-center gap-3">
@@ -50,10 +50,10 @@ export default function EmailVerificationModal({
               <Mail className="w-5 h-5 text-amber-600" />
             </div>
             <div>
-              <h3 className="font-sf text-lg font-700 text-charcoal">
+              <h3 className="font-urbanist text-lg font-700 text-charcoal">
                 Verify Your Email
               </h3>
-              <p className="font-sf text-xs text-charcoal/60">
+              <p className="font-urbanist text-xs text-charcoal/60">
                 Required to {action}
               </p>
             </div>
@@ -68,14 +68,14 @@ export default function EmailVerificationModal({
 
         {/* Content */}
         <div className="px-6 pb-6">
-          <p className="font-sf text-sm text-charcoal/70 mb-4 leading-relaxed">
+          <p className="font-urbanist text-sm text-charcoal/70 mb-4 leading-relaxed">
             We've sent a verification link to <span className="font-600 text-charcoal">{user.email}</span>. 
             Please check your email and click the link to verify your account.
           </p>
 
           {/* Benefits */}
           <div className="bg-sage/5 rounded-lg p-4 mb-4">
-            <h4 className="font-sf text-sm font-600 text-charcoal mb-2 flex items-center gap-2">
+            <h4 className="font-urbanist text-sm font-600 text-charcoal mb-2 flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-sage" />
               What you'll unlock:
             </h4>
@@ -100,7 +100,7 @@ export default function EmailVerificationModal({
             {/* Open Gmail Button */}
             <button
               onClick={() => window.open('https://mail.google.com', '_blank')}
-              className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-sf text-sm font-600 py-2.5 px-4 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-urbanist text-sm font-600 py-2.5 px-4 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center gap-2"
             >
               <Mail className="w-4 h-4" />
               Open Gmail
@@ -110,14 +110,14 @@ export default function EmailVerificationModal({
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={onClose}
-                className="px-4 py-2.5 border border-charcoal/20 text-charcoal/70 font-sf text-sm font-500 rounded-lg hover:bg-charcoal/5 transition-colors duration-200"
+                className="px-4 py-2.5 border border-charcoal/20 text-charcoal/70 font-urbanist text-sm font-500 rounded-lg hover:bg-charcoal/5 transition-colors duration-200"
               >
                 Later
               </button>
               <button
                 onClick={handleResendVerification}
                 disabled={isResending}
-                className="bg-sage text-white font-sf text-sm font-600 py-2.5 px-4 rounded-lg hover:bg-sage/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="bg-sage text-white font-urbanist text-sm font-600 py-2.5 px-4 rounded-lg hover:bg-sage/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isResending ? (
                   <>
@@ -137,14 +137,14 @@ export default function EmailVerificationModal({
             <Link
               href="/verify-email"
               onClick={onClose}
-              className="block w-full bg-off-white border border-sage/30 text-sage font-sf text-sm font-600 py-2.5 px-4 rounded-lg hover:bg-sage/5 transition-all duration-300 text-center"
+              className="block w-full bg-off-white border border-sage/30 text-sage font-urbanist text-sm font-600 py-2.5 px-4 rounded-lg hover:bg-sage/5 transition-all duration-300 text-center"
             >
               Go to Verification Page
             </Link>
           </div>
 
           {/* Help Text */}
-          <p className="font-sf text-xs text-charcoal/50 mt-3 text-center">
+          <p className="font-urbanist text-xs text-charcoal/50 mt-3 text-center">
             Check your spam folder if you don't see the email
           </p>
         </div>

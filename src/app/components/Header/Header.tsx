@@ -7,10 +7,11 @@ import { User, X, Search } from "lucide-react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { useSavedItems } from "../../contexts/SavedItemsContext";
+import Logo from "../Logo/Logo";
+import OptimizedLink from "../Navigation/OptimizedLink";
 
 const sf = {
-  fontFamily:
-    '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
 } as const;
 
 export default function Header({
@@ -100,27 +101,26 @@ export default function Header({
       {/* Google Fonts for logo and typography */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Shadows+Into+Light&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Shadows+Into+Light&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
       <header className={headerClassName} style={sf}>
         <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
           {/* Top row */}
           <div className="flex items-center justify-between gap-6">
             {/* Logo */}
-            <Link href="/home" className="group flex-shrink-0 relative" aria-label="KLIO Home">
-              <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <span className="relative text-3xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal drop-shadow-sm" style={{ fontFamily: "'Italianno', cursive" }}>
-               sayso
-              </span>
-            </Link>
+            <OptimizedLink href="/home" className="group flex-shrink-0 relative" aria-label="KLIO Home">
+              <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <Logo variant="default" className="relative" />
+            </OptimizedLink>
 
             {/* Desktop nav - centered */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 flex-1 justify-center">
               {["home", "saved", "leaderboard", "claim-business"].map((route) => (
-                <Link
+                <OptimizedLink
                   key={route}
                   href={`/${route}`}
-                  className="group capitalize px-3 lg:px-4 py-2 rounded-full text-sm font-600 text-white hover:text-white transition-all duration-300 relative"
+                  className="group capitalize px-3 lg:px-4 py-2 rounded-full text-xs font-bold text-white hover:text-white transition-all duration-300 relative"
+                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -130,7 +130,7 @@ export default function Header({
                       {savedCount > 99 ? "99+" : savedCount}
                     </div>
                   )}
-                </Link>
+                </OptimizedLink>
               ))}
             </nav>
 
@@ -165,7 +165,7 @@ export default function Header({
               </button>
 
               {/* Profile */}
-              <Link
+              <OptimizedLink
                 href="/profile"
                 className="group hidden md:flex w-10 h-10 rounded-full items-center justify-center text-white hover:text-white transition-all duration-300 relative overflow-hidden"
                 aria-label="Profile"
@@ -173,7 +173,7 @@ export default function Header({
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute inset-0 backdrop-blur-sm bg-off-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <User className="relative z-10 w-5 h-5" />
-              </Link>
+              </OptimizedLink>
             </div>
           </div>
 
@@ -217,15 +217,13 @@ export default function Header({
 
       {/* Mobile menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-full backdrop-blur-2xl bg-off-white/80 z-[100] shadow-2xl shadow-sage/10 transform md:hidden ${
+        className={`fixed top-0 right-0 h-full w-full backdrop-blur-lg bg-off-white/80 z-[100] shadow-lg shadow-sage/10 transform md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300`}
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between px-6 py-6 border-b border-charcoal/10">
-            <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal" style={{ fontFamily: "'Italianno', cursive" }}>
-              sayso
-            </span>
+            <Logo variant="mobile" />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] text-white hover:bg-sage/10 group"
@@ -239,11 +237,12 @@ export default function Header({
 
           <nav className="flex flex-col py-4 px-4">
             {["home", "saved", "leaderboard"].map((route) => (
-              <Link
+              <OptimizedLink
                 key={route}
                 href={`/${route}`}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-3 rounded-xl text-base font-600 text-charcoal hover:text-charcoal hover:bg-sage/5 transition-colors relative"
+                className="px-4 py-3 rounded-xl text-sm font-bold text-charcoal hover:text-charcoal hover:bg-sage/5 transition-colors relative"
+                style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
               >
                 <span className="flex items-center justify-between">
                   {route.charAt(0).toUpperCase() + route.slice(1)}
@@ -253,17 +252,18 @@ export default function Header({
                     </div>
                   )}
                 </span>
-              </Link>
+              </OptimizedLink>
             ))}
             <div className="h-px bg-charcoal/10 my-4 mx-4" />
-            <Link
+            <OptimizedLink
               href="/profile"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-sage/5 flex items-center gap-3 transition-all duration-200"
+              className="px-4 py-3 rounded-xl text-sm font-semibold text-white hover:text-white hover:bg-sage/5 flex items-center gap-3 transition-all duration-200"
+              style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
             >
               <User className="w-5 h-5" />
               Profile
-            </Link>
+            </OptimizedLink>
           </nav>
         </div>
       </div>

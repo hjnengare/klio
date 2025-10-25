@@ -238,20 +238,20 @@ export default function RegisterPage() {
 
         <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12">
           {/* Form Card */}
-          <div className="bg-off-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)] transition-shadow duration-300 animate-scale-in">
+          <div className="bg-off-white/95 rounded-lg p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/30 shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)] transition-shadow duration-300 animate-scale-in">
 
             <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
               {/* Error Message */}
               {error && (
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-                  <p className="font-sf text-[14px] font-600 text-red-600">{error}</p>
+                  <p className="font-urbanist text-[14px] font-600 text-red-600">{error}</p>
                 </div>
               )}
 
               {/* Offline Message */}
               {!isOnline && !error && (
                 <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
-                  <p className="font-sf text-[14px] font-600 text-orange-600">You&apos;re offline. We&apos;ll try again when you&apos;re back online.</p>
+                  <p className="font-urbanist text-[14px] font-600 text-orange-600">You&apos;re offline. We&apos;ll try again when you&apos;re back online.</p>
                 </div>
               )}
 
@@ -346,7 +346,7 @@ export default function RegisterPage() {
 
             {/* Footer */}
             <div className="text-center mt-4 pt-4 border-t border-light-gray/30">
-              <div className="font-sf text-sm sm:text-base font-400 text-charcoal/70">
+              <div className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70">
                 Already have an account?{" "}
                 <Link
                   href="/login"

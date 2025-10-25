@@ -97,7 +97,7 @@ export const ReviewItem: React.FC<ReviewItemProps> = ({
         <BusinessThumb name={businessName} imageUrl={businessImageUrl} size={40} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <span className="font-sf text-base font-700 text-charcoal truncate">
+            <span className="font-urbanist text-base font-700 text-charcoal truncate">
               {businessName}
             </span>
             <StarRating rating={rating} />

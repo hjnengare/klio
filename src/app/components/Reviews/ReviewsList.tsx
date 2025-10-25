@@ -29,7 +29,7 @@ export default function ReviewsList({
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-6 border border-sage/5"
+            className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-lg p-6 border border-sage/5"
           >
             <div className="flex items-start space-x-4 animate-pulse">
               <div className="w-12 h-12 bg-sage/20 rounded-full flex-shrink-0" />
@@ -60,15 +60,15 @@ export default function ReviewsList({
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center"
+        className="bg-red-50 border border-red-200 rounded-lg p-6 text-center"
       >
         <div className="flex items-center justify-center mb-3">
           <AlertCircle size={24} className="text-red-500" />
         </div>
-        <h3 className="font-sf text-lg font-600 text-red-800 mb-2">
+        <h3 className="font-urbanist text-lg font-600 text-red-800 mb-2">
           Unable to load reviews
         </h3>
-        <p className="font-sf text-sm text-red-600">
+        <p className="font-urbanist text-sm text-red-600">
           {error}
         </p>
       </motion.div>
@@ -80,7 +80,7 @@ export default function ReviewsList({
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-2xl p-8 text-center border border-sage/10"
+        className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-lg p-8 text-center border border-sage/10"
       >
         <motion.div
           animate={{
@@ -96,10 +96,10 @@ export default function ReviewsList({
         >
           <MessageCircle size={32} className="text-sage" />
         </motion.div>
-        <h3 className="font-sf text-xl font-600 text-charcoal mb-2">
+        <h3 className="font-urbanist text-xl font-600 text-charcoal mb-2">
           No reviews yet
         </h3>
-        <p className="font-sf text-base text-charcoal/70">
+        <p className="font-urbanist text-base text-charcoal/70">
           {emptyMessage}
         </p>
       </motion.div>
@@ -130,7 +130,7 @@ export default function ReviewsList({
           transition={{ delay: reviews.length * 0.1 + 0.2 }}
           className="text-center pt-4"
         >
-          <p className="font-sf text-sm text-charcoal/60">
+          <p className="font-urbanist text-sm text-charcoal/60">
             Showing {reviews.length} review{reviews.length !== 1 ? 's' : ''}
           </p>
         </motion.div>

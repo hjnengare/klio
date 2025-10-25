@@ -130,7 +130,7 @@ export default function WriteReviewPage() {
     <>
       {/* SF Pro + utilities */}
       <style jsx global>{`
-        .font-sf {
+        .font-urbanist {
           font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
             "SF Pro Display", "Helvetica Neue", Helvetica, Arial, system-ui,
             sans-serif;
@@ -144,7 +144,7 @@ export default function WriteReviewPage() {
       `}</style>
       <ReviewStyles />
 
-      <div className="min-h-dvh bg-off-white relative overflow-hidden font-sf">
+      <div className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist">
         {/* Subtle background tint */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02]" />
@@ -161,7 +161,10 @@ export default function WriteReviewPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* MAIN: Form */}
               <div className="lg:col-span-8">
-                <div className="bg-off-white border md:border border-sage/10 rounded-2xl p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-lg">
+                <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 ring-1 ring-white/20 rounded-lg p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-lg shadow-sage/20">
+                  {/* subtle glows */}
+                  <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg" />
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-lg" />
                   <div className="relative z-10 flex-1 flex flex-col">
                     <BusinessInfo businessName={businessName} businessRating={businessRating} />
                     <BusinessCarousel businessName={businessName} businessImages={businessImages} />

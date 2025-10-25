@@ -27,7 +27,7 @@ export default function AuthCodeErrorPage() {
 
           {/* Error Message */}
           <div className="space-y-3">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal tracking-tight">
+            <h1 className="text-lg md:text-lg lg:text-4xl font-bold text-charcoal tracking-tight">
               Authentication Error
             </h1>
             <p className="text-charcoal/70 leading-relaxed">

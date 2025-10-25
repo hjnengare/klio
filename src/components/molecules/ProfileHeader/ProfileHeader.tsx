@@ -36,7 +36,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         />
         <div>
           <div className="flex items-center space-x-2 mb-1">
-            <h1 className="font-sf text-xl font-700 text-charcoal">
+            <h1 className="font-urbanist text-xl font-700 text-charcoal">
               @{username}
             </h1>
           </div>

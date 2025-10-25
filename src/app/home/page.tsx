@@ -8,7 +8,7 @@
 import { memo } from "react";
 import dynamic from "next/dynamic";
 import Header from "../components/Header/Header";
-import { HeroCarousel } from "../components/Hero";
+import HeroCarousel from "../components/Hero/HeroCarousel";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
 import { TRENDING_BUSINESSES } from "../data/businessData";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
@@ -67,8 +67,8 @@ export default function Home() {
 
       <HeroCarousel userInterests={selectedInterests} />
 
-      <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
-        <div className="py-2">
+      <div className="bg-off-white">
+        <div className="py-1">
             {/* No scroll-reveal wrappers; simple static rendering */}
           <div>
             <MemoizedBusinessRow

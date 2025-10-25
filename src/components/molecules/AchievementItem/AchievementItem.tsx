@@ -24,7 +24,7 @@ export const AchievementItem: React.FC<AchievementItemProps> = ({
         <Trophy className="w-5 h-5 text-sage" />
       </div>
       <div className="flex-1 min-w-0">
-        <span className="font-sf text-base font-600 text-charcoal">{name}</span>
+        <span className="font-urbanist text-base font-600 text-charcoal">{name}</span>
         {description && (
           <p className="text-sm text-charcoal/60 mt-1">{description}</p>
         )}

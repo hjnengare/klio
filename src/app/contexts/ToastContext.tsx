@@ -134,7 +134,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
             <div
               key={toast.id}
               className={`
-                pointer-events-auto max-w-sm w-full backdrop-blur-xl rounded-xl p-4 shadow-2xl border border-sage/20
+                pointer-events-auto max-w-sm w-full backdrop-blur-xl rounded-xl p-4 shadow-lg border border-sage/20
                 transition-all duration-300 ease-out animate-in slide-in-from-left
                 ${getToastStyles(toast.type)}
               `}
@@ -144,7 +144,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
                   {getToastIcon(toast.type)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-sf text-sm font-600 leading-tight">
+                  <p className="font-urbanist text-sm font-600 leading-tight">
                     {toast.message}
                   </p>
                 </div>

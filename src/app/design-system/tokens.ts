@@ -233,8 +233,8 @@ export const borderRadius = {
   md: '6px',        // Medium radius for cards, buttons
   lg: '8px',        // Large radius for modals, panels
   xl: '12px',       // Extra large radius
-  '2xl': '16px',    // Default rounded-2xl for main elements
-  '3xl': '24px',    // Large rounded elements
+  'lg': '16px',    // Default rounded-lg for main elements
+  'lg': '24px',    // Large rounded elements
   full: '9999px',   // Fully rounded (pills, avatars)
 
   // Semantic radius
@@ -314,7 +314,7 @@ export const breakpoints = {
   md: '768px',    // Tablet portrait
   lg: '1024px',   // Tablet landscape / Small desktop
   xl: '1280px',   // Desktop
-  '2xl': '1536px' // Large desktop
+  'lg': '1536px' // Large desktop
 } as const;
 
 // =============================================================================

@@ -18,7 +18,7 @@ const sizeStyles: Record<AvatarSize, { container: string; text: string }> = {
   sm: { container: 'w-8 h-8', text: 'text-sm' },
   md: { container: 'w-10 h-10', text: 'text-base' },
   lg: { container: 'w-16 h-16', text: 'text-xl' },
-  xl: { container: 'w-24 h-24', text: 'text-3xl' },
+  xl: { container: 'w-24 h-24', text: 'text-lg' },
 };
 
 export const Avatar: React.FC<AvatarProps> = ({

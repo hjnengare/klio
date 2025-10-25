@@ -44,14 +44,13 @@ const HERO_SLIDES: HeroSlide[] = [
   },
 ];
 
-const FONT_STACK =
-  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif';
+const FONT_STACK = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif';
 
 interface HeroCarouselProps {
   userInterests?: string[];
 }
 
-export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
+export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
@@ -257,7 +256,7 @@ export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
       
       <section
         ref={containerRef as React.RefObject<HTMLElement>}
-        className="relative min-h-[100vh] w-full overflow-hidden outline-none"
+        className="relative min-h-[60vh] sm:min-h-[100vh] w-full overflow-hidden outline-none"
         aria-label="Hero carousel"
         tabIndex={0}
         onMouseEnter={() => setPaused(true)}
@@ -275,7 +274,7 @@ export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
         <div
           key={slide.id}
           aria-hidden={index !== currentIndex}
-          className={`absolute inset-0 w-full h-full transition-opacity duration-700 will-change-transform ${
+          className={`absolute inset-0 w-auto h-auto overflow-hidden transition-opacity duration-700 will-change-transform ${
             index === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
@@ -297,13 +296,13 @@ export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
            {/* Content - Text Left Aligned */}
            <div className="absolute inset-0 z-20 flex items-center pt-20 pb-8">
              <div className="container mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
-               <div className="max-w-2xl">
+               <div className="max-w-lg">
                  {/* Text Content */}
                  <div className="relative">
                    <h1
                      className="text-off-white leading-[1.1] mb-4 sm:mb-6 font-bold tracking-tight whitespace-nowrap"
                      style={{
-                       fontFamily: "'Lobster Two', cursive",
+                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                        fontSize: "clamp(2.4rem, 5vw, 6rem)",
                      }}
                    >
@@ -328,7 +327,7 @@ export function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
 
       {/* Carousel Indicators */}
       <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3"
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3"
         role="tablist"
         aria-label="Carousel navigation"
       >

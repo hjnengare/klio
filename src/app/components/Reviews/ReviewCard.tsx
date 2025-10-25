@@ -55,13 +55,13 @@ export default function ReviewCard({
 
   const displayedImages = showAllImages ? review.images : review.images?.slice(0, 3);
 
-
-  <motion.div
+  return (
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.01, x: 5 }}
-      className="bg-off-white  rounded-2xl p-6 border border-charcoal/10 transition-all duration-300 group shadow-sm"
+      className="bg-off-white  rounded-lg p-6 border border-charcoal/10 transition-all duration-300 group shadow-sm"
     >
       <div className="flex items-start space-x-4">
         {/* Avatar */}
@@ -80,7 +80,7 @@ export default function ReviewCard({
             />
           ) : (
             <div className="w-12 h-12 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center transition-shadow duration-300">
-              <span className="font-sf text-lg font-700 text-sage">
+              <span className="font-urbanist text-lg font-700 text-sage">
                 {review.user.name?.[0] || 'U'}
               </span>
             </div>
@@ -91,7 +91,7 @@ export default function ReviewCard({
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3 space-y-2 md:space-y-0">
             <div className="flex items-center space-x-3">
-              <span className="font-sf text-lg font-600 text-charcoal group-hover:text-sage transition-colors duration-300">
+              <span className="font-urbanist text-lg font-600 text-charcoal group-hover:text-sage transition-colors duration-300">
                 {review.user.name || 'Anonymous User'}
               </span>
               <div className="flex items-center space-x-1">
@@ -124,7 +124,7 @@ export default function ReviewCard({
             </div>
 
             <div className="flex items-center space-x-3">
-              <span className="font-sf text-sm font-400 text-charcoal/60">
+              <span className="font-urbanist text-sm font-400 text-charcoal/60">
                 {formatDate(review.created_at)}
               </span>
               {user?.id === review.user_id && (
@@ -142,7 +142,7 @@ export default function ReviewCard({
 
           {/* Review Title */}
           {review.title && (
-            <h4 className="font-sf text-xl font-600 text-charcoal mb-2 group-hover:text-sage transition-colors duration-300">
+            <h4 className="font-urbanist text-xl font-600 text-charcoal mb-2 group-hover:text-sage transition-colors duration-300">
               {review.title}
             </h4>
           )}
@@ -150,14 +150,14 @@ export default function ReviewCard({
           {/* Business Info (if showing) */}
           {showBusinessInfo && 'business' in review && (
             <div className="mb-3 p-2 bg-sage/10 rounded-lg">
-              <span className="font-sf text-sm font-500 text-sage">
+              <span className="font-urbanist text-sm font-500 text-sage">
                 Review for: {(review as ReviewWithUser & { business: { name: string } }).business?.name}
               </span>
             </div>
           )}
 
           {/* Review Text */}
-          <p className="font-sf text-base font-400 text-charcoal/90 leading-relaxed mb-4">
+          <p className="font-urbanist text-base font-400 text-charcoal/90 leading-relaxed mb-4">
             {review.content}
           </p>
 
@@ -210,7 +210,7 @@ export default function ReviewCard({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowAllImages(true)}
-                  className="text-sage hover:text-sage/80 font-sf text-sm font-500 flex items-center space-x-1"
+                  className="text-sage hover:text-sage/80 font-urbanist text-sm font-500 flex items-center space-x-1"
                 >
                   <Images size={16} />
                   <span>Show {review.images.length - 3} more images</span>
@@ -222,7 +222,7 @@ export default function ReviewCard({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowAllImages(false)}
-                  className="text-charcoal/60 hover:text-charcoal font-sf text-sm font-500 flex items-center space-x-1"
+                  className="text-charcoal/60 hover:text-charcoal font-urbanist text-sm font-500 flex items-center space-x-1"
                 >
                   <ChevronUp size={16} />
                   <span>Show less</span>
@@ -245,13 +245,13 @@ export default function ReviewCard({
               disabled={!user}
             >
               <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
-              <span className="font-sf text-sm font-500">
+              <span className="font-urbanist text-sm font-500">
                 Helpful ({helpfulCount})
               </span>
             </motion.button>
 
             {!user && (
-              <span className="font-sf text-xs text-charcoal/40">
+              <span className="font-urbanist text-xs text-charcoal/40">
                 Login to like reviews
               </span>
             )}

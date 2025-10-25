@@ -30,7 +30,7 @@ export default function TestAuthPage() {
   return (
     <div className="min-h-screen bg-off-white p-8">
       <div className="max-w-md mx-auto">
-        <h1 className="text-2xl font-bold mb-6">Auth Test Page</h1>
+        <h1 className="text-lg font-bold mb-6">Auth Test Page</h1>
         
         {/* Current User Status */}
         <div className="mb-6 p-4 bg-gray-100 rounded-lg">

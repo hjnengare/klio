@@ -22,7 +22,7 @@ export function AuthHeader({ backLink, title, subtitle }: AuthHeaderProps) {
       {/* Header with premium styling and animations */}
       <div className="text-center mb-4">
         <div className="inline-block relative mb-4 animate-fade-in-up animate-delay-400">
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+          <h2 className="text-xl sm:text-lg md:text-lg lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
             {title}
           </h2>
         </div>

@@ -48,10 +48,10 @@ export default function EmailVerificationBanner({ onDismiss, className = "" }: E
         <Mail className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
         
         <div className="flex-1 min-w-0">
-          <p className="font-sf text-sm font-600 text-amber-800 mb-1">
+          <p className="font-urbanist text-sm font-600 text-amber-800 mb-1">
             Email Verification Required
           </p>
-          <p className="font-sf text-sm text-amber-700 mb-3">
+          <p className="font-urbanist text-sm text-amber-700 mb-3">
             We've sent a confirmation email to <span className="font-600">{user.email}</span>. 
             Please verify to post reviews and appear on leaderboards.
           </p>
@@ -60,7 +60,7 @@ export default function EmailVerificationBanner({ onDismiss, className = "" }: E
             <button
               onClick={handleResend}
               disabled={isResending}
-              className="font-sf text-sm font-600 text-amber-800 hover:text-amber-900 underline disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+              className="font-urbanist text-sm font-600 text-amber-800 hover:text-amber-900 underline disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
             >
               {isResending ? (
                 <>
@@ -76,7 +76,7 @@ export default function EmailVerificationBanner({ onDismiss, className = "" }: E
             
             <a
               href="/verify-email"
-              className="font-sf text-sm font-600 text-amber-800 hover:text-amber-900 underline"
+              className="font-urbanist text-sm font-600 text-amber-800 hover:text-amber-900 underline"
             >
               Go to verification page
             </a>

@@ -24,7 +24,7 @@ export default function EventBanner({
   endDate 
 }: EventBannerProps) {
   return (
-    <div className="relative overflow-hidden rounded-t-2xl h-[180px]">
+    <div className="relative overflow-hidden rounded-t-9px h-[180px]">
       {/* Image or Icon placeholder */}
       {image ? (
         <Image
@@ -32,7 +32,7 @@ export default function EventBanner({
           alt={alt || title}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className="object-cover"
           priority={false}
         />
       ) : (

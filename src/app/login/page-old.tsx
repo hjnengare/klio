@@ -282,7 +282,7 @@ export default function LoginPage() {
         {/* Header with premium styling and animations */}
         <div className="text-center mb-4">
           <div className="inline-block relative mb-4 animate-fade-in-up animate-delay-400">
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+            <h2 className="text-xl sm:text-lg md:text-lg lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
               Welcome back
             </h2>
           </div>
@@ -295,7 +295,7 @@ export default function LoginPage() {
         {/* Form Card */}
         <div
           className="
-            bg-off-white/95 rounded-3xl p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden
+            bg-off-white/95 rounded-lg p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden
             border border-white/30 backdrop-blur-lg
             shadow-[0_10px_30px_rgba(0,0,0,0.06),0_22px_70px_rgba(0,0,0,0.10)]
             hover:shadow-[0_12px_36px_rgba(0,0,0,0.08),0_30px_90px_rgba(0,0,0,0.14)]
@@ -308,7 +308,7 @@ export default function LoginPage() {
             {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-                <p className="font-sf text-[14px] font-600 text-red-600">{error}</p>
+                <p className="font-urbanist text-[14px] font-600 text-red-600">{error}</p>
               </div>
             )}
 
@@ -332,7 +332,7 @@ export default function LoginPage() {
                   if (!emailTouched) setEmailTouched(true);
                 }}
                 onBlur={() => setEmailTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getEmailError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   email && !getEmailError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
@@ -375,7 +375,7 @@ export default function LoginPage() {
                   if (!passwordTouched) setPasswordTouched(true);
                 }}
                 onBlur={() => setPasswordTouched(true)}
-                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-sf text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
+                className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
                   getPasswordError() ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
                   password && !getPasswordError() ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
                   'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white  '
@@ -410,7 +410,7 @@ export default function LoginPage() {
             <div className="text-right">
               <Link
                 href="#"
-                className="font-sf text-base font-500 text-coral hover:text-coral/80 transition-colors duration-300"
+                className="font-urbanist text-base font-500 text-coral hover:text-coral/80 transition-colors duration-300"
               >
                 Forgot password?
               </Link>
@@ -480,7 +480,7 @@ export default function LoginPage() {
 
           {/* Enhanced footer */}
           <div className="text-center mt-4 pt-4 border-t border-light-gray/30">
-            <div className="font-sf text-sm sm:text-base font-400 text-charcoal/70">
+            <div className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70">
               {"Don't have an account? "}
               <Link
                 href="/register"

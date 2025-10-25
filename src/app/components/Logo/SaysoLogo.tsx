@@ -1,27 +1,31 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useAnimationControls } from "framer-motion";
 import { colors } from '@/app/design-system/tokens';
+import { useState } from 'react';
 
 interface SaysoLogoProps {
   size?: "small" | "medium" | "large" | "xl";
   className?: string;
   animated?: boolean;
-  variant?: "default" | "gradient" | "outline";
+  variant?: "default" | "gradient" | "outline" | "glow";
+  interactive?: boolean;
 }
 
 export default function SaysoLogo({
   size = "medium",
   className = "",
   animated = true,
-  variant = "default"
+  variant = "default",
+  interactive = false
 }: SaysoLogoProps) {
+  const [hoveredLetter, setHoveredLetter] = useState<string | null>(null);
 
   // Size mappings
   const sizeClasses = {
-    small: "text-xl sm:text-2xl",
-    medium: "text-2xl sm:text-3xl md:text-4xl",
-    large: "text-3xl sm:text-4xl md:text-5xl lg:text-6xl",
+    small: "text-xl sm:text-lg",
+    medium: "text-lg sm:text-lg md:text-4xl",
+    large: "text-lg sm:text-4xl md:text-5xl lg:text-6xl",
     xl: "text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
   };
 
@@ -34,39 +38,72 @@ export default function SaysoLogo({
     O: colors.primary.sage[500]     // Sage
   };
 
-  // Variant styles
-  const getLetterStyle = (letter: keyof typeof letterColors) => {
+  // Enhanced variant styles
+  const getLetterStyle = (letter: keyof typeof letterColors, isHovered: boolean) => {
     const baseColor = letterColors[letter];
+    const isYellow = letter === "Y";
 
     switch (variant) {
       case "gradient":
         return {
           color: "transparent",
-          backgroundImage: `linear-gradient(135deg, ${baseColor}, ${baseColor}dd)`,
+          backgroundImage: isHovered
+            ? `linear-gradient(135deg, ${baseColor}, ${colors.primary.coral[400]}, ${baseColor})`
+            : `linear-gradient(135deg, ${baseColor}ee, ${baseColor}99, ${baseColor}ee)`,
           backgroundClip: "text",
-          WebkitBackgroundClip: "text"
+          WebkitBackgroundClip: "text",
+          backgroundSize: isHovered ? "200% 200%" : "100% 100%",
+          filter: isHovered ? "brightness(1.2)" : "brightness(1)",
+          textShadow: `0 0 20px ${baseColor}40`,
+          transition: "all 0.3s ease"
         };
       case "outline":
         return {
           color: "transparent",
           WebkitTextStroke: `2px ${baseColor}`,
-          textShadow: `0 0 8px ${baseColor}20`
+          textShadow: isHovered
+            ? `0 0 20px ${baseColor}60, 0 0 40px ${baseColor}30`
+            : `0 0 8px ${baseColor}20`,
+          filter: isHovered ? "brightness(1.3)" : "brightness(1)",
+          transition: "all 0.3s ease"
+        };
+      case "glow":
+        return {
+          color: baseColor,
+          textShadow: isHovered
+            ? `0 0 10px ${baseColor}80, 0 0 20px ${baseColor}60, 0 0 30px ${baseColor}40, 0 0 40px ${baseColor}20`
+            : `0 0 8px ${baseColor}60, 0 0 16px ${baseColor}30`,
+          filter: isHovered ? "brightness(1.3) saturate(1.2)" : "brightness(1.1)",
+          transition: "all 0.3s ease"
         };
       default:
         return {
           color: baseColor,
-          textShadow: letter === "Y" ? "0 1px 2px rgba(0,0,0,0.1)" : "none" // Add shadow for off-white letter
+          textShadow: isYellow
+            ? "0 2px 4px rgba(0,0,0,0.15)"
+            : isHovered
+              ? `0 4px 12px ${baseColor}40`
+              : "none",
+          filter: isHovered ? "brightness(1.2) saturate(1.1)" : "brightness(1)",
+          transition: "all 0.3s ease",
+          transform: isHovered ? "translateY(-2px)" : "translateY(0)"
         };
     }
   };
 
   const logoContent = (
-    <span className={`font-sf font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
-      <span style={getLetterStyle("S")}>s</span>
-      <span style={getLetterStyle("A")}>a</span>
-      <span style={getLetterStyle("Y")}>y</span>
-      <span style={getLetterStyle("S2")}>s</span>
-      <span style={getLetterStyle("O")}>o</span>
+    <span className={`font-urbanist font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
+      {["S", "A", "Y", "S2", "O"].map((letter, index) => (
+        <span
+          key={`${letter}-${index}`}
+          style={getLetterStyle(letter as keyof typeof letterColors, hoveredLetter === letter)}
+          className={interactive ? "inline-block cursor-pointer select-none" : "inline-block"}
+          onMouseEnter={() => interactive && setHoveredLetter(letter)}
+          onMouseLeave={() => interactive && setHoveredLetter(null)}
+        >
+          {letter === "S2" ? "s" : letter.toLowerCase()}
+        </span>
+      ))}
     </span>
   );
 
@@ -81,56 +118,40 @@ export default function SaysoLogo({
       transition={{
         duration: 0.6,
         ease: [0.25, 0.46, 0.45, 0.94],
-        staggerChildren: 0.1
       }}
       className="inline-block"
     >
-      <span className={`font-sf font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
-        <motion.span
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.4, type: "spring", bounce: 0.3 }}
-          style={getLetterStyle("S")}
-          className="inline-block"
-        >
-          s
-        </motion.span>
-        <motion.span
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.4, type: "spring", bounce: 0.3 }}
-          style={getLetterStyle("A")}
-          className="inline-block"
-        >
-          a
-        </motion.span>
-        <motion.span
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.4, type: "spring", bounce: 0.3 }}
-          style={getLetterStyle("Y")}
-          className="inline-block"
-        >
-          y
-        </motion.span>
-        <motion.span
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.4, type: "spring", bounce: 0.3 }}
-          style={getLetterStyle("S2")}
-          className="inline-block"
-        >
-          s
-        </motion.span>
-        <motion.span
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.4, type: "spring", bounce: 0.3 }}
-          style={getLetterStyle("O")}
-          className="inline-block"
-        >
-          o
-        </motion.span>
+      <span className={`font-urbanist font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
+        {["S", "A", "Y", "S2", "O"].map((letter, index) => (
+          <motion.span
+            key={`${letter}-${index}`}
+            initial={{ opacity: 0, y: -20, rotateX: -90 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              rotateX: 0,
+            }}
+            transition={{
+              delay: 0.1 * (index + 1),
+              duration: 0.5,
+              type: "spring",
+              bounce: 0.4,
+              stiffness: 200,
+              damping: 15
+            }}
+            whileHover={interactive ? {
+              y: -4,
+              scale: 1.1,
+              transition: { duration: 0.2, type: "spring", stiffness: 400 }
+            } : undefined}
+            style={getLetterStyle(letter as keyof typeof letterColors, hoveredLetter === letter)}
+            className={interactive ? "inline-block cursor-pointer select-none" : "inline-block"}
+            onMouseEnter={() => interactive && setHoveredLetter(letter)}
+            onMouseLeave={() => interactive && setHoveredLetter(null)}
+          >
+            {letter === "S2" ? "s" : letter.toLowerCase()}
+          </motion.span>
+        ))}
       </span>
     </motion.div>
   );

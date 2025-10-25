@@ -16,9 +16,9 @@ export interface TextProps {
 }
 
 const variantStyles: Record<TextVariant, string> = {
-  h1: 'text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight',
-  h2: 'text-2xl md:text-3xl lg:text-4xl font-bold leading-tight tracking-tight',
-  h3: 'text-xl md:text-2xl lg:text-3xl font-bold leading-snug',
+  h1: 'text-lg md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight',
+  h2: 'text-lg md:text-lg lg:text-4xl font-bold leading-tight tracking-tight',
+  h3: 'text-xl md:text-lg lg:text-lg font-bold leading-snug',
   h4: 'text-lg md:text-xl font-semibold leading-snug',
   h5: 'text-base md:text-lg font-semibold leading-normal',
   h6: 'text-base font-semibold leading-normal',

@@ -32,7 +32,7 @@ export default function FloatingElements() {
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
       {/* Floating orbs */}
       <motion.div
-        className="absolute w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl"
+        className="absolute w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg"
         initial={{ x: -100, y: 100 }}
         animate={{
           x: ["-100px", "100px", "-100px"],

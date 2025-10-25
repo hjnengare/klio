@@ -7,7 +7,7 @@ export default function DebugIconsPage() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold">Icon Debug Page</h1>
+        <h1 className="text-lg font-bold">Icon Debug Page</h1>
         
         {/* Direct icon test */}
         <section className="bg-white p-6 rounded-lg shadow">
@@ -49,15 +49,15 @@ export default function DebugIconsPage() {
           <div className="flex gap-4 flex-wrap">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm border border-white/60 backdrop-blur-sm">
               <Zap className="w-3.5 h-3.5 text-sage flex-shrink-0" fill="currentColor" />
-              <span className="font-sf text-sm font-700 text-sage whitespace-nowrap">85%</span>
+              <span className="font-urbanist text-sm font-700 text-sage whitespace-nowrap">85%</span>
             </div>
             <div className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm border border-white/60 backdrop-blur-sm">
               <Heart className="w-3.5 h-3.5 text-sage flex-shrink-0" fill="currentColor" />
-              <span className="font-sf text-sm font-700 text-sage whitespace-nowrap">92%</span>
+              <span className="font-urbanist text-sm font-700 text-sage whitespace-nowrap">92%</span>
             </div>
             <div className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-sm border border-white/60 backdrop-blur-sm">
               <Star className="w-3.5 h-3.5 text-sage flex-shrink-0" fill="currentColor" />
-              <span className="font-sf text-sm font-700 text-sage whitespace-nowrap">78%</span>
+              <span className="font-urbanist text-sm font-700 text-sage whitespace-nowrap">78%</span>
             </div>
           </div>
         </section>

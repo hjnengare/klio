@@ -29,19 +29,19 @@ export default function TopReviewers({
     <section className="py-8 bg-off-white  relative" aria-label="top reviewers" data-section>
       {/* Subtle section decoration */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-10 left-20 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-2xl" />
+        <div className="absolute top-10 left-20 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg" />
         <div className="absolute bottom-20 right-10 w-24 h-24 bg-gradient-to-br from-coral/8 to-transparent rounded-full blur-xl" />
       </div>
       
       <div className="container mx-auto max-w-[1300px] px-4 relative z-10">
         <div className="mb-12 flex flex-wrap items-center justify-between gap-[18px]">
-          <h2 className="font-sf text-3xl font-800 text-charcoal relative">
+          <h2 className="font-urbanist text-lg font-800 text-charcoal relative">
             {title}
           
           </h2>
           <button
             onClick={handleSeeMore}
-            className="group font-sf font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base flex items-center gap-1"
+            className="group font-urbanist font-700 text-charcoal/70 transition-all duration-300 hover:text-sage text-base flex items-center gap-1"
           >
             <span className="transition-transform duration-300 group-hover:translate-x-[-2px]">
               {cta}

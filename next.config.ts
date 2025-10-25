@@ -92,6 +92,10 @@ const nextConfig: NextConfig = {
     },
     // Enable PPR for better performance
     ppr: false, // Set to true when ready for Partial Prerendering
+    // Enable faster page transitions
+    scrollRestoration: true,
+    // Optimize bundle size
+    bundlePagesRouterDependencies: true,
   },
 
   // Turbopack configuration (moved from experimental)

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Trophy } from "lucide-react";
 
 export default function LeaderboardTitle() {
   return (
@@ -8,12 +9,15 @@ export default function LeaderboardTitle() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 15, delay: 0.15 }}
-      className="text-center mb-8 sm:mb-12 pt-12"
+      className="mb-8 text-center"
     >
-      <h2 className="font-sf text-lg sm:text-xl md:text-2xl font-700 text-charcoal mb-2 sm:mb-4 px-4">
+      <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-white/30">
+        <Trophy className="w-7 h-7 text-charcoal" />
+      </div>
+      <h2 className="font-urbanist text-xl font-600 text-charcoal mb-2">
         Top Contributors This Month
       </h2>
-      <p className="font-sf text-sm sm:text-base font-400 text-charcoal/70 max-w-2xl mx-auto px-4">
+      <p className="font-urbanist text-charcoal/70 text-sm max-w-md mx-auto">
         Celebrating our community&apos;s most valued reviewers and featured businesses
       </p>
     </motion.div>
