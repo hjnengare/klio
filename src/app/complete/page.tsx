@@ -98,7 +98,7 @@ function CompletePageContent() {
         >
           {/* Heading */}
           <h1
-            className="text-lg md:text-5xl lg:text-6xl font-bold text-charcoal mb-4 tracking-tight leading-snug"
+            className="text-lg md:text-4xl lg:text-5xl font-bold text-charcoal mb-4 tracking-tight leading-snug"
             aria-live="polite"
           >
             You&apos;re all set!

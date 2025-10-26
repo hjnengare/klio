@@ -24,6 +24,9 @@ export function UsernameInput({
 
   return (
     <div>
+      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+        Username
+      </label>
       <div className="relative group">
         <div className={`absolute left-4 sm:left-5 top-1/2 transform -translate-y-1/2 transition-colors duration-300 z-10 ${
           hasError ? 'text-red-500' :
@@ -40,10 +43,10 @@ export function UsernameInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
-          className={`w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile ${
+          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
             hasError ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' :
             isValid ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-            'border-light-gray/50 focus:ring-sage/30 focus:border-sage focus:bg-off-white'
+            'border-white/60 focus:ring-sage/30 focus:border-sage'
           }`}
           disabled={disabled}
         />
