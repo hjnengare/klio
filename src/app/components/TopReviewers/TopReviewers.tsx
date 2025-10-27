@@ -50,17 +50,16 @@ export default function TopReviewers({
           </button>
         </div>
 
-        <ScrollableSection className="gap-6 -mb-6">
-          <ul className="flex snap-x gap-6">
+        <div className="overflow-x-auto -mb-6">
+          <ul className="flex gap-3 pb-4 sm:pb-5 md:pb-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {reviewers.map((reviewer) => (
-              <div key={reviewer.id}>
-                <ReviewerCard
-                  reviewer={reviewer}
-                />
-              </div>
+              <ReviewerCard
+                key={reviewer.id}
+                reviewer={reviewer}
+              />
             ))}
           </ul>
-        </ScrollableSection>
+        </div>
       </div>
     </section>
   );

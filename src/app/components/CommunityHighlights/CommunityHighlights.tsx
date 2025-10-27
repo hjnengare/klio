@@ -27,7 +27,7 @@ export default function CommunityHighlights({
   reviews,
   topReviewers,
   businessesOfTheMonth,
-  cta = "See Leaderboard",
+  cta = "See More",
   href = "/leaderboard",
   variant = "reviews",
 }: CommunityHighlightsProps) {

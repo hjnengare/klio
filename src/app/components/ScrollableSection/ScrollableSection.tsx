@@ -58,7 +58,9 @@ export default function ScrollableSection({
   const scrollRight = () => {
     if (!scrollRef.current) return;
     const container = scrollRef.current;
-    const cardWidth = container.clientWidth * 0.25; // Match the card min-width (25% on sm+)
+    // On mobile: scroll by 2 cards (50vw each), on larger screens: scroll by 1 card (25% width)
+    const isMobile = window.innerWidth < 640; // sm breakpoint
+    const cardWidth = isMobile ? container.clientWidth * 0.5 : container.clientWidth * 0.25;
     const gap = 12; // 3 * 4px (gap-3)
     const scrollAmount = cardWidth + gap;
     container.scrollLeft += scrollAmount;
@@ -67,7 +69,9 @@ export default function ScrollableSection({
   const scrollLeft = () => {
     if (!scrollRef.current) return;
     const container = scrollRef.current;
-    const cardWidth = container.clientWidth * 0.25; // Match the card min-width (25% on sm+)
+    // On mobile: scroll by 2 cards (50vw each), on larger screens: scroll by 1 card (25% width)
+    const isMobile = window.innerWidth < 640; // sm breakpoint
+    const cardWidth = isMobile ? container.clientWidth * 0.5 : container.clientWidth * 0.25;
     const gap = 12; // 3 * 4px (gap-3)
     const scrollAmount = cardWidth + gap;
     container.scrollLeft -= scrollAmount;
@@ -77,7 +81,7 @@ export default function ScrollableSection({
     <div className="relative overflow-hidden">
       <div
         ref={scrollRef}
-        className={`horizontal-scroll flex gap-3 overflow-x-auto pb-4 sm:pb-5 md:pb-6 snap-x snap-mandatory ${className}`}
+        className={`horizontal-scroll flex gap-3 overflow-x-auto pb-4 sm:pb-5 md:pb-6 snap-x snap-mandatory sm:snap-mandatory ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',

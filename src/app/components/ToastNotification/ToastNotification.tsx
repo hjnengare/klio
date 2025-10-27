@@ -50,12 +50,12 @@ export default function ToastNotification({
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 100, scale: 0.8 }}
       transition={{ type: "spring", damping: 25, stiffness: 300 }}
-      className="notification-toast relative bg-white rounded-lg shadow-lg overflow-hidden w-80 max-w-[calc(100vw-2rem)]"
+      className="notification-toast relative bg-page-bg backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 shadow-lg overflow-hidden w-80 max-w-[calc(100vw-2rem)]"
     >
       {/* Progress bar */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-sage/10">
         <motion.div
-          className="h-full bg-sage"
+          className="h-full bg-gradient-to-r from-sage to-sage/90"
           style={{ width: `${progress}%` }}
           transition={{ duration: 0.05 }}
         />
@@ -65,20 +65,20 @@ export default function ToastNotification({
         {/* Close button */}
         <button
           onClick={onClose}
-          className="toast-close-btn absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-charcoal/10 transition-colors z-10"
+          className="toast-close-btn absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-gradient-to-br from-charcoal to-charcoal/90 text-white hover:scale-110 transition-all duration-200 border border-white/30 shadow-sm z-10"
           aria-label="Close notification"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="14"
+            height="14"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-charcoal/60"
+            className="text-white"
           >
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -86,7 +86,7 @@ export default function ToastNotification({
         </button>
 
         {/* Image banner */}
-        <div className="toast-banner flex-shrink-0 relative w-20 h-20 rounded-lg overflow-hidden bg-sage/10">
+        <div className="toast-banner flex-shrink-0 relative w-20 h-20 rounded-lg overflow-hidden bg-white/20 border border-white/50">
           <Image
             src={notification.image}
             alt={notification.imageAlt}
@@ -99,15 +99,15 @@ export default function ToastNotification({
 
         {/* Details */}
         <div className="toast-detail flex-1 min-w-0">
-          <p className="toast-message font-urbanist text-6 font-400 text-charcoal/60 mb-1">
+          <p className="toast-message font-urbanist text-xs font-600 text-charcoal/70 mb-1">
             {notification.message}
           </p>
 
-          <p className="toast-title font-urbanist text-5 font-600 text-charcoal line-clamp-2 mb-1">
+          <p className="toast-title font-urbanist text-sm font-600 text-charcoal line-clamp-2 mb-1">
             {notification.title}
           </p>
 
-          <p className="toast-meta font-urbanist text-7 font-400 text-charcoal/50">
+          <p className="toast-meta font-urbanist text-xs text-charcoal/60">
             <time>{notification.timeAgo}</time> ago
           </p>
         </div>

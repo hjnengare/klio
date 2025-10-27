@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
-import { User, X, Search } from "lucide-react";
+import { User, X, Search, ChevronDown, Store, LogIn } from "lucide-react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { useSavedItems } from "../../contexts/SavedItemsContext";
@@ -27,6 +27,7 @@ export default function Header({
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isSaysoDropdownOpen, setIsSaysoDropdownOpen] = useState(false);
   const { savedCount } = useSavedItems();
 
   // Anchor for the dropdown FilterModal to hang under
@@ -72,6 +73,23 @@ export default function Header({
     };
   }, [lastScrollY]);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isSaysoDropdownOpen) {
+        const target = event.target as HTMLElement;
+        if (!target.closest('.sayso-dropdown')) {
+          setIsSaysoDropdownOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSaysoDropdownOpen]);
+
   const openFilters = () => {
     if (isFilterVisible) return;
     setIsFilterVisible(true);
@@ -115,7 +133,7 @@ export default function Header({
 
             {/* Desktop nav - centered */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 flex-1 justify-center">
-              {["home", "saved", "leaderboard", "claim-business"].map((route) => (
+              {["home", "saved", "leaderboard"].map((route) => (
                 <OptimizedLink
                   key={route}
                   href={`/${route}`}
@@ -124,7 +142,7 @@ export default function Header({
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative z-10">{route}</span>
+                  <span className="relative z-10">{route.charAt(0).toUpperCase() + route.slice(1)}</span>
                   {route === "saved" && savedCount > 0 && (
                     <div className="absolute -top-1 -right-1 bg-sage text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-lg z-20">
                       {savedCount > 99 ? "99+" : savedCount}
@@ -132,6 +150,73 @@ export default function Header({
                   )}
                 </OptimizedLink>
               ))}
+
+              {/* For Businesses Dropdown */}
+              <div className="relative sayso-dropdown" key="for-businesses-dropdown">
+                <button
+                  onClick={() => setIsSaysoDropdownOpen(!isSaysoDropdownOpen)}
+                  className="group capitalize px-3 lg:px-4 py-2 rounded-full text-xs font-bold text-white hover:text-white transition-all duration-300 relative flex items-center gap-1"
+                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative z-10 whitespace-nowrap">For Businesses</span>
+                  <ChevronDown className={`relative z-10 w-3 h-3 transition-transform duration-200 ${isSaysoDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Dropdown Menu */}
+                {isSaysoDropdownOpen && (
+                  <div className="absolute top-full left-0 mt-3 w-[350px] bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/50 rounded-2xl ring-1 ring-white/20 shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                    {/* Decorative gradient blur */}
+                    <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/20 to-transparent rounded-full blur-2xl" />
+                    <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-coral/20 to-transparent rounded-full blur-2xl" />
+
+                    <div className="relative py-3 px-2">
+                      <OptimizedLink
+                        href="/business/login"
+                        onClick={() => setIsSaysoDropdownOpen(false)}
+                        className="flex items-center gap-4 px-4 py-3.5 mx-2 text-sm font-600 font-urbanist text-charcoal hover:bg-white/60 transition-all duration-200 group relative rounded-xl"
+                      >
+                        <div className="w-11 h-11 bg-gradient-to-br from-sage/20 to-sage/10 rounded-xl flex items-center justify-center group-hover:from-sage/30 group-hover:to-sage/20 transition-all duration-200 shadow-sm">
+                          <LogIn className="w-5 h-5 text-sage" strokeWidth={2} />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-600 text-charcoal">Business Login</div>
+                          <div className="text-xs text-charcoal/60 mt-0.5">Access your account</div>
+                        </div>
+                      </OptimizedLink>
+
+                      <OptimizedLink
+                        href="/claim-business"
+                        onClick={() => setIsSaysoDropdownOpen(false)}
+                        className="flex items-center gap-4 px-4 py-3.5 mx-2 text-sm font-600 font-urbanist text-charcoal hover:bg-white/60 transition-all duration-200 group relative rounded-xl"
+                      >
+                        <div className="w-11 h-11 bg-gradient-to-br from-coral/20 to-coral/10 rounded-xl flex items-center justify-center group-hover:from-coral/30 group-hover:to-coral/20 transition-all duration-200 shadow-sm">
+                          <Store className="w-5 h-5 text-coral" strokeWidth={2} />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-600 text-charcoal">Claim Business</div>
+                          <div className="text-xs text-charcoal/60 mt-0.5">Add your business</div>
+                        </div>
+                      </OptimizedLink>
+
+                      <OptimizedLink
+                        href="/manage-business"
+                        onClick={() => setIsSaysoDropdownOpen(false)}
+                        className="flex items-center gap-4 px-4 py-3.5 mx-2 text-sm font-600 font-urbanist text-charcoal hover:bg-white/60 transition-all duration-200 group relative rounded-xl"
+                      >
+                        <div className="w-11 h-11 bg-gradient-to-br from-sage/20 to-sage/10 rounded-xl flex items-center justify-center group-hover:from-sage/30 group-hover:to-sage/20 transition-all duration-200 shadow-sm">
+                          <Store className="w-5 h-5 text-sage" strokeWidth={2} />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-600 text-charcoal">Manage Business</div>
+                          <div className="text-xs text-charcoal/60 mt-0.5">Update your listing</div>
+                        </div>
+                      </OptimizedLink>
+                    </div>
+                  </div>
+                )}
+              </div>
             </nav>
 
             {/* Right side */}
@@ -254,6 +339,52 @@ export default function Header({
                 </span>
               </OptimizedLink>
             ))}
+            
+            {/* For Businesses Section */}
+            <div className="px-4 py-2" key="for-businesses-mobile">
+              <div className="font-urbanist text-xs font-600 text-charcoal/60 uppercase tracking-wider mb-3 px-2">For Businesses</div>
+              <div className="space-y-2">
+                <OptimizedLink
+                  href="/business/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-sm font-600 font-urbanist text-charcoal hover:text-charcoal hover:bg-white/60 transition-all duration-200 group"
+                >
+                  <div className="w-11 h-11 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:from-sage/30 group-hover:to-sage/20 transition-all duration-200 shadow-sm">
+                    <LogIn className="w-5 h-5 text-sage" strokeWidth={2} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-600 text-charcoal">Business Login</div>
+                    <div className="text-xs text-charcoal/60 mt-0.5">Access your account</div>
+                  </div>
+                </OptimizedLink>
+                <OptimizedLink
+                  href="/claim-business"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-sm font-600 font-urbanist text-charcoal hover:text-charcoal hover:bg-white/60 transition-all duration-200 group"
+                >
+                  <div className="w-11 h-11 bg-gradient-to-br from-coral/20 to-coral/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:from-coral/30 group-hover:to-coral/20 transition-all duration-200 shadow-sm">
+                    <Store className="w-5 h-5 text-coral" strokeWidth={2} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-600 text-charcoal">Claim Business</div>
+                    <div className="text-xs text-charcoal/60 mt-0.5">Add your business</div>
+                  </div>
+                </OptimizedLink>
+                <OptimizedLink
+                  href="/manage-business"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-sm font-600 font-urbanist text-charcoal hover:text-charcoal hover:bg-white/60 transition-all duration-200 group"
+                >
+                  <div className="w-11 h-11 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:from-sage/30 group-hover:to-sage/20 transition-all duration-200 shadow-sm">
+                    <Store className="w-5 h-5 text-sage" strokeWidth={2} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-600 text-charcoal">Manage Business</div>
+                    <div className="text-xs text-charcoal/60 mt-0.5">Update your listing</div>
+                  </div>
+                </OptimizedLink>
+              </div>
+            </div>
             <div className="h-px bg-charcoal/10 my-4 mx-4" />
             <OptimizedLink
               href="/profile"

@@ -23,6 +23,12 @@ export default function EventsSpecials({
   if (!events || events.length === 0) return null;
 
   return (
+    <>
+      {/* Google Fonts for Lobster Two */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+
     <section
       className="relative"
       aria-label={title}
@@ -35,7 +41,10 @@ export default function EventsSpecials({
 
       <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10 pt-1 pb-0">
         <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
-          <h2 className="font-urbanist text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
+          <h2
+            className="text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default"
+            style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+          >
             {title}
           </h2>
 
@@ -64,5 +73,6 @@ export default function EventsSpecials({
         </ScrollableSection>
       </div>
     </section>
+    </>
   );
 }

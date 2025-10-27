@@ -63,8 +63,8 @@ const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
       <form onSubmit={handleSubmit} className={`${containerClass} ${className}`} ref={ref}>
         <div className="relative">
           {/* left icon */}
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Search className="w-4 h-4 text-charcoal/60" />
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
+            <Search className="w-5 h-5 text-charcoal" strokeWidth={2} />
           </div>
 
           {/* right icon (filters) */}

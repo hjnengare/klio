@@ -23,9 +23,9 @@ export default function SaysoLogo({
 
   // Size mappings
   const sizeClasses = {
-    small: "text-xl sm:text-lg",
-    medium: "text-lg sm:text-lg md:text-4xl",
-    large: "text-lg sm:text-4xl md:text-5xl lg:text-6xl",
+    small: "text-2xl sm:text-lg",
+    medium: "text-2xl sm:text-lg md:text-4xl",
+    large: "text-2xl sm:text-4xl md:text-5xl lg:text-6xl",
     xl: "text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
   };
 
@@ -92,7 +92,7 @@ export default function SaysoLogo({
   };
 
   const logoContent = (
-    <span className={`font-urbanist font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
+    <span className={`font-lobster-two font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
       {["S", "A", "Y", "S2", "O"].map((letter, index) => (
         <span
           key={`${letter}-${index}`}
@@ -121,7 +121,7 @@ export default function SaysoLogo({
       }}
       className="inline-block"
     >
-      <span className={`font-urbanist font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
+      <span className={`font-lobster-two font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
         {["S", "A", "Y", "S2", "O"].map((letter, index) => (
           <motion.span
             key={`${letter}-${index}`}

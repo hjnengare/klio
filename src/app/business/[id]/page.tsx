@@ -123,7 +123,6 @@ export default function BusinessProfilePage() {
                     '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
             }}
         >
-
             {/* Fixed Premium Header */}
             <header className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
                 style={{
@@ -143,8 +142,27 @@ export default function BusinessProfilePage() {
                         {business.name}
                     </h1>
 
-                    {/* Profile Picture Placeholder */}
-                    <div>
+                    <div className="flex items-center gap-3">
+                        {/* Edit Button */}
+                        <Link
+                            href={`/business/${businessId}/edit`}
+                            className="bg-sage/20 hover:bg-sage/30 text-white px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-2 border border-sage/30"
+                        >
+                            <Pencil className="w-3 h-3" />
+                            Edit
+                        </Link>
+                        
+                        {/* Manage Button */}
+                        <Link
+                            href="/manage-business"
+                            className="bg-coral/20 hover:bg-coral/30 text-white px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-2 border border-coral/30"
+                        >
+                            <Store className="w-3 h-3" />
+                            Manage
+                        </Link>
+
+                        {/* Profile Picture Placeholder */}
+                        <div>
                         {business.image && business.image.startsWith("/images/") ? (
                             <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sage/20 bg-gradient-to-br from-sage/20 to-coral/20 flex items-center justify-center">
                                 <Store className="w-5 h-5 text-sage" />
@@ -164,11 +182,11 @@ export default function BusinessProfilePage() {
                                 />
                             </div>
                         )}
-                    </div>
+                        </div>
                     </div>
                 </div>
+                </div>
             </header>
-
             <div className="max-w-6xl mx-auto px-4 py-6 pt-32 relative z-10">
                 {/* Full width layout */}
                 <div className="space-y-6">
@@ -214,7 +232,7 @@ export default function BusinessProfilePage() {
                                             Specials & Events
                                         </h3>
 
-                                        <div className="grid grid-cols-1 gap-4">
+                                        <div className="grid grid-cols-2 sm:grid-cols-1 gap-4">
                                             {business.specials.map((special) => {
                                                 const Icon = special.icon === "pizza" ? Pizza : Music;
                                                 return (

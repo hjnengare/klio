@@ -14,17 +14,17 @@ interface EventBannerProps {
   endDate?: string;
 }
 
-export default function EventBanner({ 
-  image, 
-  alt, 
-  icon, 
-  title, 
-  rating, 
-  startDate, 
-  endDate 
+export default function EventBanner({
+  image,
+  alt,
+  icon,
+  title,
+  rating,
+  startDate,
+  endDate
 }: EventBannerProps) {
   return (
-    <div className="relative overflow-hidden rounded-t-9px h-[180px]">
+    <div className="relative overflow-hidden rounded-t-9px h-[540px] md:h-[180px]">
       {/* Image or Icon placeholder */}
       {image ? (
         <Image

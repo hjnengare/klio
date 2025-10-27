@@ -23,7 +23,7 @@ export default function OptimizedLink({
 }: OptimizedLinkProps) {
   const router = useRouter();
   const linkRef = useRef<HTMLAnchorElement>(null);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout>();
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   // Prefetch on hover with debouncing
   const handleMouseEnter = useCallback(() => {

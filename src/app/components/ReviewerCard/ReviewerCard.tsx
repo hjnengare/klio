@@ -39,50 +39,16 @@ export default function ReviewerCard({
     () => `reviewer-${reviewerData?.id}`,
     [reviewerData?.id]
   );
-  const [showActions, setShowActions] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
   const [imgError, setImgError] = useState(false);
-
-  // Check if we're on desktop after component mounts
-  useEffect(() => {
-    const checkIsDesktop = () => {
-      setIsDesktop(window.innerWidth >= 640);
-    };
-
-    checkIsDesktop();
-    window.addEventListener("resize", checkIsDesktop);
-
-    return () => window.removeEventListener("resize", checkIsDesktop);
-  }, []);
-
-  // Handle click outside to close actions on mobile
-  useEffect(() => {
-    if (!isDesktop && showActions) {
-      const handleClickOutside = (e: MouseEvent) => {
-        const target = e.target as HTMLElement;
-        if (!target.closest(`#${idForSnap}`)) {
-          setShowActions(false);
-        }
-      };
-
-      document.addEventListener("click", handleClickOutside);
-      return () => document.removeEventListener("click", handleClickOutside);
-    }
-  }, [showActions, isDesktop, idForSnap]);
-
-  const toggleActions = () => {
-    if (!isDesktop) setShowActions(!showActions);
-  };
 
   if (variant === "reviewer" || reviewer) {
     return (
       <div
         id={idForSnap}
-        className="snap-start snap-always w-[100vw] sm:w-[187px] flex-shrink-0"
+        className="snap-start snap-always w-[calc(50vw-1rem)] sm:w-[187px] flex-shrink-0"
       >
         <div
           className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden group cursor-pointer h-[133px] relative border border-white/50 backdrop-blur-md ring-1 ring-white/20"
-          onClick={toggleActions}
         >
           {/* Content */}
           <div className="relative z-10 p-2 h-full flex flex-col">
@@ -201,32 +167,23 @@ export default function ReviewerCard({
                 )}
               </div>
 
-              {/* Card Actions - simplified */}
-              <div
-                className={`flex gap-1 transition-all duration-300 ease-out
-                ${
-                  isDesktop
-                    ? "opacity-0 group-hover:opacity-100"
-                    : showActions
-                    ? "opacity-100"
-                    : "opacity-0"
-                }`}
-              >
+              {/* Card Actions - always visible on mobile, slide-in on desktop */}
+              <div className="flex gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
                 <button
-                  className="w-6 h-6 bg-card-bg/90  rounded-full flex items-center justify-center hover:bg-card-bg hover:scale-110 transition-all duration-200"
+                  className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 border border-white/60 ring-1 ring-white/30 shadow-sm"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Follow"
                   title="Follow"
                 >
-                  <UserPlus className="text-primary" size={12} />
+                  <UserPlus className="text-primary w-3 h-3 md:w-4 md:h-4" />
                 </button>
                 <button
-                  className="w-6 h-6 bg-card-bg/90  rounded-full flex items-center justify-center hover:bg-card-bg hover:scale-110 transition-all duration-200"
+                  className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 border border-white/60 ring-1 ring-white/30 shadow-sm"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Message"
                   title="Message"
                 >
-                  <MessageCircle className="text-primary" size={12} />
+                  <MessageCircle className="text-primary w-3 h-3 md:w-4 md:h-4" />
                 </button>
               </div>
             </div>
@@ -238,10 +195,9 @@ export default function ReviewerCard({
 
   // --- REVIEW CARD VARIANT ---
   return (
-    <li className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[213px] flex-shrink-0">
+    <li className="w-[calc(50vw-12px)] sm:w-auto sm:min-w-[213px] flex-shrink-0">
       <div
         className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/50 backdrop-blur-md ring-1 ring-white/20"
-        onClick={toggleActions}
       >
         <div className="flex items-start gap-1.5 mb-2 p-2">
           <div className="relative">
@@ -269,40 +225,31 @@ export default function ReviewerCard({
             />
           </div>
 
-          {/* Card Actions - mobile: show on click, desktop: show on hover */}
-          <div
-            className={`absolute right-4 top-4 z-20 flex-col gap-2 transition-all duration-300 ease-out
-            ${
-              isDesktop
-                ? "hidden sm:flex translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
-                : showActions
-                ? "flex translate-x-0 opacity-100"
-                : "flex translate-x-12 opacity-0 pointer-events-none"
-            }`}
-          >
+          {/* Card Actions - always visible on mobile, slide-in on desktop */}
+          <div className="absolute right-2 top-2 md:right-2 md:top-1/2 md:-translate-y-1/2 z-20 flex flex-row md:flex-col gap-1 md:gap-2 transition-all duration-300 ease-out md:translate-x-12 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
             <button
-              className="w-6 h-6 bg-card-bg/90 rounded-full flex items-center justify-center hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 border border-white/60 ring-1 ring-white/30 shadow-sm"
               onClick={(e) => e.stopPropagation()}
               aria-label="Follow"
               title="Follow"
             >
-              <UserPlus className="text-primary" size={12} />
+              <UserPlus className="text-primary w-3 h-3 md:w-4 md:h-4" />
             </button>
             <button
-              className="w-6 h-6 bg-card-bg/90 rounded-full flex items-center justify-center hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 border border-white/60 ring-1 ring-white/30 shadow-sm"
               onClick={(e) => e.stopPropagation()}
               aria-label="Message"
               title="Message"
             >
-              <MessageCircle className="text-primary" size={12} />
+              <MessageCircle className="text-primary w-3 h-3 md:w-4 md:h-4" />
             </button>
             <button
-              className="w-6 h-6 bg-card-bg/90 rounded-full flex items-center justify-center hover:bg-card-bg hover:scale-110 transition-all duration-200 border border-gray-100"
+              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 border border-white/60 ring-1 ring-white/30 shadow-sm"
               onClick={(e) => e.stopPropagation()}
               aria-label="Share"
               title="Share"
             >
-              <Share2 className="text-primary" size={12} />
+              <Share2 className="text-primary w-3 h-3 md:w-4 md:h-4" />
             </button>
           </div>
         </div>

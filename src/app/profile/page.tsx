@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
-import { ArrowLeft, Star as StarIcon, Trophy, Calendar, Settings, Bell, Lock, LogOut, Upload, X } from "lucide-react";
+import { ArrowLeft, Star as StarIcon, Trophy, Calendar, Settings, Bell, Lock, LogOut, Upload, X, Store } from "lucide-react";
 import { getBrowserSupabase } from "../lib/supabase/client";
 
 // Import components directly for faster loading
@@ -343,6 +343,26 @@ function ProfileContent() {
 
                 {/* Stats Overview */}
                 <ProfileStatsSection stats={stats} title="Stats Overview" />
+
+                {/* Business Management */}
+                <div className="p-6 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 mb-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-600 text-charcoal flex items-center gap-3">
+                      <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
+                        <Store className="w-4 h-4 text-sage" />
+                      </span>
+                      Business Management
+                    </h3>
+                  </div>
+                  <p className="text-sm text-charcoal/70 mb-4">Manage your business profiles, respond to reviews, and track performance.</p>
+                  <Link
+                    href="/manage-business"
+                    className="bg-sage hover:bg-sage/90 text-white px-4 py-2 rounded-full text-sm font-600 transition-all duration-300 flex items-center gap-2 w-fit"
+                  >
+                    <Store className="w-4 h-4" />
+                    Manage Businesses
+                  </Link>
+                </div>
 
                 {/* Your Contributions */}
                 <ReviewsList

@@ -5,3 +5,4 @@ export * from './Text';
 export * from './Icon';
 export * from './Avatar';
 export * from './Badge';
+export * from './Tabs';

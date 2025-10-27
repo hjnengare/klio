@@ -60,6 +60,12 @@ module.exports = {
 
         // Instagram blue for verified badge
         'blue-500': '#3b82f6',
+        
+        // Brand colors
+        sage: '#7D9B76', // Primary brand color
+        coral: '#E07A5F', // Secondary brand color
+        charcoal: '#2D2D2D', // Dark text color
+        'off-white': '#F5F5F5', // Light background color
 
         // Text colors for proper contrast
         'text-primary': '#2D2D2D', // Dark text for light backgrounds
@@ -79,6 +85,7 @@ module.exports = {
       },
       fontFamily: {
         urbanist: ['Urbanist', 'sans-serif'],
+        italianno: ['Italianno', 'cursive'],
       },
       fontSize: {
         // Legacy numbered scale (for gradual migration)
@@ -119,6 +126,10 @@ module.exports = {
       boxShadow: {
         1: '0 8px 16px hsla(0, 0%, 0%, 0.15)',
         2: '0 4px 10px hsla(0, 0%, 0%, 0.05)',
+        '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        '3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.3)',
+        'sage': '0 10px 40px rgba(125, 155, 118, 0.3)',
+        'sage-lg': '0 20px 60px rgba(125, 155, 118, 0.4)',
       },
       borderRadius: {
         3: '3px',

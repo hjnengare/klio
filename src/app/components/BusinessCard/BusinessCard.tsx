@@ -4,7 +4,7 @@
 import React, { useMemo, useState, useEffect, memo } from "react";
 // Removed framer-motion for performance
 import { useRouter } from "next/navigation";
-import { ImageOff, Star, Edit, Heart, Share2, MapPin } from "lucide-react";
+import { ImageOff, Star, Edit, Heart, Share2, MapPin, Bookmark } from "lucide-react";
 import Stars from "../Stars/Stars";
 import PercentileChip from "../PercentileChip/PercentileChip";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
@@ -50,39 +50,14 @@ function BusinessCard({
   const { toggleSavedItem, isItemSaved } = useSavedItems();
   const idForSnap = useMemo(() => `business-${business.id}`, [business.id]);
 
-  const [showActions, setShowActions] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
   const [imgError, setImgError] = useState(false);
 
   // Preload the review route
   const reviewRoute = useMemo(() => `/business/review`, []);
 
   useEffect(() => {
-    const checkIsDesktop = () => setIsDesktop(window.innerWidth >= 640);
-    checkIsDesktop();
-    window.addEventListener("resize", checkIsDesktop);
-
     router.prefetch(reviewRoute);
-
-    return () => window.removeEventListener("resize", checkIsDesktop);
   }, [router, reviewRoute]);
-
-  useEffect(() => {
-    if (!isDesktop && showActions) {
-      const handleClickOutside = (e: MouseEvent) => {
-        const target = e.target as HTMLElement;
-        if (!target.closest(`#${idForSnap}`)) {
-          setShowActions(false);
-        }
-      };
-      document.addEventListener("click", handleClickOutside);
-      return () => document.removeEventListener("click", handleClickOutside);
-    }
-  }, [showActions, isDesktop, idForSnap]);
-
-  const toggleActions = () => {
-    if (!isDesktop) setShowActions((s) => !s);
-  };
 
   const handleCardClick = () => {
     router.push(`/business/${business.id}`);
@@ -113,34 +88,31 @@ function BusinessCard({
           '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
-      <div
-        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden group cursor-pointer h-[400px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20"
-        style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
-      >
+        <div
+          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden group cursor-pointer w-full md:w-auto h-[720px] md:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20"
+          style={{
+            "--width": "540",
+            "--height": "720",
+            maxWidth: "540px"
+          } as React.CSSProperties}
+        >
         {/* MEDIA */}
         <div
-          className="relative overflow-hidden rounded-t-lg flex-1 sm:flex-initial z-10"
-          onClick={(e) => {
-            // On mobile: toggle actions. Desktop: navigate to profile
-            if (!isDesktop) {
-              toggleActions();
-            } else {
-              handleCardClick();
-            }
-          }}
+          className="relative overflow-hidden rounded-t-lg flex-[2] md:flex-initial z-10 cursor-pointer"
+          onClick={handleCardClick}
         >
-          <div className="relative h-full">
+          <div className="relative w-full h-[540px] md:h-[220px]">
             {!imgError ? (
               displayImage?.endsWith('.png') ? (
                 // Display PNG files as icons with page background
-                <div className="h-[320px] md:h-[220px] w-full flex items-center justify-center bg-off-white/90 rounded-t-lg">
+                <div className="w-full h-[540px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-lg">
                   <OptimizedImage
                     src={displayImage}
                     alt={displayAlt}
-                    width={120}
-                    height={120}
-                    sizes="120px"
-                    className="w-32 h-32 object-contain"
+                    width={540}
+                    height={720}
+                    sizes="(max-width: 768px) 540px, 320px"
+                    className="w-32 h-32 md:w-32 md:h-32 object-contain"
                     priority={false}
                     quality={85}
                     onError={() => setImgError(true)}
@@ -151,17 +123,17 @@ function BusinessCard({
                 <OptimizedImage
                   src={displayImage}
                   alt={displayAlt}
-                  width={320}
-                  height={320}
-                  sizes="320px"
-                  className="w-full h-[320px] md:h-[220px] object-cover rounded-t-lg"
+                  width={540}
+                  height={720}
+                  sizes="(max-width: 768px) 540px, 320px"
+                  className="w-full h-[540px] md:h-[220px] object-cover rounded-t-lg"
                   priority={false}
                   quality={85}
                   onError={() => setImgError(true)}
                 />
               )
             ) : (
-              <div className="h-[320px] md:h-[220px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-lg">
+              <div className="w-full h-[540px] md:h-[220px] flex items-center justify-center bg-sage/10 text-sage rounded-t-lg">
                 <ImageOff className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-sage/70" />
               </div>
             )}
@@ -186,19 +158,12 @@ function BusinessCard({
             </span>
           )}
 
-          {/* actions */}
+          {/* actions - desktop only (slide-in on hover) */}
           <div
-            className={`absolute right-2 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-2 transition-all duration-300 ease-out
-              ${
-                isDesktop
-                  ? "hidden sm:flex translate-x-12 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100"
-                  : showActions
-                  ? "flex translate-x-0 opacity-100"
-                  : "flex translate-x-12 opacity-0 pointer-events-none"
-              }`}
+            className="hidden md:flex absolute pt-2 right-2 top-1/2 -translate-y-1/2 z-20 flex-col gap-2 transition-all duration-300 ease-out translate-x-12 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100"
           >
             <button
-              className="w-10 h-10 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30"
+              className="w-10 h-10 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 hover:bg-white transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 handleWriteReview();
@@ -209,7 +174,7 @@ function BusinessCard({
               <Edit className="w-4 h-4 text-primary" />
             </button>
             <button
-              className="w-10 h-10 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30"
+              className="w-10 h-10 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 hover:bg-white transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 handleBookmark();
@@ -217,12 +182,12 @@ function BusinessCard({
               aria-label={`${isItemSaved(business.id) ? 'Remove from saved' : 'Save'} ${business.name}`}
               title={isItemSaved(business.id) ? 'Remove from saved' : 'Save'}
             >
-              <Heart 
-                className={`w-4 h-4 ${isItemSaved(business.id) ? 'text-red-500 fill-red-500' : 'text-primary'}`} 
+              <Bookmark
+                className={`w-4 h-4 ${isItemSaved(business.id) ? 'text-sage fill-sage' : 'text-primary'}`}
               />
             </button>
             <button
-              className="w-10 h-10 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30"
+              className="w-10 h-10 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 hover:bg-white transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 handleShare();
@@ -236,14 +201,14 @@ function BusinessCard({
         </div>
 
         {/* CONTENT */}
-        <div className="px-4 pt-4 pb-6 relative flex-shrink-0 cursor-pointer z-10" onClick={handleCardClick}>
-          <div className="mb-2">
+        <div className="px-4 pt-4 pb-6 relative flex-shrink-0 z-10">
+          <div className="mb-2 cursor-pointer" onClick={handleCardClick}>
             <h3 className="text-sm font-600 text-charcoal group-hover:text-charcoal/80 transition-colors duration-300 text-center font-urbanist truncate">
               {business.name}
             </h3>
           </div>
 
-          <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 font-urbanist">
+          <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 font-urbanist cursor-pointer" onClick={handleCardClick}>
             <span>{business.category}</span>
             <span>·</span>
             <div className="flex items-center gap-1">
@@ -252,7 +217,7 @@ function BusinessCard({
             </div>
           </div>
 
-          <div className="mb-4 flex items-center justify-center gap-2">
+          <div className="mb-4 flex items-center justify-center gap-2 cursor-pointer" onClick={handleCardClick}>
             <Stars value={displayRating} color="navbar-bg" />
             <p className="text-xs font-600 leading-none text-charcoal font-urbanist">
               {business.reviews}
@@ -261,12 +226,49 @@ function BusinessCard({
           </div>
 
           {business.percentiles && (
-            <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="flex items-center justify-center gap-2 mb-4 cursor-pointer" onClick={handleCardClick}>
               <PercentileChip label="speed" value={business.percentiles.service} />
               <PercentileChip label="hospitality" value={business.percentiles.price} />
               <PercentileChip label="quality" value={business.percentiles.ambience} />
             </div>
           )}
+
+          {/* Mobile actions - always visible on card */}
+          <div className="flex md:hidden items-center justify-center gap-3 mt-3">
+            <button
+              className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-sage to-sage/90 text-white rounded-full text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 shadow-sm hover:shadow-md transition-all active:scale-95"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleWriteReview();
+              }}
+              aria-label={`Write a review for ${business.name}`}
+            >
+              <Edit className="w-3.5 h-3.5" />
+              <span>Review</span>
+            </button>
+            <button
+              className="w-9 h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 shadow-sm hover:shadow-md transition-all active:scale-95"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleBookmark();
+              }}
+              aria-label={`${isItemSaved(business.id) ? 'Remove from saved' : 'Save'} ${business.name}`}
+            >
+              <Bookmark
+                className={`w-4 h-4 ${isItemSaved(business.id) ? 'text-sage fill-sage' : 'text-charcoal'}`}
+              />
+            </button>
+            <button
+              className="w-9 h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 shadow-sm hover:shadow-md transition-all active:scale-95"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleShare();
+              }}
+              aria-label={`Share ${business.name}`}
+            >
+              <Share2 className="w-4 h-4 text-charcoal" />
+            </button>
+          </div>
         </div>
       </div>
     </li>

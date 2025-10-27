@@ -256,7 +256,7 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
       
       <section
         ref={containerRef as React.RefObject<HTMLElement>}
-        className="relative min-h-[60vh] sm:min-h-[100vh] w-full overflow-hidden outline-none"
+        className="relative min-h-[100dvh] sm:min-h-[100vh] w-full overflow-hidden outline-none"
         aria-label="Hero carousel"
         tabIndex={0}
         onMouseEnter={() => setPaused(true)}
@@ -294,30 +294,72 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
            </div>
 
            {/* Content - Text Left Aligned */}
-           <div className="absolute inset-0 z-20 flex items-center pt-20 pb-8">
+           <div className="absolute inset-0 z-20 flex items-center pt-16 pb-12">
              <div className="container mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
-               <div className="max-w-lg">
+               <div className="max-w-lg sm:max-w-lg lg:max-w-2xl xl:max-w-3xl">
                  {/* Text Content */}
                  <div className="relative">
                    <h1
-                     className="text-off-white leading-[1.1] mb-4 sm:mb-6 font-bold tracking-tight whitespace-nowrap"
+                     className="text-off-white leading-[1.1] mb-6 sm:mb-6 font-bold tracking-tight whitespace-normal lg:whitespace-nowrap"
                      style={{
                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
-                       fontSize: "clamp(2.4rem, 5vw, 6rem)",
+                       fontSize: "clamp(3.5rem, 8vw, 3rem)",
                      }}
                    >
                      {slide.title}
                    </h1>
-                   <p
-                     className="text-off-white/90 leading-relaxed"
-                     style={{
-                       fontSize: "clamp(1rem, 1.5vw, 1.25rem)",
-                       maxWidth: "60ch",
-                       textWrap: "pretty" as React.CSSProperties["textWrap"],
-                     }}
-                   >
+           <p
+             className="text-off-white/90 leading-relaxed mb-8 whitespace-normal lg:whitespace-nowrap lg:max-w-none"
+             style={{
+               fontSize: "clamp(1.25rem, 2.5vw, 1rem)",
+               maxWidth: "60ch",
+               textWrap: "pretty" as React.CSSProperties["textWrap"],
+               hyphens: "none" as React.CSSProperties["hyphens"],
+               wordBreak: "normal" as React.CSSProperties["wordBreak"],
+             }}
+           >
                      {slide.description}
                    </p>
+                   
+                   {/* Start Exploring Button */}
+                   <button
+                     className="group relative inline-flex items-center gap-3 px-10 py-3 bg-gradient-to-r from-sage via-sage/95 to-sage/90 text-white font-bold rounded-full shadow-2xl hover:shadow-3xl transition-all duration-500 hover:from-sage/95 hover:via-sage/90 hover:to-sage/85 hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/40 focus:ring-offset-2 focus:ring-offset-transparent overflow-hidden backdrop-blur-sm border border-white/20"
+                     style={{
+                       fontSize: "clamp(1.1rem, 2vw, 0.9rem)",
+                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                       letterSpacing: '0.025em',
+                     }}
+                     onClick={() => {
+                       // Scroll to the "For You" business section on the home page
+                       const forYouSection = document.querySelector('[data-section="for-you"]');
+                       if (forYouSection) {
+                         forYouSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                       } else {
+                         // Fallback: scroll to the first business row section
+                         const firstBusinessRow = document.querySelector('section[data-section]');
+                         if (firstBusinessRow) {
+                           firstBusinessRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                         } else {
+                           // Final fallback: scroll down one viewport height
+                           window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+                         }
+                       }
+                     }}
+                   >
+                     {/* Animated background shimmer effect */}
+                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+                     
+                     {/* Glow effect */}
+                     <div className="absolute inset-0 rounded-full bg-gradient-to-r from-sage/30 to-coral/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
+                     
+                     {/* Button content */}
+                     <span className="relative z-10">
+                       Start Exploring
+                     </span>
+                     
+                     {/* Subtle pulse animation */}
+                     <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 group-hover:animate-pulse" />
+                   </button>
                  </div>
                </div>
              </div>

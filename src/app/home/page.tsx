@@ -70,11 +70,11 @@ export default function Home() {
       <div className="bg-off-white">
         <div className="py-1">
             {/* No scroll-reveal wrappers; simple static rendering */}
-          <div>
+          <div data-section="for-you">
             <MemoizedBusinessRow
               title="For You"
               businesses={forYouBusinesses}
-              cta="Explore For You"
+              cta="See More"
               href="/for-you"
             />
           </div>
@@ -83,7 +83,7 @@ export default function Home() {
             <MemoizedBusinessRow
               title="Trending Now"
               businesses={trendingBusinesses}
-              cta="Explore Trending"
+              cta="See More"
               href="/trending"
             />
           </div>
