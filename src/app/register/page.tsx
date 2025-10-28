@@ -243,8 +243,8 @@ export default function RegisterPage() {
             <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
               {/* Error Message */}
               {error && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-                  <p className="font-urbanist text-[14px] font-600 text-red-600">{error}</p>
+                <div className="bg-error-50 border border-error-100 rounded-xl p-4 text-center">
+                  <p className="font-urbanist text-[14px] font-600 text-error-600">{error}</p>
                 </div>
               )}
 
@@ -350,7 +350,7 @@ export default function RegisterPage() {
                 Already have an account?{" "}
                 <Link
                   href="/login"
-                  className="text-white font-semibold hover:text-coral transition-colors duration-300 relative group underline decoration-white/50"
+                  className="text-white font-semibold hover:text-coral transition-colors duration-300 relative group"
                 >
                   Log in
                 </Link>

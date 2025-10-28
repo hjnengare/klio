@@ -20,11 +20,6 @@ export default function EventsPageHeader({
 }: EventsPageHeaderProps) {
   return (
     <>
-      {/* Google Fonts for logo and typography */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Shadows+Into+Light&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -36,9 +31,9 @@ export default function EventsPageHeader({
           <div className="flex items-center justify-between">
             {/* Back button */}
             <Link href={backHref} className="group flex items-center">
-                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-coral/20 hover:to-coral/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-coral/20 mr-2 sm:mr-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-coral/20 hover:to-coral/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-coral/20 mr-2 sm:mr-4">
                  <ArrowLeft
-                   className="text-white group-hover:text-coral transition-colors duration-300"
+                  className="text-white group-hover:text-white duration-300"
                    size={22}
                  />
                </div>
@@ -46,7 +41,7 @@ export default function EventsPageHeader({
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="font-sf text-base sm:text-xl font-700 text-white transition-all duration-300 group-hover:text-white/80 relative"
+                className="font-urbanist text-base sm:text-xl font-700 text-white transition-all duration-300 relative"
               >
                 {title}
               </motion.h1>

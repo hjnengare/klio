@@ -105,14 +105,14 @@ export class MobileViewportManager {
 
     target.style.overscrollBehavior = 'none';
     target.style.overscrollBehaviorY = 'none';
-    target.style.webkitOverflowScrolling = 'touch';
+    (target.style as any).webkitOverflowScrolling = 'touch';
   }
 
   // Enable smooth scrolling for mobile
   enableSmoothScrolling(element?: HTMLElement): void {
     const target = element || document.body;
 
-    target.style.webkitOverflowScrolling = 'touch';
+    (target.style as any).webkitOverflowScrolling = 'touch';
     target.style.scrollBehavior = 'smooth';
   }
 }

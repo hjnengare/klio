@@ -216,7 +216,7 @@ export default function ForgotPasswordPage() {
 
             {/* Footer */}
             <div className="text-center mt-4 pt-4 border-t border-light-gray/30">
-              <div className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70">
+              <div className="font-urbanist text-sm sm:text-base font-600 text-charcoal/70">
                 Remember your password?{" "}
                 <Link
                   href="/login"

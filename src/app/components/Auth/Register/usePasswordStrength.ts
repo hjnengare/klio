@@ -35,7 +35,7 @@ export function usePasswordStrength(password: string, email: string = ""): Passw
     if (hasCommonWord) {
       score = Math.max(0, score - 1);
       feedback = "Avoid common passwords";
-      color = "text-red-500";
+      color = "text-error-500";
     } else if (usesEmailName) {
       score = Math.max(0, score - 1);
       feedback = "Don't use your email name";
@@ -45,7 +45,7 @@ export function usePasswordStrength(password: string, email: string = ""): Passw
       color = "";
     } else if (score === 1) {
       feedback = "Weak - Add more requirements";
-      color = "text-red-500";
+      color = "text-error-500";
     } else if (score === 2) {
       feedback = "Fair - Getting better";
       color = "text-orange-500";

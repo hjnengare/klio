@@ -53,7 +53,7 @@ export default function FilterModal({
   const [style, setStyle] = useState<{ top: number; left: number; width: number }>({
     top: 0,
     left: 0,
-    width: 360,
+    width: 480, // Increased from 360px for more premium feel
   });
 
   const updatePosition = () => {
@@ -62,15 +62,16 @@ export default function FilterModal({
 
     const rect = anchor.getBoundingClientRect();
 
-    const gap = 8; // small space below the input
-    const leftPadding = 8;
-    const rightPadding = 8;
+    const gap = 12; // Increased gap for better visual separation
+    const leftPadding = 16; // Increased padding for better mobile experience
+    const rightPadding = 16;
 
     const left = Math.max(leftPadding, rect.left);
     const maxWidth = window.innerWidth - left - rightPadding;
 
-    // Prefer anchor width but clamp to viewport
-    const width = Math.min(rect.width, maxWidth);
+    // Use a more generous minimum width and better responsive behavior
+    const preferredWidth = Math.max(480, rect.width * 1.2); // At least 480px or 120% of anchor width
+    const width = Math.min(preferredWidth, maxWidth);
 
     // Place directly under the anchor (account for page scroll)
     const top = rect.bottom + gap;
@@ -165,51 +166,60 @@ export default function FilterModal({
         aria-modal="true"
         tabIndex={-1}
         className={`pointer-events-auto
-                    rounded-2xl overflow-hidden
-                    bg-off-white/95 backdrop-blur-xl
-                    border border-white/60 shadow-xl
-                    transition-all duration-200
-                    ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"}`}
+                    rounded-3xl overflow-hidden
+                    bg-gradient-to-br from-off-white/98 via-white/95 to-off-white/98 backdrop-blur-xl
+                    border border-white/80 shadow-2xl
+                    transition-all duration-300 ease-out
+                    ${isOpen ? "opacity-100 translate-y-0 scale-100" : "opacity-0 -translate-y-2 scale-95"}`}
         style={{
           position: "fixed",
           top: style.top,
           left: style.left,
-          width: style.width || 360,
-          maxWidth: "calc(100vw - 16px)",
-          maxHeight: "min(70vh, 560px)",
+          width: style.width || 480,
+          maxWidth: "calc(100vw - 32px)", // Increased from 16px for better mobile margins
+          maxHeight: "min(75vh, 600px)", // Increased height for more content
           outline: "none",
         }}
       >
         {/* header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 bg-off-white">
-          <div className="flex items-center gap-2">
-            <SlidersHorizontal className="w-4 h-4 text-sage" />
-            <h2 className="text-sm md:text-base font-semibold text-charcoal">Filters</h2>
+        <div className="flex items-center justify-between px-6 sm:px-8 pt-5 pb-4 border-b border-gradient-to-r from-transparent via-charcoal/10 to-transparent bg-gradient-to-r from-white/50 via-off-white/80 to-white/50">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sage/20 to-sage/10 flex items-center justify-center shadow-sm">
+              <SlidersHorizontal className="w-5 h-5 text-sage" strokeWidth={2} />
+            </div>
+            <div>
+              <h2 className="text-base md:text-lg font-bold text-charcoal font-urbanist">Advanced Filters</h2>
+              <p className="text-xs text-charcoal/60 font-urbanist">Refine your search experience</p>
+            </div>
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full border border-charcoal/10 bg-off-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="w-10 h-10 rounded-xl border border-white/60 bg-white/60 hover:bg-sage/10 hover:text-sage hover:border-sage/30 text-charcoal/70 flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30 shadow-sm hover:shadow-md"
             aria-label="Close filters"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4" strokeWidth={2} />
           </button>
         </div>
 
         {/* body */}
         <div
-          className="px-5 sm:px-6 py-4 space-y-4 overflow-y-auto"
-          style={{ maxHeight: "calc(70vh - 140px)" }}
+          className="px-6 sm:px-8 py-5 space-y-6 overflow-y-auto"
+          style={{ maxHeight: "calc(75vh - 160px)" }}
         >
           {/* Category */}
-          <section className="rounded-xl bg-white/40 backdrop-blur-sm border border-white/50 p-4 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg" />
-            <h3 className="font-urbanist text-sm font-600 text-charcoal mb-3 flex items-center gap-3 relative z-10">
-              <div className="w-8 h-8 bg-sage/10 rounded-full flex items-center justify-center">
-                <Utensils className="w-4 h-4 text-sage" />
+          <section className="rounded-2xl bg-gradient-to-br from-white/60 via-white/40 to-white/60 backdrop-blur-sm border border-white/70 p-6 relative overflow-hidden shadow-sm">
+            <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/15 to-transparent rounded-full blur-xl" />
+            <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-coral/10 to-transparent rounded-full blur-lg" />
+            <h3 className="font-urbanist text-base font-bold text-charcoal mb-4 flex items-center gap-3 relative z-10">
+              <div className="w-10 h-10 bg-gradient-to-br from-sage/20 to-sage/10 rounded-xl flex items-center justify-center shadow-sm">
+                <Utensils className="w-5 h-5 text-sage" strokeWidth={2} />
               </div>
-              Category
+              <div>
+                <div>Category</div>
+                <div className="text-xs font-normal text-charcoal/60">Choose your interests</div>
+              </div>
             </h3>
-            <div className="flex flex-wrap gap-2 relative z-10">
+            <div className="flex flex-wrap gap-3 relative z-10">
               {categoryOptions.map(({ name, Icon }) => {
                 const active = selectedCategories.includes(name);
                 return (
@@ -221,16 +231,16 @@ export default function FilterModal({
                         prev.includes(name) ? prev.filter((x) => x !== name) : [...prev, name]
                       )
                     }
-                    className={`px-4 py-2.5 rounded-full text-sm font-urbanist font-600 flex items-center gap-2 border transition-all
+                    className={`px-5 py-3 rounded-xl text-sm font-urbanist font-semibold flex items-center gap-3 border transition-all duration-200 shadow-sm
                       ${
                         active
-                          ? "bg-gradient-to-br from-sage to-sage/90 text-white border-sage shadow-md"
-                          : "bg-white/60 text-charcoal border-white/50 hover:bg-white/80 hover:border-sage/40"
+                          ? "bg-gradient-to-br from-sage to-sage/90 text-white border-sage/50 shadow-lg hover:shadow-xl"
+                          : "bg-white/70 text-charcoal border-white/60 hover:bg-white/90 hover:border-sage/40 hover:shadow-md"
                       }
                     focus:outline-none focus:ring-2 focus:ring-sage/30`}
                     aria-pressed={active}
                   >
-                    <Icon className={`w-4 h-4 ${active ? "text-white" : "text-sage"}`} />
+                    <Icon className={`w-5 h-5 ${active ? "text-white" : "text-sage"}`} strokeWidth={2} />
                     <span>{name}</span>
                   </button>
                 );
@@ -239,15 +249,19 @@ export default function FilterModal({
           </section>
 
           {/* Rating */}
-          <section className="rounded-xl bg-white/40 backdrop-blur-sm border border-white/50 p-4 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-lg" />
-            <h3 className="font-urbanist text-sm font-600 text-charcoal mb-3 flex items-center gap-3 relative z-10">
-              <div className="w-8 h-8 bg-coral/10 rounded-full flex items-center justify-center">
-                <Star className="w-4 h-4 text-coral" />
+          <section className="rounded-2xl bg-gradient-to-br from-white/60 via-white/40 to-white/60 backdrop-blur-sm border border-white/70 p-6 relative overflow-hidden shadow-sm">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-coral/15 to-transparent rounded-full blur-xl" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-sage/10 to-transparent rounded-full blur-lg" />
+            <h3 className="font-urbanist text-base font-bold text-charcoal mb-4 flex items-center gap-3 relative z-10">
+              <div className="w-10 h-10 bg-gradient-to-br from-coral/20 to-coral/10 rounded-xl flex items-center justify-center shadow-sm">
+                <Star className="w-5 h-5 text-coral" strokeWidth={2} />
               </div>
-              Minimum Rating
+              <div>
+                <div>Minimum Rating</div>
+                <div className="text-xs font-normal text-charcoal/60">Quality threshold</div>
+              </div>
             </h3>
-            <div className="flex flex-wrap gap-2 relative z-10">
+            <div className="flex flex-wrap gap-3 relative z-10">
               {[5, 4, 3, 2, 1].map((r) => {
                 const active = selectedRating === r;
                 return (
@@ -255,19 +269,19 @@ export default function FilterModal({
                     key={r}
                     type="button"
                     onClick={() => setSelectedRating(active ? null : r)}
-                    className={`px-4 py-2.5 rounded-full text-sm font-urbanist font-600 flex items-center gap-2 border transition-all
+                    className={`px-5 py-3 rounded-xl text-sm font-urbanist font-semibold flex items-center gap-3 border transition-all duration-200 shadow-sm
                       ${
                         active
-                          ? "bg-gradient-to-br from-sage to-sage/90 text-white border-sage shadow-md"
-                          : "bg-white/60 text-charcoal border-white/50 hover:bg-white/80 hover:border-sage/40"
+                          ? "bg-gradient-to-br from-coral to-coral/90 text-white border-coral/50 shadow-lg hover:shadow-xl"
+                          : "bg-white/70 text-charcoal border-white/60 hover:bg-white/90 hover:border-coral/40 hover:shadow-md"
                       }
-                    focus:outline-none focus:ring-2 focus:ring-sage/30`}
+                    focus:outline-none focus:ring-2 focus:ring-coral/30`}
                     aria-pressed={active}
                     aria-label={`${r}+ stars`}
                   >
                     <div className="flex">
                       {[...Array(r)].map((_, i) => (
-                        <Star key={i} className={`w-4 h-4 ${active ? "text-white fill-white" : "text-sage fill-sage"}`} />
+                        <Star key={i} className={`w-4 h-4 ${active ? "text-white fill-white" : "text-coral fill-coral"}`} strokeWidth={2} />
                       ))}
                     </div>
                     <span>{r}+</span>
@@ -278,15 +292,19 @@ export default function FilterModal({
           </section>
 
           {/* Distance */}
-          <section className="rounded-xl bg-white/40 backdrop-blur-sm border border-white/50 p-4 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg" />
-            <h3 className="font-urbanist text-sm font-600 text-charcoal mb-3 flex items-center gap-3 relative z-10">
-              <div className="w-8 h-8 bg-sage/10 rounded-full flex items-center justify-center">
-                <MapPin className="w-4 h-4 text-sage" />
+          <section className="rounded-2xl bg-gradient-to-br from-white/60 via-white/40 to-white/60 backdrop-blur-sm border border-white/70 p-6 relative overflow-hidden shadow-sm">
+            <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/15 to-transparent rounded-full blur-xl" />
+            <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-coral/10 to-transparent rounded-full blur-lg" />
+            <h3 className="font-urbanist text-base font-bold text-charcoal mb-4 flex items-center gap-3 relative z-10">
+              <div className="w-10 h-10 bg-gradient-to-br from-sage/20 to-sage/10 rounded-xl flex items-center justify-center shadow-sm">
+                <MapPin className="w-5 h-5 text-sage" strokeWidth={2} />
               </div>
-              Distance
+              <div>
+                <div>Distance</div>
+                <div className="text-xs font-normal text-charcoal/60">Search radius</div>
+              </div>
             </h3>
-            <div className="flex flex-wrap gap-2 relative z-10">
+            <div className="flex flex-wrap gap-3 relative z-10">
               {distanceOptions.map(({ distance, Icon }) => {
                 const active = selectedDistance === distance;
                 return (
@@ -294,16 +312,16 @@ export default function FilterModal({
                     key={distance}
                     type="button"
                     onClick={() => setSelectedDistance(active ? null : distance)}
-                    className={`px-4 py-2.5 rounded-full text-sm font-urbanist font-600 flex items-center gap-2 border transition-all whitespace-nowrap
+                    className={`px-5 py-3 rounded-xl text-sm font-urbanist font-semibold flex items-center gap-3 border transition-all duration-200 shadow-sm whitespace-nowrap
                       ${
                         active
-                          ? "bg-gradient-to-br from-coral to-coral/90 text-white border-coral shadow-md"
-                          : "bg-white/60 text-charcoal border-white/50 hover:bg-white/80 hover:border-coral/40"
+                          ? "bg-gradient-to-br from-coral to-coral/90 text-white border-coral/50 shadow-lg hover:shadow-xl"
+                          : "bg-white/70 text-charcoal border-white/60 hover:bg-white/90 hover:border-coral/40 hover:shadow-md"
                       }
                     focus:outline-none focus:ring-2 focus:ring-coral/30`}
                     aria-pressed={active}
                   >
-                    <Icon className={`w-4 h-4 ${active ? "text-white" : "text-coral"}`} />
+                    <Icon className={`w-5 h-5 ${active ? "text-white" : "text-coral"}`} strokeWidth={2} />
                     <span>{distance}</span>
                   </button>
                 );
@@ -313,18 +331,18 @@ export default function FilterModal({
         </div>
 
         {/* footer */}
-        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-charcoal/10">
+        <div className="flex gap-4 px-6 sm:px-8 py-5 border-t border-gradient-to-r from-transparent via-charcoal/10 to-transparent bg-gradient-to-r from-white/50 via-off-white/80 to-white/50">
           <button
             onClick={handleClearAll}
-            className="flex-1 rounded-full bg-white/40 text-charcoal border border-white/50 hover:bg-white/60 font-urbanist font-600 py-3 px-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="flex-1 rounded-xl bg-white/60 text-charcoal border border-white/70 hover:bg-white/80 hover:border-charcoal/20 font-urbanist font-semibold py-3.5 px-5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-sage/30 shadow-sm hover:shadow-md"
           >
-            Clear
+            Clear All
           </button>
           <button
             onClick={handleApply}
-            className="flex-1 rounded-full bg-gradient-to-br from-sage to-sage/90 hover:from-sage/95 hover:to-sage/85 text-white font-urbanist font-600 py-3 px-4 border border-sage/50 transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="flex-1 rounded-xl bg-gradient-to-br from-sage to-sage/90 hover:from-sage/95 hover:to-sage/85 text-white font-urbanist font-semibold py-3.5 px-5 border border-sage/50 transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-sage/30"
           >
-            Apply
+            Apply Filters
           </button>
         </div>
       </div>

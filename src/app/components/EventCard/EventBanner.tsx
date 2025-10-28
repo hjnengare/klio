@@ -24,23 +24,25 @@ export default function EventBanner({
   endDate
 }: EventBannerProps) {
   return (
-    <div className="relative overflow-hidden rounded-t-9px h-[540px] md:h-[180px]">
-      {/* Image or Icon placeholder */}
-      {image ? (
-        <Image
-          src={image}
-          alt={alt || title}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-cover"
-          priority={false}
-        />
-      ) : (
-        <div className="h-full w-full flex items-center justify-center bg-sage/10 text-sage">
-          <ImageIcon className="w-12 h-12 text-sage/70" />
-        </div>
-      )}
+    <div className="relative overflow-hidden rounded-t-lg flex-[2] md:flex-[3] z-10">
+      <div className="relative w-full h-[400px] md:h-[300px]">
+        {image ? (
+          <Image
+            src={image}
+            alt={alt || title}
+            fill
+            sizes="(max-width: 768px) 540px, 320px"
+            className="object-cover rounded-t-lg"
+            priority={false}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-sage/10 text-sage rounded-t-lg">
+            <ImageIcon className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-sage/70" />
+          </div>
+        )}
+      </div>
 
+      {/* Badges */}
       <EventBadge startDate={startDate} endDate={endDate} />
       <RatingBadge rating={rating} />
     </div>

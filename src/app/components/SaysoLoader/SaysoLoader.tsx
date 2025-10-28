@@ -41,7 +41,7 @@ export default function SaysoLoader({
              style={{ animationDuration: '1.5s', animationDirection: 'reverse' }} />
 
         {/* sayso animated text in center */}
-        <div className={`font-sf font-800 text-sage ${
+        <div className={`font-urbanist font-800 text-sage ${
           size === 'sm' ? 'text-xs' :
           size === 'md' ? 'text-sm' :
           size === 'lg' ? 'text-base' : 'text-lg'
@@ -55,7 +55,7 @@ export default function SaysoLoader({
       </div>
 
       {/* Loading text */}
-      <p className={`font-sf font-500 text-charcoal/70 ${textSizeClasses[size]} animate-pulse`}>
+      <p className={`font-urbanist font-500 text-charcoal/70 ${textSizeClasses[size]} animate-pulse`}>
         {text}
       </p>
     </div>

@@ -32,7 +32,7 @@ export default function RatingSelector({ overallRating, onRatingChange }: Rating
           );
         })}
       </div>
-      <p className="text-center text-sm font-400 text-charcoal/60">Tap to select rating</p>
+      <p className="text-center text-sm font-600 text-charcoal/60">Tap to select rating</p>
     </div>
   );
 }

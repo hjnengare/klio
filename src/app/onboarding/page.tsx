@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
 import { useMounted } from "../hooks/useMounted";
 import Logo from "../components/Logo/Logo";
 
@@ -50,10 +49,6 @@ const styles = `
     border-radius: 0.25rem;
   }
   
-  .lobster-two-font {
-    font-family: 'Lobster Two', cursive !important;
-    font-weight: 700 !important;
-  }
 
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
@@ -98,31 +93,6 @@ const styles = `
 
 export default function OnboardingPage() {
   const mounted = useMounted();
-
-  useEffect(() => {
-    // Load Google Fonts
-    const link1 = document.createElement('link');
-    link1.rel = 'preconnect';
-    link1.href = 'https://fonts.googleapis.com';
-    document.head.appendChild(link1);
-
-    const link2 = document.createElement('link');
-    link2.rel = 'preconnect';
-    link2.href = 'https://fonts.gstatic.com';
-    link2.crossOrigin = 'anonymous';
-    document.head.appendChild(link2);
-
-    const link3 = document.createElement('link');
-    link3.rel = 'stylesheet';
-    link3.href = 'https://fonts.googleapis.com/css2?family=Italianno&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap';
-    document.head.appendChild(link3);
-
-    return () => {
-      document.head.removeChild(link1);
-      document.head.removeChild(link2);
-      document.head.removeChild(link3);
-    };
-  }, []);
 
   return (
     <>

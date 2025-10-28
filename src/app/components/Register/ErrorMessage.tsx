@@ -8,8 +8,8 @@ interface ErrorMessageProps {
 export default function ErrorMessage({ error, isOffline }: ErrorMessageProps) {
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-        <p className="font-urbanist text-[14px] font-600 text-red-600">{error}</p>
+      <div className="bg-error-50 border border-error-100 rounded-xl p-4 text-center">
+        <p className="font-urbanist text-[14px] font-600 text-error-600">{error}</p>
       </div>
     );
   }

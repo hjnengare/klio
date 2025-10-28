@@ -57,7 +57,7 @@ export default function NotFound() {
           </FadeInUp>
 
           <FadeInUp delay={0.4}>
-            <p className="font-urbanist text-lg md:text-xl font-400 text-charcoal/70 mb-8 max-w-lg mx-auto leading-relaxed">
+            <p className="font-urbanist text-lg md:text-xl font-600 text-charcoal/70 mb-8 max-w-lg mx-auto leading-relaxed">
               The page you&apos;re looking for seems to have wandered off. Let&apos;s get you back on track!
             </p>
           </FadeInUp>

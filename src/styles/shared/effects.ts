@@ -8,7 +8,7 @@ export const effects = {
     md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
     lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
     xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-    'lg': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+    '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
     inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
     premium: '0 10px 30px rgba(0,0,0,0.06), 0 22px 70px rgba(0,0,0,0.10)',
     premiumHover: '0 12px 36px rgba(0,0,0,0.08), 0 30px 90px rgba(0,0,0,0.14)',
@@ -22,8 +22,8 @@ export const effects = {
     md: '0.75rem',   // 12px
     lg: '1rem',      // 16px
     xl: '1.5rem',    // 24px
-    'lg': '2rem',   // 32px
-    'lg': '3rem',   // 48px
+    '2xl': '2rem',   // 32px
+    '3xl': '3rem',   // 48px
     full: '9999px',
   },
 

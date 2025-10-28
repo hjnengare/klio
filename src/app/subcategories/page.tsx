@@ -99,12 +99,12 @@ function SubcategoriesContent() {
   }, [subcategories]);
 
   const handleSubcategoryToggle = useCallback((subcategoryId: string, interestId: string) => {
-    const isSelected = selectedSubcategories.some(s => s.id === subcategoryId);
+    const isSelected = selectedSubcategories.includes(subcategoryId);
 
     if (isSelected) {
-      setSelectedSubcategories(prev => prev.filter(s => s.id !== subcategoryId));
+      setSelectedSubcategories(selectedSubcategories.filter(s => s !== subcategoryId));
     } else {
-      setSelectedSubcategories(prev => [...prev, { id: subcategoryId, interest_id: interestId }]);
+      setSelectedSubcategories([...selectedSubcategories, subcategoryId]);
     }
   }, [selectedSubcategories, setSelectedSubcategories]);
 
@@ -118,7 +118,7 @@ function SubcategoriesContent() {
       const interestParams = selectedInterests.length > 0 
         ? `interests=${selectedInterests.join(',')}` 
         : '';
-      const subcategoryParams = selectedSubcategories.map(s => s.id).join(',');
+      const subcategoryParams = selectedSubcategories.join(',');
       
       const urlParams = [interestParams, `subcategories=${subcategoryParams}`]
         .filter(Boolean)
@@ -170,7 +170,10 @@ function SubcategoriesContent() {
           <SubcategorySelection selectedCount={selectedSubcategories?.length || 0}>
             <SubcategoryGrid
               groupedSubcategories={groupedSubcategories}
-              selectedSubcategories={selectedSubcategories}
+              selectedSubcategories={selectedSubcategories.map(id => {
+                const subcategory = subcategories.find(s => s.id === id);
+                return { id, interest_id: subcategory?.interest_id || '' };
+              })}
               onToggle={handleSubcategoryToggle}
               subcategories={subcategories}
               loading={loading}

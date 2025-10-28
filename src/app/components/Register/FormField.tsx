@@ -45,16 +45,16 @@ export default function FormField({
   };
 
   const getIconColor = () => {
-    if (error) return 'text-red-500';
+    if (error) return 'text-error-500';
     if (value && isValid && touched) return 'text-sage';
     return 'text-charcoal/40 group-focus-within:text-sage';
   };
 
   const getInputClasses = () => {
-    const baseClasses = "w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile";
-    
+    const baseClasses = "w-full bg-cultured-1/50 border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-600 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile";
+
     if (error) {
-      return `${baseClasses} border-red-300 focus:border-red-500 focus:ring-red-500/20`;
+      return `${baseClasses} border-error-100 focus:border-error-500 focus:ring-error-500/20`;
     }
     if (value && isValid && touched) {
       return `${baseClasses} border-sage/40 focus:border-sage focus:ring-sage/20`;

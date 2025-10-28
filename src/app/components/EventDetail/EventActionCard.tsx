@@ -27,13 +27,13 @@ export default function EventActionCard() {
       <div className="mt-6 pt-6 border-t border-charcoal/10">
         <h4 className="font-semibold text-charcoal mb-3 font-urbanist">Share Event</h4>
         <div className="flex gap-3">
-          <button className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2.5 px-4 rounded-full transition-all duration-200 shadow-sm">
+          <button className="flex-1 bg-black/0 hover:bg-blue-600 text-charcoal/90 py-2.5 px-4 rounded-full transition-all duration-200 shadow-sm">
             <Facebook size={18} className="mx-auto" />
           </button>
-          <button className="flex-1 bg-pink-500 hover:bg-pink-600 text-white py-2.5 px-4 rounded-full transition-all duration-200 shadow-sm">
+          <button className="flex-1 bg-black/0 hover:bg-pink-600 text-charcoal/90 py-2.5 px-4 rounded-full transition-all duration-200 shadow-sm">
             <Instagram size={18} className="mx-auto" />
           </button>
-          <button className="flex-1 bg-sky-500 hover:bg-sky-600 text-white py-2.5 px-4 rounded-full transition-all duration-200 shadow-sm">
+          <button className="flex-1 bg-black/0 hover:bg-sky-600 text-charcoal/90 py-2.5 px-4 rounded-full transition-all duration-200 shadow-sm">
             <Twitter size={18} className="mx-auto" />
           </button>
         </div>

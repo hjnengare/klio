@@ -441,7 +441,7 @@ export default function GeneralReviewsPage() {
                           <h3 className="font-urbanist text-lg sm:text-xl font-600 text-charcoal tracking-[-0.02em]">
                             {review.author}
                           </h3>
-                          <span className="font-urbanist text-sm font-400 text-charcoal/60 tracking-[-0.015em]">
+                          <span className="font-urbanist text-sm font-600 text-charcoal/60 tracking-[-0.015em]">
                             {review.date}
                           </span>
                         </div>
@@ -461,7 +461,7 @@ export default function GeneralReviewsPage() {
                     </div>
 
                     {/* Review Text */}
-                    <p className="font-urbanist text-base font-400 text-charcoal/90 leading-[1.65] mb-4 tracking-[-0.015em]">
+                    <p className="font-urbanist text-base font-600 text-charcoal/90 leading-[1.65] mb-4 tracking-[-0.015em]">
                       {displayText}
                     </p>
 
@@ -523,7 +523,7 @@ export default function GeneralReviewsPage() {
             <h3 className="font-urbanist text-xl font-600 text-charcoal mb-2 tracking-[-0.02em]">
               No reviews found
             </h3>
-            <p className="font-urbanist text-base font-400 text-charcoal/70 tracking-[-0.015em]">
+            <p className="font-urbanist text-base font-600 text-charcoal/70 tracking-[-0.015em]">
               Try adjusting your filters
             </p>
           </motion.div>

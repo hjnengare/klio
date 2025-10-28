@@ -124,7 +124,7 @@ export default function ReviewCard({
             </div>
 
             <div className="flex items-center space-x-3">
-              <span className="font-urbanist text-sm font-400 text-charcoal/60">
+              <span className="font-urbanist text-sm font-600 text-charcoal/60">
                 {formatDate(review.created_at)}
               </span>
               {user?.id === review.user_id && (
@@ -157,7 +157,7 @@ export default function ReviewCard({
           )}
 
           {/* Review Text */}
-          <p className="font-urbanist text-base font-400 text-charcoal/90 leading-relaxed mb-4">
+          <p className="font-urbanist text-base font-600 text-charcoal/90 leading-relaxed mb-4">
             {review.content}
           </p>
 

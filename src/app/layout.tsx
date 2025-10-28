@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Urbanist, Italianno } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import dynamic from "next/dynamic";
 import "./globals.css";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -21,13 +21,6 @@ const urbanist = Urbanist({
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
   fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
-});
-
-const italianno = Italianno({
-  subsets: ["latin"],
-  weight: ["400"],
-  display: "swap",
-  fallback: ["cursive"],
 });
 
 export const metadata: Metadata = {
@@ -99,10 +92,8 @@ export default function RootLayout({
 
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
-        
+
         {/* Preconnect to external domains for faster resource loading */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_SUPABASE_URL} />
         
         {/* Preload critical resources */}
@@ -129,7 +120,7 @@ export default function RootLayout({
         
         <link rel="canonical" href="/" />
       </head>
-      <body className={`${urbanist.className} ${italianno.className} no-layout-shift`}>
+      <body className={`${urbanist.className} no-layout-shift`}>
         <WebVitals />
         <ClientLayoutWrapper />
         <ErrorBoundary>

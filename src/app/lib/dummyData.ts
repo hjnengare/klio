@@ -259,3 +259,14 @@ export const generateRandomStats = () => ({
 // Simulate API delay
 export const simulateDelay = (ms: number = 300) =>
   new Promise(resolve => setTimeout(resolve, ms));
+
+// Dummy user for mock authentication
+export const DUMMY_USER = {
+  id: 'dummy-user-123',
+  email: 'test@example.com',
+  onboarding_complete: false,
+  onboarding_step: 'interests',
+  interests: ['food-drink', 'entertainment'],
+  sub_interests: ['restaurants', 'cafes'],
+  deal_breakers: ['poor-hygiene', 'rude-staff']
+};

@@ -91,7 +91,7 @@ export default function WelcomeModal() {
                 <h2 className="font-urbanist text-lg sm:text-lg font-700 text-charcoal text-center mb-2">
                   Welcome to sayso
                 </h2>
-                <p className="font-urbanist text-sm sm:text-base font-400 text-charcoal/70 text-center">
+                <p className="font-urbanist text-sm sm:text-base font-600 text-charcoal/70 text-center">
                   Discover places real locals love
                 </p>
               </div>

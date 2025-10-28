@@ -11,7 +11,7 @@ import EmptyState from "../components/EventsPage/EmptyState";
 import { EVENTS_AND_SPECIALS, Event } from "../data/eventsData";
 import { useToast } from "../contexts/ToastContext";
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 5;
 
 export default function EventsSpecialsPage() {
   const [currentPage, setCurrentPage] = useState(1);

@@ -44,7 +44,13 @@
       "Bash(netstat:*)",
       "Bash(start:*)",
       "Bash(node -e:*)",
-      "Bash(git remote set-url:*)"
+      "Bash(git remote set-url:*)",
+      "Bash(if [ ! -d \"src/app/business\" ])",
+      "Bash(then mkdir -p \"src/app/business/login\")",
+      "Bash(else echo \"Business directory exists\")",
+      "Bash(fi)",
+      "Bash(if [ ! -d \"src/app/business/login\" ])",
+      "Bash(else echo \"Login directory exists\")"
     ],
     "deny": [],
     "ask": []

@@ -1,9 +1,9 @@
-import { User } from "./AuthContext";
+import { AuthUser } from "./AuthContext";
 
 export interface OnboardingStep {
   path: string;
   name: string;
-  isComplete: (user: User | null) => boolean;
+  isComplete: (user: AuthUser | null) => boolean;
   requiredPrevious?: string[];
 }
 
@@ -33,19 +33,19 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     path: "/subcategories",
     name: "Subcategories",
-    isComplete: (user) => !!user?.subInterests && user.subInterests.length > 0,
+    isComplete: (user) => !!user?.profile?.sub_interests && user.profile.sub_interests.length > 0,
     requiredPrevious: ["/interests"]
   },
   {
     path: "/deal-breakers",
     name: "Deal Breakers",
-    isComplete: (user) => !!user?.dealbreakers && user.dealbreakers.length >= 2 && user.dealbreakers.length <= 3,
+    isComplete: (user) => !!user?.profile?.deal_breakers && user.profile.deal_breakers.length >= 2 && user.profile.deal_breakers.length <= 3,
     requiredPrevious: ["/subcategories"]
   },
   {
     path: "/complete",
     name: "Complete",
-    isComplete: (user) => !!user?.onboardingComplete,
+    isComplete: (user) => !!user?.profile?.onboarding_complete,
     requiredPrevious: ["/deal-breakers"]
   }
 ];

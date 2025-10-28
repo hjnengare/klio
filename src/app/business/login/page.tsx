@@ -1,28 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useRef } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { useToast } from "../contexts/ToastContext";
+import { useState, useRef, useEffect } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useToast } from "../../contexts/ToastContext";
+import { usePrefersReducedMotion } from "../../utils/hooks/usePrefersReducedMotion";
 
 // Import shared components
-import { authStyles } from "../components/Auth/Shared/authStyles";
-import { AuthHeader } from "../components/Auth/Shared/AuthHeader";
-import { EmailInput } from "../components/Auth/Shared/EmailInput";
-import { PasswordInput } from "../components/Auth/Shared/PasswordInput";
-import { SocialLoginButtons } from "../components/Auth/Shared/SocialLoginButtons";
+import { authStyles } from "../../components/Auth/Shared/authStyles";
+import { AuthHeader } from "../../components/Auth/Shared/AuthHeader";
+import { EmailInput } from "../../components/Auth/Shared/EmailInput";
+import { PasswordInput } from "../../components/Auth/Shared/PasswordInput";
+import { SocialLoginButtons } from "../../components/Auth/Shared/SocialLoginButtons";
 
-export default function LoginPage() {
+export default function BusinessLoginPage() {
+  const prefersReduced = usePrefersReducedMotion();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const { login, isLoading: authLoading, error: authError } = useAuth();
   const { showToast } = useToast();
   const containerRef = useRef(null);
+
+  // Prevent hydration mismatch (match register page behavior)
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Validation functions
   const validateEmail = (email: string) => {
@@ -68,9 +76,12 @@ export default function LoginPage() {
     }
 
     try {
+      // TODO: Implement business account login logic
+      // For now, using the regular login method
       const success = await login(email, password);
       if (success) {
-        showToast("Welcome back! Redirecting...", 'success', 2000);
+        showToast("Welcome back to your business account!", 'success', 2000);
+        // TODO: Redirect to business dashboard
       } else {
         const errorMsg = authError || "Invalid email or password";
         setError(errorMsg);
@@ -88,17 +99,17 @@ export default function LoginPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: authStyles }} />
-      <div ref={containerRef} className="min-h-[100dvh] bg-off-white flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
+      <div ref={containerRef} data-reduced={prefersReduced} className="min-h-[100dvh] bg-off-white flex flex-col relative overflow-hidden ios-inertia hide-scrollbar safe-area-full">
 
         <AuthHeader
-          backLink="/onboarding"
-          title="Welcome back"
-          subtitle="Sign in to continue discovering sayso"
+          backLink="/home"
+          title="Business Account Login"
+          subtitle="Sign in to manage your business profile and analytics"
         />
 
         <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12 px-4">
           {/* Form Card */}
-          <div className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden border border-white/50 backdrop-blur-md ring-1 ring-white/20 p-6 sm:p-8 md:p-10">
+          <div className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden border border-white/50 backdrop-blur-md ring-1 ring-white/20 p-6 sm:p-8 md:p-10 text-navbar-bg">
 
             <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
               {/* Error Message */}
@@ -139,7 +150,7 @@ export default function LoginPage() {
               <div className="text-right">
                 <Link
                   href="/forgot-password"
-                  className="text-sm text-white hover:text-coral transition-colors duration-300 font-medium"
+                  className="text-sm text-navbar-bg hover:text-coral transition-colors duration-300 font-medium"
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                   Forgot password?
@@ -147,23 +158,23 @@ export default function LoginPage() {
               </div>
 
               {/* Login Button */}
-              <div className="pt-2 flex justify-center">
+              <div className="pt-4 flex justify-center">
                 <div className="w-full">
                   <button
                     type="submit"
-                    disabled={isSubmitting || !email || !password}
+                    disabled={mounted ? (isSubmitting || !email || !password) : false}
                     style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                     className={`group block w-full text-base font-semibold py-3 px-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap transform hover:scale-105 active:scale-95 ${
-                      isSubmitting || !email || !password
+                      (mounted ? (isSubmitting || !email || !password) : false)
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
-                        : 'btn-premium text-white focus:ring-sage/30'
+                        : 'btn-premium text-navbar-bg focus:ring-sage/30'
                     }`}
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
-                      {isSubmitting && (
+                      {(mounted && isSubmitting) && (
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                       )}
-                      {isSubmitting ? "Signing in..." : "Sign in"}
+                      {(mounted && isSubmitting) ? "Signing in..." : "Sign in to Business Account"}
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
                   </button>
@@ -176,13 +187,22 @@ export default function LoginPage() {
 
             {/* Footer */}
             <div className="text-center mt-6 pt-6 border-t border-white/20">
-              <div className="text-sm sm:text-base text-white" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-                Don&apos;t have an account?{" "}
+              <div className="text-sm sm:text-base text-navbar-bg" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                Don&apos;t have a business account?{" "}
                 <Link
-                  href="/register"
-                  className="text-white font-semibold hover:text-coral transition-colors duration-300 relative group"
+                  href="/claim-business"
+                  className="text-navbar-bg font-semibold hover:text-coral transition-colors duration-300 relative group"
                 >
-                  Sign up
+                  Claim your business
+                </Link>
+              </div>
+              <div className="text-sm text-navbar-bg/70 mt-3" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                Looking for personal account?{" "}
+                <Link
+                  href="/login"
+                  className="text-navbar-bg hover:text-coral transition-colors duration-300"
+                >
+                  Sign in here
                 </Link>
               </div>
             </div>

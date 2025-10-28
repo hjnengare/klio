@@ -173,7 +173,7 @@ export default function ImageUpload({
               <p className="font-urbanist text-base font-600 text-charcoal mb-2">
                 {dragActive ? 'Drop images here' : 'Add photos to your review'}
               </p>
-              <p className="font-urbanist text-sm font-400 text-charcoal/60">
+              <p className="font-urbanist text-sm font-600 text-charcoal/60">
                 Drag & drop or click to select images
                 <br />
                 <span className="text-xs">

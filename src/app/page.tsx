@@ -20,7 +20,7 @@ export default function HomePage() {
         <h1 className="font-urbanist text-4 font-700 text-charcoal mb-2">
           sayso
         </h1>
-        <p className="font-urbanist text-6 font-400 text-charcoal/70">
+        <p className="font-urbanist text-6 font-600 text-charcoal/70">
           Getting ready...
         </p>
       </div>

@@ -56,7 +56,8 @@ export class PerformanceMonitor {
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
         if ('hadRecentInput' in entry && (entry as { hadRecentInput: boolean }).hadRecentInput) continue;
-        console.log('CLS:', entry.value);
+        const layoutShiftEntry = entry as LayoutShift;
+        console.log('CLS:', layoutShiftEntry.value);
       }
     });
 

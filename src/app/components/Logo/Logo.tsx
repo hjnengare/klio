@@ -33,7 +33,7 @@ export default function Logo({
     <div className={`flex items-baseline gap-1 ${className}`}>
       <span
         className={`font-bold py-2 px-1 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal drop-shadow-sm ${sizeClasses[variant]}`}
-        style={{ fontFamily: "'Italianno', cursive" }}
+        style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
       >
         sayso
       </span>

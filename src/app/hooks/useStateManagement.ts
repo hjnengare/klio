@@ -359,7 +359,7 @@ export function useAnimationState() {
 export function useDebouncedState<T>(initialValue: T, delay: number = 300) {
   const [value, setValue] = useState<T>(initialValue);
   const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   useEffect(() => {
     if (timeoutRef.current) {
@@ -393,7 +393,7 @@ export function useThrottledState<T>(initialValue: T, interval: number = 100) {
   const [value, setValue] = useState<T>(initialValue);
   const [throttledValue, setThrottledValue] = useState<T>(initialValue);
   const lastExecuted = useRef<number>(0);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   useEffect(() => {
     const now = Date.now();
@@ -430,7 +430,7 @@ interface TimeStamp {
 
 export function useRelativeTime(timestamp: number, refreshInterval: number = 60000) {
   const [relativeTime, setRelativeTime] = useState<string>('');
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const formatRelativeTime = useCallback((timestamp: number): string => {
     const now = Date.now();
@@ -479,7 +479,7 @@ export function useRelativeTime(timestamp: number, refreshInterval: number = 600
 export function useSessionManagement() {
   const [isStale, setIsStale] = useState(false);
   const [lastActivity, setLastActivity] = useState(Date.now());
-  const sessionTimeoutRef = useRef<NodeJS.Timeout>();
+  const sessionTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const refreshSession = useCallback(() => {
     setLastActivity(Date.now());

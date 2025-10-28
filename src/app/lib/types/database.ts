@@ -16,6 +16,7 @@ export interface Profile {
   last_interests_updated?: string;
   interests?: string[];
   sub_interests?: string[];
+  deal_breakers?: string[];
   created_at: string;
   updated_at: string;
 }

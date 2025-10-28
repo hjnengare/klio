@@ -19,7 +19,7 @@ export default function ValidationMessage({
 }: ValidationMessageProps) {
   if (error) {
     return (
-      <p className="text-xs text-red-600 flex items-center gap-1 mt-1" role="alert">
+      <p className="text-xs text-error-600 flex items-center gap-1 mt-1" role="alert">
         <AlertCircle className="w-3 h-3" />
         {error}
       </p>

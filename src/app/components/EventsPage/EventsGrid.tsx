@@ -14,7 +14,7 @@ export default function EventsGrid({ events, onBookmark }: EventsGridProps) {
   return (
     <div>
       <div className="max-w-[1300px] mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
           {events.map((event) => (
             <div key={event.id} className="animate-fade-in-up list-none relative group">
               <EventCard event={event} />

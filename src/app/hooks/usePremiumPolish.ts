@@ -124,8 +124,8 @@ const DESIGN_TOKENS = {
     md: '16px',
     lg: '24px',
     xl: '32px',
-    'lg': '48px',
-    'lg': '64px',
+    '2xl': '48px',
+    '3xl': '64px',
     '4xl': '96px',
   },
   borderRadius: {
@@ -134,7 +134,7 @@ const DESIGN_TOKENS = {
     md: '8px',
     lg: '12px',
     xl: '16px',
-    'lg': '24px',
+    '2xl': '24px',
     full: '9999px',
   },
 } as const;

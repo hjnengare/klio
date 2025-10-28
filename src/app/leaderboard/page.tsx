@@ -24,6 +24,7 @@ interface LeaderboardUser {
   reviews: number;
   badge?: string;
   avatar: string;
+  totalRating: number;
 }
 
 // Memoized leaderboard data to prevent recreation on every render

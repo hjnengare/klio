@@ -89,7 +89,7 @@ function BusinessCard({
       }}
     >
         <div
-          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden group cursor-pointer w-full md:w-auto h-[720px] md:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20"
+          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden group cursor-pointer w-full md:w-auto h-[720px] md:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-sm hover:shadow-lg transition-all duration-300"
           style={{
             "--width": "540",
             "--height": "720",

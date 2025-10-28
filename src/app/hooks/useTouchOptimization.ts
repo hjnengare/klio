@@ -112,14 +112,14 @@ export function useTouchOptimization(options: TouchOptimizationOptions = {}) {
     if ('visualViewport' in window) {
       window.visualViewport!.addEventListener('resize', handleVisualViewportChange);
     } else {
-      window.addEventListener('resize', handleResize);
+      (window as any).addEventListener('resize', handleResize);
     }
 
     return () => {
       if ('visualViewport' in window) {
         window.visualViewport!.removeEventListener('resize', handleVisualViewportChange);
       } else {
-        window.removeEventListener('resize', handleResize);
+        (window as any).removeEventListener('resize', handleResize);
       }
     };
   }, [opts.enableVirtualKeyboardHandling, keyboardOpen]);

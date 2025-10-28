@@ -59,7 +59,7 @@ export function PasswordInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
-          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-400 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
+          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-600 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
             isStrong ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
             isWeak ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
             'border-white/60 focus:ring-sage/30 focus:border-sage'
@@ -90,7 +90,7 @@ export function PasswordInput({
                 className={`h-1 flex-1 transition-all duration-300 ${
                   level <= strength.score
                     ? level === 1
-                      ? 'bg-red-400'
+                      ? 'bg-error-500'
                       : level === 2
                       ? 'bg-orange-400'
                       : level === 3

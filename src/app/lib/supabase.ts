@@ -46,7 +46,6 @@ export const createProfile = async (userId: string) => {
     ])
     .select()
     .single()
-    .abortSignal(AbortSignal.timeout(10000)) // 10 second timeout
 
   if (error) throw error
   return data
@@ -58,7 +57,6 @@ export const getProfile = async (userId: string) => {
     .select('*')
     .eq('user_id', userId)
     .single()
-    .abortSignal(AbortSignal.timeout(5000)) // 5 second timeout
 
   if (error) throw error
   return data
@@ -71,7 +69,6 @@ export const updateProfile = async (userId: string, updates: Partial<Profile>) =
     .eq('user_id', userId)
     .select()
     .single()
-    .abortSignal(AbortSignal.timeout(5000))
 
   if (error) throw error
   return data
@@ -83,7 +80,6 @@ export const getInterests = async () => {
     .select('*')
     .order('name', { ascending: true })
     .limit(50) // Reasonable limit
-    .abortSignal(AbortSignal.timeout(3000))
 
   if (error) throw error
   return data || []
@@ -100,7 +96,7 @@ export const getSubInterests = async (parentIds?: string[]) => {
     query = query.in('parent_id', parentIds)
   }
 
-  const { data, error } = await query.abortSignal(AbortSignal.timeout(3000))
+  const { data, error } = await query
 
   if (error) throw error
   return data || []

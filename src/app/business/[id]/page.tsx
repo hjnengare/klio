@@ -104,7 +104,6 @@ export default function BusinessProfilePage() {
             {/* Google Fonts */}
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-            <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
             {/* SF Pro Font Setup */}
             <style jsx global>{`
                 .font-urbanist {
@@ -225,7 +224,7 @@ export default function BusinessProfilePage() {
                                     <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-lg" />
 
                                     <div className="relative z-10">
-                                        <h3 className="text-lg font-600 text-charcoal mb-6 flex items-center gap-3" style={{ fontFamily: "'Lobster Two', cursive" }}>
+                                        <h3 className="text-lg font-600 text-charcoal mb-6 flex items-center gap-3 font-urbanist">
                                             <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10">
                                                 <Calendar className="w-4 h-4 text-coral" />
                                             </span>
@@ -245,7 +244,7 @@ export default function BusinessProfilePage() {
                                                                 <Icon className="w-5 h-5 text-sage" />
                                                             </div>
                                                                 <div>
-                                                                    <h4 className="text-sm font-600 text-charcoal mb-0.5" style={{ fontFamily: "'Lobster Two', cursive" }}>{special.name}</h4>
+                                                                    <h4 className="text-sm font-600 text-charcoal mb-0.5 font-urbanist">{special.name}</h4>
                                                                     <p className="text-xs text-charcoal/70">{special.description}</p>
                                                                 </div>
                                                         </div>

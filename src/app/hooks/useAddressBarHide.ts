@@ -3,7 +3,7 @@
 import { useEffect, useCallback, useRef } from 'react';
 
 export function useAddressBarHide() {
-  const scrollTimeoutRef = useRef<NodeJS.Timeout>();
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const lastScrollYRef = useRef(0);
   const tickingRef = useRef(false);
 
@@ -19,7 +19,7 @@ export function useAddressBarHide() {
 
   const detectMobile = useCallback(() => {
     const userAgent = typeof window !== 'undefined' ? navigator.userAgent : '';
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream;
     const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 

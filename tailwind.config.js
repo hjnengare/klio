@@ -85,7 +85,7 @@ module.exports = {
       },
       fontFamily: {
         urbanist: ['Urbanist', 'sans-serif'],
-        italianno: ['Italianno', 'cursive'],
+        sf: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'SF Pro Text', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         // Legacy numbered scale (for gradual migration)

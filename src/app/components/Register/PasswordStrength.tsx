@@ -26,7 +26,7 @@ export default function PasswordStrength({ password, strength }: PasswordStrengt
             className={`h-1 flex-1 transition-all duration-300 ${
               level <= strength.score
                 ? level === 1
-                  ? 'bg-red-400'
+                  ? 'bg-error-500'
                   : level === 2
                   ? 'bg-orange-400'
                   : level === 3
@@ -41,7 +41,7 @@ export default function PasswordStrength({ password, strength }: PasswordStrengt
         <span className={`text-xs font-500 ${
           strength.score >= 3 ? 'text-sage' :
           strength.score >= 2 ? 'text-orange-500' :
-          strength.score >= 1 ? 'text-red-500' :
+          strength.score >= 1 ? 'text-error-500' :
           'text-gray-500'
         }`}>
           {strength.feedback}

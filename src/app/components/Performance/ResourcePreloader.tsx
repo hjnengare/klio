@@ -3,11 +3,9 @@
 import { useEffect } from "react";
 
 // Critical resources to preload
-const CRITICAL_RESOURCES = [
-  // Fonts
-  "https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap",
-  "https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap",
-  
+const CRITICAL_RESOURCES: string[] = [
+  // Fonts are loaded via next/font/google in layout.tsx
+
   // Critical images (if any)
   // Add any critical image URLs here
 ];

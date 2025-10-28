@@ -160,7 +160,7 @@ export const Typography = forwardRef<HTMLElement, TypographyProps>(
     ref
   ) => {
     // Determine the HTML element to render
-    const Element = (as || defaultElements[variant]) as keyof JSX.IntrinsicElements;
+    const Element = (as || defaultElements[variant]) as React.ElementType;
 
     // Build typography classes
     const typographyClasses = cn(

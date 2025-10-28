@@ -52,7 +52,7 @@ export function useTabSync(options: TabSyncOptions = {}) {
   const [tabId] = useState(() => Math.random().toString(36).substr(2, 9));
   const [isMainTab, setIsMainTab] = useState(false);
   const [openTabs, setOpenTabs] = useState<string[]>([]);
-  const heartbeatInterval = useRef<NodeJS.Timeout>();
+  const heartbeatInterval = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const broadcastToTabs = useCallback((event: string, data: any) => {
     if (!opts.enableTabSync) return;

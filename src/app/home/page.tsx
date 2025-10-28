@@ -89,7 +89,7 @@ export default function Home() {
           </div>
 
           <div>
-            <EventsSpecials events={EVENTS_AND_SPECIALS} />
+            <EventsSpecials events={EVENTS_AND_SPECIALS.slice(0, 5)} />
           </div>
 
           <div>

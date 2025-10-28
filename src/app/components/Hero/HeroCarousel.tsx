@@ -249,10 +249,6 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
 
   return (
     <>
-      {/* Google Fonts for Lobster Two */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
       
       <section
         ref={containerRef as React.RefObject<HTMLElement>}
@@ -321,7 +317,7 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
                      {slide.description}
                    </p>
                    
-                   {/* Start Exploring Button */}
+                   {/* Log into Business Account Button */}
                    <button
                      className="group relative inline-flex items-center gap-3 px-10 py-3 bg-gradient-to-r from-sage via-sage/95 to-sage/90 text-white font-bold rounded-full shadow-2xl hover:shadow-3xl transition-all duration-500 hover:from-sage/95 hover:via-sage/90 hover:to-sage/85 hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/40 focus:ring-offset-2 focus:ring-offset-transparent overflow-hidden backdrop-blur-sm border border-white/20"
                      style={{
@@ -330,20 +326,8 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
                        letterSpacing: '0.025em',
                      }}
                      onClick={() => {
-                       // Scroll to the "For You" business section on the home page
-                       const forYouSection = document.querySelector('[data-section="for-you"]');
-                       if (forYouSection) {
-                         forYouSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                       } else {
-                         // Fallback: scroll to the first business row section
-                         const firstBusinessRow = document.querySelector('section[data-section]');
-                         if (firstBusinessRow) {
-                           firstBusinessRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                         } else {
-                           // Final fallback: scroll down one viewport height
-                           window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
-                         }
-                       }
+                       // Navigate to business login page
+                       window.location.href = '/business/login';
                      }}
                    >
                      {/* Animated background shimmer effect */}
@@ -354,7 +338,7 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
                      
                      {/* Button content */}
                      <span className="relative z-10">
-                       Start Exploring
+                       Log into Business Account
                      </span>
                      
                      {/* Subtle pulse animation */}
