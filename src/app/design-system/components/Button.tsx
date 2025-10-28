@@ -231,10 +231,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       if (isValidElement(children)) {
         // Clone the child element and merge props
         return cloneElement(children, {
-          className: cn(buttonClasses, children.props.className),
+          className: cn(buttonClasses, (children as any).props?.className),
           ref,
           ...props,
-          ...children.props,
+          ...(children as any).props,
         });
       } else {
         console.warn('Button: asChild prop requires a single valid React element as children');
@@ -253,7 +253,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           whileTap={{ scale: 0.98 }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
           {...motionProps}
-          {...props}
+          {...(() => {
+            const { onDrag, onDragStart, onDragEnd, ...restProps } = props as any;
+            return restProps;
+          })()}
         >
           {buttonContent}
         </motion.button>
@@ -281,4 +284,3 @@ Button.displayName = 'Button';
 // =============================================================================
 
 export default Button;
-export type { ButtonProps };

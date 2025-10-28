@@ -444,4 +444,3 @@ Input.displayName = 'Input';
 // =============================================================================
 
 export default Input;
-export type { InputProps };

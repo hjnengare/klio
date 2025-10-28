@@ -227,7 +227,10 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
             exit="exit"
             transition={{ duration: 0.3, ease: 'easeOut' }}
             {...motionProps}
-            {...props}
+            {...(() => {
+              const { onDrag, onDragStart, onDragEnd, ...restProps } = props as any;
+              return restProps;
+            })()}
           >
             {/* Icon */}
             <div className="flex-shrink-0">
@@ -321,4 +324,3 @@ ToastContainer.displayName = 'ToastContainer';
 // =============================================================================
 
 export default Toast;
-export type { ToastProps, ToastContainerProps };

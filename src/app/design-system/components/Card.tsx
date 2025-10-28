@@ -250,7 +250,10 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
           {...keyboardProps}
           {...defaultMotionProps}
           {...motionProps}
-          {...props}
+          {...(() => {
+            const { onDrag, onDragStart, onDragEnd, ...restProps } = props as any;
+            return restProps;
+          })()}
         >
           {cardContent}
         </motion.div>
@@ -348,4 +351,3 @@ CardFooter.displayName = 'CardFooter';
 // =============================================================================
 
 export default Card;
-export type { CardProps };

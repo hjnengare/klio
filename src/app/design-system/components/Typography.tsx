@@ -277,4 +277,3 @@ Footnote.displayName = 'Footnote';
 // =============================================================================
 
 export default Typography;
-export type { TypographyProps };
