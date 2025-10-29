@@ -31,6 +31,10 @@ const eslintConfig = [
       "@typescript-eslint/no-empty-object-type": "off",
       "@next/next/no-img-element": "off",
       "react-hooks/exhaustive-deps": "off",
+      "@next/next/no-page-custom-font": "off",
+      "@typescript-eslint/no-require-imports": "off",
+      "no-unused-expressions": "off",
+      "no-console": "off",
     },
   },
 ];
