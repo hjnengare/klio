@@ -12,6 +12,22 @@ import {
   BusinessOfTheMonth,
 } from "../../data/communityHighlightsData";
 
+// Sample review texts for variety
+const sampleReviewTexts = [
+  "Absolutely love this place! Great atmosphere and amazing service. Will definitely come back!",
+  "The best spot in town! Quality is top-notch and the staff is incredibly friendly.",
+  "Hidden gem discovered! Food was incredible and the ambiance is perfect for a relaxed evening.",
+  "Outstanding experience! Every detail was perfect, from service to quality. Highly recommend!",
+  "Wow, just wow! Exceeded all my expectations. This is my new favorite spot in the area.",
+  "Incredible find! Great value for money and the atmosphere is unbeatable. Can't wait to return!",
+  "Perfect place for a date night! Romantic ambiance, delicious food, and excellent service.",
+  "Top tier quality! The attention to detail here is amazing. Will be a regular customer for sure.",
+  "Fantastic experience all around! Staff went above and beyond to make our visit memorable.",
+  "This place never disappoints! Consistent quality and friendly service every single time.",
+  "Amazing spot with great vibes! The perfect blend of quality, service, and atmosphere.",
+  "Exceptional! From the moment we walked in, everything was perfect. Must visit!"
+];
+
 interface CommunityHighlightsProps {
   title?: string;
   reviews: Review[];
@@ -80,13 +96,30 @@ export default function CommunityHighlights({
             </div>
 
             <ScrollableSection className="gap-3">
-              {topReviewers.map((reviewer) => (
-                <ReviewerCard
-                  key={reviewer.id}
-                  reviewer={reviewer}
-                  variant="reviewer"
-                />
-              ))}
+              {topReviewers.map((reviewer, index) => {
+                // Try to find an actual review first, otherwise use sample text
+                const actualReview = reviews.find(r => r.reviewer.id === reviewer.id);
+                const reviewIndex = parseInt(reviewer.id) % sampleReviewTexts.length;
+                const sampleText = sampleReviewTexts[reviewIndex];
+                
+                return (
+                  <ReviewerCard
+                    key={reviewer.id}
+                    reviewer={reviewer}
+                    variant="reviewer"
+                    latestReview={actualReview || {
+                      id: `${reviewer.id}-latest`,
+                      reviewer,
+                      businessName: `${reviewer.location} Favorite`,
+                      businessType: "Local Business",
+                      rating: reviewer.rating,
+                      reviewText: sampleText,
+                      date: index < 3 ? `${index + 1} days ago` : `${index + 1} weeks ago`,
+                      likes: Math.floor((reviewer.reviewCount * 0.3) + 5)
+                    }}
+                  />
+                );
+              })}
             </ScrollableSection>
           </div>
         )}

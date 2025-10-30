@@ -151,7 +151,7 @@ function BusinessCard({
           {/* rating badge */}
           {!hideStar && (
             <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-xl bg-gradient-to-br from-off-white via-off-white to-off-white/90 backdrop-blur-xl px-3 py-1.5 text-charcoal border border-white/60 ring-1 ring-white/30">
-              <Star className="w-3.5 h-3.5 text-navbar-bg fill-navbar-bg" />
+              <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
               <span className="text-sm font-semibold">
                 {Number(displayRating).toFixed(1)}
               </span>
@@ -218,7 +218,7 @@ function BusinessCard({
           </div>
 
           <div className="mb-4 flex items-center justify-center gap-2 cursor-pointer" onClick={handleCardClick}>
-            <Stars value={displayRating} color="navbar-bg" />
+            <Stars value={displayRating} color="amber-400" />
             <p className="text-xs font-600 leading-none text-charcoal font-urbanist">
               {business.reviews}
             </p>

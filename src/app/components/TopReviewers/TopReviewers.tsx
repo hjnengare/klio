@@ -6,6 +6,22 @@ import ReviewerCard from "../ReviewerCard/ReviewerCard";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
 import { Reviewer } from "../../data/communityHighlightsData";
 
+// Sample review texts for variety
+const sampleReviewTexts = [
+  "Absolutely love this place! Great atmosphere and amazing service. Will definitely come back!",
+  "The best spot in town! Quality is top-notch and the staff is incredibly friendly.",
+  "Hidden gem discovered! Food was incredible and the ambiance is perfect for a relaxed evening.",
+  "Outstanding experience! Every detail was perfect, from service to quality. Highly recommend!",
+  "Wow, just wow! Exceeded all my expectations. This is my new favorite spot in the area.",
+  "Incredible find! Great value for money and the atmosphere is unbeatable. Can't wait to return!",
+  "Perfect place for a date night! Romantic ambiance, delicious food, and excellent service.",
+  "Top tier quality! The attention to detail here is amazing. Will be a regular customer for sure.",
+  "Fantastic experience all around! Staff went above and beyond to make our visit memorable.",
+  "This place never disappoints! Consistent quality and friendly service every single time.",
+  "Amazing spot with great vibes! The perfect blend of quality, service, and atmosphere.",
+  "Exceptional! From the moment we walked in, everything was perfect. Must visit!"
+];
+
 interface TopReviewersProps {
   title?: string;
   reviewers: Reviewer[];
@@ -52,12 +68,28 @@ export default function TopReviewers({
 
         <div className="overflow-x-auto -mb-6">
           <ul className="flex gap-3 pb-4 sm:pb-5 md:pb-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {reviewers.map((reviewer) => (
-              <ReviewerCard
-                key={reviewer.id}
-                reviewer={reviewer}
-              />
-            ))}
+            {reviewers.map((reviewer, index) => {
+              // Get a consistent review text for each reviewer based on their ID
+              const reviewIndex = parseInt(reviewer.id) % sampleReviewTexts.length;
+              const sampleText = sampleReviewTexts[reviewIndex];
+              
+              return (
+                <ReviewerCard
+                  key={reviewer.id}
+                  reviewer={reviewer}
+                  latestReview={{
+                    id: `${reviewer.id}-latest`,
+                    reviewer,
+                    businessName: `${reviewer.location} Favorite`,
+                    businessType: "Local Business",
+                    rating: reviewer.rating,
+                    reviewText: sampleText,
+                    date: index < 3 ? `${index + 1} days ago` : `${index + 1} weeks ago`,
+                    likes: Math.floor((reviewer.reviewCount * 0.3) + 5)
+                  }}
+                />
+              );
+            })}
           </ul>
         </div>
       </div>

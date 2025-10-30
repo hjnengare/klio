@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "@/app/contexts/AuthContext";
 import { ArrowLeft, Star as StarIcon, Trophy, Calendar, Settings, Bell, Lock, LogOut, Upload, X, Store } from "lucide-react";
-import { getBrowserSupabase } from "../lib/supabase/client";
+import { getBrowserSupabase } from "@/app/lib/supabase/client";
 
 // Import components directly for faster loading
-import Footer from "../components/Footer/Footer";
+import Footer from "@/app/components/Footer/Footer";
 import { ProfileHeader } from "@/components/molecules/ProfileHeader";
 import { ProfileStatsSection } from "@/components/organisms/ProfileStatsSection";
 import { ReviewsList } from "@/components/organisms/ReviewsList";

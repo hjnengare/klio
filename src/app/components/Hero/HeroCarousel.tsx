@@ -249,18 +249,18 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
 
   return (
     <>
-      
-      <section
-        ref={containerRef as React.RefObject<HTMLElement>}
-        className="relative min-h-[100dvh] sm:min-h-[100vh] w-full overflow-hidden outline-none"
-        aria-label="Hero carousel"
-        tabIndex={0}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onFocus={() => setPaused(true)}
-        onBlur={() => setPaused(false)}
-        style={{ fontFamily: FONT_STACK }}
-      >
+      <div className="relative w-full px-4 pt-4 mt-12">
+        <section
+          ref={containerRef as React.RefObject<HTMLElement>}
+          className="relative min-h-[80vh] sm:min-h-[80vh] w-full overflow-hidden outline-none rounded-2xl"
+          aria-label="Hero carousel"
+          tabIndex={0}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocus={() => setPaused(true)}
+          onBlur={() => setPaused(false)}
+          style={{ fontFamily: FONT_STACK }}
+        >
       {/* Liquid Glass Ambient Lighting */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-sage/10 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.15)_0%,_transparent_70%)] pointer-events-none" />
@@ -295,11 +295,11 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
                <div className="max-w-lg sm:max-w-lg lg:max-w-2xl xl:max-w-3xl">
                  {/* Text Content */}
                  <div className="relative">
-                   <h1
+                  <h1
                      className="text-off-white leading-[1.1] mb-6 sm:mb-6 font-bold tracking-tight whitespace-normal lg:whitespace-nowrap"
                      style={{
                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
-                       fontSize: "clamp(3.5rem, 8vw, 3rem)",
+                       fontSize: "clamp(2.5rem, 6vw, 2rem)",
                      }}
                    >
                      {slide.title}
@@ -307,7 +307,7 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
            <p
              className="text-off-white/90 leading-relaxed mb-8 whitespace-normal lg:whitespace-nowrap lg:max-w-none"
              style={{
-               fontSize: "clamp(1.25rem, 2.5vw, 1rem)",
+              fontSize: "clamp(1rem, 2vw, 0.875rem)",
                maxWidth: "60ch",
                textWrap: "pretty" as React.CSSProperties["textWrap"],
                hyphens: "none" as React.CSSProperties["hyphens"],
@@ -316,34 +316,6 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
            >
                      {slide.description}
                    </p>
-                   
-                   {/* Log into Business Account Button */}
-                   <button
-                     className="group relative inline-flex items-center gap-3 px-10 py-3 bg-gradient-to-r from-sage via-sage/95 to-sage/90 text-white font-bold rounded-full shadow-2xl hover:shadow-3xl transition-all duration-500 hover:from-sage/95 hover:via-sage/90 hover:to-sage/85 hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sage/40 focus:ring-offset-2 focus:ring-offset-transparent overflow-hidden backdrop-blur-sm border border-white/20"
-                     style={{
-                       fontSize: "clamp(1.1rem, 2vw, 0.9rem)",
-                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
-                       letterSpacing: '0.025em',
-                     }}
-                     onClick={() => {
-                       // Navigate to business login page
-                       window.location.href = '/business/login';
-                     }}
-                   >
-                     {/* Animated background shimmer effect */}
-                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-                     
-                     {/* Glow effect */}
-                     <div className="absolute inset-0 rounded-full bg-gradient-to-r from-sage/30 to-coral/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
-                     
-                     {/* Button content */}
-                     <span className="relative z-10">
-                       Log into Business Account
-                     </span>
-                     
-                     {/* Subtle pulse animation */}
-                     <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 group-hover:animate-pulse" />
-                   </button>
                  </div>
                </div>
              </div>
@@ -351,36 +323,41 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
         </div>
       ))}
 
-      {/* Carousel Indicators */}
-      <div
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3"
-        role="tablist"
-        aria-label="Carousel navigation"
-      >
-        {slides.map((slide, index) => {
-          const active = index === currentIndex;
-          return (
-            <button
-              key={slide.id}
-              onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/50 focus:ring-offset-2 focus:ring-offset-transparent backdrop-blur-sm ${
-                active
-                  ? "bg-sage w-8 shadow-lg shadow-sage/30"
-                  : "bg-sage/40 hover:bg-sage/60 w-2 hover:shadow-md hover:shadow-sage/20"
-              }`}
-              role="tab"
-              aria-selected={active}
-              aria-label={`Slide ${index + 1}: ${slide.title}`}
-            />
-          );
-        })}
+      {/* Carousel Progress Bar and Controls */}
+      <div className="absolute bottom-12 left-0 right-0 z-30 px-8 flex items-center gap-4">
+        {/* Progress Bar */}
+        <div className="flex-1 h-[3px] bg-white/30 relative">
+          <div
+            className="absolute left-0 top感觉到 h-full bg-white transition-all duration-300"
+            style={{ width: `${((currentIndex + 1) / slides.length) * 100}%` }}
+          />
+        </div>
+        
+        {/* Pause/Play Button */}
+        <button
+          onClick={() => setPaused(!paused)}
+          className="w-8 h-8 rounded-full bg-transparent hover:bg-white/10 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+          aria-label={paused ? "Play carousel" : "Pause carousel"}
+        >
+          {paused ? (
+            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          ) : (
+            <div className="flex items-center justify-center gap-[2px]">
+              <span className="w-[3px] h-4 bg-white rounded-full" />
+              <span className="w-[3px] h-4 bg-white rounded-full" />
+            </div>
+          )}
+        </button>
       </div>
 
       {/* Accessible live region (announces slide title) */}
       <div className="sr-only" aria-live="polite">
         {slides[currentIndex]?.title}
       </div>
-    </section>
+        </section>
+      </div>
     </>
   );
 }

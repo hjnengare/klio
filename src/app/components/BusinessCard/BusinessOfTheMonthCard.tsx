@@ -101,7 +101,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
 
           {/* rating badge */}
           <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
-            <Star className="w-3.5 h-3.5 text-navbar-bg fill-navbar-bg" />
+            <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
             <span className="text-sm font-semibold">
               {Number(displayTotal).toFixed(1)}
             </span>
@@ -165,7 +165,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           </div>
 
           <div className="mb-4 flex items-center justify-center gap-2 cursor-pointer">
-            <Stars value={business.rating} color="navbar-bg" />
+            <Stars value={business.rating} color="amber-400" />
             <p className="text-xs font-600 leading-none text-charcoal font-urbanist">
               {business.reviews}
             </p>

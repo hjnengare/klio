@@ -58,10 +58,10 @@ export default function ScrollableSection({
   const scrollRight = () => {
     if (!scrollRef.current) return;
     const container = scrollRef.current;
-    // On mobile: scroll by 2 cards (50vw each), on larger screens: scroll by 1 card (25% width)
+    // On mobile: scroll by 1 full card (100vw minus padding), on larger screens: scroll by 1 card (25% width)
     const isMobile = window.innerWidth < 640; // sm breakpoint
-    const cardWidth = isMobile ? container.clientWidth * 0.5 : container.clientWidth * 0.25;
-    const gap = 12; // 3 * 4px (gap-3)
+    const cardWidth = isMobile ? container.clientWidth : container.clientWidth * 0.25;
+    const gap = isMobile ? 8 : 12; // gap-2 on mobile, gap-3 on larger screens
     const scrollAmount = cardWidth + gap;
     container.scrollLeft += scrollAmount;
   };
@@ -69,10 +69,10 @@ export default function ScrollableSection({
   const scrollLeft = () => {
     if (!scrollRef.current) return;
     const container = scrollRef.current;
-    // On mobile: scroll by 2 cards (50vw each), on larger screens: scroll by 1 card (25% width)
+    // On mobile: scroll by 1 full card (100vw minus padding), on larger screens: scroll by 1 card (25% width)
     const isMobile = window.innerWidth < 640; // sm breakpoint
-    const cardWidth = isMobile ? container.clientWidth * 0.5 : container.clientWidth * 0.25;
-    const gap = 12; // 3 * 4px (gap-3)
+    const cardWidth = isMobile ? container.clientWidth : container.clientWidth * 0.25;
+    const gap = isMobile ? 8 : 12; // gap-2 on mobile, gap-3 on larger screens
     const scrollAmount = cardWidth + gap;
     container.scrollLeft -= scrollAmount;
   };

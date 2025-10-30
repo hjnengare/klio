@@ -2,8 +2,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState, useEffect } from "react";
-import { User, X, Search, LogIn, Store } from "lucide-react";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { createPortal } from "react-dom";
+import { User, X, Search, LogIn, Store, ChevronDown, Building2, Settings } from "lucide-react";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { useSavedItems } from "../../contexts/SavedItemsContext";
@@ -27,10 +28,14 @@ export default function Header({
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
+  const [menuPos, setMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
   const { savedCount } = useSavedItems();
 
   // Anchor for the dropdown FilterModal to hang under
   const searchWrapRef = useRef<HTMLDivElement>(null);
+  const businessDropdownRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
 
   // Scroll-based header visibility
   useEffect(() => {
@@ -72,6 +77,30 @@ export default function Header({
     };
   }, [lastScrollY]);
 
+  // Close business dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (businessDropdownRef.current && !businessDropdownRef.current.contains(event.target as Node)) {
+        setIsBusinessDropdownOpen(false);
+      }
+    };
+
+    if (isBusinessDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isBusinessDropdownOpen]);
+
+  // Measure button position when dropdown opens
+  useLayoutEffect(() => {
+    if (isBusinessDropdownOpen && btnRef.current) {
+      const r = btnRef.current.getBoundingClientRect();
+      setMenuPos({ left: r.left, top: r.bottom + 8 });
+    }
+  }, [isBusinessDropdownOpen]);
 
   const openFilters = () => {
     if (isFilterVisible) return;
@@ -95,18 +124,24 @@ export default function Header({
     if (isFilterVisible) closeFilters();
   };
 
-  const headerClassName = `fixed top-0 left-0 right-0 z-50 bg-navbar-bg backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 translate-y-0`;
+  // Different positioning for home page (frosty variant) vs other pages
+  const isHomeVariant = variant === "frosty";
+  const headerClassName = isHomeVariant
+    ? `absolute top-6 left-1/2 -translate-x-1/2 z-50 bg-off-white backdrop-blur-xl rounded-full shadow-xl transition-all duration-300 w-[96%] max-w-[1700px]`
+    : `fixed top-0 left-0 right-0 z-50 bg-off-white backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 translate-y-0`;
 
   return (
     <>
       <header className={headerClassName} style={sf}>
-        <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+        <div className={`relative z-[1] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 ${isHomeVariant ? 'py-0' : 'py-0'}`}>
           {/* Top row */}
           <div className="flex items-center justify-between gap-6">
             {/* Logo */}
             <OptimizedLink href="/home" className="group flex-shrink-0 relative" aria-label="KLIO Home">
               <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <Logo variant="default" className="relative" />
+              <div className="relative scale-[0.64] origin-left">
+                <Logo variant="default" className="relative" />
+              </div>
             </OptimizedLink>
 
             {/* Desktop nav - centered */}
@@ -115,41 +150,105 @@ export default function Header({
                 <OptimizedLink
                   key={route}
                   href={`/${route}`}
-                  className="group capitalize px-3 lg:px-4 py-2 rounded-full text-xs font-bold text-white hover:text-white transition-all duration-300 relative"
+                  className="group capitalize px-2 lg:px-3 rounded-full text-xs font-bold text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative"
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <span className="relative z-10">{route.charAt(0).toUpperCase() + route.slice(1)}</span>
                   {route === "saved" && savedCount > 0 && (
-                    <div className="absolute -top-1 -right-1 bg-sage text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-lg z-20">
+                    <div className="absolute -top-1 -right-1 bg-sage text-charcoal/90 text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-lg z-20">
                       {savedCount > 99 ? "99+" : savedCount}
                     </div>
                   )}
                 </OptimizedLink>
               ))}
 
-              {/* Business Links */}
-
-              <OptimizedLink
-                href="/claim-business"
-                  className="group capitalize px-3 lg:px-4 py-2 rounded-full text-xs font-bold text-white hover:text-white transition-all duration-300 relative flex items-center gap-1"
+              {/* For Businesses Dropdown */}
+              <div className="relative" ref={businessDropdownRef}>
+                <button
+                  ref={btnRef}
+                  onClick={() => setIsBusinessDropdownOpen(!isBusinessDropdownOpen)}
+                  className="group capitalize px-3 lg:px-4 py-1 rounded-full text-xs font-bold text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative flex items-center gap-1"
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative z-10 whitespace-nowrap">Claim Business</span>
-                      </OptimizedLink>
+                  <span className="relative z-10 whitespace-nowrap">For Businesses</span>
+                  <ChevronDown className={`relative z-10 w-3 h-3 transition-transform duration-200 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
 
-                      <OptimizedLink
-                        href="/manage-business"
-                className="group capitalize px-3 lg:px-4 py-2 rounded-full text-xs font-bold text-white hover:text-white transition-all duration-300 relative flex items-center gap-1"
-                style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative z-10 whitespace-nowrap">Manage Business</span>
-                      </OptimizedLink>
+                {/* Portal Dropdown Menu */}
+                {isBusinessDropdownOpen &&
+                  createPortal(
+                    <div
+                      className="fixed z-[1000] bg-white/95 backdrop-blur-xl border border-white/60 shadow-xl rounded-2xl overflow-hidden min-w-[560px] whitespace-normal break-keep transition-all duration-200"
+                      style={{ left: menuPos.left, top: menuPos.top }}
+                    >
+                      {/* header */}
+                      <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
+                        <div className="relative z-10 flex items-center gap-2">
+                          <Building2 className="w-4 h-4 text-sage" />
+                          <h2 className="text-sm md:text-base font-semibold text-charcoal">For Businesses</h2>
+                        </div>
+                        <button
+                          onClick={() => setIsBusinessDropdownOpen(false)}
+                          className="relative z-10 w-9 h-9 rounded-full border border-charcoal/10 bg-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+                          aria-label="Close menu"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      {/* body */}
+                      <div className="px-5 sm:px-6 py-4 space-y-3">
+                        <OptimizedLink
+                          href="/business/login"
+                          onClick={() => setIsBusinessDropdownOpen(false)}
+                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-sage/30 transition-all duration-200"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="font-urbanist font-600 text-charcoal text-sm">Business Login</div>
+                              <div className="text-xs text-charcoal/60 mt-0.5">Access your business account</div>
+                            </div>
+                            <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-sage transition-colors" />
+                          </div>
+                        </OptimizedLink>
+
+                        <OptimizedLink
+                          href="/claim-business"
+                          onClick={() => setIsBusinessDropdownOpen(false)}
+                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="font-urbanist font-600 text-charcoal text-sm">Claim Business</div>
+                              <div className="text-xs text-charcoal/60 mt-0.5">Add your business to our platform</div>
+                            </div>
+                            <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-coral transition-colors" />
+                          </div>
+                        </OptimizedLink>
+
+                        <OptimizedLink
+                          href="/manage-business"
+                          onClick={() => setIsBusinessDropdownOpen(false)}
+                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-sage/30 transition-all duration-200"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="font-urbanist font-600 text-charcoal text-sm">Manage Business</div>
+                              <div className="text-xs text-charcoal/60 mt-0.5">Update your business listing</div>
+                            </div>
+                            <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-sage transition-colors" />
+                          </div>
+                        </OptimizedLink>
+                      </div>
+                    </div>,
+                    document.body
+                  )
+                }
+              </div>
             </nav>
 
             {/* Right side */}
@@ -157,27 +256,27 @@ export default function Header({
               {/* Search Toggle (manual close/open) */}
               <button
                 onClick={() => setShowSearchBar((p) => !p)}
-                className="group w-10 h-10 rounded-full flex items-center justify-center text-white hover:text-white transition-all duration-300 relative overflow-hidden"
+                className="group w-6 h-6 rounded-full flex items-center justify-center text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative overflow-hidden"
                 aria-label="Toggle search"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute inset-0 backdrop-blur-sm bg-off-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <Search className="relative z-10 w-5 h-5" />
+                <Search className="relative z-10 w-4 h-4" />
               </button>
 
               {/* Mobile menu toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden w-10 h-10 rounded-full flex items-center justify-center hover:bg-sage/10 transition-colors"
+                className="md:hidden w-6 h-6 rounded-full flex items-center justify-center hover:bg-sage/10 transition-colors"
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
-                  <X className="w-6 h-6 text-white" />
+                  <X className="w-5 h-5 text-charcoal/90" />
                 ) : (
                   <div className="flex flex-col items-center justify-center gap-[5px]">
-                    <span className="w-5 h-[2px] bg-white rounded-full" />
-                    <span className="w-6 h-[2px] bg-white rounded-full" />
-                    <span className="w-5 h-[2px] bg-white rounded-full" />
+                    <span className="w-4 h-[2px] rounded-full bg-charcoal/90" />
+                    <span className="w-4 h-[2px] rounded-full bg-charcoal/90" />
+                    <span className="w-2 h-[2px] rounded-full bg-charcoal/90" />
                   </div>
                 )}
               </button>
@@ -185,12 +284,12 @@ export default function Header({
               {/* Profile */}
               <OptimizedLink
                 href="/profile"
-                className="group hidden md:flex w-10 h-10 rounded-full items-center justify-center text-white hover:text-white transition-all duration-300 relative overflow-hidden"
+                className="group hidden md:flex w-6 h-6 rounded-full items-center justify-center text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative overflow-hidden"
                 aria-label="Profile"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute inset-0 backdrop-blur-sm bg-off-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <User className="relative z-10 w-5 h-5" />
+                <User className="relative z-10 w-4 h-4" />
               </OptimizedLink>
             </div>
           </div>
@@ -244,12 +343,12 @@ export default function Header({
             <Logo variant="mobile" />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] text-white hover:bg-sage/10 group"
+              className={`w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] hover:bg-sage/10 group ${isHomeVariant ? 'text-charcoal' : 'text-charcoal/90'}`}
               aria-label="Close menu"
             >
-              <span className="w-5 h-[2px] bg-white rounded-full group-hover:bg-sage" />
-              <span className="w-6 h-[2px] bg-white rounded-full group-hover:bg-sage" />
-              <span className="w-5 h-[2px] bg-white rounded-full group-hover:bg-sage" />
+              <span className="w-5 h-[2px] bg-charcoal/90 rounded-full group-hover:bg-sage" />
+              <span className="w-5 h-[2px] bg-charcoal/90 rounded-full group-hover:bg-sage" />
+              <span className="w-2.5 h-[2px] bg-charcoal/90 rounded-full group-hover:bg-sage" />
             </button>
           </div>
 
@@ -265,7 +364,7 @@ export default function Header({
                 <span className="flex items-center justify-between">
                   {route.charAt(0).toUpperCase() + route.slice(1)}
                   {route === "saved" && savedCount > 0 && (
-                    <div className="bg-coral text-white text-xs font-bold rounded-full min-w-[20px] h-[20px] flex items-center justify-center px-1 shadow-lg">
+                    <div className="bg-coral text-charcoal/90 text-xs font-bold rounded-full min-w-[20px] h-[20px] flex items-center justify-center px-1 shadow-lg">
                       {savedCount > 99 ? "99+" : savedCount}
                     </div>
                   )}
@@ -322,7 +421,7 @@ export default function Header({
             <OptimizedLink
               href="/profile"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl text-sm font-semibold text-white hover:text-white hover:bg-sage/5 flex items-center gap-3 transition-all duration-200"
+              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 flex items-center gap-3 transition-all duration-200"
               style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
             >
               <User className="w-5 h-5" />

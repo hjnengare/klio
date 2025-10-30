@@ -16,7 +16,7 @@ export default function EventContent({ title, location, description, href }: Eve
     <div className="pt-4 relative flex-shrink-0 z-10 flex flex-col justify-between h-full">
       <div>
         <div>
-          <h3 className="text-lg font-bold text-navbar-bg group-hover:text-charcoal/80 transition-colors duration-300 text-center font-urbanist line-clamp-1 min-h-[2.5rem]">
+          <h3 className="text-lg font-bold text-charcoal group-hover:text-coral transition-colors duration-300 text-center font-urbanist line-clamp-1 min-h-[2.5rem]">
             {title}
           </h3>
         </div>

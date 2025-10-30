@@ -8,6 +8,7 @@
 import { memo } from "react";
 import dynamic from "next/dynamic";
 import Header from "../components/Header/Header";
+import PromoBar from "../components/PromoBar/PromoBar";
 import HeroCarousel from "../components/Hero/HeroCarousel";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
 import { TRENDING_BUSINESSES } from "../data/businessData";
@@ -55,17 +56,20 @@ export default function Home() {
 
   return (
     <div className="min-h-dvh bg-off-white">
-      <Header showSearch={true} variant="frosty" />
+      <div className="relative">
+        <PromoBar />
 
+        <Header showSearch={true} variant="frosty" />
 
-      <ToastContainer
-        notifications={notifications}
-        onRemove={removeNotification}
-        position="bottom-right"
-        duration={5000}
-      />
+        <ToastContainer
+          notifications={notifications}
+          onRemove={removeNotification}
+          position="bottom-right"
+          duration={5000}
+        />
 
-      <HeroCarousel userInterests={selectedInterests} />
+        <HeroCarousel userInterests={selectedInterests} />
+      </div>
 
       <div className="bg-off-white">
         <div className="py-1">
@@ -133,3 +137,14 @@ export function useScrollReveal(_opts?: ScrollRevealOptions) {
 export const ScrollRevealProvider: React.FC<React.PropsWithChildren> = ({ children }) => (
   <>{children}</>
 );
+
+
+
+
+
+
+
+
+
+
+
