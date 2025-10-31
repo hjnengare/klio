@@ -8,8 +8,6 @@ import {
   Instagram,
   Facebook,
   Linkedin,
-  ShieldCheck,
-  Heart,
 } from "lucide-react";
 import Logo from "../Logo/Logo";
 
@@ -18,15 +16,11 @@ export default function Footer() {
 
   const footerLinks = {
     company: [
-      { name: "About", href: "/about" },
-      { name: "Careers", href: "/careers" },
-      { name: "Press", href: "/press" },
-      { name: "Blog", href: "/blog" }
+      { name: "About", href: "/about" }
     ],
     support: [
       { name: "Help Center", href: "/help" },
       { name: "Safety", href: "/safety" },
-      { name: "Community", href: "/community" },
       { name: "Contact", href: "/contact" }
     ],
     legal: [
@@ -45,7 +39,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden pb-safe-area-bottom">
+    <footer className="relative overflow-hidden pb-safe-area-bottom bg-charcoal text-off-white">
    
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 md:pt-16">
         {/* Main footer content */}
@@ -63,7 +57,7 @@ export default function Footer() {
                   <Logo variant="footer" />
                 </div>
               </Link>
-              <p className="font-urbanist text-6 text-charcoal/70 leading-relaxed mb-6 max-w-sm">
+              <p className="font-urbanist text-6 text-off-white/70 leading-relaxed mb-6 max-w-sm">
                 Discover trusted local businesses and authentic experiences in your community.
               </p>
 
@@ -80,7 +74,7 @@ export default function Footer() {
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                       viewport={{ once: true }}
                       whileHover={{ scale: 1.1, y: -2 }}
-                      className="w-10 h-10 bg-sage/15 hover:bg-sage/25 backdrop-blur-sm rounded-full flex items-center justify-center text-sage hover:text-sage/80 transition-all duration-300 border border-sage/20 hover:border-sage/30 shadow-lg shadow-sage/10 hover:shadow-xl hover:shadow-sage/15"
+                      className="w-10 h-10 bg-off-white/10 hover:bg-off-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-off-white hover:text-off-white/80 transition-all duration-300 border border-off-white/20 hover:border-off-white/30 shadow-lg hover:shadow-xl"
                       aria-label={social.name}
                     >
                       <Icon className="w-5 h-5" />
@@ -101,17 +95,17 @@ export default function Footer() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                <h3 className="font-urbanist text-5 font-600 text-charcoal mb-4">Company</h3>
+                <h3 className="font-urbanist text-5 font-600 text-off-white mb-4">Company</h3>
                 <ul className="space-y-3">
                   {footerLinks.company.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="font-urbanist text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
+                        className="font-urbanist text-6 text-off-white/70 hover:text-off-white transition-colors duration-300 group"
                       >
                         <span className="relative">
                           {link.name}
-                          <div className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-sage/30 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                          <div className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-off-white/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                         </span>
                       </Link>
                     </li>
@@ -126,17 +120,17 @@ export default function Footer() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <h3 className="font-urbanist text-5 font-600 text-charcoal mb-4">Support</h3>
+                <h3 className="font-urbanist text-5 font-600 text-off-white mb-4">Support</h3>
                 <ul className="space-y-3">
                   {footerLinks.support.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="font-urbanist text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
+                        className="font-urbanist text-6 text-off-white/70 hover:text-off-white transition-colors duration-300 group"
                       >
                         <span className="relative">
                           {link.name}
-                          <div className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-sage/30 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                          <div className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-off-white/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                         </span>
                       </Link>
                     </li>
@@ -151,17 +145,17 @@ export default function Footer() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <h3 className="font-urbanist text-5 font-600 text-charcoal mb-4">Legal</h3>
+                <h3 className="font-urbanist text-5 font-600 text-off-white mb-4">Legal</h3>
                 <ul className="space-y-3">
                   {footerLinks.legal.map((link) => (
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        className="font-urbanist text-6 text-charcoal/70 hover:text-sage transition-colors duration-300 group"
+                        className="font-urbanist text-6 text-off-white/70 hover:text-off-white transition-colors duration-300 group"
                       >
                         <span className="relative">
                           {link.name}
-                          <div className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-sage/30 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                          <div className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-off-white/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                         </span>
                       </Link>
                     </li>
@@ -178,25 +172,13 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="pt-6 md:pt-8 border-t border-white/30"
+          className="pt-6 md:pt-8 border-t border-off-white/20"
         >
           <div className="flex flex-col md:flex-row items-center justify-center md:justify-between space-y-4 md:space-y-0">
             {/* Copyright */}
-            <p className="font-urbanist text-7 text-charcoal/60">
+            <p className="font-urbanist text-7 text-off-white/60">
               © {currentYear} sayso. All rights reserved.
             </p>
-
-            {/* Trust indicators */}
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 px-3 py-1 bg-sage/15 backdrop-blur-sm rounded-full border border-sage/20 shadow-lg shadow-sage/10">
-                <ShieldCheck className="w-3.5 h-3.5 text-sage" />
-                <span className="font-urbanist text-8 font-500 text-sage">Secure</span>
-              </div>
-              <div className="flex items-center space-x-2 px-3 py-1 bg-coral/15 backdrop-blur-sm rounded-full border border-coral/20 shadow-lg shadow-coral/10">
-                <Heart className="w-3.5 h-3.5 text-coral" fill="currentColor" />
-                <span className="font-urbanist text-8 font-500 text-coral">Trusted</span>
-              </div>
-            </div>
           </div>
         </motion.div>
       </div>

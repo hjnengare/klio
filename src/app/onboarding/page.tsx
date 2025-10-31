@@ -112,7 +112,7 @@ export default function OnboardingPage() {
               <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-600" : "opacity-0"}`}>
                 <h2
                   className="text-lg sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-5 md:mb-6 leading-tight tracking-tight px-2 text-charcoal"
-                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                  style={{ fontFamily: '"Permanent Marker", cursive' }}
                 >
                   Discover local gems near you!
                 </h2>
