@@ -96,9 +96,6 @@ public
 tmp/
 temp/
 
-# Performance and documentation (project-specific)
-PERFORMANCE_OPTIMIZATION.md
-
 # Editor swap files
 *.swp
 *.swo
@@ -110,3 +107,14 @@ playwright-report/
 
 # Bundle analyzer
 .next/analyze/
+
+# Temporary files
+temp_*.ts
+temp_*.js
+backup.txt
+
+# Documentation/Summary files (project-specific optimization notes)
+PERFORMANCE_OPTIMIZATION*.md
+OPTIMIZATION_SUMMARY.md
+REFACTORING_SUMMARY.md
+PERFORMANCE_OPTIMIZATION_GUIDE.md

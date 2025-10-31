@@ -104,6 +104,9 @@ export default function RootLayout({
         {/* Dancing Script Font */}
         <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet" />
         
+        {/* Permanent Marker Font */}
+        <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet" />
+        
         {/* Service Worker Registration */}
         <script
           dangerouslySetInnerHTML={{
