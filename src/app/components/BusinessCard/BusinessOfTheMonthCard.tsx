@@ -8,14 +8,55 @@ import { ImageOff, Star, Edit, Bookmark, Share2, MapPin } from "lucide-react";
 import Stars from "../Stars/Stars";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
 import { BusinessOfTheMonth } from "../../data/communityHighlightsData";
+import { getCategoryPng, isPngIcon } from "../../utils/categoryToPngMapping";
 
 export default function BusinessOfTheMonthCard({ business }: { business: BusinessOfTheMonth }) {
   const idForSnap = useMemo(() => `business-month-${business.id}`, [business.id]);
   const [imgError, setImgError] = useState(false);
+  const [usingFallback, setUsingFallback] = useState(false);
 
-  const displayImage = business.image || (business as any).image_url || "";
+  // Image fallback logic with edge case handling
+  const getDisplayImage = useMemo(() => {
+    // Priority 1: Check for uploaded business image (not a PNG icon)
+    const uploadedImage = (business as any).uploaded_image || (business as any).uploadedImage;
+    if (uploadedImage && 
+        typeof uploadedImage === 'string' && 
+        uploadedImage.trim() !== '' &&
+        !isPngIcon(uploadedImage) &&
+        !uploadedImage.includes('/png/')) {
+      return { image: uploadedImage, isPng: false };
+    }
+
+    // Priority 2: Check image_url (API compatibility)
+    const imageUrl = business.image || (business as any).image_url;
+    if (imageUrl && 
+        typeof imageUrl === 'string' && 
+        imageUrl.trim() !== '' &&
+        !isPngIcon(imageUrl)) {
+      return { image: imageUrl, isPng: false };
+    }
+
+    // Priority 3: Fallback to PNG based on category
+    const categoryPng = getCategoryPng(business.category);
+    return { image: categoryPng, isPng: true };
+  }, [business]);
+
+  const displayImage = getDisplayImage.image;
+  const isImagePng = getDisplayImage.isPng;
   const displayAlt = business.alt || business.name;
   const displayTotal = typeof business.totalRating === "number" ? business.totalRating : (business as any).rating || 0;
+
+  // Handle image error - fallback to PNG if uploaded image fails
+  const handleImageError = () => {
+    if (!usingFallback && !isImagePng) {
+      // If uploaded image fails, try category PNG
+      setUsingFallback(true);
+      setImgError(false); // Reset to try fallback
+    } else {
+      // PNG also failed or we're already using fallback
+      setImgError(true);
+    }
+  };
 
   const badgeStyle = (badge: string) => {
     switch (badge) {
@@ -58,24 +99,68 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       >
         {/* Media */}
         <div className="relative overflow-hidden rounded-t-lg flex-1 sm:flex-initial z-10">
-          {!imgError && displayImage ? (
-            <Image
-              src={displayImage}
-              alt={displayAlt}
-              width={400}
-              height={320}
-              className="h-[540px] sm:h-[320px] md:h-[220px] w-full object-cover rounded-t-lg"
-              priority={false}
-              loading="lazy"
-              quality={85}
-              onError={() => setImgError(true)}
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            />
-          ) : (
-            <div className="h-[540px] sm:h-[320px] md:h-[220px] w-full flex items-center justify-center bg-sage/10 text-sage rounded-t-lg">
-              <ImageOff className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
-            </div>
-          )}
+          <div className="relative w-full h-[540px] sm:h-[320px] md:h-[220px]">
+            {!imgError && displayImage ? (
+              isImagePng || displayImage.includes('/png/') || displayImage.endsWith('.png') || usingFallback ? (
+                // Display PNG files as icons with page background
+                <div className="w-full h-[540px] sm:h-[320px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-lg">
+                  <Image
+                    src={usingFallback ? getCategoryPng(business.category) : displayImage}
+                    alt={displayAlt}
+                    width={128}
+                    height={128}
+                    className="w-28 h-28 sm:w-28 sm:h-28 object-contain"
+                    priority={false}
+                    loading="lazy"
+                    quality={85}
+                    onError={handleImageError}
+                    sizes="128px"
+                  />
+                </div>
+              ) : (
+                // Regular full image for uploaded business images
+                <Image
+                  src={displayImage}
+                  alt={displayAlt}
+                  width={400}
+                  height={320}
+                  className="h-[540px] sm:h-[320px] md:h-[220px] w-full object-cover rounded-t-lg"
+                  priority={false}
+                  loading="lazy"
+                  quality={85}
+                  onError={handleImageError}
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                />
+              )
+            ) : (
+              // Final fallback - show icon placeholder
+              <div className="w-full h-[540px] sm:h-[320px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-lg">
+                <div className="w-28 h-28 sm:w-28 sm:h-28 flex items-center justify-center">
+                  <Image
+                    src={getCategoryPng(business.category)}
+                    alt={displayAlt}
+                    width={128}
+                    height={128}
+                    className="w-full h-full object-contain"
+                    priority={false}
+                    loading="lazy"
+                    quality={85}
+                    onError={() => {
+                      // Even PNG fallback failed
+                      setImgError(true);
+                    }}
+                    sizes="128px"
+                  />
+                </div>
+              </div>
+            )}
+            {/* Show error icon only if all fallbacks failed */}
+            {imgError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-sage/10 text-sage rounded-t-lg">
+                <ImageOff className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
+              </div>
+            )}
+          </div>
 
 
           {/* Achievement badge */}

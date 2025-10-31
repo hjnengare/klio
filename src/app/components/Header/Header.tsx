@@ -29,13 +29,16 @@ export default function Header({
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
+  const [isMobileBusinessDropdownOpen, setIsMobileBusinessDropdownOpen] = useState(false);
   const [menuPos, setMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
+  const [mobileMenuPos, setMobileMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
   const { savedCount } = useSavedItems();
 
   // Anchor for the dropdown FilterModal to hang under
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const businessDropdownRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
+  const mobileBusinessBtnRef = useRef<HTMLButtonElement>(null);
 
   // Scroll-based header visibility
   useEffect(() => {
@@ -102,6 +105,19 @@ export default function Header({
     }
   }, [isBusinessDropdownOpen]);
 
+  // Measure mobile button position when dropdown opens
+  useLayoutEffect(() => {
+    if (isMobileBusinessDropdownOpen && mobileBusinessBtnRef.current) {
+      const r = mobileBusinessBtnRef.current.getBoundingClientRect();
+      // Position on the right side, slightly inset from edge
+      const dropdownWidth = 320; // Approximate width of dropdown
+      setMobileMenuPos({ 
+        left: Math.max(16, window.innerWidth - dropdownWidth - 16), 
+        top: r.top 
+      });
+    }
+  }, [isMobileBusinessDropdownOpen]);
+
   const openFilters = () => {
     if (isFilterVisible) return;
     setIsFilterVisible(true);
@@ -150,7 +166,7 @@ export default function Header({
                 <OptimizedLink
                   key={route}
                   href={`/${route}`}
-                  className="group capitalize px-2 lg:px-3 rounded-full text-xs font-bold text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative"
+                  className="group capitalize px-2 lg:px-3 rounded-full text-xs font-normal text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative"
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -163,13 +179,16 @@ export default function Header({
                   )}
                 </OptimizedLink>
               ))}
+            </nav>
 
+            {/* Right side */}
+            <div className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
               {/* For Businesses Dropdown */}
-              <div className="relative" ref={businessDropdownRef}>
+              <div className="relative hidden md:block" ref={businessDropdownRef}>
                 <button
                   ref={btnRef}
                   onClick={() => setIsBusinessDropdownOpen(!isBusinessDropdownOpen)}
-                  className="group capitalize px-3 lg:px-4 py-1 rounded-full text-xs font-bold text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative flex items-center gap-1"
+                  className="group capitalize px-3 lg:px-4 py-1 rounded-full text-xs font-normal text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative flex items-center gap-1"
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -249,10 +268,7 @@ export default function Header({
                   )
                 }
               </div>
-            </nav>
 
-            {/* Right side */}
-            <div className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
               {/* Search Toggle (manual close/open) */}
               <button
                 onClick={() => setShowSearchBar((p) => !p)}
@@ -293,53 +309,53 @@ export default function Header({
               </OptimizedLink>
             </div>
           </div>
-
-          {/* Search Input Section — stays open until submit or manual toggle */}
-          {showSearch && (
-            <div
-              className={`overflow-hidden transition-all duration-300 ${
-                showSearchBar ? "max-h-20 opacity-100 mt-3 sm:mt-4" : "max-h-0 opacity-0 mt-0"
-              }`}
-            >
-              {/* Anchor for the dropdown modal */}
-              <div ref={searchWrapRef}>
-                <SearchInput
-                  variant="header"
-                  placeholder="Discover exceptional local experiences, premium dining, and hidden gems..."
-                  mobilePlaceholder="Search places, coffee, yoga…"
-                  onSearch={(q) => console.log("search change:", q)}
-                  onSubmitQuery={handleSubmitQuery}     // <-- close on Enter/submit
-                  onFilterClick={openFilters}
-                  onFocusOpenFilters={openFilters}      // anchored modal opens on focus
-                  showFilter
-                />
-              </div>
-
-              <div
-                className="pb-3 sm:pb-4"
-                style={{ paddingBottom: "calc(0.5rem + var(--safe-bottom))" }}
-              />
-            </div>
-          )}
         </div>
       </header>
+
+      {/* Search Input Section — appears below navbar */}
+      {showSearch && (
+        <div
+          className={`fixed left-0 right-0 z-40 bg-transparent transition-all duration-300 ease-out ${
+            isHomeVariant 
+              ? (showSearchBar ? "top-[calc(6rem+24px)] opacity-100 translate-y-0" : "top-[calc(6rem+24px)] opacity-0 -translate-y-4 pointer-events-none")
+              : (showSearchBar ? "top-[64px] opacity-100 translate-y-0" : "top-[64px] opacity-0 -translate-y-4 pointer-events-none")
+          }`}
+          style={sf}
+        >
+          <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 max-w-[1300px]">
+            {/* Anchor for the dropdown modal */}
+            <div ref={searchWrapRef}>
+              <SearchInput
+                variant="header"
+                placeholder="Discover exceptional local experiences, premium dining, and hidden gems..."
+                mobilePlaceholder="Search places, coffee, yoga…"
+                onSearch={(q) => console.log("search change:", q)}
+                onSubmitQuery={handleSubmitQuery}
+                onFilterClick={openFilters}
+                onFocusOpenFilters={openFilters}
+                showFilter
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-charcoal/40 backdrop-blur-xl z-[90] md:hidden"
+          className="fixed inset-0 bg-charcoal/40 backdrop-blur-xl z-[10000] md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Mobile menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-full backdrop-blur-lg bg-off-white/80 z-[100] shadow-lg shadow-sage/10 transform md:hidden ${
+        className={`fixed top-0 right-0 h-full w-full bg-off-white z-[10001] shadow-lg shadow-sage/10 transform md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300`}
       >
-        <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between px-6 py-6 border-b border-charcoal/10">
+        <div className="flex flex-col h-full overflow-hidden">
+          <div className="flex items-center justify-between px-6 py-6 border-b border-charcoal/10 flex-shrink-0">
             <Logo variant="mobile" />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
@@ -352,7 +368,7 @@ export default function Header({
             </button>
           </div>
 
-          <nav className="flex flex-col py-4 px-4">
+          <nav className="flex flex-col py-4 px-4 overflow-y-auto flex-1 min-h-0">
             {["home", "saved", "leaderboard"].map((route) => (
               <OptimizedLink
                 key={route}
@@ -372,51 +388,16 @@ export default function Header({
               </OptimizedLink>
             ))}
             
-            {/* For Businesses Section */}
-            <div className="px-4 py-2" key="for-businesses-mobile">
-              <div className="font-urbanist text-xs font-600 text-charcoal/60 uppercase tracking-wider mb-3 px-2">For Businesses</div>
-              <div className="space-y-2">
-                <OptimizedLink
-                  href="/business/login"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-sm font-600 font-urbanist text-charcoal hover:text-charcoal hover:bg-white/60 transition-all duration-200 group"
-                >
-                  <div className="w-11 h-11 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:from-sage/30 group-hover:to-sage/20 transition-all duration-200 shadow-sm">
-                    <LogIn className="w-5 h-5 text-sage" strokeWidth={2} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-600 text-charcoal">Business Login</div>
-                    <div className="text-xs text-charcoal/60 mt-0.5">Access your account</div>
-                  </div>
-                </OptimizedLink>
-                <OptimizedLink
-                  href="/claim-business"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-sm font-600 font-urbanist text-charcoal hover:text-charcoal hover:bg-white/60 transition-all duration-200 group"
-                >
-                  <div className="w-11 h-11 bg-gradient-to-br from-coral/20 to-coral/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:from-coral/30 group-hover:to-coral/20 transition-all duration-200 shadow-sm">
-                    <Store className="w-5 h-5 text-coral" strokeWidth={2} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-600 text-charcoal">Claim Business</div>
-                    <div className="text-xs text-charcoal/60 mt-0.5">Add your business</div>
-                  </div>
-                </OptimizedLink>
-                <OptimizedLink
-                  href="/manage-business"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center gap-4 px-4 py-3.5 rounded-xl text-sm font-600 font-urbanist text-charcoal hover:text-charcoal hover:bg-white/60 transition-all duration-200 group"
-                >
-                  <div className="w-11 h-11 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:from-sage/30 group-hover:to-sage/20 transition-all duration-200 shadow-sm">
-                    <Store className="w-5 h-5 text-sage" strokeWidth={2} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-600 text-charcoal">Manage Business</div>
-                    <div className="text-xs text-charcoal/60 mt-0.5">Update your listing</div>
-                  </div>
-                </OptimizedLink>
-              </div>
-            </div>
+            {/* For Businesses Button */}
+            <button
+              ref={mobileBusinessBtnRef}
+              onClick={() => setIsMobileBusinessDropdownOpen(!isMobileBusinessDropdownOpen)}
+              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 flex items-center gap-3 transition-all duration-200 text-left"
+              style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+            >
+              For Businesses
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isMobileBusinessDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
             <div className="h-px bg-charcoal/10 my-4 mx-4" />
             <OptimizedLink
               href="/profile"
@@ -424,12 +405,103 @@ export default function Header({
               className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 flex items-center gap-3 transition-all duration-200"
               style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
             >
-              <User className="w-5 h-5" />
               Profile
             </OptimizedLink>
           </nav>
         </div>
       </div>
+
+      {/* Mobile Business Dropdown Portal */}
+      {isMobileBusinessDropdownOpen &&
+        typeof window !== "undefined" &&
+        createPortal(
+          <>
+            {/* Overlay */}
+            <div
+              className="fixed inset-0 bg-charcoal/20 backdrop-blur-sm z-[10002] md:hidden"
+              onClick={() => setIsMobileBusinessDropdownOpen(false)}
+            />
+            {/* Dropdown */}
+            <div
+              className="fixed z-[10003] bg-white/95 backdrop-blur-xl border border-white/60 shadow-xl rounded-2xl overflow-hidden w-[calc(100vw-32px)] max-w-[320px] md:hidden transition-all duration-200"
+              style={{ 
+                left: `${mobileMenuPos.left}px`, 
+                top: `${mobileMenuPos.top + 48}px`,
+                right: '16px'
+              }}
+            >
+              {/* header */}
+              <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
+                <div className="relative z-10 flex items-center gap-2">
+                  <Building2 className="w-4 h-4 text-sage" />
+                  <h2 className="text-sm md:text-base font-semibold text-charcoal">For Businesses</h2>
+                </div>
+                <button
+                  onClick={() => setIsMobileBusinessDropdownOpen(false)}
+                  className="relative z-10 w-9 h-9 rounded-full border border-charcoal/10 bg-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+                  aria-label="Close menu"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* body */}
+              <div className="px-5 sm:px-6 py-4 space-y-3">
+                <OptimizedLink
+                  href="/business/login"
+                  onClick={() => {
+                    setIsMobileBusinessDropdownOpen(false);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-sage/30 transition-all duration-200"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="font-urbanist font-600 text-charcoal text-sm">Business Login</div>
+                      <div className="text-xs text-charcoal/60 mt-0.5">Access your business account</div>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-sage transition-colors" />
+                  </div>
+                </OptimizedLink>
+
+                <OptimizedLink
+                  href="/claim-business"
+                  onClick={() => {
+                    setIsMobileBusinessDropdownOpen(false);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="font-urbanist font-600 text-charcoal text-sm">Claim Business</div>
+                      <div className="text-xs text-charcoal/60 mt-0.5">Add your business to our platform</div>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-coral transition-colors" />
+                  </div>
+                </OptimizedLink>
+
+                <OptimizedLink
+                  href="/manage-business"
+                  onClick={() => {
+                    setIsMobileBusinessDropdownOpen(false);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-sage/30 transition-all duration-200"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="font-urbanist font-600 text-charcoal text-sm">Manage Business</div>
+                      <div className="text-xs text-charcoal/60 mt-0.5">Update your business listing</div>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-sage transition-colors" />
+                  </div>
+                </OptimizedLink>
+              </div>
+            </div>
+          </>,
+          document.body
+        )}
 
       {/* Anchored Filter Modal */}
       <FilterModal

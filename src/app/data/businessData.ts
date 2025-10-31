@@ -4,7 +4,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440001",
     name: "The Green Table",
-    image: "/museum.png",
+    // No uploaded_image - will use category-based PNG fallback
     alt: "The Green Table restaurant",
     category: "Restaurant",
     location: "Downtown",
@@ -21,7 +21,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440002",
     name: "Artisan Coffee Co.",
-    image: "/plate.png",
+    // No uploaded_image - will use category-based PNG fallback
     alt: "Artisan Coffee Co.",
     category: "Coffee Shop",
     location: "Arts District",
@@ -37,7 +37,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440003",
     name: "Bloom Yoga Studio",
-    image: "/restaurant.png",
+    // No uploaded_image - will use category-based PNG fallback
     alt: "Bloom Yoga Studio",
     category: "Wellness",
     location: "Riverside",
@@ -53,7 +53,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440004",
     name: "Vintage & Vine",
-    image: "/table.png",
+    // No uploaded_image - will use category-based PNG fallback
     alt: "Vintage & Vine bookstore",
     category: "Bookstore",
     location: "Old Town",
@@ -69,7 +69,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440005",
     name: "Sunset Ceramics",
-    image: "/wine.png",
+    // No uploaded_image - will use category-based PNG fallback
     alt: "Sunset Ceramics studio",
     category: "Art Studio",
     location: "Westside",
@@ -86,7 +86,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440006",
     name: "Morning Glory Bakery",
-    image: "/bar.png",
+    // No uploaded_image - will use category-based PNG fallback
     alt: "Morning Glory Bakery",
     category: "Bakery",
     location: "Main Street",
@@ -102,7 +102,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440021",
     name: "Ocean View Bistro",
-    image: "/car.png",
+    // No uploaded_image - will use category-based PNG fallback
     alt: "Ocean View Bistro restaurant",
     category: "Restaurant",
     location: "Waterfront",
@@ -119,7 +119,7 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440022",
     name: "Urban Roastery",
-    image: "/cocktail.png",
+    // No uploaded_image - will use category-based PNG fallback
     alt: "Urban Roastery coffee shop",
     category: "Coffee Shop",
     location: "Industrial District",
@@ -135,7 +135,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440023",
     name: "Zen Wellness Center",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Zen Wellness Center",
     category: "Wellness",
     location: "Garden District",
@@ -151,7 +152,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440024",
     name: "The Literary Corner",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "The Literary Corner bookstore",
     category: "Bookstore",
     location: "University District",
@@ -167,7 +169,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440025",
     name: "Creative Canvas Studio",
-    image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2058&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2058&q=80",
     alt: "Creative Canvas Studio",
     category: "Art Studio",
     location: "Artists Quarter",
@@ -184,7 +187,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440026",
     name: "Fresh Start Bakehouse",
-    image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Fresh Start Bakehouse",
     category: "Bakery",
     location: "Community Center",
@@ -200,7 +204,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440027",
     name: "Fitness First Gym",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Fitness First Gym",
     category: "Fitness",
     location: "Health Complex",
@@ -216,7 +221,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440028",
     name: "Metro Brew House",
-    image: "https://images.unsplash.com/photo-1442975631115-c4f7b05b8a2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1442975631115-c4f7b05b8a2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Metro Brew House",
     category: "Coffee Shop",
     location: "Metro Station",
@@ -232,7 +238,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440029",
     name: "Harmony Spa & Wellness",
-    image: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Harmony Spa & Wellness",
     category: "Wellness",
     location: "Peaceful Gardens",
@@ -249,7 +256,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440030",
     name: "Pages & Poetry",
-    image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Pages & Poetry bookstore",
     category: "Bookstore",
     location: "Literary District",
@@ -265,7 +273,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440031",
     name: "Artisan's Workshop",
-    image: "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Artisan's Workshop",
     category: "Art Studio",
     location: "Craft Village",
@@ -281,7 +290,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440032",
     name: "Sweet Dreams Patisserie",
-    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
     alt: "Sweet Dreams Patisserie",
     category: "Bakery",
     location: "French Quarter",
@@ -298,7 +308,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440033",
     name: "Peak Performance Studio",
-    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Peak Performance Studio",
     category: "Fitness",
     location: "Athletic Center",
@@ -314,7 +325,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440034",
     name: "Rooftop Bistro",
-    image: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Rooftop Bistro restaurant",
     category: "Restaurant",
     location: "City Center",
@@ -331,7 +343,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440035",
     name: "Coastal Café",
-    image: "https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
     alt: "Coastal Café",
     category: "Coffee Shop",
     location: "Beachside",
@@ -347,7 +360,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440036",
     name: "Mindful Movement",
-    image: "https://images.unsplash.com/photo-1506629905607-e41068fe2d57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1506629905607-e41068fe2d57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Mindful Movement wellness center",
     category: "Wellness",
     location: "Holistic Hub",
@@ -363,7 +377,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440037",
     name: "Chapter & Verse",
-    image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Chapter & Verse bookstore",
     category: "Bookstore",
     location: "Scholar's Row",
@@ -379,7 +394,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440038",
     name: "Pottery & Paint",
-    image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Pottery & Paint art studio",
     category: "Art Studio",
     location: "Creative Commons",
@@ -396,7 +412,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440039",
     name: "Golden Crust Bakery",
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Golden Crust Bakery",
     category: "Bakery",
     location: "Heritage District",
@@ -412,7 +429,8 @@ export const TRENDING_BUSINESSES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440040",
     name: "Iron & Steel Fitness",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2066&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2066&q=80",
     alt: "Iron & Steel Fitness gym",
     category: "Fitness",
     location: "Industrial Park",
@@ -431,7 +449,8 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440007",
     name: "Rustic Reads",
-    image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Rustic Reads bookstore",
     category: "Bookstore",
     location: "Historic Quarter",
@@ -447,7 +466,8 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440008",
     name: "Harmony Healing",
-    image: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Harmony Healing spa",
     category: "Wellness",
     location: "Spa District",
@@ -463,7 +483,8 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440009",
     name: "Corner Deli & More",
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80",
     alt: "Corner Deli & More",
     category: "Deli",
     location: "Neighborhood",
@@ -479,7 +500,8 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440010",
     name: "Sketch & Sip Studio",
-    image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2058&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2058&q=80",
     alt: "Sketch & Sip Studio",
     category: "Art Studio",
     location: "Creative District",
@@ -495,7 +517,8 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440011",
     name: "Peak Performance Gym",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     alt: "Peak Performance Gym",
     category: "Fitness",
     location: "Sports Complex",
@@ -512,7 +535,8 @@ export const NEARBY_FAVORITES: Business[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440012",
     name: "Golden Hour Cafe",
-    image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
+    // No uploaded_image - will use category-based PNG fallback
+    // image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
     alt: "Golden Hour Cafe",
     category: "Coffee Shop",
     location: "Sunset Boulevard",

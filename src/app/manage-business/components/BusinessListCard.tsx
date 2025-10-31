@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, Edit3, Store } from "lucide-react";
+import { Eye, Edit3, Store, ImageOff } from "lucide-react";
+import { getCategoryPng, isPngIcon } from "../../utils/categoryToPngMapping";
 
 export interface Business {
   id: string;
@@ -18,6 +19,99 @@ export interface Business {
 
 interface BusinessListCardProps {
   businesses: Business[];
+}
+
+// Helper component for business image with fallback
+function BusinessImage({ business }: { business: Business }) {
+  const [imgError, setImgError] = useState(false);
+  const [usingFallback, setUsingFallback] = useState(false);
+
+  // Image fallback logic with edge case handling
+  const getDisplayImage = useMemo(() => {
+    // Priority 1: Check for uploaded business image (not a PNG icon)
+    const uploadedImage = (business as any).uploaded_image || (business as any).uploadedImage;
+    if (uploadedImage && 
+        typeof uploadedImage === 'string' && 
+        uploadedImage.trim() !== '' &&
+        !isPngIcon(uploadedImage) &&
+        !uploadedImage.includes('/png/')) {
+      return { image: uploadedImage, isPng: false };
+    }
+
+    // Priority 2: Check image field (if not a PNG)
+    if (business.image && 
+        typeof business.image === 'string' && 
+        business.image.trim() !== '' &&
+        !isPngIcon(business.image)) {
+      return { image: business.image, isPng: false };
+    }
+
+    // Priority 3: Fallback to PNG based on category
+    const categoryPng = getCategoryPng(business.category);
+    return { image: categoryPng, isPng: true };
+  }, [business]);
+
+  const displayImage = getDisplayImage.image;
+  const isImagePng = getDisplayImage.isPng;
+
+  // Handle image error - fallback to PNG if uploaded image fails
+  const handleImageError = () => {
+    if (!usingFallback && !isImagePng) {
+      setUsingFallback(true);
+      setImgError(false);
+    } else {
+      setImgError(true);
+    }
+  };
+
+  return (
+    <div className="w-16 h-16 rounded-lg overflow-hidden bg-white/20 flex-shrink-0 relative">
+      {!imgError && displayImage ? (
+        isImagePng || displayImage.includes('/png/') || displayImage.endsWith('.png') || usingFallback ? (
+          // Display PNG files as icons
+          <div className="w-full h-full flex items-center justify-center bg-off-white/90">
+            <Image
+              src={usingFallback ? getCategoryPng(business.category) : displayImage}
+              alt={business.name}
+              width={64}
+              height={64}
+              className="w-12 h-12 object-contain"
+              onError={handleImageError}
+            />
+          </div>
+        ) : (
+          // Regular full image for uploaded business images
+          <Image
+            src={displayImage}
+            alt={business.name}
+            width={64}
+            height={64}
+            className="w-full h-full object-cover"
+            onError={handleImageError}
+          />
+        )
+      ) : (
+        // Final fallback
+        <div className="w-full h-full flex items-center justify-center bg-off-white/90">
+          <div className="w-12 h-12 flex items-center justify-center">
+            <Image
+              src={getCategoryPng(business.category)}
+              alt={business.name}
+              width={48}
+              height={48}
+              className="w-full h-full object-contain"
+              onError={() => setImgError(true)}
+            />
+          </div>
+        </div>
+      )}
+      {imgError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-sage/10">
+          <ImageOff className="w-6 h-6 text-sage/70" />
+        </div>
+      )}
+    </div>
+  );
 }
 
 export function BusinessListCard({ businesses }: BusinessListCardProps) {
@@ -55,15 +149,7 @@ export function BusinessListCard({ businesses }: BusinessListCardProps) {
             <div key={business.id} className="bg-white/40 backdrop-blur-sm rounded-lg p-4 border border-white/50 hover:bg-white/60 transition-all duration-200">
               <div className="flex items-center gap-4">
                 {/* Business Image */}
-                <div className="w-16 h-16 rounded-lg overflow-hidden bg-white/20 flex-shrink-0">
-                  <Image
-                    src={business.image}
-                    alt={business.name}
-                    width={64}
-                    height={64}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <BusinessImage business={business} />
 
                 {/* Business Info */}
                 <div className="flex-1 min-w-0">

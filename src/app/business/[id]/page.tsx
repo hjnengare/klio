@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
     ArrowLeft,
     Store,
@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { ImageCarousel } from "../../components/Business/ImageCarousel";
 import { PremiumReviewCard } from "../../components/Business/PremiumReviewCard";
+import { getCategoryPng, isPngIcon } from "../../utils/categoryToPngMapping";
 
 // CSS animations to replace framer-motion
 const animations = `
@@ -52,6 +53,95 @@ const animations = `
   .animate-delay-300 { animation-delay: 0.3s; opacity: 0; }
 `;
 
+// Helper component for business profile image with fallback
+function BusinessProfileImage({ business }: { business: { id: string; name: string; category?: string; image?: string; uploaded_image?: string; uploadedImage?: string; image_url?: string } }) {
+    const [imgError, setImgError] = useState(false);
+    const [usingFallback, setUsingFallback] = useState(false);
+
+    // Image fallback logic with edge case handling
+    const getDisplayImage = useMemo(() => {
+        // Priority 1: Check for uploaded business image (not a PNG icon)
+        const uploadedImage = business.uploaded_image || business.uploadedImage;
+        if (uploadedImage && 
+            typeof uploadedImage === 'string' && 
+            uploadedImage.trim() !== '' &&
+            !isPngIcon(uploadedImage) &&
+            !uploadedImage.includes('/png/')) {
+            return { image: uploadedImage, isPng: false };
+        }
+
+        // Priority 2: Check image_url (API compatibility)
+        if (business.image_url && 
+            typeof business.image_url === 'string' && 
+            business.image_url.trim() !== '' &&
+            !isPngIcon(business.image_url)) {
+            return { image: business.image_url, isPng: false };
+        }
+
+        // Priority 3: Check image field (if not a PNG)
+        if (business.image && 
+            typeof business.image === 'string' && 
+            business.image.trim() !== '' &&
+            !isPngIcon(business.image)) {
+            return { image: business.image, isPng: false };
+        }
+
+        // Priority 4: Fallback to PNG based on category
+        const categoryPng = getCategoryPng(business.category);
+        return { image: categoryPng, isPng: true };
+    }, [business]);
+
+    const displayImage = getDisplayImage.image;
+    const isImagePng = getDisplayImage.isPng;
+
+    // Handle image error - fallback to PNG if uploaded image fails
+    const handleImageError = () => {
+        if (!usingFallback && !isImagePng) {
+            setUsingFallback(true);
+            setImgError(false);
+        } else {
+            setImgError(true);
+        }
+    };
+
+    return (
+        <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sage/20 relative">
+            {!imgError && displayImage ? (
+                isImagePng || displayImage.includes('/png/') || displayImage.endsWith('.png') || usingFallback ? (
+                    // Display PNG files as icons
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-sage/20 to-coral/20">
+                        <Image
+                            src={usingFallback ? getCategoryPng(business.category) : displayImage}
+                            alt={`${business.name} profile`}
+                            width={40}
+                            height={40}
+                            className="w-8 h-8 object-contain"
+                            unoptimized
+                            onError={handleImageError}
+                        />
+                    </div>
+                ) : (
+                    // Regular full image for uploaded business images
+                    <Image
+                        src={displayImage}
+                        alt={`${business.name} profile`}
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-cover"
+                        unoptimized
+                        onError={handleImageError}
+                    />
+                )
+            ) : (
+                // Final fallback
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-sage/20 to-coral/20">
+                    <Store className="w-5 h-5 text-sage" />
+                </div>
+            )}
+        </div>
+    );
+}
+
 export default function BusinessProfilePage() {
     const params = useParams();
     const businessId = params?.id as string;
@@ -61,6 +151,7 @@ export default function BusinessProfilePage() {
         return {
             id: businessId || "demo",
             name: "Mama's Kitchen",
+            category: "Restaurant", // Add category for PNG fallback
             rating: 4.8,
             image: "/images/product-01.jpg",
             images: [
@@ -161,27 +252,7 @@ export default function BusinessProfilePage() {
                         </Link>
 
                         {/* Profile Picture Placeholder */}
-                        <div>
-                        {business.image && business.image.startsWith("/images/") ? (
-                            <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sage/20 bg-gradient-to-br from-sage/20 to-coral/20 flex items-center justify-center">
-                                <Store className="w-5 h-5 text-sage" />
-                            </div>
-                        ) : (
-                            <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sage/20">
-                                <Image
-                                    src={
-                                        business.image ||
-                                        "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=100&h=100&fit=crop"
-                                    }
-                                    alt={`${business.name} profile`}
-                                    width={40}
-                                    height={40}
-                                    className="w-full h-full object-cover"
-                                    unoptimized
-                                />
-                            </div>
-                        )}
-                        </div>
+                        <BusinessProfileImage business={business} />
                     </div>
                 </div>
                 </div>

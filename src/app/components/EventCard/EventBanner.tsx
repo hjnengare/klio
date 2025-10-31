@@ -24,7 +24,7 @@ export default function EventBanner({
   endDate
 }: EventBannerProps) {
   return (
-    <div className="relative overflow-hidden rounded-t-lg flex-[2] md:flex-[3] z-10">
+    <div className="relative overflow-hidden rounded-t-[20px] flex-[2] md:flex-[3] z-10">
       <div className="relative w-full h-[400px] md:h-[300px]">
         {image ? (
           <Image
@@ -32,11 +32,11 @@ export default function EventBanner({
             alt={alt || title}
             fill
             sizes="(max-width: 768px) 540px, 320px"
-            className="object-cover rounded-t-lg"
+            className="object-cover rounded-t-[20px]"
             priority={false}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-sage/10 text-sage rounded-t-lg">
+          <div className="w-full h-full flex items-center justify-center bg-sage/10 text-sage rounded-t-[20px]">
             <ImageIcon className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-sage/70" />
           </div>
         )}

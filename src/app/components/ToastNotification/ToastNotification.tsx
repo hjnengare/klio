@@ -86,16 +86,37 @@ export default function ToastNotification({
         </button>
 
         {/* Image banner */}
-        <div className="toast-banner flex-shrink-0 relative w-20 h-20 rounded-lg overflow-hidden bg-white/20 border border-white/50">
-          <Image
-            src={notification.image}
-            alt={notification.imageAlt}
-            fill
-            sizes="80px"
-            className="object-cover"
-            unoptimized
-          />
-        </div>
+        {notification.image && notification.image.trim() !== "" ? (
+          <div className="toast-banner flex-shrink-0 relative w-20 h-20 rounded-lg overflow-hidden bg-white/20 border border-white/50">
+            <Image
+              src={notification.image}
+              alt={notification.imageAlt || ""}
+              fill
+              sizes="80px"
+              className="object-cover"
+              unoptimized
+            />
+          </div>
+        ) : (
+          <div className="toast-banner flex-shrink-0 relative w-20 h-20 rounded-lg overflow-hidden bg-white/20 border border-white/50 flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-charcoal/40"
+            >
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+              <circle cx="9" cy="9" r="2" />
+              <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+            </svg>
+          </div>
+        )}
 
         {/* Details */}
         <div className="toast-detail flex-1 min-w-0">

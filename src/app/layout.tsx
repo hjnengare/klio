@@ -94,10 +94,15 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
 
         {/* Preconnect to external domains for faster resource loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_SUPABASE_URL} />
         
         {/* Preload critical resources */}
         <link rel="preload" href="/globals.css" as="style" />
+        
+        {/* Dancing Script Font */}
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet" />
         
         {/* Service Worker Registration */}
         <script

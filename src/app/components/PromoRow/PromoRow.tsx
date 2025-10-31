@@ -54,7 +54,7 @@ function PromoRow() {
         <div className="absolute bottom-1/4 right-1/3 w-32 h-32 bg-gradient-to-br from-coral/15 to-transparent rounded-full blur-lg" />
       </div>
 
-      <div className="container mx-auto max-w-[1300px] px-4 relative z-10">
+      <div className="container mx-auto max-w-[1300px] px-0 md:px-4 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           {PROMO_CARDS.map((card, index) => (
             <Link

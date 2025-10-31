@@ -53,7 +53,8 @@ interface HeroCarouselProps {
 export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const autoplayRef = useRef<NodeJS.Timeout | null>(null);
+  const [progress, setProgress] = useState(0);
+  const progressRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLElement>(null);
 
   // Generate slides based on user interests
@@ -157,30 +158,56 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const next = useCallback(() => {
+    setProgress(0); // Reset progress when advancing
     setCurrentIndex((prev) => (prev + 1) % slides.length);
   }, [slides.length]);
   const prev = useCallback(() => {
+    setProgress(0); // Reset progress when going back
     setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
   }, [slides.length]);
 
-  // autoplay (paused on reduced motion / hover / focus / tab hidden)
+  // Progress animation for each slide
   useEffect(() => {
-    if (prefersReduced || paused) return;
+    if (prefersReduced || paused) {
+      // Clear progress timer when paused
+      if (progressRef.current) {
+        clearInterval(progressRef.current);
+        progressRef.current = null;
+      }
+      return;
+    }
 
-    const start = () => {
-      if (autoplayRef.current) clearInterval(autoplayRef.current);
-      autoplayRef.current = setInterval(next, 5000);
-    };
-    const stop = () => {
-      if (autoplayRef.current) {
-        clearInterval(autoplayRef.current);
-        autoplayRef.current = null;
+    // Reset progress when slide changes
+    setProgress(0);
+
+    // Animate progress from 0 to 100 over 5 seconds
+    const interval = 50; // Update every 50ms for smooth animation
+    const totalDuration = 5000; // 5 seconds per slide
+    const steps = totalDuration / interval;
+    let currentStep = 0;
+
+    progressRef.current = setInterval(() => {
+      currentStep++;
+      const newProgress = Math.min((currentStep / steps) * 100, 100);
+      setProgress(newProgress);
+
+      // When progress reaches 100%, advance to next slide
+      if (newProgress >= 100) {
+        if (progressRef.current) {
+          clearInterval(progressRef.current);
+          progressRef.current = null;
+        }
+        next();
+      }
+    }, interval);
+
+    return () => {
+      if (progressRef.current) {
+        clearInterval(progressRef.current);
+        progressRef.current = null;
       }
     };
-
-    start();
-    return stop;
-  }, [prefersReduced, paused, next]);
+  }, [prefersReduced, paused, currentIndex, next]);
 
   // pause when tab is hidden
   useEffect(() => {
@@ -244,15 +271,16 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
+    setProgress(0); // Reset progress when manually navigating
     setPaused(true);
   };
 
   return (
     <>
-      <div className="relative w-full px-4 pt-4 mt-12">
+      <div className="relative w-full px-0 md:px-4 pt-4 mt-12">
         <section
           ref={containerRef as React.RefObject<HTMLElement>}
-          className="relative min-h-[80vh] sm:min-h-[80vh] w-full overflow-hidden outline-none rounded-2xl"
+          className="relative min-h-[80vh] sm:min-h-[80vh] w-full overflow-hidden outline-none rounded-none md:rounded-2xl"
           aria-label="Hero carousel"
           tabIndex={0}
           onMouseEnter={() => setPaused(true)}
@@ -326,10 +354,10 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
       {/* Carousel Progress Bar and Controls */}
       <div className="absolute bottom-12 left-0 right-0 z-30 px-8 flex items-center gap-4">
         {/* Progress Bar */}
-        <div className="flex-1 h-[3px] bg-white/30 relative">
+        <div className="flex-1 h-[3px] bg-white/30 relative overflow-hidden rounded-full">
           <div
-            className="absolute left-0 top感觉到 h-full bg-white transition-all duration-300"
-            style={{ width: `${((currentIndex + 1) / slides.length) * 100}%` }}
+            className="absolute left-0 top-0 h-full bg-white transition-all duration-75 ease-linear"
+            style={{ width: `${progress}%` }}
           />
         </div>
         
