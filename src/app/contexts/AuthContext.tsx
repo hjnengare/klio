@@ -213,6 +213,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
           profileUpdates.onboarding_step = userData.profile.onboarding_step;
         }
 
+        // Update avatar_url if provided
+        if (userData.profile.avatar_url !== undefined) {
+          profileUpdates.avatar_url = userData.profile.avatar_url;
+        }
+
+        // Update username if provided
+        if (userData.profile.username !== undefined) {
+          profileUpdates.username = userData.profile.username;
+        }
+
+        // Update display_name if provided
+        if (userData.profile.display_name !== undefined) {
+          profileUpdates.display_name = userData.profile.display_name;
+        }
+
         // Update the profiles table with valid fields only
         const { error } = await supabase
           .from('profiles')

@@ -51,25 +51,20 @@ export default function WriteReviewPage() {
 
   return (
     <EmailVerificationGuard>
-      <div className="min-h-screen  bg-off-white   relative overflow-hidden">
-      {/* Static background layers */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-coral/5" />
-      </div>
-
+      <div className="min-h-screen bg-off-white relative overflow-hidden">
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg backdrop-blur-sm border-b border-charcoal/10">
-        <div className="max-w-[1300px] mx-auto px-4">
-          <div className="h-10 sm:h-11 flex items-center">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10">
+        <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+          <div className="flex items-center justify-between">
             <button
               onClick={() => router.back()}
               className="group flex items-center"
               aria-label="Go back"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3">
-                <ChevronLeft className="w-4 h-4 text-white group-hover:text-white transition-colors duration-300" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3">
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-white transition-colors duration-300" />
               </div>
-              <h1 className="font-urbanist text-[10px] sm:text-xs font-medium text-white transition-all duration-300 relative" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              <h1 className="font-urbanist text-base sm:text-xl font-700 text-white transition-all duration-300 relative">
                 Write Review
               </h1>
             </button>
@@ -77,7 +72,12 @@ export default function WriteReviewPage() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-[800px] mx-auto px-4 pt-20 pb-8">
+      <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
+        <div className="py-1 pt-20">
+          <section className="relative font-sf-pro pt-16 sm:pt-20">
+            <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 md:px-6 relative z-10">
+              <div className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20">
+                <div className="max-w-[800px] mx-auto">
         {/* Search Section */}
         <div className="mb-8">
           <div className="text-center mb-6">
@@ -115,7 +115,7 @@ export default function WriteReviewPage() {
             <Link
               key={business.id}
               href="/business/review"
-              className="block p-4  bg-off-white   border border-sage/10 rounded-xl hover:border-sage/30
+              className="block p-4 bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] hover:border-sage/30
                          transition-all duration-200 group"
             >
               <div className="flex items-center justify-between">
@@ -176,6 +176,11 @@ export default function WriteReviewPage() {
             </button>
           </div>
         )}
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
       </div>
     </EmailVerificationGuard>

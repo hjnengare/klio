@@ -1,21 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import ReviewHeader from "../../components/ReviewForm/ReviewHeader";
-import BusinessInfo from "../../components/ReviewForm/BusinessInfo";
-import BusinessCarousel from "../../components/ReviewForm/BusinessCarousel";
-import RatingSelector from "../../components/ReviewForm/RatingSelector";
-import TagSelector from "../../components/ReviewForm/TagSelector";
-import ReviewTextForm from "../../components/ReviewForm/ReviewTextForm";
-import ReviewSubmitButton from "../../components/ReviewForm/ReviewSubmitButton";
+import ReviewForm from "../../components/ReviewForm/ReviewForm";
 import ReviewSidebar from "../../components/ReviewForm/ReviewSidebar";
 import ReviewStyles from "../../components/ReviewForm/ReviewStyles";
-
-const ImageUpload = dynamic(() => import("../../components/ReviewForm/ImageUpload"), {
-  ssr: false,
-});
+import { useReviewForm } from "../../hooks/useReviewForm";
 
 const FloatingElements = dynamic(() => import("../../components/Animations/FloatingElements"), {
   ssr: false,
@@ -40,6 +31,19 @@ type SmallReview = {
 
 export default function WriteReviewPage() {
   const router = useRouter();
+  const {
+    overallRating,
+    selectedTags,
+    reviewText,
+    reviewTitle,
+    selectedImages,
+    isFormValid,
+    handleStarClick,
+    handleTagToggle,
+    setReviewText,
+    setReviewTitle,
+    setSelectedImages,
+  } = useReviewForm();
 
   // Mock data for design work
   const businessName = "Sample Business";
@@ -50,12 +54,7 @@ export default function WriteReviewPage() {
     "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1600&h=1200&fit=crop&auto=format",
   ];
   const businessRating = 4.5;
-
-  const [overallRating, setOverallRating] = useState(0);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [reviewText, setReviewText] = useState("");
-  const [reviewTitle, setReviewTitle] = useState("");
-  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const quickTags = ["Trustworthy", "On Time", "Friendly", "Good Value"];
 
   const otherReviews: SmallReview[] = [
     {
@@ -106,12 +105,6 @@ export default function WriteReviewPage() {
     },
   ];
 
-
-  const quickTags = ["Trustworthy", "On Time", "Friendly", "Good Value"];
-  const handleTagToggle = (tag: string) =>
-    setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
-  const handleStarClick = (rating: number) => setOverallRating(rating);
-
   const handleSubmitReview = async () => {
     console.log("Review submitted:", {
       rating: overallRating,
@@ -123,8 +116,6 @@ export default function WriteReviewPage() {
     alert("Review submitted! (UI/UX Demo Mode)");
     router.push("/home");
   };
-
-  const isFormValid = overallRating > 0 && reviewText.trim().length > 0;
 
   return (
     <>
@@ -160,38 +151,25 @@ export default function WriteReviewPage() {
           <div className="w-full max-w-7xl mx-auto px-0 md:px-4 py-4 md:py-6 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* MAIN: Form */}
-              <div className="lg:col-span-8">
-                <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 ring-1 ring-white/20 rounded-lg p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-lg shadow-sage/20">
-                  {/* subtle glows */}
-                  <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg" />
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-lg" />
-                  <div className="relative z-10 flex-1 flex flex-col">
-                    <BusinessInfo businessName={businessName} businessRating={businessRating} />
-                    <BusinessCarousel businessName={businessName} businessImages={businessImages} />
-                    <RatingSelector overallRating={overallRating} onRatingChange={handleStarClick} />
-                    <TagSelector 
-                      selectedTags={selectedTags} 
-                      onTagToggle={handleTagToggle} 
-                      availableTags={quickTags}
-                    />
-                    <ReviewTextForm 
-                      reviewTitle={reviewTitle}
-                      reviewText={reviewText}
-                      onTitleChange={setReviewTitle}
-                      onTextChange={setReviewText}
-                    />
-
-                    {/* Image Upload */}
-                    <div className="mb-6 md:mb-8 px-4">
-                      <h3 className="text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 text-center md:text-left">
-                        Add Photos (Optional)
-                      </h3>
-                      <ImageUpload onImagesChange={setSelectedImages} maxImages={5} disabled={false} />
-                    </div>
-
-                    <ReviewSubmitButton isFormValid={isFormValid} onSubmit={handleSubmitReview} />
-                  </div>
-                </div>
+              <div className="lg:col-span-8 py-4">
+                <ReviewForm
+                  businessName={businessName}
+                  businessRating={businessRating}
+                  businessImages={businessImages}
+                  overallRating={overallRating}
+                  selectedTags={selectedTags}
+                  reviewText={reviewText}
+                  reviewTitle={reviewTitle}
+                  selectedImages={selectedImages}
+                  isFormValid={isFormValid}
+                  availableTags={quickTags}
+                  onRatingChange={handleStarClick}
+                  onTagToggle={handleTagToggle}
+                  onTitleChange={setReviewTitle}
+                  onTextChange={setReviewText}
+                  onImagesChange={setSelectedImages}
+                  onSubmit={handleSubmitReview}
+                />
               </div>
 
               {/* ------------ SIDEBAR ------------ */}

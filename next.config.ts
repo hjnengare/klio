@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
         pathname: '/photo-**',
       },
+      {
+        protocol: 'https',
+        hostname: '**.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
     ],
     unoptimized: process.env.NODE_ENV === 'development', // Faster dev builds
     formats: ['image/avif', 'image/webp'],

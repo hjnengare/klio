@@ -65,7 +65,7 @@ export function ImageCarousel({
         <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-[10px] border border-sage/10 bg-off-white">
             {/* Slides */}
             <div
-                className="relative h-[500px] sm:h-[520px] md:h-[540px] lg:h-[560px] overflow-hidden cursor-pointer group"
+                className="relative aspect-[16/9] overflow-hidden cursor-pointer group"
                 onClick={openModal}
             >
                 {images.map((src, i) => (
@@ -100,7 +100,7 @@ export function ImageCarousel({
             {/* Caption overlay: rating + metrics */}
             <div className="pointer-events-none absolute left-0 right-0 bottom-0 p-3 sm:p-4">
                 <div className="mx-auto max-w-none">
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 rounded-[12px] border border-white/40 bg-off-white/70 backdrop-blur-md px-3 sm:px-4 py-2 shadow-sm">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 rounded-[12px] border border-white/40 bg-off-white backdrop-blur-md px-3 sm:px-4 py-2 shadow-sm">
                         {/* Rating badge */}
                         <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 px-3 py-1 text-white text-sm font-semibold shadow">
                             <Star className="h-4 w-4" />

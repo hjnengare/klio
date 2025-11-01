@@ -44,7 +44,7 @@ export default function BusinessCarousel({ businessName, businessImages }: Busin
   };
 
   return (
-    <div className="mb-6 md:mb-8 -mx-4 md:-mx-8 relative">
+    <div className="mb-6 md:mb-8 mx-2 relative">
       <div
         className="relative overflow-hidden rounded-none md:rounded-lg"
         onTouchStart={onTouchStart}

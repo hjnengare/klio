@@ -125,41 +125,103 @@ function ProfileContent() {
 
       let avatar_url = profile.avatar_url || null;
       if (avatarFile) {
-        const timestamp = Date.now();
-        const path = `${user.id}/avatar-${timestamp}`;
-        const { error: uploadErr } = await supabase.storage
-          .from('avatars')
-          .upload(path, avatarFile, { upsert: true, cacheControl: '3600' });
-        if (uploadErr) throw uploadErr;
-        const { data: pub } = supabase.storage.from('avatars').getPublicUrl(path);
-        // Add cache-busting query parameter to force browser refresh
-        avatar_url = `${pub.publicUrl}?t=${timestamp}`;
+        try {
+          console.log('Starting avatar upload...', {
+            fileName: avatarFile.name,
+            fileSize: avatarFile.size,
+            fileType: avatarFile.type,
+            userId: user.id
+          });
+
+          // Validate file size (max 5MB)
+          const maxSize = 5 * 1024 * 1024; // 5MB
+          if (avatarFile.size > maxSize) {
+            throw new Error('Image file is too large. Maximum size is 5MB.');
+          }
+
+          const timestamp = Date.now();
+          const fileExt = avatarFile.name.split('.').pop() || 'jpg';
+          const path = `${user.id}/avatar-${timestamp}.${fileExt}`;
+          
+          console.log('Uploading to path:', path);
+          
+          // Upload to Supabase Storage
+          const { error: uploadErr, data: uploadData } = await supabase.storage
+            .from('avatars')
+            .upload(path, avatarFile, { 
+              upsert: true, 
+              cacheControl: '3600',
+              contentType: avatarFile.type || `image/${fileExt}`
+            });
+          
+          if (uploadErr) {
+            console.error('Avatar upload error details:', {
+              error: uploadErr,
+              message: uploadErr.message,
+              name: uploadErr.name
+            });
+            
+            // Provide more specific error messages
+            let errorMessage = 'Failed to upload avatar image';
+            if (uploadErr.message) {
+              errorMessage = uploadErr.message;
+              
+              // Check for specific error patterns
+              if (uploadErr.message.includes('413') || uploadErr.message.includes('too large')) {
+                errorMessage = 'Image file is too large. Please choose a smaller image.';
+              } else if (uploadErr.message.includes('401') || uploadErr.message.includes('403') || uploadErr.message.includes('permission') || uploadErr.message.includes('unauthorized')) {
+                errorMessage = 'Permission denied. Please check your account permissions.';
+              } else if (uploadErr.message.includes('duplicate') || uploadErr.message.includes('already exists')) {
+                // If file already exists, try to get the URL anyway
+                console.log('File already exists, getting public URL...');
+                // Don't throw - continue to get the URL
+              } else {
+                errorMessage = `Upload failed: ${uploadErr.message}`;
+              }
+            }
+            
+            // Only throw if it's not a duplicate (we can still get the URL)
+            if (!uploadErr.message?.includes('duplicate') && !uploadErr.message?.includes('already exists')) {
+              throw new Error(errorMessage);
+            }
+          }
+          
+          console.log('Upload successful, getting public URL...');
+          
+          // Get public URL
+          const { data: pubData } = supabase.storage.from('avatars').getPublicUrl(path);
+          
+          if (!pubData?.publicUrl) {
+            console.error('Failed to get public URL:', pubData);
+            throw new Error('Failed to get public URL for uploaded image');
+          }
+          
+          console.log('Got public URL:', pubData.publicUrl);
+          
+          // Store URL without query parameter (we can add cache-busting on display if needed)
+          avatar_url = pubData.publicUrl;
+          
+          // Small delay to ensure image is available after upload
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+          console.log('Avatar URL set:', avatar_url);
+        } catch (uploadError: any) {
+          console.error('Avatar upload failed:', uploadError);
+          throw new Error(uploadError.message || 'Failed to upload profile image. Please try again.');
+        }
       }
 
-      const updates: Record<string, any> = {
-        updated_at: new Date().toISOString(),
-      };
-      updates.username = normalizedUsername || null;
-      updates.display_name = displayNameInput.trim() || null;
-      if (avatar_url !== null) updates.avatar_url = avatar_url;
-
-      const { error: upErr } = await supabase
-        .from('profiles')
-        .update(updates)
-        .eq('user_id', user.id);
-      if (upErr) throw upErr;
-
+      // Use updateUser to handle both database update and local state update
       await updateUser({
         profile: {
           ...(user.profile || {}),
-          username: updates.username ?? null,
-          display_name: updates.display_name ?? null,
-          avatar_url: updates.avatar_url ?? avatar_url ?? null,
-          updated_at: updates.updated_at,
+          username: normalizedUsername || null,
+          display_name: displayNameInput.trim() || null,
+          avatar_url: avatar_url,
         } as any,
       });
 
-      console.log('Profile updated with avatar_url:', updates.avatar_url ?? avatar_url);
+      console.log('Profile updated with avatar_url:', avatar_url);
       setIsEditOpen(false);
     } catch (e: any) {
       setError(e?.message || 'Failed to save profile');
@@ -186,7 +248,7 @@ function ProfileContent() {
     return (
       <div className="min-h-dvh bg-off-white">
         <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
-          <div className="py-1 pt-24">
+          <div className="pt-4">
             <section
               className="relative"
               style={{
@@ -303,13 +365,13 @@ function ProfileContent() {
           fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
         }}
       >
-        <div className="max-w-[1300px] mx-auto px-4">
-          <div className="h-10 sm:h-11 flex items-center">
+        <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+          <div className="flex items-center justify-between">
             <Link href="/home" className="group flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-3">
-                <ArrowLeft className="w-4 h-4 text-white group-hover:text-sage transition-colors duration-300" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-sage/20 mr-3 sm:mr-4">
+                <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-sage transition-colors duration-300" />
               </div>
-              <h1 className="font-urbanist text-[10px] sm:text-xs font-medium text-white transition-all duration-300 group-hover:text-white/80 relative" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              <h1 className="font-urbanist text-base sm:text-xl font-700 text-white transition-all duration-300 group-hover:text-white/80 relative">
                 Your Profile
               </h1>
             </Link>
@@ -321,13 +383,13 @@ function ProfileContent() {
       <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
         <div className="py-1 pt-20">
           <section
-            className="relative pt-12 sm:pt-14 pb-12 sm:pb-16 md:pb-20"
+            className="relative pt-4 sm:pt-6 pb-12 sm:pb-16 md:pb-20"
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
             }}
           >
             <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
-              <div className="max-w-[800px] mx-auto pt-8">
+              <div className="max-w-[800px] mx-auto pt-2">
                 {/* Profile Header Card */}
                 <div className="p-6 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 mb-6">
                   <ProfileHeader

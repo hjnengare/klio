@@ -109,7 +109,7 @@ function BusinessProfileImage({ business }: { business: { id: string; name: stri
             {!imgError && displayImage ? (
                 isImagePng || displayImage.includes('/png/') || displayImage.endsWith('.png') || usingFallback ? (
                     // Display PNG files as icons
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-sage/20 to-coral/20">
+                    <div className="w-full h-full flex items-center justify-center bg-off-white">
                         <Image
                             src={usingFallback ? getCategoryPng(business.category) : displayImage}
                             alt={`${business.name} profile`}
@@ -134,7 +134,7 @@ function BusinessProfileImage({ business }: { business: { id: string; name: stri
                 )
             ) : (
                 // Final fallback
-                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-sage/20 to-coral/20">
+                <div className="w-full h-full flex items-center justify-center bg-white">
                     <Store className="w-5 h-5 text-sage" />
                 </div>
             )}
@@ -207,7 +207,7 @@ export default function BusinessProfilePage() {
                 }
             `}</style>
         <div
-                className="min-h-dvh bg-off-white/90 relative overflow-hidden font-urbanist"
+                className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist"
             style={{
                 fontFamily:
                     '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
@@ -215,20 +215,22 @@ export default function BusinessProfilePage() {
         >
             {/* Fixed Premium Header */}
             <header className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
+                role="banner"
                 style={{
                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                 }}
             >
-                <div className="max-w-[1300px] mx-auto px-4">
-                    <div className="h-10 sm:h-11 flex items-center justify-between">
+                <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+                    <nav className="flex items-center justify-between" aria-label="Business profile navigation">
                         <Link
                             href="/home"
-                            className="group flex items-center"
+                            className="group flex items-center focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 focus:ring-offset-navbar-bg rounded-lg px-1 -mx-1"
+                            aria-label="Go back to home"
                         >
-                            <div className="w-8 h-8 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3">
-                                <ArrowLeft className="w-4 h-4 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
+                                <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                             </div>
-                            <h1 className="font-urbanist text-[10px] sm:text-xs font-medium text-white animate-delay-100 animate-fade-in" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                            <h1 className="font-urbanist text-sm font-700 text-white animate-delay-100 animate-fade-in" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                                 {business.name}
                             </h1>
                         </Link>
@@ -255,101 +257,87 @@ export default function BusinessProfilePage() {
                         {/* Profile Picture Placeholder */}
                         <BusinessProfileImage business={business} />
                     </div>
-                </div>
+                    </nav>
                 </div>
             </header>
-            <div className="max-w-6xl mx-auto px-4 py-6 pt-32 relative z-10">
-                {/* Full width layout */}
-                <div className="space-y-6">
-                        {/* Photos and Specials Row */}
-                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
-                            {/* Photos Section */}
-                            <div className="lg:col-span-3">
-                                {/* Photos (with metrics caption overlay) */}
-                                <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 p-5 relative overflow-hidden animate-fade-in-up animate-delay-100">
-                                    <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg" />
-                                    <div className="relative z-10">
-                                        <h3 className="text-lg font-600 text-charcoal mb-4 flex items-center gap-3">
-                                            <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
-                                                <Images className="w-4 h-4 text-sage" />
-                                            </span>
-                                            Photos
-                                        </h3>
 
-                                        <ImageCarousel
-                                            images={business.images || [business.image]}
-                                            altBase={business.name}
-                                            rating={business.rating}
-                                            metrics={[
-                                                { label: "Trust", value: business.trust, color: "sage" },
-                                                { label: "Punctuality", value: business.punctuality, color: "coral" },
-                                                { label: "Friendliness", value: business.friendliness, color: "sage" },
-                                            ]}
-                                        />
-                                    </div>
+            <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
+                <div className="py-1 pt-20">
+                    <main className="relative font-sf-pro pt-4 sm:pt-6" id="main-content" role="main" aria-label="Business profile content">
+                        <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 md:px-6 relative z-10">
+                            <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
+                                {/* Accessible skip link */}
+                                <a
+                                    href="#reviews-section"
+                                    className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-sage focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 font-urbanist text-sm font-600"
+                                >
+                                    Skip to reviews
+                                </a>
+
+                                {/* Full width layout */}
+                                <div className="space-y-6">
+
+                        {/* PRIORITY 1: Hero Carousel - Full Width at Top */}
+                        <article className="w-full" aria-labelledby="photos-heading">
+                            <div className="bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] p-5 relative overflow-hidden animate-fade-in-up">
+                                <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg" aria-hidden="true" />
+                                <div className="relative z-10">
+                                    <h2 id="photos-heading" className="text-sm font-bold text-charcoal mb-3 flex items-center gap-2.5 font-urbanist">
+                                        <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10" aria-hidden="true">
+                                            <Images className="w-4 h-4 text-sage" />
+                                        </span>
+                                        <span>Photos</span>
+                                    </h2>
+
+                                    <ImageCarousel
+                                        images={business.images || [business.image]}
+                                        altBase={business.name}
+                                        rating={business.rating}
+                                        metrics={[
+                                            { label: "Trust", value: business.trust, color: "sage" },
+                                            { label: "Punctuality", value: business.punctuality, color: "coral" },
+                                            { label: "Friendliness", value: business.friendliness, color: "sage" },
+                                        ]}
+                                    />
                                 </div>
                             </div>
+                        </article>
 
-                            {/* Specials & Events - Right Aligned */}
-                            <div className="lg:col-span-1">
-                                <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 p-6 relative overflow-hidden animate-fade-in-up animate-delay-200">
-                                    <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-lg" />
-
-                                    <div className="relative z-10">
-                                        <h3 className="text-lg font-600 text-charcoal mb-6 flex items-center gap-3 font-urbanist">
-                                            <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10">
-                                                <Calendar className="w-4 h-4 text-coral" />
-                                            </span>
-                                            Specials & Events
-                                        </h3>
-
-                                        <div className="grid grid-cols-2 sm:grid-cols-1 gap-4">
-                                            {business.specials.map((special) => {
-                                                const Icon = special.icon === "pizza" ? Pizza : Music;
-                                                return (
-                                                    <div
-                                                        key={special.id}
-                                                        className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-[10px] p-4 border border-sage/10"
-                                                    >
-                                                        <div className="flex items-center gap-4">
-                                                            <div className="w-12 h-12 grid place-items-center bg-gradient-to-br from-sage/20 to-sage/10 rounded-[10px]">
-                                                                <Icon className="w-5 h-5 text-sage" />
-                                                            </div>
-                                                                <div>
-                                                                    <h4 className="text-sm font-600 text-charcoal mb-0.5 font-urbanist">{special.name}</h4>
-                                                                    <p className="text-xs text-charcoal/70">{special.description}</p>
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Reviews Section - Full Width Underneath */}
-                        <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 p-6 relative overflow-hidden animate-fade-in-up animate-delay-300">
-                            <div className="flex items-center justify-between mb-6">
+                        {/* PRIORITY 2: Reviews and Specials Row */}
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                            {/* Reviews Section - Left Side (3/4 width) */}
+                            <article
+                                id="reviews-section"
+                                className="lg:col-span-3 bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] p-4 relative overflow-hidden animate-fade-in-up animate-delay-100"
+                                aria-labelledby="reviews-heading"
+                            >
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
                                 <div className="flex items-center gap-3">
-                                    <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
-                                        <MessageSquareText className="w-4 h-4 text-sage" />
+                                    <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10" aria-hidden="true">
+                                        <MessageSquareText className="w-5 h-5 text-sage" />
                                     </span>
-                                    <h3 className="text-lg font-700 text-charcoal">Community Reviews</h3>
+                                    <h2 id="reviews-heading" className="text-sm font-bold text-charcoal font-urbanist">
+                                        Community Reviews
+                                    </h2>
                                 </div>
                                 <Link
                                     href={`/business/${business.id}/review`}
-                                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sage to-sage/90 text-white text-sm font-600 py-2 px-4"
+                                    className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sage to-sage/90 text-white text-sm font-600 py-3 px-5 hover:from-sage/90 hover:to-sage/80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 focus:ring-offset-off-white"
+                                    aria-label="Write a review for {business.name}"
                                 >
-                                    <Pencil className="w-4 h-4" />
-                                    Write Review
+                                    <Pencil className="w-4 h-4" aria-hidden="true" />
+                                    <span>Write Review</span>
                                 </Link>
                             </div>
 
-                            {/* Review Cards - Scrollable Container (4 at a time) */}
-                            <div className="h-[600px] overflow-y-auto custom-scroll">
-                                <div className="space-y-4">
+                            {/* Review Cards - Accessible Scrollable Container */}
+                            <div
+                                className="h-[600px] overflow-y-auto custom-scroll focus:outline-none focus:ring-2 focus:ring-sage/20 focus:ring-inset rounded-lg"
+                                role="feed"
+                                aria-label="Customer reviews"
+                                tabIndex={0}
+                            >
+                                <div className="space-y-4 pr-2">
                                     <PremiumReviewCard
                                         author={business.reviews[0].author}
                                         rating={business.reviews[0].rating}
@@ -464,10 +452,53 @@ export default function BusinessProfilePage() {
                                     />
                                 </div>
                             </div>
+                        </article>
+
+                            {/* Specials & Events - Right Side (1/4 width) */}
+                            <aside className="lg:col-span-1" aria-labelledby="specials-heading">
+                                <div className="bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] p-6 relative overflow-hidden animate-fade-in-up animate-delay-200">
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-lg" aria-hidden="true" />
+
+                                    <div className="relative z-10">
+                                        <h3 id="specials-heading" className="text-sm font-bold text-charcoal mb-3 flex items-center gap-2.5 font-urbanist">
+                                            <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10" aria-hidden="true">
+                                                <Calendar className="w-4 h-4 text-coral" />
+                                            </span>
+                                            <span>Specials & Events</span>
+                                        </h3>
+
+                                        <ul className="grid grid-cols-2 sm:grid-cols-1 gap-3 list-none">
+                                            {business.specials.map((special) => {
+                                                const Icon = special.icon === "pizza" ? Pizza : Music;
+                                                return (
+                                                    <li
+                                                        key={special.id}
+                                                        className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-[10px] p-3 border border-sage/10 focus-within:ring-2 focus-within:ring-coral/20 focus-within:border-coral/30 transition-all duration-200"
+                                                    >
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="w-10 h-10 grid place-items-center bg-gradient-to-br from-sage/20 to-sage/10 rounded-[10px]" aria-hidden="true">
+                                                                <Icon className="w-4 h-4 text-sage" />
+                                                            </div>
+                                                                <div>
+                                                                    <h4 className="text-sm font-600 text-charcoal mb-0.5 font-urbanist">{special.name}</h4>
+                                                                    <p className="text-xs text-charcoal/70">{special.description}</p>
+                                                                </div>
+                                                        </div>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </aside>
                         </div>
+                    </div>
                 </div>
             </div>
+        </main>
         </div>
-        </>
-    );
+      </div>
+    </div>
+    </>
+  );
 }

@@ -272,7 +272,7 @@ function BusinessCard({
         </div>
 
         {/* CONTENT */}
-        <div className="px-4 pt-4 pb-6 relative flex-shrink-0 z-10">
+        <div className="px-4 pt-4 pb-6 relative flex-shrink-0 z-10 bg-card-bg">
           <div className="mb-2 cursor-pointer" onClick={handleCardClick}>
             <h3 className="text-sm font-600 text-charcoal group-hover:text-charcoal/80 transition-colors duration-300 text-center font-urbanist truncate">
               {business.name}

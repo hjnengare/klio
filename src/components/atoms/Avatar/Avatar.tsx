@@ -67,11 +67,16 @@ export const Avatar: React.FC<AvatarProps> = ({
     >
       {showImage ? (
         <Image
+          key={src}
           src={src}
           alt={alt}
           fill
           className="object-cover"
-          onError={() => setImageError(true)}
+          onError={() => {
+            console.log('Avatar image error:', src);
+            setImageError(true);
+          }}
+          unoptimized={src.includes('supabase.co')} // Disable optimization for Supabase images in dev
         />
       ) : (
         <div className={`w-full h-full flex items-center justify-center font-semibold ${text}`}>

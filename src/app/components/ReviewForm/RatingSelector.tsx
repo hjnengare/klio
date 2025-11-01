@@ -9,8 +9,8 @@ interface RatingSelectorProps {
 
 export default function RatingSelector({ overallRating, onRatingChange }: RatingSelectorProps) {
   return (
-    <div className="mb-6 md:mb-8 px-4">
-      <h3 className="text-base md:text-xl font-600 text-charcoal mb-3 md:mb-4 text-center md:text-left">
+    <div className="mb-3 px-4">
+      <h3 className="text-sm font-bold text-charcoal mb-3 text-center md:text-left">
         Overall rating
       </h3>
       <div className="flex items-center justify-center space-x-1 md:space-x-2 mb-2">

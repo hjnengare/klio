@@ -38,13 +38,13 @@ export default function TrendingPage() {
         transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
         className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg shadow-sm"
       >
-        <div className="relative z-[1] max-w-[1300px] mx-auto px-4">
-          <div className="h-10 sm:h-11 flex items-center">
+        <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+          <div className="flex items-center justify-between">
             {/* Back button */}
             <Link href="/home" className="group flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3">
                 <ArrowLeft
-                  size={16}
+                  size={22}
                   className="text-white group-hover:text-white transition-colors duration-300"
                 />
               </div>
@@ -52,8 +52,7 @@ export default function TrendingPage() {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="font-urbanist text-[10px] sm:text-xs font-medium text-white transition-all duration-300 relative"
-                style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                className="font-urbanist text-base sm:text-xl font-700 text-white transition-all duration-300 relative"
               >
                 Trending Now
               </motion.h1>
@@ -63,7 +62,7 @@ export default function TrendingPage() {
       </motion.header>
 
       {/* Hero Section */}
-      <section className="relative z-10 pt-12 sm:pt-14 pb-6 sm:pb-8 md:pb-12">
+      <section className="relative z-10 pt-16 sm:pt-20 pb-6 sm:pb-8 md:pb-12">
         <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Breadcrumb */}
           <nav className="px-2 sm:px-4 pt-3 sm:pt-4 pb-1" aria-label="Breadcrumb">
