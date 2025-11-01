@@ -287,7 +287,7 @@ export default function LoginPage() {
             </h2>
           </div>
           <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-            Sign in to continue discovering KLIO
+            Sign in to continue discovering sayso
           </p>
         </div>
 

@@ -3,10 +3,10 @@
 
 import { useState, useMemo, memo } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 import LeaderboardHeader from "../components/Leaderboard/LeaderboardHeader";
-import LeaderboardTitle from "../components/Leaderboard/LeaderboardTitle";
 import LeaderboardPodium from "../components/Leaderboard/LeaderboardPodium";
 import LeaderboardList from "../components/Leaderboard/LeaderboardList";
 import BusinessOfMonthLeaderboard from "../components/Leaderboard/BusinessOfMonthLeaderboard";
@@ -74,16 +74,43 @@ function LeaderboardPage() {
 
         <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
           <div className="py-1 pt-20">
+            {/* Hero Section */}
+            <section className="relative z-10 pt-12 sm:pt-14 pb-6 sm:pb-8 md:pb-12">
+              <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6">
+                {/* Breadcrumb */}
+                <nav className="px-2 sm:px-4 pt-3 sm:pt-4 pb-1" aria-label="Breadcrumb">
+                  <ol className="flex items-center gap-1 text-sm text-charcoal/60">
+                    <li>
+                      <Link href="/home" className="hover:text-charcoal transition-colors font-urbanist">
+                        Home
+                      </Link>
+                    </li>
+                    <li className="text-charcoal/40">/</li>
+                    <li className="text-charcoal font-medium font-urbanist">Community Highlights</li>
+                  </ol>
+                </nav>
+
+                {/* Main Headline */}
+                <h1 className="text-sm font-bold text-charcoal mb-1 text-center font-urbanist">
+                  Community Highlights
+                </h1>
+
+                {/* Sub-headline */}
+                <p className="text-xs text-charcoal/70 text-center max-w-2xl mx-auto font-urbanist leading-relaxed">
+                  See top reviewers, featured businesses, and community favorites
+                </p>
+              </div>
+            </section>
+
             {/* Main Content Section */}
             <section
-              className="relative"
+              className="relative pb-12 sm:pb-16 md:pb-20"
               style={{
                 fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
               }}
             >
               <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 md:px-6 relative z-10">
                 <div className="max-w-[800px] mx-auto pt-4 sm:pt-6 md:pt-8">
-                  <LeaderboardTitle />
 
                   {/* Tabs */}
                   <div className="flex justify-center mb-4 sm:mb-6 md:mb-8 px-2">

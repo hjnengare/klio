@@ -29,7 +29,7 @@ export default function SavedPage() {
         <SavedHeader />
 
         <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
-          <div className="py-1 pt-20">
+          <div className="py-1 pt-20 pb-12 sm:pb-16 md:pb-20">
             {savedBusinesses.length > 0 ? (
               <div>
                 <SavedBusinessRow

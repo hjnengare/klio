@@ -9,7 +9,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-console.log('🚀 KLIO Development Performance Monitor\n');
+console.log('🚀 sayso Development Performance Monitor\n');
 
 // Check for large files
 function checkLargeFiles() {

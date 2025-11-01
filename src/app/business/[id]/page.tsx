@@ -219,18 +219,19 @@ export default function BusinessProfilePage() {
                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                 }}
             >
-                <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
-                    <div className="flex items-center justify-between">
+                <div className="max-w-[1300px] mx-auto px-4">
+                    <div className="h-10 sm:h-11 flex items-center justify-between">
                         <Link
                             href="/home"
-                            className="text-white/90 hover:text-white transition-colors duration-300 p-2 hover:bg-white/10 rounded-full"
+                            className="group flex items-center"
                         >
-                            <ArrowLeft className="w-6 h-6" strokeWidth={2.5} />
+                            <div className="w-8 h-8 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3">
+                                <ArrowLeft className="w-4 h-4 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
+                            </div>
+                            <h1 className="font-urbanist text-[10px] sm:text-xs font-medium text-white animate-delay-100 animate-fade-in" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                                {business.name}
+                            </h1>
                         </Link>
-
-                    <h1 className="font-urbanist text-sm font-700 text-white animate-delay-100 animate-fade-in">
-                        {business.name}
-                    </h1>
 
                     <div className="flex items-center gap-3">
                         {/* Edit Button */}

@@ -18,7 +18,7 @@ export default function EventCard({ event }: EventCardProps) {
       }}
     >
       <Link href={`/event/${event.id}`} className="block group">
-        <article className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden cursor-pointer w-[calc(100vw-4rem)] sm:w-[252px] md:w-[270px] lg:w-[288px] flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-sm hover:shadow-lg transition-all duration-300">
+        <article className="relative bg-card-bg rounded-lg overflow-hidden cursor-pointer w-[calc(100vw-4rem)] sm:w-[252px] md:w-[270px] lg:w-[288px] h-[480px] flex flex-col border border-white/60 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] min-h-[480px]">
           <EventBanner
             image={event.image}
             alt={event.alt}

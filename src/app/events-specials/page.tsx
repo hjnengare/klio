@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Footer from "../components/Footer/Footer";
 import EventsPageHeader from "../components/EventsPage/EventsPageHeader";
 import FilterTabs from "../components/EventsPage/FilterTabs";
@@ -46,15 +47,43 @@ export default function EventsSpecialsPage() {
 
       <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
         <div className="py-1 pt-20">
+          {/* Hero Section */}
+          <section className="relative z-10 pt-12 sm:pt-14 pb-6 sm:pb-8 md:pb-12">
+            <div className="max-w-[1300px] mx-auto px-4 sm:px-6">
+              {/* Breadcrumb */}
+              <nav className="px-2 sm:px-4 pt-3 sm:pt-4 pb-1" aria-label="Breadcrumb">
+                <ol className="flex items-center gap-1 text-sm text-charcoal/60">
+                  <li>
+                    <Link href="/home" className="hover:text-charcoal transition-colors font-urbanist">
+                      Home
+                    </Link>
+                  </li>
+                  <li className="text-charcoal/40">/</li>
+                  <li className="text-charcoal font-medium font-urbanist">Events & Specials</li>
+                </ol>
+              </nav>
+
+              {/* Main Headline */}
+              <h1 className="text-sm font-bold text-charcoal mb-1 text-center font-urbanist">
+                Events & Specials
+              </h1>
+
+              {/* Sub-headline */}
+              <p className="text-xs text-charcoal/70 text-center max-w-2xl mx-auto font-urbanist leading-relaxed">
+                Discover exciting events and exclusive specials happening near you
+              </p>
+            </div>
+          </section>
+
           {/* Main Content Section */}
           <section
-            className="relative"
+            className="relative pb-12 sm:pb-16 md:pb-20"
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
             }}
           >
             <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
-              <div className="pt-8">
+              <div className="pt-4">
                 {/* Filter tabs */}
                 <FilterTabs
                   selectedFilter={selectedFilter}

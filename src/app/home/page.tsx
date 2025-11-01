@@ -72,7 +72,7 @@ export default function Home() {
       </div>
 
       <div className="bg-off-white">
-        <div className="py-1">
+        <div className="py-1 pb-12 sm:pb-16 md:pb-20">
             {/* No scroll-reveal wrappers; simple static rendering */}
           <div data-section="for-you">
             <MemoizedBusinessRow

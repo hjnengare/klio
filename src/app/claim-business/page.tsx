@@ -70,7 +70,7 @@ export default function ClaimBusinessPage() {
         <div className="py-1 pt-20">
           {/* Main Content Section */}
           <section
-            className="relative"
+            className="relative pb-12 sm:pb-16 md:pb-20"
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
             }}
@@ -196,8 +196,7 @@ export default function ClaimBusinessPage() {
                                        hover:bg-charcoal hover:text-white transition-all duration-300 shadow-sm">
                       Contact Support
                     </button>
-                    <button className="px-4 py-2 bg-white/20 border border-white/40 text-charcoal rounded-full text-sm font-600 font-urbanist
-                                       hover:bg-white/30 transition-all duration-300 shadow-sm">
+                    <button className="px-8 py-2.5 bg-gradient-to-r from-coral to-coral/90 text-white text-sm font-700 font-urbanist rounded-full hover:from-coral/90 hover:to-coral/80 transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md">
                       Learn More
                     </button>
                   </div>

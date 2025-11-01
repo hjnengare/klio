@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Performance Audit Script for KLIO
+ * Performance Audit Script for sayso
  * 
  * Checks common performance issues and provides recommendations
  * Run with: node scripts/performance-audit.js
@@ -10,7 +10,7 @@
 const fs = require('fs');
 const path = require('path');
 
-console.log('🚀 KLIO Performance Audit\n');
+console.log('🚀 sayso Performance Audit\n');
 console.log('=' .repeat(50));
 
 // Check 1: Loading states

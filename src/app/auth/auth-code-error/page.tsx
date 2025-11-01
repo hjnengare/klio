@@ -59,10 +59,10 @@ export default function AuthCodeErrorPage() {
             <p className="text-sm text-charcoal/60">
               If you continue to experience issues, please contact support at{" "}
               <a
-                href="mailto:support@klio.com"
+                href="mailto:support@sayso.com"
                 className="text-sage hover:text-sage/80 font-medium underline"
               >
-                support@klio.com
+                support@sayso.com
               </a>
             </p>
           </div>

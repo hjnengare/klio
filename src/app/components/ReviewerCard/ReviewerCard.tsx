@@ -51,7 +51,7 @@ export default function ReviewerCard({
         className="snap-start snap-always w-[calc(50vw-1rem)] sm:w-[200px] flex-shrink-0"
       >
         <div
-          className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden group cursor-pointer h-[200px] relative border border-white/50 backdrop-blur-md ring-1 ring-white/20 transition-all duration-300 hover:shadow-xl hover:shadow-sage/20 hover:-translate-y-0.5 hover:border-white/70"
+          className="bg-card-bg backdrop-blur-xl rounded-[20px] overflow-hidden group cursor-pointer h-[200px] relative border border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)]"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -67,7 +67,7 @@ export default function ReviewerCard({
                       alt={reviewerData?.name || "User avatar"}
                       width={32}
                       height={32}
-                      className="w-8 h-8 object-cover rounded-full border-2 border-white ring-2 ring-white/50 transition-all duration-300 group-hover:scale-105 group-hover:ring-sage/30"
+                      className="w-8 h-8 object-cover rounded-full border-2 border-white ring-2 ring-white/50"
                       priority={false}
                       onError={() => setImgError(true)}
                     />
@@ -85,16 +85,16 @@ export default function ReviewerCard({
                     )}
                   </div>
                 ) : (
-                  <div className="w-8 h-8 flex items-center justify-center bg-sage/20 text-sage rounded-full border-2 border-white ring-2 ring-white/50 transition-all duration-300 group-hover:scale-105 group-hover:bg-sage/30">
+                  <div className="w-8 h-8 flex items-center justify-center bg-sage/20 text-sage rounded-full border-2 border-white ring-2 ring-white/50">
                     <User className="text-sage/70" size={14} />
                   </div>
                 )}
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-urbanist text-xs font-600 text-charcoal truncate group-hover:text-sage transition-colors duration-200">
+                  <h3 className="font-urbanist text-xs font-600 text-charcoal truncate">
                     {reviewerData?.name}
                   </h3>
-                  <p className="font-urbanist text-xs text-charcoal/70 transition-colors duration-200 group-hover:text-charcoal/90">
+                  <p className="font-urbanist text-xs text-charcoal/70">
                     {reviewerData?.location}
                   </p>
                 </div>
@@ -105,7 +105,7 @@ export default function ReviewerCard({
             {/* Stats with micro-interaction */}
             <div className="mb-1">
               <div className="flex items-center justify-center">
-                <div className="text-center transition-all duration-300 group-hover:scale-105">
+                <div className="text-center">
                   <div className="font-urbanist font-600 text-xs text-charcoal flex items-center justify-center gap-1">
                     <span>{reviewerData?.reviewCount}</span>
                     {/* Star rating display for context */}
@@ -122,7 +122,7 @@ export default function ReviewerCard({
             {/* Latest Review Preview with fade-in effect */}
             {latestReview && (
               <div className="mb-1.5 mt-1 border-t border-white/20 pt-1.5">
-                <div className="bg-off-white rounded-md px-2 py-1 transition-all duration-300 group-hover:bg-white group-hover:shadow-sm">
+                <div className="bg-off-white rounded-md px-2 py-1">
                   <div className="flex items-center gap-1 mb-0.5">
                     <Star className="w-2 h-2 fill-amber-400 text-amber-400" />
                     <span className="font-urbanist text-[8px] text-charcoal/60">Latest Review</span>
@@ -139,7 +139,7 @@ export default function ReviewerCard({
               <div className="flex items-center gap-1 flex-wrap">
                 {reviewerData?.badge && (
                   <div
-                    className={`px-1.5 py-0.5 rounded-full text-[10px] font-urbanist font-600 flex items-center gap-0.5 transition-all duration-300 group-hover:scale-105 ${
+                    className={`px-1.5 py-0.5 rounded-full text-[10px] font-urbanist font-600 flex items-center gap-0.5 ${
                       reviewerData.badge === "top"
                         ? "bg-amber-100 text-amber-700 shadow-sm shadow-amber-200/50"
                         : reviewerData.badge === "verified"
@@ -166,7 +166,7 @@ export default function ReviewerCard({
 
                 {reviewerData?.trophyBadge && (
                   <div
-                    className={`px-1.5 py-0.5 rounded-full text-[10px] font-urbanist font-600 flex items-center gap-0.5 transition-all duration-300 group-hover:scale-105 ${
+                    className={`px-1.5 py-0.5 rounded-full text-[10px] font-urbanist font-600 flex items-center gap-0.5 ${
                       reviewerData.trophyBadge === "gold"
                         ? "bg-yellow-50 text-yellow-700 shadow-sm shadow-yellow-200/50"
                         : reviewerData.trophyBadge === "silver"
@@ -197,22 +197,22 @@ export default function ReviewerCard({
               </div>
 
               {/* Card Actions with slide-up animation */}
-              <div className="flex gap-1 md:opacity-0 md:group-hover:opacity-100 md:translate-y-2 md:group-hover:translate-y-0 transition-all duration-300">
+              <div className="flex gap-1">
                 <button
-                  className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center hover:bg-sage hover:text-white hover:border-sage hover:shadow-lg hover:shadow-sage/30 transition-all duration-200 border border-white/60 ring-1 ring-white/30 shadow-sm"
+                  className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Follow"
                   title="Follow"
                 >
-                  <UserPlus className="text-primary w-3 h-3 md:w-4 md:h-4 transition-colors duration-200" />
+                  <UserPlus className="text-primary w-3 h-3 md:w-4 md:h-4" />
                 </button>
                 <button
-                  className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center hover:bg-coral hover:text-white hover:border-coral hover:shadow-lg hover:shadow-coral/30 transition-all duration-200 border border-white/60 ring-1 ring-white/30 shadow-sm"
+                  className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Message"
                   title="Message"
                 >
-                  <MessageCircle className="text-primary w-3 h-3 md:w-4 md:h-4 transition-colors duration-200" />
+                  <MessageCircle className="text-primary w-3 h-3 md:w-4 md:h-4" />
                 </button>
               </div>
             </div>
@@ -226,7 +226,7 @@ export default function ReviewerCard({
   return (
     <li className="w-[calc(50vw-12px)] sm:w-auto sm:min-w-[213px] flex-shrink-0">
       <div
-        className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/50 backdrop-blur-md ring-1 ring-white/20"
+        className="bg-card-bg backdrop-blur-xl rounded-[20px] group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)]"
       >
         <div className="flex items-start gap-1.5 mb-2 p-2">
           <div className="relative">
@@ -255,9 +255,9 @@ export default function ReviewerCard({
           </div>
 
           {/* Card Actions - always visible on mobile, slide-in on desktop */}
-          <div className="absolute right-2 top-2 md:right-2 md:top-1/2 md:-translate-y-1/2 z-20 flex flex-row md:flex-col gap-1 md:gap-2 transition-all duration-300 ease-out md:translate-x-12 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
+          <div className="absolute right-2 top-2 md:right-2 md:top-1/2 md:-translate-y-1/2 z-20 flex flex-row md:flex-col gap-1 md:gap-2">
             <button
-              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 border border-white/60 ring-1 ring-white/30 shadow-sm"
+              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
               onClick={(e) => e.stopPropagation()}
               aria-label="Follow"
               title="Follow"
@@ -265,7 +265,7 @@ export default function ReviewerCard({
               <UserPlus className="text-primary w-3 h-3 md:w-4 md:h-4" />
             </button>
             <button
-              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 border border-white/60 ring-1 ring-white/30 shadow-sm"
+              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
               onClick={(e) => e.stopPropagation()}
               aria-label="Message"
               title="Message"
@@ -273,7 +273,7 @@ export default function ReviewerCard({
               <MessageCircle className="text-primary w-3 h-3 md:w-4 md:h-4" />
             </button>
             <button
-              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 border border-white/60 ring-1 ring-white/30 shadow-sm"
+              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
               onClick={(e) => e.stopPropagation()}
               aria-label="Share"
               title="Share"

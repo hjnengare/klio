@@ -44,7 +44,7 @@ const HERO_SLIDES: HeroSlide[] = [
   },
 ];
 
-const FONT_STACK = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif';
+const FONT_STACK = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", system-ui, sans-serif';
 
 interface HeroCarouselProps {
   userInterests?: string[];
@@ -326,7 +326,7 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
                   <h1
                      className="text-off-white leading-[1.1] mb-6 sm:mb-6 font-bold tracking-tight whitespace-normal lg:whitespace-nowrap"
                      style={{
-                       fontFamily: '"Permanent Marker", cursive',
+                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", system-ui, sans-serif',
                        fontSize: "clamp(2.5rem, 6vw, 2rem)",
                      }}
                    >

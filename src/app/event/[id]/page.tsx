@@ -113,16 +113,13 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
 
         {/* Main Content Section */}
         <section
-          className="relative"
-          style={{
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
-          }}
+          className="relative font-sf-pro"
         >
-          <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
-            <div className="pt-8">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 md:px-6 relative z-10">
+            <div className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                 {/* Left Column - Main Content */}
-                <div className="lg:col-span-2 space-y-8">
+                <div className="lg:col-span-2 space-y-4 sm:space-y-6 lg:space-y-8">
                   <EventHeroImage event={event} isLiked={isLiked} onLike={handleLike} />
                   <EventInfo event={event} />
                   <EventDetailsCard event={event} />
@@ -130,7 +127,7 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
                 </div>
 
                 {/* Right Column - Sidebar */}
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   <EventActionCard />
                   <EventContactInfo event={event} />
                 </div>

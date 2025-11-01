@@ -13,26 +13,30 @@ interface EventContentProps {
 
 export default function EventContent({ title, location, description, href }: EventContentProps) {
   return (
-    <div className="pt-4 relative flex-shrink-0 z-10 flex flex-col justify-between h-full">
-      <div>
-        <div>
-          <h3 className="text-lg font-600 font-extrabold text-charcoal group-hover:text-coral transition-colors duration-300 text-center line-clamp-1 min-h-[2.5rem]" style={{ fontFamily: '"Permanent Marker", cursive' }}>
+    <div className="pt-4 pb-4 px-4 relative flex-shrink-0 z-10 flex flex-col justify-between min-h-0 bg-gradient-to-b from-transparent to-card-bg/50">
+      <div className="flex-shrink-0">
+        <div className="mb-1">
+          <h3 className="text-base font-semibold text-charcoal text-center line-clamp-2 tracking-tight font-sf-pro">
             {title}
           </h3>
         </div>
 
-        <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 font-urbanist">
-          <MapPin className="w-3 h-3 text-charcoal/70" />
-          <span className="truncate">{location}</span>
+        <div className="mb-2 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 font-urbanist">
+          <MapPin className="w-3 h-3 text-charcoal/50" />
+          <span className="truncate font-medium">{location}</span>
         </div>
       </div>
 
-      {/* Description */}
-      {description && (
-        <p className="text-sm font-600 text-charcoal/90 leading-relaxed line-clamp-3 text-center font-urbanist min-h-[3.75rem]">
-          {description}
-        </p>
-      )}
+
+      {/* Learn More Button - Fixed at bottom */}
+      <div className="flex justify-center mt-auto pt-3 pb-2 flex-shrink-0">
+        <button className="w-full max-w-[160px] py-2 bg-gradient-to-r from-coral to-coral/90 text-white text-xs font-600 font-urbanist rounded-full hover:from-coral/90 hover:to-coral/80 transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md">
+          Learn More
+        </button>
+      </div>
+
+      {/* Decorative bottom accent */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-transparent via-coral/30 to-transparent rounded-full" />
     </div>
   );
 }

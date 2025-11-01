@@ -34,23 +34,24 @@ export default function ForYouPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
-        className="bg-off-white shadow-sm relative z-10"
+        className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg shadow-sm"
       >
-        <div className="relative z-[1] max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
-          <div className="flex items-center justify-between">
+        <div className="relative z-[1] max-w-[1300px] mx-auto px-4">
+          <div className="h-10 sm:h-11 flex items-center">
             {/* Back button */}
             <Link href="/home" className="group flex items-center">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
+              <div className="w-8 h-8 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3">
                 <ArrowLeft
-                  size={22}
-                  className="text-charcoal/70 group-hover:text-sage transition-colors duration-300"
+                  size={16}
+                  className="text-white group-hover:text-white transition-colors duration-300"
                 />
               </div>
               <motion.h1
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-300 group-hover:from-sage/90 group-hover:to-sage relative"
+                className="font-urbanist text-[10px] sm:text-xs font-medium text-white transition-all duration-300 relative"
+                style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
               >
                 For You
               </motion.h1>
@@ -59,10 +60,38 @@ export default function ForYouPage() {
         </div>
       </motion.header>
 
+      {/* Hero Section */}
+      <section className="relative z-10 pt-12 sm:pt-14 pb-6 sm:pb-8 md:pb-12">
+        <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          {/* Breadcrumb */}
+          <nav className="px-2 sm:px-4 pt-3 sm:pt-4 pb-1" aria-label="Breadcrumb">
+            <ol className="flex items-center gap-1 text-sm text-charcoal/60">
+              <li>
+                <Link href="/home" className="hover:text-charcoal transition-colors font-urbanist">
+                  Home
+                </Link>
+              </li>
+              <li className="text-charcoal/40">/</li>
+              <li className="text-charcoal font-medium font-urbanist">For You</li>
+            </ol>
+          </nav>
+
+          {/* Main Headline */}
+          <h1 className="text-sm font-bold text-charcoal mb-1 text-center font-urbanist">
+            For You
+          </h1>
+
+          {/* Sub-headline */}
+          <p className="text-xs text-charcoal/70 text-center max-w-2xl mx-auto font-urbanist leading-relaxed">
+            Personalized recommendations tailored to your interests and preferences
+          </p>
+        </div>
+      </section>
+
       {/* Main content with proper spacing */}
-      <div className="pb-6 relative z-10">
+      <div className="pb-12 sm:pb-16 md:pb-20 relative z-10">
         {/* Results count */}
-        <div className="px-3 sm:px-4 md:px-6 lg:px-8 pt-6 pb-2">
+        <div className="px-3 sm:px-4 md:px-6 lg:px-8 pb-2">
           <div className="max-w-[1300px] mx-auto">
             <p className="font-urbanist text-sm text-charcoal/60">
               Showing {currentBusinesses.length} personalized recommendations

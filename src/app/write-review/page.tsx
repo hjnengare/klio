@@ -58,26 +58,26 @@ export default function WriteReviewPage() {
       </div>
 
       {/* Header */}
-      <div className="relative z-20  bg-off-white   backdrop-blur-sm border-b border-sage/10 sticky top-0">
-        <div className="max-w-[1300px] mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => router.back()}
-                className="w-10 h-10 rounded-full hover:bg-sage/5 flex items-center justify-center transition-all duration-200 mobile-interaction"
-                aria-label="Go back"
-              >
-                <ChevronLeft className="w-5 h-5 text-charcoal/70" />
-              </button>
-              <h1 className="font-urbanist text-lg font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg backdrop-blur-sm border-b border-charcoal/10">
+        <div className="max-w-[1300px] mx-auto px-4">
+          <div className="h-10 sm:h-11 flex items-center">
+            <button
+              onClick={() => router.back()}
+              className="group flex items-center"
+              aria-label="Go back"
+            >
+              <div className="w-8 h-8 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3">
+                <ChevronLeft className="w-4 h-4 text-white group-hover:text-white transition-colors duration-300" />
+              </div>
+              <h1 className="font-urbanist text-[10px] sm:text-xs font-medium text-white transition-all duration-300 relative" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Write Review
               </h1>
-            </div>
+            </button>
           </div>
         </div>
       </div>
 
-      <div className="relative z-10 max-w-[800px] mx-auto px-4 py-8">
+      <div className="relative z-10 max-w-[800px] mx-auto px-4 pt-20 pb-8">
         {/* Search Section */}
         <div className="mb-8">
           <div className="text-center mb-6">

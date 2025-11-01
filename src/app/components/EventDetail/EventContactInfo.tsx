@@ -15,22 +15,22 @@ export default function EventContactInfo({ event }: EventContactInfoProps) {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.6, duration: 0.6 }}
-      className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 p-6"
+      className="bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] p-4"
     >
-      <h3 className="text-xl font-bold text-charcoal mb-4 font-urbanist">Contact Information</h3>
+      <h3 className="text-sm font-bold text-charcoal mb-3 font-urbanist">Contact Information</h3>
 
-      <div className="space-y-3">
-        <div className="flex items-center gap-3">
-          <Phone className="text-charcoal" size={18} />
-          <span className="text-charcoal/80 font-urbanist">+44 20 1234 5678</span>
+      <div className="space-y-2.5">
+        <div className="flex items-center gap-2.5">
+          <Phone className="text-charcoal/70" size={16} />
+          <span className="text-sm text-charcoal/70 font-urbanist">+44 20 1234 5678</span>
         </div>
-        <div className="flex items-center gap-3">
-          <Globe className="text-charcoal" size={18} />
-          <span className="text-charcoal/80 font-urbanist">www.example.com</span>
+        <div className="flex items-center gap-2.5">
+          <Globe className="text-charcoal/70" size={16} />
+          <span className="text-sm text-charcoal/70 font-urbanist">www.example.com</span>
         </div>
-        <div className="flex items-center gap-3">
-          <MapPin className="text-charcoal" size={18} />
-          <span className="text-charcoal/80 font-urbanist">{event.location}</span>
+        <div className="flex items-center gap-2.5">
+          <MapPin className="text-charcoal/70" size={16} />
+          <span className="text-sm text-charcoal/70 font-urbanist">{event.location}</span>
         </div>
       </div>
     </motion.div>

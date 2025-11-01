@@ -89,8 +89,8 @@ export default function CommunityHighlights({
         {/* Top Reviewers */}
         {topReviewers && topReviewers.length > 0 && (
           <div className="mt-1">
-            <div className="mb-0.5 flex flex-wrap items-center justify-between gap-2">
-              <h3 className="font-urbanist text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
+            <div className="mb-2 flex justify-center">
+              <h3 className="font-urbanist text-sm sm:text-base font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] text-center">
                 Top Reviewers This Month In Claremont
               </h3>
             </div>
@@ -127,24 +127,11 @@ export default function CommunityHighlights({
         {/* Businesses of the Month */}
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
           <div className="mt-3">
-            <div className="mb-0.5 flex flex-wrap items-center justify-between gap-2">
-              <h3 className="font-urbanist text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
+            <div className="mb-2 flex justify-center">
+              <h3 className="font-urbanist text-sm sm:text-base font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] text-center">
                 Businesses of the Month by Category
               </h3>
             </div>
-
-            <div className="mb-2 text-center">
-              <div className="inline-flex items-center gap-1.5 bg-coral/15 rounded-full px-3 py-1.5 border border-coral/20 shadow-lg shadow-coral/10">
-                <Trophy className="w-3.5 h-3.5 text-coral" />
-                <span className="font-semibold text-coral text-xs">
-                  September 2025 Winners
-                </span>
-              </div>
-              <p className="mt-1 text-xs text-primary/70">
-                Top-rated businesses competing within their categories
-              </p>
-            </div>
-
             <ScrollableSection className="list-none gap-3">
               {businessesOfTheMonth.map((business) => (
                 <BusinessOfTheMonthCard

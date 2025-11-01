@@ -22,14 +22,17 @@ export default function EventHeroImage({
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6 }}
-      className="relative h-[400px] sm:h-[500px] rounded-xl overflow-hidden shadow-lg border border-white/50"
+      className="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] rounded-lg sm:rounded-xl overflow-hidden shadow-lg border border-white/50"
     >
       <Image
-        src={event.image || "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=500&fit=crop&crop=center"}
+        src={event.image || "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=1920&h=1080&fit=crop&crop=center&q=90"}
         alt={event.alt || event.title}
         fill
-        className="object-cover"
+        className="object-cover object-center"
         priority
+        quality={90}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 900px"
+        style={{ objectFit: 'cover' }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
@@ -49,7 +52,7 @@ export default function EventHeroImage({
         onClick={onLike}
         className={`absolute top-6 right-6 w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-110 ${
           isLiked
-            ? "bg-red-500/90 text-white border-red-500/50"
+            ? "bg-coral/90 text-white border-coral/50"
             : "bg-white/20 text-white border-white/30 hover:bg-white/30"
         }`}
         aria-label="Like event"

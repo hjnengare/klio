@@ -41,8 +41,8 @@ export interface UserProfile {
   
   export const MOCK_PROFILE: UserProfile = {
     user_id: "mock-user-1",
-    username: "klio_dev",
-    display_name: "KLIO Designer",
+    username: "sayso_dev",
+    display_name: "sayso Designer",
     avatar_url: null, // keep null to see your Ion placeholder; set a URL to test images
     locale: "en_US",
     onboarding_step: "complete",

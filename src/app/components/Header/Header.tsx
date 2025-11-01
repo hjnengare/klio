@@ -27,7 +27,6 @@ export default function Header({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
   const [isMobileBusinessDropdownOpen, setIsMobileBusinessDropdownOpen] = useState(false);
   const [menuPos, setMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
@@ -42,23 +41,46 @@ export default function Header({
 
   // Scroll-based header visibility
   useEffect(() => {
+    const hideOffset = 100; // Additional 100px to stay visible after scroll starts
+    let lastKnownScrollY = window.scrollY;
+    let scrollDownStartY: number | null = null;
+
     const controlHeader = () => {
       const currentScrollY = window.scrollY;
-      const scrollThreshold = 100; // Minimum scroll distance to trigger hide/show
-      
-      // Don't hide header if we're near the top
-      if (currentScrollY < scrollThreshold) {
+
+      // At the top - always show
+      if (currentScrollY <= 10) {
         setIsHeaderVisible(true);
-      } else {
-        // Hide when scrolling down, show when scrolling up
-        if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
+        scrollDownStartY = null;
+        lastKnownScrollY = currentScrollY;
+        return;
+      }
+
+      const isScrollingDown = currentScrollY > lastKnownScrollY;
+      const isScrollingUp = currentScrollY < lastKnownScrollY;
+
+      if (isScrollingDown) {
+        // Record the position where scrolling down started
+        if (scrollDownStartY === null) {
+          scrollDownStartY = lastKnownScrollY;
+        }
+
+        // Calculate distance scrolled down from start
+        const scrolledDistance = currentScrollY - scrollDownStartY;
+
+        // Keep visible for 100px, then hide
+        if (scrolledDistance > hideOffset) {
           setIsHeaderVisible(false);
-        } else if (currentScrollY < lastScrollY) {
+        } else {
           setIsHeaderVisible(true);
         }
+      } else if (isScrollingUp) {
+        // Immediately show when scrolling up
+        setIsHeaderVisible(true);
+        scrollDownStartY = null;
       }
-      
-      setLastScrollY(currentScrollY);
+
+      lastKnownScrollY = currentScrollY;
     };
 
     // Add scroll event listener with throttling
@@ -74,11 +96,11 @@ export default function Header({
     };
 
     window.addEventListener('scroll', throttledScroll, { passive: true });
-    
+
     return () => {
       window.removeEventListener('scroll', throttledScroll);
     };
-  }, [lastScrollY]);
+  }, []);
 
   // Close business dropdown when clicking outside
   useEffect(() => {
@@ -101,7 +123,22 @@ export default function Header({
   useLayoutEffect(() => {
     if (isBusinessDropdownOpen && btnRef.current) {
       const r = btnRef.current.getBoundingClientRect();
-      setMenuPos({ left: r.left, top: r.bottom + 8 });
+      const dropdownWidth = 560; // min-w-[560px]
+      const viewportWidth = window.innerWidth;
+      const padding = 16; // padding from edge
+
+      // Calculate left position, ensure it doesn't go off screen
+      let leftPos = r.left;
+
+      // If dropdown would go off right edge, align to right side of button
+      if (leftPos + dropdownWidth > viewportWidth - padding) {
+        leftPos = Math.max(padding, r.right - dropdownWidth);
+      }
+
+      // Ensure it doesn't go off left edge
+      leftPos = Math.max(padding, leftPos);
+
+      setMenuPos({ left: leftPos, top: r.bottom + 8 });
     }
   }, [isBusinessDropdownOpen]);
 
@@ -143,8 +180,8 @@ export default function Header({
   // Different positioning for home page (frosty variant) vs other pages
   const isHomeVariant = variant === "frosty";
   const headerClassName = isHomeVariant
-    ? `absolute top-6 left-1/2 -translate-x-1/2 z-50 bg-off-white backdrop-blur-xl rounded-full shadow-xl transition-all duration-300 w-[96%] max-w-[1700px]`
-    : `fixed top-0 left-0 right-0 z-50 bg-off-white backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 translate-y-0`;
+    ? `absolute top-6 left-1/2 -translate-x-1/2 z-50 bg-off-white backdrop-blur-xl rounded-full shadow-xl transition-all duration-300 w-[96%] max-w-[1700px] ${!isHeaderVisible ? 'opacity-0 pointer-events-none' : ''}`
+    : `fixed top-0 left-0 right-0 z-50 bg-off-white backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 ${isHeaderVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`;
 
   return (
     <>
@@ -153,7 +190,7 @@ export default function Header({
           {/* Top row */}
           <div className="flex items-center justify-between gap-6">
             {/* Logo */}
-            <OptimizedLink href="/home" className="group flex-shrink-0 relative" aria-label="KLIO Home">
+            <OptimizedLink href="/home" className="group flex-shrink-0 relative" aria-label="sayso Home">
               <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative scale-[0.64] origin-left">
                 <Logo variant="default" className="relative" />
