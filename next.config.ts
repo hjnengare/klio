@@ -90,7 +90,7 @@ const nextConfig: NextConfig = {
 
   // Enable experimental features for better performance
   experimental: {
-    optimizePackageImports: ['react-icons', 'framer-motion', 'lucide-react', 'date-fns'],
+    optimizePackageImports: ['react-icons', 'lucide-react', 'date-fns'],
     optimizeCss: true,
     serverActions: {
       bodySizeLimit: '2mb',
@@ -99,8 +99,6 @@ const nextConfig: NextConfig = {
     ppr: false, // Set to true when ready for Partial Prerendering
     // Enable faster page transitions
     scrollRestoration: true,
-    // Optimize bundle size
-    bundlePagesRouterDependencies: true,
   },
 
   // Turbopack configuration (moved from experimental)

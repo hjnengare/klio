@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import confetti from "canvas-confetti";
 import { Smile, Sparkles, Check, ArrowRight, CheckCircle } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useReducedMotion } from "../utils/useReducedMotion";
@@ -45,31 +44,35 @@ function CompletePageContent() {
 
   useEffect(() => {
     // 🎉 Confetti rain effect
-    if (!reducedMotion) {
+    if (!reducedMotion && typeof window !== 'undefined') {
       let cancelled = false;
-      const duration = 2000; // 2 seconds
-      const end = Date.now() + duration;
+      
+      // Dynamically import canvas-confetti to avoid SSR issues
+      import('canvas-confetti').then((confetti) => {
+        const duration = 2000; // 2 seconds
+        const end = Date.now() + duration;
 
-      (function frame() {
-        if (cancelled) return;
+        (function frame() {
+          if (cancelled) return;
 
-        confetti({
-          particleCount: 3,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-          colors: ["var(--coral)", "var(--sage)", "var(--charcoal)", "var(--off-white)"],
-        });
-        confetti({
-          particleCount: 3,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-          colors: ["var(--coral)", "var(--sage)", "var(--charcoal)", "var(--off-white)"],
-        });
+          confetti.default({
+            particleCount: 3,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ["var(--coral)", "var(--sage)", "var(--charcoal)", "var(--off-white)"],
+          });
+          confetti.default({
+            particleCount: 3,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ["var(--coral)", "var(--sage)", "var(--charcoal)", "var(--off-white)"],
+          });
 
-        if (Date.now() < end) requestAnimationFrame(frame);
-      })();
+          if (Date.now() < end) requestAnimationFrame(frame);
+        })();
+      });
 
       return () => {
         cancelled = true;
