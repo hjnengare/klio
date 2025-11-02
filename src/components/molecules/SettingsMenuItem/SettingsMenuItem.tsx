@@ -16,9 +16,9 @@ export interface SettingsMenuItemProps {
 
 const variantStyles: Record<SettingsMenuItemVariant, { icon: string; text: string; hover: string }> = {
   default: {
-    icon: 'text-gray-500',
-    text: 'text-charcoal group-hover:text-sage',
-    hover: 'hover:bg-sage/5',
+    icon: 'text-gray-500 group-hover:text-coral',
+    text: 'text-charcoal group-hover:text-coral',
+    hover: 'hover:bg-coral/5',
   },
   danger: {
     icon: 'text-coral',
@@ -50,7 +50,7 @@ export const SettingsMenuItem: React.FC<SettingsMenuItemProps> = ({
       </div>
       {showChevron && (
         <ChevronRight
-          className={variant === 'danger' ? 'text-coral' : 'text-gray-400'}
+          className={variant === 'danger' ? 'text-coral' : 'text-gray-400 group-hover:text-coral transition-colors duration-200'}
           size={16}
         />
       )}

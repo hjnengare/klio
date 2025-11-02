@@ -185,7 +185,7 @@ export default function FilterModal({
         <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
           <div className="relative z-10 flex items-center gap-2">
             <SlidersHorizontal className="w-4 h-4 text-sage" />
-            <h2 className="text-sm md:text-base font-semibold text-charcoal">Filters</h2>
+            <h2 className="text-xs font-semibold text-charcoal">Filters</h2>
           </div>
           <button
             onClick={onClose}
@@ -202,9 +202,9 @@ export default function FilterModal({
           style={{ maxHeight: "calc(70vh - 140px)" }}
         >
           {/* Category */}
-          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4">
-            <h3 className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2">
-              <Utensils className="w-4 h-4 text-sage" />
+          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.05s]">
+            <h3 className="text-xs font-semibold text-charcoal mb-3 flex items-center gap-2">
+              <Utensils className="w-3 h-3 text-sage" />
               Category
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -219,7 +219,7 @@ export default function FilterModal({
                         prev.includes(name) ? prev.filter((x) => x !== name) : [...prev, name]
                       )
                     }
-                    className={`px-3 py-2 rounded-full text-sm flex items-center gap-2 border transition-all
+                    className={`px-3 py-2 rounded-full text-xs flex items-center gap-2 border transition-all
                       ${
                         active
                           ? "bg-sage text-white border-sage shadow-sm"
@@ -228,7 +228,7 @@ export default function FilterModal({
                     focus:outline-none focus:ring-2 focus:ring-sage/30`}
                     aria-pressed={active}
                   >
-                    <Icon className={`w-4 h-4 ${active ? "text-white" : "text-sage"}`} />
+                    <Icon className={`w-3.5 h-3.5 ${active ? "text-white" : "text-sage"}`} />
                     <span>{name}</span>
                   </button>
                 );
@@ -237,9 +237,9 @@ export default function FilterModal({
           </section>
 
           {/* Rating */}
-          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4">
-            <h3 className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2">
-              <Star className="w-4 h-4 text-sage" />
+          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.1s]">
+            <h3 className="text-xs font-semibold text-charcoal mb-3 flex items-center gap-2">
+              <Star className="w-3 h-3 text-sage" />
               Minimum Rating
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -250,7 +250,7 @@ export default function FilterModal({
                     key={r}
                     type="button"
                     onClick={() => setSelectedRating(active ? null : r)}
-                    className={`px-3 py-2 rounded-full text-sm flex items-center gap-2 border transition-all
+                    className={`px-3 py-2 rounded-full text-xs flex items-center gap-2 border transition-all
                       ${
                         active
                           ? "bg-sage text-white border-sage shadow-sm"
@@ -273,9 +273,9 @@ export default function FilterModal({
           </section>
 
           {/* Distance */}
-          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4">
-            <h3 className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-sage" />
+          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.15s]">
+            <h3 className="text-xs font-semibold text-charcoal mb-3 flex items-center gap-2">
+              <MapPin className="w-3 h-3 text-sage" />
               Distance
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -286,7 +286,7 @@ export default function FilterModal({
                     key={distance}
                     type="button"
                     onClick={() => setSelectedDistance(active ? null : distance)}
-                    className={`px-3 py-2 rounded-full text-sm flex items-center gap-2 border transition-all whitespace-nowrap
+                    className={`px-3 py-2 rounded-full text-xs flex items-center gap-2 border transition-all whitespace-nowrap
                       ${
                         active
                           ? "bg-coral text-white border-coral shadow-sm"
@@ -306,15 +306,15 @@ export default function FilterModal({
 
         {/* footer */}
         <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-white/60 bg-white/80 backdrop-blur-sm">
-          <button
+            <button
             onClick={handleClearAll}
-            className="flex-1 rounded-full bg-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="flex-1 rounded-full bg-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
           >
             Clear
           </button>
           <button
             onClick={handleApply}
-            className="flex-1 rounded-full bg-sage hover:bg-sage/90 text-white font-semibold py-2.5 px-4 border border-sage transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="flex-1 rounded-full bg-sage hover:bg-sage/90 text-white font-semibold py-2.5 px-4 text-xs border border-sage transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
           >
             Apply
           </button>

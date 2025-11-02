@@ -198,21 +198,38 @@ export class AuthService {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('user_id, onboarding_step, interests_count, last_interests_updated, created_at, updated_at')
+        .select('user_id, onboarding_step, interests_count, last_interests_updated, created_at, updated_at, avatar_url, username, display_name, locale, is_top_reviewer, reviews_count, badges_count, subcategories_count, dealbreakers_count')
         .eq('user_id', userId)
         .single();
 
-      if (error || !data) return undefined;
+      if (error || !data) {
+        console.log('getUserProfile: No data or error', error);
+        return undefined;
+      }
 
-      return {
+      console.log('getUserProfile: Fetched avatar_url from DB:', data.avatar_url);
+
+      const profile = {
         id: data.user_id,
         onboarding_step: data.onboarding_step,
         onboarding_complete: data.onboarding_step === 'complete',
         interests_count: data.interests_count || 0,
         last_interests_updated: data.last_interests_updated,
+        avatar_url: data.avatar_url || undefined,
+        username: data.username || undefined,
+        display_name: data.display_name || undefined,
+        locale: data.locale || 'en',
+        is_top_reviewer: data.is_top_reviewer || false,
+        reviews_count: data.reviews_count || 0,
+        badges_count: data.badges_count || 0,
+        subcategories_count: data.subcategories_count || 0,
+        dealbreakers_count: data.dealbreakers_count || 0,
         created_at: data.created_at,
         updated_at: data.updated_at
       };
+
+      console.log('getUserProfile: Returning profile with avatar_url:', profile.avatar_url);
+      return profile;
     } catch (error) {
       console.error('Error fetching user profile:', error);
       return undefined;

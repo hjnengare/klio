@@ -17,8 +17,8 @@ export const ProfileStatsSection: React.FC<ProfileStatsSectionProps> = ({
   className = '',
 }) => {
   return (
-    <div className={`p-6 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 mb-6 ${className}`}>
-      <h2 className="font-urbanist text-base font-600 text-charcoal mb-4">{title}</h2>
+    <div className={`p-6 sm:p-8 bg-card-bg border border-white/50 rounded-2xl shadow-sm mb-6 ${className}`}>
+      <h2 className="font-urbanist text-sm font-bold text-charcoal mb-4">{title}</h2>
       <StatsGrid stats={stats} columns={columns} />
     </div>
   );

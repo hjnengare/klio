@@ -36,14 +36,14 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         />
         <div>
           <div className="flex items-center space-x-2 mb-1">
-            <h1 className="font-urbanist text-xl font-700 text-charcoal">
+            <h1 className="font-urbanist text-sm font-bold text-charcoal">
               @{username}
             </h1>
           </div>
           {isTopReviewer && (
             <Badge variant="coral" size="sm" className="flex items-center space-x-1">
               <Trophy className="w-3 h-3" />
-              <span className="font-600">{topReviewerBadgeText}</span>
+              <span className="font-600 text-xs">{topReviewerBadgeText}</span>
             </Badge>
           )}
         </div>

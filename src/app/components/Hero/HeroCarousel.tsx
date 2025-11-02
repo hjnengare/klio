@@ -280,7 +280,7 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
       <div className="relative w-full px-0 md:px-4 pt-4 mt-12">
         <section
           ref={containerRef as React.RefObject<HTMLElement>}
-          className="relative min-h-[80vh] sm:min-h-[80vh] w-full overflow-hidden outline-none rounded-none md:rounded-2xl"
+          className="relative min-h-[80vh] sm:min-h-[80vh] w-full overflow-hidden outline-none rounded-none md:rounded-[20px]"
           aria-label="Hero carousel"
           tabIndex={0}
           onMouseEnter={() => setPaused(true)}

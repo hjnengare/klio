@@ -26,13 +26,13 @@ export const ReviewsList: React.FC<ReviewsListProps> = ({
     : reviews.slice(0, initialDisplayCount);
 
   return (
-    <div className={`p-6 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 mb-6 ${className}`}>
+    <div className={`p-6 sm:p-8 bg-card-bg border border-white/50 rounded-2xl shadow-sm mb-6 ${className}`}>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-urbanist text-base font-600 text-charcoal">{title}</h2>
+        <h2 className="font-urbanist text-sm font-bold text-charcoal">{title}</h2>
         {showToggle && reviews.length > initialDisplayCount && (
           <button
             onClick={() => setShowAll(!showAll)}
-            className="text-sm text-coral font-600 hover:text-coral/80 transition-colors duration-200 flex items-center space-x-1"
+            className="text-xs text-coral font-600 hover:text-coral/80 transition-colors duration-200 flex items-center space-x-1"
             aria-expanded={showAll}
           >
             <span>{showAll ? 'Hide' : 'See all'}</span>

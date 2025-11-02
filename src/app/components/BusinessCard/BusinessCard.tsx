@@ -138,7 +138,7 @@ function BusinessCard({
       }}
     >
         <div
-          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden group cursor-pointer w-full md:w-auto h-[720px] md:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-sm hover:shadow-lg transition-all duration-300"
+          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden group cursor-pointer w-full md:w-auto h-[720px] md:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-sm hover:shadow-lg transition-all duration-300"
           style={{
             "--width": "540",
             "--height": "720",
@@ -147,14 +147,14 @@ function BusinessCard({
         >
         {/* MEDIA */}
         <div
-          className="relative overflow-hidden rounded-t-lg flex-[2] md:flex-initial z-10 cursor-pointer"
+          className="relative overflow-hidden rounded-t-[20px] flex-[2] md:flex-initial z-10 cursor-pointer"
           onClick={handleCardClick}
         >
           <div className="relative w-full h-[540px] md:h-[220px]">
             {!imgError && displayImage ? (
               isImagePng || displayImage.includes('/png/') || displayImage.endsWith('.png') || usingFallback ? (
                 // Display PNG files as icons with page background
-                <div className="w-full h-[540px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-lg">
+                <div className="w-full h-[540px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-[20px]">
                   <OptimizedImage
                     src={usingFallback ? getCategoryPng(business.category) : displayImage}
                     alt={displayAlt}
@@ -175,7 +175,7 @@ function BusinessCard({
                   width={540}
                   height={720}
                   sizes="(max-width: 768px) 540px, 320px"
-                  className="w-full h-[540px] md:h-[220px] object-cover rounded-t-lg"
+                  className="w-full h-[540px] md:h-[220px] object-cover rounded-t-[20px]"
                   priority={false}
                   quality={85}
                   onError={handleImageError}
@@ -183,7 +183,7 @@ function BusinessCard({
               )
             ) : (
               // Final fallback - show icon placeholder
-              <div className="w-full h-[540px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-lg">
+              <div className="w-full h-[540px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-[20px]">
                 <div className="w-28 h-28 md:w-28 md:h-28 flex items-center justify-center">
                   <OptimizedImage
                     src={getCategoryPng(business.category)}
@@ -204,7 +204,7 @@ function BusinessCard({
             )}
             {/* Show error icon only if all fallbacks failed */}
             {imgError && (
-              <div className="absolute inset-0 flex items-center justify-center bg-sage/10 text-sage rounded-t-lg">
+              <div className="absolute inset-0 flex items-center justify-center bg-sage/10 text-sage rounded-t-[20px]">
                 <ImageOff className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-sage/70" />
               </div>
             )}
@@ -279,11 +279,11 @@ function BusinessCard({
             </h3>
           </div>
 
-          <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 font-urbanist cursor-pointer" onClick={handleCardClick}>
+          <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/90 font-urbanist cursor-pointer" onClick={handleCardClick}>
             <span>{business.category}</span>
             <span>·</span>
             <div className="flex items-center gap-1">
-              <MapPin className="w-3 h-3 text-charcoal/60" />
+              <MapPin className="w-3 h-3 text-charcoal/70" />
               <span>{business.location}</span>
             </div>
           </div>
@@ -293,7 +293,7 @@ function BusinessCard({
             <p className="text-xs font-600 leading-none text-charcoal font-urbanist">
               {business.reviews}
             </p>
-            <p className="text-xs leading-none text-charcoal/60 font-urbanist">reviews</p>
+            <p className="text-xs leading-none text-charcoal/70 font-urbanist">reviews</p>
           </div>
 
           {business.percentiles && (

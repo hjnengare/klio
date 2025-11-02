@@ -50,7 +50,12 @@
       "Bash(else echo \"Business directory exists\")",
       "Bash(fi)",
       "Bash(if [ ! -d \"src/app/business/login\" ])",
-      "Bash(else echo \"Login directory exists\")"
+      "Bash(else echo \"Login directory exists\")",
+      "Bash(move ANIMATION_GUIDE.md docs )",
+      "Bash(move PERFORMANCE_OPTIMIZATION.md docs )",
+      "Bash(move OPTIMIZATION_SUMMARY.md docs )",
+      "Bash(move:*)",
+      "Bash(move REFACTORING_SUMMARY.md docs )"
     ],
     "deny": [],
     "ask": []

@@ -94,16 +94,16 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       }}
     >
       <div
-        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden group cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-sm hover:shadow-lg transition-all duration-300"
+        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden group cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-sm hover:shadow-lg transition-all duration-300"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Media */}
-        <div className="relative overflow-hidden rounded-t-lg flex-1 sm:flex-initial z-10">
+        <div className="relative overflow-hidden rounded-t-[20px] flex-1 sm:flex-initial z-10">
           <div className="relative w-full h-[540px] sm:h-[320px] md:h-[220px]">
             {!imgError && displayImage ? (
               isImagePng || displayImage.includes('/png/') || displayImage.endsWith('.png') || usingFallback ? (
                 // Display PNG files as icons with page background
-                <div className="w-full h-[540px] sm:h-[320px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-lg">
+                <div className="w-full h-[540px] sm:h-[320px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-[20px]">
                   <Image
                     src={usingFallback ? getCategoryPng(business.category) : displayImage}
                     alt={displayAlt}
@@ -124,7 +124,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
                   alt={displayAlt}
                   width={400}
                   height={320}
-                  className="h-[540px] sm:h-[320px] md:h-[220px] w-full object-cover rounded-t-lg"
+                  className="h-[540px] sm:h-[320px] md:h-[220px] w-full object-cover rounded-t-[20px]"
                   priority={false}
                   loading="lazy"
                   quality={85}
@@ -134,7 +134,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               )
             ) : (
               // Final fallback - show icon placeholder
-              <div className="w-full h-[540px] sm:h-[320px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-lg">
+              <div className="w-full h-[540px] sm:h-[320px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-[20px]">
                 <div className="w-28 h-28 sm:w-28 sm:h-28 flex items-center justify-center">
                   <Image
                     src={getCategoryPng(business.category)}
@@ -156,7 +156,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             )}
             {/* Show error icon only if all fallbacks failed */}
             {imgError && (
-              <div className="absolute inset-0 flex items-center justify-center bg-sage/10 text-sage rounded-t-lg">
+              <div className="absolute inset-0 flex items-center justify-center bg-sage/10 text-sage rounded-t-[20px]">
                 <ImageOff className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
               </div>
             )}

@@ -102,6 +102,25 @@ export default function Header({
     };
   }, []);
 
+  // Close all modals on scroll
+  useEffect(() => {
+    const closeModalsOnScroll = () => {
+      setIsBusinessDropdownOpen(false);
+      setIsMobileBusinessDropdownOpen(false);
+      setShowSearchBar(false);
+      if (isFilterVisible) {
+        setIsFilterOpen(false);
+        setTimeout(() => setIsFilterVisible(false), 150);
+      }
+    };
+
+    window.addEventListener('scroll', closeModalsOnScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', closeModalsOnScroll);
+    };
+  }, [isFilterVisible]);
+
   // Close business dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -238,7 +257,7 @@ export default function Header({
                 {isBusinessDropdownOpen &&
                   createPortal(
                     <div
-                      className="fixed z-[1000] bg-white/95 backdrop-blur-xl border border-white/60 shadow-xl rounded-2xl overflow-hidden min-w-[560px] whitespace-normal break-keep transition-all duration-200"
+                      className="fixed z-[1000] bg-white/95 backdrop-blur-xl border border-white/60 shadow-xl rounded-2xl overflow-hidden min-w-[560px] whitespace-normal break-keep"
                       style={{ left: menuPos.left, top: menuPos.top }}
                     >
                       {/* header */}
@@ -261,14 +280,14 @@ export default function Header({
                         <OptimizedLink
                           href="/business/login"
                           onClick={() => setIsBusinessDropdownOpen(false)}
-                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-sage/30 transition-all duration-200"
+                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1">
-                              <div className="font-urbanist font-600 text-charcoal text-sm">Business Login</div>
-                              <div className="text-xs text-charcoal/60 mt-0.5">Access your business account</div>
+                              <div className="font-urbanist font-600 text-charcoal group-hover:text-coral text-sm transition-colors">Business Login</div>
+                              <div className="text-xs text-charcoal/60 group-hover:text-coral/80 mt-0.5 transition-colors">Access your business account</div>
                             </div>
-                            <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-sage transition-colors" />
+                            <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-coral transition-colors" />
                           </div>
                         </OptimizedLink>
 
@@ -279,8 +298,8 @@ export default function Header({
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1">
-                              <div className="font-urbanist font-600 text-charcoal text-sm">Claim Business</div>
-                              <div className="text-xs text-charcoal/60 mt-0.5">Add your business to our platform</div>
+                              <div className="font-urbanist font-600 text-charcoal group-hover:text-coral text-sm transition-colors">Claim Business</div>
+                              <div className="text-xs text-charcoal/60 group-hover:text-coral/80 mt-0.5 transition-colors">Add your business to our platform</div>
                             </div>
                             <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-coral transition-colors" />
                           </div>
@@ -289,14 +308,14 @@ export default function Header({
                         <OptimizedLink
                           href="/manage-business"
                           onClick={() => setIsBusinessDropdownOpen(false)}
-                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-sage/30 transition-all duration-200"
+                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1">
-                              <div className="font-urbanist font-600 text-charcoal text-sm">Manage Business</div>
-                              <div className="text-xs text-charcoal/60 mt-0.5">Update your business listing</div>
+                              <div className="font-urbanist font-600 text-charcoal group-hover:text-coral text-sm transition-colors">Manage Business</div>
+                              <div className="text-xs text-charcoal/60 group-hover:text-coral/80 mt-0.5 transition-colors">Update your business listing</div>
                             </div>
-                            <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-sage transition-colors" />
+                            <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-coral transition-colors" />
                           </div>
                         </OptimizedLink>
                       </div>

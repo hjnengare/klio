@@ -105,6 +105,7 @@
     margin: 0;
     padding: 0;
     scrollbar-gutter: stable;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -672,6 +673,82 @@
     }
   }
 
+  /* Page Load Animations */
+  @keyframes pageLoad {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pageLoadFade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes pageLoadSlide {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Page load animation classes */
+  .page-load {
+    animation: pageLoad 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  }
+
+  .page-load-fade {
+    animation: pageLoadFade 0.5s ease-out forwards;
+  }
+
+  .page-load-slide {
+    animation: pageLoadSlide 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  }
+
+  /* Staggered page load delays */
+  .page-load-delay-1 {
+    animation-delay: 0.1s;
+    opacity: 0;
+  }
+
+  .page-load-delay-2 {
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+
+  .page-load-delay-3 {
+    animation-delay: 0.3s;
+    opacity: 0;
+  }
+
+  .page-load-delay-4 {
+    animation-delay: 0.4s;
+    opacity: 0;
+  }
+
+  .page-load-delay-5 {
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
+
+  .page-load-delay-6 {
+    animation-delay: 0.6s;
+    opacity: 0;
+  }
+
   /* Arrow bounce animation */
   .arrow-bounce {
     animation: bounceRight 2s ease-in-out infinite;
@@ -1103,10 +1180,14 @@
     .scroll-reveal,
     .scroll-reveal-left,
     .scroll-reveal-right,
-    .scroll-reveal-scale {
+    .scroll-reveal-scale,
+    .page-load,
+    .page-load-fade,
+    .page-load-slide {
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
+      animation: none !important;
     }
 
     .animate-gradient,

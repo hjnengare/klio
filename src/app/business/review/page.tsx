@@ -7,6 +7,7 @@ import ReviewForm from "../../components/ReviewForm/ReviewForm";
 import ReviewSidebar from "../../components/ReviewForm/ReviewSidebar";
 import ReviewStyles from "../../components/ReviewForm/ReviewStyles";
 import { useReviewForm } from "../../hooks/useReviewForm";
+import PageLoad from "../../components/Animations/PageLoad";
 
 const FloatingElements = dynamic(() => import("../../components/Animations/FloatingElements"), {
   ssr: false,
@@ -144,14 +145,16 @@ export default function WriteReviewPage() {
         {/* Floating elements (unchanged) */}
         <FloatingElements />
 
-        <ReviewHeader />
+        <PageLoad variant="fade">
+          <ReviewHeader />
+        </PageLoad>
 
         {/* ---------------- Main content ---------------- */}
         <div className="relative z-10 bg-off-white pt-20">
           <div className="w-full max-w-7xl mx-auto px-0 md:px-4 py-4 md:py-6 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* MAIN: Form */}
-              <div className="lg:col-span-8 py-4">
+              <PageLoad variant="slide" delay={1} className="lg:col-span-8 py-4">
                 <ReviewForm
                   businessName={businessName}
                   businessRating={businessRating}
@@ -170,12 +173,14 @@ export default function WriteReviewPage() {
                   onImagesChange={setSelectedImages}
                   onSubmit={handleSubmitReview}
                 />
-              </div>
+              </PageLoad>
 
               {/* ------------ SIDEBAR ------------ */}
-              <aside className="lg:col-span-4">
-                <ReviewSidebar otherReviews={otherReviews} />
-              </aside>
+              <PageLoad variant="slide" delay={2} className="lg:col-span-4">
+                <aside>
+                  <ReviewSidebar otherReviews={otherReviews} />
+                </aside>
+              </PageLoad>
             </div>
           </div>
         </div>

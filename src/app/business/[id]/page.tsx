@@ -224,7 +224,7 @@ export default function BusinessProfilePage() {
                     <nav className="flex items-center justify-between" aria-label="Business profile navigation">
                         <Link
                             href="/home"
-                            className="group flex items-center focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 focus:ring-offset-navbar-bg rounded-lg px-1 -mx-1"
+                            className="group flex items-center focus:outline-none rounded-lg px-1 -mx-1"
                             aria-label="Go back to home"
                         >
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">

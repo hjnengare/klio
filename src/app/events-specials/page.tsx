@@ -51,7 +51,7 @@ export default function EventsSpecialsPage() {
           <section className="relative z-10 pt-2 pb-6 sm:pb-8 md:pb-12">
             <div className="max-w-[1300px] mx-auto px-4 sm:px-6">
               {/* Breadcrumb */}
-              <nav className="px-2 sm:px-4 pt-3 sm:pt-4 pb-1" aria-label="Breadcrumb">
+              <nav className="px-2 sm:px-4 pt-2 pb-1" aria-label="Breadcrumb">
                 <ol className="flex items-center gap-1 text-sm text-charcoal/60">
                   <li>
                     <Link href="/home" className="hover:text-charcoal transition-colors font-urbanist">

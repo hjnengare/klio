@@ -18,6 +18,13 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   last_interests_updated TIMESTAMPTZ,
   last_subcategories_updated TIMESTAMPTZ,
   last_dealbreakers_updated TIMESTAMPTZ,
+  avatar_url TEXT,
+  username TEXT UNIQUE,
+  display_name TEXT,
+  locale TEXT DEFAULT 'en',
+  is_top_reviewer BOOLEAN DEFAULT FALSE,
+  reviews_count INTEGER DEFAULT 0,
+  badges_count INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );

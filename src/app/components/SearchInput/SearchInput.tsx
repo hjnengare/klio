@@ -19,8 +19,8 @@ interface SearchInputProps {
 const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
   (
     {
-      placeholder = "Discover exceptional local experiences, premium dining, and hidden gems...",
-      mobilePlaceholder = "Search places, coffee, yoga…",
+      placeholder = "Search...",
+      mobilePlaceholder = "Search...",
       onSearch,
       onSubmitQuery,
       onFilterClick,
@@ -89,7 +89,7 @@ const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
             placeholder={ph}
             className={`
               w-full bg-off-white border-2 border-charcoal/20 rounded-full
-              text-sm placeholder:text-charcoal/50 font-urbanist text-charcoal
+              text-sm placeholder:text-xs placeholder:text-charcoal/50 font-urbanist text-charcoal
               focus:outline-none focus:border-sage focus:ring-2 focus:ring-sage/20
               hover:border-charcoal/30 transition-all duration-200
               ${showFilter && onFilterClick ? "pl-12 pr-12" : "pl-12 pr-4"}

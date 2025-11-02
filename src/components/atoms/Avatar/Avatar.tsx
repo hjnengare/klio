@@ -54,7 +54,9 @@ export const Avatar: React.FC<AvatarProps> = ({
       .slice(0, 2);
   }, [fallback, alt]);
 
-  const showImage = src && !imageError;
+  // Check if src is a valid non-empty string
+  const hasValidSrc = src && typeof src === 'string' && src.trim().length > 0;
+  const showImage = hasValidSrc && !imageError;
 
   return (
     <div

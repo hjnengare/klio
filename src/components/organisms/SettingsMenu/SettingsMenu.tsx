@@ -15,9 +15,9 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   className = '',
 }) => {
   return (
-    <div className={`p-6 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 mb-12 ${className}`}>
+    <div className={`p-6 sm:p-8 bg-card-bg border border-white/50 rounded-2xl shadow-sm mb-12 ${className}`}>
       {title && (
-        <h2 className="font-urbanist text-base font-600 text-charcoal mb-4">{title}</h2>
+        <h2 className="font-urbanist text-sm font-bold text-charcoal mb-4">{title}</h2>
       )}
       <div className="space-y-2">
         {menuItems.map((item, index) => (

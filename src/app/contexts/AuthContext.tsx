@@ -269,16 +269,31 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
       }
 
-      // Update local user state
+      // Fetch fresh profile data from database to ensure we have the latest avatar_url
+      const { data: freshProfile, error: fetchError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (fetchError) {
+        console.error('Error fetching fresh profile:', fetchError);
+      }
+
+      // Update local user state with fresh data from database
       const updatedUser = {
         ...user,
         ...userData,
-        profile: userData.profile ? { ...user.profile, ...userData.profile } : user.profile
+        profile: freshProfile ? { ...user.profile, ...freshProfile } : (userData.profile ? { ...user.profile, ...userData.profile } : user.profile)
       };
+
+      console.log('Updated user state with avatar_url:', updatedUser.profile?.avatar_url);
       setUser(updatedUser);
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Update failed';
       setError(message);
+      // Re-throw so calling code can handle the error
+      throw error;
     } finally {
       setIsLoading(false);
     }

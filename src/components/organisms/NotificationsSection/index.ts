@@ -1,0 +1,2 @@
+export { NotificationsSection } from './NotificationsSection';
+

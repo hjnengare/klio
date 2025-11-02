@@ -17,6 +17,15 @@ export interface Profile {
   interests?: string[];
   sub_interests?: string[];
   deal_breakers?: string[];
+  avatar_url?: string;
+  username?: string;
+  display_name?: string;
+  locale?: string;
+  is_top_reviewer?: boolean;
+  reviews_count?: number;
+  badges_count?: number;
+  subcategories_count?: number;
+  dealbreakers_count?: number;
   created_at: string;
   updated_at: string;
 }

@@ -15,7 +15,7 @@ export default function LeaderboardHeader() {
         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
-      <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+      <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 pt-2 pb-4">
         <div className="flex items-center justify-between">
           {/* Back button */}
           <Link href="/home" className="group flex items-center">
