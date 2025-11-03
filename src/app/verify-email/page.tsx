@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import { usePrefersReducedMotion } from '../utils/hooks/usePrefersReducedMotion';
-import { Mail, CheckCircle, Loader2, ExternalLink, ArrowLeft } from 'lucide-react';
+import { Mail, CheckCircle, Loader, ExternalLink, ArrowLeft } from 'react-feather';
 
 const styles = `
   /* Mobile-first typography scale - Body text ≥ 16px */
@@ -413,17 +413,17 @@ export default function VerifyEmailPage() {
           {/* Header with premium styling and animations */}
           <div className="text-center mb-4">
             <div className="inline-block relative mb-4 animate-fade-in-up animate-delay-400">
-              <h2 className="text-xl sm:text-lg md:text-lg lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              <h2 className="text-xl sm:text-lg md:text-lg lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
                 Check Your Email
               </h2>
             </div>
-            <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+            <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" >
               We&apos;ve sent a confirmation email to verify your account and unlock full features!
             </p>
           </div>
 
           {/* Main Card */}
-          <div className="bg-off-white rounded-lg p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-shadow duration-300 animate-scale-in">
+          <div className="bg-card-bg rounded-lg p-5 sm:p-7 md:p-9 mb-4 relative overflow-hidden border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-shadow duration-300 animate-scale-in">
             
             {/* Email Icon */}
             <div className="text-center mb-6">
@@ -434,9 +434,9 @@ export default function VerifyEmailPage() {
               {/* Email Display - Clickable */}
               <button
                 onClick={handleOpenInbox}
-                className="bg-sage/5 rounded-lg p-4 mb-6 border border-sage/20 w-full hover:bg-sage/10 hover:border-sage/30 transition-all duration-300 cursor-pointer group"
+                className="bg-sage/5 rounded-lg p-4 mb-6 border border-sage/20 w-full hover:bg-coral/10 hover:border-sage/30 transition-all duration-300 cursor-pointer group"
               >
-                <p className="font-urbanist text-lg font-600 text-charcoal group-hover:text-sage transition-colors duration-300 flex items-center justify-center gap-2">
+                <p className="text-lg font-600 text-charcoal group-hover:text-charcoal transition-colors duration-300 flex items-center justify-center gap-2" >
                   {displayEmail}
                   <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </p>
@@ -445,17 +445,17 @@ export default function VerifyEmailPage() {
 
             {/* Instructions */}
             <div className="text-center mb-8">
-              <p className="font-urbanist text-sm text-charcoal/70 mb-6 leading-relaxed">
+              <p className="text-sm text-charcoal/70 mb-6 leading-relaxed" >
                 Please check your email and click the verification link to activate your account. The link will automatically redirect you back to the app once verified.
               </p>
 
               {/* Benefits */}
               <div className="bg-gradient-to-r from-sage/5 to-coral/5 rounded-lg p-6 mb-6 text-left border border-sage/10">
-                <h3 className="font-urbanist text-base font-600 text-charcoal mb-4 flex items-center gap-2">
+                <h3 className="text-base font-600 text-charcoal mb-4 flex items-center gap-2" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
                   <CheckCircle className="w-5 h-5 text-sage" />
                   Why verify your email?
                 </h3>
-                <ul className="font-urbanist text-sm text-charcoal/80 space-y-2 list-disc pl-5">
+                <ul className="text-sm text-charcoal/80 space-y-2 list-disc pl-5" >
                   <li>Unlock full app features (posting, saving, leaderboards)</li>
                   <li>Secure account recovery and password resets</li>
                   <li>Receive important updates and notifications</li>
@@ -470,7 +470,8 @@ export default function VerifyEmailPage() {
               <button
                 onClick={handleResendVerification}
                 disabled={isResending}
-                className="w-full bg-sage text-white font-urbanist text-sm font-600 py-3 px-4 rounded-full hover:bg-coral transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
+                className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
+                
               >
                 <Mail className="w-4 h-4" />
                 Resend Verification Email
@@ -480,11 +481,12 @@ export default function VerifyEmailPage() {
               <button
                 onClick={handleRefreshUser}
                 disabled={isChecking}
-                className="w-full bg-charcoal text-white font-urbanist text-sm font-600 py-3 px-4 rounded-full hover:bg-coral transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
+                className="w-full bg-gradient-to-r from-sage to-sage/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-sage/90 hover:to-sage transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
+                
               >
                 {isChecking ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader className="w-4 h-4 animate-spin" />
                     Checking...
                   </>
                 ) : (
@@ -497,7 +499,7 @@ export default function VerifyEmailPage() {
             </div>
 
             {/* Help Text */}
-            <p className="font-urbanist text-xs text-charcoal/50 text-center">
+            <p className="text-xs text-charcoal/50 text-center" >
               Didn&apos;t receive the email? Check your spam folder or try resending.
             </p>
           </div>

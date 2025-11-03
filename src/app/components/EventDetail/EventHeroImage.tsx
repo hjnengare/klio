@@ -3,7 +3,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Heart } from "lucide-react";
+import { Heart } from "react-feather";
 import { Event } from "../../data/eventsData";
 
 interface EventHeroImageProps {
@@ -38,11 +38,11 @@ export default function EventHeroImage({
 
       {/* Event Type Badge */}
       <div className="absolute top-6 left-6">
-        <span className={`px-4 py-2 rounded-full text-sm font-600 font-urbanist backdrop-blur-md border shadow-sm ${
+        <span className={`px-4 py-2 rounded-full text-sm font-600 backdrop-blur-md border shadow-sm ${
           event.type === "event"
             ? "bg-coral/90 text-white border-coral/50"
             : "bg-sage/90 text-white border-sage/50"
-        }`}>
+        }`} style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
           {event.type === "event" ? "Event" : "Special"}
         </span>
       </div>

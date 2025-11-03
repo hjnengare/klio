@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
-import { User, X, Search, LogIn, Store, ChevronDown, Building2, Settings } from "lucide-react";
+import { User, X, Search, LogIn, Briefcase, ChevronDown, Settings } from "react-feather";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { useSavedItems } from "../../contexts/SavedItemsContext";
@@ -200,7 +200,7 @@ export default function Header({
   const isHomeVariant = variant === "frosty";
   const headerClassName = isHomeVariant
     ? `absolute top-6 left-1/2 -translate-x-1/2 z-50 bg-off-white backdrop-blur-xl rounded-full shadow-xl transition-all duration-300 w-[96%] max-w-[1700px] ${!isHeaderVisible ? 'opacity-0 pointer-events-none' : ''}`
-    : `fixed top-0 left-0 right-0 z-50 bg-off-white backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 ${isHeaderVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`;
+    : `fixed top-6 left-0 right-0 z-50 bg-off-white backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 ${isHeaderVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`;
 
   return (
     <>
@@ -218,7 +218,7 @@ export default function Header({
 
             {/* Desktop nav - centered */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 flex-1 justify-center">
-              {["home", "saved", "leaderboard"].map((route) => (
+              {["home", "explore", "saved", "leaderboard"].map((route) => (
                 <OptimizedLink
                   key={route}
                   href={`/${route}`}
@@ -263,7 +263,7 @@ export default function Header({
                       {/* header */}
                       <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
                         <div className="relative z-10 flex items-center gap-2">
-                          <Building2 className="w-4 h-4 text-sage" />
+                          <Briefcase className="w-4 h-4 text-sage" />
                           <h2 className="text-sm md:text-base font-semibold text-charcoal">For Businesses</h2>
                         </div>
                         <button
@@ -425,7 +425,7 @@ export default function Header({
           </div>
 
           <nav className="flex flex-col py-4 px-4 overflow-y-auto flex-1 min-h-0">
-            {["home", "saved", "leaderboard"].map((route) => (
+            {["home", "explore", "saved", "leaderboard"].map((route) => (
               <OptimizedLink
                 key={route}
                 href={`/${route}`}
@@ -489,7 +489,7 @@ export default function Header({
               {/* header */}
               <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
                 <div className="relative z-10 flex items-center gap-2">
-                  <Building2 className="w-4 h-4 text-sage" />
+                  <Briefcase className="w-4 h-4 text-sage" />
                   <h2 className="text-sm md:text-base font-semibold text-charcoal">For Businesses</h2>
                 </div>
                 <button

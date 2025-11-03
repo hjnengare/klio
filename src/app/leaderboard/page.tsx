@@ -75,7 +75,7 @@ function LeaderboardPage() {
         <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
           <div className="py-1 pt-20">
             {/* Hero Section */}
-            <section className="relative z-10 pt-16 sm:pt-20 pb-6 sm:pb-8 md:pb-12">
+            <section className="relative z-10 pb-6 sm:pb-8 md:pb-12">
               <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6">
                 {/* Breadcrumb */}
                 <nav className="px-2 sm:px-4 pt-2 pb-1" aria-label="Breadcrumb">

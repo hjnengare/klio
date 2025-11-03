@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { Camera, Upload, Images, AlertCircle, X } from 'lucide-react';
+import { Camera, Upload, Image as ImageIcon, AlertCircle, X } from 'react-feather';
 import { ImageUploadService } from '../../lib/services/imageUploadService';
 
 interface ImageUploadProps {
@@ -232,7 +232,7 @@ export default function ImageUpload({
             className="space-y-3"
           >
             <h4 className="font-urbanist text-sm font-600 text-charcoal flex items-center">
-              <Images className="w-4 h-4 mr-2" />
+              <ImageIcon className="w-4 h-4 mr-2" />
               Selected Images ({selectedImages.length})
             </h4>
 

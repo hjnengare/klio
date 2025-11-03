@@ -1,18 +1,21 @@
-import { Star } from "lucide-react";
+import { Star } from "react-feather";
 
 export default function Stars({ value = 5, color = "amber-500" }: { value?: number; color?: string }) {
-  const full = Math.max(0, Math.min(5, Math.floor(value)));
+  const full = value !== undefined ? Math.max(0, Math.min(5, Math.floor(value))) : 0;
 
   return (
-    <div className={`flex items-center gap-[2px] text-[15px] text-${color}`} aria-label={`Rating: ${full} out of 5`}>
+    <div className="flex items-center gap-[2px] text-[15px] group-hover/rating:scale-110 transition-transform duration-200" aria-label={`Rating: ${value !== undefined ? value.toFixed(1) : 'No rating'} out of 5`}>
       {Array.from({ length: 5 }).map((_, i) => {
         const active = i < full;
         return (
           <Star
             key={i}
-            className={active ? `text-${color}` : "text-gray-300"}
-            // lucide is outline-first; fill to simulate a solid star
-            style={{ width: 15, height: 15, fill: active ? "currentColor" : "none" }}
+            className={`transition-all duration-200 ${
+              active 
+                ? 'text-amber-400 fill-amber-400 group-hover/rating:text-amber-500 group-hover/rating:fill-amber-500' 
+                : 'text-gray-300 group-hover/rating:text-amber-400 group-hover/rating:fill-amber-400'
+            }`}
+            style={{ width: 15, height: 15 }}
             aria-hidden
           />
         );

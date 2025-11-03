@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { AlertCircle, Home, Mail } from "lucide-react";
+import { AlertCircle, Home, Mail } from "react-feather";
 import { motion } from "framer-motion";
 
 export default function AuthCodeErrorPage() {
@@ -27,10 +27,10 @@ export default function AuthCodeErrorPage() {
 
           {/* Error Message */}
           <div className="space-y-3">
-            <h1 className="text-lg md:text-lg lg:text-4xl font-bold text-charcoal tracking-tight">
+            <h1 className="text-lg md:text-lg lg:text-4xl font-bold text-charcoal tracking-tight" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
               Authentication Error
             </h1>
-            <p className="text-charcoal/70 leading-relaxed">
+            <p className="text-charcoal/70 leading-relaxed" >
               {error}
             </p>
           </div>
@@ -39,7 +39,8 @@ export default function AuthCodeErrorPage() {
           <div className="space-y-3 pt-4">
             <button
               onClick={() => router.push('/login')}
-              className="w-full bg-sage text-white font-semibold py-4 px-6 rounded-full hover:bg-sage/90 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2 flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 flex items-center justify-center gap-2 btn-target btn-press"
+              
             >
               <Home className="w-5 h-5" />
               Back to Login
@@ -47,7 +48,8 @@ export default function AuthCodeErrorPage() {
 
             <button
               onClick={() => router.push('/register')}
-              className="w-full bg-cultured-1/50 text-charcoal font-semibold py-4 px-6 rounded-full hover:bg-cultured-1 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/20 focus:ring-offset-2 flex items-center justify-center gap-2 border border-light-gray/50"
+              className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 flex items-center justify-center gap-2 btn-target btn-press"
+              
             >
               <Mail className="w-5 h-5" />
               Try Registering Instead
@@ -56,7 +58,7 @@ export default function AuthCodeErrorPage() {
 
           {/* Help Text */}
           <div className="pt-6 border-t border-light-gray/30">
-            <p className="text-sm text-charcoal/60">
+            <p className="text-sm text-charcoal/60" >
               If you continue to experience issues, please contact support at{" "}
               <a
                 href="mailto:support@sayso.com"

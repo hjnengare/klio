@@ -1,6 +1,6 @@
 "use client";
 
-import { User, AlertCircle, CheckCircle } from "lucide-react";
+import { User, AlertCircle, CheckCircle } from "react-feather";
 
 interface UsernameInputProps {
   value: string;
@@ -24,7 +24,7 @@ export function UsernameInput({
 
   return (
     <div>
-      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
         Username
       </label>
       <div className="relative group">
@@ -43,7 +43,8 @@ export function UsernameInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
-          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 font-urbanist text-body font-600 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
+          style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}
+          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 text-body font-600 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
             hasError ? 'border-error-100 focus:border-error-500 focus:ring-error-500/20' :
             isValid ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
             'border-white/60 focus:ring-sage/30 focus:border-sage'
@@ -54,13 +55,13 @@ export function UsernameInput({
 
       {/* Username validation feedback */}
       {hasError && (
-        <p className="text-xs text-error-600 flex items-center gap-1 mt-1" role="alert">
+        <p className="text-xs text-error-600 flex items-center gap-1 mt-1" role="alert" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
           <AlertCircle className="w-3 h-3" />
           {error}
         </p>
       )}
       {isValid && (
-        <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status">
+        <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
           <CheckCircle className="w-3 h-3" />
           Username looks good!
         </p>

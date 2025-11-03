@@ -2,7 +2,7 @@
 
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
-import { Calendar } from "lucide-react";
+import { Calendar } from "react-feather";
 import { EVENTS_AND_SPECIALS, Event } from "../../data/eventsData";
 import { useToast } from "../../contexts/ToastContext";
 import dynamic from "next/dynamic";
@@ -90,8 +90,8 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
           <div className="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
             <Calendar className="w-7 h-7 text-charcoal" />
           </div>
-          <h1 className="text-2xl font-bold text-charcoal mb-4 font-urbanist">Event Not Found</h1>
-          <Link href="/events-specials" className="px-6 py-2.5 bg-charcoal text-white rounded-full text-sm font-600 font-urbanist hover:bg-charcoal/90 transition-all duration-300 hover:shadow-lg inline-block">
+          <h1 className="text-2xl font-bold text-charcoal mb-4" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>Event Not Found</h1>
+          <Link href="/events-specials" className="px-6 py-2.5 bg-charcoal text-white rounded-full text-sm font-600 hover:bg-charcoal/90 transition-all duration-300 hover:shadow-lg inline-block" >
             Back to Events & Specials
           </Link>
         </div>
@@ -117,7 +117,7 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
         >
           <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 md:px-6 relative z-10">
             <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
                 {/* Left Column - Main Content */}
                 <div className="lg:col-span-2 space-y-4 sm:space-y-6 lg:space-y-8">
                   <EventHeroImage event={event} isLiked={isLiked} onLike={handleLike} />

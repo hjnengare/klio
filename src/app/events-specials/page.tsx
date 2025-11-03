@@ -54,22 +54,22 @@ export default function EventsSpecialsPage() {
               <nav className="px-2 sm:px-4 pt-2 pb-1" aria-label="Breadcrumb">
                 <ol className="flex items-center gap-1 text-sm text-charcoal/60">
                   <li>
-                    <Link href="/home" className="hover:text-charcoal transition-colors font-urbanist">
+                    <Link href="/home" className="hover:text-charcoal transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                       Home
                     </Link>
                   </li>
                   <li className="text-charcoal/40">/</li>
-                  <li className="text-charcoal font-medium font-urbanist">Events & Specials</li>
+                  <li className="text-charcoal font-medium" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Events & Specials</li>
                 </ol>
               </nav>
 
               {/* Main Headline */}
-              <h1 className="text-sm font-bold text-charcoal mb-1 text-center font-urbanist">
+              <h1 className="text-sm font-bold text-charcoal mb-1 text-center" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Events & Specials
               </h1>
 
               {/* Sub-headline */}
-              <p className="text-xs text-charcoal/70 text-center max-w-2xl mx-auto font-urbanist leading-relaxed">
+              <p className="text-xs text-charcoal/70 text-center max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
                 Discover exciting events and exclusive specials happening near you
               </p>
             </div>
@@ -79,7 +79,7 @@ export default function EventsSpecialsPage() {
           <section
             className="relative pb-12 sm:pb-16 md:pb-20"
             style={{
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
             }}
           >
             <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">

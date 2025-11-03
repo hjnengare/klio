@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
-import { ArrowLeft, Store, Images, ThumbsUp, FileText, Star } from "lucide-react";
+import { ArrowLeft, Briefcase, Image as ImageIcon, ThumbsUp, FileText, Star } from "react-feather";
 import VerifiedBadge from "../../components/VerifiedBadge/VerifiedBadge";
 
 // Mock reviews data - in production this would come from API
@@ -252,7 +252,7 @@ export default function GeneralReviewsPage() {
           transition={{ delay: 0.6, duration: 0.6 }}
           className=" bg-off-white   backdrop-blur-lg rounded-lg shadow-premium-md border border-charcoal/10 p-4 sm:p-6 mb-6 relative overflow-hidden"
         >
-          <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+          <div className="flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
             {/* Filters */}
             <div className="flex flex-wrap gap-2">
               {FILTER_OPTIONS.map((filter) => (
@@ -273,7 +273,7 @@ export default function GeneralReviewsPage() {
                   {filter.id === "all" && <FileText className="w-4 h-4" />}
                   {filter.id === "5" && <Star className="w-4 h-4" />}
                   {filter.id === "4" && <Star className="w-4 h-4" />}
-                  {filter.id === "photos" && <Images className="w-4 h-4" />}
+                  {filter.id === "photos" && <ImageIcon className="w-4 h-4" />}
                   <span>{filter.label}</span>
                 </motion.button>
               ))}
@@ -300,7 +300,7 @@ export default function GeneralReviewsPage() {
         </motion.div>
 
         {/* Reviews List - Masonry Layout */}
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-4 sm:gap-6">
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-3 sm:gap-6">
           <AnimatePresence mode="popLayout">
             {filteredReviews.map((review, index) => {
               const isExpanded = expandedReviews.has(review.id);
@@ -348,7 +348,7 @@ export default function GeneralReviewsPage() {
                         href={`/business/${review.businessId}`}
                         className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5  bg-off-white  /95 backdrop-blur-md hover:bg-off-white   rounded-full transition-all duration-premium shadow-premium-md hover:shadow-premium-lg hover:scale-105 z-20"
                       >
-                        <Store className="w-4 h-4 text-sage" />
+                        <Briefcase className="w-4 h-4 text-sage" />
                         <span className="font-urbanist text-sm font-600 text-sage tracking-[-0.015em]">
                           {review.businessName}
                         </span>
@@ -357,7 +357,7 @@ export default function GeneralReviewsPage() {
                       {/* Gallery Icon with count (top right) */}
                       {review.images.length > 1 && (
                         <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1.5 bg-charcoal/80 backdrop-blur-md rounded-lg z-20">
-                          <Images className="w-4 h-4 text-white" />
+                          <ImageIcon className="w-4 h-4 text-white" />
                           <span className="font-urbanist text-sm font-600 text-white tracking-[-0.015em]">
                             {review.images.length}
                           </span>
@@ -397,7 +397,7 @@ export default function GeneralReviewsPage() {
                         href={`/business/${review.businessId}`}
                         className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-sage/10 hover:bg-sage/20 rounded-full transition-all duration-premium"
                       >
-                        <Store className="w-4 h-4 text-sage" />
+                        <Briefcase className="w-4 h-4 text-sage" />
                         <span className="font-urbanist text-sm font-600 text-sage tracking-[-0.015em]">
                           {review.businessName}
                         </span>
@@ -405,7 +405,7 @@ export default function GeneralReviewsPage() {
                     )}
 
                     {/* Review Header */}
-                    <div className="flex items-start gap-4 mb-4">
+                    <div className="flex items-start gap-3 mb-4">
                       {/* Avatar */}
                       <motion.div
                         initial={{ scale: 0.8, opacity: 0 }}
@@ -491,7 +491,7 @@ export default function GeneralReviewsPage() {
                     )}
 
                     {/* Helpful Button */}
-                    <div className="flex items-center gap-4 pt-4 border-t border-charcoal/10">
+                    <div className="flex items-center gap-3 pt-4 border-t border-charcoal/10">
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}

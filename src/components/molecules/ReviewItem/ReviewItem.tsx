@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Star as StarIcon, Building2 } from 'lucide-react';
+import { Star as StarIcon, Briefcase } from 'react-feather';
 import { Badge } from '@/components/atoms/Badge';
 
 export interface ReviewItemProps {
@@ -30,7 +30,7 @@ const BusinessThumb: React.FC<{
         style={{ width: size, height: size }}
         aria-label={`${name} placeholder image`}
       >
-        <Building2
+        <Briefcase
           className="text-sage"
           style={{ width: size * 0.5, height: size * 0.5 }}
         />
@@ -97,7 +97,7 @@ export const ReviewItem: React.FC<ReviewItemProps> = ({
         <BusinessThumb name={businessName} imageUrl={businessImageUrl} size={40} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <span className="font-urbanist text-base font-700 text-charcoal truncate">
+            <span className="text-base font-700 text-charcoal truncate" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
               {businessName}
             </span>
             <StarRating rating={rating} />
@@ -107,17 +107,18 @@ export const ReviewItem: React.FC<ReviewItemProps> = ({
               </Badge>
             )}
           </div>
-          <span className="text-sm text-charcoal/60">{formatDate(createdAt)}</span>
+          <span className="text-sm text-charcoal/60" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>{formatDate(createdAt)}</span>
         </div>
       </div>
       <div className="text-right ml-3">
         <button
           onClick={onViewClick}
           className="text-coral text-sm font-500 hover:text-coral/80 transition-colors duration-200"
+          style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
         >
           Click to see
         </button>
-        <div className="text-xs text-charcoal/50 mt-1">full review</div>
+        <div className="text-xs text-charcoal/50 mt-1" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>full review</div>
       </div>
     </div>
   );

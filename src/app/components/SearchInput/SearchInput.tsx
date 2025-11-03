@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, forwardRef, useImperativeHandle, useRef } from "react";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Search, Sliders } from "react-feather";
 
 interface SearchInputProps {
   placeholder?: string;
@@ -75,7 +75,7 @@ const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
               className="absolute inset-y-0 right-0 pr-4 flex items-center text-charcoal/60 hover:text-sage transition-colors z-10"
               aria-label="Open filters"
             >
-              <SlidersHorizontal className="w-4 h-4" />
+              <Sliders className="w-4 h-4" />
             </button>
           )}
 

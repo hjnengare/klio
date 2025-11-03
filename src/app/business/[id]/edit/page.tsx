@@ -407,9 +407,9 @@ export default function BusinessEditPage() {
                                     Business Hours
                                 </h3>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     {days.map(day => (
-                                        <div key={day.key} className="flex items-center gap-4">
+                                        <div key={day.key} className="flex items-center gap-3">
                                             <label className="w-24 font-urbanist text-sm font-600 text-charcoal">{day.label}</label>
                                             <input
                                                 type="text"
@@ -435,7 +435,7 @@ export default function BusinessEditPage() {
                                     Business Photos
                                 </h3>
 
-                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
                                     {formData.images.map((image, index) => (
                                         <div key={index} className="relative group">
                                             <div className="aspect-square rounded-lg overflow-hidden bg-white/20 border border-white/50">
@@ -512,7 +512,7 @@ export default function BusinessEditPage() {
                                             >
                                                 <X className="w-4 h-4" strokeWidth={2.5} />
                                             </button>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                 <div>
                                                     <label className="block font-urbanist text-sm font-600 text-charcoal mb-2">Name</label>
                                                     <input
@@ -541,7 +541,7 @@ export default function BusinessEditPage() {
                         </div>
 
                         {/* Save Button */}
-                        <div className="flex justify-end gap-4">
+                        <div className="flex justify-end gap-3">
                             <Link
                                 href={`/business/${businessId}`}
                                 className="px-6 py-3 bg-white/40 text-charcoal rounded-full text-sm font-600 font-urbanist transition-all duration-300 hover:bg-white/60 border border-white/50"

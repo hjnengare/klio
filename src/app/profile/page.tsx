@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/contexts/AuthContext";
-import { ArrowLeft, Star as StarIcon, Trophy, Calendar, X, Store, LogOut, AlertTriangle, Trash2 } from "lucide-react";
+import { ArrowLeft, Star as StarIcon, Award, Calendar, X, Briefcase, LogOut, AlertTriangle, Trash2 } from "react-feather";
 import { getBrowserSupabase } from "@/app/lib/supabase/client";
 
 // Import components directly for faster loading
@@ -241,10 +241,26 @@ function ProfileContent() {
     window.location.href = "/login";
   };
 
-  const handleDeactivate = () => {
-    if (confirm("Are you sure you want to deactivate your account? You can reactivate it anytime by logging in.")) {
-      // TODO: Implement account deactivation
-      console.log("Account deactivation requested");
+  const handleDeactivate = async () => {
+    if (!confirm("Are you sure you want to deactivate your account? You can reactivate it anytime by logging in.")) {
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/user/deactivate-account', {
+        method: 'POST',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to deactivate account');
+      }
+
+      // Account successfully deactivated, redirect to login
+      window.location.href = '/login?message=Account deactivated. Log in to reactivate.';
+    } catch (error: any) {
+      console.error('Error deactivating account:', error);
+      alert(`Failed to deactivate account: ${error.message}`);
     }
   };
 
@@ -328,7 +344,7 @@ function ProfileContent() {
       iconColor: "text-coral",
     },
     {
-      icon: Trophy,
+      icon: Award,
       value: profile.badges_count,
       label: "badges",
       iconColor: "text-coral",
@@ -368,7 +384,7 @@ function ProfileContent() {
       <header
         className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg border-b border-white/10"
         style={{
-          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+          fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
         }}
       >
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
@@ -377,7 +393,7 @@ function ProfileContent() {
               <div className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200">
                 <ArrowLeft className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-lg sm:text-xl font-700 text-white">
+              <h1 className="text-lg sm:text-xl font-700 text-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Your Profile
               </h1>
             </Link>
@@ -391,7 +407,7 @@ function ProfileContent() {
           <section
             className="relative py-6"
             style={{
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
             }}
           >
             <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
@@ -415,19 +431,20 @@ function ProfileContent() {
                 {/* Business Management */}
                 <div className="p-6 sm:p-8 bg-card-bg border border-white/50 rounded-2xl shadow-sm mb-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-bold text-charcoal flex items-center gap-3">
+                    <h3 className="text-sm font-bold text-charcoal flex items-center gap-3" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                       <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
-                        <Store className="w-4 h-4 text-sage" />
+                        <Briefcase className="w-4 h-4 text-sage" />
                       </span>
                       Business Management
                     </h3>
                   </div>
-                  <p className="text-xs text-charcoal/70 mb-4">Manage your business profiles, respond to reviews, and track performance.</p>
+                  <p className="text-xs text-charcoal/70 mb-4" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Manage your business profiles, respond to reviews, and track performance.</p>
                   <Link
                     href="/manage-business"
                     className="bg-coral hover:bg-coral/90 text-white px-4 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-2 w-fit"
+                    style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
                   >
-                    <Store className="w-4 h-4" />
+                    <Briefcase className="w-4 h-4" />
                     Manage Businesses
                   </Link>
                 </div>
@@ -446,7 +463,7 @@ function ProfileContent() {
                 {/* Account Actions */}
                 <div className="p-6 sm:p-8 bg-card-bg border border-white/50 rounded-2xl shadow-sm">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-bold text-charcoal flex items-center gap-3">
+                    <h3 className="text-sm font-bold text-charcoal flex items-center gap-3" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                       <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10">
                         <AlertTriangle className="w-4 h-4 text-coral" />
                       </span>
@@ -493,7 +510,7 @@ function ProfileContent() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal/50">
           <div className="relative z-10 w-full max-w-md bg-card-bg border border-white/30 rounded-2xl shadow-2xl p-6 sm:p-8">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-sm font-bold text-white">Edit Profile</h3>
+              <h3 className="text-sm font-bold text-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Edit Profile</h3>
               <button
                 className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-200"
                 onClick={() => !saving && setIsEditOpen(false)}
@@ -505,7 +522,7 @@ function ProfileContent() {
 
             <div className="space-y-5">
               <div>
-                <label className="block text-xs font-semibold text-white mb-2">Username</label>
+                <label className="block text-xs font-semibold text-white mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Username</label>
                 <input
                   type="text"
                   value={username}
@@ -516,7 +533,7 @@ function ProfileContent() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-white mb-2">Display Name</label>
+                <label className="block text-xs font-semibold text-white mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Display Name</label>
                 <input
                   type="text"
                   value={displayName}
@@ -527,7 +544,7 @@ function ProfileContent() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-white mb-2">Profile Photo</label>
+                <label className="block text-xs font-semibold text-white mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Profile Photo</label>
                 <div className="flex items-center gap-3">
                   <input
                     type="file"
@@ -543,7 +560,7 @@ function ProfileContent() {
 
               {error && (
                 <div className="p-3 rounded-lg bg-coral/10 border border-coral/30">
-                  <p className="text-xs text-coral">{error}</p>
+                  <p className="text-xs text-coral" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>{error}</p>
                 </div>
               )}
 
@@ -552,6 +569,7 @@ function ProfileContent() {
                   className="px-5 py-2.5 rounded-full text-xs font-semibold bg-white/20 text-white
                              hover:bg-white/30 transition-all duration-200
                              disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
                   onClick={() => setIsEditOpen(false)}
                   disabled={saving}
                 >
@@ -561,6 +579,7 @@ function ProfileContent() {
                   className="px-6 py-2.5 rounded-full text-xs font-semibold bg-sage text-white
                              hover:bg-sage/90 transition-all duration-200 shadow-sm
                              disabled:opacity-60 disabled:cursor-not-allowed"
+                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
                   onClick={handleSaveProfile}
                   disabled={saving}
                 >

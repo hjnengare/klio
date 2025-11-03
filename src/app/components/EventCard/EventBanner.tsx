@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ImageIcon } from "lucide-react";
+import { Image as ImageIcon } from "react-feather";
 import EventIcon from "./EventIcon";
 import EventBadge from "./EventBadge";
 import RatingBadge from "./RatingBadge";

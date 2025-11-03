@@ -39,9 +39,9 @@ export const authStyles = `
   /* Premium button styling */
   .btn-premium {
     position: relative;
-    background: linear-gradient(135deg, #7D9B76 0%, #6B8A64 100%);
+    background: linear-gradient(135deg, #E07A5F 0%, #D1674A 100%);
     box-shadow:
-      0 10px 40px rgba(125, 155, 118, 0.25),
+      0 10px 40px rgba(224, 122, 95, 0.25),
       0 4px 12px rgba(0, 0, 0, 0.08),
       inset 0 1px 0 rgba(255, 255, 255, 0.15);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -50,14 +50,16 @@ export const authStyles = `
 
   .btn-premium:hover {
     transform: translateY(-2px);
+    background: linear-gradient(135deg, #E88A6F 0%, #D9755A 100%);
     box-shadow:
-      0 20px 60px rgba(125, 155, 118, 0.35),
+      0 20px 60px rgba(224, 122, 95, 0.35),
       0 8px 24px rgba(0, 0, 0, 0.12),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   .btn-premium:active {
     transform: translateY(0);
+    background: linear-gradient(135deg, #D1674A 0%, #C2553A 100%);
   }
 
   /* Input styling - 16px+ to prevent auto-zoom */

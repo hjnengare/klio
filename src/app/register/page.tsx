@@ -238,20 +238,20 @@ export default function RegisterPage() {
 
         <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12 px-4">
           {/* Form Card */}
-          <div className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden border border-white/50 backdrop-blur-md ring-1 ring-white/20 p-6 sm:p-8 md:p-10">
+          <div className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden border border-white/50 backdrop-blur-md ring-1 ring-white/20 px-4 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10 lg:px-12 lg:py-10 xl:px-16 xl:py-12">
 
             <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
               {/* Error Message */}
               {error && (
                 <div className="bg-error-50 border border-error-100 rounded-xl p-4 text-center">
-                  <p className="font-urbanist text-[14px] font-600 text-error-600">{error}</p>
+                  <p className="text-[14px] font-600 text-error-600" style={{ fontFamily: '"Livvic", sans-serif' }}>{error}</p>
                 </div>
               )}
 
               {/* Offline Message */}
               {!isOnline && !error && (
                 <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
-                  <p className="font-urbanist text-[14px] font-600 text-orange-600">You&apos;re offline. We&apos;ll try again when you&apos;re back online.</p>
+                  <p className="text-[14px] font-600 text-orange-600" style={{ fontFamily: '"Livvic", sans-serif' }}>You&apos;re offline. We&apos;ll try again when you&apos;re back online.</p>
                 </div>
               )}
 
@@ -288,7 +288,7 @@ export default function RegisterPage() {
 
               {/* Terms consent */}
               <div className="pt-2">
-                <label className="flex items-start gap-3 text-sm text-white cursor-pointer" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                <label className="flex items-start gap-3 text-sm text-white cursor-pointer" >
                   <input
                     type="checkbox"
                     checked={consent}
@@ -314,20 +314,17 @@ export default function RegisterPage() {
                   <button
                     type="submit"
                     disabled={isSubmitDisabled}
-                    style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
-                    className={`group block w-full text-base font-semibold py-3 px-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap transform hover:scale-105 active:scale-95 ${
-                      isSubmitDisabled
-                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
-                        : 'btn-premium text-white focus:ring-sage/30'
-                    }`}
+                    
+                    className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
                   >
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                      {isFormDisabled && (
+                    {isFormDisabled ? (
+                      <>
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      )}
-                      {isFormDisabled ? "Creating account..." : "Create account"}
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
+                        Creating account...
+                      </>
+                    ) : (
+                      "Create account"
+                    )}
                   </button>
                 </div>
               </div>
@@ -346,7 +343,7 @@ export default function RegisterPage() {
 
             {/* Footer */}
             <div className="text-center mt-6 pt-6 border-t border-white/20">
-              <div className="text-sm sm:text-base text-white" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              <div className="text-sm sm:text-base text-white" >
                 Already have an account?{" "}
                 <Link
                   href="/login"

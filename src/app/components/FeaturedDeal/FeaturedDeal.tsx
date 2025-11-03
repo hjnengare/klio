@@ -136,7 +136,7 @@ function FeaturedDeal() {
       <div className="container mx-auto max-w-[1300px] px-4 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column - Images */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3">
             {/* Top Image with static background */}
             <div className={`relative h-64 sm:h-80 bg-gradient-to-br ${deal.color1} rounded-6 overflow-hidden p-4`}>
               <div className={`relative w-full h-full transition-all duration-[1500ms] ease-in-out ${isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
@@ -197,7 +197,7 @@ function FeaturedDeal() {
               <p className="font-urbanist text-sm font-600 text-primary/70 uppercase tracking-wide">
                 Offer ends in
               </p>
-              <div className="flex gap-3 sm:gap-4">
+              <div className="flex gap-3 sm:gap-3">
                 {[
                   { value: timeLeft.days, label: "Days" },
                   { value: timeLeft.hours, label: "Hours" },

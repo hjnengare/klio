@@ -7,7 +7,7 @@ import { Business } from "../BusinessCard/BusinessCard";
 const BusinessRowSkeleton = () => (
   <section className="pb-4 sm:pb-6 sm:pt-2  bg-off-white   relative">
     <div className="container mx-auto max-w-[1300px] px-4 relative z-10">
-      <div className="mb-6 sm:mb-12 flex items-center justify-between gap-4">
+      <div className="mb-6 sm:mb-12 flex items-center justify-between gap-3">
         <div className="h-6 bg-sage/10 rounded w-32" />
         <div className="h-4 bg-sage/10 rounded w-20" />
       </div>

@@ -2,7 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, Globe, MapPin } from "lucide-react";
+import { Phone, Globe, MapPin } from "react-feather";
 import { Event } from "../../data/eventsData";
 
 interface EventContactInfoProps {
@@ -17,20 +17,20 @@ export default function EventContactInfo({ event }: EventContactInfoProps) {
       transition={{ delay: 0.6, duration: 0.6 }}
       className="bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] p-4"
     >
-      <h3 className="text-sm font-bold text-charcoal mb-3 font-urbanist">Contact Information</h3>
+      <h3 className="text-sm font-bold text-charcoal mb-3" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>Contact Information</h3>
 
       <div className="space-y-2.5">
         <div className="flex items-center gap-2.5">
           <Phone className="text-charcoal/70" size={16} />
-          <span className="text-sm text-charcoal/70 font-urbanist">+44 20 1234 5678</span>
+          <span className="text-sm text-charcoal/70" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>+44 20 1234 5678</span>
         </div>
         <div className="flex items-center gap-2.5">
           <Globe className="text-charcoal/70" size={16} />
-          <span className="text-sm text-charcoal/70 font-urbanist">www.example.com</span>
+          <span className="text-sm text-charcoal/70" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>www.example.com</span>
         </div>
         <div className="flex items-center gap-2.5">
           <MapPin className="text-charcoal/70" size={16} />
-          <span className="text-sm text-charcoal/70 font-urbanist">{event.location}</span>
+          <span className="text-sm text-charcoal/70" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>{event.location}</span>
         </div>
       </div>
     </motion.div>

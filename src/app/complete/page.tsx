@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { Smile, Sparkles, Check, ArrowRight, CheckCircle } from "lucide-react";
+import { Smile, Star, Check, ArrowRight, CheckCircle } from "react-feather";
 import { useAuth } from "../contexts/AuthContext";
 import { useReducedMotion } from "../utils/useReducedMotion";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
@@ -32,10 +32,10 @@ const completeStyles = `
   }
 `;
 
-/** ---------- Shared font (SF Pro) ---------- */
+/** ---------- Shared fonts ---------- */
 const sf = {
   fontFamily:
-    '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+    '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
 } as const;
 
 function CompletePageContent() {
@@ -103,10 +103,11 @@ function CompletePageContent() {
           <h1
             className="text-lg md:text-4xl lg:text-5xl font-bold text-charcoal mb-4 tracking-tight leading-snug"
             aria-live="polite"
+            style={sf}
           >
             You&apos;re all set!
           </h1>
-          <p className="text-base md:text-lg font-normal text-charcoal/70 mb-4 leading-relaxed">
+          <p className="text-base md:text-lg font-normal text-charcoal/70 mb-4 leading-relaxed" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
             Time to discover what&apos;s out there.
           </p>
 
@@ -117,7 +118,7 @@ function CompletePageContent() {
                 <Smile className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
               <div className="absolute bottom-0 left-[45%] w-14 h-14 rounded-full bg-off-white/90 border-2 border-sage flex items-center justify-center float-anim delay-400 shadow-[0_8px_24px_rgba(0,0,0,0.06)] pointer-events-none select-none">
-                <Sparkles className="w-5 h-5 text-charcoal" aria-hidden="true" />
+                <Star className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
               <div className="absolute bottom-0 left-[75%] w-14 h-14 rounded-full bg-off-white/90 border-2 border-coral flex items-center justify-center float-anim delay-800 shadow-[0_8px_24px_rgba(0,0,0,0.06)] pointer-events-none select-none">
                 <Check className="w-5 h-5 text-charcoal" aria-hidden="true" />
@@ -132,7 +133,7 @@ function CompletePageContent() {
               data-testid="onboarding-complete-cta"
               aria-label="Go to Home"
               className="group inline-flex items-center justify-center w-full sm:w-auto text-white text-sm font-semibold py-4 px-8 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-sage/30 focus:ring-offset-2"
-              style={sf}
+              style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
             >
               <span
                 className="

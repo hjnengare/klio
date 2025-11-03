@@ -3,18 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import {
   X,
-  SlidersHorizontal,
-  Utensils,
+  Sliders,
   Coffee,
   ShoppingBag,
-  Gamepad2,
-  Wrench,
+  Monitor,
+  Tool,
   Star,
-  Footprints,
-  Car,
-  Plane,
+  Move,
+  Truck,
+  Navigation,
   MapPin,
-} from "lucide-react";
+} from "react-feather";
 
 export interface FilterState {
   categories: string[];
@@ -138,18 +137,18 @@ export default function FilterModal({
   if (!isVisible) return null;
 
   const categoryOptions = [
-    { name: "Restaurants", Icon: Utensils },
+    { name: "Restaurants", Icon: ShoppingBag },
     { name: "Coffee Shops", Icon: Coffee },
     { name: "Shopping", Icon: ShoppingBag },
-    { name: "Entertainment", Icon: Gamepad2 },
-    { name: "Services", Icon: Wrench },
+    { name: "Entertainment", Icon: Monitor },
+    { name: "Services", Icon: Tool },
   ];
 
   const distanceOptions = [
-    { distance: "1 mile", Icon: Footprints },
-    { distance: "5 miles", Icon: Car },
-    { distance: "10 miles", Icon: Car },
-    { distance: "25 miles", Icon: Plane },
+    { distance: "1 mile", Icon: Move },
+    { distance: "5 miles", Icon: Truck },
+    { distance: "10 miles", Icon: Truck },
+    { distance: "25 miles", Icon: Navigation },
   ];
 
   return (
@@ -184,7 +183,7 @@ export default function FilterModal({
         {/* header */}
         <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
           <div className="relative z-10 flex items-center gap-2">
-            <SlidersHorizontal className="w-4 h-4 text-sage" />
+            <Sliders className="w-4 h-4 text-sage" />
             <h2 className="text-xs font-semibold text-charcoal">Filters</h2>
           </div>
           <button
@@ -204,7 +203,7 @@ export default function FilterModal({
           {/* Category */}
           <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.05s]">
             <h3 className="text-xs font-semibold text-charcoal mb-3 flex items-center gap-2">
-              <Utensils className="w-3 h-3 text-sage" />
+              <ShoppingBag className="w-3 h-3 text-sage" />
               Category
             </h3>
             <div className="flex flex-wrap gap-2">

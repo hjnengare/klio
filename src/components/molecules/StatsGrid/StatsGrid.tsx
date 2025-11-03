@@ -2,10 +2,9 @@
 
 import React from 'react';
 import { StatCard } from '@/components/atoms/StatCard';
-import { LucideIcon } from 'lucide-react';
 
 export interface Stat {
-  icon: LucideIcon;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   value: string | number;
   label: string;
   iconColor?: string;
@@ -29,7 +28,7 @@ export const StatsGrid: React.FC<StatsGridProps> = ({
   }[columns];
 
   return (
-    <div className={`grid ${gridCols} gap-2 sm:gap-4 ${className}`}>
+    <div className={`grid ${gridCols} gap-2 sm:gap-3 ${className}`}>
       {stats.map((stat, index) => (
         <StatCard
           key={index}

@@ -179,7 +179,7 @@ export default function DealBreakersPage() {
       <Suspense fallback={
         <OnboardingLayout step={3} backHref="/interests">
           <div className="flex items-center justify-center min-h-[400px]">
-            <div className="animate-pulse text-charcoal/60">Loading deal-breakers...</div>
+            <div className="animate-pulse text-charcoal/60" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Loading deal-breakers...</div>
           </div>
         </OnboardingLayout>
       }>

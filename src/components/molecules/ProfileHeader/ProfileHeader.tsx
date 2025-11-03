@@ -4,7 +4,7 @@ import React from 'react';
 import { Avatar } from '@/components/atoms/Avatar';
 import { Badge } from '@/components/atoms/Badge';
 import { IconButton } from '@/components/atoms/IconButton';
-import { Trophy, Pencil } from 'lucide-react';
+import { Award, Edit } from 'react-feather';
 
 export interface ProfileHeaderProps {
   username: string;
@@ -36,21 +36,21 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         />
         <div>
           <div className="flex items-center space-x-2 mb-1">
-            <h1 className="font-urbanist text-sm font-bold text-charcoal">
+            <h1 className="text-sm font-bold text-charcoal" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
               @{username}
             </h1>
           </div>
           {isTopReviewer && (
             <Badge variant="coral" size="sm" className="flex items-center space-x-1">
-              <Trophy className="w-3 h-3" />
-              <span className="font-600 text-xs">{topReviewerBadgeText}</span>
+              <Award className="w-3 h-3" />
+              <span className="font-600 text-xs" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>{topReviewerBadgeText}</span>
             </Badge>
           )}
         </div>
       </div>
       {onEditClick && (
         <IconButton
-          icon={Pencil}
+          icon={Edit}
           variant="sage"
           size="md"
           ariaLabel="Edit profile"

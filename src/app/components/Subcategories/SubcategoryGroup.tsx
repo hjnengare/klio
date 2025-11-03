@@ -25,8 +25,8 @@ export default function SubcategoryGroup({
   onToggle, 
   groupIndex 
 }: SubcategoryGroupProps) {
-  const sf = {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+  const changaOne = {
+    fontFamily: '"Changa One", cursive, sans-serif',
   };
 
   return (
@@ -35,8 +35,8 @@ export default function SubcategoryGroup({
       style={{ animationDelay: `${groupIndex * 0.08}s` }}
     >
       <h3
-        className="text-base md:text-lg font-semibold text-charcoal mb-3"
-        style={sf}
+        className="text-base md:text-lg font-bold text-charcoal mb-3"
+        style={changaOne}
       >
         {title}
       </h3>

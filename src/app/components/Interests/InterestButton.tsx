@@ -24,8 +24,9 @@ export default function InterestButton({
   onToggle, 
   index 
 }: InterestButtonProps) {
-  const sf = {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+  const livvic = {
+    fontFamily: '"Livvic", sans-serif',
+    fontWeight: 600,
   };
 
   const delay = Math.min(index, 8) * 0.03 + 0.1;
@@ -51,7 +52,7 @@ export default function InterestButton({
             : "bg-sage text-white hover:bg-sage/90 hover:scale-105 active:scale-95 shadow-[0_8px_24px_rgba(125,155,118,0.16)]"
         }
       `}
-      style={{ ...sf, animationDelay: `${delay}s` }}
+      style={{ ...livvic, animationDelay: `${delay}s` }}
       suppressHydrationWarning
     >
       <div

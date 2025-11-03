@@ -1,10 +1,9 @@
 'use client';
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 
 export interface StatCardProps {
-  icon: LucideIcon;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   value: string | number;
   label: string;
   iconColor?: string;
@@ -27,10 +26,10 @@ export const StatCard: React.FC<StatCardProps> = ({
           style={{ fill: iconColor.includes('coral') || iconColor.includes('sage') ? 'currentColor' : 'none' }}
         />
       </div>
-      <span className="font-urbanist text-lg font-700 text-charcoal leading-tight block mb-1">
+      <span className="text-lg font-700 text-charcoal leading-tight block mb-1" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
         {value}
       </span>
-      <span className="text-xs font-400 text-charcoal/70 leading-tight block">
+      <span className="text-xs font-400 text-charcoal/70 leading-tight block" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
         {label}
       </span>
     </div>

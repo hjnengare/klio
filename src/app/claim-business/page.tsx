@@ -117,7 +117,7 @@ export default function ClaimBusinessPage() {
                       className="p-4 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20
                                  hover:border-white/70 hover:shadow-lg transition-all duration-300 group"
                     >
-                      <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center space-x-4 flex-1 min-w-0">
                           <div className="w-12 h-12 bg-white/30 rounded-full flex items-center justify-center flex-shrink-0
                                           group-hover:bg-white/40 transition-colors duration-200 shadow-sm">

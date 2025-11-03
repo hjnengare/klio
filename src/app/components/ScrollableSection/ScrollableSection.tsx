@@ -20,6 +20,7 @@ export default function ScrollableSection({
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const checkScrollPosition = () => {
     if (!scrollRef.current) return;
@@ -31,6 +32,14 @@ export default function ScrollableSection({
     setCanScrollLeft(scrollLeft > 5);
     setShowRightArrow(scrollLeft < maxScrollLeft - 10);
     setShowLeftArrow(scrollLeft > 10);
+    
+    // Calculate scroll progress (0 to 100)
+    if (maxScrollLeft > 0) {
+      const progress = (scrollLeft / maxScrollLeft) * 100;
+      setScrollProgress(Math.min(100, Math.max(0, progress)));
+    } else {
+      setScrollProgress(0);
+    }
   };
 
   useEffect(() => {

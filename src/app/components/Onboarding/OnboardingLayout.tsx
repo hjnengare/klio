@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ReactNode } from "react";
-import { ArrowLeft } from "lucide-react"; // ✅ Lucide icon import
+import { ArrowLeft } from "react-feather";
 
 // Shared CSS animations for all onboarding pages
 const globalAnimations = `

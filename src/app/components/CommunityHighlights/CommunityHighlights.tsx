@@ -2,7 +2,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Trophy, ArrowRight } from "lucide-react";
+import { Award, ArrowRight } from "react-feather";
 import ReviewerCard from "../ReviewerCard/ReviewerCard";
 import BusinessOfTheMonthCard from "../BusinessCard/BusinessOfTheMonthCard";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
@@ -62,14 +62,14 @@ export default function CommunityHighlights({
       aria-label={title}
       data-section
       style={{
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
 
       <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="font-urbanist text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
+          <h2 className="text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
             {title}
           </h2>
 
@@ -77,6 +77,7 @@ export default function CommunityHighlights({
             onClick={() => router.push(href)}
             className="group inline-flex items-center gap-1 text-sm font-semibold text-primary/80 transition-all duration-300 hover:text-sage focus:outline-none focus:ring-2 focus:ring-sage/30 rounded-full px-4 py-2 -mx-2 relative overflow-hidden"
             aria-label={`${cta}: ${title}`}
+            style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-0.5">
@@ -90,7 +91,7 @@ export default function CommunityHighlights({
         {topReviewers && topReviewers.length > 0 && (
           <div className="mt-1">
             <div className="mb-2 flex justify-center">
-              <h3 className="font-urbanist text-sm sm:text-base font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] text-center">
+              <h3 className="text-sm sm:text-base font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] text-center" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Top Reviewers This Month In Claremont
               </h3>
             </div>
@@ -128,7 +129,7 @@ export default function CommunityHighlights({
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
           <div className="mt-3">
             <div className="mb-2 flex justify-center">
-              <h3 className="font-urbanist text-sm sm:text-base font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] text-center">
+              <h3 className="text-sm sm:text-base font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] text-center" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Businesses of the Month by Category
               </h3>
             </div>

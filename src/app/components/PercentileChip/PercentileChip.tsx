@@ -1,6 +1,6 @@
 "use client";
 
-import { Zap, Heart, Star, CheckCircle } from "lucide-react";
+import { Zap, Heart, Star, CheckCircle } from "react-feather";
 import { memo } from "react";
 
 interface PercentileChipProps {
@@ -16,26 +16,52 @@ function PercentileChip({ label, value }: PercentileChipProps) {
     labelLowerCase: label.toLowerCase()
   });
 
-  // Render icon based on label with inline fill styles for better visibility
+  // Handle placeholder (0 value) with grayed out style
+  const isPlaceholder = value === 0;
+
+  // Render icon based on label with specific colors
   const renderIcon = () => {
-    const iconClasses = "w-3 h-3 text-charcoal flex-shrink-0";
+    const baseClasses = "w-3 h-3 flex-shrink-0";
 
     switch (label.toLowerCase()) {
       case 'speed':
-        return <Zap className={iconClasses} fill="currentColor" />;
+        return (
+          <Zap 
+            className={`${baseClasses} text-amber-500`} 
+            fill="currentColor" 
+          />
+        );
       case 'hospitality':
-        return <Heart className={iconClasses} fill="currentColor" />;
+        return (
+          <Heart 
+            className={`${baseClasses} text-pink-500`} 
+            fill="currentColor" 
+          />
+        );
       case 'quality':
-        return <Star className={iconClasses} fill="currentColor" />;
+        return (
+          <Star 
+            className={`${baseClasses} text-amber-500`} 
+            fill="currentColor" 
+          />
+        );
       default:
-        return <CheckCircle className={iconClasses} />;
+        return <CheckCircle className={`${baseClasses} text-charcoal`} />;
     }
   };
 
   return (
-    <div className="inline-flex items-center gap-1.5 rounded-full bg-white/40 px-3 py-1.5 shadow-sm border border-white/40 backdrop-blur-sm transition-all duration-200 hover:shadow-md hover:scale-105">
+    <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 shadow-md border border-white/30 backdrop-blur-md transition-all duration-200 hover:shadow-md hover:scale-105 ${
+      isPlaceholder 
+        ? 'bg-white/90 border-white/20 opacity-50' 
+        : 'bg-white/90 border-white/30'
+    }`}>
       {renderIcon()}
-      <span className="text-xs font-600 text-charcoal whitespace-nowrap">{value}%</span>
+      <span className={`text-xs font-600 whitespace-nowrap ${
+        isPlaceholder ? 'text-charcoal/40' : 'text-charcoal'
+      }`}>
+        {isPlaceholder ? '—' : `${value}%`}
+      </span>
     </div>
   );
 }

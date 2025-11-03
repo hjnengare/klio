@@ -6,15 +6,15 @@ import { useParams } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import {
     ArrowLeft,
-    Store,
+    Briefcase,
     Star,
-    Images,
+    Image as ImageIcon,
     Calendar,
-    MessageSquareText,
-    Pencil,
-    Pizza,
+    MessageSquare,
+    Edit,
+    Coffee,
     Music,
-} from "lucide-react";
+} from "react-feather";
 import { ImageCarousel } from "../../components/Business/ImageCarousel";
 import { PremiumReviewCard } from "../../components/Business/PremiumReviewCard";
 import { getCategoryPng, isPngIcon } from "../../utils/categoryToPngMapping";
@@ -135,7 +135,7 @@ function BusinessProfileImage({ business }: { business: { id: string; name: stri
             ) : (
                 // Final fallback
                 <div className="w-full h-full flex items-center justify-center bg-white">
-                    <Store className="w-5 h-5 text-sage" />
+                    <Briefcase className="w-5 h-5 text-sage" />
                 </div>
             )}
         </div>
@@ -241,7 +241,7 @@ export default function BusinessProfilePage() {
                             href={`/business/${businessId}/edit`}
                             className="bg-sage/20 hover:bg-sage/30 text-white px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-2 border border-sage/30"
                         >
-                            <Pencil className="w-3 h-3" />
+                            <Edit className="w-3 h-3" />
                             Edit
                         </Link>
                         
@@ -250,7 +250,7 @@ export default function BusinessProfilePage() {
                             href="/manage-business"
                             className="bg-coral/20 hover:bg-coral/30 text-white px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-2 border border-coral/30"
                         >
-                            <Store className="w-3 h-3" />
+                            <Briefcase className="w-3 h-3" />
                             Manage
                         </Link>
 
@@ -284,7 +284,7 @@ export default function BusinessProfilePage() {
                                 <div className="relative z-10">
                                     <h2 id="photos-heading" className="text-sm font-bold text-charcoal mb-3 flex items-center gap-2.5 font-urbanist">
                                         <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10" aria-hidden="true">
-                                            <Images className="w-4 h-4 text-sage" />
+                                            <ImageIcon className="w-4 h-4 text-sage" />
                                         </span>
                                         <span>Photos</span>
                                     </h2>
@@ -314,7 +314,7 @@ export default function BusinessProfilePage() {
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
                                 <div className="flex items-center gap-3">
                                     <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10" aria-hidden="true">
-                                        <MessageSquareText className="w-5 h-5 text-sage" />
+                                        <MessageSquare className="w-5 h-5 text-sage" />
                                     </span>
                                     <h2 id="reviews-heading" className="text-sm font-bold text-charcoal font-urbanist">
                                         Community Reviews
@@ -325,7 +325,7 @@ export default function BusinessProfilePage() {
                                     className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sage to-sage/90 text-white text-sm font-600 py-3 px-5 hover:from-sage/90 hover:to-sage/80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 focus:ring-offset-off-white"
                                     aria-label="Write a review for {business.name}"
                                 >
-                                    <Pencil className="w-4 h-4" aria-hidden="true" />
+                                    <Edit className="w-4 h-4" aria-hidden="true" />
                                     <span>Write Review</span>
                                 </Link>
                             </div>
@@ -469,7 +469,7 @@ export default function BusinessProfilePage() {
 
                                         <ul className="grid grid-cols-2 sm:grid-cols-1 gap-3 list-none">
                                             {business.specials.map((special) => {
-                                                const Icon = special.icon === "pizza" ? Pizza : Music;
+                                                const Icon = special.icon === "pizza" ? Coffee : Music;
                                                 return (
                                                     <li
                                                         key={special.id}

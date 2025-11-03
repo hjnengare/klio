@@ -1,10 +1,9 @@
 'use client';
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 
 export interface SettingsCardProps {
-  icon: LucideIcon;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
   iconColor?: 'coral' | 'sage' | 'default';
   className?: string;

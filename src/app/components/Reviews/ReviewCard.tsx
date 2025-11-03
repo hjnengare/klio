@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
-import { Trash2, Images, ChevronUp, Heart, X } from 'lucide-react';
+import { Trash2, Image as ImageIcon, ChevronUp, Heart, X } from 'react-feather';
 import type { ReviewWithUser } from '../../lib/types/database';
 import { useAuth } from '../../contexts/AuthContext';
 import { useReviewSubmission } from '../../hooks/useReviews';
@@ -212,7 +212,7 @@ export default function ReviewCard({
                   onClick={() => setShowAllImages(true)}
                   className="text-sage hover:text-sage/80 font-urbanist text-sm font-500 flex items-center space-x-1"
                 >
-                  <Images size={16} />
+                  <ImageIcon size={16} />
                   <span>Show {review.images.length - 3} more images</span>
                 </motion.button>
               )}

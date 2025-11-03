@@ -92,6 +92,21 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
   };
 
   const checkPasswordStrength = (password: string) => {
+    // Early return for empty password
+    if (password.length === 0) {
+      return {
+        score: 0,
+        feedback: "",
+        checks: {
+          length: false,
+          uppercase: false,
+          lowercase: false,
+          number: false
+        },
+        color: ""
+      };
+    }
+
     const checks = {
       length: password.length >= 8,
       uppercase: /(?=.*[A-Z])/.test(password),
@@ -118,21 +133,21 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
       score = Math.max(0, score - 1);
       feedback = "Don't use your email name";
       color = "text-orange-500";
-    } else if (password.length === 0) {
-      feedback = "";
-      color = "";
-    } else if (score === 1) {
-      feedback = "Weak - Add more requirements";
-      color = "text-error-500";
-    } else if (score === 2) {
-      feedback = "Fair - Getting better";
-      color = "text-orange-500";
+    } else if (score === 4) {
+      feedback = "Strong - Perfect! 🎉";
+      color = "text-blue-500";
     } else if (score === 3) {
       feedback = "Good - Almost there";
       color = "text-yellow-500";
-    } else if (score === 4) {
-      feedback = "Strong - Perfect! 🎉";
-      color = "text-sage";
+    } else if (score === 2) {
+      feedback = "Fair - Getting better";
+      color = "text-orange-500";
+    } else if (score === 1) {
+      feedback = "Weak - Add more requirements";
+      color = "text-error-500";
+    } else {
+      feedback = "Very weak - Add more requirements";
+      color = "text-error-500";
     }
 
     return { score, feedback, checks, color };

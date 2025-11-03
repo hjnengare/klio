@@ -4,7 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { ImageOff, Star, Edit, Bookmark, Share2, MapPin } from "lucide-react";
+import { Image as ImageIcon, Star, Edit, Bookmark, Share2, MapPin } from "react-feather";
 import Stars from "../Stars/Stars";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
 import { BusinessOfTheMonth } from "../../data/communityHighlightsData";
@@ -89,8 +89,8 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       id={idForSnap}
       className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[25%] md:min-w-[25%] xl:min-w-[25%] flex-shrink-0"
       style={{
-        fontFamily:
-          '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontWeight: 600,
       }}
     >
       <div
@@ -157,7 +157,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             {/* Show error icon only if all fallbacks failed */}
             {imgError && (
               <div className="absolute inset-0 flex items-center justify-center bg-sage/10 text-sage rounded-t-[20px]">
-                <ImageOff className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
+                <ImageIcon className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
               </div>
             )}
           </div>
@@ -235,12 +235,26 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
         {/* CONTENT */}
         <div className="px-4 pt-4 pb-6 relative flex-shrink-0 z-10">
           <div className="mb-2 cursor-pointer">
-            <h3 className="text-sm font-600 text-charcoal group-hover:text-charcoal/80 transition-colors duration-300 text-center font-urbanist truncate">
+            <h3 className="text-sm font-normal text-black group-hover:text-charcoal transition-colors duration-300 text-center truncate" style={{ 
+              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+              fontWeight: 400,
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale',
+              textRendering: 'optimizeLegibility',
+              letterSpacing: '-0.01em'
+            }}>
               {business.name}
             </h3>
           </div>
 
-          <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 font-urbanist cursor-pointer">
+          <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 cursor-pointer" style={{ 
+            fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+            fontWeight: 600,
+            WebkitFontSmoothing: 'antialiased',
+            MozOsxFontSmoothing: 'grayscale',
+            textRendering: 'optimizeLegibility',
+            letterSpacing: '0.01em'
+          }}>
             <span>{business.category}</span>
             <span>·</span>
             <div className="flex items-center gap-1">
@@ -251,15 +265,33 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
 
           <div className="mb-4 flex items-center justify-center gap-2 cursor-pointer">
             <Stars value={business.rating} color="amber-400" />
-            <p className="text-xs font-600 leading-none text-charcoal font-urbanist">
+            <p className="text-xs font-600 leading-none text-charcoal" style={{ 
+              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+              fontWeight: 600,
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale',
+              textRendering: 'optimizeLegibility'
+            }}>
               {business.reviews}
             </p>
-            <p className="text-xs leading-none text-charcoal/60 font-urbanist">reviews</p>
+            <p className="text-xs leading-none text-charcoal/60" style={{ 
+              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+              fontWeight: 600,
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale',
+              textRendering: 'optimizeLegibility'
+            }}>reviews</p>
           </div>
 
           {/* Month chip */}
           <div className="flex items-center justify-center gap-2 mb-4 cursor-pointer">
-            <div className="px-3 py-1.5 rounded-full bg-white/40 text-charcoal text-xs font-600 font-urbanist shadow-sm border border-white/40">
+            <div className="px-3 py-1.5 rounded-full bg-white/40 text-charcoal text-xs font-600 shadow-sm border border-white/40" style={{ 
+              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+              fontWeight: 600,
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale',
+              textRendering: 'optimizeLegibility'
+            }}>
               {(business as any).monthLabel || "September Winner"}
             </div>
           </div>
@@ -273,6 +305,13 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
                 // Handle write review
               }}
               aria-label={`Write a review for ${business.name}`}
+              style={{ 
+                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                fontWeight: 600,
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                textRendering: 'optimizeLegibility'
+              }}
             >
               <Edit className="w-3.5 h-3.5" />
               <span>Review</span>

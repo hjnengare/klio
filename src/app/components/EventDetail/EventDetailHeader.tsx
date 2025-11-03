@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Share2, Bookmark } from "lucide-react";
+import { ArrowLeft, Share2, Bookmark } from "react-feather";
 
 interface EventDetailHeaderProps {
   isBookmarked: boolean;
@@ -25,7 +25,7 @@ export default function EventDetailHeader({
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-3">
               <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-sage transition-colors duration-300" />
             </div>
-            <span className="font-urbanist text-sm font-bold text-white transition-all duration-300 group-hover:text-white/80">
+            <span className="text-sm font-bold text-white transition-all duration-300 group-hover:text-white/80" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
               Back to Events
             </span>
           </Link>

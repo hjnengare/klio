@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';
 import { AuthService } from '../../lib/auth';
 import { useToast } from '../../contexts/ToastContext';
-import { Mail, CheckCircle, AlertCircle, Loader2, ExternalLink } from 'lucide-react';
+import { Mail, CheckCircle, AlertCircle, Loader, ExternalLink } from 'react-feather';
 
 interface EmailVerificationGuardProps {
   children: React.ReactNode;

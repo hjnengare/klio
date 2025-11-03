@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { MapPin } from "react-feather";
 
 interface EventContentProps {
   title: string;
@@ -16,7 +16,7 @@ export default function EventContent({ title, location, description, href }: Eve
     <div className="pt-4 pb-4 px-4 relative flex-shrink-0 z-10 flex flex-col justify-between min-h-0 bg-gradient-to-b from-transparent to-card-bg/50">
       <div className="flex-shrink-0">
         <div className="mb-1">
-          <h3 className="text-base font-semibold text-charcoal text-center line-clamp-2 tracking-tight font-sf-pro">
+          <h3 className="text-base font-400 text-charcoal/90 text-center line-clamp-2 tracking-tight font-sf-pro">
             {title}
           </h3>
         </div>

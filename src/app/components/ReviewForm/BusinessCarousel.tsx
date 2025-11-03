@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, Image as ImageIcon } from "react-feather";
 
 interface BusinessCarouselProps {
   businessName: string;

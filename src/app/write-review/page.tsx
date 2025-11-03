@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, Search, Building2, MapPin, ChevronRight } from "lucide-react";
+import { ChevronLeft, Search, Briefcase, MapPin, ChevronRight } from "react-feather";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 
 export default function WriteReviewPage() {
@@ -64,7 +64,7 @@ export default function WriteReviewPage() {
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3">
                 <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-white transition-colors duration-300" />
               </div>
-              <h1 className="font-urbanist text-base sm:text-xl font-700 text-white transition-all duration-300 relative">
+              <h1 className="text-base sm:text-xl font-700 text-white transition-all duration-300 relative" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
                 Write Review
               </h1>
             </button>
@@ -81,10 +81,10 @@ export default function WriteReviewPage() {
         {/* Search Section */}
         <div className="mb-8">
           <div className="text-center mb-6">
-            <h2 className="font-urbanist text-xl font-600 text-charcoal mb-2">
+            <h2 className="text-xl font-600 text-charcoal mb-2" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
               Which business would you like to review?
             </h2>
-            <p className="text-charcoal/60 text-sm">
+            <p className="text-charcoal/60 text-sm" >
               Search for a business or select from your recent visits
             </p>
           </div>
@@ -99,11 +99,12 @@ export default function WriteReviewPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search businesses..."
               className="w-full pl-12 pr-4 py-3.5 bg-white/80 backdrop-blur-sm border-2 border-charcoal/20 rounded-xl
-                         text-sm placeholder:text-charcoal/50 font-urbanist text-charcoal
+                         text-sm placeholder:text-charcoal/50 text-charcoal
                          focus:outline-none focus:border-sage focus:ring-2 focus:ring-sage/20
                          hover:border-charcoal/30 transition-all duration-200"
               style={{
-                fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                fontFamily: '"Livvic", sans-serif',
+                fontWeight: 600
               }}
             />
           </div>
@@ -133,21 +134,21 @@ export default function WriteReviewPage() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <Building2 className="w-5 h-5 text-sage" />
+                        <Briefcase className="w-5 h-5 text-sage" />
                       </div>
                     )}
                   </div>
                   <div>
-                    <h3 className="font-urbanist text-base font-600 text-charcoal group-hover:text-sage
-                                   transition-colors duration-200">
+                    <h3 className="text-base font-600 text-charcoal group-hover:text-sage
+                                   transition-colors duration-200" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
                       {business.name}
                     </h3>
                     <div className="flex items-center space-x-3 mt-1">
-                      <span className="text-sm text-charcoal/60">{business.category}</span>
+                      <span className="text-sm text-charcoal/60" >{business.category}</span>
                       <span className="text-charcoal/30">•</span>
                       <div className="flex items-center space-x-1">
                         <MapPin className="w-3 h-3 text-charcoal/40" />
-                        <span className="text-sm text-charcoal/60">{business.location}</span>
+                        <span className="text-sm text-charcoal/60" >{business.location}</span>
                       </div>
                     </div>
                   </div>
@@ -164,14 +165,14 @@ export default function WriteReviewPage() {
             <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="w-8 h-8 text-charcoal/40" />
             </div>
-            <h3 className="font-urbanist text-lg font-600 text-charcoal mb-2">
+            <h3 className="text-lg font-600 text-charcoal mb-2" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
               No businesses found
             </h3>
-            <p className="text-charcoal/60 text-sm mb-6">
+            <p className="text-charcoal/60 text-sm mb-6" >
               Can&apos;t find the business you&apos;re looking for? Try a different search term.
             </p>
-            <button className="px-6 py-3 bg-sage text-white rounded-lg font-urbanist text-sm font-500
-                               hover:bg-sage/90 transition-colors duration-200">
+            <button className="px-6 py-3 bg-sage text-white rounded-lg text-sm font-500
+                               hover:bg-sage/90 transition-colors duration-200" >
               Suggest a Business
             </button>
           </div>

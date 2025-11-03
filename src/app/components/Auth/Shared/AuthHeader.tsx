@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "react-feather";
 
 interface AuthHeaderProps {
   backLink: string;
@@ -10,6 +10,13 @@ interface AuthHeaderProps {
 }
 
 export function AuthHeader({ backLink, title, subtitle }: AuthHeaderProps) {
+  const sf = {
+    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+  };
+  const changaOne = {
+    fontFamily: '"Changa One", cursive',
+  };
+
   return (
     <>
       {/* Back button with entrance animation */}
@@ -22,11 +29,11 @@ export function AuthHeader({ backLink, title, subtitle }: AuthHeaderProps) {
       {/* Header with premium styling and animations */}
       <div className="text-center mb-4">
         <div className="inline-block relative mb-4 animate-fade-in-up animate-delay-400">
-          <h2 className="text-xl sm:text-lg md:text-lg lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+          <h2 className="text-xl sm:text-lg md:text-lg lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={changaOne}>
             {title}
           </h2>
         </div>
-        <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+        <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
           {subtitle}
         </p>
       </div>

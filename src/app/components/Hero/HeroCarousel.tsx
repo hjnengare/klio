@@ -44,7 +44,7 @@ const HERO_SLIDES: HeroSlide[] = [
   },
 ];
 
-const FONT_STACK = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", system-ui, sans-serif';
+const FONT_STACK = '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif';
 
 interface HeroCarouselProps {
   userInterests?: string[];
@@ -277,10 +277,10 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
 
   return (
     <>
-      <div className="relative w-full px-0 md:px-4 pt-4 mt-12">
+      <div className="relative w-full px-0 mt-6">
         <section
           ref={containerRef as React.RefObject<HTMLElement>}
-          className="relative min-h-[80vh] sm:min-h-[80vh] w-full overflow-hidden outline-none rounded-none md:rounded-[20px]"
+          className="relative min-h-[80vh] sm:min-h-[80vh] md:min-h-[90vh] w-full overflow-hidden outline-none rounded-none"
           aria-label="Hero carousel"
           tabIndex={0}
           onMouseEnter={() => setPaused(true)}
@@ -324,10 +324,11 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
                  {/* Text Content */}
                  <div className="relative">
                   <h1
-                     className="text-off-white leading-[1.1] mb-6 sm:mb-6 font-bold tracking-tight whitespace-normal lg:whitespace-nowrap"
+                     className="text-off-white leading-[1.1] mb-6 sm:mb-6 font-extrabold tracking-tight whitespace-normal lg:whitespace-nowrap"
                      style={{
-                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", system-ui, sans-serif',
+                       fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                        fontSize: "clamp(2.5rem, 6vw, 2rem)",
+                       fontWeight: 800,
                      }}
                    >
                      {slide.title}
@@ -335,6 +336,8 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
            <p
              className="text-off-white/90 leading-relaxed mb-8 whitespace-normal lg:whitespace-nowrap lg:max-w-none"
              style={{
+              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+              fontWeight: 600,
               fontSize: "clamp(1rem, 2vw, 0.875rem)",
                maxWidth: "60ch",
                textWrap: "pretty" as React.CSSProperties["textWrap"],
@@ -352,7 +355,7 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
       ))}
 
       {/* Carousel Progress Bar and Controls */}
-      <div className="absolute bottom-12 left-0 right-0 z-30 px-8 flex items-center gap-4">
+      <div className="absolute bottom-12 left-0 right-0 z-30 px-8 flex items-center gap-3">
         {/* Progress Bar */}
         <div className="flex-1 h-[3px] bg-white/30 relative overflow-hidden rounded-full">
           <div

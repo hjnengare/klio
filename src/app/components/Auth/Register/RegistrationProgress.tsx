@@ -1,6 +1,6 @@
 "use client";
 
-import { Circle, CheckCircle } from "lucide-react";
+import { Circle, CheckCircle } from "react-feather";
 
 interface RegistrationProgressProps {
   usernameValid: boolean;
@@ -19,7 +19,7 @@ export function RegistrationProgress({
   const progress = (completedSteps / 4) * 100;
 
   return (
-    <div className="space-y-4 pt-6" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+    <div className="space-y-4 pt-6" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
       {/* Progress bar */}
       <div className="relative h-1.5 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
         <div
@@ -38,7 +38,7 @@ export function RegistrationProgress({
           }`}>
             {usernameValid ? <CheckCircle className="w-4 h-4 text-sage" /> : <Circle className="w-4 h-4 text-white/40" />}
           </div>
-          <span className={`text-xs font-medium transition-colors duration-300 ${usernameValid ? 'text-white' : 'text-white/50'}`}>
+          <span className={`text-xs font-medium transition-colors duration-300 ${usernameValid ? 'text-white' : 'text-white/50'}`} style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
             Username
           </span>
         </div>
@@ -51,7 +51,7 @@ export function RegistrationProgress({
           }`}>
             {emailValid ? <CheckCircle className="w-4 h-4 text-sage" /> : <Circle className="w-4 h-4 text-white/40" />}
           </div>
-          <span className={`text-xs font-medium transition-colors duration-300 ${emailValid ? 'text-white' : 'text-white/50'}`}>
+          <span className={`text-xs font-medium transition-colors duration-300 ${emailValid ? 'text-white' : 'text-white/50'}`} style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
             Email
           </span>
         </div>
@@ -64,7 +64,7 @@ export function RegistrationProgress({
           }`}>
             {passwordStrong ? <CheckCircle className="w-4 h-4 text-sage" /> : <Circle className="w-4 h-4 text-white/40" />}
           </div>
-          <span className={`text-xs font-medium transition-colors duration-300 ${passwordStrong ? 'text-white' : 'text-white/50'}`}>
+          <span className={`text-xs font-medium transition-colors duration-300 ${passwordStrong ? 'text-white' : 'text-white/50'}`} style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
             Password
           </span>
         </div>
@@ -77,7 +77,7 @@ export function RegistrationProgress({
           }`}>
             {consentGiven ? <CheckCircle className="w-4 h-4 text-sage" /> : <Circle className="w-4 h-4 text-white/40" />}
           </div>
-          <span className={`text-xs font-medium transition-colors duration-300 ${consentGiven ? 'text-white' : 'text-white/50'}`}>
+          <span className={`text-xs font-medium transition-colors duration-300 ${consentGiven ? 'text-white' : 'text-white/50'}`} style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
             Terms
           </span>
         </div>
@@ -86,7 +86,7 @@ export function RegistrationProgress({
       {/* Next step indicator */}
       {completedSteps === 4 && (
         <div className="text-center animate-fade-in">
-          <p className="text-sm text-white/90 font-medium">
+          <p className="text-sm text-white/90 font-medium" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
             ✨ Ready! Next - Pick your interests
           </p>
         </div>

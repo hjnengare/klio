@@ -2,7 +2,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "react-feather";
 import BusinessCard, { Business } from "../BusinessCard/BusinessCard";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
 
@@ -27,12 +27,12 @@ export default function BusinessRow({
       aria-label={title}
       data-section
       style={{
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
       <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
         <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
-          <h2 className="font-urbanist text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
+          <h2 className="text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
             {title}
           </h2>
 
@@ -43,7 +43,7 @@ export default function BusinessRow({
           >
             <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-0.5">
+            <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
               {cta}
             </span>
             <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -52,9 +52,9 @@ export default function BusinessRow({
 
         <ScrollableSection>
           {/* Gap harmonizes with card radius/shadows; list semantics preserved via <li> inside cards */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 items-stretch">
             {businesses.map((business) => (
-              <div key={business.id} className="list-none">
+              <div key={business.id} className="list-none flex">
                 <BusinessCard business={business} />
               </div>
             ))}

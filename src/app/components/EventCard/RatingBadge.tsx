@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Star } from "react-feather";
 
 interface RatingBadgeProps {
   rating: number;
@@ -6,9 +6,9 @@ interface RatingBadgeProps {
 
 export default function RatingBadge({ rating }: RatingBadgeProps) {
   return (
-    <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-xl bg-gradient-to-br from-off-white via-off-white to-off-white/90 backdrop-blur-xl px-3 py-1.5 text-charcoal border border-white/60 ring-1 ring-white/30">
-      <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-      <span className="text-sm font-semibold">
+    <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-xl bg-gradient-to-br from-off-white via-off-white to-off-white/90 backdrop-blur-xl px-2.5 py-1 text-charcoal border border-white/60 ring-1 ring-white/30">
+      <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+      <span className="text-xs font-semibold" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
         {rating.toFixed(1)}
       </span>
     </span>

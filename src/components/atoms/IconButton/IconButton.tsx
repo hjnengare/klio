@@ -1,13 +1,12 @@
 'use client';
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 
 export type IconButtonVariant = 'default' | 'sage' | 'coral' | 'ghost';
 export type IconButtonSize = 'sm' | 'md' | 'lg';
 
 export interface IconButtonProps {
-  icon: LucideIcon;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   onClick?: () => void;
   variant?: IconButtonVariant;
   size?: IconButtonSize;

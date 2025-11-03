@@ -9,19 +9,18 @@ import ReviewerStats from "./ReviewerStats";
 import ReviewContent from "./ReviewContent";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
 
-// lucide-react icons
+// react-feather icons
 import {
   User,
   Star,
   Check,
-  UserPlus,
-  MessageCircle,
+  Users,
+  MessageSquare,
   Share2,
   MapPin,
-  Trophy,
-  Medal,
+  Award,
   Heart,
-} from "lucide-react";
+} from "react-feather";
 
 interface ReviewerCardProps {
   review?: Review;
@@ -91,7 +90,7 @@ export default function ReviewerCard({
                 )}
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-urbanist text-xs font-600 text-charcoal truncate">
+                  <h3 className="font-urbanist text-xs font-600 text-black truncate">
                     {reviewerData?.name}
                   </h3>
                   <p className="font-urbanist text-xs text-charcoal/70">
@@ -148,7 +147,7 @@ export default function ReviewerCard({
                     }`}
                   >
                     {reviewerData.badge === "top" ? (
-                      <Trophy size={10} />
+                      <Award size={10} />
                     ) : reviewerData.badge === "verified" ? (
                       <Check size={10} />
                     ) : (
@@ -179,11 +178,11 @@ export default function ReviewerCard({
                     }`}
                   >
                     {reviewerData.trophyBadge === "gold" ? (
-                      <Trophy size={10} />
+                      <Award size={10} />
                     ) : reviewerData.trophyBadge === "silver" ? (
-                      <Medal size={10} />
+                      <Award size={10} />
                     ) : reviewerData.trophyBadge === "bronze" ? (
-                      <Medal size={10} />
+                      <Award size={10} />
                     ) : reviewerData.trophyBadge === "rising-star" ? (
                       <Star size={10} />
                     ) : (
@@ -204,7 +203,7 @@ export default function ReviewerCard({
                   aria-label="Follow"
                   title="Follow"
                 >
-                  <UserPlus className="text-primary w-3 h-3 md:w-4 md:h-4" />
+                  <Users className="text-primary w-3 h-3 md:w-4 md:h-4" />
                 </button>
                 <button
                   className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
@@ -212,7 +211,7 @@ export default function ReviewerCard({
                   aria-label="Message"
                   title="Message"
                 >
-                  <MessageCircle className="text-primary w-3 h-3 md:w-4 md:h-4" />
+                  <MessageSquare className="text-primary w-3 h-3 md:w-4 md:h-4" />
                 </button>
               </div>
             </div>
@@ -245,7 +244,7 @@ export default function ReviewerCard({
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-urbanist text-xs font-600 text-charcoal truncate">
+            <h3 className="font-urbanist text-xs font-600 text-black truncate">
               {review?.reviewer.name}
             </h3>
             <ReviewerStats
@@ -262,7 +261,7 @@ export default function ReviewerCard({
               aria-label="Follow"
               title="Follow"
             >
-              <UserPlus className="text-primary w-3 h-3 md:w-4 md:h-4" />
+              <Users className="text-primary w-3 h-3 md:w-4 md:h-4" />
             </button>
             <button
               className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
@@ -270,7 +269,7 @@ export default function ReviewerCard({
               aria-label="Message"
               title="Message"
             >
-              <MessageCircle className="text-primary w-3 h-3 md:w-4 md:h-4" />
+              <MessageSquare className="text-primary w-3 h-3 md:w-4 md:h-4" />
             </button>
             <button
               className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"

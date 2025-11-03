@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { LucideIcon, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'react-feather';
 
 export type SettingsMenuItemVariant = 'default' | 'danger';
 
 export interface SettingsMenuItemProps {
-  icon: LucideIcon;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   label: string;
   onClick?: () => void;
   variant?: SettingsMenuItemVariant;

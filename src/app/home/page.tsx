@@ -11,7 +11,6 @@ import Header from "../components/Header/Header";
 import PromoBar from "../components/PromoBar/PromoBar";
 import HeroCarousel from "../components/Hero/HeroCarousel";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
-import { TRENDING_BUSINESSES } from "../data/businessData";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import {
   FEATURED_REVIEWS,
@@ -21,6 +20,7 @@ import {
 import { useOnboarding } from "../contexts/OnboardingContext";
 import ToastContainer from "../components/ToastNotification/ToastContainer";
 import { useToastNotifications } from "../hooks/useToastNotifications";
+import { useForYouBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 
 // Removed any animation / scroll-reveal classes and imports.
 
@@ -46,8 +46,9 @@ const MemoizedBusinessRow = memo(BusinessRow);
 
 export default function Home() {
   const { selectedInterests } = useOnboarding();
-  const forYouBusinesses = TRENDING_BUSINESSES.slice(0, 10);
-  const trendingBusinesses = TRENDING_BUSINESSES.slice(10, 20);
+  const { businesses: forYouBusinesses, loading: forYouLoading, error: forYouError } = useForYouBusinesses(10);
+  const { businesses: trendingBusinesses, loading: trendingLoading, error: trendingError } = useTrendingBusinesses(10);
+  
   const { notifications, removeNotification } = useToastNotifications({
     interval: 15000, // Show a notification every 15 seconds
     maxToasts: 1,
@@ -55,7 +56,7 @@ export default function Home() {
   });
 
   return (
-    <div className="min-h-dvh bg-off-white">
+    <div className="min-h-dvh bg-off-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
       <div className="relative">
         <PromoBar />
 
@@ -74,23 +75,27 @@ export default function Home() {
       <div className="bg-off-white">
         <div className="py-1 pb-12 sm:pb-16 md:pb-20">
             {/* No scroll-reveal wrappers; simple static rendering */}
-          <div data-section="for-you">
-            <MemoizedBusinessRow
-              title="For You"
-              businesses={forYouBusinesses}
-              cta="See More"
-              href="/for-you"
-            />
-          </div>
+          {forYouBusinesses.length > 0 && (
+            <div data-section="for-you">
+              <MemoizedBusinessRow
+                title="For You"
+                businesses={forYouBusinesses}
+                cta="See More"
+                href="/for-you"
+              />
+            </div>
+          )}
 
-          <div>
-            <MemoizedBusinessRow
-              title="Trending Now"
-              businesses={trendingBusinesses}
-              cta="See More"
-              href="/trending"
-            />
-          </div>
+          {trendingBusinesses.length > 0 && (
+            <div>
+              <MemoizedBusinessRow
+                title="Trending Now"
+                businesses={trendingBusinesses}
+                cta="See More"
+                href="/trending"
+              />
+            </div>
+          )}
 
           <div>
             <EventsSpecials events={EVENTS_AND_SPECIALS.slice(0, 5)} />

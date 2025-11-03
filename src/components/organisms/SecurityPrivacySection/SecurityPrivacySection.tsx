@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Lock, KeyRound, Shield } from 'lucide-react';
+import { Lock, KeyRound, Shield } from 'react-feather';
 import { SettingsCard } from '@/components/atoms/SettingsCard';
 import { ExpandableSection } from '@/components/atoms/ExpandableSection';
 import { PasswordChangeForm } from '../PasswordChangeForm';

@@ -35,7 +35,7 @@ export default function DealBreakerGrid({
   onToggle 
 }: DealBreakerGridProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
       {dealbreakers.map((dealbreaker, index) => {
         const isSelected = selectedDealbreakers.includes(dealbreaker.id);
         const IconComponent = iconMap[dealbreaker.icon as keyof typeof iconMap] || CheckCircle;

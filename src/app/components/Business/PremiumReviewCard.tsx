@@ -35,7 +35,7 @@ export function PremiumReviewCard({
             <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-lg" />
             <span className="pointer-events-none absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-coral/10 blur-lg" />
 
-            <div className="flex items-start gap-3 sm:gap-4">
+            <div className="flex items-start gap-3 sm:gap-3">
                 {/* Avatar */}
                 <div className="relative shrink-0">
                     {profileImage && !imageError ? (

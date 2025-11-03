@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 import { SettingsCard } from '@/components/atoms/SettingsCard';
 import { NotificationToggleItem } from '@/components/molecules/NotificationToggleItem';
 
@@ -13,7 +12,7 @@ export interface NotificationItem {
 }
 
 export interface NotificationCategoryProps {
-  icon: LucideIcon;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
   iconColor?: 'coral' | 'sage';
   notifications: NotificationItem[];

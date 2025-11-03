@@ -3,7 +3,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "react-feather";
 
 interface EventsPageHeaderProps {
   title?: string;
@@ -12,6 +12,10 @@ interface EventsPageHeaderProps {
 
 const sf = {
   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+} as const;
+
+const changaOne = {
+  fontFamily: '"Changa One", cursive',
 } as const;
 
 export default function EventsPageHeader({
@@ -41,8 +45,8 @@ export default function EventsPageHeader({
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="font-urbanist text-base sm:text-xl font-700 text-white transition-all duration-300 relative"
-                style={sf}
+                className="text-base sm:text-xl font-700 text-white transition-all duration-300 relative"
+                style={changaOne}
               >
                 {title}
               </motion.h1>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Lock, Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
+import { Lock, Eye, EyeOff, AlertCircle, CheckCircle } from "react-feather";
 
 interface PasswordInputProps {
   value: string;
@@ -40,7 +40,7 @@ export function PasswordInput({
 
   return (
     <div>
-      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
         Password
       </label>
       <div className="relative group">
@@ -59,7 +59,8 @@ export function PasswordInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
-          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 font-urbanist text-body font-600 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
+          style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}
+          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 text-body font-600 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
             isStrong ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
             isWeak ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
             'border-white/60 focus:ring-sage/30 focus:border-sage'
@@ -103,10 +104,10 @@ export function PasswordInput({
           </div>
           {strength.feedback && (
             <span className={`text-xs font-500 ${
-              strength.score >= 3 ? 'text-sage' :
+              strength.score >= 3 ? 'text-coral' :
               strength.score > 0 ? 'text-orange-500' :
-              'text-charcoal/60'
-            }`}>
+              'text-orange-400'
+            }`} style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
               {strength.feedback}
             </span>
           )}

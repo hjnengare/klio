@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AuthService } from "../lib/auth";
 import { useToast } from "../contexts/ToastContext";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle } from "react-feather";
 import { getBrowserSupabase } from "../lib/supabase/client";
 
 // Import shared components

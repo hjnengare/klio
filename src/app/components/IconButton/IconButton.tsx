@@ -1,10 +1,9 @@
 'use client';
 
-import { ButtonHTMLAttributes } from 'react';
-import { LucideIcon } from 'lucide-react';
+import React, { ButtonHTMLAttributes } from 'react';
 
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: LucideIcon;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   label: string;
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   size?: 'small' | 'medium' | 'large';

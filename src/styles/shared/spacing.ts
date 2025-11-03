@@ -26,7 +26,7 @@ export const spacingPatterns = {
   // Gaps
   gapXs: 'gap-2',
   gapSm: 'gap-3',
-  gapMd: 'gap-4',
+  gapMd: 'gap-3',
   gapLg: 'gap-6',
   gapXl: 'gap-8',
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "react-feather";
 
 const frostyHeader = `
   fixed top-0 left-0 right-0 z-50

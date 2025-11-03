@@ -1,12 +1,11 @@
 'use client';
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 
 export interface ProfileInfoItemProps {
   label: string;
   value: string;
-  icon?: LucideIcon;
+  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   iconColor?: 'coral' | 'sage' | 'default';
   showBorder?: boolean;
 }

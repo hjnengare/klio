@@ -1,7 +1,7 @@
 // src/components/EventsPage/EventsGrid.tsx
 "use client";
 
-import { Bookmark } from "lucide-react";
+import { Bookmark } from "react-feather";
 import EventCard from "../EventCard/EventCard";
 import { Event } from "../../data/eventsData";
 

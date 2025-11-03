@@ -2,7 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, Clock, Users } from "lucide-react";
+import { Calendar, Clock, Users } from "react-feather";
 import { Event } from "../../data/eventsData";
 
 interface EventDetailsCardProps {
@@ -17,7 +17,7 @@ export default function EventDetailsCard({ event }: EventDetailsCardProps) {
       transition={{ delay: 0.3, duration: 0.6 }}
       className="bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] p-4"
     >
-      <h2 className="text-sm font-bold text-charcoal mb-4 font-urbanist">Event Details</h2>
+      <h2 className="text-sm font-bold text-charcoal mb-4" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>Event Details</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex items-center gap-2.5">
@@ -25,10 +25,10 @@ export default function EventDetailsCard({ event }: EventDetailsCardProps) {
             <Calendar className="text-charcoal/70" size={18} />
           </div>
           <div>
-            <p className="text-xs text-charcoal/50 font-urbanist">Date</p>
-            <p className="text-sm font-semibold text-charcoal font-urbanist">{event.startDate}</p>
+            <p className="text-xs text-charcoal/50" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>Date</p>
+            <p className="text-sm font-semibold text-charcoal" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>{event.startDate}</p>
             {event.endDate && (
-              <p className="text-xs text-charcoal/60 font-urbanist">to {event.endDate}</p>
+              <p className="text-xs text-charcoal/60" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>to {event.endDate}</p>
             )}
           </div>
         </div>
@@ -38,8 +38,8 @@ export default function EventDetailsCard({ event }: EventDetailsCardProps) {
             <Clock className="text-charcoal/70" size={18} />
           </div>
           <div>
-            <p className="text-xs text-charcoal/50 font-urbanist">Duration</p>
-            <p className="text-sm font-semibold text-charcoal font-urbanist">2-3 hours</p>
+            <p className="text-xs text-charcoal/50" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>Duration</p>
+            <p className="text-sm font-semibold text-charcoal" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>2-3 hours</p>
           </div>
         </div>
 
@@ -48,8 +48,8 @@ export default function EventDetailsCard({ event }: EventDetailsCardProps) {
             <Users className="text-charcoal/70" size={18} />
           </div>
           <div>
-            <p className="text-xs text-charcoal/50 font-urbanist">Capacity</p>
-            <p className="text-sm font-semibold text-charcoal font-urbanist">Up to 20 people</p>
+            <p className="text-xs text-charcoal/50" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>Capacity</p>
+            <p className="text-sm font-semibold text-charcoal" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>Up to 20 people</p>
           </div>
         </div>
 
@@ -59,8 +59,8 @@ export default function EventDetailsCard({ event }: EventDetailsCardProps) {
               <span className="text-charcoal/70 font-bold text-base">£</span>
             </div>
             <div>
-              <p className="text-xs text-charcoal/50 font-urbanist">Price</p>
-              <p className="text-sm font-semibold text-charcoal font-urbanist">{event.price}</p>
+              <p className="text-xs text-charcoal/50" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>Price</p>
+              <p className="text-sm font-semibold text-charcoal" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>{event.price}</p>
             </div>
           </div>
         )}

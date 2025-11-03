@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "react-feather";
 import ReviewerCard from "../ReviewerCard/ReviewerCard";
 import ScrollableSection from "../ScrollableSection/ScrollableSection";
 import { Reviewer } from "../../data/communityHighlightsData";
