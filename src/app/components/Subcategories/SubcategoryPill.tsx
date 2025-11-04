@@ -13,8 +13,8 @@ interface SubcategoryPillProps {
 }
 
 export default function SubcategoryPill({ subcategory, isSelected, onToggle }: SubcategoryPillProps) {
-  const livvic = {
-    fontFamily: '"Livvic", sans-serif',
+  const sfPro = {
+    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
     fontWeight: 600,
   };
 
@@ -29,7 +29,7 @@ export default function SubcategoryPill({ subcategory, isSelected, onToggle }: S
           : 'border-sage/30 bg-sage/5 text-sage hover:bg-sage/10 hover:border-sage/40 hover:scale-105'
         }
       `}
-      style={livvic}
+      style={sfPro}
     >
       <span>{subcategory.label}</span>
       {isSelected && (

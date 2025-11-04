@@ -30,8 +30,8 @@ export default function SubcategoryGrid({
   subcategories, 
   loading 
 }: SubcategoryGridProps) {
-  const sf = {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+  const sfPro = {
+    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
   };
 
   return (
@@ -49,7 +49,7 @@ export default function SubcategoryGrid({
       ))}
 
       {subcategories.length === 0 && !loading && (
-        <div className="text-center text-charcoal/60 py-8" style={sf}>
+        <div className="text-center text-charcoal/60 py-8" style={sfPro}>
           <p>No subcategories found for your selected interests.</p>
         </div>
       )}

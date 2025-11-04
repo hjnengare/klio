@@ -9,8 +9,8 @@ interface InterestSelectionProps {
 }
 
 export default function InterestSelection({ selectedCount, minSelections, maxSelections }: InterestSelectionProps) {
-  const livvic = {
-    fontFamily: '"Livvic", sans-serif',
+  const sfPro = {
+    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
     fontWeight: 600,
   };
 
@@ -25,7 +25,7 @@ export default function InterestSelection({ selectedCount, minSelections, maxSel
       >
         <span
           className="text-sm font-semibold text-sage"
-          style={livvic}
+          style={sfPro}
           aria-live="polite"
           aria-atomic="true"
         >
@@ -35,7 +35,7 @@ export default function InterestSelection({ selectedCount, minSelections, maxSel
           <CheckCircle className="w-4 h-4 text-[hsl(148,20%,38%)]" aria-hidden="true" />
         )}
       </div>
-      <p className="text-xs text-charcoal/60" style={livvic} aria-live="polite">
+      <p className="text-xs text-charcoal/60" style={sfPro} aria-live="polite">
         {selectedCount < minSelections
           ? `Select ${minSelections - selectedCount} or more to continue`
           : selectedCount === maxSelections

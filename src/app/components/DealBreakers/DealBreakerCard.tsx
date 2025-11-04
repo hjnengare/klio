@@ -24,8 +24,8 @@ export default function DealBreakerCard({
   index, 
   IconComponent 
 }: DealBreakerCardProps) {
-  const livvic = {
-    fontFamily: '"Livvic", sans-serif',
+  const sfPro = {
+    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
     fontWeight: 600,
   };
 
@@ -60,10 +60,10 @@ export default function DealBreakerCard({
           `}
           style={{ backfaceVisibility: 'hidden' }}
         >
-          <h3 className="text-base font-semibold text-charcoal mb-2" style={livvic}>
+          <h3 className="text-base font-semibold text-charcoal mb-2" style={sfPro}>
             {dealbreaker.label}
           </h3>
-          <p className="text-xs text-charcoal/60 leading-relaxed px-2" style={livvic}>
+          <p className="text-xs text-charcoal/60 leading-relaxed px-2" style={sfPro}>
             {dealbreaker.description}
           </p>
         </div>

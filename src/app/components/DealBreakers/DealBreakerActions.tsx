@@ -15,8 +15,8 @@ export default function DealBreakerActions({
   onComplete, 
   onSkip 
 }: DealBreakerActionsProps) {
-  const livvic = {
-    fontFamily: '"Livvic", sans-serif',
+  const sfPro = {
+    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
     fontWeight: 600,
   };
 
@@ -31,7 +31,7 @@ export default function DealBreakerActions({
           }`}
           onClick={onComplete}
           disabled={!canProceed}
-          style={livvic}
+          style={sfPro}
         >
           {isNavigating ? (
             <>
@@ -50,7 +50,7 @@ export default function DealBreakerActions({
           type="button"
           className="inline-block text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
           aria-label="Skip deal-breakers for now"
-          style={livvic}
+          style={sfPro}
           onClick={onSkip}
         >
           Skip for now

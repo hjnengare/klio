@@ -17,8 +17,8 @@ export default function SubcategoryActions({
   onContinue, 
   onSkip 
 }: SubcategoryActionsProps) {
-  const livvic = {
-    fontFamily: '"Livvic", sans-serif',
+  const sfPro = {
+    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
     fontWeight: 600,
   };
 
@@ -33,7 +33,7 @@ export default function SubcategoryActions({
           }`}
           onClick={onContinue}
           disabled={!canProceed}
-          style={livvic}
+          style={sfPro}
         >
           {(isLoading || isNavigating) ? (
             <>
@@ -52,7 +52,7 @@ export default function SubcategoryActions({
           type="button"
           className="inline-block text-sm text-charcoal/60 hover:text-charcoal transition-colors duration-300 focus:outline-none focus:underline underline decoration-dotted"
           aria-label="Skip subcategory selection for now"
-          style={livvic}
+          style={sfPro}
           onClick={onSkip}
         >
           Skip for now

@@ -143,7 +143,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: process.env.NODE_ENV === 'development',
   },
   eslint: {
-    ignoreDuringBuilds: true, // Disable ESLint during builds completely
+    ignoreDuringBuilds: false, // Enable ESLint during builds
   },
 
   // Additional performance optimizations
