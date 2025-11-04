@@ -50,6 +50,24 @@ const nextConfig: NextConfig = {
       },
     };
 
+    // Fix for "self is not defined" error - polyfill for browser-only code
+    if (isServer) {
+      // On server, provide fallback for browser globals
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        self: false,
+      };
+    } else {
+      // On client, define self as window
+      const webpack = require('webpack');
+      config.plugins = config.plugins || [];
+      config.plugins.push(
+        new webpack.DefinePlugin({
+          'self': 'window',
+        })
+      );
+    }
+
     if (dev) {
       // Development optimizations
       config.optimization = {

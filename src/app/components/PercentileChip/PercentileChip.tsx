@@ -19,41 +19,41 @@ function PercentileChip({ label, value }: PercentileChipProps) {
   // Handle placeholder (0 value) with grayed out style
   const isPlaceholder = value === 0;
 
-  // Render icon based on label with specific colors
+  // Render icon based on label with coral stroke
   const renderIcon = () => {
-    const baseClasses = "w-3 h-3 flex-shrink-0";
+    const baseClasses = "w-3 h-3 flex-shrink-0 text-coral";
 
     switch (label.toLowerCase()) {
       case 'speed':
         return (
           <Zap 
-            className={`${baseClasses} text-amber-500`} 
+            className={baseClasses}
             fill="currentColor" 
           />
         );
       case 'hospitality':
         return (
           <Heart 
-            className={`${baseClasses} text-pink-500`} 
+            className={baseClasses}
             fill="currentColor" 
           />
         );
       case 'quality':
         return (
           <Star 
-            className={`${baseClasses} text-amber-500`} 
+            className={baseClasses}
             fill="currentColor" 
           />
         );
       default:
-        return <CheckCircle className={`${baseClasses} text-charcoal`} />;
+        return <CheckCircle className={baseClasses} />;
     }
   };
 
   return (
-    <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 shadow-md border border-white/30 backdrop-blur-md transition-all duration-200 hover:shadow-md hover:scale-105 ${
+    <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 shadow-md border border-white/30 transition-all duration-200 hover:shadow-md hover:scale-105 ${
       isPlaceholder 
-        ? 'bg-white/90 border-white/20 opacity-50' 
+        ? 'bg-white/90 border-white/20' 
         : 'bg-white/90 border-white/30'
     }`}>
       {renderIcon()}

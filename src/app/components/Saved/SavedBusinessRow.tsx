@@ -43,7 +43,7 @@ export default function SavedBusinessRow({
         </div>
 
         <ScrollableSection>
-          <div className="flex gap-3">
+          <div className="flex gap-3 pt-2">
             {businesses.map((business) => (
               <div key={business.id} className="list-none relative group">
                 <BusinessCard business={business} />

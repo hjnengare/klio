@@ -54,7 +54,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
         ${className}
       `}
     >
-      <Icon size={iconSize} />
+      <Icon width={iconSize} height={iconSize} />
     </button>
   );
 };

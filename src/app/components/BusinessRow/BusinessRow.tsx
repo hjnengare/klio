@@ -52,7 +52,7 @@ export default function BusinessRow({
 
         <ScrollableSection>
           {/* Gap harmonizes with card radius/shadows; list semantics preserved via <li> inside cards */}
-          <div className="flex gap-3 items-stretch">
+          <div className="flex gap-3 items-stretch pt-2">
             {businesses.map((business) => (
               <div key={business.id} className="list-none flex">
                 <BusinessCard business={business} />

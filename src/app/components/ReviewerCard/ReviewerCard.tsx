@@ -47,10 +47,10 @@ export default function ReviewerCard({
     return (
       <div
         id={idForSnap}
-        className="snap-start snap-always w-[calc(50vw-1rem)] sm:w-[200px] flex-shrink-0"
+        className="snap-start snap-always w-[calc(50vw-1rem)] sm:w-[240px] flex-shrink-0"
       >
         <div
-          className="bg-card-bg backdrop-blur-xl rounded-[20px] overflow-hidden group cursor-pointer h-[200px] relative border border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)]"
+          className="bg-card-bg backdrop-blur-xl rounded-[20px] overflow-hidden group cursor-pointer h-[240px] relative border border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.06)] transition-all duration-500 ease-out hover:-translate-y-1"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -90,10 +90,19 @@ export default function ReviewerCard({
                 )}
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-urbanist text-xs font-600 text-black truncate">
+                  <h3 className="text-sm font-bold text-charcoal truncate" style={{ 
+                    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                    fontWeight: 700,
+                    WebkitFontSmoothing: 'antialiased',
+                    MozOsxFontSmoothing: 'grayscale',
+                    letterSpacing: '-0.01em',
+                  }}>
                     {reviewerData?.name}
                   </h3>
-                  <p className="font-urbanist text-xs text-charcoal/70">
+                  <p className="text-xs text-charcoal/70" style={{ 
+                    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                    fontWeight: 400,
+                  }}>
                     {reviewerData?.location}
                   </p>
                 </div>
@@ -105,15 +114,16 @@ export default function ReviewerCard({
             <div className="mb-1">
               <div className="flex items-center justify-center">
                 <div className="text-center">
-                  <div className="font-urbanist font-600 text-xs text-charcoal flex items-center justify-center gap-1">
+                  <div className="text-sm font-semibold text-charcoal flex items-center justify-center gap-1" style={{ 
+                    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                    fontWeight: 600,
+                  }}>
                     <span>{reviewerData?.reviewCount}</span>
-                    {/* Star rating display for context */}
-                    <div className="flex items-center gap-0.5">
-                      <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
-                      <span className="text-[8px] text-charcoal/60">{reviewerData?.rating}</span>
                     </div>
-                  </div>
-                  <div className="font-urbanist text-[10px] text-charcoal/70">Reviews</div>
+                  <div className="text-xs text-charcoal/70" style={{ 
+                    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                    fontWeight: 400,
+                  }}>Reviews</div>
                 </div>
               </div>
             </div>
@@ -123,10 +133,14 @@ export default function ReviewerCard({
               <div className="mb-1.5 mt-1 border-t border-white/20 pt-1.5">
                 <div className="bg-off-white rounded-md px-2 py-1">
                   <div className="flex items-center gap-1 mb-0.5">
-                    <Star className="w-2 h-2 fill-amber-400 text-amber-400" />
-                    <span className="font-urbanist text-[8px] text-charcoal/60">Latest Review</span>
+                    <Star className="w-3 h-3 fill-coral text-coral" />
+                    <span className="font-urbanist text-[10px] text-charcoal/60" style={{ 
+                      fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                    }}>Latest Review</span>
                   </div>
-                  <p className="font-urbanist text-[9px] text-charcoal/80 leading-tight line-clamp-2 italic">
+                  <p className="font-urbanist text-xs text-charcoal/80 leading-relaxed line-clamp-2 italic" style={{ 
+                    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                  }}>
                     "{latestReview.reviewText}"
                   </p>
                 </div>
@@ -196,22 +210,22 @@ export default function ReviewerCard({
               </div>
 
               {/* Card Actions with slide-up animation */}
-              <div className="flex gap-1">
+              <div className="flex gap-1.5 transition-all duration-500 ease-out translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
                 <button
-                  className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
+                  className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Follow"
                   title="Follow"
                 >
-                  <Users className="text-primary w-3 h-3 md:w-4 md:h-4" />
+                  <Users className="text-charcoal w-4 h-4" />
                 </button>
                 <button
-                  className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
+                  className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Message"
                   title="Message"
                 >
-                  <MessageSquare className="text-primary w-3 h-3 md:w-4 md:h-4" />
+                  <MessageSquare className="text-charcoal w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -225,7 +239,7 @@ export default function ReviewerCard({
   return (
     <li className="w-[calc(50vw-12px)] sm:w-auto sm:min-w-[213px] flex-shrink-0">
       <div
-        className="bg-card-bg backdrop-blur-xl rounded-[20px] group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)]"
+        className="bg-card-bg backdrop-blur-xl rounded-[20px] group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.06)] transition-all duration-500 ease-out hover:-translate-y-1"
       >
         <div className="flex items-start gap-1.5 mb-2 p-2">
           <div className="relative">
@@ -244,7 +258,13 @@ export default function ReviewerCard({
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-urbanist text-xs font-600 text-black truncate">
+            <h3 className="text-sm font-bold text-charcoal truncate" style={{ 
+              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+              fontWeight: 700,
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale',
+              letterSpacing: '-0.01em',
+            }}>
               {review?.reviewer.name}
             </h3>
             <ReviewerStats
@@ -254,30 +274,30 @@ export default function ReviewerCard({
           </div>
 
           {/* Card Actions - always visible on mobile, slide-in on desktop */}
-          <div className="absolute right-2 top-2 md:right-2 md:top-1/2 md:-translate-y-1/2 z-20 flex flex-row md:flex-col gap-1 md:gap-2">
+          <div className="absolute right-2 top-2 md:right-2 md:bottom-4 z-20 flex flex-row md:flex-col gap-1.5 md:gap-2 transition-all duration-500 ease-out md:translate-y-8 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
             <button
-              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
+              className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
               onClick={(e) => e.stopPropagation()}
               aria-label="Follow"
               title="Follow"
             >
-              <Users className="text-primary w-3 h-3 md:w-4 md:h-4" />
+              <Users className="text-charcoal w-4 h-4" />
             </button>
             <button
-              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
+              className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
               onClick={(e) => e.stopPropagation()}
               aria-label="Message"
               title="Message"
             >
-              <MessageSquare className="text-primary w-3 h-3 md:w-4 md:h-4" />
+              <MessageSquare className="text-charcoal w-4 h-4" />
             </button>
             <button
-              className="w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 ring-1 ring-white/30 shadow-sm"
+              className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
               onClick={(e) => e.stopPropagation()}
               aria-label="Share"
               title="Share"
             >
-              <Share2 className="text-primary w-3 h-3 md:w-4 md:h-4" />
+              <Share2 className="text-charcoal w-4 h-4" />
             </button>
           </div>
         </div>

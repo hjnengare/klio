@@ -91,13 +91,14 @@ export default function CommunityHighlights({
         {topReviewers && topReviewers.length > 0 && (
           <div className="mt-1">
             <div className="mb-2 flex justify-center">
-              <h3 className="text-sm sm:text-base font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] text-center" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              <h3 className="text-xs font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] text-center" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Top Reviewers This Month In Claremont
               </h3>
             </div>
 
-            <ScrollableSection className="gap-3">
-              {topReviewers.map((reviewer, index) => {
+            <ScrollableSection>
+              <div className="flex gap-3 py-2">
+                {topReviewers.map((reviewer, index) => {
                 // Try to find an actual review first, otherwise use sample text
                 const actualReview = reviews.find(r => r.reviewer.id === reviewer.id);
                 const reviewIndex = parseInt(reviewer.id) % sampleReviewTexts.length;
@@ -121,6 +122,7 @@ export default function CommunityHighlights({
                   />
                 );
               })}
+              </div>
             </ScrollableSection>
           </div>
         )}
@@ -129,17 +131,19 @@ export default function CommunityHighlights({
         {businessesOfTheMonth && businessesOfTheMonth.length > 0 && (
           <div className="mt-3">
             <div className="mb-2 flex justify-center">
-              <h3 className="text-sm sm:text-base font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] text-center" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              <h3 className="text-xs font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] text-center" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Businesses of the Month by Category
               </h3>
             </div>
-            <ScrollableSection className="list-none gap-3">
-              {businessesOfTheMonth.map((business) => (
-                <BusinessOfTheMonthCard
-                  key={business.id}
-                  business={business}
-                />
-              ))}
+            <ScrollableSection>
+              <div className="flex gap-3 py-2">
+                {businessesOfTheMonth.map((business) => (
+                  <BusinessOfTheMonthCard
+                    key={business.id}
+                    business={business}
+                  />
+                ))}
+              </div>
             </ScrollableSection>
           </div>
         )}

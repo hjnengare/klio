@@ -94,7 +94,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       }}
     >
       <div
-        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden group cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-sm hover:shadow-lg transition-all duration-300"
+        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden group cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.06)] transition-all duration-500 ease-out hover:-translate-y-1"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Media */}
@@ -186,8 +186,11 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
 
           {/* rating badge */}
           <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
-            <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-            <span className="text-sm font-semibold">
+            <Star className="w-3.5 h-3.5 text-coral fill-coral" />
+            <span className="text-sm font-semibold" style={{
+              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+              fontWeight: 600,
+            }}>
               {Number(displayTotal).toFixed(1)}
             </span>
           </span>
@@ -264,7 +267,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           </div>
 
           <div className="mb-4 flex items-center justify-center gap-2 cursor-pointer">
-            <Stars value={business.rating} color="amber-400" />
+            <Stars value={business.rating} color="coral" />
             <p className="text-xs font-600 leading-none text-charcoal" style={{ 
               fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
               fontWeight: 600,

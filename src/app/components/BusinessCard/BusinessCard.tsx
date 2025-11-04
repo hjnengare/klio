@@ -142,101 +142,109 @@ function BusinessCard({
       }}
     >
       <div
-        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden group cursor-pointer w-full md:w-[320px] h-[640px] md:h-[450px] flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-sm hover:shadow-lg transition-all duration-300"
+        className="relative overflow-hidden group cursor-pointer w-full md:w-[340px] h-[640px] md:h-[520px] flex flex-col bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.06)] transition-all duration-500 ease-out hover:-translate-y-1"
         style={{
           maxWidth: "540px"
         } as React.CSSProperties}
       >
-        {/* MEDIA - More dominant */}
+        {/* MEDIA - Full bleed with premium overlay */}
         <div
-          className="relative overflow-hidden rounded-t-[20px] flex-[2.5] md:flex-[2] z-10 cursor-pointer"
+          className="relative overflow-hidden flex-[2.5] md:flex-[2.8] z-10 cursor-pointer"
           onClick={handleCardClick}
         >
           <div className="relative w-full h-full">
             {!imgError && displayImage ? (
               isImagePng || displayImage.includes('/png/') || displayImage.endsWith('.png') || usingFallback ? (
-                <div className="w-full h-full flex items-center justify-center bg-off-white/90 rounded-t-[20px]">
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-off-white/95 to-off-white/85">
                   <OptimizedImage
                     src={usingFallback ? getCategoryPng(business.category) : displayImage}
                     alt={displayAlt}
                     width={320}
                     height={350}
-                    sizes="(max-width: 768px) 540px, 320px"
-                    className="w-28 h-28 md:w-32 md:h-32 object-contain"
+                    sizes="(max-width: 768px) 540px, 340px"
+                    className="w-32 h-32 md:w-36 md:h-36 object-contain"
                     priority={false}
-                    quality={85}
+                    quality={90}
                     onError={handleImageError}
                   />
                 </div>
               ) : (
+                <div className="relative w-full h-full overflow-hidden">
                 <OptimizedImage
                   src={displayImage}
                   alt={displayAlt}
-                  width={320}
-                  height={350}
-                  sizes="(max-width: 768px) 540px, 320px"
-                  className="w-full h-full object-cover rounded-t-[20px]"
+                    width={340}
+                    height={400}
+                    sizes="(max-width: 768px) 540px, 340px"
+                    className="w-full h-full object-cover"
                   priority={false}
-                  quality={85}
+                    quality={90}
                   onError={handleImageError}
                 />
+                  {/* Subtle gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
               )
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-off-white/90 rounded-t-[20px]">
-                <div className="w-28 h-28 md:w-32 md:h-32 flex items-center justify-center">
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-off-white/95 to-off-white/85">
+                <div className="w-32 h-32 md:w-36 md:h-36 flex items-center justify-center">
                   <OptimizedImage
                     src={getCategoryPng(business.category)}
                     alt={displayAlt}
-                    width={128}
-                    height={128}
-                    sizes="128px"
-                    className="w-full h-full object-contain"
+                    width={144}
+                    height={144}
+                    sizes="144px"
+                    className="w-full h-full object-contain opacity-60"
                     priority={false}
-                    quality={85}
+                    quality={90}
                     onError={() => setImgError(true)}
                   />
                 </div>
               </div>
             )}
             {imgError && (
-              <div className="absolute inset-0 flex items-center justify-center bg-sage/10 text-sage rounded-t-[20px]">
-                <Image className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-off-white/95 to-off-white/85">
+                <Image className="w-16 h-16 text-charcoal/20" />
               </div>
             )}
           </div>
 
-          {/* verified badge */}
+          {/* Premium glass badges */}
           {business.verified && (
-            <div className="absolute left-2 top-2 z-20">
+            <div className="absolute left-4 top-4 z-20">
               <VerifiedBadge />
             </div>
           )}
 
-          {/* rating badge */}
           {!hideStar && hasRating && displayRating !== undefined && (
-            <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-xl bg-gradient-to-br from-off-white via-off-white to-off-white/90 backdrop-blur-xl px-3 py-1.5 text-charcoal border border-white/60 ring-1 ring-white/30">
-              <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-              <span className="text-sm font-semibold" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
+            <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-2xl bg-white/80 backdrop-blur-xl px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-white/60">
+              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+              <span className="text-sm font-semibold text-charcoal" style={{ 
+                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                fontWeight: 600,
+                letterSpacing: '-0.01em'
+              }}>
                 {Number(displayRating).toFixed(1)}
               </span>
-            </span>
+            </div>
           )}
           
           {!hideStar && !hasRating && (
-            <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-xl bg-gradient-to-br from-off-white/80 via-off-white/70 to-off-white/60 backdrop-blur-xl px-3 py-1.5 text-charcoal/60 border border-white/40 ring-1 ring-white/20">
-              <Star className="w-3.5 h-3.5 text-charcoal/40" />
-              <span className="text-xs font-medium" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 500 }}>
+            <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-2xl bg-white/60 backdrop-blur-xl px-3 py-2 border border-white/40">
+              <span className="text-xs font-medium text-charcoal/50" style={{ 
+                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                fontWeight: 500,
+                letterSpacing: '0.01em'
+              }}>
                 New
               </span>
-            </span>
+            </div>
           )}
 
-          {/* actions - desktop only */}
-          <div
-            className="hidden md:flex absolute pt-2 right-2 top-1/2 -translate-y-1/2 z-20 flex-col gap-2 transition-all duration-300 ease-out translate-x-12 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100"
-          >
+          {/* Premium floating actions - desktop only */}
+          <div className="hidden md:flex absolute right-4 bottom-4 pb-8  z-20 flex-col gap-2 transition-all duration-500 ease-out translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
             <button
-              className="w-10 h-10 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 hover:bg-white transition-colors"
+              className="w-11 h-11 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
               onClick={(e) => {
                 e.stopPropagation();
                 handleWriteReview();
@@ -244,10 +252,10 @@ function BusinessCard({
               aria-label={`Write a review for ${business.name}`}
               title="Write a review"
             >
-              <Edit className="w-4 h-4 text-primary" />
+              <Edit className="w-4 h-4 text-charcoal" />
             </button>
             <button
-              className="w-10 h-10 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 hover:bg-white transition-colors"
+              className="w-11 h-11 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
               onClick={(e) => {
                 e.stopPropagation();
                 handleBookmark();
@@ -256,11 +264,11 @@ function BusinessCard({
               title={isItemSaved(business.id) ? 'Remove from saved' : 'Save'}
             >
               <Bookmark
-                className={`w-4 h-4 ${isItemSaved(business.id) ? 'text-sage fill-sage' : 'text-primary'}`}
+                className={`w-4 h-4 transition-colors ${isItemSaved(business.id) ? 'text-coral fill-coral' : 'text-charcoal'}`}
               />
             </button>
             <button
-              className="w-10 h-10 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 hover:bg-white transition-colors"
+              className="w-11 h-11 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
               onClick={(e) => {
                 e.stopPropagation();
                 handleShare();
@@ -268,30 +276,38 @@ function BusinessCard({
               aria-label={`Share ${business.name}`}
               title="Share"
             >
-              <Share2 className="w-4 h-4 text-primary" />
+              <Share2 className="w-4 h-4 text-charcoal" />
             </button>
           </div>
         </div>
 
-        {/* CONTENT - Premium spacing and typography */}
-        <div className="px-5 pt-4 pb-1 relative flex-shrink-0 flex-1 flex flex-col justify-start z-10 bg-card-bg">
-          {/* Business Name */}
-          <div className="cursor-pointer mb-2.5" onClick={handleCardClick}>
-            <h3 className="text-base font-normal leading-[1.2] text-charcoal group-hover:text-coral transition-colors duration-300 text-center truncate hover:text-coral" style={{ 
+        {/* CONTENT - Minimal, premium spacing */}
+        <div className="px-6 py-1 relative flex-shrink-0 flex-1 flex flex-col justify-between bg-transparent z-10">
+          <div className="flex-1 flex flex-col">
+            {/* Business Name - Clamped to ensure consistent spacing */}
+            <div className="cursor-pointer mb-2 flex items-center justify-center" onClick={handleCardClick}>
+              <h3 className="text-sm font-bold text-charcoal group-hover:text-coral transition-colors duration-300 text-center truncate" style={{ 
               fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
-              fontWeight: 600,
+                fontWeight: 700,
               WebkitFontSmoothing: 'antialiased',
               MozOsxFontSmoothing: 'grayscale',
               textRendering: 'optimizeLegibility',
-              letterSpacing: '-0.01em',
-            
+                letterSpacing: '-0.01em'
             }}>
               {business.name}
             </h3>
           </div>
 
-          {/* Category */}
-          <div className="flex items-center justify-center text-sm leading-[1.3] text-charcoal cursor-pointer mb-2" style={{ 
+            {/* Info Wrapper */}
+            <div className="relative rounded-xl border border-sage/10 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md p-4 mb-2 overflow-hidden shadow-md" onClick={handleCardClick}>
+              {/* Decorative spans - Silverish */}
+              <span className="pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-full bg-gray-300/30 blur-xl" />
+              <span className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-gray-300/30 blur-xl" />
+              
+              {/* Content - Centered */}
+              <div className="flex flex-col items-center text-center relative z-10">
+                {/* Category and Location - Combined with bullet separator */}
+                <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 cursor-pointer" style={{ 
             fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
             fontWeight: 600,
             WebkitFontSmoothing: 'antialiased',
@@ -300,57 +316,70 @@ function BusinessCard({
             letterSpacing: '0.01em'
           }} onClick={handleCardClick}>
             <span>{business.category}</span>
-          </div>
-
-          {/* Address */}
           {(business.address || business.location) && (
-            <div className="flex items-center justify-center gap-1.5 text-sm leading-[1.3] text-charcoal/90 cursor-pointer mb-2.5" style={{ 
-              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
-              fontWeight: 500,
-              WebkitFontSmoothing: 'antialiased',
-              MozOsxFontSmoothing: 'grayscale',
-              textRendering: 'optimizeLegibility',
-            }} onClick={handleCardClick}>
-              <MapPin className="w-3.5 h-3.5 text-charcoal/60 flex-shrink-0" />
-              <span className="text-center truncate max-w-full">{business.address || business.location}</span>
+                    <>
+                      <span>·</span>
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-charcoal/60" />
+                        <span>{business.address || business.location}</span>
             </div>
+                    </>
           )}
+                </div>
 
-          {/* Reviews - Consistent height */}
-          <div className="flex items-center justify-center gap-2.5 cursor-pointer group/rating leading-[1.3] mb-2.5 min-h-[20px]" onClick={handleCardClick}>
+                {/* Reviews - Refined */}
+                <div className="mb-3 flex items-center justify-center gap-2 cursor-pointer" onClick={handleCardClick}>
             {hasRating && displayRating !== undefined ? (
               <>
-                <Stars value={displayRating} color="amber-400" />
-                <p className="text-sm font-600 leading-none text-charcoal" style={{ 
+                      <div 
+                        className="cursor-pointer hover:scale-110 transition-transform duration-300 active:scale-95"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCardClick();
+                        }}
+                      >
+                        <Stars value={displayRating} color="amber-500" />
+                      </div>
+                      <p className="text-xs font-600 leading-none text-charcoal" style={{ 
                   fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
                   fontWeight: 600,
+                        WebkitFontSmoothing: 'antialiased',
+                        MozOsxFontSmoothing: 'grayscale',
+                        textRendering: 'optimizeLegibility'
                 }}>
                   {business.reviews}
                 </p>
-                <p className="text-sm leading-none text-charcoal/70" style={{ 
+                      <p className="text-xs leading-none text-charcoal/60" style={{ 
                   fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
                   fontWeight: 600,
+                        WebkitFontSmoothing: 'antialiased',
+                        MozOsxFontSmoothing: 'grayscale',
+                        textRendering: 'optimizeLegibility'
                 }}>reviews</p>
               </>
             ) : (
-              <div className="flex items-center gap-2.5">
-                <div className="flex items-center gap-[2px] text-[15px] text-charcoal/30">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-[15px] h-[15px] text-charcoal/30" />
-                  ))}
+                    <>
+                      <div 
+                        className="cursor-pointer hover:scale-110 transition-transform duration-300 active:scale-95"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCardClick();
+                        }}
+                      >
+                        <Stars value={0} color="amber-500" />
                 </div>
-                <p className="text-sm font-medium text-charcoal/60" style={{ 
+                      <span className="text-xs text-charcoal/60 leading-relaxed" style={{ 
                   fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
                   fontWeight: 500,
                 }}>
                   No reviews yet
-                </p>
-              </div>
+                      </span>
+                    </>
             )}
           </div>
 
-          {/* Percentile chips - Always visible with consistent spacing */}
-          <div className="flex items-center justify-center gap-3 cursor-pointer leading-[1.3] mb-2.5 min-h-[32px]" onClick={handleCardClick}>
+                {/* Percentile chips - Inside wrapper */}
+                <div className="flex items-center justify-center gap-2 flex-wrap mb-3">
             <PercentileChip 
               label="speed" 
               value={business.percentiles?.service || 0} 
@@ -365,10 +394,14 @@ function BusinessCard({
             />
           </div>
 
-          {/* Mobile actions */}
-          <div className="flex md:hidden items-center justify-center gap-3 mt-3">
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile actions - Minimal */}
+          <div className="flex md:hidden items-center justify-center gap-3 mt-4 pt-4 border-t border-white/20">
             <button
-              className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-sage to-sage/90 text-white rounded-full text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 shadow-sm hover:shadow-md transition-all active:scale-95"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-charcoal text-white rounded-2xl text-sm font-semibold hover:bg-charcoal/90 active:scale-95 transition-all duration-300 shadow-sm"
               onClick={(e) => {
                 e.stopPropagation();
                 handleWriteReview();
@@ -379,11 +412,11 @@ function BusinessCard({
                 fontWeight: 600,
               }}
             >
-              <Edit className="w-3.5 h-3.5" />
+              <Edit className="w-4 h-4" />
               <span>Review</span>
             </button>
             <button
-              className="w-9 h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 shadow-sm hover:shadow-md transition-all active:scale-95"
+              className="w-11 h-11 bg-white/80 backdrop-blur-xl border border-white/60 rounded-2xl flex items-center justify-center hover:bg-white/90 active:scale-95 transition-all duration-300 shadow-sm"
               onClick={(e) => {
                 e.stopPropagation();
                 handleBookmark();
@@ -391,18 +424,18 @@ function BusinessCard({
               aria-label={`${isItemSaved(business.id) ? 'Remove from saved' : 'Save'} ${business.name}`}
             >
               <Bookmark
-                className={`w-4 h-4 ${isItemSaved(business.id) ? 'text-sage fill-sage' : 'text-charcoal'}`}
+                className={`w-4 h-4 transition-colors ${isItemSaved(business.id) ? 'text-coral fill-coral' : 'text-charcoal/60'}`}
               />
             </button>
             <button
-              className="w-9 h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 shadow-sm hover:shadow-md transition-all active:scale-95"
+              className="w-11 h-11 bg-white/80 backdrop-blur-xl border border-white/60 rounded-2xl flex items-center justify-center hover:bg-white/90 active:scale-95 transition-all duration-300 shadow-sm"
               onClick={(e) => {
                 e.stopPropagation();
                 handleShare();
               }}
               aria-label={`Share ${business.name}`}
             >
-              <Share2 className="w-4 h-4 text-charcoal" />
+              <Share2 className="w-4 h-4 text-charcoal/60" />
             </button>
           </div>
         </div>

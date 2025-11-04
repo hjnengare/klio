@@ -144,7 +144,7 @@ export default function EmailVerificationGuard({
             >
               {isResending ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader className="w-4 h-4 animate-spin" />
                   Sending...
                 </>
               ) : (
@@ -173,3 +173,5 @@ export default function EmailVerificationGuard({
     </div>
   );
 }
+
+

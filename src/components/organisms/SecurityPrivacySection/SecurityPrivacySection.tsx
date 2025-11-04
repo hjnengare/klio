@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Lock, KeyRound, Shield } from 'react-feather';
+import { Lock, Key, Shield } from 'react-feather';
 import { SettingsCard } from '@/components/atoms/SettingsCard';
 import { ExpandableSection } from '@/components/atoms/ExpandableSection';
 import { PasswordChangeForm } from '../PasswordChangeForm';
@@ -40,7 +40,7 @@ export const SecurityPrivacySection: React.FC<SecurityPrivacySectionProps> = ({
       {/* Change Password Section */}
       <div className="border-b border-charcoal/10 pb-4 mb-6">
         <ExpandableSection
-          icon={KeyRound}
+          icon={Key}
           label="Change Password"
           isExpanded={activeSection === 'password'}
           onToggle={() => onToggleSection('password')}
