@@ -50,15 +50,24 @@ const nextConfig: NextConfig = {
       },
     };
 
-    // Fix for "self is not defined" error - polyfill for browser-only code
+    // Fix for "self is not defined" error - handle browser-only packages
     if (isServer) {
-      // On server, provide fallback for browser globals
+      // On server, exclude canvas-confetti and provide fallback for browser globals
       config.resolve.fallback = {
         ...config.resolve.fallback,
+        'canvas-confetti': false,
         self: false,
       };
+      
+      // Externalize canvas-confetti to prevent server bundling
+      config.externals = config.externals || [];
+      if (Array.isArray(config.externals)) {
+        config.externals.push('canvas-confetti');
+      } else if (typeof config.externals === 'object') {
+        config.externals['canvas-confetti'] = 'commonjs canvas-confetti';
+      }
     } else {
-      // On client, define self as window
+      // On client, define self as window for browser-only code
       const webpack = require('webpack');
       config.plugins = config.plugins || [];
       config.plugins.push(

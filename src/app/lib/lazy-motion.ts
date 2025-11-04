@@ -32,8 +32,11 @@ export const useAnimation = () => {
   return hook;
 };
 
-// Lazy load confetti
+// Lazy load confetti - client-only
 export const loadConfetti = async () => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
   const confetti = await import('canvas-confetti');
   return confetti.default;
 };
