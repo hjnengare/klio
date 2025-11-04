@@ -69,7 +69,7 @@ export default function Home() {
           duration={5000}
         />
 
-        <HeroCarousel userInterests={selectedInterests} />
+        <HeroCarousel />
       </div>
 
       <div className="bg-off-white">

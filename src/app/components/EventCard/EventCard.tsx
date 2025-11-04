@@ -3,8 +3,6 @@
 import { Event } from "../../data/eventsData";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { ArrowRight } from "react-feather";
 import { getEventIconPng } from "../../utils/eventIconToPngMapping";
 import EventBadge from "./EventBadge";
 import RatingBadge from "./RatingBadge";
@@ -14,7 +12,6 @@ interface EventCardProps {
 }
 
 export default function EventCard({ event }: EventCardProps) {
-  const router = useRouter();
   const iconPng = getEventIconPng(event.icon);
   
   return (
@@ -68,7 +65,7 @@ export default function EventCard({ event }: EventCardProps) {
           <div className="px-6 pt-5 pb-6 relative flex-shrink-0 flex-1 flex flex-col justify-between bg-transparent z-10">
             <div className="flex-1 flex flex-col items-center text-center">
               {/* Icon */}
-              <div className="mb-4 w-12 h-12 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-xl border border-white/60 shadow-sm">
+              <div className="w-12 h-12 flex items-center justify-center rounded-full">
                 <Image
                   src={iconPng}
                   alt={event.title}
@@ -96,7 +93,7 @@ export default function EventCard({ event }: EventCardProps) {
               
               {/* Description - Apple-like */}
               {event.description && (
-                <p className="text-xs text-charcoal/70 leading-relaxed mb-3 text-center line-clamp-2" style={{ 
+                <p className="text-xs font-bold text-charcoal/70 leading-relaxed font-600 text-center line-clamp-2" style={{ 
                   fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
                   fontWeight: 400,
                   WebkitFontSmoothing: 'antialiased',
@@ -106,26 +103,6 @@ export default function EventCard({ event }: EventCardProps) {
                   {event.description}
                 </p>
               )}
-              
-              {/* Learn More Button - Apple-like */}
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  router.push(`/event/${event.id}`);
-                }}
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-coral text-white text-sm font-medium hover:bg-coral/95 active:scale-[0.98] transition-all duration-200 shadow-[0_2px_8px_rgba(125,15,42,0.25)] hover:shadow-[0_4px_12px_rgba(125,15,42,0.35)]"
-                style={{
-                  fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
-                  fontWeight: 500,
-                  WebkitFontSmoothing: 'antialiased',
-                  MozOsxFontSmoothing: 'grayscale',
-                  letterSpacing: '-0.01em',
-                }}
-              >
-                <span>Learn More</span>
-                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
-              </button>
             </div>
           </div>
         </article>

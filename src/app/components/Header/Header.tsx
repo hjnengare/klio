@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { useRef, useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { User, X, Search, LogIn, Briefcase, ChevronDown, Settings } from "react-feather";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
@@ -32,6 +32,29 @@ export default function Header({
   const [menuPos, setMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
   const [mobileMenuPos, setMobileMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
   const { savedCount } = useSavedItems();
+
+  // Use refs to track state without causing re-renders
+  const isFilterVisibleRef = useRef(isFilterVisible);
+  const isBusinessDropdownOpenRef = useRef(isBusinessDropdownOpen);
+  const isMobileBusinessDropdownOpenRef = useRef(isMobileBusinessDropdownOpen);
+  const showSearchBarRef = useRef(showSearchBar);
+
+  // Update refs when state changes
+  useEffect(() => {
+    isFilterVisibleRef.current = isFilterVisible;
+  }, [isFilterVisible]);
+
+  useEffect(() => {
+    isBusinessDropdownOpenRef.current = isBusinessDropdownOpen;
+  }, [isBusinessDropdownOpen]);
+
+  useEffect(() => {
+    isMobileBusinessDropdownOpenRef.current = isMobileBusinessDropdownOpen;
+  }, [isMobileBusinessDropdownOpen]);
+
+  useEffect(() => {
+    showSearchBarRef.current = showSearchBar;
+  }, [showSearchBar]);
 
   // Anchor for the dropdown FilterModal to hang under
   const searchWrapRef = useRef<HTMLDivElement>(null);
@@ -102,24 +125,31 @@ export default function Header({
     };
   }, []);
 
-  // Close all modals on scroll
-  useEffect(() => {
-    const closeModalsOnScroll = () => {
+  // Close all modals on scroll - memoized with useCallback
+  const closeModalsOnScroll = useCallback(() => {
+    // Only close if they're actually open to avoid unnecessary state updates
+    if (isBusinessDropdownOpenRef.current) {
       setIsBusinessDropdownOpen(false);
+    }
+    if (isMobileBusinessDropdownOpenRef.current) {
       setIsMobileBusinessDropdownOpen(false);
+    }
+    if (showSearchBarRef.current) {
       setShowSearchBar(false);
-      if (isFilterVisible) {
-        setIsFilterOpen(false);
-        setTimeout(() => setIsFilterVisible(false), 150);
-      }
-    };
+    }
+    if (isFilterVisibleRef.current) {
+      setIsFilterOpen(false);
+      setTimeout(() => setIsFilterVisible(false), 150);
+    }
+  }, []);
 
+  useEffect(() => {
     window.addEventListener('scroll', closeModalsOnScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', closeModalsOnScroll);
     };
-  }, [isFilterVisible]);
+  }, [closeModalsOnScroll]);
 
   // Close business dropdown when clicking outside
   useEffect(() => {
@@ -218,7 +248,7 @@ export default function Header({
 
             {/* Desktop nav - centered */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 flex-1 justify-center">
-              {["home", "explore", "saved", "leaderboard"].map((route) => (
+              {["home", "saved", "leaderboard"].map((route) => (
                 <OptimizedLink
                   key={route}
                   href={`/${route}`}
@@ -258,7 +288,11 @@ export default function Header({
                   createPortal(
                     <div
                       className="fixed z-[1000] bg-white/95 backdrop-blur-xl border border-white/60 shadow-xl rounded-2xl overflow-hidden min-w-[560px] whitespace-normal break-keep"
-                      style={{ left: menuPos.left, top: menuPos.top }}
+                      style={{ 
+                        left: menuPos.left, 
+                        top: menuPos.top,
+                        animation: 'fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                      }}
                     >
                       {/* header */}
                       <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
@@ -425,7 +459,7 @@ export default function Header({
           </div>
 
           <nav className="flex flex-col py-4 px-4 overflow-y-auto flex-1 min-h-0">
-            {["home", "explore", "saved", "leaderboard"].map((route) => (
+            {["home", "saved", "leaderboard"].map((route) => (
               <OptimizedLink
                 key={route}
                 href={`/${route}`}
@@ -479,11 +513,12 @@ export default function Header({
             />
             {/* Dropdown */}
             <div
-              className="fixed z-[10003] bg-white/95 backdrop-blur-xl border border-white/60 shadow-xl rounded-2xl overflow-hidden w-[calc(100vw-32px)] max-w-[320px] md:hidden transition-all duration-200"
+              className="fixed z-[10003] bg-white/95 backdrop-blur-xl border border-white/60 shadow-xl rounded-2xl overflow-hidden w-[calc(100vw-32px)] max-w-[320px] md:hidden"
               style={{ 
                 left: `${mobileMenuPos.left}px`, 
                 top: `${mobileMenuPos.top + 48}px`,
-                right: '16px'
+                right: '16px',
+                animation: 'fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
               }}
             >
               {/* header */}

@@ -40,7 +40,7 @@ export function PasswordInput({
 
   return (
     <div>
-      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
+      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif", sans-serif', fontWeight: 600 }}>
         Password
       </label>
       <div className="relative group">
@@ -59,7 +59,7 @@ export function PasswordInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
-          style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}
+          style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif", sans-serif', fontWeight: 600 }}
           className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 text-body font-600 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
             isStrong ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
             isWeak ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
@@ -107,7 +107,7 @@ export function PasswordInput({
               strength.score >= 3 ? 'text-coral' :
               strength.score > 0 ? 'text-orange-500' :
               'text-orange-400'
-            }`} style={{ fontFamily: '"Livvic", sans-serif', fontWeight: 600 }}>
+            }`} style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif", sans-serif', fontWeight: 600 }}>
               {strength.feedback}
             </span>
           )}

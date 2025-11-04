@@ -244,14 +244,14 @@ export default function RegisterPage() {
               {/* Error Message */}
               {error && (
                 <div className="bg-error-50 border border-error-100 rounded-xl p-4 text-center">
-                  <p className="text-[14px] font-600 text-error-600" style={{ fontFamily: '"Livvic", sans-serif' }}>{error}</p>
+                  <p className="text-[14px] font-600 text-error-600" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{error}</p>
                 </div>
               )}
 
               {/* Offline Message */}
               {!isOnline && !error && (
                 <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
-                  <p className="text-[14px] font-600 text-orange-600" style={{ fontFamily: '"Livvic", sans-serif' }}>You&apos;re offline. We&apos;ll try again when you&apos;re back online.</p>
+                  <p className="text-[14px] font-600 text-orange-600" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>You&apos;re offline. We&apos;ll try again when you&apos;re back online.</p>
                 </div>
               )}
 
@@ -288,7 +288,7 @@ export default function RegisterPage() {
 
               {/* Terms consent */}
               <div className="pt-2">
-                <label className="flex items-start gap-3 text-sm text-white cursor-pointer" >
+                <label className="flex items-start gap-3 text-sm text-white cursor-pointer" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
                   <input
                     type="checkbox"
                     checked={consent}
@@ -314,7 +314,7 @@ export default function RegisterPage() {
                   <button
                     type="submit"
                     disabled={isSubmitDisabled}
-                    
+                    style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
                     className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
                   >
                     {isFormDisabled ? (
@@ -342,12 +342,13 @@ export default function RegisterPage() {
             </form>
 
             {/* Footer */}
-            <div className="text-center mt-6 pt-6 border-t border-white/20">
-              <div className="text-sm sm:text-base text-white" >
+              <div className="text-center mt-6 pt-6 border-t border-white/20">
+              <div className="text-sm sm:text-base text-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
                 Already have an account?{" "}
                 <Link
                   href="/login"
                   className="text-white font-semibold hover:text-coral transition-colors duration-300 relative group"
+                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
                 >
                   Log in
                 </Link>

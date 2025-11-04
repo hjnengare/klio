@@ -53,8 +53,8 @@ function PercentileChip({ label, value }: PercentileChipProps) {
   return (
     <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 shadow-md border border-white/30 transition-all duration-200 hover:shadow-md hover:scale-105 ${
       isPlaceholder 
-        ? 'bg-white/90 border-white/20' 
-        : 'bg-white/90 border-white/30'
+        ? 'bg-sage border-white/20' 
+        : 'bg-sage border-white/30'
     }`}>
       {renderIcon()}
       <span className={`text-xs font-600 whitespace-nowrap ${

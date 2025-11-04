@@ -242,7 +242,7 @@ function BusinessCard({
           )}
 
           {/* Premium floating actions - desktop only */}
-          <div className="hidden md:flex absolute right-4 bottom-4 pb-8  z-20 flex-col gap-2 transition-all duration-500 ease-out translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
+          <div className="hidden md:flex absolute right-4 bottom-4 py-4 px-4 z-20 flex-col gap-2 transition-all duration-500 ease-out translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
             <button
               className="w-11 h-11 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
               onClick={(e) => {
@@ -284,28 +284,23 @@ function BusinessCard({
         {/* CONTENT - Minimal, premium spacing */}
         <div className="px-6 py-1 relative flex-shrink-0 flex-1 flex flex-col justify-between bg-transparent z-10">
           <div className="flex-1 flex flex-col">
-            {/* Business Name - Clamped to ensure consistent spacing */}
-            <div className="cursor-pointer mb-2 flex items-center justify-center" onClick={handleCardClick}>
-              <h3 className="text-sm font-bold text-charcoal group-hover:text-coral transition-colors duration-300 text-center truncate" style={{ 
-              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
-                fontWeight: 700,
-              WebkitFontSmoothing: 'antialiased',
-              MozOsxFontSmoothing: 'grayscale',
-              textRendering: 'optimizeLegibility',
-                letterSpacing: '-0.01em'
-            }}>
-              {business.name}
-            </h3>
-          </div>
-
             {/* Info Wrapper */}
-            <div className="relative rounded-xl border border-sage/10 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md p-4 mb-2 overflow-hidden shadow-md" onClick={handleCardClick}>
-              {/* Decorative spans - Silverish */}
-              <span className="pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-full bg-gray-300/30 blur-xl" />
-              <span className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-gray-300/30 blur-xl" />
-              
+            <div className="relative p-4 overflow-hidden" onClick={handleCardClick}>
               {/* Content - Centered */}
               <div className="flex flex-col items-center text-center relative z-10">
+                {/* Business Name - Inside wrapper */}
+                <div className="cursor-pointer mb-3 flex items-center justify-center" onClick={handleCardClick}>
+                  <h3 className="text-sm font-bold text-charcoal group-hover:text-coral transition-colors duration-300 text-center truncate" style={{ 
+                    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                    fontWeight: 700,
+                    WebkitFontSmoothing: 'antialiased',
+                    MozOsxFontSmoothing: 'grayscale',
+                    textRendering: 'optimizeLegibility',
+                    letterSpacing: '-0.01em'
+                  }}>
+                    {business.name}
+                  </h3>
+                </div>
                 {/* Category and Location - Combined with bullet separator */}
                 <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 cursor-pointer" style={{ 
             fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 

@@ -3,22 +3,53 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLoading } from "../../contexts/LoadingContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function PageLoader() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [routeLoading, setRouteLoading] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
   const pathname = usePathname();
+  const { isLoading: contextLoading } = useLoading();
+  const { isLoading: authLoading } = useAuth();
 
+  // Handle initial page load/refresh
   useEffect(() => {
-    // Show loader when pathname changes
-    setIsLoading(true);
+    // Check if page is already loaded
+    if (document.readyState === 'complete') {
+      // Page already loaded, show loader briefly then hide
+      const timer = setTimeout(() => {
+        setInitialLoad(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+
+    // Page is still loading, wait for load event
+    const handleLoad = () => {
+      // Small delay to show loader on refresh
+      const timer = setTimeout(() => {
+        setInitialLoad(false);
+      }, 800);
+      return () => clearTimeout(timer);
+    };
+
+    window.addEventListener('load', handleLoad);
+    return () => window.removeEventListener('load', handleLoad);
+  }, []);
+
+  // Handle route changes
+  useEffect(() => {
+    setRouteLoading(true);
     
-    // Hide loader after a short delay to allow page to render
     const timer = setTimeout(() => {
-      setIsLoading(false);
+      setRouteLoading(false);
     }, 300);
 
     return () => clearTimeout(timer);
   }, [pathname]);
+
+  // Combine all loading states
+  const isLoading = initialLoad || routeLoading || contextLoading || authLoading;
 
   return (
     <AnimatePresence>

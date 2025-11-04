@@ -3,6 +3,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import { useUserInterests } from "../../hooks/useUserInterests";
 
 interface HeroSlide {
   id: string;
@@ -14,48 +15,53 @@ interface HeroSlide {
 const HERO_SLIDES: HeroSlide[] = [
   {
     id: "1",
-    image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=2560&q=95&auto=format&fit=crop",
+    image: "/hero/restaurant_cpt.jpg",
     title: "Find the Best Restaurants",
     description: "Discover top-rated dining experiences, from cozy cafes to fine dining establishments in your area",
   },
   {
     id: "2",
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2560&q=95&auto=format&fit=crop",
-    title: "Trusted Healthcare Professionals",
-    description: "Connect with verified dentists, doctors, and wellness professionals recommended by your community",
+    image: "/hero/Cover-for-Street-Food-In-Cape-Town.webp",
+    title: "Explore Local Dining",
+    description: "Connect with verified restaurants and dining experiences recommended by your community",
   },
   {
     id: "3",
-    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=2560&q=95&auto=format&fit=crop",
-    title: "Reliable Home Services",
-    description: "Find skilled plumbers, electricians, and contractors for all your home improvement needs",
-  },
-  {
-    id: "4",
-    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=2560&q=95&auto=format&fit=crop",
+    image: "/hero/full-body-massage_lwj4_460x@2x.webp",
     title: "Beauty & Wellness",
     description: "Explore salons, spas, gyms, and wellness centers that prioritize your health and happiness",
   },
   {
+    id: "4",
+    image: "/hero/hiking-trails-cape-town.webp",
+    title: "Outdoors & Adventure",
+    description: "Discover amazing outdoor experiences and adventures in your area",
+  },
+  {
     id: "5",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=2560&q=95&auto=format&fit=crop",
-    title: "Professional Services",
-    description: "Connect with lawyers, accountants, consultants, and other professionals you can trust",
+    image: "/hero/views.jpg",
+    title: "Discover Local Gems",
+    description: "Explore the best that your community has to offer",
   },
 ];
 
 const FONT_STACK = '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif';
 
 interface HeroCarouselProps {
-  userInterests?: string[];
+  userInterests?: string[]; // Optional prop for backward compatibility
 }
 
-export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) {
+export default function HeroCarousel({ userInterests: propInterests }: HeroCarouselProps) {
+  // Fetch user's interests from database (unique to each user)
+  const dbInterests = useUserInterests();
+  // Use database interests if available, otherwise fall back to prop interests
+  const userInterests = dbInterests.length > 0 ? dbInterests : (propInterests || []);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState(0);
   const progressRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLElement>(null);
+  const currentIndexRef = useRef(currentIndex);
 
   // Generate slides based on user interests
   const generateSlidesFromInterests = (interests: string[]): HeroSlide[] => {
@@ -63,71 +69,167 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
       'food-drink': [
         {
           id: "food-1",
-          image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=2560&q=95&auto=format&fit=crop",
+          image: "/hero/restaurant_cpt.jpg",
           title: "Find the Best Restaurants",
           description: "Discover top-rated dining experiences, from cozy cafes to fine dining establishments in your area",
         },
         {
           id: "food-2",
-          image: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=2560&q=95&auto=format&fit=crop",
+          image: "/hero/Cover-for-Street-Food-In-Cape-Town.webp",
+          title: "Street Food Adventures",
+          description: "Explore authentic street food and local culinary experiences",
+        },
+        {
+          id: "food-3",
+          image: "/hero/v-and-a-waterfront-restaurants.webp",
           title: "Local Food Gems",
-          description: "Explore hidden culinary treasures and authentic flavors recommended by your community",
+          description: "Discover hidden culinary treasures and authentic flavors recommended by your community",
         },
       ],
       'beauty-wellness': [
         {
           id: "beauty-1",
-          image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=2560&q=95&auto=format&fit=crop",
+          image: "/hero/full-body-massage_lwj4_460x@2x.webp",
           title: "Beauty & Wellness",
           description: "Explore salons, spas, gyms, and wellness centers that prioritize your health and happiness",
         },
         {
           id: "beauty-2",
-          image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=2560&q=95&auto=format&fit=crop",
+          image: "/hero/practice-gallery-23.jpg",
           title: "Self-Care Made Easy",
           description: "Find trusted professionals for your beauty and wellness needs",
         },
-      ],
-      'healthcare': [
         {
-          id: "health-1",
-          image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2560&q=95&auto=format&fit=crop",
-          title: "Trusted Healthcare",
-          description: "Connect with verified dentists, doctors, and wellness professionals recommended by your community",
-        },
-        {
-          id: "health-2",
-          image: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=2560&q=95&auto=format&fit=crop",
-          title: "Your Health Matters",
-          description: "Find healthcare providers you can trust for all your medical needs",
-        },
-      ],
-      'home-services': [
-        {
-          id: "home-1",
-          image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=2560&q=95&auto=format&fit=crop",
-          title: "Reliable Home Services",
-          description: "Find skilled plumbers, electricians, and contractors for all your home improvement needs",
-        },
-        {
-          id: "home-2",
-          image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=2560&q=95&auto=format&fit=crop",
-          title: "Professional Contractors",
-          description: "Connect with trusted professionals for repairs, renovations, and maintenance",
+          id: "beauty-3",
+          image: "/hero/wheelchair+and+nurse.webp",
+          title: "Holistic Wellness",
+          description: "Discover comprehensive wellness services for your mind and body",
         },
       ],
       'professional-services': [
         {
           id: "prof-1",
-          image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=2560&q=95&auto=format&fit=crop",
+          image: "/hero/Construction-Cost-South-Africa-1024x585.jpg",
           title: "Professional Services",
           description: "Connect with lawyers, accountants, consultants, and other professionals you can trust",
         },
         {
           id: "prof-2",
-          image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=2560&q=95&auto=format&fit=crop",
+          image: "/hero/plumbing-cost-per-square-meter-south-africa-1024x585.jpeg",
           title: "Expert Guidance",
           description: "Find qualified professionals for your business and personal needs",
+        },
+        {
+          id: "prof-3",
+          image: "/hero/DSC_3122.jpg",
+          title: "Trusted Professionals",
+          description: "Work with verified experts for all your service needs",
+        },
+      ],
+      'outdoors-adventure': [
+        {
+          id: "outdoor-1",
+          image: "/hero/hiking-trails-cape-town.webp",
+          title: "Outdoors & Adventure",
+          description: "Discover amazing outdoor experiences and adventures in your area",
+        },
+        {
+          id: "outdoor-2",
+          image: "/hero/cpt_table_mountain.jpg",
+          title: "Explore Nature",
+          description: "Find outdoor activities and adventures that match your interests",
+        },
+        {
+          id: "outdoor-3",
+          image: "/hero/table_mountain.jpeg",
+          title: "Mountain Adventures",
+          description: "Experience breathtaking views and outdoor excursions",
+        },
+        {
+          id: "outdoor-4",
+          image: "/hero/views.jpg",
+          title: "Scenic Experiences",
+          description: "Discover beautiful landscapes and outdoor destinations",
+        },
+      ],
+      'experiences-entertainment': [
+        {
+          id: "ent-1",
+          image: "/hero/Bo-Kaap_Cape_Town_South_Africa.jpg",
+          title: "Entertainment & Experiences",
+          description: "Discover exciting events, entertainment venues, and unique experiences near you",
+        },
+        {
+          id: "ent-2",
+          image: "/hero/v-and-a-waterfront-restaurants.webp",
+          title: "Unforgettable Moments",
+          description: "Explore places and experiences that create lasting memories",
+        },
+        {
+          id: "ent-3",
+          image: "/hero/26ac876911e042cd87c6e6be20135d73.jpg",
+          title: "Unique Experiences",
+          description: "Find one-of-a-kind entertainment and memorable experiences",
+        },
+      ],
+      'arts-culture': [
+        {
+          id: "arts-1",
+          image: "/hero/Old_Drill_Hall,_Darling_Street,_Cape_town.jpeg",
+          title: "Arts & Culture",
+          description: "Immerse yourself in local arts, culture, and historical landmarks",
+        },
+        {
+          id: "arts-2",
+          image: "/hero/Cape-Towns-Centra-Library_70-years_exterior.jpg",
+          title: "Cultural Heritage",
+          description: "Explore museums, galleries, and cultural institutions in your community",
+        },
+        {
+          id: "arts-3",
+          image: "/hero/a1-2.jpg",
+          title: "Artistic Expressions",
+          description: "Discover local art, culture, and creative experiences",
+        },
+      ],
+      'family-pets': [
+        {
+          id: "family-1",
+          image: "/hero/garden-services-9.jpg",
+          title: "Family & Pets",
+          description: "Find family-friendly places and pet services that everyone will love",
+        },
+        {
+          id: "family-2",
+          image: "/hero/wheelchair+and+nurse.webp",
+          title: "Family Care",
+          description: "Discover trusted services for your family and beloved pets",
+        },
+        {
+          id: "family-3",
+          image: "/hero/views.jpg",
+          title: "Family Adventures",
+          description: "Explore family-friendly destinations and activities",
+        },
+      ],
+      'shopping-lifestyle': [
+        {
+          id: "shop-1",
+          image: "/hero/v-and-a-waterfront-restaurants.webp",
+          title: "Shopping & Lifestyle",
+          description: "Explore the best shopping destinations and lifestyle experiences",
+        },
+        {
+          id: "shop-2",
+          image: "/hero/Bo-Kaap_Cape_Town_South_Africa.jpg",
+          title: "Lifestyle Experiences",
+          description: "Discover shops, boutiques, and lifestyle services tailored to you",
+        },
+        {
+          id: "shop-3",
+          image: "/hero/pexels-pixabay-159711-new-2-e1751302518691.jpg",
+          title: "Lifestyle Destinations",
+          description: "Find unique shopping and lifestyle experiences in your area",
         },
       ],
     };
@@ -159,12 +261,25 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
 
   const next = useCallback(() => {
     setProgress(0); // Reset progress when advancing
-    setCurrentIndex((prev) => (prev + 1) % slides.length);
+    setCurrentIndex((prev) => {
+      const newIndex = (prev + 1) % slides.length;
+      currentIndexRef.current = newIndex;
+      return newIndex;
+    });
   }, [slides.length]);
   const prev = useCallback(() => {
     setProgress(0); // Reset progress when going back
-    setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+    setCurrentIndex((prev) => {
+      const newIndex = (prev - 1 + slides.length) % slides.length;
+      currentIndexRef.current = newIndex;
+      return newIndex;
+    });
   }, [slides.length]);
+
+  // Update ref when currentIndex changes
+  useEffect(() => {
+    currentIndexRef.current = currentIndex;
+  }, [currentIndex]);
 
   // Progress animation for each slide
   useEffect(() => {
@@ -197,7 +312,13 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
           clearInterval(progressRef.current);
           progressRef.current = null;
         }
-        next();
+        // Use the ref version of next to avoid dependency issues
+        setCurrentIndex((prev) => {
+          const newIndex = (prev + 1) % slides.length;
+          currentIndexRef.current = newIndex;
+          return newIndex;
+        });
+        setProgress(0);
       }
     }, interval);
 
@@ -207,7 +328,7 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
         progressRef.current = null;
       }
     };
-  }, [prefersReduced, paused, currentIndex, next]);
+  }, [prefersReduced, paused, currentIndex, slides.length]);
 
   // pause when tab is hidden
   useEffect(() => {
@@ -283,10 +404,6 @@ export default function HeroCarousel({ userInterests = [] }: HeroCarouselProps) 
           className="relative min-h-[80vh] sm:min-h-[80vh] md:min-h-[90vh] w-full overflow-hidden outline-none rounded-none"
           aria-label="Hero carousel"
           tabIndex={0}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocus={() => setPaused(true)}
-          onBlur={() => setPaused(false)}
           style={{ fontFamily: FONT_STACK }}
         >
       {/* Liquid Glass Ambient Lighting */}
