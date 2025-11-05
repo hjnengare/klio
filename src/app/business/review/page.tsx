@@ -47,6 +47,15 @@ export default function WriteReviewPage() {
     "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1600&h=1200&fit=crop&auto=format",
   ];
   const businessRating = 4.5;
+  const businessInfo = {
+    name: businessName,
+    phone: "+44 20 1234 5678",
+    website: "www.example.com",
+    address: "123 Main Street, Cape Town, South Africa",
+    email: "info@example.com",
+    category: "Restaurant",
+    location: "Cape Town",
+  };
   const quickTags = ["Trustworthy", "On Time", "Friendly", "Good Value"];
 
   const otherReviews: SmallReview[] = [
@@ -166,7 +175,7 @@ export default function WriteReviewPage() {
             '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
         }}
       >
-        <ReviewHeader />
+        <ReviewHeader businessInfo={businessInfo} />
 
         <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
           <div className="py-1 pt-20">

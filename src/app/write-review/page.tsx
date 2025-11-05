@@ -116,7 +116,7 @@ export default function WriteReviewPage() {
             <Link
               key={business.id}
               href="/business/review"
-              className="block p-4 bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] hover:border-sage/30
+              className="block p-4 bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg hover:border-sage/30
                          transition-all duration-200 group"
             >
               <div className="flex items-center justify-between">

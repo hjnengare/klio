@@ -50,10 +50,10 @@ export default function ReviewForm({
   onSubmit,
 }: ReviewFormProps) {
   return (
-    <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 ring-1 ring-white/20 rounded-2xl p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-lg shadow-sage/20 py-4 md:py-6">
-      {/* Subtle glows */}
-      <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg" />
-      <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-lg" />
+    <div className="bg-gradient-to-br bg-off-white backdrop-blur-md border border-sage/10 rounded-2xl p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-lg py-4 md:py-6 border border-white/30">
+      {/* Subtle glows - similar to review cards */}
+      <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-lg" />
+      <span className="pointer-events-none absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-coral/10 blur-lg" />
 
       <div className="relative z-10 flex-1 flex flex-col">
         <div className="hidden md:block">

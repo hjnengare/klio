@@ -28,6 +28,7 @@ export default function Header({
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
+  const [isBusinessDropdownClosing, setIsBusinessDropdownClosing] = useState(false);
   const [menuPos, setMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
   const { savedCount } = useSavedItems();
 
@@ -176,7 +177,7 @@ export default function Header({
       // Ensure it doesn't go off left edge
       leftPos = Math.max(padding, leftPos);
 
-      setMenuPos({ left: leftPos, top: r.bottom + 8 });
+      setMenuPos({ left: leftPos, top: r.bottom + 16 });
     }
   }, [isBusinessDropdownOpen]);
 
@@ -206,7 +207,7 @@ export default function Header({
   // Different positioning for home page (frosty variant) vs other pages
   const isHomeVariant = variant === "frosty";
   const headerClassName = isHomeVariant
-    ? `absolute top-8 mt-6 left-1/2 -translate-x-1/2 z-50 bg-off-white backdrop-blur-xl rounded-full shadow-xl transition-all duration-300 w-[96%] max-w-[1700px] ${!isHeaderVisible ? 'opacity-0 pointer-events-none' : ''}`
+    ? `absolute top-8 mt-6 left-1/2 -translate-x-1/2 z-50 bg-off-white backdrop-blur-xl rounded-full shadow-lg border border-white/30 transition-all duration-300 w-[96%] max-w-[1700px] ${!isHeaderVisible ? 'opacity-0 pointer-events-none' : ''}`
     : `fixed top-6 left-0 right-0 z-50 bg-off-white backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 ${isHeaderVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`;
 
   return (
@@ -250,7 +251,17 @@ export default function Header({
               <div className="relative hidden md:block" ref={businessDropdownRef}>
                 <button
                   ref={btnRef}
-                  onClick={() => setIsBusinessDropdownOpen(!isBusinessDropdownOpen)}
+                  onClick={() => {
+                    if (isBusinessDropdownOpen) {
+                      setIsBusinessDropdownClosing(true);
+                      setTimeout(() => {
+                        setIsBusinessDropdownOpen(false);
+                        setIsBusinessDropdownClosing(false);
+                      }, 300);
+                    } else {
+                      setIsBusinessDropdownOpen(true);
+                    }
+                  }}
                   className="group capitalize px-3 lg:px-4 py-1 rounded-full text-xs font-normal text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative flex items-center gap-1"
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
@@ -264,22 +275,31 @@ export default function Header({
                 {isBusinessDropdownOpen &&
                   createPortal(
                     <div
-                      className="fixed z-[1000] bg-white/95 backdrop-blur-xl border border-white/60 shadow-xl rounded-2xl overflow-hidden min-w-[560px] whitespace-normal break-keep"
+                      className={`fixed z-[1000] bg-off-white rounded-2xl border border-white/60 shadow-xl overflow-hidden min-w-[560px] whitespace-normal break-keep transition-all duration-300 ease-out ${
+                        isBusinessDropdownClosing ? 'opacity-0 scale-95 translate-y-[-8px]' : 'opacity-100 scale-100 translate-y-0'
+                      }`}
                       style={{ 
                         left: menuPos.left, 
                         top: menuPos.top,
-                        animation: 'fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                        animation: isBusinessDropdownClosing ? 'none' : 'fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                       }}
                     >
                       {/* header */}
-                      <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
+                      <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 bg-off-white">
                         <div className="relative z-10 flex items-center gap-2">
                           <Briefcase className="w-4 h-4 text-sage" />
-                          <h2 className="text-sm md:text-base font-semibold text-charcoal">For Businesses</h2>
+                          <h2 className="text-sm md:text-base font-semibold text-charcoal" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>For Businesses</h2>
                         </div>
                         <button
-                          onClick={() => setIsBusinessDropdownOpen(false)}
-                          className="relative z-10 w-9 h-9 rounded-full border border-charcoal/10 bg-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+                          onClick={() => {
+                            setIsBusinessDropdownClosing(true);
+                            setTimeout(() => {
+                              setIsBusinessDropdownOpen(false);
+                              setIsBusinessDropdownClosing(false);
+                            }, 300);
+                          }}
+                          className="relative z-10 w-11 h-11 sm:w-9 sm:h-9 rounded-full border border-charcoal/10 bg-off-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0"
                           aria-label="Close menu"
                         >
                           <X className="w-4 h-4" />
@@ -287,48 +307,60 @@ export default function Header({
                       </div>
 
                       {/* body */}
-                      <div className="px-5 sm:px-6 py-4 space-y-3">
-                        <OptimizedLink
+                      <div className="px-5 sm:px-6 py-4 space-y-3" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                        <Link
                           href="/business/login"
-                          onClick={() => setIsBusinessDropdownOpen(false)}
-                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200"
+                          onClick={(e) => {
+                            setIsBusinessDropdownClosing(true);
+                            setTimeout(() => {
+                              setIsBusinessDropdownOpen(false);
+                              setIsBusinessDropdownClosing(false);
+                            }, 300);
+                          }}
+                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200 min-h-[44px] flex items-center"
+                          style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                         >
-                          <div className="flex items-center justify-between">
-                            <div className="flex-1">
-                              <div className="font-urbanist font-600 text-charcoal group-hover:text-coral text-sm transition-colors">Business Login</div>
-                              <div className="text-xs text-charcoal/60 group-hover:text-coral/80 mt-0.5 transition-colors">Access your business account</div>
-                            </div>
-                            <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-coral transition-colors" />
+                          <div className="flex-1">
+                            <div className="font-600 text-charcoal group-hover:text-coral text-sm transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Business Login</div>
+                            <div className="text-xs text-charcoal/60 group-hover:text-coral/80 mt-0.5 transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Access your business account</div>
                           </div>
-                        </OptimizedLink>
+                        </Link>
 
-                        <OptimizedLink
+                        <Link
                           href="/claim-business"
-                          onClick={() => setIsBusinessDropdownOpen(false)}
-                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200"
+                          onClick={(e) => {
+                            setIsBusinessDropdownClosing(true);
+                            setTimeout(() => {
+                              setIsBusinessDropdownOpen(false);
+                              setIsBusinessDropdownClosing(false);
+                            }, 300);
+                          }}
+                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200 min-h-[44px] flex items-center"
+                          style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                         >
-                          <div className="flex items-center justify-between">
-                            <div className="flex-1">
-                              <div className="font-urbanist font-600 text-charcoal group-hover:text-coral text-sm transition-colors">Claim Business</div>
-                              <div className="text-xs text-charcoal/60 group-hover:text-coral/80 mt-0.5 transition-colors">Add your business to our platform</div>
-                            </div>
-                            <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-coral transition-colors" />
+                          <div className="flex-1">
+                            <div className="font-600 text-charcoal group-hover:text-coral text-sm transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Claim Business</div>
+                            <div className="text-xs text-charcoal/60 group-hover:text-coral/80 mt-0.5 transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Add your business to our platform</div>
                           </div>
-                        </OptimizedLink>
+                        </Link>
 
-                        <OptimizedLink
+                        <Link
                           href="/manage-business"
-                          onClick={() => setIsBusinessDropdownOpen(false)}
-                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200"
+                          onClick={(e) => {
+                            setIsBusinessDropdownClosing(true);
+                            setTimeout(() => {
+                              setIsBusinessDropdownOpen(false);
+                              setIsBusinessDropdownClosing(false);
+                            }, 300);
+                          }}
+                          className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200 min-h-[44px] flex items-center"
+                          style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                         >
-                          <div className="flex items-center justify-between">
-                            <div className="flex-1">
-                              <div className="font-urbanist font-600 text-charcoal group-hover:text-coral text-sm transition-colors">Manage Business</div>
-                              <div className="text-xs text-charcoal/60 group-hover:text-coral/80 mt-0.5 transition-colors">Update your business listing</div>
-                            </div>
-                            <ChevronDown className="w-4 h-4 text-charcoal/40 rotate-[-90deg] group-hover:text-coral transition-colors" />
+                          <div className="flex-1">
+                            <div className="font-600 text-charcoal group-hover:text-coral text-sm transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Manage Business</div>
+                            <div className="text-xs text-charcoal/60 group-hover:text-coral/80 mt-0.5 transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Update your business listing</div>
                           </div>
-                        </OptimizedLink>
+                        </Link>
                       </div>
                     </div>,
                     document.body
@@ -339,7 +371,7 @@ export default function Header({
               {/* Search Toggle (manual close/open) */}
               <button
                 onClick={() => setShowSearchBar((p) => !p)}
-                className="group w-6 h-6 rounded-full flex items-center justify-center text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative overflow-hidden"
+                className="group w-11 h-11 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative overflow-hidden min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0"
                 aria-label="Toggle search"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -350,7 +382,7 @@ export default function Header({
               {/* Mobile menu toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden w-6 h-6 rounded-full flex items-center justify-center hover:bg-sage/10 transition-colors"
+                className="md:hidden w-11 h-11 rounded-full flex items-center justify-center hover:bg-sage/10 transition-colors min-h-[44px] min-w-[44px]"
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
@@ -367,7 +399,7 @@ export default function Header({
               {/* Profile */}
               <OptimizedLink
                 href="/profile"
-                className="group hidden md:flex w-6 h-6 rounded-full items-center justify-center text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative overflow-hidden"
+                className="group hidden md:flex w-6 h-6 rounded-full items-center justify-center text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative overflow-hidden md:min-h-[24px] md:min-w-[24px]"
                 aria-label="Profile"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -426,7 +458,7 @@ export default function Header({
             <Logo variant="mobile" />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] hover:bg-sage/10 group ${isHomeVariant ? 'text-charcoal' : 'text-charcoal/90'}`}
+              className={`w-11 h-11 rounded-full flex flex-col items-center justify-center gap-[5px] hover:bg-sage/10 group min-h-[44px] min-w-[44px] ${isHomeVariant ? 'text-charcoal' : 'text-charcoal/90'}`}
               aria-label="Close menu"
             >
               <span className="w-5 h-[2px] bg-charcoal/90 rounded-full group-hover:bg-sage" />
@@ -441,7 +473,7 @@ export default function Header({
                 key={route}
                 href={`/${route}`}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-3 rounded-xl text-sm font-bold text-charcoal hover:text-charcoal hover:bg-sage/5 transition-colors relative"
+                className="px-4 py-3 rounded-xl text-sm font-bold text-charcoal hover:text-charcoal hover:bg-sage/5 transition-colors relative min-h-[44px] flex items-center"
                 style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
               >
                 <span className="flex items-center justify-between">
@@ -468,7 +500,7 @@ export default function Header({
             <OptimizedLink
               href="/business/login"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 transition-all duration-200"
+              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 transition-all duration-200 min-h-[44px] flex items-center"
               style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
             >
               Business Login
@@ -477,7 +509,7 @@ export default function Header({
             <OptimizedLink
               href="/claim-business"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 transition-all duration-200"
+              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 transition-all duration-200 min-h-[44px] flex items-center"
               style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
             >
               Claim Business
@@ -486,7 +518,7 @@ export default function Header({
             <OptimizedLink
               href="/manage-business"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 transition-all duration-200"
+              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 transition-all duration-200 min-h-[44px] flex items-center"
               style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
             >
               Manage Business
@@ -496,7 +528,7 @@ export default function Header({
             <OptimizedLink
               href="/profile"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 flex items-center gap-3 transition-all duration-200"
+              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 flex items-center gap-3 transition-all duration-200 min-h-[44px]"
               style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
             >
               Profile

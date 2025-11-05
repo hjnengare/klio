@@ -16,17 +16,17 @@ import {
     Music,
     MapPin,
     Clock,
-    Phone,
-    Mail,
     Heart,
     Share2,
     X,
     ChevronUp,
+    Info,
 } from "react-feather";
 import { ImageCarousel } from "../../components/Business/ImageCarousel";
 import { PremiumReviewCard } from "../../components/Business/PremiumReviewCard";
 import { getCategoryPng, isPngIcon } from "../../utils/categoryToPngMapping";
 import Footer from "../../components/Footer/Footer";
+import BusinessInfoModal, { BusinessInfo } from "../../components/BusinessInfo/BusinessInfoModal";
 
 // CSS animations to replace framer-motion
 const animations = `
@@ -71,94 +71,6 @@ const animations = `
   .animate-delay-300 { animation-delay: 0.3s; opacity: 0; }
 `;
 
-// Helper component for business profile image with fallback
-function BusinessProfileImage({ business }: { business: { id: string; name: string; category?: string; image?: string; uploaded_image?: string; uploadedImage?: string; image_url?: string } }) {
-    const [imgError, setImgError] = useState(false);
-    const [usingFallback, setUsingFallback] = useState(false);
-
-    // Image fallback logic with edge case handling
-    const getDisplayImage = useMemo(() => {
-        // Priority 1: Check for uploaded business image (not a PNG icon)
-        const uploadedImage = business.uploaded_image || business.uploadedImage;
-        if (uploadedImage &&
-            typeof uploadedImage === 'string' &&
-            uploadedImage.trim() !== '' &&
-            !isPngIcon(uploadedImage) &&
-            !uploadedImage.includes('/png/')) {
-            return { image: uploadedImage, isPng: false };
-        }
-
-        // Priority 2: Check image_url (API compatibility)
-        if (business.image_url &&
-            typeof business.image_url === 'string' &&
-            business.image_url.trim() !== '' &&
-            !isPngIcon(business.image_url)) {
-            return { image: business.image_url, isPng: false };
-        }
-
-        // Priority 3: Check image field (if not a PNG)
-        if (business.image &&
-            typeof business.image === 'string' &&
-            business.image.trim() !== '' &&
-            !isPngIcon(business.image)) {
-            return { image: business.image, isPng: false };
-        }
-
-        // Priority 4: Fallback to PNG based on category
-        const categoryPng = getCategoryPng(business.category);
-        return { image: categoryPng, isPng: true };
-    }, [business]);
-
-    const displayImage = getDisplayImage.image;
-    const isImagePng = getDisplayImage.isPng;
-
-    // Handle image error - fallback to PNG if uploaded image fails
-    const handleImageError = () => {
-        if (!usingFallback && !isImagePng) {
-            setUsingFallback(true);
-            setImgError(false);
-        } else {
-            setImgError(true);
-        }
-    };
-
-    return (
-        <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-sage/20 relative">
-            {!imgError && displayImage ? (
-                isImagePng || displayImage.includes('/png/') || displayImage.endsWith('.png') || usingFallback ? (
-                    // Display PNG files as icons
-                    <div className="w-full h-full flex items-center justify-center bg-off-white">
-                        <Image
-                            src={usingFallback ? getCategoryPng(business.category) : displayImage}
-                            alt={`${business.name} profile`}
-                            width={40}
-                            height={40}
-                            className="w-8 h-8 object-contain"
-                            unoptimized
-                            onError={handleImageError}
-                        />
-                    </div>
-                ) : (
-                    // Regular full image for uploaded business images
-                    <Image
-                        src={displayImage}
-                        alt={`${business.name} profile`}
-                        width={40}
-                        height={40}
-                        className="w-full h-full object-cover"
-                        unoptimized
-                        onError={handleImageError}
-                    />
-                )
-            ) : (
-                // Final fallback
-                <div className="w-full h-full flex items-center justify-center bg-white">
-                    <Briefcase className="w-5 h-5 text-sage" />
-                </div>
-            )}
-        </div>
-    );
-}
 
 export default function BusinessProfilePage() {
     const params = useParams();
@@ -167,6 +79,8 @@ export default function BusinessProfilePage() {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [modalPosition, setModalPosition] = useState({ top: 0, right: 0 });
     const [showScrollTop, setShowScrollTop] = useState(false);
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+    const infoButtonRef = useRef<HTMLButtonElement>(null);
 
     // Calculate modal position based on button position
     useEffect(() => {
@@ -207,15 +121,20 @@ export default function BusinessProfilePage() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    // Handle ESC key to close modal
+    // Handle ESC key to close modals
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape' && showSpecialsModal) {
-                setShowSpecialsModal(false);
+            if (e.key === 'Escape') {
+                if (showSpecialsModal) {
+                    setShowSpecialsModal(false);
+                }
+                if (isInfoModalOpen) {
+                    setIsInfoModalOpen(false);
+                }
             }
         };
 
-        if (showSpecialsModal) {
+        if (showSpecialsModal || isInfoModalOpen) {
             document.addEventListener('keydown', handleEscape);
             // Prevent body scroll when modal is open
             document.body.style.overflow = 'hidden';
@@ -225,14 +144,22 @@ export default function BusinessProfilePage() {
             document.removeEventListener('keydown', handleEscape);
             document.body.style.overflow = 'unset';
         };
-    }, [showSpecialsModal]);
+    }, [showSpecialsModal, isInfoModalOpen]);
 
     // Mock data (replace with API in production)
     const business = useMemo(() => {
         return {
             id: businessId || "demo",
             name: "Mama's Kitchen",
+            description: "A family-owned restaurant serving authentic Italian cuisine with a modern twist. We've been serving the community for over 20 years, specializing in wood-fired pizzas, fresh pasta, and traditional Italian dishes made with locally sourced ingredients.",
             category: "Restaurant", // Add category for PNG fallback
+            location: "Downtown, San Francisco, CA",
+            address: "123 Main Street, San Francisco, CA 94102",
+            phone: "+1 (415) 555-0123",
+            email: "info@mamaskitchen.com",
+            website: "www.mamaskitchen.com",
+            price_range: "$$" as const,
+            verified: true,
             rating: 4.8,
             image: "/images/product-01.jpg",
             images: [
@@ -246,8 +173,8 @@ export default function BusinessProfilePage() {
             punctuality: 89,
             friendliness: 92,
             specials: [
-                { id: 1, name: "2 for 1 Pizza", description: "Every day", icon: "pizza" },
-                { id: 2, name: "Jazz Night", description: "Mondays", icon: "musical-notes" },
+                { id: 1, name: "2 for 1 Pizza", description: "Every day", icon: "pizza", eventId: "special-1", type: "special" as const },
+                { id: 2, name: "Jazz Night", description: "Mondays", icon: "musical-notes", eventId: "event-3", type: "event" as const },
             ],
             reviews: [
                 {
@@ -358,8 +285,22 @@ export default function BusinessProfilePage() {
                                     <span className="hidden lg:inline">Manage Business</span>
                                 </Link>
 
-                                {/* Profile Picture Placeholder */}
-                                <BusinessProfileImage business={business} />
+                                {/* Info Button */}
+                                <button
+                                    ref={infoButtonRef}
+                                    onClick={() => {
+                                        if (isInfoModalOpen) {
+                                            setIsInfoModalOpen(false);
+                                        } else {
+                                            setIsInfoModalOpen(true);
+                                        }
+                                    }}
+                                    className="w-10 h-10 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 min-h-[44px] min-w-[44px]"
+                                    style={{ animation: 'gentlePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}
+                                    aria-label="View business information"
+                                >
+                                    <Info className="w-5 h-5 text-white" strokeWidth={2.5} />
+                                </button>
                             </div>
                         </nav>
                     </div>
@@ -377,7 +318,7 @@ export default function BusinessProfilePage() {
 
                                         {/* PRIORITY 1: Hero Carousel - Full Width at Top */}
                                         <article className="w-full sm:mx-0 flex items-center justify-center" aria-labelledby="photos-heading">
-                                            <div className="bg-card-bg backdrop-blur-xl border-0 sm:border border-white/60 rounded-none sm:rounded-[20px] shadow-none sm:shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] relative overflow-hidden animate-fade-in-up mx-auto w-full">
+                                            <div className="bg-card-bg backdrop-blur-xl border-0 sm:border border-white/60 rounded-none sm:rounded-[20px] shadow-none sm:shadow-lg relative overflow-hidden animate-fade-in-up mx-auto w-full">
                                                
                                                 <div className="relative z-10">
                                                     <ImageCarousel
@@ -536,7 +477,7 @@ export default function BusinessProfilePage() {
                         aria-labelledby="specials-modal-heading"
                     >
                         <div
-                            className="bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] p-6 relative overflow-hidden w-[280px] sm:w-[300px] lg:w-[320px] pointer-events-auto animate-fade-in-scale"
+                            className="bg-off-white backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-6 relative overflow-hidden w-[280px] sm:w-[300px] lg:w-[320px] pointer-events-auto animate-fade-in-scale"
                         >
                             {/* Decorative background element */}
                                                     <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-lg" aria-hidden="true" />
@@ -569,20 +510,28 @@ export default function BusinessProfilePage() {
                                 <ul className="grid grid-cols-1 gap-3 list-none max-h-[60vh] overflow-y-auto custom-scroll pr-2">
                                                             {business.specials.map((special) => {
                                                                 const Icon = special.icon === "pizza" ? Coffee : Music;
+                                                                const eventPath = special.type === "event" 
+                                                                    ? `/event/${special.eventId}` 
+                                                                    : `/special/${special.eventId}`;
+                                                                
                                                                 return (
                                                                     <li
                                                                         key={special.id}
-                                                                        className="bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm rounded-[10px] p-3 border border-sage/10 focus-within:ring-2 focus-within:ring-coral/20 focus-within:border-coral/30 transition-all duration-200"
+                                                                        className="bg-gradient-to-br from-white/80 to-white/60 hover:from-white/90 hover:to-white/70 backdrop-blur-sm rounded-[10px] p-3 border border-sage/10 hover:border-coral/30 focus-within:ring-2 focus-within:ring-coral/20 focus-within:border-coral/30 transition-all duration-200 cursor-pointer"
                                                                     >
-                                                                        <div className="flex items-center gap-3">
+                                                                        <Link
+                                                                            href={eventPath}
+                                                                            onClick={() => setShowSpecialsModal(false)}
+                                                                            className="flex items-center gap-3"
+                                                                        >
                                                                             <div className="w-10 h-10 grid place-items-center bg-gradient-to-br from-sage/20 to-sage/10 rounded-[10px]" aria-hidden="true">
                                                                                 <Icon className="w-4 h-4 text-sage" />
                                                                             </div>
-                                                                            <div>
+                                                                            <div className="flex-1">
                                                                                 <h4 className="text-sm font-600 text-charcoal mb-0.5 font-urbanist">{special.name}</h4>
                                                                                 <p className="text-xs text-charcoal/70">{special.description}</p>
                                                                             </div>
-                                                                        </div>
+                                                                        </Link>
                                                                     </li>
                                                                 );
                                                             })}
@@ -603,6 +552,25 @@ export default function BusinessProfilePage() {
                     <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
             )}
+
+            {/* Business Info Modal */}
+            <BusinessInfoModal
+                businessInfo={{
+                    name: business.name,
+                    description: business.description,
+                    category: business.category,
+                    location: business.location,
+                    address: business.address,
+                    phone: business.phone,
+                    email: business.email,
+                    website: business.website,
+                    price_range: business.price_range,
+                    verified: business.verified,
+                }}
+                buttonRef={infoButtonRef}
+                isOpen={isInfoModalOpen}
+                onClose={() => setIsInfoModalOpen(false)}
+            />
 
             <Footer />
         </>

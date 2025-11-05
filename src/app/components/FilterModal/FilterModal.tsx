@@ -165,30 +165,41 @@ export default function FilterModal({
         aria-modal="true"
         tabIndex={-1}
         className={`pointer-events-auto
-                    rounded-2xl overflow-hidden
-                    bg-white/95 backdrop-blur-xl
-                    border border-white/60 shadow-xl
+                    rounded-none sm:rounded-2xl overflow-hidden
+                    bg-off-white
+                    border border-white/30 shadow-lg
                     transition-all duration-200
                     ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"}`}
         style={{
           position: "fixed",
-          top: style.top,
-          left: style.left,
-          width: style.width || 360,
-          maxWidth: "calc(100vw - 16px)",
-          maxHeight: "min(70vh, 560px)",
+          ...(typeof window !== 'undefined' && window.innerWidth < 640
+            ? {
+                top: 0,
+                left: 0,
+                width: '100vw',
+                height: '100vh',
+                maxWidth: '100vw',
+                maxHeight: '100vh',
+              }
+            : {
+                top: style.top,
+                left: style.left,
+                width: style.width || 360,
+                maxWidth: "calc(100vw - 16px)",
+                maxHeight: "min(70vh, 560px)",
+              }),
           outline: "none",
         }}
       >
         {/* header */}
-        <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 backdrop-blur-xl supports-[backdrop-filter]:bg-transparent shadow-sm transition-all duration-300 before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.75),rgba(255,255,255,0.60))] before:backdrop-blur-xl after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:bg-[radial-gradient(600px_350px_at_5%_0%,rgba(232,215,146,0.15),transparent_65%),radial-gradient(550px_320px_at_95%_0%,rgba(209,173,219,0.12),transparent_65%)]">
+        <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-white/30 bg-off-white shadow-sm transition-all duration-300">
           <div className="relative z-10 flex items-center gap-2">
             <Sliders className="w-4 h-4 text-sage" />
             <h2 className="text-xs font-semibold text-charcoal">Filters</h2>
           </div>
           <button
             onClick={onClose}
-            className="relative z-10 w-9 h-9 rounded-full border border-charcoal/10 bg-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="relative z-10 w-9 h-9 rounded-full border border-charcoal/10 bg-off-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
             aria-label="Close filters"
           >
             <X className="w-4 h-4" />
@@ -198,7 +209,9 @@ export default function FilterModal({
         {/* body */}
         <div
           className="px-5 sm:px-6 py-4 space-y-4 overflow-y-auto"
-          style={{ maxHeight: "calc(70vh - 140px)" }}
+          style={{ 
+            maxHeight: "calc(100vh - 140px)",
+          }}
         >
           {/* Category */}
           <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.05s]">
@@ -304,10 +317,10 @@ export default function FilterModal({
         </div>
 
         {/* footer */}
-        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-white/60 bg-white/80 backdrop-blur-sm">
+        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm">
             <button
             onClick={handleClearAll}
-            className="flex-1 rounded-full bg-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
           >
             Clear
           </button>

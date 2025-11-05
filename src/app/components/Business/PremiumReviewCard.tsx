@@ -30,7 +30,7 @@ export function PremiumReviewCard({
     const [imageError, setImageError] = useState(false);
 
     return (
-        <div className="relative overflow-hidden rounded-xl border border-sage/10 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md p-4">
+        <div className="relative overflow-hidden rounded-2xl border border-white/30 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md p-4 shadow-lg">
             {/* subtle glows */}
             <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-lg" />
             <span className="pointer-events-none absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-coral/10 blur-lg" />

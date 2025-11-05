@@ -171,7 +171,6 @@ export default function ImageUpload({
           ) : (
             <>
               <p className="font-urbanist text-base font-600 text-charcoal mb-2">
-                <ImageIcon className="w-8 h-8 text-charcoal block mx-auto mb-2" />
                 <span className="block">{dragActive ? 'Drop images here' : 'Add photos to your review'}</span>
               </p>
               <p className="font-urbanist text-xs font-600 text-charcoal/60">

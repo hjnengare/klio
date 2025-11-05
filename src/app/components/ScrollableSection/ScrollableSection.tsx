@@ -112,13 +112,13 @@ export default function ScrollableSection({
                 scroll-arrow scroll-arrow-left
                 absolute left-2 top-1/2 -translate-y-1/2 z-10
                 w-10 h-10 sm:w-12 sm:h-12
-                bg-off-white/90 backdrop-blur-sm
+                bg-card-bg/90 backdrop-blur-sm
                 rounded-full shadow-lg 
                 flex items-center justify-center
                 transition-all duration-300 ease-out
-                hover:bg-card-bg hover:shadow-xl hover:border-card-bg/40
+                hover:bg-navbar-bg/90 hover:shadow-xl
                 active:scale-95
-                ${arrowColor}
+                text-charcoal hover:text-white
               `}
               aria-label="Scroll left"
             >
@@ -144,13 +144,13 @@ export default function ScrollableSection({
                 scroll-arrow scroll-arrow-right
                 absolute right-2 top-1/2 -translate-y-1/2 z-10
                 w-10 h-10 sm:w-12 sm:h-12
-                bg-off-white/90 backdrop-blur-sm
+                bg-card-bg/90 backdrop-blur-sm
                 rounded-full shadow-lg 
                 flex items-center justify-center
                 transition-all duration-300 ease-out
-                hover:bg-card-bg  hover:shadow-xl 
+                hover:bg-navbar-bg/90 hover:shadow-xl
                 active:scale-95
-                ${arrowColor}
+                text-charcoal hover:text-white
               `}
               aria-label="Scroll right"
             >

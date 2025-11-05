@@ -83,18 +83,18 @@ export default function BusinessCarousel({ businessName, businessImages }: Busin
         {/* Navigation Arrows */}
         <button
           onClick={handlePrevImage}
-          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-charcoal/70 hover:bg-charcoal/90 backdrop-blur-sm flex items-center justify-center transition-all duration-200 z-10 group"
+          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-card-bg/90 hover:bg-navbar-bg/90 backdrop-blur-sm flex items-center justify-center transition-all duration-200 z-10 group text-charcoal hover:text-white"
           aria-label="Previous image"
         >
-          <ChevronLeft className="text-white group-hover:scale-110 transition-transform" size={22} />
+          <ChevronLeft className="group-hover:scale-110 transition-transform" size={22} />
         </button>
 
         <button
           onClick={handleNextImage}
-          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-charcoal/70 hover:bg-charcoal/90 backdrop-blur-sm flex items-center justify-center transition-all duration-200 z-10 group"
+          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-card-bg/90 hover:bg-navbar-bg/90 backdrop-blur-sm flex items-center justify-center transition-all duration-200 z-10 group text-charcoal hover:text-white"
           aria-label="Next image"
         >
-          <ChevronRight className="text-white group-hover:scale-110 transition-transform" size={22} />
+          <ChevronRight className="group-hover:scale-110 transition-transform" size={22} />
         </button>
 
         {/* Image Counter */}

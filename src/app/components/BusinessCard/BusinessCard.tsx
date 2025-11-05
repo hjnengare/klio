@@ -142,14 +142,14 @@ function BusinessCard({
       }}
     >
       <div
-        className="relative overflow-hidden group cursor-pointer w-full md:w-[340px] h-[640px] md:h-[520px] flex flex-col bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.06)] transition-all duration-500 ease-out hover:-translate-y-1"
+        className="relative overflow-hidden group cursor-pointer w-full md:w-[340px] h-[640px] md:h-[520px] flex flex-col bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
         style={{
           maxWidth: "540px"
         } as React.CSSProperties}
       >
         {/* MEDIA - Full bleed with premium overlay */}
         <div
-          className="relative overflow-hidden flex-[2.5] md:flex-[2.8] z-10 cursor-pointer"
+          className="relative overflow-hidden flex-[2.5] md:flex-[2.8] z-10 cursor-pointer bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md border border-sage/10"
           onClick={handleCardClick}
         >
           <div className="relative w-full h-full">

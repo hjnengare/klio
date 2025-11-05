@@ -16,6 +16,8 @@ interface SmallReview {
 
 interface ReviewSidebarProps {
   otherReviews: SmallReview[];
+  businessName?: string;
+  businessRating?: number;
 }
 
 const frostyPanel = `
@@ -32,12 +34,12 @@ export default function ReviewSidebar({ otherReviews }: ReviewSidebarProps) {
       <div className={`hidden lg:block`}>
         <div className={frostyPanel}>
           <div className="relative z-[1]">
-            <h3 className="text-sm font-bold text-charcoal font-urbanist px-3 pt-4 pb-3" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+            <h3 className="text-sm font-bold text-charcoal font-urbanist px-3 pt-4 pb-3 border-b border-white/30" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
               What others are saying
             </h3>
-            <div className="px-3 pb-4 space-y-2 xl:space-y-3 max-h-[600px] overflow-y-auto custom-scroll">
+            <div className="px-3 py-4 space-y-2 xl:space-y-3 max-h-[600px] overflow-y-auto custom-scroll">
               {otherReviews.map((r) => (
-                <div key={r.id} className="rounded-2xl border border-sage/10 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md p-3 relative overflow-hidden">
+                <div key={r.id} className="rounded-2xl border border-sage/10 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md px-3 py-6 relative overflow-hidden border border-white/30">
                   {/* subtle glows */}
                   <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-lg" />
                   <span className="pointer-events-none absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-coral/10 blur-lg" />

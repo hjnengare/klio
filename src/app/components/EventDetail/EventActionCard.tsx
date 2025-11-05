@@ -10,7 +10,7 @@ export default function EventActionCard() {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5, duration: 0.6 }}
-      className="bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] p-4 sticky top-24"
+      className="bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4 sticky top-24"
     >
       <h3 className="text-sm font-bold text-charcoal mb-3 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Join This Event</h3>
 

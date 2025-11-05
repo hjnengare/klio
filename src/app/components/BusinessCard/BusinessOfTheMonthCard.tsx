@@ -94,7 +94,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       }}
     >
       <div
-        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden group cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.06)] transition-all duration-500 ease-out hover:-translate-y-1"
+        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden group cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Media */}
@@ -238,9 +238,9 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
         {/* CONTENT */}
         <div className="px-4 pt-4 pb-6 relative flex-shrink-0 z-10">
           <div className="mb-2 cursor-pointer">
-            <h3 className="text-sm font-normal text-black group-hover:text-charcoal transition-colors duration-300 text-center truncate" style={{ 
+            <h3 className="text-sm font-bold text-charcoal group-hover:text-charcoal transition-colors duration-300 text-center truncate" style={{ 
               fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
-              fontWeight: 400,
+              fontWeight: 700,
               WebkitFontSmoothing: 'antialiased',
               MozOsxFontSmoothing: 'grayscale',
               textRendering: 'optimizeLegibility',

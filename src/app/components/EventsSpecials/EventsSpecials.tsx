@@ -55,8 +55,13 @@ export default function EventsSpecials({
         <ScrollableSection showArrows={true}>
           {/* Perfect symmetry with consistent card dimensions */}
           <div className="flex gap-2 sm:gap-3 pt-2">
-            {events.map((event) => (
-              <div key={event.id} className="list-none flex-shrink-0">
+            {events.map((event, index) => (
+              <div 
+                key={event.id} 
+                className={`list-none flex-shrink-0 w-[calc(100vw-5rem)] sm:w-auto ${
+                  index === 1 ? 'pointer-events-none sm:pointer-events-auto' : ''
+                }`}
+              >
                 <EventCard event={event} />
               </div>
             ))}
