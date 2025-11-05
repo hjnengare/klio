@@ -18,7 +18,7 @@ export default function TagSelector({ selectedTags, onTagToggle, availableTags }
             key={tag}
             onClick={() => onTagToggle(tag)}
             className={`
-              px-5 py-3 rounded-full border-2 transition-all duration-300 text-sm font-600 btn-target
+              px-5 py-3 rounded-full border-2 transition-all duration-300 text-sm font-400 btn-target
               ${selectedTags.includes(tag)
                 ? "bg-sage border-sage text-white shadow-lg"
                 : "bg-off-white backdrop-blur-sm border-sage/20 text-charcoal hover:border-sage hover:bg-sage/10"

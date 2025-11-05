@@ -122,7 +122,7 @@ export default function ImageUpload({
       {/* Upload Area */}
       <motion.div
         className={`
-          relative border-2 border-dashed rounded-xl p-6 transition-all duration-300 cursor-pointer
+          relative border-2 border-dashed rounded-xl px-6 py-6 md:py-4 transition-all duration-300 cursor-pointer
           ${dragActive
             ? 'border-sage bg-sage/10 scale-105'
             : 'border-sage/30 hover:border-sage/50'
@@ -171,9 +171,10 @@ export default function ImageUpload({
           ) : (
             <>
               <p className="font-urbanist text-base font-600 text-charcoal mb-2">
-                {dragActive ? 'Drop images here' : 'Add photos to your review'}
+                <ImageIcon className="w-8 h-8 text-charcoal block mx-auto mb-2" />
+                <span className="block">{dragActive ? 'Drop images here' : 'Add photos to your review'}</span>
               </p>
-              <p className="font-urbanist text-sm font-600 text-charcoal/60">
+              <p className="font-urbanist text-xs font-600 text-charcoal/60">
                 Drag & drop or click to select images
                 <br />
                 <span className="text-xs">

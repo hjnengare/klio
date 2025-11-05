@@ -25,14 +25,14 @@ export default function RatingSelector({ overallRating, onRatingChange }: Rating
             >
               <Star
                 size={32}
-                className={active ? "text-navbar-bg" : "text-gray-400"}
-                style={{ fill: active ? "currentColor" : "none" }}
+                className="text-coral"
+                style={{ fill: active ? "currentColor" : "none", stroke: "currentColor" }}
               />
             </button>
           );
         })}
       </div>
-      <p className="text-center text-sm font-600 text-charcoal/60">Tap to select rating</p>
+      <p className="text-center text-sm font-600 text-charcoal">Tap to select rating</p>
     </div>
   );
 }

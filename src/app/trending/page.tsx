@@ -65,7 +65,7 @@ export default function TrendingPage() {
       <section className="relative z-10 pt-16 sm:pt-20 pb-6 sm:pb-8 md:pb-12">
         <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Breadcrumb */}
-          <nav className="px-2 sm:px-4 pt-2 pb-1" aria-label="Breadcrumb">
+          <nav className="px-2 sm:px-4 pb-1" aria-label="Breadcrumb">
             <ol className="flex items-center gap-1 text-sm text-charcoal/60">
               <li>
                 <Link href="/home" className="hover:text-charcoal transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
@@ -76,16 +76,6 @@ export default function TrendingPage() {
               <li className="text-charcoal font-medium" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Trending Now</li>
             </ol>
           </nav>
-
-          {/* Main Headline */}
-          <h1 className="text-sm font-bold text-charcoal mb-1 text-center" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-            Trending Now
-          </h1>
-
-          {/* Sub-headline */}
-          <p className="text-xs text-charcoal/70 text-center max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
-            Discover what&apos;s popular and trending in your area right now
-          </p>
         </div>
       </section>
 
@@ -110,7 +100,7 @@ export default function TrendingPage() {
         {!loading && (
           <div className="px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="max-w-[1300px] mx-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-3">
                 {currentBusinesses.map((business) => (
                   <div key={business.id} className="animate-fade-in-up list-none">
                     <BusinessCard business={business} />
@@ -124,11 +114,11 @@ export default function TrendingPage() {
                   <button
                     onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
-                    className="w-10 h-10 rounded-full bg-navbar-bg border border-charcoal/20 flex items-center justify-center hover:bg-navbar-bg/80 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
+                    className="w-10 h-10 rounded-full bg-navbar-bg/90 border border-charcoal/20 flex items-center justify-center hover:bg-navbar-bg/80 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
                     aria-label="Previous page"
                     title="Previous"
                   >
-                    <ChevronLeft className="text-charcoal/70" size={20} />
+                    <ChevronLeft className="text-white" size={20} />
                   </button>
 
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -138,8 +128,8 @@ export default function TrendingPage() {
                       style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
                       className={`w-10 h-10 rounded-full bg-navbar-bg font-600 text-sm transition-all duration-200 ${
                         currentPage === page
-                          ? "bg-coral text-white shadow-lg"
-                          : "border border-charcoal/20 text-charcoal/70 hover:bg-navbar-bg/80"
+                          ? "bg-sage text-white shadow-lg"
+                          : "border border-charcoal/20 text-white hover:bg-navbar-bg/80"
                       }`}
                       aria-current={currentPage === page ? "page" : undefined}
                     >
@@ -154,7 +144,7 @@ export default function TrendingPage() {
                     aria-label="Next page"
                     title="Next"
                   >
-                    <ChevronRight className="text-charcoal/70" size={20} />
+                    <ChevronRight className="text-white" size={20} />
                   </button>
                 </div>
               )}

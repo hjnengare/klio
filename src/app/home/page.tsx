@@ -7,7 +7,6 @@
 
 import { memo } from "react";
 import dynamic from "next/dynamic";
-import Header from "../components/Header/Header";
 import PromoBar from "../components/PromoBar/PromoBar";
 import HeroCarousel from "../components/Hero/HeroCarousel";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
@@ -59,8 +58,6 @@ export default function Home() {
     <div className="min-h-dvh bg-off-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
       <div className="relative">
         <PromoBar />
-
-        <Header showSearch={true} variant="frosty" />
 
         <ToastContainer
           notifications={notifications}

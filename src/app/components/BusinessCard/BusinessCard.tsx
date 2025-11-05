@@ -302,7 +302,7 @@ function BusinessCard({
                   </h3>
                 </div>
                 {/* Category and Location - Combined with bullet separator */}
-                <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 cursor-pointer" style={{ 
+                <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 cursor-pointer text-nowrap overflow-hidden text-ellipsis whitespace-nowrap" style={{ 
             fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
             fontWeight: 600,
             WebkitFontSmoothing: 'antialiased',

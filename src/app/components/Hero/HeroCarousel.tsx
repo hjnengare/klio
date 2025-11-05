@@ -3,6 +3,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import Header from "../Header/Header";
 import { useUserInterests } from "../../hooks/useUserInterests";
 
 interface HeroSlide {
@@ -295,9 +296,9 @@ export default function HeroCarousel({ userInterests: propInterests }: HeroCarou
     // Reset progress when slide changes
     setProgress(0);
 
-    // Animate progress from 0 to 100 over 5 seconds
+    // Animate progress from 0 to 100 over 8 seconds (more natural speed)
     const interval = 50; // Update every 50ms for smooth animation
-    const totalDuration = 5000; // 5 seconds per slide
+    const totalDuration = 8000; // 8 seconds per slide for a more natural pace
     const steps = totalDuration / interval;
     let currentStep = 0;
 
@@ -398,7 +399,8 @@ export default function HeroCarousel({ userInterests: propInterests }: HeroCarou
 
   return (
     <>
-      <div className="relative w-full px-0 mt-6">
+      <div className="relative w-full px-0 top-0">
+        <Header showSearch={true} variant="frosty" />
         <section
           ref={containerRef as React.RefObject<HTMLElement>}
           className="relative min-h-[80vh] sm:min-h-[80vh] md:min-h-[90vh] w-full overflow-hidden outline-none rounded-none"

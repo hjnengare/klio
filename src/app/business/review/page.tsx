@@ -1,22 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
+import { Star } from "react-feather";
 import ReviewHeader from "../../components/ReviewForm/ReviewHeader";
 import ReviewForm from "../../components/ReviewForm/ReviewForm";
 import ReviewSidebar from "../../components/ReviewForm/ReviewSidebar";
+import BusinessCarousel from "../../components/ReviewForm/BusinessCarousel";
 import ReviewStyles from "../../components/ReviewForm/ReviewStyles";
+import Footer from "../../components/Footer/Footer";
 import { useReviewForm } from "../../hooks/useReviewForm";
-import PageLoad from "../../components/Animations/PageLoad";
-
-const FloatingElements = dynamic(() => import("../../components/Animations/FloatingElements"), {
-  ssr: false,
-});
-
-const Footer = dynamic(() => import("../../components/Footer/Footer"), {
-  loading: () => null,
-  ssr: false,
-});
 
 
 type SmallReview = {
@@ -120,7 +112,41 @@ export default function WriteReviewPage() {
 
   return (
     <>
-      {/* SF Pro + utilities */}
+      {/* CSS animations */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in-up {
+          animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .animate-fade-in {
+          animation: fadeIn 0.4s ease-out forwards;
+        }
+        
+        .animate-slide-in-top {
+          animation: slideInFromTop 0.5s ease-out forwards;
+        }
+        
+        .animate-delay-100 { animation-delay: 0.1s; opacity: 0; }
+        .animate-delay-200 { animation-delay: 0.2s; opacity: 0; }
+        .animate-delay-300 { animation-delay: 0.3s; opacity: 0; }
+      `}} />
+      
+      {/* SF Pro Font Setup */}
       <style jsx global>{`
         .font-urbanist {
           font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
@@ -128,62 +154,76 @@ export default function WriteReviewPage() {
             sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
-        }
-        html, body {
-          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-            "SF Pro Display", system-ui, sans-serif;
+          font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
         }
       `}</style>
       <ReviewStyles />
 
-      <div className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist">
-        {/* Subtle background tint */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] via-transparent to-black/[0.02]" />
-        </div>
+      <div
+        className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist"
+        style={{
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        }}
+      >
+        <ReviewHeader />
 
-        {/* Floating elements (unchanged) */}
-        <FloatingElements />
+        <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
+          <div className="py-1 pt-20">
+            <main className="relative font-sf-pro pt-4 sm:pt-6" id="main-content" role="main" aria-label="Write review content">
+              <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 md:px-6 relative z-10">
+                <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                      {/* MAIN: Form */}
+                      <div className="lg:col-span-8 animate-fade-in-up">
+                        {/* Business Info and Carousel - visible on mobile only */}
+                        <div className="md:hidden space-y-4 mb-6">
+                          <div className="text-center px-4">
+                            <h2 className="text-sm font-bold text-charcoal mb-2">{businessName}</h2>
+                            <div className="flex items-center justify-center space-x-2">
+                              <div className="flex items-center space-x-1 bg-gradient-to-br from-amber-400 to-amber-600 px-3 py-1.5 rounded-full">
+                                <Star size={16} className="text-white" style={{ fill: "currentColor" }} />
+                                <span className="text-sm font-600 text-white">
+                                  {businessRating.toFixed(1)}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <BusinessCarousel businessName={businessName} businessImages={businessImages} />
+                        </div>
+                        <ReviewForm
+                          businessName={businessName}
+                          businessRating={businessRating}
+                          businessImages={businessImages}
+                          overallRating={overallRating}
+                          selectedTags={selectedTags}
+                          reviewText={reviewText}
+                          reviewTitle={reviewTitle}
+                          selectedImages={selectedImages}
+                          isFormValid={isFormValid}
+                          availableTags={quickTags}
+                          onRatingChange={handleStarClick}
+                          onTagToggle={handleTagToggle}
+                          onTitleChange={setReviewTitle}
+                          onTextChange={setReviewText}
+                          onImagesChange={setSelectedImages}
+                          onSubmit={handleSubmitReview}
+                        />
+                      </div>
 
-        <PageLoad variant="fade">
-          <ReviewHeader />
-        </PageLoad>
-
-        {/* ---------------- Main content ---------------- */}
-        <div className="relative z-10 bg-off-white pt-20">
-          <div className="w-full max-w-7xl mx-auto px-0 md:px-4 py-4 md:py-6 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              {/* MAIN: Form */}
-              <PageLoad variant="slide" delay={1} className="lg:col-span-8 py-4">
-                <ReviewForm
-                  businessName={businessName}
-                  businessRating={businessRating}
-                  businessImages={businessImages}
-                  overallRating={overallRating}
-                  selectedTags={selectedTags}
-                  reviewText={reviewText}
-                  reviewTitle={reviewTitle}
-                  selectedImages={selectedImages}
-                  isFormValid={isFormValid}
-                  availableTags={quickTags}
-                  onRatingChange={handleStarClick}
-                  onTagToggle={handleTagToggle}
-                  onTitleChange={setReviewTitle}
-                  onTextChange={setReviewText}
-                  onImagesChange={setSelectedImages}
-                  onSubmit={handleSubmitReview}
-                />
-              </PageLoad>
-
-              {/* ------------ SIDEBAR ------------ */}
-              <PageLoad variant="slide" delay={2} className="lg:col-span-4">
-                <aside>
-                  <ReviewSidebar otherReviews={otherReviews} />
-                </aside>
-              </PageLoad>
-            </div>
+                      {/* SIDEBAR */}
+                      <aside className="lg:col-span-4 animate-fade-in-up animate-delay-200">
+                        <ReviewSidebar otherReviews={otherReviews} />
+                      </aside>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );

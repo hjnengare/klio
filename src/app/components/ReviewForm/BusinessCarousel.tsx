@@ -44,9 +44,9 @@ export default function BusinessCarousel({ businessName, businessImages }: Busin
   };
 
   return (
-    <div className="mb-6 md:mb-8 mx-2 relative">
+    <div className="mb-6 md:mb-8 mx-2 md:mx-0 relative">
       <div
-        className="relative overflow-hidden rounded-none md:rounded-lg"
+        className="relative overflow-hidden rounded-2xl md:rounded-lg bg-card-bg"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}

@@ -9,6 +9,7 @@ import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 import LeaderboardHeader from "../components/Leaderboard/LeaderboardHeader";
 import LeaderboardPodium from "../components/Leaderboard/LeaderboardPodium";
 import LeaderboardList from "../components/Leaderboard/LeaderboardList";
+import LeaderboardTitle from "../components/Leaderboard/LeaderboardTitle";
 import BusinessOfMonthLeaderboard from "../components/Leaderboard/BusinessOfMonthLeaderboard";
 import { Tabs } from "@/components/atoms/Tabs";
 import { BUSINESSES_OF_THE_MONTH } from "../data/communityHighlightsData";
@@ -78,7 +79,7 @@ function LeaderboardPage() {
             <section className="relative z-10 pb-6 sm:pb-8 md:pb-12">
               <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6">
                 {/* Breadcrumb */}
-                <nav className="px-2 sm:px-4 pt-2 pb-1" aria-label="Breadcrumb">
+                <nav className="px-2 sm:px-4 pb-1" aria-label="Breadcrumb">
                   <ol className="flex items-center gap-1 text-sm text-charcoal/60">
                     <li>
                       <Link href="/home" className="hover:text-charcoal transition-colors font-urbanist">
@@ -90,15 +91,7 @@ function LeaderboardPage() {
                   </ol>
                 </nav>
 
-                {/* Main Headline */}
-                <h1 className="text-sm font-bold text-charcoal mb-1 text-center font-urbanist">
-                  Community Highlights
-                </h1>
-
-                {/* Sub-headline */}
-                <p className="text-xs text-charcoal/70 text-center max-w-2xl mx-auto font-urbanist leading-relaxed">
-                  See top reviewers, featured businesses, and community favorites
-                </p>
+               <LeaderboardTitle />
               </div>
             </section>
 

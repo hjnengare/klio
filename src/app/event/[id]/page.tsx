@@ -90,8 +90,8 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
           <div className="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
             <Calendar className="w-7 h-7 text-charcoal" />
           </div>
-          <h1 className="text-2xl font-bold text-charcoal mb-4" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>Event Not Found</h1>
-          <Link href="/events-specials" className="px-6 py-2.5 bg-charcoal text-white rounded-full text-sm font-600 hover:bg-charcoal/90 transition-all duration-300 hover:shadow-lg inline-block" >
+          <h1 className="text-2xl font-bold text-charcoal mb-4 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Event Not Found</h1>
+          <Link href="/events-specials" className="px-6 py-2.5 bg-charcoal text-white rounded-full text-sm font-600 hover:bg-charcoal/90 transition-all duration-300 hover:shadow-lg inline-block font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
             Back to Events & Specials
           </Link>
         </div>

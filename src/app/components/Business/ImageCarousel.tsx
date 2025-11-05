@@ -62,16 +62,16 @@ export function ImageCarousel({
     }, [isModalOpen, handleKeyDown]);
 
     return (
-        <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-[10px] border border-sage/10 bg-off-white">
+        <div className="relative w-full mx-auto overflow-visible sm:overflow-hidden border-0 sm:border border-sage/10 bg-card-bg rounded-2xl sm:rounded-none">
             {/* Slides */}
             <div
-                className="relative aspect-[16/9] overflow-hidden cursor-pointer group"
+                className="relative h-[80vh] sm:h-screen overflow-visible sm:overflow-hidden cursor-pointer group bg-card-bg flex items-center justify-center rounded-2xl"
                 onClick={openModal}
             >
                 {images.map((src, i) => (
                     <div
                         key={src}
-                        className={`absolute inset-0 transition-opacity duration-300 ${
+                        className={`absolute inset-0 transition-opacity duration-300 bg-card-bg rounded-2xl ${
                             i === index ? 'opacity-100' : 'opacity-0'
                         }`}
                     >
@@ -79,7 +79,7 @@ export function ImageCarousel({
                             src={src}
                             alt={`${altBase} image ${i + 1}`}
                             fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            className="object-cover sm:object-contain sm:scale-110 transition-transform duration-300 group-hover:scale-105 sm:group-hover:scale-115"
                             sizes="(max-width: 768px) 100vw, 768px"
                             priority={i === 0}
                             loading={i === 0 ? "eager" : "lazy"}
@@ -99,16 +99,13 @@ export function ImageCarousel({
 
             {/* Caption overlay: rating + metrics */}
             <div className="pointer-events-none absolute left-0 right-0 bottom-0 p-3 sm:p-4">
-                <div className="mx-auto max-w-none">
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 rounded-[12px] border border-white/40 bg-off-white backdrop-blur-md px-3 sm:px-4 py-2 shadow-sm">
+                <div className="mx-auto max-w-md">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 rounded-[12px] bg-card-bg/90 px-3 sm:px-4 py-2 shadow-sm mx-auto text-center justify-center">
                         {/* Rating badge */}
                         <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 px-3 py-1 text-white text-sm font-semibold shadow">
                             <Star className="h-4 w-4" />
                             {rating.toFixed(1)}
                         </span>
-
-                        {/* Divider dot */}
-                        <span className="hidden sm:inline text-charcoal/30">•</span>
 
                         {/* Metrics chips */}
                         <div className="flex flex-wrap items-center gap-2">
@@ -116,8 +113,8 @@ export function ImageCarousel({
                                 <span
                                     key={m.label}
                                     className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs ${m.color === "sage"
-                                            ? "border-sage/25 text-sage bg-sage/10"
-                                            : "border-coral/25 text-coral bg-coral/10"
+                                            ? "border-coral/25 text-charcoal font-600 bg-sage/10"
+                                            : "border-coral/25 text-coral font-600 bg-coral/10"
                                         }`}
                                 >
                                     {m.label}: {m.value}%
@@ -204,7 +201,7 @@ export function ImageCarousel({
                         )}
 
                         {/* Image Counter */}
-                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm font-medium">
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-coral px-3 py-1 rounded-full text-sm font-medium">
                             {index + 1} / {images.length}
                         </div>
                     </div>

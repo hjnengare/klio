@@ -25,7 +25,7 @@ export default function Pagination({
         aria-label="Previous page"
         title="Previous"
       >
-        <ChevronLeft className="text-charcoal/70" size={20} />
+        <ChevronLeft className="text-white" size={20} />
       </button>
 
       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -34,8 +34,8 @@ export default function Pagination({
           onClick={() => onPageChange(page)}
           className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-navbar-bg font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
             currentPage === page
-              ? "bg-coral text-white shadow-lg"
-              : "border border-charcoal/20 text-charcoal/70 hover:bg-navbar-bg/80"
+              ? "bg-sage text-white shadow-lg"
+              : "border border-charcoal/20 text-white hover:bg-navbar-bg/80"
           }`}
           style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
           aria-current={currentPage === page ? "page" : undefined}
@@ -51,7 +51,7 @@ export default function Pagination({
         aria-label="Next page"
         title="Next"
       >
-        <ChevronRight className="text-charcoal/70" size={20} />
+        <ChevronRight className="text-white" size={20} />
       </button>
     </div>
   );

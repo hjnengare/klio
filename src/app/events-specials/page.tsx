@@ -48,10 +48,10 @@ export default function EventsSpecialsPage() {
       <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
         <div className="py-1 pt-20">
           {/* Hero Section */}
-          <section className="relative z-10 pt-2 pb-6 sm:pb-8 md:pb-12">
+          <section className="relative z-10 pb-6 sm:pb-8 md:pb-12">
             <div className="max-w-[1300px] mx-auto px-4 sm:px-6">
               {/* Breadcrumb */}
-              <nav className="px-2 sm:px-4 pt-2 pb-1" aria-label="Breadcrumb">
+              <nav className="px-2 sm:px-4 pb-1" aria-label="Breadcrumb">
                 <ol className="flex items-center gap-1 text-sm text-charcoal/60">
                   <li>
                     <Link href="/home" className="hover:text-charcoal transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
@@ -63,15 +63,6 @@ export default function EventsSpecialsPage() {
                 </ol>
               </nav>
 
-              {/* Main Headline */}
-              <h1 className="text-sm font-bold text-charcoal mb-1 text-center" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-                Events & Specials
-              </h1>
-
-              {/* Sub-headline */}
-              <p className="text-xs text-charcoal/70 text-center max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
-                Discover exciting events and exclusive specials happening near you
-              </p>
             </div>
           </section>
 

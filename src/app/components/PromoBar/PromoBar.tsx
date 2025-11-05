@@ -8,7 +8,7 @@ const sf = {
 
 export default function PromoBar() {
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] bg-navbar-bg text-white">
+    <div className="fixed top-0 left-0 right-0 z-[60] bg-navbar-bg/90 text-white">
       <div className="mx-auto max-w-[1400px] px-4">
         <div className="h-10 sm:h-11 flex items-center justify-center text-center">
           <p className="text-[10px] sm:text-xs font-medium" style={sf}>
