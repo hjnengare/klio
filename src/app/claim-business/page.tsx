@@ -1,15 +1,22 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../contexts/AuthContext";
 import {
   Search,
   Store,
   MapPin,
   Check,
   ArrowLeft,
+  Loader2,
 } from "lucide-react";
+import { BusinessService } from "../lib/services/businessService";
+import { BusinessOwnershipService } from "../lib/services/businessOwnershipService";
+import { VerificationForm } from "../components/BusinessClaim/VerificationForm";
+import type { Business, BusinessWithStats } from "../lib/types/database";
+import Link from "next/link";
 
 const Footer = dynamic(() => import("../components/Footer/Footer"), {
   loading: () => null,
@@ -18,27 +25,70 @@ const Footer = dynamic(() => import("../components/Footer/Footer"), {
 
 export default function ClaimBusinessPage() {
   const router = useRouter();
+  const { user, isLoading: authLoading } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedBusiness, setSelectedBusiness] = useState<number | null>(null);
+  const [businesses, setBusinesses] = useState<BusinessWithStats[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [selectedBusiness, setSelectedBusiness] = useState<BusinessWithStats | null>(null);
+  const [showVerificationForm, setShowVerificationForm] = useState(false);
 
-  const unclaimedBusinesses = [
-    { id: 1, name: "Artisan Bakery & Café", category: "Bakery", location: "Mission District", reviews: 45 },
-    { id: 2, name: "Vintage Vinyl Records", category: "Music Store", location: "Castro", reviews: 23 },
-    { id: 3, name: "Mountain View Fitness", category: "Gym", location: "SOMA", reviews: 67 },
-    { id: 4, name: "Garden Fresh Market", category: "Grocery", location: "Richmond", reviews: 34 },
-    { id: 5, name: "Sunset Yoga Studio", category: "Wellness", location: "Sunset", reviews: 89 },
-  ];
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/login?redirect=/claim-business');
+    }
+  }, [user, authLoading, router]);
 
-  const filteredBusinesses = unclaimedBusinesses.filter((business) =>
-    business.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    business.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    business.location.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Search businesses when query changes
+  useEffect(() => {
+    const searchBusinesses = async () => {
+      if (searchQuery.trim().length < 2) {
+        setBusinesses([]);
+        return;
+      }
 
-  const handleClaimBusiness = (businessId: number) => {
-    setSelectedBusiness(businessId);
-    console.log(`Claiming business with ID: ${businessId}`);
+      setIsSearching(true);
+      try {
+        const results = await BusinessService.searchBusinesses(searchQuery);
+        setBusinesses(results);
+      } catch (error) {
+        console.error('Error searching businesses:', error);
+        setBusinesses([]);
+      } finally {
+        setIsSearching(false);
+      }
+    };
+
+    const debounceTimer = setTimeout(searchBusinesses, 300);
+    return () => clearTimeout(debounceTimer);
+  }, [searchQuery]);
+
+  const handleClaimBusiness = (business: BusinessWithStats) => {
+    if (!user) {
+      router.push('/login?redirect=/claim-business');
+      return;
+    }
+    setSelectedBusiness(business);
+    setShowVerificationForm(true);
   };
+
+  const handleVerificationSuccess = () => {
+    setShowVerificationForm(false);
+    setSelectedBusiness(null);
+    router.push('/business/verification-status');
+  };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-dvh bg-off-white flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-coral" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null; // Will redirect
+  }
 
   return (
     <div className="min-h-dvh bg-off-white">
@@ -74,9 +124,40 @@ export default function ClaimBusinessPage() {
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
             }}
-          >
-            <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
-              <div className="max-w-[800px] mx-auto pt-8">
+          > {/* Breadcrumb */}
+            <nav className="px-2 sm:px-4 py-4 mb-4" aria-label="Breadcrumb">
+              <ol className="flex items-center gap-1 text-sm text-charcoal/60">
+                <li>
+                  <Link
+                    href="/home"
+                    className="hover:text-charcoal transition-colors"
+                    style={{
+                      fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      fontWeight: 600
+                    }}
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li className="text-charcoal/40">/</li>
+                <li>
+                  <Link
+                    href="/claim-business"
+                    className="text-charcoal font-medium hover:text-charcoal transition-colors"
+                    style={{
+                      fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      fontWeight: 600
+                    }}
+                  >
+                    Claim Business
+                  </Link>
+                </li>
+              </ol>
+            </nav>
+
+            <div className="container max-w-[1300px] px-4 sm:px-6 relative z-10">
+              <div className="max-w-[800px] mx-auto">
+
                 {/* Header Section */}
                 <div className="mb-8 text-center">
                   <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-white/30">
@@ -93,15 +174,15 @@ export default function ClaimBusinessPage() {
                 {/* Search Section */}
                 <div className="mb-6">
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Search className="w-4 h-4 text-charcoal/60" />
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
+                      <Search className="w-5 h-5 text-charcoal/70" strokeWidth={2} />
                     </div>
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search for your business..."
-                      className="w-full pl-12 pr-4 py-3.5 bg-white/80 backdrop-blur-sm border-2 border-charcoal/20 rounded-xl
+                      className="w-full pl-12 pr-4 py-3.5 bg-white/80 backdrop-blur-sm border-2 border-charcoal/20 rounded-full
                                  text-sm placeholder:text-charcoal/50 font-urbanist text-charcoal
                                  focus:outline-none focus:border-sage focus:ring-2 focus:ring-sage/20
                                  hover:border-charcoal/30 transition-all duration-200"
@@ -111,7 +192,12 @@ export default function ClaimBusinessPage() {
 
                 {/* Business Results */}
                 <div className="space-y-3 mb-8">
-                  {filteredBusinesses.map((business) => (
+                  {isSearching && (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="w-6 h-6 animate-spin text-coral" />
+                    </div>
+                  )}
+                  {!isSearching && businesses.map((business) => (
                     <div
                       key={business.id}
                       className="p-4 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20
@@ -135,28 +221,21 @@ export default function ClaimBusinessPage() {
                                 <MapPin className="w-3 h-3 text-charcoal/60" />
                                 <span>{business.location}</span>
                               </div>
-                              <span className="text-charcoal/40">•</span>
-                              <span>{business.reviews} reviews</span>
+                              {business.stats && (
+                                <>
+                                  <span className="text-charcoal/40">•</span>
+                                  <span>{business.stats.total_reviews || 0} reviews</span>
+                                </>
+                              )}
                             </div>
                           </div>
                         </div>
                         <button
-                          onClick={() => handleClaimBusiness(business.id)}
-                          disabled={selectedBusiness === business.id}
-                          className={`px-4 py-2 rounded-full text-xs font-600 font-urbanist transition-all duration-200 flex-shrink-0
-                            ${selectedBusiness === business.id
-                              ? "bg-charcoal text-white shadow-lg"
-                              : "bg-white/40 text-charcoal hover:bg-charcoal hover:text-white hover:shadow-lg"
-                            }`}
+                          onClick={() => handleClaimBusiness(business)}
+                          className="px-4 py-2 rounded-full text-xs font-600 font-urbanist transition-all duration-200 flex-shrink-0
+                            bg-white/40 text-charcoal hover:bg-charcoal hover:text-white hover:shadow-lg"
                         >
-                          {selectedBusiness === business.id ? (
-                            <div className="flex items-center gap-2">
-                              <Check className="w-4 h-4" />
-                              <span>Claimed</span>
-                            </div>
-                          ) : (
-                            "Claim"
-                          )}
+                          Claim
                         </button>
                       </div>
                     </div>
@@ -164,7 +243,7 @@ export default function ClaimBusinessPage() {
                 </div>
 
                 {/* Empty State */}
-                {searchQuery && filteredBusinesses.length === 0 && (
+                {searchQuery && !isSearching && businesses.length === 0 && (
                   <div className="text-center py-12">
                     <div className="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                       <Search className="w-6 h-6 text-charcoal" />
@@ -183,7 +262,7 @@ export default function ClaimBusinessPage() {
                 )}
 
                 {/* Help Section */}
-                <div className="mt-12 mb-12 p-6 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20">
+                <div className="mt-12 mb-12 p-6 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md border border-white/30 rounded-2xl ring-1 ring-white/20">
                   <h3 className="font-urbanist text-base font-600 text-charcoal mb-2">
                     Need help claiming your business?
                   </h3>
@@ -208,6 +287,18 @@ export default function ClaimBusinessPage() {
 
         <Footer />
       </div>
+
+      {/* Verification Form Modal */}
+      {showVerificationForm && selectedBusiness && (
+        <VerificationForm
+          business={selectedBusiness}
+          onClose={() => {
+            setShowVerificationForm(false);
+            setSelectedBusiness(null);
+          }}
+          onSuccess={handleVerificationSuccess}
+        />
+      )}
     </div>
   );
 }

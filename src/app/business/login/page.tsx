@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "../../contexts/AuthContext";
 import { useToast } from "../../contexts/ToastContext";
 import { usePrefersReducedMotion } from "../../utils/hooks/usePrefersReducedMotion";
+import { BusinessOwnershipService } from "../../lib/services/businessOwnershipService";
+import { AuthService } from "../../lib/auth";
 
 // Import shared components
 import { authStyles } from "../../components/Auth/Shared/authStyles";
@@ -21,16 +24,11 @@ export default function BusinessLoginPage() {
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   const { login, isLoading: authLoading, error: authError } = useAuth();
   const { showToast } = useToast();
+  const router = useRouter();
   const containerRef = useRef(null);
-
-  // Prevent hydration mismatch (match register page behavior)
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Validation functions
   const validateEmail = (email: string) => {
@@ -76,22 +74,46 @@ export default function BusinessLoginPage() {
     }
 
     try {
-      // TODO: Implement business account login logic
-      // For now, using the regular login method
-      const success = await login(email, password);
-      if (success) {
-        showToast("Welcome back to your business account!", 'success', 2000);
-        // TODO: Redirect to business dashboard
+      // Use AuthService directly to avoid automatic redirects
+      const { user: authUser, error: authError } = await AuthService.signIn({ email, password });
+      
+      if (authError) {
+        setError(authError.message);
+        showToast(authError.message, 'sage', 4000);
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (authUser) {
+        // Check if user has verified business ownership
+        const ownedBusinesses = await BusinessOwnershipService.getBusinessesForOwner(authUser.id);
+        
+        // Update auth context (this will trigger auth state change)
+        await login(email, password);
+        
+        if (ownedBusinesses.length > 0) {
+          showToast("Welcome back to your business account!", 'success', 2000);
+          // Redirect to manage business page
+          setTimeout(() => {
+            router.push('/manage-business');
+          }, 500);
+        } else {
+          // User doesn't have verified businesses
+          showToast("You don't have any verified business accounts. Claim a business to get started.", 'sage', 5000);
+          // Redirect to claim business page
+          setTimeout(() => {
+            router.push('/claim-business');
+          }, 2000);
+        }
       } else {
-        const errorMsg = authError || "Invalid email or password";
-        setError(errorMsg);
-        showToast(errorMsg, 'sage', 4000);
+        setError("Login failed. Please try again.");
+        showToast("Login failed. Please try again.", 'sage', 4000);
+        setIsSubmitting(false);
       }
     } catch (error: unknown) {
       const errorMsg = error instanceof Error ? error.message : 'Login failed';
       setError(errorMsg);
       showToast(errorMsg, 'sage', 4000);
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -103,19 +125,19 @@ export default function BusinessLoginPage() {
 
         <AuthHeader
           backLink="/home"
-          title="Business Account Login"
+          title="Welcome back"
           subtitle="Sign in to manage your business profile and analytics"
         />
 
-        <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12 px-4">
+        <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12 px-1 sm:px-4">
           {/* Form Card */}
-          <div className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden border border-white/50 backdrop-blur-md ring-1 ring-white/20 p-6 sm:p-8 md:p-10 text-navbar-bg">
+          <div className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden border border-white/50 backdrop-blur-md ring-1 ring-white/20 px-4 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10 lg:px-12 lg:py-10 xl:px-16 xl:py-12">
 
             <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
               {/* Error Message */}
               {error && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-                  <p className="font-urbanist text-[14px] font-600 text-red-600">{error}</p>
+                <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
+                  <p className="text-[14px] font-600 text-orange-600" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{error}</p>
                 </div>
               )}
 
@@ -150,33 +172,30 @@ export default function BusinessLoginPage() {
               <div className="text-right">
                 <Link
                   href="/forgot-password"
-                  className="text-sm text-navbar-bg hover:text-coral transition-colors duration-300 font-medium"
-                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                  className="text-sm text-white hover:text-coral transition-colors duration-300 font-medium"
+                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
                 >
                   Forgot password?
                 </Link>
               </div>
 
               {/* Login Button */}
-              <div className="pt-4 flex justify-center">
+              <div className="pt-2 flex justify-center">
                 <div className="w-full">
                   <button
                     type="submit"
-                    disabled={mounted ? (isSubmitting || !email || !password) : false}
-                    style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
-                    className={`group block w-full text-base font-semibold py-3 px-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 relative overflow-hidden text-center min-h-[48px] whitespace-nowrap transform hover:scale-105 active:scale-95 ${
-                      (mounted ? (isSubmitting || !email || !password) : false)
-                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-50'
-                        : 'btn-premium text-navbar-bg focus:ring-sage/30'
-                    }`}
+                    disabled={isSubmitting || !email || !password}
+                    style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+                    className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
                   >
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                      {(mounted && isSubmitting) && (
+                    {isSubmitting ? (
+                      <>
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      )}
-                      {(mounted && isSubmitting) ? "Signing in..." : "Sign in to Business Account"}
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
+                        Signing in...
+                      </>
+                    ) : (
+                      "Sign in"
+                    )}
                   </button>
                 </div>
               </div>
@@ -187,20 +206,22 @@ export default function BusinessLoginPage() {
 
             {/* Footer */}
             <div className="text-center mt-6 pt-6 border-t border-white/20">
-              <div className="text-sm sm:text-base text-navbar-bg" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              <div className="text-sm sm:text-base text-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
                 Don&apos;t have a business account?{" "}
                 <Link
                   href="/claim-business"
-                  className="text-navbar-bg font-semibold hover:text-coral transition-colors duration-300 relative group"
+                  className="text-white font-semibold hover:text-coral transition-colors duration-300 relative group"
+                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
                 >
                   Claim your business
                 </Link>
               </div>
-              <div className="text-sm text-navbar-bg/70 mt-3" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              <div className="text-sm text-white/70 mt-3" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Looking for personal account?{" "}
                 <Link
                   href="/login"
-                  className="text-navbar-bg hover:text-coral transition-colors duration-300"
+                  className="text-white hover:text-coral transition-colors duration-300"
+                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                   Sign in here
                 </Link>

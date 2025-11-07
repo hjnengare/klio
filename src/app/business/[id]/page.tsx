@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useMemo, useState, useEffect, useRef } from "react";
+import { Loader2 } from "lucide-react";
 import {
     ArrowLeft,
     Briefcase,
@@ -27,6 +28,7 @@ import { PremiumReviewCard } from "../../components/Business/PremiumReviewCard";
 import { getCategoryPng, isPngIcon } from "../../utils/categoryToPngMapping";
 import Footer from "../../components/Footer/Footer";
 import BusinessInfoModal, { BusinessInfo } from "../../components/BusinessInfo/BusinessInfoModal";
+import { useAuth } from "../../contexts/AuthContext";
 
 // CSS animations to replace framer-motion
 const animations = `
@@ -74,6 +76,8 @@ const animations = `
 
 export default function BusinessProfilePage() {
     const params = useParams();
+    const router = useRouter();
+    const { user } = useAuth();
     const businessId = params?.id as string;
     const [showSpecialsModal, setShowSpecialsModal] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -146,56 +150,126 @@ export default function BusinessProfilePage() {
         };
     }, [showSpecialsModal, isInfoModalOpen]);
 
-    // Mock data (replace with API in production)
-    const business = useMemo(() => {
-        return {
-            id: businessId || "demo",
-            name: "Mama's Kitchen",
-            description: "A family-owned restaurant serving authentic Italian cuisine with a modern twist. We've been serving the community for over 20 years, specializing in wood-fired pizzas, fresh pasta, and traditional Italian dishes made with locally sourced ingredients.",
-            category: "Restaurant", // Add category for PNG fallback
-            location: "Downtown, San Francisco, CA",
-            address: "123 Main Street, San Francisco, CA 94102",
-            phone: "+1 (415) 555-0123",
-            email: "info@mamaskitchen.com",
-            website: "www.mamaskitchen.com",
-            price_range: "$$" as const,
-            verified: true,
-            rating: 4.8,
-            image: "/images/product-01.jpg",
-            images: [
-                "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&h=900&fit=crop",
-                "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&h=900&fit=crop",
-                "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1600&h=900&fit=crop",
-                "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1600&h=900&fit=crop",
-                "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1600&h=900&fit=crop",
-            ],
-            trust: 95,
-            punctuality: 89,
-            friendliness: 92,
-            specials: [
-                { id: 1, name: "2 for 1 Pizza", description: "Every day", icon: "pizza", eventId: "special-1", type: "special" as const },
-                { id: 2, name: "Jazz Night", description: "Mondays", icon: "musical-notes", eventId: "event-3", type: "event" as const },
-            ],
-            reviews: [
-                {
-                    id: 1,
-                    author: "Jess",
-                    rating: 5,
-                    text: "Loved the pizza, staff were so friendly. Food came fast & trustworthy. @on time @friendly",
-                    date: "Feb 2023",
-                    tags: ["trustworthy", "on time", "friendly"],
-                },
-                {
-                    id: 2,
-                    author: "Hilario",
-                    rating: 4,
-                    text: "Terrible anything but food came fast. @on time",
-                    date: "March 2023",
-                    tags: ["on time"],
-                },
-            ],
+    // Fetch business data from API
+    const [business, setBusiness] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchBusiness = async () => {
+            if (!businessId) {
+                setError('Business ID is required');
+                setIsLoading(false);
+                return;
+            }
+
+            try {
+                setIsLoading(true);
+                setError(null);
+                
+                const response = await fetch(`/api/businesses/${businessId}`);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        setError('Business not found');
+                    } else {
+                        setError('Failed to load business');
+                    }
+                    setIsLoading(false);
+                    return;
+                }
+
+                const data = await response.json();
+                setBusiness(data);
+            } catch (err: any) {
+                console.error('Error fetching business:', err);
+                setError('Failed to load business');
+            } finally {
+                setIsLoading(false);
+            }
         };
+
+        fetchBusiness();
     }, [businessId]);
+
+    // Loading state
+    if (isLoading) {
+        return (
+            <div className="min-h-dvh bg-off-white flex items-center justify-center">
+                <div className="text-center">
+                    <Loader2 className="w-8 h-8 animate-spin text-coral mx-auto mb-4" />
+                    <p className="text-charcoal/70 font-urbanist">Loading business...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Error state
+    if (error || !business) {
+        return (
+            <div className="min-h-dvh bg-off-white flex items-center justify-center">
+                <div className="text-center max-w-md px-4">
+                    <div className="w-16 h-16 bg-coral/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <X className="w-8 h-8 text-coral" />
+                    </div>
+                    <h2 className="text-xl font-bold text-charcoal mb-2 font-urbanist">
+                        {error || 'Business not found'}
+                    </h2>
+                    <p className="text-charcoal/70 mb-6 font-urbanist">
+                        The business you're looking for doesn't exist or has been removed.
+                    </p>
+                    <Link
+                        href="/home"
+                        className="inline-block px-6 py-3 bg-coral text-white rounded-full font-600 font-urbanist hover:bg-coral/90 transition-colors"
+                    >
+                        Go to Home
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+
+    // Check if current user is the business owner
+    const isBusinessOwner = user && business.owner_id && user.id === business.owner_id;
+
+    // Prepare image data without using PNG placeholders
+    const cleanedGalleryImages = Array.isArray(business.images)
+        ? business.images.filter((img: string) => img && img.trim() !== '' && !isPngIcon(img))
+        : [];
+
+    const fallbackImageCandidate = [
+        business.uploaded_image,
+        business.uploadedImage,
+        business.image_url,
+        business.image,
+    ].find((img) => img && img.trim() !== '' && !isPngIcon(img as string));
+
+    const galleryImages = cleanedGalleryImages.length > 0
+        ? cleanedGalleryImages
+        : (fallbackImageCandidate ? [fallbackImageCandidate] : []);
+
+    // Default values for missing data
+    const businessData = {
+        id: business.id || businessId,
+        name: business.name || 'Unnamed Business',
+        description: business.description || `${business.category || 'Business'} located in ${business.location || 'Cape Town'}`,
+        category: business.category || 'Business',
+        location: business.location || 'Cape Town',
+        address: business.address,
+        phone: business.phone,
+        email: business.email,
+        website: business.website,
+        price_range: business.price_range || '$$',
+        verified: business.verified || false,
+        rating: business.stats?.average_rating || 0,
+        image: fallbackImageCandidate || '',
+        images: galleryImages,
+        trust: business.trust || business.stats?.percentiles?.service || 85,
+        punctuality: business.punctuality || business.stats?.percentiles?.price || 85,
+        friendliness: business.friendliness || business.stats?.percentiles?.ambience || 85,
+        specials: [], // TODO: Fetch from events/specials table
+        reviews: business.reviews || [],
+    };
 
     return (
         <>
@@ -230,18 +304,18 @@ export default function BusinessProfilePage() {
                 >
                     <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
                         <nav className="flex items-center justify-between" aria-label="Business profile navigation">
-                            <Link
-                                href="/home"
-                                className="group flex items-center focus:outline-nonecl rounded-lg px-1 -mx-1"
-                                aria-label="Go back to home"
+                            <button
+                                onClick={() => router.back()}
+                                className="group flex items-center focus:outline-none rounded-lg px-1 -mx-1"
+                                aria-label="Go back to previous page"
                             >
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
                                     <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                                 </div>
                                 <h1 className="font-urbanist text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-                                    {business.name}
+                                    {businessData.name}
                                 </h1>
-                            </Link>
+                            </button>
 
                             <div className="flex items-center gap-2 sm:gap-3">
                                 {/* Events and Specials Button */}
@@ -257,24 +331,28 @@ export default function BusinessProfilePage() {
                                     </button>
                                 </div>
 
-                                {/* Write Review Button */}
-                                <Link
-                                    href="/business/review"
-                                    className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
-                                    aria-label={`Write a review for ${business.name}`}
-                                >
-                                    <Edit className="w-3 h-3" />
-                                    <span className="hidden md:inline">Write Review</span>
-                                </Link>
+                                {/* Write Review Button - Only show to authenticated users who are not the owner */}
+                                {user && !isBusinessOwner && (
+                                    <Link
+                                        href={`/business/review?businessId=${businessId}`}
+                                        className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                        aria-label={`Write a review for ${businessData.name}`}
+                                    >
+                                        <Edit className="w-3 h-3" />
+                                        <span className="hidden md:inline">Write Review</span>
+                                    </Link>
+                                )}
 
-                                {/* Edit Button */}
-                                <Link
-                                    href={`/business/${businessId}/edit`}
-                                    className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
-                                >
-                                    <Edit className="w-3 h-3" />
-                                    <span className="hidden lg:inline">Edit Business</span>
-                                </Link>
+                                {/* Edit Button - Only show to business owner */}
+                                {isBusinessOwner && (
+                                    <Link
+                                        href={`/business/${businessId}/edit`}
+                                        className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                    >
+                                        <Edit className="w-3 h-3" />
+                                        <span className="hidden lg:inline">Edit Business</span>
+                                    </Link>
+                                )}
 
                                 {/* Manage Button */}
                                 <Link
@@ -322,13 +400,13 @@ export default function BusinessProfilePage() {
                                                
                                                 <div className="relative z-10">
                                                     <ImageCarousel
-                                                        images={business.images || [business.image]}
-                                                        altBase={business.name}
-                                                        rating={business.rating}
+                                                        images={businessData.images}
+                                                        altBase={businessData.name}
+                                                        rating={businessData.rating}
                                                         metrics={[
-                                                            { label: "Trust", value: business.trust, color: "sage" },
-                                                            { label: "Punctuality", value: business.punctuality, color: "coral" },
-                                                            { label: "Friendliness", value: business.friendliness, color: "sage" },
+                                                            { label: "Trust", value: businessData.trust, color: "sage" },
+                                                            { label: "Punctuality", value: businessData.punctuality, color: "coral" },
+                                                            { label: "Friendliness", value: businessData.friendliness, color: "sage" },
                                                         ]}
                                                     />
                                                 </div>
@@ -343,120 +421,42 @@ export default function BusinessProfilePage() {
                                                         </h2>
                                                 </div>
                                             </div>
-                                                    <div className="space-y-4">
-                                                        <PremiumReviewCard
-                                                            author={business.reviews[0].author}
-                                                            rating={business.reviews[0].rating}
-                                                            text={business.reviews[0].text}
-                                                            date={business.reviews[0].date}
-                                                            tags={business.reviews[0].tags}
-                                                            highlight="Top Reviewer"
-                                                            verified
-                                                            profileImage="https://images.unsplash.com/photo-1494790108755-2616b332e234?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-                                                            reviewImages={[
-                                                                "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-                                                                "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                                                            ]}
-                                                        />
-                                                        <PremiumReviewCard
-                                                            author={business.reviews[1].author}
-                                                            rating={business.reviews[1].rating}
-                                                            text={business.reviews[1].text}
-                                                            date={business.reviews[1].date}
-                                                            tags={business.reviews[1].tags}
-                                                            highlight="Local Guide"
-                                                            verified={false}
-                                                            profileImage="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-                                                            reviewImages={[
-                                                                "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                                                            ]}
-                                                        />
-                                                        <PremiumReviewCard
-                                                            author="Maria Garcia"
-                                                            rating={5}
-                                                            text="Amazing food and great service! The staff was very friendly and the atmosphere was perfect for a family dinner. Highly recommend the pasta dishes."
-                                                            date="Jan 2024"
-                                                            tags={["friendly", "family-friendly", "great food"]}
-                                                            highlight="Foodie"
-                                                            verified
-                                                            profileImage="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80"
-                                                            reviewImages={[
-                                                                "https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-                                                                "https://images.unsplash.com/photo-1563379091339-03246963d0b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-                                                                "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                                                            ]}
-                                                        />
-                                                        <PremiumReviewCard
-                                                            author="Alex Chen"
-                                                            rating={4}
-                                                            text="Good food but service was a bit slow during peak hours. The pizza was delicious though, worth the wait."
-                                                            date="Dec 2023"
-                                                            tags={["slow service", "good food"]}
-                                                            highlight="Regular"
-                                                            verified={false}
-                                                            profileImage="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-                                                            reviewImages={[
-                                                                "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                                                            ]}
-                                                        />
-                                                        <PremiumReviewCard
-                                                            author="Sarah Johnson"
-                                                            rating={5}
-                                                            text="Absolutely fantastic! The ambiance is perfect for a date night. The wine selection is excellent and the staff knows their stuff. Will definitely be back!"
-                                                            date="Feb 2024"
-                                                            tags={["romantic", "great wine", "excellent service"]}
-                                                            highlight="Wine Expert"
-                                                            verified
-                                                            profileImage="https://broken-image-url.com/profile.jpg"
-                                                            reviewImages={[
-                                                                "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-                                                                "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                                                            ]}
-                                                        />
-                                                        <PremiumReviewCard
-                                                            author="Mike Rodriguez"
-                                                            rating={3}
-                                                            text="Food was decent but the wait time was too long. The place was packed and understaffed. Good food when it finally arrived though."
-                                                            date="Jan 2024"
-                                                            tags={["long wait", "understaffed", "decent food"]}
-                                                            highlight="Regular"
-                                                            verified={false}
-                                                            profileImage=""
-                                                            reviewImages={[
-                                                                "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                                                            ]}
-                                                        />
-                                                        <PremiumReviewCard
-                                                            author="Emma Wilson"
-                                                            rating={5}
-                                                            text="Best restaurant in town! The chef's special was incredible and the presentation was beautiful. Service was impeccable from start to finish."
-                                                            date="Feb 2024"
-                                                            tags={["chef's special", "beautiful presentation", "impeccable service"]}
-                                                            highlight="Food Critic"
-                                                            verified
-                                                            profileImage="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-                                                            reviewImages={[
-                                                                "https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-                                                                "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-                                                                "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-                                                                "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                                                            ]}
-                                                        />
-                                                        <PremiumReviewCard
-                                                            author="David Kim"
-                                                            rating={4}
-                                                            text="Great atmosphere and friendly staff. The menu has good variety and the prices are reasonable. Parking can be a bit tricky during peak hours."
-                                                            date="Jan 2024"
-                                                            tags={["great atmosphere", "friendly staff", "reasonable prices"]}
-                                                            highlight="Local Guide"
-                                                            verified
-                                                            profileImage="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-                                                            reviewImages={[
-                                                                "https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-                                                                "https://images.unsplash.com/photo-1563379091339-03246963d0b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                                                            ]}
-                                                        />
-                                                    </div>
+                                                    {businessData.reviews.length > 0 ? (
+                                                        <div className="space-y-4">
+                                                            {businessData.reviews.map((review: any, index: number) => (
+                                                                <PremiumReviewCard
+                                                                    key={review.id || index}
+                                                                    author={review.author}
+                                                                    rating={review.rating}
+                                                                    text={review.text}
+                                                                    date={review.date}
+                                                                    tags={review.tags}
+                                                                    highlight={index === 0 ? "Top Reviewer" : "Local Guide"}
+                                                                    verified={index < 2}
+                                                                    profileImage={review.profileImage}
+                                                                    reviewImages={review.reviewImages}
+                                                                />
+                                                            ))}
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-center py-12">
+                                                            <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                                <MessageSquare className="w-8 h-8 text-charcoal/40" />
+                                                            </div>
+                                                            <h3 className="text-lg font-bold text-charcoal mb-2 font-urbanist">
+                                                                No reviews yet
+                                                            </h3>
+                                                            <p className="text-charcoal/70 mb-6 font-urbanist">
+                                                                Be the first to review this business!
+                                                            </p>
+                                                            <Link
+                                                                href={`/business/review?businessId=${businessId}`}
+                                                                className="inline-block px-6 py-3 bg-coral text-white rounded-full font-600 font-urbanist hover:bg-coral/90 transition-colors"
+                                                            >
+                                                                Write First Review
+                                                            </Link>
+                                                        </div>
+                                                    )}
                                                 </div>
                                 </div>
                             </div>
@@ -508,7 +508,8 @@ export default function BusinessProfilePage() {
                                                         </h3>
 
                                 <ul className="grid grid-cols-1 gap-3 list-none max-h-[60vh] overflow-y-auto custom-scroll pr-2">
-                                                            {business.specials.map((special) => {
+                                                            {businessData.specials.length > 0 ? (
+                                                                businessData.specials.map((special: any) => {
                                                                 const Icon = special.icon === "pizza" ? Coffee : Music;
                                                                 const eventPath = special.type === "event" 
                                                                     ? `/event/${special.eventId}` 
@@ -534,7 +535,11 @@ export default function BusinessProfilePage() {
                                                                         </Link>
                                                                     </li>
                                                                 );
-                                                            })}
+                                                            })) : (
+                                                                <li className="text-center py-8 text-charcoal/70 font-urbanist text-sm">
+                                                                    No events or specials available at this time.
+                                                                </li>
+                                                            )}
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -556,16 +561,16 @@ export default function BusinessProfilePage() {
             {/* Business Info Modal */}
             <BusinessInfoModal
                 businessInfo={{
-                    name: business.name,
-                    description: business.description,
-                    category: business.category,
-                    location: business.location,
-                    address: business.address,
-                    phone: business.phone,
-                    email: business.email,
-                    website: business.website,
-                    price_range: business.price_range,
-                    verified: business.verified,
+                    name: businessData.name,
+                    description: businessData.description,
+                    category: businessData.category,
+                    location: businessData.location,
+                    address: businessData.address,
+                    phone: businessData.phone,
+                    email: businessData.email,
+                    website: businessData.website,
+                    price_range: businessData.price_range,
+                    verified: businessData.verified,
                 }}
                 buttonRef={infoButtonRef}
                 isOpen={isInfoModalOpen}

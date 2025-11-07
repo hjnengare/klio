@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import FallbackImage from "../FallbackImage/FallbackImage";
@@ -12,6 +13,7 @@ interface LeaderboardUser {
   badge?: string;
   avatar: string;
   totalRating?: number;
+  id?: string;
 }
 
 interface LeaderboardUserProps {
@@ -21,12 +23,13 @@ interface LeaderboardUserProps {
 
 function LeaderboardUser({ user, index }: LeaderboardUserProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -10 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.05, duration: 0.3 }}
-      className="group bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.12)] cursor-pointer border border-white/50 backdrop-blur-md ring-1 ring-white/20"
-    >
+    <Link href={user.id ? `/reviewer/${user.id}` : '#'}>
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: index * 0.05, duration: 0.3 }}
+        className="group bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.12)] cursor-pointer border border-white/50 backdrop-blur-md ring-1 ring-white/20 hover:shadow-xl transition-all duration-300"
+      >
       <div className="flex items-center justify-between p-3 sm:p-4">
         <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
           <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-charcoal/15 to-charcoal/10 rounded-full flex items-center justify-center font-urbanist text-xs sm:text-sm font-600 text-charcoal/70 shadow-[0_4px_12px_rgba(0,0,0,0.1)] flex-shrink-0 border border-white/40">
@@ -55,6 +58,7 @@ function LeaderboardUser({ user, index }: LeaderboardUserProps) {
         </div>
       </div>
     </motion.div>
+    </Link>
   );
 }
 

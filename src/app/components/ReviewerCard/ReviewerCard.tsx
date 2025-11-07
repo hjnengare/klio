@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useMemo, useState, useEffect } from "react";
 import { Review, Reviewer } from "../../data/communityHighlightsData";
 import ProfilePicture from "./ProfilePicture";
@@ -35,6 +36,7 @@ export default function ReviewerCard({
   latestReview,
   variant = "review",
 }: ReviewerCardProps) {
+  const router = useRouter();
   const reviewerData = reviewer || review?.reviewer;
   const idForSnap = useMemo(
     () => `reviewer-${reviewerData?.id}`,
@@ -49,17 +51,21 @@ export default function ReviewerCard({
         id={idForSnap}
         className="snap-start snap-always w-[calc(50vw-0.5rem)] sm:w-[240px] flex-shrink-0"
       >
-        <div
-          className="bg-card-bg backdrop-blur-xl rounded-[20px] overflow-hidden group cursor-pointer h-[240px] relative border border-white/60 shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+        <Link
+          href={`/reviewer/${reviewerData?.id || ''}`}
+          className="block"
         >
+          <div
+            className="bg-card-bg backdrop-blur-xl rounded-[20px] overflow-hidden group cursor-pointer h-[240px] relative border border-white/60 shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
           {/* Content */}
           <div className="relative z-10 p-2 h-full flex flex-col">
             {/* Header with small profile pic and rating */}
             <div className="flex items-start justify-between mb-1">
                 <div className="flex items-center gap-1.5">
-                {!imgError && reviewerData?.profilePicture ? (
+                {!imgError && reviewerData?.profilePicture && reviewerData.profilePicture.trim() !== '' ? (
                   <div className="relative">
                     <Image
                       src={reviewerData.profilePicture}
@@ -90,7 +96,7 @@ export default function ReviewerCard({
                 )}
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-bold text-charcoal truncate" style={{ 
+                  <h3 className="text-sm font-bold text-charcoal group-hover:text-coral/90 truncate transition-colors duration-300" style={{ 
                     fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
                     fontWeight: 700,
                     WebkitFontSmoothing: 'antialiased',
@@ -213,15 +219,22 @@ export default function ReviewerCard({
               <div className="flex gap-1.5 transition-all duration-500 ease-out translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
                 <button
                   className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                  }}
                   aria-label="Follow"
                   title="Follow"
                 >
                   <Users className="text-charcoal w-4 h-4" />
                 </button>
                 <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    router.push(`/dm/${reviewerData?.id || ''}`);
+                  }}
                   className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
-                  onClick={(e) => e.stopPropagation()}
                   aria-label="Message"
                   title="Message"
                 >
@@ -231,6 +244,7 @@ export default function ReviewerCard({
             </div>
           </div>
         </div>
+        </Link>
       </div>
     );
   }
@@ -238,9 +252,13 @@ export default function ReviewerCard({
   // --- REVIEW CARD VARIANT ---
   return (
     <li className="w-[calc(50vw-12px)] sm:w-auto sm:min-w-[213px] flex-shrink-0">
-      <div
-        className="bg-card-bg backdrop-blur-xl rounded-[20px] group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/60 shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
+      <Link
+        href={`/reviewer/${review?.reviewer?.id || ''}`}
+        className="block"
       >
+        <div
+          className="bg-card-bg backdrop-blur-xl rounded-[20px] group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/60 shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
+        >
         <div className="flex items-start gap-1.5 mb-2 p-2">
           <div className="relative">
             <ProfilePicture
@@ -258,7 +276,7 @@ export default function ReviewerCard({
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-bold text-charcoal truncate" style={{ 
+            <h3 className="text-sm font-bold text-charcoal group-hover:text-coral/90 truncate transition-colors duration-300" style={{ 
               fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
               fontWeight: 700,
               WebkitFontSmoothing: 'antialiased',
@@ -277,15 +295,22 @@ export default function ReviewerCard({
           <div className="absolute right-2 top-2 md:right-2 md:bottom-4 z-20 flex flex-row md:flex-col gap-1.5 md:gap-2 transition-all duration-500 ease-out md:translate-y-8 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
             <button
               className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
               aria-label="Follow"
               title="Follow"
             >
               <Users className="text-charcoal w-4 h-4" />
             </button>
             <button
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                router.push(`/dm/${review?.reviewer?.id || ''}`);
+              }}
               className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
-              onClick={(e) => e.stopPropagation()}
               aria-label="Message"
               title="Message"
             >
@@ -293,7 +318,10 @@ export default function ReviewerCard({
             </button>
             <button
               className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
               aria-label="Share"
               title="Share"
             >
@@ -311,6 +339,7 @@ export default function ReviewerCard({
           images={review?.images}
         />
       </div>
+      </Link>
     </li>
   );
 }

@@ -94,17 +94,17 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       }}
     >
       <div
-        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden group cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
+        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden group cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Media */}
-        <div className="relative overflow-hidden rounded-t-[20px] flex-1 sm:flex-initial z-10">
+        <div className="relative overflow-hidden rounded-t-[12px] flex-1 sm:flex-initial z-10">
           <div className="relative w-full h-[540px] sm:h-[320px] md:h-[220px]">
             {!imgError && displayImage ? (
               isImagePng || displayImage.includes('/png/') || displayImage.endsWith('.png') || usingFallback ? (
                 // Display PNG files as icons with page background
-                <div className="w-full h-[540px] sm:h-[320px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-[20px]">
-                  <Image
+                <div className="w-full h-[540px] sm:h-[320px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-[12px]">
+                <Image
                     src={usingFallback ? getCategoryPng(business.category) : displayImage}
                     alt={displayAlt}
                     width={128}
@@ -124,7 +124,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
                   alt={displayAlt}
                   width={400}
                   height={320}
-                  className="h-[540px] sm:h-[320px] md:h-[220px] w-full object-cover rounded-t-[20px]"
+                  className="h-[540px] sm:h-[320px] md:h-[220px] w-full object-cover rounded-t-[12px]"
                   priority={false}
                   loading="lazy"
                   quality={85}
@@ -134,7 +134,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               )
             ) : (
               // Final fallback - show icon placeholder
-              <div className="w-full h-[540px] sm:h-[320px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-[20px]">
+              <div className="w-full h-[540px] sm:h-[320px] md:h-[220px] flex items-center justify-center bg-off-white/90 rounded-t-[12px]">
                 <div className="w-28 h-28 sm:w-28 sm:h-28 flex items-center justify-center">
                   <Image
                     src={getCategoryPng(business.category)}
@@ -156,7 +156,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             )}
             {/* Show error icon only if all fallbacks failed */}
             {imgError && (
-              <div className="absolute inset-0 flex items-center justify-center bg-sage/10 text-sage rounded-t-[20px]">
+              <div className="absolute inset-0 flex items-center justify-center bg-sage/10 text-sage rounded-t-[12px]">
                 <ImageIcon className="w-12 h-12 md:w-16 md:h-16 text-sage/70" />
               </div>
             )}
@@ -238,7 +238,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
         {/* CONTENT */}
         <div className="px-4 pt-4 pb-6 relative flex-shrink-0 z-10">
           <div className="mb-2 cursor-pointer">
-            <h3 className="text-sm font-bold text-charcoal group-hover:text-charcoal transition-colors duration-300 text-center truncate" style={{ 
+            <h3 className="text-sm font-bold text-charcoal group-hover:text-coral/90 transition-colors duration-300 text-center truncate" style={{ 
               fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
               fontWeight: 700,
               WebkitFontSmoothing: 'antialiased',

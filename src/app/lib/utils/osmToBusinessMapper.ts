@@ -4,6 +4,7 @@
 
 import { OverpassBusiness } from '../services/overpassService';
 import { Business } from '../../lib/types/database';
+import { getCategoryImageUrl } from './categoryToImageMapper';
 
 /**
  * Maps OSM business data to our database Business type
@@ -21,6 +22,9 @@ export function mapOSMToBusiness(osmBusiness: OverpassBusiness): Omit<Business, 
   // Generate description from category and name
   const description = `${osmBusiness.category} located in ${location}`;
   
+  // Get placeholder image based on category
+  const placeholderImage = getCategoryImageUrl(osmBusiness.category);
+  
   return {
     name: osmBusiness.name,
     description,
@@ -30,7 +34,7 @@ export function mapOSMToBusiness(osmBusiness: OverpassBusiness): Omit<Business, 
     phone: osmBusiness.phone || undefined,
     email: undefined, // OSM doesn't typically have email
     website: osmBusiness.website || undefined,
-    image_url: undefined, // Will be handled by frontend fallback
+    image_url: placeholderImage, // Assign placeholder PNG based on category
     verified: false, // New businesses start unverified
     price_range: priceRange as '$' | '$$' | '$$$' | '$$$$',
     owner_id: undefined, // No owner initially

@@ -92,6 +92,20 @@ export default function FilterModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
 
+  // Body scroll lock when modal is open
+  useEffect(() => {
+    if (!isVisible) return;
+
+    // Lock body scroll
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      // Restore body scroll
+      document.body.style.overflow = originalStyle;
+    };
+  }, [isVisible]);
+
   // Outside click + ESC (no body scroll lock)
   useEffect(() => {
     if (!isVisible) return;
@@ -169,6 +183,7 @@ export default function FilterModal({
                     bg-off-white
                     border border-white/30 shadow-lg
                     transition-all duration-200
+                    flex flex-col
                     ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"}`}
         style={{
           position: "fixed",
@@ -208,9 +223,17 @@ export default function FilterModal({
 
         {/* body */}
         <div
-          className="px-5 sm:px-6 py-4 space-y-4 overflow-y-auto"
+          className="px-5 sm:px-6 py-4 space-y-4 overflow-y-auto overscroll-contain flex-1 min-h-0"
           style={{ 
-            maxHeight: "calc(100vh - 140px)",
+            WebkitOverflowScrolling: 'touch',
+          }}
+          onWheel={(e) => {
+            // Prevent scroll propagation to body
+            e.stopPropagation();
+          }}
+          onTouchMove={(e) => {
+            // Prevent touch scroll propagation to body
+            e.stopPropagation();
           }}
         >
           {/* Category */}
@@ -317,7 +340,7 @@ export default function FilterModal({
         </div>
 
         {/* footer */}
-        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm">
+        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm flex-shrink-0">
             <button
             onClick={handleClearAll}
             className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Star, Heart, MapPin, Calendar } from "lucide-react";
+import { Star, Heart, MapPin, Calendar, User } from "lucide-react";
 
 interface SmallReview {
   id: string;
@@ -21,7 +21,7 @@ interface ReviewSidebarProps {
 }
 
 const frostyPanel = `
-  relative overflow-hidden rounded-2xl
+  relative overflow-hidden rounded-[12px]
   bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-md
   border border-white/50 ring-1 ring-white/20
   shadow-lg shadow-sage/20
@@ -55,7 +55,9 @@ export default function ReviewSidebar({ otherReviews }: ReviewSidebarProps) {
                           quality={85}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-sage">•</div>
+                        <div className="w-full h-full flex items-center justify-center text-sage">
+                          <User className="w-5 h-5 text-sage/70" />
+                        </div>
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -110,7 +112,7 @@ export default function ReviewSidebar({ otherReviews }: ReviewSidebarProps) {
         <div className="mt-2 sm:mt-3 overflow-x-auto hide-scrollbar">
           <ul className="flex gap-2 sm:gap-3 px-4 pb-4">
             {otherReviews.map((r) => (
-              <li key={r.id} className="min-w-[240px] sm:min-w-[260px] max-w-[260px] sm:max-w-[280px] bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md border border-sage/10 rounded-2xl p-3 sm:p-4 relative overflow-hidden">
+              <li key={r.id} className="min-w-[240px] sm:min-w-[260px] max-w-[260px] sm:max-w-[280px] bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md border border-sage/10 rounded-[12px] p-3 sm:p-4 relative overflow-hidden">
                 {/* subtle glows */}
                 <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-lg" />
                 <span className="pointer-events-none absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-coral/10 blur-lg" />
@@ -126,7 +128,9 @@ export default function ReviewSidebar({ otherReviews }: ReviewSidebarProps) {
                         quality={85}
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-sage">•</div>
+                      <div className="w-full h-full flex items-center justify-center text-sage">
+                        <User className="w-4 h-4 sm:w-5 sm:h-5 text-sage/70" />
+                      </div>
                     )}
                   </div>
                   <div className="min-w-0">

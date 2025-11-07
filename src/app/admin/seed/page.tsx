@@ -194,7 +194,7 @@ export default function SeedPage() {
             <input
               type="number"
               min="1"
-              max="500"
+              max="100000"
               value={limit}
               onChange={(e) => setLimit(parseInt(e.target.value) || 100)}
               disabled={loading}

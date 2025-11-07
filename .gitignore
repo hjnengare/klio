@@ -34,6 +34,7 @@ yarn-debug.log*
 yarn-error.log*
 dev-output.log
 build-output.txt
+how*
 
 # Runtime data
 pids
@@ -101,9 +102,10 @@ temp/
 *.swo
 *~
 
-# Test output
+# Test output and reports
 test-results/
 playwright-report/
+coverage/
 
 # Bundle analyzer
 .next/analyze/
@@ -113,8 +115,5 @@ temp_*.ts
 temp_*.js
 backup.txt
 
-# Documentation/Summary files (project-specific optimization notes)
-PERFORMANCE_OPTIMIZATION*.md
-OPTIMIZATION_SUMMARY.md
-REFACTORING_SUMMARY.md
-PERFORMANCE_OPTIMIZATION_GUIDE.md
+# Temporary backup files
+backup.txt

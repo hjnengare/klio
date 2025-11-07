@@ -55,7 +55,7 @@ export default function ProfilePicture({
   };
 
   // If no src provided or error occurred, show placeholder
-  if (!src || imgError) {
+  if (!src || src.trim() === '' || imgError) {
     return (
       <div className="relative inline-block">
         <div className={`${sizeClasses[size]} rounded-full bg-sage/10 flex items-center justify-center border-2 border-white shadow-lg ring-2 ring-white/50`}>

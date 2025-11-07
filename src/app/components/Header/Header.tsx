@@ -53,6 +53,7 @@ export default function Header({
   // Anchor for the dropdown FilterModal to hang under
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const businessDropdownRef = useRef<HTMLDivElement>(null);
+  const businessMenuPortalRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
 
   // Scroll-based header visibility
@@ -144,17 +145,22 @@ export default function Header({
   // Close business dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (businessDropdownRef.current && !businessDropdownRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      const clickedInsideButtonWrap = businessDropdownRef.current?.contains(target);
+      const clickedInsidePortalMenu = businessMenuPortalRef.current?.contains(target);
+
+      if (!clickedInsideButtonWrap && !clickedInsidePortalMenu) {
         setIsBusinessDropdownOpen(false);
       }
     };
 
     if (isBusinessDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      // use 'click' instead of 'mousedown' so Link can process first
+      document.addEventListener('click', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, [isBusinessDropdownOpen]);
 
@@ -218,9 +224,9 @@ export default function Header({
           <div className="flex items-center justify-between gap-6">
             {/* Logo */}
             <OptimizedLink href="/home" className="group flex-shrink-0 relative" aria-label="sayso Home">
-              <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative scale-[0.64] origin-left">
-                <Logo variant="default" className="relative" />
+              <div className="absolute inset-0 bg-gradient-to-r from-sage/30 to-coral/30 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative scale-[0.72] origin-left">
+                <Logo variant="default" className="relative drop-shadow-[0_4px_12px_rgba(0,0,0,0.08)]" />
               </div>
             </OptimizedLink>
 
@@ -243,12 +249,9 @@ export default function Header({
                   )}
                 </OptimizedLink>
               ))}
-            </nav>
 
-            {/* Right side */}
-            <div className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
-              {/* For Businesses Dropdown */}
-              <div className="relative hidden md:block" ref={businessDropdownRef}>
+              {/* For Businesses Dropdown (desktop) */}
+              <div className="relative" ref={businessDropdownRef}>
                 <button
                   ref={btnRef}
                   onClick={() => {
@@ -271,21 +274,21 @@ export default function Header({
                   <ChevronDown className={`relative z-10 w-3 h-3 transition-transform duration-200 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {/* Portal Dropdown Menu */}
                 {isBusinessDropdownOpen &&
                   createPortal(
                     <div
+                      ref={businessMenuPortalRef}
                       className={`fixed z-[1000] bg-off-white rounded-2xl border border-white/60 shadow-xl overflow-hidden min-w-[560px] whitespace-normal break-keep transition-all duration-300 ease-out ${
                         isBusinessDropdownClosing ? 'opacity-0 scale-95 translate-y-[-8px]' : 'opacity-100 scale-100 translate-y-0'
                       }`}
-                      style={{ 
-                        left: menuPos.left, 
-                        top: menuPos.top,
+                      style={{
+                        left: menuPos.left,
+                        top: menuPos.top + 12,
                         fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                         animation: isBusinessDropdownClosing ? 'none' : 'fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                       }}
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      {/* header */}
                       <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 bg-off-white">
                         <div className="relative z-10 flex items-center gap-2">
                           <Briefcase className="w-4 h-4 text-sage" />
@@ -306,17 +309,9 @@ export default function Header({
                         </button>
                       </div>
 
-                      {/* body */}
                       <div className="px-5 sm:px-6 py-4 space-y-3" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                         <Link
                           href="/business/login"
-                          onClick={(e) => {
-                            setIsBusinessDropdownClosing(true);
-                            setTimeout(() => {
-                              setIsBusinessDropdownOpen(false);
-                              setIsBusinessDropdownClosing(false);
-                            }, 300);
-                          }}
                           className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200 min-h-[44px] flex items-center"
                           style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                         >
@@ -328,13 +323,6 @@ export default function Header({
 
                         <Link
                           href="/claim-business"
-                          onClick={(e) => {
-                            setIsBusinessDropdownClosing(true);
-                            setTimeout(() => {
-                              setIsBusinessDropdownOpen(false);
-                              setIsBusinessDropdownClosing(false);
-                            }, 300);
-                          }}
                           className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200 min-h-[44px] flex items-center"
                           style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                         >
@@ -346,13 +334,6 @@ export default function Header({
 
                         <Link
                           href="/manage-business"
-                          onClick={(e) => {
-                            setIsBusinessDropdownClosing(true);
-                            setTimeout(() => {
-                              setIsBusinessDropdownOpen(false);
-                              setIsBusinessDropdownClosing(false);
-                            }, 300);
-                          }}
                           className="group block rounded-xl bg-white/70 border border-charcoal/10 p-4 hover:bg-white/90 hover:border-coral/30 transition-all duration-200 min-h-[44px] flex items-center"
                           style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                         >
@@ -364,10 +345,12 @@ export default function Header({
                       </div>
                     </div>,
                     document.body
-                  )
-                }
+                  )}
               </div>
+            </nav>
 
+            {/* Right side */}
+            <div className="flex items-center gap-2 lg:gap-3 flex-shrink-0">
               {/* Search Toggle (manual close/open) */}
               <button
                 onClick={() => setShowSearchBar((p) => !p)}

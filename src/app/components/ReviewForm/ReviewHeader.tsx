@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useRef } from "react";
 import { ArrowLeft, Info } from "react-feather";
 import BusinessInfoModal, { BusinessInfo } from "../BusinessInfo/BusinessInfoModal";
@@ -10,6 +10,7 @@ interface ReviewHeaderProps {
 }
 
 export default function ReviewHeader({ businessInfo }: ReviewHeaderProps) {
+  const router = useRouter();
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const infoButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -24,10 +25,10 @@ export default function ReviewHeader({ businessInfo }: ReviewHeaderProps) {
       >
         <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
           <nav className="flex items-center justify-between" aria-label="Write review navigation">
-            <Link
-              href="/home"
+            <button
+              onClick={() => router.back()}
               className="group flex items-center focus:outline-none rounded-lg px-1 -mx-1"
-              aria-label="Go back to home"
+              aria-label="Go back to previous page"
             >
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
                 <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
@@ -35,7 +36,7 @@ export default function ReviewHeader({ businessInfo }: ReviewHeaderProps) {
               <h1 className="font-urbanist text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Write a Review
               </h1>
-            </Link>
+            </button>
 
             {businessInfo && (
               <button

@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo } from "react";
+import { usePathname } from "next/navigation";
 import {
     ArrowLeft,
     Store,
     Plus,
     BarChart3,
     MessageSquare,
+    Loader2,
 } from "lucide-react";
 
 // Import components
@@ -16,8 +18,9 @@ import {
     BusinessListCard, 
     QuickActionCard, 
     WelcomeSection,
-    type Business 
+    type Business as BusinessCard 
 } from "./components";
+import { useRequireBusinessOwner } from "../hooks/useBusinessAccess";
 
 // CSS animations to match the design schema
 const animations = `
@@ -53,46 +56,108 @@ const animations = `
   .animate-delay-300 { animation-delay: 0.3s; opacity: 0; }
 `;
 
+function formatLastUpdated(primary?: string | null, fallback?: string | null) {
+    const source = primary ?? fallback;
+
+    if (!source) {
+        return "recently";
+    }
+
+    const date = new Date(source);
+    if (Number.isNaN(date.getTime())) {
+        return "recently";
+    }
+
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
 export default function ManageBusinessPage() {
-    // Mock data for business owner's businesses
-    const [businesses] = useState<Business[]>([
-        {
-            id: "1",
-            name: "Mama's Kitchen",
-            category: "Restaurant",
-            status: "active",
-            rating: 4.8,
-            reviews: 127,
-            image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop",
-            lastUpdated: "2 hours ago",
-            pendingReviews: 3,
-            verificationStatus: "verified",
-        },
-        {
-            id: "2",
-            name: "Sunset Yoga Studio",
-            category: "Wellness",
-            status: "active",
-            rating: 4.9,
-            reviews: 89,
-            image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop",
-            lastUpdated: "1 day ago",
-            pendingReviews: 1,
-            verificationStatus: "verified",
-        },
-        {
-            id: "3",
-            name: "Artisan Bakery & Café",
-            category: "Bakery",
-            status: "pending",
-            rating: 0,
-            reviews: 0,
-            image: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&h=300&fit=crop",
-            lastUpdated: "3 days ago",
-            pendingReviews: 0,
-            verificationStatus: "pending",
-        },
-    ]);
+    const pathname = usePathname();
+    const redirectTo = `/business/login?redirect=${encodeURIComponent(pathname || "/manage-business")}`;
+    const { isChecking, hasAccess, businesses: ownedBusinesses } = useRequireBusinessOwner({ redirectTo });
+
+    const businessCards = useMemo<BusinessCard[]>(() => ownedBusinesses.map((biz) => {
+        const rawStatus = (biz as any).status;
+        const normalizedStatus: BusinessCard["status"] = rawStatus === "pending" || rawStatus === "inactive" ? rawStatus : "active";
+
+        const rawRating = (biz as any).average_rating ?? (biz as any).rating ?? 0;
+        const numericRating = Number(rawRating);
+        const rating = Number.isFinite(numericRating) ? Number(numericRating.toFixed(1)) : 0;
+
+        const rawReviews = (biz as any).total_reviews ?? (biz as any).reviews ?? 0;
+        const numericReviews = Number(rawReviews);
+        const reviews = Number.isFinite(numericReviews) ? numericReviews : 0;
+
+        const rawPending = (biz as any).pending_reviews ?? (biz as any).pendingReviews ?? 0;
+        const numericPending = Number(rawPending);
+        const pendingReviews = Number.isFinite(numericPending) ? numericPending : 0;
+
+        const updatedAt = (biz as any).updated_at ?? biz.updated_at ?? null;
+        const createdAt = (biz as any).created_at ?? biz.created_at ?? null;
+
+        const image = (biz as any).uploaded_image ?? (biz as any).uploadedImage ?? biz.image_url ?? (biz as any).image ?? "";
+
+        const verificationStatus: BusinessCard["verificationStatus"] = (biz as any).owner_verified || (biz as any).ownerVerified ? "verified" : "pending";
+
+        return {
+            id: biz.id,
+            name: biz.name,
+            category: biz.category || "Business",
+            status: normalizedStatus,
+            rating,
+            reviews,
+            image,
+            lastUpdated: formatLastUpdated(updatedAt, createdAt),
+            pendingReviews,
+            verificationStatus,
+        };
+    }), [ownedBusinesses]);
+
+    const totalPendingReviews = useMemo(() => businessCards.reduce((sum, business) => sum + (business.pendingReviews || 0), 0), [businessCards]);
+
+    const averageRating = useMemo(() => {
+        const ratedBusinesses = businessCards.filter((business) => business.rating > 0);
+        if (ratedBusinesses.length === 0) {
+            return "N/A";
+        }
+        const total = ratedBusinesses.reduce((sum, business) => sum + business.rating, 0);
+        return (total / ratedBusinesses.length).toFixed(1);
+    }, [businessCards]);
+
+    if (isChecking) {
+        return (
+            <div className="min-h-dvh bg-off-white flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-coral" />
+            </div>
+        );
+    }
+
+    if (!hasAccess) {
+        return (
+            <div className="min-h-dvh bg-off-white flex items-center justify-center px-6 text-center">
+                <div className="space-y-4 max-w-sm">
+                    <h2 className="text-xl font-semibold text-charcoal font-urbanist">Business access required</h2>
+                    <p className="text-sm text-charcoal/70 font-urbanist">
+                        Sign in with your business account or claim a business to manage listings.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <Link
+                            href="/business/login"
+                            className="px-5 py-2.5 rounded-full bg-sage text-white font-urbanist font-600 hover:bg-sage/90 transition-all duration-200"
+                        >
+                            Business Login
+                        </Link>
+                        <Link
+                            href="/claim-business"
+                            className="px-5 py-2.5 rounded-full border border-sage/40 text-charcoal font-urbanist font-600 hover:bg-sage/10 transition-all duration-200"
+                        >
+                            Claim a Business
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <>
@@ -167,31 +232,28 @@ export default function ManageBusinessPage() {
                             <BusinessStatsCard
                                 icon={Store}
                                 label="Total Businesses"
-                                value={businesses.length}
+                                value={businessCards.length}
                                 color="sage"
                                 delay={200}
                             />
                             <BusinessStatsCard
                                 icon={MessageSquare}
                                 label="Pending Reviews"
-                                value={businesses.reduce((sum, business) => sum + business.pendingReviews, 0)}
+                                value={totalPendingReviews}
                                 color="coral"
                                 delay={200}
                             />
                             <BusinessStatsCard
                                 icon={BarChart3}
                                 label="Avg Rating"
-                                value={businesses.filter(b => b.rating > 0).length > 0 
-                                    ? (businesses.filter(b => b.rating > 0).reduce((sum, business) => sum + business.rating, 0) / businesses.filter(b => b.rating > 0).length).toFixed(1)
-                                    : "N/A"
-                                }
+                                value={averageRating}
                                 color="sage"
                                 delay={200}
                             />
                         </div>
 
                         {/* Business List */}
-                        <BusinessListCard businesses={businesses} />
+                        <BusinessListCard businesses={businessCards} />
 
                         {/* Quick Actions */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

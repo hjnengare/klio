@@ -28,6 +28,144 @@ export interface OverpassBusiness {
   tags: Record<string, string>;
 }
 
+// Mapping from subcategories to OSM tags
+export const SUBCATEGORY_TO_OSM_TAGS: Record<string, { amenity?: string[], shop?: string[], tourism?: string[] }> = {
+  // Food & Drink subcategories
+  'restaurants': {
+    amenity: ['restaurant', 'bistro'],
+  },
+  'cafes': {
+    amenity: ['cafe', 'coffee_shop'],
+  },
+  'bars': {
+    amenity: ['bar', 'pub'],
+  },
+  'fast-food': {
+    amenity: ['fast_food', 'food_court', 'ice_cream'],
+  },
+  'fine-dining': {
+    amenity: ['restaurant'], // Fine dining is typically tagged as restaurant with cuisine tags
+  },
+  
+  // Beauty & Wellness subcategories
+  'gyms': {
+    amenity: ['gym', 'fitness_center'],
+  },
+  'spas': {
+    amenity: ['spa', 'massage'],
+  },
+  'salons': {
+    amenity: ['beauty_salon', 'hairdresser'],
+    shop: ['hairdresser'],
+  },
+  'wellness': {
+    amenity: ['spa', 'yoga', 'massage'],
+  },
+  'nail-salons': {
+    amenity: ['nail_salon'],
+  },
+  
+  // Professional Services subcategories
+  'education-learning': {
+    amenity: ['school', 'kindergarten', 'university', 'college', 'library'],
+  },
+  'transport-travel': {
+    amenity: ['taxi', 'bus_station', 'car_rental', 'bicycle_rental'],
+    shop: ['travel_agency'],
+  },
+  'finance-insurance': {
+    amenity: ['bank', 'atm', 'insurance'],
+    shop: ['insurance'],
+  },
+  'plumbers': {
+    amenity: [], // Professional services may not have specific OSM tags
+    shop: ['plumber'],
+  },
+  'electricians': {
+    amenity: [],
+    shop: ['electrician'],
+  },
+  'legal-services': {
+    amenity: ['lawyer'],
+  },
+  
+  // Outdoors & Adventure subcategories
+  'hiking': {
+    tourism: ['attraction'],
+  },
+  'cycling': {
+    amenity: ['bicycle_rental'],
+  },
+  'water-sports': {
+    amenity: ['boat_rental'],
+    tourism: ['attraction'],
+  },
+  'camping': {
+    tourism: ['camp_site', 'caravan_site'],
+  },
+  
+  // Entertainment & Experiences subcategories
+  'events-festivals': {
+    amenity: ['community_centre', 'arts_centre'],
+    tourism: ['attraction'],
+  },
+  'sports-recreation': {
+    amenity: ['sports_centre', 'stadium'],
+    tourism: ['attraction'],
+  },
+  'nightlife': {
+    amenity: ['nightclub', 'bar', 'pub', 'casino'],
+  },
+  'comedy-clubs': {
+    amenity: ['nightclub', 'theatre'],
+  },
+  
+  // Arts & Culture subcategories
+  'museums': {
+    tourism: ['museum'],
+  },
+  'galleries': {
+    tourism: ['gallery', 'artwork'],
+    shop: ['art'],
+  },
+  'theaters': {
+    amenity: ['theatre', 'cinema'],
+  },
+  'concerts': {
+    amenity: ['music_venue', 'arts_centre'],
+  },
+  
+  // Family & Pets subcategories
+  'family-activities': {
+    tourism: ['zoo', 'aquarium', 'theme_park', 'attraction'],
+    amenity: ['playground'],
+  },
+  'pet-services': {
+    shop: ['pet'],
+  },
+  'childcare': {
+    amenity: ['childcare', 'kindergarten'],
+  },
+  'veterinarians': {
+    amenity: ['veterinary'],
+  },
+  
+  // Shopping & Lifestyle subcategories
+  'fashion': {
+    shop: ['clothes', 'fashion', 'jewelry', 'shoes', 'bag', 'boutique'],
+  },
+  'electronics': {
+    shop: ['electronics', 'mobile_phone', 'computer'],
+  },
+  'home-decor': {
+    shop: ['homeware', 'furniture', 'florist', 'gift'],
+  },
+  'books': {
+    shop: ['books'],
+    amenity: ['library'],
+  },
+};
+
 // Category mapping from OSM tags to our business categories
 const OSM_CATEGORY_MAP: Record<string, string> = {
   'restaurant': 'Restaurant',
@@ -76,17 +214,27 @@ const OSM_CATEGORY_MAP: Record<string, string> = {
   'park': 'Park',
   'zoo': 'Zoo',
   'aquarium': 'Aquarium',
+  // Electronics & Telecom
+  'mobile_phone': 'Electronics',
+  'electronics': 'Electronics',
+  'computer': 'Electronics',
+  'telecommunication': 'Electronics',
+  'phone': 'Electronics',
+  'telecom': 'Electronics',
 };
 
 // Default categories for unmapped OSM types
+// Using 'Business' which maps to 'electronics' subcategory (shopping bag icon)
 const DEFAULT_CATEGORY = 'Business';
 
 /**
  * Fetches businesses from Overpass API for Cape Town area
+ * @param limit - Maximum number of businesses to return
+ * @param subcategory - Subcategory ID (e.g., 'restaurants', 'cafes', 'gyms') to filter by
  */
 export async function fetchCapeTownBusinesses(
   limit: number = 100,
-  category?: string
+  subcategory?: string
 ): Promise<OverpassBusiness[]> {
   // Cape Town bounding box (approximate)
   // Format: south,west,north,east
@@ -131,8 +279,8 @@ export async function fetchCapeTownBusinesses(
         }
       }
       
-      // Determine category from tags
-      const category = determineCategory(element.tags);
+      // Determine category from tags and name
+      const category = determineCategory(element.tags, element.tags.name);
       
       // Build address from tags
       const address = buildAddress(element.tags);
@@ -158,20 +306,74 @@ export async function fetchCapeTownBusinesses(
       return businesses;
     }
     
-    // Increase timeout and optimize query
-    // Use smaller bounding box or fewer relation queries if needed
-    const finalQuery = `
-      [out:json][timeout:180];
-      (
-        node["amenity"](${south},${west},${north},${east});
-        way["amenity"](${south},${west},${north},${east});
-        node["shop"](${south},${west},${north},${east});
-        way["shop"](${south},${west},${north},${east});
-        node["tourism"](${south},${west},${north},${east});
-        way["tourism"](${south},${west},${north},${east});
-      );
-      out center meta;
-    `;
+    // Build Overpass query based on subcategory
+    let finalQuery: string;
+    
+    if (subcategory && SUBCATEGORY_TO_OSM_TAGS[subcategory]) {
+      // Filter by specific subcategory
+      const tags = SUBCATEGORY_TO_OSM_TAGS[subcategory];
+      const queries: string[] = [];
+      
+      // Build queries for each tag type
+      if (tags.amenity && tags.amenity.length > 0) {
+        tags.amenity.forEach(tag => {
+          queries.push(`node["amenity"="${tag}"](${south},${west},${north},${east});`);
+          queries.push(`way["amenity"="${tag}"](${south},${west},${north},${east});`);
+        });
+      }
+      
+      if (tags.shop && tags.shop.length > 0) {
+        tags.shop.forEach(tag => {
+          queries.push(`node["shop"="${tag}"](${south},${west},${north},${east});`);
+          queries.push(`way["shop"="${tag}"](${south},${west},${north},${east});`);
+        });
+      }
+      
+      if (tags.tourism && tags.tourism.length > 0) {
+        tags.tourism.forEach(tag => {
+          queries.push(`node["tourism"="${tag}"](${south},${west},${north},${east});`);
+          queries.push(`way["tourism"="${tag}"](${south},${west},${north},${east});`);
+        });
+      }
+      
+      if (queries.length === 0) {
+        // Fallback to general query if no tags found
+        finalQuery = `
+          [out:json][timeout:180];
+          (
+            node["amenity"](${south},${west},${north},${east});
+            way["amenity"](${south},${west},${north},${east});
+            node["shop"](${south},${west},${north},${east});
+            way["shop"](${south},${west},${north},${east});
+            node["tourism"](${south},${west},${north},${east});
+            way["tourism"](${south},${west},${north},${east});
+          );
+          out center meta;
+        `;
+      } else {
+        finalQuery = `
+          [out:json][timeout:180];
+          (
+            ${queries.join('\n            ')}
+          );
+          out center meta;
+        `;
+      }
+    } else {
+      // General query for all businesses (no category filter)
+      finalQuery = `
+        [out:json][timeout:180];
+        (
+          node["amenity"](${south},${west},${north},${east});
+          way["amenity"](${south},${west},${north},${east});
+          node["shop"](${south},${west},${north},${east});
+          way["shop"](${south},${west},${north},${east});
+          node["tourism"](${south},${west},${north},${east});
+          way["tourism"](${south},${west},${north},${east});
+        );
+        out center meta;
+      `;
+    }
     
     // Retry logic for Overpass API (can be slow or rate-limited)
     const maxRetries = 3;
@@ -253,9 +455,9 @@ export async function fetchCapeTownBusinesses(
 }
 
 /**
- * Determines business category from OSM tags
+ * Determines business category from OSM tags and business name
  */
-function determineCategory(tags: Record<string, string>): string {
+function determineCategory(tags: Record<string, string>, businessName?: string): string {
   // Check amenity tag
   if (tags.amenity && OSM_CATEGORY_MAP[tags.amenity]) {
     return OSM_CATEGORY_MAP[tags.amenity];
@@ -274,6 +476,39 @@ function determineCategory(tags: Record<string, string>): string {
   // Check cuisine tag for restaurants
   if (tags.cuisine) {
     return 'Restaurant';
+  }
+  
+  // Use business name hints for better categorization
+  if (businessName) {
+    const nameLower = businessName.toLowerCase();
+    
+    // Telecom/Electronics hints
+    if (nameLower.includes('cell') || nameLower.includes('mobile') || 
+        nameLower.includes('vodacom') || nameLower.includes('mtn') || 
+        nameLower.includes('telkom') || nameLower.includes('telecom') ||
+        nameLower.includes('phone') || nameLower.includes('cellular')) {
+      return 'Electronics';
+    }
+    
+    // Restaurant/Food hints
+    if (nameLower.includes('restaurant') || nameLower.includes('cafe') || 
+        nameLower.includes('bistro') || nameLower.includes('diner') ||
+        nameLower.includes('pizza') || nameLower.includes('burger') ||
+        nameLower.includes('food') || nameLower.includes('kitchen')) {
+      return 'Restaurant';
+    }
+    
+    // Clothing/Fashion hints
+    if (nameLower.includes('boutique') || nameLower.includes('fashion') ||
+        nameLower.includes('clothing') || nameLower.includes('apparel')) {
+      return 'Clothing';
+    }
+    
+    // Fitness/Gym hints
+    if (nameLower.includes('gym') || nameLower.includes('fitness') ||
+        nameLower.includes('health') || nameLower.includes('wellness')) {
+      return 'Fitness';
+    }
   }
   
   // Default category

@@ -20,7 +20,9 @@ import {
     Tag,
     ImageIcon,
     Edit3,
+    Loader2,
 } from "lucide-react";
+import { useRequireBusinessOwner } from "../../../hooks/useBusinessAccess";
 
 // CSS animations to match business profile page
 const animations = `
@@ -59,7 +61,13 @@ const animations = `
 export default function BusinessEditPage() {
     const params = useParams();
     const router = useRouter();
-    const businessId = params?.id as string;
+    const paramId = params?.id;
+    const businessId = Array.isArray(paramId) ? paramId[0] : paramId;
+    const redirectTarget = businessId ? `/business/${businessId}` : "/business/login";
+    const { isChecking, hasAccess } = useRequireBusinessOwner({
+        businessId,
+        redirectTo: redirectTarget,
+    });
 
     // Form state
     const [formData, setFormData] = useState({
@@ -166,6 +174,10 @@ export default function BusinessEditPage() {
     const handleSave = async () => {
         setIsSaving(true);
         try {
+            if (!businessId) {
+                setIsSaving(false);
+                return;
+            }
             // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 2000));
             router.push(`/business/${businessId}`);
@@ -192,6 +204,41 @@ export default function BusinessEditPage() {
         { key: "saturday", label: "Saturday" },
         { key: "sunday", label: "Sunday" },
     ];
+
+    if (!businessId || isChecking) {
+        return (
+            <div className="min-h-dvh bg-off-white flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-coral" />
+            </div>
+        );
+    }
+
+    if (!hasAccess) {
+        return (
+            <div className="min-h-dvh bg-off-white flex items-center justify-center px-6 text-center">
+                <div className="space-y-4 max-w-sm">
+                    <h2 className="text-xl font-semibold text-charcoal font-urbanist">Access denied</h2>
+                    <p className="text-sm text-charcoal/70 font-urbanist">
+                        You must be a verified owner of this business to edit its profile.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <Link
+                            href={`/business/${businessId}`}
+                            className="px-5 py-2.5 rounded-full bg-sage text-white font-urbanist font-600 hover:bg-sage/90 transition-all duration-200"
+                        >
+                            View Business
+                        </Link>
+                        <Link
+                            href="/claim-business"
+                            className="px-5 py-2.5 rounded-full border border-sage/40 text-charcoal font-urbanist font-600 hover:bg-sage/10 transition-all duration-200"
+                        >
+                            Claim Ownership
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <>

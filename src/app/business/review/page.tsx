@@ -116,7 +116,7 @@ export default function WriteReviewPage() {
       images: selectedImages,
     });
     alert("Review submitted! (UI/UX Demo Mode)");
-    router.push("/home");
+    router.back();
   };
 
   return (

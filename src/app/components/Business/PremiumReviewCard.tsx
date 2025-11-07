@@ -49,11 +49,7 @@ export function PremiumReviewCard({
                         </div>
                     ) : (
                         <div className="grid place-items-center h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-sage/20 to-sage/10 ring-1 ring-sage/20">
-                            {profileImage && imageError ? (
-                                <User className="h-4 w-4 sm:h-5 sm:w-5 text-sage" />
-                            ) : (
-                                <span className="text-sage font-semibold text-sm sm:text-base">{author?.[0]?.toUpperCase() || "U"}</span>
-                            )}
+                            <User className="h-4 w-4 sm:h-5 sm:w-5 text-sage" />
                         </div>
                     )}
                     {verified && (

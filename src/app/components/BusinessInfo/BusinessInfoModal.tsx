@@ -31,7 +31,6 @@ export default function BusinessInfoModal({
   onClose 
 }: BusinessInfoModalProps) {
   const [isClosing, setIsClosing] = useState(false);
-  const [modalPosition, setModalPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
 
   const handleClose = () => {
     setIsClosing(true);
@@ -41,67 +40,28 @@ export default function BusinessInfoModal({
     }, 300); // Match animation duration
   };
 
-  useEffect(() => {
-    if (!isOpen || !buttonRef.current) return;
-
-    const updatePosition = () => {
-      const button = buttonRef.current;
-      if (!button) return;
-
-      const rect = button.getBoundingClientRect();
-      const gap = 8;
-      const rightPadding = 16;
-      const modalWidth = 400;
-      const maxWidth = window.innerWidth - rightPadding;
-      
-      // Calculate left position - align to right edge of button or adjust if it would overflow
-      let left = rect.left;
-      if (left + modalWidth > maxWidth) {
-        left = maxWidth - modalWidth;
-      }
-      // Ensure it doesn't go off the left edge
-      left = Math.max(rightPadding, left);
-      
-      setModalPosition({
-        top: rect.bottom + gap,
-        left: left,
-      });
-    };
-
-    updatePosition();
-    window.addEventListener('resize', updatePosition);
-    window.addEventListener('scroll', updatePosition, true);
-
-    return () => {
-      window.removeEventListener('resize', updatePosition);
-      window.removeEventListener('scroll', updatePosition, true);
-    };
-  }, [isOpen, buttonRef]);
-
   if (!isOpen) return null;
 
   return createPortal(
     <>
-      {/* Invisible overlay to close on outside click */}
+      {/* Subtle dark overlay */}
       <div
-        className="fixed inset-0 z-[9999] pointer-events-auto"
+        className="fixed inset-0 z-[9999] bg-black/20 pointer-events-auto"
         onClick={handleClose}
       />
-      {/* Modal positioned below header */}
-      <div
-        className={`fixed z-[10000] bg-off-white rounded-2xl border border-white/60 shadow-xl max-w-md max-h-[90vh] overflow-y-auto pointer-events-auto transition-all duration-300 ease-out ${
-          isClosing ? 'opacity-0 scale-95 translate-y-[-8px]' : 'opacity-100 scale-100 translate-y-0'
-        }`}
-        style={{
-          top: `${modalPosition.top}px`,
-          left: `${modalPosition.left}px`,
-          width: '400px',
-          maxWidth: 'calc(100vw - 32px)',
-          fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
-          animation: isClosing ? 'none' : 'fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
+
+      <div className="fixed inset-0 z-[10000] flex items-start md:items-center justify-center p-4 sm:p-6 pointer-events-none">
+        <div
+          className={`relative w-full pointer-events-auto bg-off-white rounded-2xl border border-white/60 shadow-xl max-h-[90vh] overflow-y-auto transition-all duration-300 ease-out ${
+            isClosing ? 'opacity-0 scale-95 translate-y-[-8px]' : 'opacity-100 scale-100 translate-y-0'
+          }`}
+          style={{
+            maxWidth: 'min(680px, 100%)',
+            fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+            animation: isClosing ? 'none' : 'fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
         <div className="sticky top-0 bg-off-white border-b border-charcoal/10 px-5 sm:px-6 py-4 flex items-center justify-between">
           <h2 className="text-base font-bold text-charcoal" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
             Business Information
@@ -217,6 +177,7 @@ export default function BusinessInfoModal({
             </div>
           )}
         </div>
+      </div>
       </div>
     </>,
     document.body

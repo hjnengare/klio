@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import React, { useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Star } from "react-feather";
+import { ChevronLeft, ChevronRight, Star as StarIcon, Star, Image as ImageIcon } from "react-feather";
 
 interface ImageCarouselProps {
     images: string[];
     altBase: string;
     rating: number;
     metrics: { label: string; value: number; color: "sage" | "coral" }[];
+    placeholderImage?: string; // Optional placeholder PNG for when no images
 }
 
 export function ImageCarousel({
@@ -16,10 +17,16 @@ export function ImageCarousel({
     altBase,
     rating,
     metrics,
+    placeholderImage,
 }: ImageCarouselProps) {
     const [index, setIndex] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const total = images.length;
+    // Filter out empty strings and null values from images array
+    const validImages = images?.filter((img: string) => img && img.trim() !== '') || [];
+    const hasImages = validImages.length > 0;
+    const displayImages = hasImages ? validImages : (placeholderImage ? [placeholderImage] : []);
+    const hasFallbackImage = displayImages.length > 0;
+    const total = displayImages.length;
 
     const next = useCallback(() => setIndex((i) => (i + 1) % total), [total]);
     const prev = useCallback(() => setIndex((i) => (i - 1 + total) % total), [total]);
@@ -66,35 +73,58 @@ export function ImageCarousel({
             {/* Slides */}
             <div
                 className="relative h-[80vh] sm:h-screen overflow-visible sm:overflow-hidden cursor-pointer group bg-card-bg flex items-center justify-center rounded-2xl"
-                onClick={openModal}
+                onClick={hasImages ? openModal : undefined}
             >
-                {images.map((src, i) => (
-                    <div
-                        key={src}
-                        className={`absolute inset-0 transition-opacity duration-300 bg-card-bg rounded-2xl ${
-                            i === index ? 'opacity-100' : 'opacity-0'
-                        }`}
-                    >
-                        <Image
-                            src={src}
-                            alt={`${altBase} image ${i + 1}`}
-                            fill
-                            className="object-cover sm:object-contain sm:scale-110 transition-transform duration-300 group-hover:scale-105 sm:group-hover:scale-115"
-                            sizes="(max-width: 768px) 100vw, 768px"
-                            priority={i === 0}
-                            loading={i === 0 ? "eager" : "lazy"}
-                        />
+                {hasImages ? (
+                    displayImages.map((src, i) => (
+                        <div
+                            key={src || i}
+                            className={`absolute inset-0 transition-opacity duration-300 bg-card-bg rounded-2xl ${
+                                i === index ? 'opacity-100' : 'opacity-0'
+                            }`}
+                        >
+                            <Image
+                                src={src}
+                                alt={`${altBase} image ${i + 1}`}
+                                fill
+                                className="object-cover sm:object-contain sm:scale-110 transition-transform duration-300 group-hover:scale-105 sm:group-hover:scale-115"
+                                sizes="(max-width: 768px) 100vw, 768px"
+                                priority={i === 0}
+                                loading={i === 0 ? "eager" : "lazy"}
+                            />
 
-                        {/* Zoom overlay on hover */}
-                        <div className="absolute inset-0 bg-black/5 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg">
-                                <svg className="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                                </svg>
+                            {/* Zoom overlay on hover */}
+                            <div className="absolute inset-0 bg-black/5 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
+                                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg">
+                                    <svg className="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
+                    ))
+                ) : (
+                    // Placeholder icon when no images
+                    <div className="absolute inset-0 flex items-center justify-center bg-card-bg rounded-2xl">
+                        {placeholderImage ? (
+                            <Image
+                                src={placeholderImage}
+                                alt={`${altBase} placeholder`}
+                                width={254}
+                                height={254}
+                                className="object-contain opacity-60"
+                                priority
+                            />
+                        ) : (
+                            <div className="flex flex-col items-center justify-center text-coral/30 gap-3">
+                                <StarIcon className="w-32 h-32" strokeWidth={1.2} />
+                                <span className="text-sm font-semibold tracking-wide uppercase text-charcoal/50">
+                                    No Photos Yet
+                                </span>
+                            </div>
+                        )}
                     </div>
-                ))}
+                )}
             </div>
 
             {/* Caption overlay: rating + metrics */}
@@ -125,21 +155,25 @@ export function ImageCarousel({
                 </div>
             </div>
 
-            {/* Controls */}
-            <button
-                aria-label="Previous image"
-                onClick={prev}
-                className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-off-white/80 hover:bg-off-white p-2 shadow-sm border border-black/5"
-            >
-                <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-                aria-label="Next image"
-                onClick={next}
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-off-white/80 hover:bg-off-white p-2 shadow-sm border border-black/5"
-            >
-                <ChevronRight className="w-5 h-5" />
-            </button>
+            {/* Controls - Only show if there are multiple images */}
+            {total > 1 && (
+                <>
+                    <button
+                        aria-label="Previous image"
+                        onClick={prev}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-off-white/80 hover:bg-off-white p-2 shadow-sm border border-black/5"
+                    >
+                        <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                        aria-label="Next image"
+                        onClick={next}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-off-white/80 hover:bg-off-white p-2 shadow-sm border border-black/5"
+                    >
+                        <ChevronRight className="w-5 h-5" />
+                    </button>
+                </>
+            )}
 
             {/* Image Modal */}
             {isModalOpen && (
@@ -165,7 +199,7 @@ export function ImageCarousel({
                         {/* Modal Image */}
                         <div className="relative aspect-[16/9] overflow-hidden rounded-lg">
                             <Image
-                                src={images[index]}
+                                src={displayImages[index]}
                                 alt={`${altBase} image ${index + 1}`}
                                 fill
                                 className="object-contain"
@@ -175,7 +209,7 @@ export function ImageCarousel({
                         </div>
 
                         {/* Modal Navigation */}
-                        {images.length > 1 && (
+                        {displayImages.length > 1 && (
                             <>
                                 <button
                                     onClick={(e) => {
@@ -202,7 +236,7 @@ export function ImageCarousel({
 
                         {/* Image Counter */}
                         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-coral px-3 py-1 rounded-full text-sm font-medium">
-                            {index + 1} / {images.length}
+                            {index + 1} / {displayImages.length}
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import BusinessCard, { Business } from "../components/BusinessCard/BusinessCard";
 import Footer from "../components/Footer/Footer";
-import { ArrowLeft, ChevronLeft, ChevronRight } from "react-feather";
+import { ArrowLeft, ChevronLeft, ChevronRight, Star } from "react-feather";
 import { useForYouBusinesses } from "../hooks/useBusinesses";
 import ToastContainer from "../components/ToastNotification/ToastContainer";
 import { useToastNotifications } from "../hooks/useToastNotifications";
@@ -74,7 +74,7 @@ export default function ForYouPage() {
       <section className="relative z-10 pt-16 sm:pt-20 pb-6 sm:pb-8 md:pb-12">
         <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Breadcrumb */}
-          <nav className="px-2 sm:px-4 pb-2" aria-label="Breadcrumb">
+          <nav className="px-2 sm:px-4 py-4" aria-label="Breadcrumb">
             <ol className="flex items-center gap-1 text-sm text-charcoal/60">
               <li>
                 <Link href="/home" className="hover:text-charcoal transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
@@ -85,6 +85,19 @@ export default function ForYouPage() {
               <li className="text-charcoal font-medium" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>For You</li>
             </ol>
           </nav>
+
+          {/* Header Section */}
+          <div className="mb-6 sm:mb-8 text-center px-2 sm:px-4 pb-2">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-sm border border-white/30">
+              <Star className="w-6 h-6 sm:w-7 sm:h-7 text-charcoal" />
+            </div>
+            <h2 className="font-urbanist text-lg sm:text-xl md:text-2xl font-600 text-charcoal mb-2">
+              Personalized For You
+            </h2>
+            <p className="font-urbanist text-charcoal/70 text-xs sm:text-sm max-w-md mx-auto px-2">
+              Discover businesses tailored to your interests and preferences
+            </p>
+          </div>
         </div>
       </section>
 

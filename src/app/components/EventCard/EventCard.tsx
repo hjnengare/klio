@@ -33,9 +33,9 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
       }}
     >
       <Link href={`/event/${event.id}`} className="block group">
-        <article className="relative overflow-hidden cursor-pointer w-full sm:w-[252px] md:w-[277px] lg:w-[288px] h-[400px] sm:h-[450px] flex flex-col bg-card-bg backdrop-blur-xl border border-white/60 rounded-[16px] sm:rounded-[20px] shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1">
+        <article className="relative overflow-hidden cursor-pointer w-full sm:w-[252px] md:w-[277px] lg:w-[288px] h-[400px] sm:h-[450px] flex flex-col bg-card-bg backdrop-blur-xl border border-white/60 rounded-[12px] shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1">
           {/* MEDIA - Full bleed with premium overlay */}
-          <div className="relative overflow-hidden flex-[2] z-10">
+          <div className="relative overflow-hidden flex-[2] z-10 rounded-t-[12px]">
             <div className="relative w-full h-full">
               {event.image ? (
                 <div className="relative w-full h-full overflow-hidden">
