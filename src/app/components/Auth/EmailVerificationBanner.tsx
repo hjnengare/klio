@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
-import { Mail, X, Loader2 } from 'lucide-react';
+import { Mail, X } from 'lucide-react';
+import { InlineLoader } from '../Loader';
 
 interface EmailVerificationBannerProps {
   onDismiss?: () => void;
@@ -64,7 +65,7 @@ export default function EmailVerificationBanner({ onDismiss, className = "" }: E
             >
               {isResending ? (
                 <>
-                  <Loader2 className="w-3 h-3 animate-spin" />
+                  <InlineLoader size="xs" color="current" />
                   Sending...
                 </>
               ) : (

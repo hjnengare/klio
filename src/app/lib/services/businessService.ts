@@ -64,9 +64,9 @@ export class BusinessService {
             tags,
             helpful_count,
             created_at,
-            user:users (
-              id,
-              name,
+            profile:profiles!reviews_user_id_fkey (
+              user_id,
+              display_name,
               avatar_url
             ),
             review_images (
@@ -120,9 +120,9 @@ export class BusinessService {
             tags,
             helpful_count,
             created_at,
-            user:users (
-              id,
-              name,
+            profile:profiles!reviews_user_id_fkey (
+              user_id,
+              display_name,
               avatar_url
             ),
             review_images (

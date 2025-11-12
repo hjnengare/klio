@@ -8,9 +8,9 @@ export class ReviewService {
         .from('reviews')
         .select(`
           *,
-          user:users (
-            id,
-            name,
+          profile:profiles!reviews_user_id_fkey (
+            user_id,
+            display_name,
             avatar_url
           ),
           review_images (
@@ -73,12 +73,12 @@ export class ReviewService {
       const image = images[i];
       const fileExt = image.name.split('.').pop();
       const fileName = `${reviewId}_${i}.${fileExt}`;
-      const filePath = `review-images/${fileName}`;
+      const filePath = `${reviewId}/${fileName}`; // Organize by review ID
 
       try {
         // Upload image to Supabase Storage
         const { error: uploadError } = await supabase.storage
-          .from('review-images')
+          .from('review_images')
           .upload(filePath, image);
 
         if (uploadError) {
@@ -88,7 +88,7 @@ export class ReviewService {
 
         // Get the public URL
         const { data: { publicUrl } } = supabase.storage
-          .from('review-images')
+          .from('review_images')
           .getPublicUrl(filePath);
 
         // Save image record to database
@@ -96,6 +96,7 @@ export class ReviewService {
           .from('review_images')
           .insert({
             review_id: reviewId,
+            storage_path: filePath,
             image_url: publicUrl,
             alt_text: `Review image ${i + 1}`
           })
@@ -119,46 +120,13 @@ export class ReviewService {
 
   static async updateBusinessStats(businessId: string): Promise<void> {
     try {
-      // Get all reviews for the business
-      const { data: reviews, error: reviewsError } = await supabase
-        .from('reviews')
-        .select('rating')
-        .eq('business_id', businessId);
-
-      if (reviewsError) throw reviewsError;
-
-      if (!reviews || reviews.length === 0) return;
-
-      // Calculate stats
-      const totalReviews = reviews.length;
-      const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-      const averageRating = totalRating / totalReviews;
-
-      // Calculate rating distribution
-      const ratingDistribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-      reviews.forEach(review => {
-        ratingDistribution[review.rating as keyof typeof ratingDistribution]++;
+      const { error } = await supabase.rpc('update_business_stats', {
+        p_business_id: businessId,
       });
 
-      // Calculate percentiles (simplified - in real app you'd compare against all businesses)
-      const percentiles = {
-        service: Math.min(95, Math.round(averageRating * 20)), // Mock calculation
-        price: Math.min(90, Math.round((averageRating - 0.2) * 20)), // Mock calculation
-        ambience: Math.min(93, Math.round((averageRating + 0.1) * 20)) // Mock calculation
-      };
-
-      // Upsert business stats
-      const { error: statsError } = await supabase
-        .from('business_stats')
-        .upsert({
-          business_id: businessId,
-          total_reviews: totalReviews,
-          average_rating: parseFloat(averageRating.toFixed(1)),
-          rating_distribution: ratingDistribution,
-          percentiles
-        });
-
-      if (statsError) throw statsError;
+      if (error) {
+        throw error;
+      }
     } catch (error) {
       console.error('Error updating business stats:', error);
     }
@@ -170,9 +138,9 @@ export class ReviewService {
         .from('reviews')
         .select(`
           *,
-          user:users (
-            id,
-            name,
+          profile:profiles!reviews_user_id_fkey (
+            user_id,
+            display_name,
             avatar_url
           ),
           business:businesses (

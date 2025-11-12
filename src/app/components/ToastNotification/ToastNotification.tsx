@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export interface ToastNotificationData {
   id: string;
-  type: "review" | "business" | "user";
+  type: "review" | "business" | "user" | "highlyRated";
   message: string;
   title: string;
   timeAgo: string;
@@ -44,28 +44,38 @@ export default function ToastNotification({
     return () => clearInterval(interval);
   }, [duration, onClose]);
 
+  // Special styling for highly rated notifications
+  const isHighlyRated = notification.type === "highlyRated";
+  const borderClass = isHighlyRated 
+    ? "border-coral/60 ring-coral/30" 
+    : "border-white/50 ring-white/20";
+  const progressBarBg = isHighlyRated ? "bg-coral/10" : "bg-sage/10";
+  const progressBarGradient = isHighlyRated 
+    ? "from-coral to-coral/90" 
+    : "from-sage to-sage/90";
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 100, scale: 0.8 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 100, scale: 0.8 }}
       transition={{ type: "spring", damping: 25, stiffness: 300 }}
-      className="notification-toast relative bg-page-bg backdrop-blur-md border border-white/50 rounded-xl ring-1 ring-white/20 shadow-lg overflow-hidden w-80 max-w-[calc(100vw-2rem)]"
+      className={`notification-toast relative bg-page-bg backdrop-blur-md border rounded-xl ring-1 shadow-lg overflow-hidden w-80 max-w-[calc(100vw-2rem)] ${borderClass}`}
     >
       {/* Progress bar */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-sage/10">
+      <div className={`absolute top-0 left-0 right-0 h-1 ${progressBarBg}`}>
         <motion.div
-          className="h-full bg-gradient-to-r from-sage to-sage/90"
+          className={`h-full bg-gradient-to-r ${progressBarGradient}`}
           style={{ width: `${progress}%` }}
           transition={{ duration: 0.05 }}
         />
       </div>
 
-      <div className="flex items-start gap-3 p-4 pt-5">
+      <div className="flex items-start gap-3 p-4 pt-5 pl-14">
         {/* Close button */}
         <button
           onClick={onClose}
-          className="toast-close-btn absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-gradient-to-br from-charcoal to-charcoal/90 text-white hover:scale-110 transition-all duration-200 border border-white/30 shadow-sm z-10"
+          className="toast-close-btn absolute top-2 left-2 w-7 h-7 flex items-center justify-center rounded-full bg-gradient-to-br from-charcoal to-charcoal/90 text-white hover:scale-110 transition-all duration-200 border border-white/30 shadow-sm z-10"
           aria-label="Close notification"
         >
           <svg

@@ -1,7 +1,7 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { createContext, useContext, useEffect, useRef, useState, ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface PageTransitionContextType {
@@ -26,34 +26,27 @@ interface PageTransitionProviderProps {
 export default function PageTransitionProvider({ children }: PageTransitionProviderProps) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [displayChildren, setDisplayChildren] = useState(children);
-  const router = useRouter();
   const pathname = usePathname();
+  const isFirstRender = useRef(true);
 
   // Handle route changes with optimized transitions
   useEffect(() => {
-    const handleRouteChange = () => {
-      setIsTransitioning(true);
-      
-      // Use requestAnimationFrame for smoother transitions
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          setDisplayChildren(children);
-          setIsTransitioning(false);
-        }, 150); // Reduced transition time
-      });
-    };
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      setDisplayChildren(children);
+      return;
+    }
 
-    // Listen for route changes
-    const handleBeforeUnload = () => {
-      setIsTransitioning(true);
-    };
+    setIsTransitioning(true);
+    const transitionTimeout = window.setTimeout(() => {
+      setDisplayChildren(children);
+      requestAnimationFrame(() => setIsTransitioning(false));
+    }, 90); // faster transitions
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.clearTimeout(transitionTimeout);
     };
-  }, [children]);
+  }, [children, pathname]);
 
   const value = {
     isTransitioning,
@@ -65,12 +58,12 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
       <AnimatePresence mode="wait">
         <motion.div
           key={pathname}
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
+          exit={{ opacity: 0, y: -6 }}
           transition={{ 
-            duration: 0.2,
-            ease: "easeInOut"
+            duration: 0.12,
+            ease: [0.25, 0.1, 0.25, 1]
           }}
           className="min-h-screen"
         >

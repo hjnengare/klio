@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import {
     ArrowLeft,
@@ -80,6 +80,7 @@ interface DMUser {
 
 export default function DMPage() {
     const params = useParams();
+    const router = useRouter();
     const recipientId = params?.id as string;
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState<Message[]>([]);
@@ -199,15 +200,15 @@ export default function DMPage() {
                 >
                     <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
                         <nav className="flex items-center justify-between" aria-label="Direct message navigation">
-                            <Link
-                                href="/home"
+                            <button
+                                onClick={() => router.back()}
                                 className="group flex items-center focus:outline-none rounded-lg px-1 -mx-1"
-                                aria-label="Go back to home"
+                                aria-label="Go back to previous page"
                             >
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
                                     <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                                 </div>
-                            </Link>
+                            </button>
 
                             {/* Recipient Info */}
                             <div className="flex items-center gap-3 flex-1 min-w-0 mx-4">

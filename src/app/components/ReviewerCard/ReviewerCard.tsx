@@ -56,7 +56,7 @@ export default function ReviewerCard({
           className="block"
         >
           <div
-            className="bg-card-bg backdrop-blur-xl rounded-[20px] overflow-hidden group cursor-pointer h-[240px] relative border border-white/60 shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
+            className="bg-card-bg backdrop-blur-xl rounded-[20px] overflow-hidden group cursor-pointer h-[240px] relative border border-white/60 shadow-lg"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -257,7 +257,7 @@ export default function ReviewerCard({
         className="block"
       >
         <div
-          className="bg-card-bg backdrop-blur-xl rounded-[20px] group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/60 shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
+          className="bg-card-bg backdrop-blur-xl rounded-[20px] group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/60 shadow-lg"
         >
         <div className="flex items-start gap-1.5 mb-2 p-2">
           <div className="relative">

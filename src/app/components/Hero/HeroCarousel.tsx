@@ -122,7 +122,7 @@ export default function HeroCarousel({ userInterests: propInterests }: HeroCarou
         },
         {
           id: "prof-3",
-          image: "/hero/DSC_3122.jpg",
+          image: "/hero/wheelchair+and+nurse.webp",
           title: "Trusted Professionals",
           description: "Work with verified experts for all your service needs",
         },
@@ -196,19 +196,19 @@ export default function HeroCarousel({ userInterests: propInterests }: HeroCarou
       'family-pets': [
         {
           id: "family-1",
-          image: "/hero/garden-services-9.jpg",
+          image: "/hero/pets.jpg",
           title: "Family & Pets",
           description: "Find family-friendly places and pet services that everyone will love",
         },
         {
           id: "family-2",
-          image: "/hero/wheelchair+and+nurse.webp",
+          image: "/hero/pets.jpg",
           title: "Family Care",
           description: "Discover trusted services for your family and beloved pets",
         },
         {
           id: "family-3",
-          image: "/hero/views.jpg",
+          image: "/hero/pets.jpg",
           title: "Family Adventures",
           description: "Explore family-friendly destinations and activities",
         },

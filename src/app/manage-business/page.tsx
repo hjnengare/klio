@@ -9,8 +9,8 @@ import {
     Plus,
     BarChart3,
     MessageSquare,
-    Loader2,
 } from "lucide-react";
+import { PageLoader } from "../components/Loader";
 
 // Import components
 import { 
@@ -125,11 +125,7 @@ export default function ManageBusinessPage() {
     }, [businessCards]);
 
     if (isChecking) {
-        return (
-            <div className="min-h-dvh bg-off-white flex items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-coral" />
-            </div>
-        );
+        return <PageLoader size="lg" color="sage" text="Loading..." />;
     }
 
     if (!hasAccess) {

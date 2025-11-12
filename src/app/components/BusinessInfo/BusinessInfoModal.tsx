@@ -76,94 +76,108 @@ export default function BusinessInfoModal({
         </div>
 
         <div className="px-5 sm:px-6 py-4 pb-6 space-y-4" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-          {businessInfo.name && (
-            <div>
-              <h3 className="text-sm font-semibold text-charcoal mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-                {businessInfo.name}
-              </h3>
-            </div>
-          )}
+          {/* Business Name */}
+          <div>
+            <h3 className="text-sm font-semibold text-charcoal mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              {businessInfo.name || 'Business Name Not Available'}
+            </h3>
+          </div>
 
-          {businessInfo.category && (
-            <div className="flex items-center gap-2 text-sm text-charcoal/70" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-              <span className="font-medium text-charcoal/60">Category:</span>
-              <span>{businessInfo.category}</span>
-            </div>
-          )}
+          {/* Category */}
+          <div className="flex items-center gap-2 text-sm text-charcoal/70" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+            <span className="font-medium text-charcoal/60">Category:</span>
+            <span className={!businessInfo.category ? 'italic text-charcoal/40' : ''}>
+              {businessInfo.category || 'Not specified'}
+            </span>
+          </div>
 
-          {businessInfo.description && (
-            <div className="text-sm text-charcoal/70" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-              <p className="font-medium text-charcoal/60 mb-1">Description</p>
-              <p className="leading-relaxed">{businessInfo.description}</p>
-            </div>
-          )}
+          {/* Description */}
+          <div className="text-sm text-charcoal/70" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+            <p className="font-medium text-charcoal/60 mb-1">Description</p>
+            <p className={`leading-relaxed ${!businessInfo.description ? 'italic text-charcoal/40' : ''}`}>
+              {businessInfo.description || 'No description available'}
+            </p>
+          </div>
 
-          {businessInfo.price_range && (
-            <div className="flex items-center gap-2 text-sm text-charcoal/70" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-              <DollarSign className="w-4 h-4 text-sage flex-shrink-0" />
-              <span className="font-medium text-charcoal/60">Price Range:</span>
-              <span>{businessInfo.price_range}</span>
-            </div>
-          )}
+          {/* Price Range */}
+          <div className="flex items-center gap-2 text-sm text-charcoal/70" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+            <DollarSign className={`w-4 h-4 flex-shrink-0 ${businessInfo.price_range ? 'text-sage' : 'text-charcoal/30'}`} />
+            <span className="font-medium text-charcoal/60">Price Range:</span>
+            <span className={!businessInfo.price_range ? 'italic text-charcoal/40' : ''}>
+              {businessInfo.price_range || 'Not specified'}
+            </span>
+          </div>
 
-          {businessInfo.verified !== undefined && (
-            <div className="flex items-center gap-2 text-sm" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-              <CheckCircle className={`w-4 h-4 flex-shrink-0 ${businessInfo.verified ? 'text-sage' : 'text-charcoal/40'}`} />
-              <span className={`font-medium ${businessInfo.verified ? 'text-sage' : 'text-charcoal/60'}`}>
-                {businessInfo.verified ? 'Verified Business' : 'Not Verified'}
-              </span>
-            </div>
-          )}
+          {/* Verification Status */}
+          <div className="flex items-center gap-2 text-sm" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+            <CheckCircle className={`w-4 h-4 flex-shrink-0 ${businessInfo.verified ? 'text-sage' : 'text-charcoal/40'}`} />
+            <span className={`font-medium ${businessInfo.verified ? 'text-sage' : 'text-charcoal/60'}`}>
+              {businessInfo.verified ? 'Verified Business' : 'Not Verified'}
+            </span>
+          </div>
 
-          {businessInfo.location && (
-            <div className="flex items-start gap-3">
-              <MapPin className="w-4 h-4 text-sage mt-0.5 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-charcoal mb-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Location</p>
-                <p className="text-sm text-charcoal/70" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{businessInfo.location}</p>
-              </div>
+          {/* Location */}
+          <div className="flex items-start gap-3">
+            <MapPin className={`w-4 h-4 mt-0.5 flex-shrink-0 ${businessInfo.location ? 'text-sage' : 'text-charcoal/30'}`} />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-charcoal mb-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Location</p>
+              <p className={`text-sm ${businessInfo.location ? 'text-charcoal/70' : 'italic text-charcoal/40'}`} style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                {businessInfo.location || 'Location not provided'}
+              </p>
             </div>
-          )}
+          </div>
 
-          {businessInfo.address && (
-            <div className="flex items-start gap-3">
-              <MapPin className="w-4 h-4 text-sage mt-0.5 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-charcoal mb-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Address</p>
-                <p className="text-sm text-charcoal/70" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{businessInfo.address}</p>
-              </div>
+          {/* Address */}
+          <div className="flex items-start gap-3">
+            <MapPin className={`w-4 h-4 mt-0.5 flex-shrink-0 ${businessInfo.address ? 'text-sage' : 'text-charcoal/30'}`} />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-charcoal mb-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Address</p>
+              <p className={`text-sm ${businessInfo.address ? 'text-charcoal/70' : 'italic text-charcoal/40'}`} style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                {businessInfo.address || 'Address not provided'}
+              </p>
             </div>
-          )}
+          </div>
 
-          {businessInfo.phone && (
-            <div className="flex items-start gap-3">
-              <Phone className="w-4 h-4 text-sage mt-0.5 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-charcoal mb-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Phone</p>
+          {/* Phone */}
+          <div className="flex items-start gap-3">
+            <Phone className={`w-4 h-4 mt-0.5 flex-shrink-0 ${businessInfo.phone ? 'text-sage' : 'text-charcoal/30'}`} />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-charcoal mb-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Phone</p>
+              {businessInfo.phone ? (
                 <a href={`tel:${businessInfo.phone}`} className="text-sm text-sage hover:text-coral transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                   {businessInfo.phone}
                 </a>
-              </div>
+              ) : (
+                <p className="text-sm italic text-charcoal/40" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                  Phone number not provided
+                </p>
+              )}
             </div>
-          )}
+          </div>
 
-          {businessInfo.email && (
-            <div className="flex items-start gap-3">
-              <Mail className="w-4 h-4 text-sage mt-0.5 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-charcoal mb-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Email</p>
+          {/* Email */}
+          <div className="flex items-start gap-3">
+            <Mail className={`w-4 h-4 mt-0.5 flex-shrink-0 ${businessInfo.email ? 'text-sage' : 'text-charcoal/30'}`} />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-charcoal mb-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Email</p>
+              {businessInfo.email ? (
                 <a href={`mailto:${businessInfo.email}`} className="text-sm text-sage hover:text-coral transition-colors break-all" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                   {businessInfo.email}
                 </a>
-              </div>
+              ) : (
+                <p className="text-sm italic text-charcoal/40" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                  Email not provided
+                </p>
+              )}
             </div>
-          )}
+          </div>
 
-          {businessInfo.website && (
-            <div className="flex items-start gap-3">
-              <Globe className="w-4 h-4 text-sage mt-0.5 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-charcoal mb-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Website</p>
+          {/* Website */}
+          <div className="flex items-start gap-3">
+            <Globe className={`w-4 h-4 mt-0.5 flex-shrink-0 ${businessInfo.website ? 'text-sage' : 'text-charcoal/30'}`} />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-charcoal mb-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Website</p>
+              {businessInfo.website ? (
                 <a 
                   href={businessInfo.website.startsWith('http') ? businessInfo.website : `https://${businessInfo.website}`}
                   target="_blank"
@@ -173,9 +187,13 @@ export default function BusinessInfoModal({
                 >
                   {businessInfo.website}
                 </a>
-              </div>
+              ) : (
+                <p className="text-sm italic text-charcoal/40" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                  Website not provided
+                </p>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
       </div>

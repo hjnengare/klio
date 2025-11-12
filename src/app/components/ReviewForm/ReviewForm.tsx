@@ -50,14 +50,11 @@ export default function ReviewForm({
   onSubmit,
 }: ReviewFormProps) {
   return (
-    <div className="bg-gradient-to-br bg-off-white backdrop-blur-md border border-sage/10 rounded-2xl p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col shadow-lg py-4 md:py-6 border border-white/30">
+    <div className="p-0 md:p-8 mb-0 md:mb-8 relative overflow-hidden flex flex-col py-4 md:py-6">
       {/* Subtle glows - similar to review cards */}
-      <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-lg" />
-      <span className="pointer-events-none absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-coral/10 blur-lg" />
 
       <div className="relative z-10 flex-1 flex flex-col">
         <div className="hidden md:block">
-          <BusinessInfo businessName={businessName} businessRating={businessRating} />
           <BusinessCarousel businessName={businessName} businessImages={businessImages} />
         </div>
         <RatingSelector overallRating={overallRating} onRatingChange={onRatingChange} />

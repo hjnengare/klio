@@ -62,7 +62,7 @@ export default function Home() {
         <ToastContainer
           notifications={notifications}
           onRemove={removeNotification}
-          position="bottom-right"
+          position="bottom-left"
           duration={5000}
         />
 
@@ -70,46 +70,39 @@ export default function Home() {
       </div>
 
       <div className="bg-off-white">
-        <div className="py-1 pb-12 sm:pb-16 md:pb-20">
-            {/* No scroll-reveal wrappers; simple static rendering */}
+        <div className="pb-12 sm:pb-16 md:pb-20">
+          {/* No scroll-reveal wrappers; simple static rendering */}
           {forYouBusinesses.length > 0 && (
-            <div data-section="for-you">
-              <MemoizedBusinessRow
-                title="For You"
-                businesses={forYouBusinesses}
-                cta="See More"
-                href="/for-you"
-              />
-            </div>
+            <MemoizedBusinessRow
+              title="For You"
+              businesses={forYouBusinesses}
+              cta="See More"
+              href="/for-you"
+            />
           )}
 
           {trendingBusinesses.length > 0 && (
-            <div>
-              <MemoizedBusinessRow
-                title="Trending Now"
-                businesses={trendingBusinesses}
-                cta="See More"
-                href="/trending"
-              />
-            </div>
+            <MemoizedBusinessRow
+              title="Trending Now"
+              businesses={trendingBusinesses}
+              cta="See More"
+              href="/trending"
+            />
           )}
 
-          <div>
-            <EventsSpecials events={EVENTS_AND_SPECIALS.slice(0, 5)} />
-          </div>
+          <EventsSpecials events={EVENTS_AND_SPECIALS.slice(0, 5)} />
 
-          <div>
-            <CommunityHighlights
-              reviews={FEATURED_REVIEWS}
-              topReviewers={TOP_REVIEWERS}
-              businessesOfTheMonth={BUSINESSES_OF_THE_MONTH}
-              variant="reviews"
-            />
-          </div>
+          <CommunityHighlights
+            reviews={FEATURED_REVIEWS}
+            topReviewers={TOP_REVIEWERS}
+            businessesOfTheMonth={BUSINESSES_OF_THE_MONTH}
+            variant="reviews"
+          />
         </div>
 
         <Footer />
       </div>
+
     </div>
   );
 }

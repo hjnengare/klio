@@ -33,7 +33,7 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
       }}
     >
       <Link href={`/event/${event.id}`} className="block group">
-        <article className="relative overflow-hidden cursor-pointer w-full sm:w-[252px] md:w-[277px] lg:w-[288px] h-[400px] sm:h-[450px] flex flex-col bg-card-bg backdrop-blur-xl border border-white/60 rounded-[12px] shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1">
+        <article className="relative overflow-hidden cursor-pointer w-full sm:w-[252px] md:w-[277px] lg:w-[288px] h-[400px] sm:h-[450px] flex flex-col bg-card-bg backdrop-blur-xl border border-white/60 rounded-[12px] shadow-lg">
           {/* MEDIA - Full bleed with premium overlay */}
           <div className="relative overflow-hidden flex-[2] z-10 rounded-t-[12px]">
             <div className="relative w-full h-full">
@@ -88,9 +88,9 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
               
               {/* Title */}
               <h3 
-                className="text-sm sm:text-base font-bold leading-tight text-charcoal mb-1.5 sm:mb-2 text-center group-hover:text-coral transition-colors duration-300 line-clamp-2"
+                className="text-base sm:text-lg font-bold leading-tight text-charcoal mb-1.5 sm:mb-2 text-center group-hover:text-coral transition-colors duration-300 line-clamp-2"
                 style={{ 
-                  fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                  fontFamily: '"DM Sans", system-ui, sans-serif', 
                   fontWeight: 700,
                   WebkitFontSmoothing: 'antialiased',
                   MozOsxFontSmoothing: 'grayscale',

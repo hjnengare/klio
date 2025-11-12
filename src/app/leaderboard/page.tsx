@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
-import LeaderboardHeader from "../components/Leaderboard/LeaderboardHeader";
+import Header from "../components/Header/Header";
 import LeaderboardPodium from "../components/Leaderboard/LeaderboardPodium";
 import LeaderboardList from "../components/Leaderboard/LeaderboardList";
 import LeaderboardTitle from "../components/Leaderboard/LeaderboardTitle";
@@ -72,7 +72,14 @@ function LeaderboardPage() {
   return (
     <EmailVerificationGuard>
       <div className="min-h-dvh bg-off-white">
-        <LeaderboardHeader />
+        <Header
+          showSearch={false}
+          variant="white"
+          backgroundClassName="bg-navbar-bg/90"
+          topPosition="top-0"
+          reducedPadding={true}
+          whiteText={true}
+        />
 
         <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
           <div className="py-1 pt-20">
@@ -80,7 +87,7 @@ function LeaderboardPage() {
             <section className="relative z-10 pb-6 sm:pb-8 md:pb-12">
               <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6">
                 {/* Breadcrumb */}
-                <nav className="px-2 sm:px-4 pb-1" aria-label="Breadcrumb">
+                <nav className="px-2 sm:px-4 py-4" aria-label="Breadcrumb">
                   <ol className="flex items-center gap-1 text-sm text-charcoal/60">
                     <li>
                       <Link href="/home" className="hover:text-charcoal transition-colors font-urbanist">
@@ -91,8 +98,6 @@ function LeaderboardPage() {
                     <li className="text-charcoal font-medium font-urbanist">Community Highlights</li>
                   </ol>
                 </nav>
-
-               <LeaderboardTitle />
               </div>
             </section>
 

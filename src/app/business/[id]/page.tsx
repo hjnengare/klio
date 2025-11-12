@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import React, { useMemo, useState, useEffect, useRef } from "react";
-import { Loader2 } from "lucide-react";
+import { PageLoader } from "../../components/Loader";
 import {
     ArrowLeft,
     Briefcase,
@@ -194,14 +194,7 @@ export default function BusinessProfilePage() {
 
     // Loading state
     if (isLoading) {
-        return (
-            <div className="min-h-dvh bg-off-white flex items-center justify-center">
-                <div className="text-center">
-                    <Loader2 className="w-8 h-8 animate-spin text-coral mx-auto mb-4" />
-                    <p className="text-charcoal/70 font-urbanist">Loading business...</p>
-                </div>
-            </div>
-        );
+        return <PageLoader size="lg" color="sage" text="Loading business..." />;
     }
 
     // Error state
@@ -334,7 +327,7 @@ export default function BusinessProfilePage() {
                                 {/* Write Review Button - Only show to authenticated users who are not the owner */}
                                 {user && !isBusinessOwner && (
                                     <Link
-                                        href={`/business/review?businessId=${businessId}`}
+                                        href={`/business/review?business_id=${businessId}`}
                                         className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
                                         aria-label={`Write a review for ${businessData.name}`}
                                     >
@@ -396,7 +389,7 @@ export default function BusinessProfilePage() {
 
                                         {/* PRIORITY 1: Hero Carousel - Full Width at Top */}
                                         <article className="w-full sm:mx-0 flex items-center justify-center" aria-labelledby="photos-heading">
-                                            <div className="bg-card-bg backdrop-blur-xl border-0 sm:border border-white/60 rounded-none sm:rounded-[20px] shadow-none sm:shadow-lg relative overflow-hidden animate-fade-in-up mx-auto w-full">
+                                            <div className="bg-card-bg backdrop-blur-xl border-0 sm:border border-white/60 rounded-2xl sm:rounded-[20px] shadow-none sm:shadow-lg relative overflow-hidden animate-fade-in-up mx-auto w-full">
                                                
                                                 <div className="relative z-10">
                                                     <ImageCarousel
@@ -450,7 +443,7 @@ export default function BusinessProfilePage() {
                                                                 Be the first to review this business!
                                                             </p>
                                                             <Link
-                                                                href={`/business/review?businessId=${businessId}`}
+                                                                href={`/business/review?business_id=${businessId}`}
                                                                 className="inline-block px-6 py-3 bg-coral text-white rounded-full font-600 font-urbanist hover:bg-coral/90 transition-colors"
                                                             >
                                                                 Write First Review

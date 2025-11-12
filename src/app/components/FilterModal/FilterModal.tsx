@@ -13,6 +13,14 @@ import {
   Truck,
   Navigation,
   MapPin,
+  Home,
+  Scissors,
+  Briefcase,
+  Compass,
+  Film,
+  Image,
+  Heart,
+  Package,
 } from "react-feather";
 
 export interface FilterState {
@@ -151,11 +159,14 @@ export default function FilterModal({
   if (!isVisible) return null;
 
   const categoryOptions = [
-    { name: "Restaurants", Icon: ShoppingBag },
-    { name: "Coffee Shops", Icon: Coffee },
-    { name: "Shopping", Icon: ShoppingBag },
-    { name: "Entertainment", Icon: Monitor },
-    { name: "Services", Icon: Tool },
+    { id: 'food-drink', name: "Food & Drink", Icon: Coffee },
+    { id: 'beauty-wellness', name: "Beauty & Wellness", Icon: Scissors },
+    { id: 'professional-services', name: "Professional Services", Icon: Briefcase },
+    { id: 'outdoors-adventure', name: "Outdoors & Adventure", Icon: Compass },
+    { id: 'experiences-entertainment', name: "Entertainment & Experiences", Icon: Film },
+    { id: 'arts-culture', name: "Arts & Culture", Icon: Image },
+    { id: 'family-pets', name: "Family & Pets", Icon: Heart },
+    { id: 'shopping-lifestyle', name: "Shopping & Lifestyle", Icon: Package },
   ];
 
   const distanceOptions = [
@@ -167,7 +178,7 @@ export default function FilterModal({
 
   return (
     <div
-      className="fixed inset-0 z-[70] pointer-events-none"
+      className="fixed inset-0 z-[100] pointer-events-none"
       aria-hidden={!isOpen}
       style={sf}
     >
@@ -181,7 +192,7 @@ export default function FilterModal({
         className={`pointer-events-auto
                     rounded-none sm:rounded-2xl overflow-hidden
                     bg-off-white
-                    border border-white/30 shadow-lg
+                    border border-white/30 shadow-2xl
                     transition-all duration-200
                     flex flex-col
                     ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"}`}
@@ -201,7 +212,7 @@ export default function FilterModal({
                 left: style.left,
                 width: style.width || 360,
                 maxWidth: "calc(100vw - 16px)",
-                maxHeight: "min(70vh, 560px)",
+                maxHeight: "calc(100vh - " + (style.top + 40) + "px)",
               }),
           outline: "none",
         }}
@@ -237,7 +248,7 @@ export default function FilterModal({
           }}
         >
           {/* Category */}
-          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.05s]">
+          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.05s]">
             <h3 className="text-xs font-semibold text-charcoal mb-3 flex items-center gap-2">
               <ShoppingBag className="w-3 h-3 text-sage" />
               Category
@@ -258,7 +269,7 @@ export default function FilterModal({
                       ${
                         active
                           ? "bg-sage text-white border-sage shadow-sm"
-                          : "bg-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
+                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
                       }
                     focus:outline-none focus:ring-2 focus:ring-sage/30`}
                     aria-pressed={active}
@@ -272,7 +283,7 @@ export default function FilterModal({
           </section>
 
           {/* Rating */}
-          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.1s]">
+          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.1s]">
             <h3 className="text-xs font-semibold text-charcoal mb-3 flex items-center gap-2">
               <Star className="w-3 h-3 text-sage" />
               Minimum Rating
@@ -289,7 +300,7 @@ export default function FilterModal({
                       ${
                         active
                           ? "bg-sage text-white border-sage shadow-sm"
-                          : "bg-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
+                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
                       }
                     focus:outline-none focus:ring-2 focus:ring-sage/30`}
                     aria-pressed={active}
@@ -308,7 +319,7 @@ export default function FilterModal({
           </section>
 
           {/* Distance */}
-          <section className="rounded-xl bg-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.15s]">
+          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.15s]">
             <h3 className="text-xs font-semibold text-charcoal mb-3 flex items-center gap-2">
               <MapPin className="w-3 h-3 text-sage" />
               Distance

@@ -12,6 +12,7 @@ import { getBrowserSupabase } from "../lib/supabase/client";
 import { authStyles } from "../components/Auth/Shared/authStyles";
 import { AuthHeader } from "../components/Auth/Shared/AuthHeader";
 import { PasswordInput } from "../components/Auth/Shared/PasswordInput";
+import { PageLoader, InlineLoader } from "../components/Loader";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -150,10 +151,7 @@ export default function ResetPasswordPage() {
     return (
       <>
         <style dangerouslySetInnerHTML={{ __html: authStyles }} />
-        <div className="min-h-[100dvh] bg-off-white flex flex-col items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage"></div>
-          <p className="mt-4 font-urbanist text-sm text-charcoal/70">Verifying reset link...</p>
-        </div>
+        <PageLoader size="xl" color="sage" text="Verifying reset link..." />
       </>
     );
   }
@@ -337,9 +335,7 @@ export default function ResetPasswordPage() {
                     }`}
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
-                      {isSubmitting && (
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      )}
+                      {isSubmitting && <InlineLoader size="xs" />}
                       {isSubmitting ? "Resetting..." : "Reset password"}
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-r from-coral to-coral/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>

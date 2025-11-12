@@ -20,8 +20,8 @@ import {
     Tag,
     ImageIcon,
     Edit3,
-    Loader2,
 } from "lucide-react";
+import { PageLoader } from "../../../components/Loader";
 import { useRequireBusinessOwner } from "../../../hooks/useBusinessAccess";
 
 // CSS animations to match business profile page
@@ -206,11 +206,7 @@ export default function BusinessEditPage() {
     ];
 
     if (!businessId || isChecking) {
-        return (
-            <div className="min-h-dvh bg-off-white flex items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-coral" />
-            </div>
-        );
+        return <PageLoader size="lg" color="sage" text="Loading..." />;
     }
 
     if (!hasAccess) {
@@ -522,8 +518,7 @@ export default function BusinessEditPage() {
 
                                 {uploadingImages && (
                                     <div className="text-center py-4">
-                                        <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-sage"></div>
-                                        <span className="ml-2 font-urbanist text-sm text-charcoal/60">Uploading...</span>
+                                        <PageLoader size="sm" color="sage" text="Uploading..." />
                                     </div>
                                 )}
                             </div>

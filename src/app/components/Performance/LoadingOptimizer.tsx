@@ -2,6 +2,7 @@
 
 import { useEffect, useState, ReactNode } from "react";
 import { motion } from "framer-motion";
+import { Loader } from "../Loader";
 
 interface LoadingOptimizerProps {
   children: ReactNode;
@@ -32,12 +33,7 @@ export default function LoadingOptimizer({
   if (isLoading) {
     return (
       <div style={{ minHeight }} className="flex items-center justify-center">
-        {fallback || (
-          <div className="flex items-center gap-2">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-sage"></div>
-            <span className="text-sm text-charcoal/60">Loading...</span>
-          </div>
-        )}
+        {fallback || <Loader size="md" color="sage" text="Loading..." />}
       </div>
     );
   }

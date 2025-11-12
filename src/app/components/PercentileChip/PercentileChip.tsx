@@ -9,13 +9,6 @@ interface PercentileChipProps {
 }
 
 function PercentileChip({ label, value }: PercentileChipProps) {
-  // Debug logging
-  console.log('PercentileChip Debug:', {
-    label,
-    value,
-    labelLowerCase: label.toLowerCase()
-  });
-
   // Handle placeholder (0 value) with grayed out style
   const isPlaceholder = value === 0;
 

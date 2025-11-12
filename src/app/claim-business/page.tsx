@@ -10,8 +10,8 @@ import {
   MapPin,
   Check,
   ArrowLeft,
-  Loader2,
 } from "lucide-react";
+import { PageLoader, Loader } from "../components/Loader";
 import { BusinessService } from "../lib/services/businessService";
 import { BusinessOwnershipService } from "../lib/services/businessOwnershipService";
 import { VerificationForm } from "../components/BusinessClaim/VerificationForm";
@@ -79,11 +79,7 @@ export default function ClaimBusinessPage() {
   };
 
   if (authLoading) {
-    return (
-      <div className="min-h-dvh bg-off-white flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-coral" />
-      </div>
-    );
+    return <PageLoader size="lg" color="sage" />;
   }
 
   if (!user) {
@@ -194,7 +190,7 @@ export default function ClaimBusinessPage() {
                 <div className="space-y-3 mb-8">
                   {isSearching && (
                     <div className="flex items-center justify-center py-8">
-                      <Loader2 className="w-6 h-6 animate-spin text-coral" />
+                      <Loader size="md" color="sage" />
                     </div>
                   )}
                   {!isSearching && businesses.map((business) => (

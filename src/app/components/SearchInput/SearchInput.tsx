@@ -62,24 +62,19 @@ const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
     return (
       <form onSubmit={handleSubmit} className={`${containerClass} ${className}`} ref={ref}>
         <div className="relative">
-          {/* left icon */}
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
-            <Search className="w-5 h-5 text-charcoal" strokeWidth={2} />
-          </div>
-
-          {/* right icon (filters) */}
+          {/* right icon (filters) - positioned on the far right */}
           {showFilter && onFilterClick && (
             <button
               type="button"
               onClick={onFilterClick}
-              className="absolute inset-y-0 right-0 pr-4 flex items-center text-charcoal/60 hover:text-sage transition-colors z-10"
+              className="absolute inset-y-0 right-0 pr-2 flex items-center text-charcoal/60 hover:text-charcoal transition-colors z-10"
               aria-label="Open filters"
             >
-              <Sliders className="w-4 h-4" />
+              <Sliders className="w-5 h-5" strokeWidth={2} />
             </button>
           )}
 
-          {/* input */}
+          {/* input - no left icon, simple underline */}
           <input
             type="text"
             value={searchQuery}
@@ -88,12 +83,12 @@ const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
             onTouchStart={onFocusOpenFilters}
             placeholder={ph}
             className={`
-              w-full bg-off-white border-2 border-charcoal/20 rounded-full
-              text-sm placeholder:text-xs placeholder:text-charcoal/50 font-urbanist text-charcoal
-              focus:outline-none focus:border-sage focus:ring-2 focus:ring-sage/20
+              w-full bg-transparent border-0 border-b-2 border-charcoal/20
+              text-base placeholder:text-base placeholder:text-charcoal/40 font-normal text-charcoal
+              focus:outline-none focus:border-charcoal/60
               hover:border-charcoal/30 transition-all duration-200
-              ${showFilter && onFilterClick ? "pl-12 pr-12" : "pl-12 pr-4"}
-              ${variant === "header" ? "py-3.5" : "py-3"}
+              ${showFilter && onFilterClick ? "pr-12" : "pr-2"}
+              py-3 px-0
             `}
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',

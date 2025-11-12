@@ -172,11 +172,30 @@ export function useReviewSubmission() {
       setSubmitting(true);
       setError(null);
 
-      // Simulate review creation delay
-      await simulateDelay(800);
+      const formData = new FormData();
+      formData.append('business_id', reviewData.business_id);
+      formData.append('rating', reviewData.rating.toString());
+      if (reviewData.title) {
+        formData.append('title', reviewData.title);
+      }
+      formData.append('content', reviewData.content);
+      reviewData.tags.forEach(tag => formData.append('tags', tag));
+      reviewData.images?.forEach(image => {
+        formData.append('images', image, image.name);
+      });
 
-      // For dummy data, always succeed
-      showToast('Review submitted successfully!', 'success');
+      const response = await fetch('/api/reviews', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit review');
+      }
+
+      showToast('Review submitted successfully! 🎉', 'success', 5000);
       return true;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to submit review';

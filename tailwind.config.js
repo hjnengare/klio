@@ -65,7 +65,7 @@ module.exports = {
         sage: '#7D9B76', // Primary brand color
         coral: '#E07A5F', // Secondary brand color
         charcoal: '#2D2D2D', // Dark text color
-        'off-white': '#F5F5F5', // Light background color
+        'off-white': '#E8E8E8', // Light background color
 
         // Text colors for proper contrast
         'text-primary': '#2D2D2D', // Dark text for light backgrounds

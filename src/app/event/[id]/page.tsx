@@ -6,6 +6,7 @@ import { Calendar } from "react-feather";
 import { EVENTS_AND_SPECIALS, Event } from "../../data/eventsData";
 import { useToast } from "../../contexts/ToastContext";
 import dynamic from "next/dynamic";
+import { PageLoader } from "../../components/Loader";
 import {
   EventDetailHeader,
   EventHeroImage,
@@ -76,11 +77,7 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-dvh bg-off-white flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-charcoal"></div>
-      </div>
-    );
+    return <PageLoader size="xl" color="sage" />;
   }
 
   if (!event) {

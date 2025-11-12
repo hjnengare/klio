@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../contexts/AuthContext";
+import { PageLoader } from "../../components/Loader";
 import { BusinessOwnershipService } from "../../../lib/services/businessOwnershipService";
 import { BusinessService } from "../../../lib/services/businessService";
 import {
@@ -10,7 +11,6 @@ import {
   CheckCircle,
   Clock,
   XCircle,
-  Loader2,
   Store,
   Mail,
   Phone,
@@ -113,11 +113,7 @@ export default function VerificationStatusPage() {
   };
 
   if (authLoading || isLoading) {
-    return (
-      <div className="min-h-dvh bg-off-white flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-coral" />
-      </div>
-    );
+    return <PageLoader size="lg" color="sage" />;
   }
 
   if (!user) {

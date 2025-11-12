@@ -23,26 +23,25 @@ export default function BusinessRow({
 
   return (
     <section
-      className="relative"
+      className="relative m-0 p-0 w-full"
       aria-label={title}
       data-section
       style={{
         fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
-      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
+      <div className="container max-w-[1300px] relative z-10 m-0 p-2">
         <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
-          <h2 className="text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+          <h2 className="text-sm font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
             {title}
           </h2>
 
           <button
             onClick={() => router.push(href)}
-            className="group inline-flex items-center gap-1 text-sm font-semibold text-primary/80 transition-all duration-300 hover:text-sage focus:outline-none focus:ring-2 focus:ring-sage/30 rounded-full px-4 py-2 -mx-2 relative overflow-hidden"
+            className="group inline-flex items-center gap-1 text-sm font-semibold text-charcoal transition-all duration-300 hover:text-sage focus:outline-none rounded-full px-4 py-2 -mx-2 relative overflow-hidden"
             aria-label={`${cta}: ${title}`}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-0.5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
               {cta}
             </span>

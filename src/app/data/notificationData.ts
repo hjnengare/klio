@@ -20,6 +20,13 @@ const NOTIFICATION_MESSAGES = {
     "Just bookmarked",
     "Someone added to favorites",
   ],
+  highlyRated: [
+    "Highly rated business",
+    "Top-rated near you",
+    "⭐ Exceptional ratings for",
+    "Community favorite",
+    "Outstanding reviews for",
+  ],
 };
 
 const TIME_RANGES = [
@@ -32,7 +39,7 @@ const TIME_RANGES = [
 ];
 
 export function generateRandomNotification(): ToastNotificationData {
-  const types: ("review" | "business" | "user")[] = ["review", "business", "user"];
+  const types: ("review" | "business" | "user" | "highlyRated")[] = ["review", "business", "user", "highlyRated"];
   const type = types[Math.floor(Math.random() * types.length)];
 
   const business = TRENDING_BUSINESSES[

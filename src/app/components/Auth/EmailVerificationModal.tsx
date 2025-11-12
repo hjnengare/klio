@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
-import { Mail, X, CheckCircle, Loader2, ExternalLink } from 'lucide-react';
+import { Mail, X, CheckCircle, ExternalLink } from 'lucide-react';
+import { InlineLoader } from '../Loader';
 
 interface EmailVerificationModalProps {
   isOpen: boolean;
@@ -121,7 +122,7 @@ export default function EmailVerificationModal({
               >
                 {isResending ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <InlineLoader size="xs" color="current" />
                     <span className="hidden sm:inline">Sending...</span>
                   </>
                 ) : (

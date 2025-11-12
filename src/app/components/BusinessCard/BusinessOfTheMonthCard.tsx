@@ -94,7 +94,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       }}
     >
       <div
-        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden group cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
+        className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden group cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-lg"
         style={{ "--width": "540", "--height": "720" } as React.CSSProperties}
       >
         {/* Media */}
@@ -200,7 +200,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 flex-col gap-2 transition-all duration-300 ease-out translate-x-12 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100"
           >
             <button
-              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle write review
@@ -211,7 +211,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               <Edit className="w-4 h-4 text-primary" />
             </button>
             <button
-              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle bookmark
@@ -222,7 +222,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               <Bookmark className="w-4 h-4 text-primary" />
             </button>
             <button
-              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 hover:shadow-xl hover:shadow-sage/25"
+              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center shadow-lg shadow-sage/20 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle share
@@ -238,8 +238,8 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
         {/* CONTENT */}
         <div className="px-4 pt-4 pb-6 relative flex-shrink-0 z-10">
           <div className="mb-2 cursor-pointer">
-            <h3 className="text-sm font-bold text-charcoal group-hover:text-coral/90 transition-colors duration-300 text-center truncate" style={{ 
-              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+            <h3 className="text-base font-bold text-charcoal group-hover:text-coral/90 transition-colors duration-300 text-center truncate" style={{ 
+              fontFamily: '"DM Sans", system-ui, sans-serif', 
               fontWeight: 700,
               WebkitFontSmoothing: 'antialiased',
               MozOsxFontSmoothing: 'grayscale',
@@ -267,7 +267,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           </div>
 
           <div className="mb-4 flex items-center justify-center gap-2 cursor-pointer">
-            <Stars value={business.rating} color="coral" />
+            <Stars value={business.rating} color="coral/90" />
             <p className="text-xs font-600 leading-none text-charcoal" style={{ 
               fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
               fontWeight: 600,
@@ -302,7 +302,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           {/* Mobile actions - always visible on card */}
           <div className="flex md:hidden items-center justify-center gap-3 mt-3">
             <button
-              className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-sage to-sage/90 text-white rounded-full text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 shadow-sm hover:shadow-md transition-all active:scale-95"
+              className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-sage to-sage/90 text-white rounded-full text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 shadow-sm transition-all active:scale-95"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle write review
@@ -320,7 +320,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               <span>Review</span>
             </button>
             <button
-              className="w-9 h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 shadow-sm hover:shadow-md transition-all active:scale-95"
+              className="w-9 h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 shadow-sm transition-all active:scale-95"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle bookmark
@@ -330,7 +330,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               <Bookmark className="w-4 h-4 text-charcoal" />
             </button>
             <button
-              className="w-9 h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 shadow-sm hover:shadow-md transition-all active:scale-95"
+              className="w-9 h-9 bg-gradient-to-br from-off-white via-white to-off-white/95 backdrop-blur-xl rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sage/40 border border-white/60 ring-1 ring-white/30 shadow-sm transition-all active:scale-95"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle share

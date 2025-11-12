@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { X, Mail, Phone, FileText, UserCheck, Loader2 } from "lucide-react";
+import { X, Mail, Phone, FileText, UserCheck } from "lucide-react";
+import { InlineLoader } from "../Loader";
 import { BusinessOwnershipService } from "../../lib/services/businessOwnershipService";
 import { useAuth } from "../../contexts/AuthContext";
 import { useToast } from "../../contexts/ToastContext";
@@ -263,7 +264,7 @@ export function VerificationForm({ business, onClose, onSuccess }: VerificationF
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <InlineLoader size="xs" color="current" />
                   Submitting...
                 </>
               ) : (

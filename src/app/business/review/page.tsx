@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
 import { Star } from "react-feather";
 import ReviewHeader from "../../components/ReviewForm/ReviewHeader";
 import ReviewForm from "../../components/ReviewForm/ReviewForm";
@@ -9,6 +10,9 @@ import BusinessCarousel from "../../components/ReviewForm/BusinessCarousel";
 import ReviewStyles from "../../components/ReviewForm/ReviewStyles";
 import Footer from "../../components/Footer/Footer";
 import { useReviewForm } from "../../hooks/useReviewForm";
+import { useReviewSubmission } from "../../hooks/useReviews";
+import { supabase } from "../../lib/supabase";
+import { PageLoader } from "../../components/Loader";
 
 
 type SmallReview = {
@@ -22,8 +26,12 @@ type SmallReview = {
   image?: string;
 };
 
-export default function WriteReviewPage() {
+function WriteReviewContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  // Support both business_id and businessId for compatibility
+  const businessId = searchParams.get('business_id') || searchParams.get('businessId');
+
   const {
     overallRating,
     selectedTags,
@@ -36,88 +44,137 @@ export default function WriteReviewPage() {
     setReviewText,
     setReviewTitle,
     setSelectedImages,
+    resetForm,
   } = useReviewForm();
 
-  // Mock data for design work
-  const businessName = "Sample Business";
-  const businessImages = [
-    "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&h=1200&fit=crop&auto=format",
-    "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&h=1200&fit=crop&auto=format",
-    "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1600&h=1200&fit=crop&auto=format",
-    "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1600&h=1200&fit=crop&auto=format",
-  ];
-  const businessRating = 4.5;
+  const { submitReview, submitting } = useReviewSubmission();
+
+  // State for business data
+  const [business, setBusiness] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch business data
+  useEffect(() => {
+    async function fetchBusiness() {
+      if (!businessId) {
+        setError('No business ID provided');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const { data, error: fetchError } = await supabase
+          .from('businesses')
+          .select(`
+            *,
+            business_stats (
+              total_reviews,
+              average_rating
+            )
+          `)
+          .eq('id', businessId)
+          .single();
+
+        if (fetchError) throw fetchError;
+        
+        if (data) {
+          setBusiness(data);
+        } else {
+          setError('Business not found');
+        }
+      } catch (err) {
+        console.error('Error fetching business:', err);
+        setError('Failed to load business information');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchBusiness();
+  }, [businessId]);
+
+  // Use real business data
+  const businessName = business?.name || "Loading...";
+  
+  // Filter out PNG placeholder images (like /png/001-restaurant.png) - these are for cards only
+  const isPngPlaceholder = (url: string | null | undefined) => {
+    if (!url) return true;
+    return url.startsWith('/png/') || url.includes('/png/');
+  };
+  
+  const businessImages = business?.uploaded_image && !isPngPlaceholder(business.uploaded_image)
+    ? [business.uploaded_image]
+    : business?.image_url && !isPngPlaceholder(business.image_url)
+    ? [business.image_url]
+    : [];
+  const businessRating = business?.business_stats?.[0]?.average_rating || 0;
   const businessInfo = {
     name: businessName,
-    phone: "+44 20 1234 5678",
-    website: "www.example.com",
-    address: "123 Main Street, Cape Town, South Africa",
-    email: "info@example.com",
-    category: "Restaurant",
-    location: "Cape Town",
+    phone: business?.phone || "",
+    website: business?.website || "",
+    address: business?.address || business?.location || "",
+    email: business?.email || "",
+    category: business?.category || "",
+    location: business?.location || "",
   };
   const quickTags = ["Trustworthy", "On Time", "Friendly", "Good Value"];
 
-  const otherReviews: SmallReview[] = [
-    {
-      id: "r1",
-      user: {
-        name: "Naledi M.",
-        avatar:
-          "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&auto=format",
-        location: "Cape Town",
-      },
-      business: "Bean & Bloom Café",
-      rating: 5,
-      text: "Latte art on point and the staff are super friendly. Cozy vibe!",
-      date: "Sep 18, 2025",
-      likes: 23,
-      image:
-        "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=800&h=600&fit=crop&auto=format",
-    },
-    {
-      id: "r2",
-      user: {
-        name: "Alex J.",
-        avatar:
-          "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=400&h=400&fit=crop&auto=format",
-        location: "Sea Point",
-      },
-      business: "The Pot Luck Club",
-      rating: 4,
-      text: "Creative small plates and gorgeous views. A little noisy at peak.",
-      date: "Sep 10, 2025",
-      likes: 11,
-    },
-    {
-      id: "r3",
-      user: {
-        name: "Sibusiso K.",
-        avatar:
-          "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&auto=format",
-        location: "Green Point",
-      },
-      business: "Chapman's Peak Drive",
-      rating: 5,
-      text: "Sunset drive is unbeatable. Pack a picnic!",
-      date: "Aug 30, 2025",
-      likes: 42,
-      image:
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&h=600&fit=crop&auto=format",
-    },
-  ];
+  // Fetch recent reviews from the same business or other businesses
+  // For now, this will be empty and can be populated with real data later
+  const otherReviews: SmallReview[] = [];
 
   const handleSubmitReview = async () => {
-    console.log("Review submitted:", {
+    if (!businessId) {
+      alert('No business ID provided');
+      return;
+    }
+
+    if (!isFormValid) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    const success = await submitReview({
+      business_id: businessId,
       rating: overallRating,
       title: reviewTitle,
       content: reviewText,
       tags: selectedTags,
       images: selectedImages,
     });
-    alert("Review submitted! (UI/UX Demo Mode)");
-    router.back();
+
+    if (success) {
+      resetForm();
+      // Navigate back to business page or home
+      setTimeout(() => {
+        router.push(`/business/${businessId}`);
+      }, 1500);
+    }
   };
+
+  // Show loading state
+  if (loading) {
+    return <PageLoader size="xl" color="sage" text="Loading business information..." />;
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-off-white flex items-center justify-center">
+        <div className="text-center p-8">
+          <p className="text-red-500 font-urbanist mb-4">{error}</p>
+          <button
+            onClick={() => router.back()}
+            className="px-6 py-2 bg-sage text-white rounded-xl hover:bg-sage/80 transition-colors"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -180,15 +237,15 @@ export default function WriteReviewPage() {
         <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
           <div className="py-1 pt-20">
             <main className="relative font-sf-pro pt-4 sm:pt-6" id="main-content" role="main" aria-label="Write review content">
-              <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 md:px-6 relative z-10">
+              <div className="w-full md:container md:mx-auto md:max-w-[1300px] px-0 md:px-6 relative z-10">
                 <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
-                  <div className="space-y-6">
+                  <div className="space-y-6 px-3 sm:px-4 md:px-0">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                       {/* MAIN: Form */}
                       <div className="lg:col-span-8 animate-fade-in-up">
                         {/* Business Info and Carousel - visible on mobile only */}
-                        <div className="md:hidden space-y-4 mb-6">
-                          <div className="text-center px-4">
+                        <div className="md:hidden mb-6 flex flex-col">
+                          <div className="text-center px-4 mb-4">
                             <h2 className="text-sm font-bold text-charcoal mb-2">{businessName}</h2>
                             <div className="flex items-center justify-center space-x-2">
                               <div className="flex items-center space-x-1 bg-gradient-to-br from-amber-400 to-amber-600 px-3 py-1.5 rounded-full">
@@ -201,7 +258,8 @@ export default function WriteReviewPage() {
                           </div>
                           <BusinessCarousel businessName={businessName} businessImages={businessImages} />
                         </div>
-                        <ReviewForm
+                        <div className="lg:border lg:border-sage/10 lg:rounded-2xl lg:shadow-lg lg:p-6">
+                          <ReviewForm
                           businessName={businessName}
                           businessRating={businessRating}
                           businessImages={businessImages}
@@ -210,7 +268,7 @@ export default function WriteReviewPage() {
                           reviewText={reviewText}
                           reviewTitle={reviewTitle}
                           selectedImages={selectedImages}
-                          isFormValid={isFormValid}
+                          isFormValid={isFormValid && !submitting}
                           availableTags={quickTags}
                           onRatingChange={handleStarClick}
                           onTagToggle={handleTagToggle}
@@ -219,11 +277,12 @@ export default function WriteReviewPage() {
                           onImagesChange={setSelectedImages}
                           onSubmit={handleSubmitReview}
                         />
+                        </div>
                       </div>
 
                       {/* SIDEBAR */}
                       <aside className="lg:col-span-4 animate-fade-in-up animate-delay-200">
-                        <ReviewSidebar otherReviews={otherReviews} />
+                        <ReviewSidebar otherReviews={otherReviews} businessInfo={businessInfo} businessRating={businessRating} />
                       </aside>
                     </div>
                   </div>
@@ -235,5 +294,14 @@ export default function WriteReviewPage() {
         <Footer />
       </div>
     </>
+  );
+}
+
+// Wrapper component with Suspense for useSearchParams
+export default function WriteReviewPage() {
+  return (
+    <Suspense fallback={<PageLoader size="xl" color="sage" text="Loading..." />}>
+      <WriteReviewContent />
+    </Suspense>
   );
 }

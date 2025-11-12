@@ -7,6 +7,7 @@ import { useToast } from "../contexts/ToastContext";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
 import OnboardingCard from "../components/Onboarding/OnboardingCard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
+import { Loader } from "../components/Loader";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 import EmailVerificationBanner from "../components/Auth/EmailVerificationBanner";
 import InterestStyles from "../components/Interests/InterestStyles";
@@ -248,7 +249,7 @@ export default function InterestsPage() {
       <Suspense fallback={
         <OnboardingLayout backHref="/register" step={1}>
           <div className="flex items-center justify-center min-h-[400px]">
-            <div className="animate-pulse text-charcoal/60" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Loading interests...</div>
+            <Loader size="md" color="sage" text="Loading interests..." />
           </div>
         </OnboardingLayout>
       }>

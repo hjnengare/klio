@@ -50,9 +50,11 @@ type Business = {
 function BusinessCard({
   business,
   hideStar = false,
+  compact = false,
 }: {
   business: Business;
   hideStar?: boolean;
+  compact?: boolean;
 }) {
   const router = useRouter();
   const { toggleSavedItem, isItemSaved } = useSavedItems();
@@ -135,21 +137,28 @@ function BusinessCard({
   return (
     <li
       id={idForSnap}
-      className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[25%] md:min-w-[25%] xl:min-w-[25%] flex-shrink-0"
+      className={`snap-start snap-always flex-shrink-0 ${
+        compact ? 'w-auto' : 'w-[100vw] sm:w-auto sm:min-w-[25%] md:min-w-[25%] xl:min-w-[25%]'
+      }`}
       style={{
         fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
         fontWeight: 600,
       }}
     >
       <div
-        className="relative overflow-hidden group cursor-pointer w-full md:w-[340px] h-[640px] md:h-[520px] flex flex-col bg-card-bg backdrop-blur-xl border border-white/60 rounded-[12px] shadow-lg hover:shadow-md transition-all duration-500 ease-out hover:-translate-y-1"
+        className={`relative overflow-hidden group cursor-pointer w-full flex flex-col bg-card-bg backdrop-blur-xl border border-white/60 rounded-[12px] hover:shadow-md ${
+          compact ? 'h-[640px] md:h-[416px]' : 'md:w-[340px] h-[640px] md:h-[520px]'
+        }`}
         style={{
-          maxWidth: "540px"
+          maxWidth: compact ? "100%" : "540px",
+          boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
         } as React.CSSProperties}
       >
+        {/* Glass depth overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none z-0"></div>
         {/* MEDIA - Full bleed with premium overlay */}
         <div
-          className="relative overflow-hidden flex-[2.5] md:flex-[2.8] z-10 cursor-pointer bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md border border-sage/10 rounded-t-[12px]"
+          className="relative overflow-hidden flex-[2.5] md:flex-[2.9] lg:flex-[3] z-10 cursor-pointer bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md border border-sage/10 rounded-t-[12px]"
           onClick={handleCardClick}
         >
           <div className="relative w-full h-full">
@@ -182,7 +191,7 @@ function BusinessCard({
                   onError={handleImageError}
                 />
                   {/* Subtle gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100" />
                 </div>
               )
             ) : (
@@ -217,9 +226,9 @@ function BusinessCard({
           )}
 
           {!hideStar && hasRating && displayRating !== undefined && (
-            <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-2xl bg-white/80 backdrop-blur-xl px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-white/60">
-              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-              <span className="text-sm font-semibold text-charcoal" style={{ 
+            <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-2xl bg-off-white/80 backdrop-blur-xl px-3 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-white/60">
+              <Star className="w-3.5 h-3.5 text-coral fill-coral/90" />
+              <span className="text-sm font-semibold text-coral/90" style={{ 
                 fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
                 fontWeight: 600,
                 letterSpacing: '-0.01em'
@@ -230,11 +239,11 @@ function BusinessCard({
           )}
           
           {!hideStar && !hasRating && (
-            <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-2xl bg-white/60 backdrop-blur-xl px-3 py-2 border border-white/40">
-              <span className="text-xs font-medium text-charcoal/50" style={{ 
-                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+            <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-full bg-white/40 backdrop-blur-xl px-3 py-1.5 border border-gray-200">
+              <span className="text-xs font-medium text-charcoal" style={{ 
+                fontFamily: '"SF Pro Display", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif', 
                 fontWeight: 500,
-                letterSpacing: '0.01em'
+                letterSpacing: '-0.01em'
               }}>
                 New
               </span>
@@ -242,9 +251,9 @@ function BusinessCard({
           )}
 
           {/* Premium floating actions - desktop only */}
-          <div className="hidden md:flex absolute right-4 bottom-4 py-4 px-4 z-20 flex-col gap-2 transition-all duration-500 ease-out translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
+          <div className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 py-4 px-4 z-20 flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0 translate-x-2">
             <button
-              className="w-11 h-11 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
+              className="w-11 h-11 bg-off-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-off-white"
               onClick={(e) => {
                 e.stopPropagation();
                 handleWriteReview();
@@ -255,7 +264,7 @@ function BusinessCard({
               <Edit className="w-4 h-4 text-charcoal" />
             </button>
             <button
-              className="w-11 h-11 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
+              className="w-11 h-11 bg-off-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-off-white"
               onClick={(e) => {
                 e.stopPropagation();
                 handleBookmark();
@@ -264,11 +273,11 @@ function BusinessCard({
               title={isItemSaved(business.id) ? 'Remove from saved' : 'Save'}
             >
               <Bookmark
-                className={`w-4 h-4 transition-colors ${isItemSaved(business.id) ? 'text-coral fill-coral' : 'text-charcoal'}`}
+                className={`w-4 h-4 ${isItemSaved(business.id) ? 'text-coral fill-coral' : 'text-charcoal'}`}
               />
             </button>
             <button
-              className="w-11 h-11 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
+              className="w-11 h-11 bg-off-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-off-white"
               onClick={(e) => {
                 e.stopPropagation();
                 handleShare();
@@ -282,27 +291,68 @@ function BusinessCard({
         </div>
 
         {/* CONTENT - Minimal, premium spacing */}
-        <div className="px-6 py-1 relative flex-shrink-0 flex-1 flex flex-col justify-between bg-transparent z-10">
+        <div className="px-8 pt-2 pb-4 relative flex-shrink-0 flex-1 flex flex-col justify-between bg-transparent z-10">
+          {/* Mobile info button - top right */}
+          <div className="md:hidden absolute top-2 right-2 z-20">
+            <div className="relative group">
+              <button
+                className="w-9 h-9 bg-transparent hover:bg-off-white/20 rounded-full flex items-center justify-center transition-colors"
+                aria-label="More options"
+              >
+                <svg className="w-5 h-5 text-charcoal/70" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                </svg>
+              </button>
+              
+              {/* Dropdown menu */}
+              <div className="absolute right-0 mt-2 w-32 bg-off-white/95 backdrop-blur-xl border border-off-white/60 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-10">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleBookmark();
+                  }}
+                  className="w-full flex items-center gap-2 px-4 py-3 text-sm text-charcoal hover:bg-sage/10 transition-colors"
+                  aria-label={`${isItemSaved(business.id) ? 'Remove from saved' : 'Save'} ${business.name}`}
+                >
+                  <Bookmark
+                    className={`w-4 h-4 ${isItemSaved(business.id) ? 'text-coral fill-coral' : 'text-charcoal/60'}`}
+                  />
+                  <span>{isItemSaved(business.id) ? 'Saved' : 'Save'}</span>
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleShare();
+                  }}
+                  className="w-full flex items-center gap-2 px-4 py-3 text-sm text-charcoal hover:bg-sage/10 transition-colors border-t border-off-white/30"
+                  aria-label={`Share ${business.name}`}
+                >
+                  <Share2 className="w-4 h-4 text-charcoal/60" />
+                  <span>Share</span>
+                </button>
+              </div>
+            </div>
+          </div>
           <div className="flex-1 flex flex-col">
             {/* Info Wrapper */}
-            <div className="relative p-4 overflow-hidden" onClick={handleCardClick}>
+            <div className="relative overflow-hidden" onClick={handleCardClick}>
               {/* Content - Centered */}
-              <div className="flex flex-col items-center text-center relative z-10">
+              <div className="flex flex-col items-center text-center relative z-10 space-y-1">
                 {/* Business Name - Inside wrapper */}
-                <div className="cursor-pointer mb-3 flex items-center justify-center" onClick={handleCardClick}>
-                  <h3 className="text-sm font-bold text-charcoal group-hover:text-coral transition-colors duration-300 text-center truncate" style={{ 
-                    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                <div className="cursor-pointer flex items-center justify-center w-full min-h-[40px]" onClick={handleCardClick}>
+                  <h3 className="text-base font-bold text-charcoal group-hover:text-coral text-center line-clamp-2 px-2 tracking-tight" style={{ 
+                    fontFamily: '"DM Sans", system-ui, sans-serif', 
                     fontWeight: 700,
                     WebkitFontSmoothing: 'antialiased',
                     MozOsxFontSmoothing: 'grayscale',
                     textRendering: 'optimizeLegibility',
-                    letterSpacing: '-0.01em'
+                    letterSpacing: '-0.02em'
                   }}>
                     {business.name}
                   </h3>
                 </div>
                 {/* Category and Location - Combined with bullet separator */}
-                <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 cursor-pointer text-nowrap overflow-hidden text-ellipsis whitespace-nowrap" style={{ 
+                <div className="flex items-center justify-center gap-1.5 text-xs text-charcoal/70 cursor-pointer min-h-[20px]" style={{ 
             fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
             fontWeight: 600,
             WebkitFontSmoothing: 'antialiased',
@@ -310,30 +360,30 @@ function BusinessCard({
             textRendering: 'optimizeLegibility',
             letterSpacing: '0.01em'
           }} onClick={handleCardClick}>
-            <span>{business.category}</span>
+            <span className="truncate">{business.category}</span>
           {(business.address || business.location) && (
                     <>
                       <span>·</span>
-                      <div className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-charcoal/60" />
-                        <span>{business.address || business.location}</span>
+                      <div className="flex items-center gap-1 truncate">
+                        <MapPin className="w-3 h-3 text-charcoal/60 flex-shrink-0" />
+                        <span className="truncate">{business.address || business.location}</span>
             </div>
                     </>
           )}
                 </div>
 
                 {/* Reviews - Refined */}
-                <div className="mb-3 flex items-center justify-center gap-2 cursor-pointer" onClick={handleCardClick}>
+                <div className="flex items-center justify-center gap-2 cursor-pointer min-h-[24px]" onClick={handleCardClick}>
             {hasRating && displayRating !== undefined ? (
               <>
                       <div 
-                        className="cursor-pointer hover:scale-110 transition-transform duration-300 active:scale-95"
+                        className="cursor-pointer"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleCardClick();
                         }}
                       >
-                        <Stars value={displayRating} color="amber-500" />
+                        <Stars value={displayRating} color="coral/90" />
                       </div>
                       <p className="text-xs font-600 leading-none text-charcoal" style={{ 
                   fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
@@ -355,15 +405,15 @@ function BusinessCard({
             ) : (
                     <>
                       <div 
-                        className="cursor-pointer hover:scale-110 transition-transform duration-300 active:scale-95"
+                        className="cursor-pointer"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleCardClick();
                         }}
                       >
-                        <Stars value={0} color="amber-500" />
+                        <Stars value={0} color="coral/90" />
                 </div>
-                      <span className="text-xs text-charcoal/60 leading-relaxed" style={{ 
+                      <span className="text-xs text-charcoal/60" style={{ 
                   fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
                   fontWeight: 500,
                 }}>
@@ -374,7 +424,7 @@ function BusinessCard({
           </div>
 
                 {/* Percentile chips - Inside wrapper */}
-                <div className="flex items-center justify-center gap-2 flex-wrap mb-3">
+                <div className="flex items-center justify-center gap-2 flex-wrap min-h-[32px] pb-3">
             <PercentileChip 
               label="speed" 
               value={business.percentiles?.service || 0} 
@@ -394,9 +444,9 @@ function BusinessCard({
           </div>
 
           {/* Mobile actions - Minimal */}
-          <div className="flex md:hidden items-center justify-center gap-3 mt-4 pt-4 border-t border-white/20">
+          <div className="flex md:hidden items-center justify-center pt-4 border-t border-white/20">
             <button
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-charcoal text-white rounded-2xl text-sm font-semibold hover:bg-charcoal/90 active:scale-95 transition-all duration-300 shadow-sm"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-navbar-bg/90 text-white rounded-full hover:bg-navbar-bg/80 shadow-sm min-h-[48px]"
               onClick={(e) => {
                 e.stopPropagation();
                 handleWriteReview();
@@ -407,30 +457,8 @@ function BusinessCard({
                 fontWeight: 600,
               }}
             >
-              <Edit className="w-4 h-4" />
+              <Edit className="w-5 h-5" />
               <span>Review</span>
-            </button>
-            <button
-              className="w-11 h-11 bg-white/80 backdrop-blur-xl border border-white/60 rounded-2xl flex items-center justify-center hover:bg-white/90 active:scale-95 transition-all duration-300 shadow-sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleBookmark();
-              }}
-              aria-label={`${isItemSaved(business.id) ? 'Remove from saved' : 'Save'} ${business.name}`}
-            >
-              <Bookmark
-                className={`w-4 h-4 transition-colors ${isItemSaved(business.id) ? 'text-coral fill-coral' : 'text-charcoal/60'}`}
-              />
-            </button>
-            <button
-              className="w-11 h-11 bg-white/80 backdrop-blur-xl border border-white/60 rounded-2xl flex items-center justify-center hover:bg-white/90 active:scale-95 transition-all duration-300 shadow-sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleShare();
-              }}
-              aria-label={`Share ${business.name}`}
-            >
-              <Share2 className="w-4 h-4 text-charcoal/60" />
             </button>
           </div>
         </div>

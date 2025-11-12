@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Star, Heart, MapPin, Calendar, User } from "lucide-react";
+import { Star, Heart, MapPin, Calendar, User, MessageSquare } from "lucide-react";
 
 interface SmallReview {
   id: string;
@@ -16,7 +16,15 @@ interface SmallReview {
 
 interface ReviewSidebarProps {
   otherReviews: SmallReview[];
-  businessName?: string;
+  businessInfo?: {
+    name: string;
+    phone?: string;
+    website?: string;
+    address?: string;
+    email?: string;
+    category?: string;
+    location?: string;
+  };
   businessRating?: number;
 }
 
@@ -27,7 +35,7 @@ const frostyPanel = `
   shadow-lg shadow-sage/20
 `.replace(/\s+/g, " ");
 
-export default function ReviewSidebar({ otherReviews }: ReviewSidebarProps) {
+export default function ReviewSidebar({ otherReviews, businessInfo, businessRating }: ReviewSidebarProps) {
   return (
     <>
       {/* Desktop: Aligned with form */}
@@ -37,8 +45,41 @@ export default function ReviewSidebar({ otherReviews }: ReviewSidebarProps) {
             <h3 className="text-sm font-bold text-charcoal font-urbanist px-3 pt-4 pb-3 border-b border-white/30" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
               What others are saying
             </h3>
+            {businessInfo && (
+              <div className="px-3 py-3 border-b border-white/30">
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="flex items-center space-x-1 bg-gradient-to-br from-amber-400 to-amber-600 px-3 py-1.5 rounded-full">
+                    <Star size={16} className="text-white" style={{ fill: "currentColor" }} />
+                    <span className="text-sm font-600 text-white">
+                      {businessRating?.toFixed(1) || "0.0"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="px-3 py-4 space-y-2 xl:space-y-3 max-h-[600px] overflow-y-auto custom-scroll">
-              {otherReviews.map((r) => (
+              {otherReviews.length === 0 ? (
+                <div className="rounded-2xl border border-sage/10 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md px-4 py-8 relative overflow-hidden border border-white/30">
+                  {/* subtle glows */}
+                  <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-lg" />
+                  <span className="pointer-events-none absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-coral/10 blur-lg" />
+                  
+                  <div className="flex flex-col items-center justify-center text-center relative z-10 space-y-3">
+                    <div className="w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center">
+                      <MessageSquare className="w-6 h-6 text-sage/60" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-600 text-charcoal/80 font-urbanist mb-1">
+                        No reviews yet
+                      </p>
+                      <p className="text-xs text-charcoal/60 font-urbanist leading-relaxed">
+                        Other community reviews will appear here once they're submitted
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                otherReviews.map((r) => (
                 <div key={r.id} className="rounded-2xl border border-sage/10 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md px-3 py-6 relative overflow-hidden border border-white/30">
                   {/* subtle glows */}
                   <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-lg" />
@@ -100,7 +141,7 @@ export default function ReviewSidebar({ otherReviews }: ReviewSidebarProps) {
                     </div>
                   </div>
                 </div>
-              ))}
+              )))}
             </div>
           </div>
         </div>
@@ -110,8 +151,29 @@ export default function ReviewSidebar({ otherReviews }: ReviewSidebarProps) {
       <div className="lg:hidden mt-4 sm:mt-6">
         <h3 className="text-sm font-bold text-charcoal font-urbanist px-4 pt-4 pb-3" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>What others are saying</h3>
         <div className="mt-2 sm:mt-3 overflow-x-auto hide-scrollbar">
-          <ul className="flex gap-2 sm:gap-3 px-4 pb-4">
-            {otherReviews.map((r) => (
+          {otherReviews.length === 0 ? (
+            <div className="mx-4 rounded-2xl border border-sage/10 bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md px-4 py-8 relative overflow-hidden">
+              {/* subtle glows */}
+              <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-lg" />
+              <span className="pointer-events-none absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-coral/10 blur-lg" />
+              
+              <div className="flex flex-col items-center justify-center text-center relative z-10 space-y-3">
+                <div className="w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center">
+                  <MessageSquare className="w-6 h-6 text-sage/60" />
+                </div>
+                <div>
+                  <p className="text-sm font-600 text-charcoal/80 font-urbanist mb-1">
+                    No reviews yet
+                  </p>
+                  <p className="text-xs text-charcoal/60 font-urbanist leading-relaxed">
+                    Other community reviews will appear here once they're submitted
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <ul className="flex gap-2 sm:gap-3 px-4 pb-4">
+              {otherReviews.map((r) => (
               <li key={r.id} className="min-w-[240px] sm:min-w-[260px] max-w-[260px] sm:max-w-[280px] bg-gradient-to-br from-white/85 to-white/60 backdrop-blur-md border border-sage/10 rounded-[12px] p-3 sm:p-4 relative overflow-hidden">
                 {/* subtle glows */}
                 <span className="pointer-events-none absolute -top-8 -right-8 h-20 w-20 rounded-full bg-sage/10 blur-lg" />
@@ -162,8 +224,9 @@ export default function ReviewSidebar({ otherReviews }: ReviewSidebarProps) {
                   <span className="text-[10px] font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{r.likes}</span>
                 </div>
               </li>
-            ))}
-          </ul>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </>

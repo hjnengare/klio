@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { useMounted } from "../hooks/useMounted";
 import Logo from "../components/Logo/Logo";
+import OnboardingCarousel from "../components/Onboarding/OnboardingCarousel";
 
 const styles = `
   @keyframes fadeInUp {
@@ -111,10 +112,10 @@ export default function OnboardingPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="min-h-[100svh] md:min-h-[100dvh] bg-off-white flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding">
+      <div className="min-h-[100svh] md:min-h-[100dvh] bg-off-white flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding no-overflow">
 
         {/* Content only — background objects removed */}
-        <div className="w-full max-w-full px-3 md:max-w-4xl md:px-4 mx-auto relative z-10 flex flex-col h-full py-4 sm:py-6">
+        <div className="w-full max-w-full max-w-full-safe px-3 md:max-w-4xl md:px-4 mx-auto relative z-10 flex flex-col h-full py-4 sm:py-6">
           {/* Logo */}
           <div className={`text-center mb-8 md:mb-6 flex-shrink-0 flex justify-center ${mounted ? "opacity-0 animate-fade-in-up delay-400" : "opacity-0"}`}>
             <Logo variant="onboarding" />
@@ -123,9 +124,14 @@ export default function OnboardingPage() {
           {/* Main content */}
           <div className="text-center flex-1 flex flex-col justify-center min-h-0 py-4">
             <div className="space-y-6 md:space-y-8">
+              {/* Carousel - placed below the logo and above the title */}
+              <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-600" : "opacity-0"}`}>
+                <OnboardingCarousel />
+              </div>
+
               <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-600" : "opacity-0"}`}>
                 <h2
-                  className="text-lg sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-5 md:mb-6 leading-tight tracking-tight px-2 text-charcoal no-hyphens"
+                  className="text-4xl md:text-5xl font-bold mb-5 md:mb-6 leading-tight tracking-tight px-2 text-charcoal no-hyphens"
                   style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                   Discover local gems near you!
@@ -134,7 +140,7 @@ export default function OnboardingPage() {
 
               <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-800" : "opacity-0"}`}>
                 <p className="text-base md:text-lg font-normal text-charcoal/70 leading-relaxed max-w-sm md:max-w-lg lg:max-w-xl mx-auto px-4 no-hyphens"
-                   style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
+                   style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                    Explore trusted businesses, leave reviews and see what&apos;s trending around you
                 </p>
               </div>
@@ -153,13 +159,10 @@ export default function OnboardingPage() {
                 <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-1200" : "opacity-0"}`}>
                   <Link
                     href="/login"
-                    className="group block w-full text-coral hover:text-coral/80 text-sm font-600 min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-coral/30 focus-visible:ring-offset-2 relative text-center flex items-center justify-center"
+                    className="block w-full text-coral hover:text-coral/80 text-sm font-600 min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-coral/30 focus-visible:ring-offset-2 relative text-center flex items-center justify-center"
                     style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
                   >
-                    <span className="relative z-10">
-                      Log in
-                      <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-coral scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-center" />
-                    </span>
+                    Log in
                   </Link>
                 </div>
               </div>
@@ -170,3 +173,4 @@ export default function OnboardingPage() {
     </>
   );
 }
+

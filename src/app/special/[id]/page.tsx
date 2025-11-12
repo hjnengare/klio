@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { EVENTS_AND_SPECIALS, Event } from "../../data/eventsData";
 import { useToast } from "../../contexts/ToastContext";
+import { PageLoader } from "../../components/Loader";
 
 interface SpecialDetailPageProps {
   params: Promise<{
@@ -81,11 +82,7 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-white via-coral/[0.02] to-white flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral"></div>
-      </div>
-    );
+    return <PageLoader size="xl" color="sage" />;
   }
 
   if (!special) {
