@@ -678,9 +678,9 @@ export default function Header({
                 key={key}
                 href={href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-xl text-sm font-bold text-charcoal hover:text-charcoal hover:bg-sage/5 transition-colors relative min-h-[44px] flex items-center ${mobileRevealClass}`}
+                className={`px-4 py-3 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-off-white/10 transition-colors relative min-h-[48px] flex items-center ${mobileRevealClass}`}
                 style={{
-                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                  fontFamily: '"DM Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                   transitionDelay: `${index * 60}ms`,
                 }}
               >
@@ -694,8 +694,8 @@ export default function Header({
 
             <div className="px-4 py-2">
               <div className="flex items-center gap-2 mb-2">
-                <Compass className="w-4 h-4 text-sage" />
-                <span className="text-xs font-semibold text-charcoal/60 uppercase tracking-wider">Discover</span>
+                <Compass className="w-4 h-4 text-off-white" />
+                <span className="text-sm font-semibold text-white/80 tracking-wide">Discover</span>
               </div>
               <div className="space-y-2">
                 {DISCOVER_LINKS.map(({ key, label, href }, index) => (
@@ -703,9 +703,9 @@ export default function Header({
                     key={key}
                     href={href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 transition-all duration-200 min-h-[44px] flex gap-3 ${mobileRevealClass}`}
+                    className={`px-4 py-3 rounded-xl text-base font-medium text-white/90 hover:text-white hover:bg-off-white/10 transition-all duration-200 min-h-[48px] flex gap-3 ${mobileRevealClass}`}
                     style={{
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      fontFamily: '"DM Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                       transitionDelay: `${(primaryCount + index) * 60}ms`,
                     }}
                   >
@@ -721,8 +721,8 @@ export default function Header({
             {/* For Businesses Section */}
             <div className="px-4 py-2">
               <div className="flex items-center gap-2 mb-2">
-                <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-sage" />
-                <span className="text-xs font-semibold text-charcoal/60 uppercase tracking-wider">For Businesses</span>
+                <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-off-white" />
+                <span className="text-sm font-semibold text-white/80 tracking-wide">For Businesses</span>
               </div>
               <div className="space-y-2">
                 {BUSINESS_LINKS.map(({ key, label, description, href }, index) => (
@@ -730,17 +730,17 @@ export default function Header({
                 key={key}
                 href={href}
               onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-lg text-sm font-medium text-charcoal/80 hover:text-sage transition-colors duration-200 min-h-[44px] flex gap-3 ${mobileRevealClass}`}
+                className={`px-4 py-3 rounded-lg text-base font-medium text-white/90 hover:text-white hover:bg-off-white/10 transition-colors duration-200 min-h-[48px] flex gap-3 ${mobileRevealClass}`}
               style={{
-                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                fontFamily: '"DM Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                 fontWeight: 500,
                 transitionDelay: `${(primaryCount + discoverCount + index) * 60}ms`,
               }}
             >
                   <span className="mt-1 w-2 h-2 rounded-full bg-gradient-to-br from-sage to-coral/70 flex-shrink-0" />
                   <span className="flex-1 text-left">
-                    <span className="block">{label}</span>
-                    <span className="text-xs font-normal text-charcoal/60">{description}</span>
+                    <span className="block text-white">{label}</span>
+                    <span className="text-sm font-normal text-white/70 normal-case">{description}</span>
                   </span>
             </OptimizedLink>
                 ))}
@@ -751,9 +751,9 @@ export default function Header({
             <OptimizedLink
               href="/profile"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-4 py-3 rounded-lg text-sm font-medium text-charcoal/80 hover:text-sage flex items-center gap-3 transition-colors duration-200 min-h-[44px] ${mobileRevealClass}`}
+              className={`px-4 py-3 rounded-lg text-base font-semibold text-white hover:text-white flex items-center gap-3 transition-colors duration-200 min-h-[48px] ${mobileRevealClass}`}
               style={{
-                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                fontFamily: '"DM Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                 fontWeight: 500,
                 transitionDelay: `${(primaryCount + discoverCount + businessCount) * 60}ms`,
               }}
