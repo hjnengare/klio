@@ -236,7 +236,10 @@ export default function GeneralReviewsPage() {
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center shadow-premium-sm hover:shadow-premium-md transition-all duration-premium ease-premium hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
               <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-charcoal/70 group-hover:text-sage transition-colors duration-premium ease-premium" />
             </div>
-            <motion.h1 className="font-urbanist text-base sm:text-xl font-700 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-premium ease-premium group-hover:from-sage/90 group-hover:to-sage relative tracking-[-0.02em]">
+            <motion.h1
+              className="text-base sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-premium ease-premium group-hover:from-sage/90 group-hover:to-sage relative tracking-[-0.02em]"
+              style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
+            >
               Community Reviews
             </motion.h1>
           </Link>
@@ -309,6 +312,20 @@ export default function GeneralReviewsPage() {
                 ? review.text
                 : review.text.slice(0, 200) + "...";
 
+              const isNavy = index % 2 === 1;
+              const cardClasses = isNavy
+                ? "border-navbar-bg/40 bg-gradient-to-br from-navbar-bg/95 via-navbar-bg/90 to-navbar-bg/85 text-white"
+                : "border-white/30 bg-gradient-to-br from-white/90 via-white/80 to-white/70 text-charcoal";
+              const titleText = isNavy ? "text-white" : "text-charcoal";
+              const subtleText = isNavy ? "text-white/70" : "text-charcoal/60";
+              const bodyText = isNavy ? "text-white/85" : "text-charcoal/90";
+              const chipClasses = isNavy
+                ? "bg-white/10 border border-white/25 text-white"
+                : "bg-sage/10 border border-sage/20 text-sage";
+              const buttonClasses = isNavy
+                ? "inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/15 rounded-full font-urbanist text-sm font-600 text-white transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
+                : "inline-flex items-center gap-2 px-4 py-2 bg-charcoal/5 hover:bg-charcoal/10 rounded-full font-urbanist text-sm font-600 text-charcoal/70 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]";
+
               return (
                 <motion.div
                   key={review.id}
@@ -316,7 +333,7 @@ export default function GeneralReviewsPage() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -20, opacity: 0 }}
                   transition={{ delay: 0.1 * index, duration: 0.5 }}
-                  className=" bg-off-white   backdrop-blur-lg rounded-lg shadow-premium-md hover:shadow-premium-lg border border-charcoal/10 relative overflow-hidden transition-all duration-premium ease-premium break-inside-avoid mb-4 sm:mb-6 group"
+                  className={`backdrop-blur-lg rounded-2xl border relative overflow-hidden transition-all duration-premium ease-premium break-inside-avoid mb-4 sm:mb-6 group shadow-[0_15px_40px_rgba(15,23,42,0.08)] hover:shadow-[0_20px_50px_rgba(15,23,42,0.12)] ${cardClasses}`}
                 >
                   {/* Hero Image Section - Instagram-like Carousel */}
                   {review.images && review.images.length > 0 && (
@@ -346,10 +363,12 @@ export default function GeneralReviewsPage() {
                       {/* Business Name Badge - Floating on image */}
                       <Link
                         href={`/business/${review.businessId}`}
-                        className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5  bg-off-white  /95 backdrop-blur-md hover:bg-off-white   rounded-full transition-all duration-premium shadow-premium-md hover:shadow-premium-lg hover:scale-105 z-20"
+                        className={`absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-premium shadow-premium-md hover:shadow-premium-lg hover:scale-105 z-20 ${
+                          isNavy ? "bg-white/10 text-white" : "bg-off-white/95 hover:bg-off-white"
+                        }`}
                       >
-                        <Briefcase className="w-4 h-4 text-sage" />
-                        <span className="font-urbanist text-sm font-600 text-sage tracking-[-0.015em]">
+                        <Briefcase className={`w-4 h-4 ${isNavy ? "text-white" : "text-sage"}`} />
+                        <span className={`font-urbanist text-sm font-600 tracking-[-0.015em] ${isNavy ? "text-white" : "text-sage"}`}>
                           {review.businessName}
                         </span>
                       </Link>
@@ -438,10 +457,10 @@ export default function GeneralReviewsPage() {
 
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                          <h3 className="font-urbanist text-lg sm:text-xl font-600 text-charcoal tracking-[-0.02em]">
+                          <h3 className={`font-urbanist text-lg sm:text-xl font-600 tracking-[-0.02em] ${titleText}`}>
                             {review.author}
                           </h3>
-                          <span className="font-urbanist text-sm font-600 text-charcoal/60 tracking-[-0.015em]">
+                          <span className={`font-urbanist text-sm font-600 tracking-[-0.015em] ${subtleText}`}>
                             {review.date}
                           </span>
                         </div>
@@ -461,7 +480,7 @@ export default function GeneralReviewsPage() {
                     </div>
 
                     {/* Review Text */}
-                    <p className="font-urbanist text-base font-600 text-charcoal/90 leading-[1.65] mb-4 tracking-[-0.015em]">
+                    <p className={`font-urbanist text-base font-600 leading-[1.65] mb-4 tracking-[-0.015em] ${bodyText}`}>
                       {displayText}
                     </p>
 
@@ -481,7 +500,7 @@ export default function GeneralReviewsPage() {
                         {review.tags.map((tag, tagIdx) => (
                           <span
                             key={tagIdx}
-                            className="inline-flex items-center px-3 py-1 bg-sage/10 text-sage text-sm font-500 rounded-full border border-sage/20 font-urbanist tracking-[-0.015em]"
+                            className={`inline-flex items-center px-3 py-1 text-sm font-500 rounded-full font-urbanist tracking-[-0.015em] ${chipClasses}`}
                           >
                             <span className="mr-1">@</span>
                             {tag}
@@ -491,15 +510,15 @@ export default function GeneralReviewsPage() {
                     )}
 
                     {/* Helpful Button */}
-                    <div className="flex items-center gap-3 pt-4 border-t border-charcoal/10">
+                    <div className={`flex items-center gap-3 pt-4 border-t ${isNavy ? "border-white/20" : "border-charcoal/10"}`}>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-charcoal/5 hover:bg-charcoal/10 rounded-full font-urbanist text-sm font-600 text-charcoal/70 transition-all duration-premium shadow-premium-sm hover:shadow-premium-md tracking-[-0.015em]"
+                        className={buttonClasses}
                       >
                         <ThumbsUp className="w-4 h-4" />
                         <span>Helpful</span>
-                        <span className="text-charcoal/50">({review.helpful})</span>
+                        <span className={isNavy ? "text-white/60" : "text-charcoal/50"}>({review.helpful})</span>
                       </motion.button>
                     </div>
                   </div>

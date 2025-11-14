@@ -72,7 +72,7 @@ export default function ReviewForm({
 
         {/* Image Upload */}
         <div className="mb-3 px-4">
-          <h3 className="text-sm font-bold text-charcoal mb-3 text-center md:text-left">
+          <h3 className="text-sm font-bold text-charcoal mb-3 text-center md:text-left" style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}>
             Add Photos (Optional)
           </h3>
           <ImageUpload onImagesChange={onImagesChange} maxImages={5} disabled={false} />

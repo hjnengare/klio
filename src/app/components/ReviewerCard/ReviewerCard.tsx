@@ -56,7 +56,7 @@ export default function ReviewerCard({
           className="block"
         >
           <div
-            className="bg-card-bg backdrop-blur-xl rounded-[20px] overflow-hidden group cursor-pointer h-[240px] relative border border-white/60 shadow-lg"
+            className="bg-card-bg backdrop-blur-xl rounded-[20px] overflow-hidden group cursor-pointer h-[240px] relative border border-white/60"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -160,10 +160,10 @@ export default function ReviewerCard({
                   <div
                     className={`px-1.5 py-0.5 rounded-full text-[10px] font-urbanist font-600 flex items-center gap-0.5 ${
                       reviewerData.badge === "top"
-                        ? "bg-amber-100 text-amber-700 shadow-sm shadow-amber-200/50"
+                        ? "bg-amber-100 text-amber-700"
                         : reviewerData.badge === "verified"
-                        ? "bg-blue-100 text-blue-700 shadow-sm shadow-blue-200/50"
-                        : "bg-sage/10 text-sage shadow-sm shadow-sage/20"
+                        ? "bg-blue-100 text-blue-700"
+                        : "bg-sage/10 text-sage"
                     }`}
                   >
                     {reviewerData.badge === "top" ? (
@@ -187,14 +187,14 @@ export default function ReviewerCard({
                   <div
                     className={`px-1.5 py-0.5 rounded-full text-[10px] font-urbanist font-600 flex items-center gap-0.5 ${
                       reviewerData.trophyBadge === "gold"
-                        ? "bg-yellow-50 text-yellow-700 shadow-sm shadow-yellow-200/50"
+                        ? "bg-yellow-50 text-yellow-700"
                         : reviewerData.trophyBadge === "silver"
-                        ? "bg-gray-50 text-gray-700 shadow-sm shadow-gray-200/50"
+                        ? "bg-gray-50 text-gray-700"
                         : reviewerData.trophyBadge === "bronze"
-                        ? "bg-orange-50 text-orange-700 shadow-sm shadow-orange-200/50"
+                        ? "bg-orange-50 text-orange-700"
                         : reviewerData.trophyBadge === "rising-star"
-                        ? "bg-purple-50 text-purple-700 shadow-sm shadow-purple-200/50"
-                        : "bg-pink-50 text-pink-700 shadow-sm shadow-pink-200/50"
+                        ? "bg-purple-50 text-purple-700"
+                        : "bg-pink-50 text-pink-700"
                     }`}
                   >
                     {reviewerData.trophyBadge === "gold" ? (
@@ -218,7 +218,7 @@ export default function ReviewerCard({
               {/* Card Actions with slide-up animation */}
               <div className="flex gap-1.5 transition-all duration-500 ease-out translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
                 <button
-                  className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
+                  className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
                   onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
@@ -234,7 +234,7 @@ export default function ReviewerCard({
                     e.preventDefault();
                     router.push(`/dm/${reviewerData?.id || ''}`);
                   }}
-                  className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
+                  className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
                   aria-label="Message"
                   title="Message"
                 >
@@ -257,7 +257,7 @@ export default function ReviewerCard({
         className="block"
       >
         <div
-          className="bg-card-bg backdrop-blur-xl rounded-[20px] group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/60 shadow-lg"
+          className="bg-card-bg backdrop-blur-xl rounded-[20px] group cursor-pointer h-[187px] flex flex-col relative overflow-hidden border border-white/60"
         >
         <div className="flex items-start gap-1.5 mb-2 p-2">
           <div className="relative">
@@ -294,7 +294,7 @@ export default function ReviewerCard({
           {/* Card Actions - always visible on mobile, slide-in on desktop */}
           <div className="absolute right-2 top-2 md:right-2 md:bottom-4 z-20 flex flex-row md:flex-col gap-1.5 md:gap-2 transition-all duration-500 ease-out md:translate-y-8 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
             <button
-              className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
+              className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
@@ -310,14 +310,14 @@ export default function ReviewerCard({
                 e.preventDefault();
                 router.push(`/dm/${review?.reviewer?.id || ''}`);
               }}
-              className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
+              className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
               aria-label="Message"
               title="Message"
             >
               <MessageSquare className="text-charcoal w-4 h-4" />
             </button>
             <button
-              className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
+              className="w-8 h-8 bg-white/90 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/60 hover:bg-white hover:scale-110 active:scale-95 transition-all duration-300"
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();

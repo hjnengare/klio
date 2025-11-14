@@ -69,12 +69,11 @@ export default function Header({
     }
     return searchParams.get("openSearch") === "true";
   });
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
   const [isBusinessDropdownClosing, setIsBusinessDropdownClosing] = useState(false);
   const [menuPos, setMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
   const [discoverMenuPos, setDiscoverMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
-  const { savedCount } = useSavedItems();
+  useSavedItems();
 
   // Use refs to track state without causing re-renders
   const isFilterVisibleRef = useRef(isFilterVisible);
@@ -113,51 +112,74 @@ export default function Header({
   const discoverDropdownRef = useRef<HTMLDivElement>(null);
   const discoverMenuPortalRef = useRef<HTMLDivElement>(null);
   const discoverBtnRef = useRef<HTMLButtonElement>(null);
+  const discoverHoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const businessHoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Scroll-based header visibility
-  useEffect(() => {
-    let lastKnownScrollY = window.scrollY;
-
-    const controlHeader = () => {
-      const currentScrollY = window.scrollY;
-
-      // Hide when scrolled down past 100px
-      if (currentScrollY > 100) {
-      const isScrollingDown = currentScrollY > lastKnownScrollY;
-      const isScrollingUp = currentScrollY < lastKnownScrollY;
-
-      if (isScrollingDown) {
-          setIsHeaderVisible(false);
-        } else if (isScrollingUp) {
-          // Show immediately on scroll up
-          setIsHeaderVisible(true);
-        }
-      } else {
-        // Always show when above 100px
-        setIsHeaderVisible(true);
-      }
-
-      lastKnownScrollY = currentScrollY;
-    };
-
-    // Add scroll event listener with throttling
-    let ticking = false;
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          controlHeader();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', throttledScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', throttledScroll);
-    };
+  const clearDiscoverHoverTimeout = useCallback(() => {
+    if (discoverHoverTimeoutRef.current) {
+      clearTimeout(discoverHoverTimeoutRef.current);
+      discoverHoverTimeoutRef.current = null;
+    }
   }, []);
+
+  const clearBusinessHoverTimeout = useCallback(() => {
+    if (businessHoverTimeoutRef.current) {
+      clearTimeout(businessHoverTimeoutRef.current);
+      businessHoverTimeoutRef.current = null;
+    }
+  }, []);
+
+  const openDiscoverDropdown = useCallback(() => {
+    clearDiscoverHoverTimeout();
+    setIsDiscoverDropdownClosing(false);
+    setIsDiscoverDropdownOpen(true);
+  }, [clearDiscoverHoverTimeout]);
+
+  const closeDiscoverDropdown = useCallback(() => {
+    setIsDiscoverDropdownClosing(true);
+    setTimeout(() => {
+      setIsDiscoverDropdownOpen(false);
+      setIsDiscoverDropdownClosing(false);
+    }, 200);
+  }, []);
+
+  const scheduleDiscoverDropdownClose = useCallback(() => {
+    clearDiscoverHoverTimeout();
+    discoverHoverTimeoutRef.current = setTimeout(() => {
+      closeDiscoverDropdown();
+    }, 100);
+  }, [clearDiscoverHoverTimeout, closeDiscoverDropdown]);
+
+  const openBusinessDropdown = useCallback(() => {
+    clearBusinessHoverTimeout();
+    setIsBusinessDropdownClosing(false);
+    setIsBusinessDropdownOpen(true);
+  }, [clearBusinessHoverTimeout]);
+
+  const closeBusinessDropdown = useCallback(() => {
+    setIsBusinessDropdownClosing(true);
+    setTimeout(() => {
+      setIsBusinessDropdownOpen(false);
+      setIsBusinessDropdownClosing(false);
+    }, 300);
+  }, []);
+
+  const scheduleBusinessDropdownClose = useCallback(() => {
+    clearBusinessHoverTimeout();
+    businessHoverTimeoutRef.current = setTimeout(() => {
+      closeBusinessDropdown();
+    }, 120);
+  }, [clearBusinessHoverTimeout, closeBusinessDropdown]);
+
+  useEffect(() => {
+    return () => {
+      clearDiscoverHoverTimeout();
+      clearBusinessHoverTimeout();
+    };
+  }, [clearDiscoverHoverTimeout, clearBusinessHoverTimeout]);
+
+  // Header always visible (scroll effects removed)
+  // Previously had scroll-based hide/show logic, now permanently visible
 
   useEffect(() => {
   if (forceSearchOpen || isStackedLayout) {
@@ -182,14 +204,12 @@ export default function Header({
   const closeModalsOnScroll = useCallback(() => {
     // Only close if they're actually open to avoid unnecessary state updates
     if (isBusinessDropdownOpenRef.current) {
-      setIsBusinessDropdownOpen(false);
+      clearBusinessHoverTimeout();
+      closeBusinessDropdown();
     }
   if (isDiscoverDropdownOpenRef.current) {
-    setIsDiscoverDropdownClosing(true);
-    setTimeout(() => {
-      setIsDiscoverDropdownOpen(false);
-      setIsDiscoverDropdownClosing(false);
-    }, 150);
+    clearDiscoverHoverTimeout();
+    closeDiscoverDropdown();
   }
   if (showSearchBarRef.current && !(forceSearchOpen || isStackedLayout)) {
       setShowSearchBar(false);
@@ -198,7 +218,7 @@ export default function Header({
       setIsFilterOpen(false);
       setTimeout(() => setIsFilterVisible(false), 150);
     }
-}, [forceSearchOpen, isStackedLayout]);
+}, [clearBusinessHoverTimeout, closeBusinessDropdown, clearDiscoverHoverTimeout, closeDiscoverDropdown, forceSearchOpen, isStackedLayout]);
 
   useEffect(() => {
     window.addEventListener('scroll', closeModalsOnScroll, { passive: true });
@@ -216,7 +236,8 @@ export default function Header({
       const clickedInsidePortalMenu = businessMenuPortalRef.current?.contains(target);
 
       if (!clickedInsideButtonWrap && !clickedInsidePortalMenu) {
-        setIsBusinessDropdownOpen(false);
+        clearBusinessHoverTimeout();
+        closeBusinessDropdown();
       }
     };
 
@@ -228,7 +249,7 @@ export default function Header({
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [isBusinessDropdownOpen]);
+  }, [isBusinessDropdownOpen, clearBusinessHoverTimeout, closeBusinessDropdown]);
 
   // Close discover dropdown when clicking outside
   useEffect(() => {
@@ -238,11 +259,8 @@ export default function Header({
       const clickedInsidePortalMenu = discoverMenuPortalRef.current?.contains(target);
 
       if (!clickedInsideButtonWrap && !clickedInsidePortalMenu) {
-        setIsDiscoverDropdownClosing(true);
-        setTimeout(() => {
-          setIsDiscoverDropdownOpen(false);
-          setIsDiscoverDropdownClosing(false);
-        }, 200);
+        clearDiscoverHoverTimeout();
+        closeDiscoverDropdown();
       }
     };
 
@@ -253,7 +271,7 @@ export default function Header({
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [isDiscoverDropdownOpen]);
+  }, [isDiscoverDropdownOpen, clearDiscoverHoverTimeout, closeDiscoverDropdown]);
 
   // Measure button position when dropdown opens
   useLayoutEffect(() => {
@@ -262,40 +280,29 @@ export default function Header({
       const dropdownWidth = 560; // min-w-[560px]
       const viewportWidth = window.innerWidth;
       const padding = 16; // padding from edge
+      const center = r.left + r.width / 2;
+      let leftPos = center - dropdownWidth / 2;
+      const maxLeft = viewportWidth - dropdownWidth - padding;
+      leftPos = Math.max(padding, Math.min(leftPos, maxLeft));
 
-      // Calculate left position, ensure it doesn't go off screen
-      let leftPos = r.left;
-
-      // If dropdown would go off right edge, align to right side of button
-      if (leftPos + dropdownWidth > viewportWidth - padding) {
-        leftPos = Math.max(padding, r.right - dropdownWidth);
-      }
-
-      // Ensure it doesn't go off left edge
-      leftPos = Math.max(padding, leftPos);
-
-      setMenuPos({ left: leftPos, top: r.bottom + 16 });
+      setMenuPos({ left: leftPos, top: r.bottom + 12 });
     }
   }, [isBusinessDropdownOpen]);
 
   useLayoutEffect(() => {
-    if (isDiscoverDropdownOpen && discoverBtnRef.current) {
-      const r = discoverBtnRef.current.getBoundingClientRect();
-      const dropdownWidth = 320;
-      const viewportWidth = window.innerWidth;
-      const padding = 16;
+     if (isDiscoverDropdownOpen && discoverBtnRef.current) {
+       const r = discoverBtnRef.current.getBoundingClientRect();
+       const dropdownWidth = 320;
+       const viewportWidth = window.innerWidth;
+       const padding = 16;
+       const center = r.left + r.width / 2;
+       let leftPos = center - dropdownWidth / 2;
+       const maxLeft = viewportWidth - dropdownWidth - padding;
+       leftPos = Math.max(padding, Math.min(leftPos, maxLeft));
 
-      let leftPos = r.left;
-
-      if (leftPos + dropdownWidth > viewportWidth - padding) {
-        leftPos = Math.max(padding, r.right - dropdownWidth);
-      }
-
-      leftPos = Math.max(padding, leftPos);
-
-      setDiscoverMenuPos({ left: leftPos, top: r.bottom + 12 });
-    }
-  }, [isDiscoverDropdownOpen]);
+       setDiscoverMenuPos({ left: leftPos, top: r.bottom + 12 });
+     }
+   }, [isDiscoverDropdownOpen]);
 
 
   const openFilters = () => {
@@ -326,8 +333,8 @@ export default function Header({
   const isHomeVariant = variant === "frosty";
   const computedBackgroundClass = backgroundClassName ?? "bg-off-white";
   const headerClassName = isHomeVariant
-    ? `absolute top-8 mt-6 left-1/2 -translate-x-1/2 z-50 ${computedBackgroundClass} backdrop-blur-xl rounded-full shadow-lg border border-white/30 transition-all duration-300 w-[96%] max-w-[1700px] ${!isHeaderVisible ? 'opacity-0 pointer-events-none' : ''}`
-    : `fixed ${topPosition} left-0 right-0 z-50 ${computedBackgroundClass} backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300 ${isHeaderVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`;
+    ? `absolute top-8 mt-6 left-1/2 -translate-x-1/2 z-50 ${computedBackgroundClass} backdrop-blur-xl rounded-full shadow-lg border border-white/30 transition-all duration-300 w-[96%] max-w-[1700px]`
+    : `fixed ${topPosition} left-0 right-0 z-50 ${computedBackgroundClass} backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300`;
   const isSearchVisible = forceSearchOpen || isStackedLayout || showSearchBar;
 
   const handleSearchToggle = () => {
@@ -354,6 +361,16 @@ export default function Header({
     />
   );
 
+  const primaryCount = PRIMARY_LINKS.length;
+  const discoverCount = DISCOVER_LINKS.length;
+  const businessCount = BUSINESS_LINKS.length;
+  const mobileRevealClass = `transform transition-all duration-500 ease-out ${
+    isMobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+  }`;
+  const mobileModalRevealClass = `transition-all duration-500 ease-out ${
+    isMobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+  }`;
+
   return (
     <>
       <header className={headerClassName} style={sf}>
@@ -369,53 +386,45 @@ export default function Header({
             </OptimizedLink>
 
             {/* Desktop nav - centered */}
-            <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 flex-1 justify-center">
+            <nav className="hidden md:flex items-center space-x-1 lg:space-x-3 flex-1 justify-center">
               {PRIMARY_LINKS.map(({ key, label, href }, index) => (
                 <Fragment key={key}>
                 <OptimizedLink
                     href={href}
-                    className={`group capitalize px-2 lg:px-3 rounded-full text-xs font-normal transition-all duration-300 relative ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/90 hover:text-charcoal/90'}`}
+                    className={`group capitalize px-2.5 lg:px-3.5 py-1 text-xs sm:text-sm font-semibold transition-colors duration-200 ${whiteText ? 'text-white hover:text-white/90' : 'text-charcoal/80 hover:text-sage'}`}
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <span className="relative z-10">{label}</span>
-                    {key === "saved" && (
-                      <div
-                        className={`absolute -top-1 -right-1 text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-lg z-20 ${
-                          savedCount > 0 ? 'bg-off-white text-charcoal' : 'bg-off-white/60 text-charcoal/50'
-                        }`}
-                      >
-                      {savedCount > 99 ? "99+" : savedCount}
-                      </div>
-                    )}
+                    <span>{label}</span>
                   </OptimizedLink>
 
                   {index === 0 && (
-                    <div className="relative" ref={discoverDropdownRef}>
+                    <div
+                      className="relative"
+                      ref={discoverDropdownRef}
+                      onMouseEnter={() => {
+                        openDiscoverDropdown();
+                      }}
+                      onMouseLeave={() => {
+                        scheduleDiscoverDropdownClose();
+                      }}
+                    >
                       <button
                         ref={discoverBtnRef}
                         onClick={() => {
                           if (isDiscoverDropdownOpen) {
-                            setIsDiscoverDropdownClosing(true);
-                            setTimeout(() => {
-                              setIsDiscoverDropdownOpen(false);
-                              setIsDiscoverDropdownClosing(false);
-                            }, 200);
+                            clearDiscoverHoverTimeout();
+                            closeDiscoverDropdown();
                           } else {
-                            setIsDiscoverDropdownClosing(false);
-                            setIsDiscoverDropdownOpen(true);
+                            openDiscoverDropdown();
                           }
                         }}
-                        className={`group capitalize px-3 lg:px-4 py-1 rounded-full text-xs font-normal transition-all duration-300 relative flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/90 hover:text-charcoal/90'}`}
+                        className={`group capitalize px-3 lg:px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200 flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/80 hover:text-sage'}`}
                         style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                         aria-expanded={isDiscoverDropdownOpen}
                         aria-haspopup="true"
                       >
-                        <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <span className="relative z-10 whitespace-nowrap">Discover</span>
-                        <ChevronDown className={`relative z-10 w-3 h-3 transition-transform duration-200 ${isDiscoverDropdownOpen ? 'rotate-180' : ''}`} />
+                        <span className="whitespace-nowrap">Discover</span>
+                        <ChevronDown className={`w-4 h-4 sm:w-4 sm:h-4 transition-transform duration-200 ${isDiscoverDropdownOpen ? 'rotate-180' : ''}`} />
                       </button>
 
                       {isDiscoverDropdownOpen &&
@@ -432,9 +441,15 @@ export default function Header({
                               animation: isDiscoverDropdownClosing ? 'none' : 'fadeInScale 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                             }}
                             onClick={(e) => e.stopPropagation()}
+                            onMouseEnter={() => {
+                              clearDiscoverHoverTimeout();
+                            }}
+                            onMouseLeave={() => {
+                              scheduleDiscoverDropdownClose();
+                            }}
                           >
                             <div className="px-5 pt-4 pb-3 border-b border-charcoal/10 bg-off-white flex items-center gap-2">
-                              <Compass className="w-4 h-4 text-sage" />
+                              <Compass className="w-5 h-5 md:w-6 md:h-6 text-sage" />
                               <span className="text-sm font-semibold text-charcoal">Discover</span>
                             </div>
                             <div className="py-3">
@@ -443,11 +458,8 @@ export default function Header({
                                   key={subKey}
                                   href={subHref}
                                   onClick={() => {
-                                    setIsDiscoverDropdownClosing(true);
-                                    setTimeout(() => {
-                                      setIsDiscoverDropdownOpen(false);
-                                      setIsDiscoverDropdownClosing(false);
-                                    }, 200);
+                                    clearDiscoverHoverTimeout();
+                                    closeDiscoverDropdown();
                                   }}
                                   className="group flex items-start gap-3 px-5 py-3 hover:bg-sage/10 transition-all duration-200"
                                   style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
@@ -469,27 +481,31 @@ export default function Header({
               ))}
 
               {/* For Businesses Dropdown (desktop) */}
-              <div className="relative" ref={businessDropdownRef}>
+              <div
+                className="relative"
+                ref={businessDropdownRef}
+                onMouseEnter={() => {
+                  openBusinessDropdown();
+                }}
+                onMouseLeave={() => {
+                  scheduleBusinessDropdownClose();
+                }}
+              >
                 <button
                   ref={btnRef}
                   onClick={() => {
                     if (isBusinessDropdownOpen) {
-                      setIsBusinessDropdownClosing(true);
-                      setTimeout(() => {
-                        setIsBusinessDropdownOpen(false);
-                        setIsBusinessDropdownClosing(false);
-                      }, 300);
+                      clearBusinessHoverTimeout();
+                      closeBusinessDropdown();
                     } else {
-                      setIsBusinessDropdownOpen(true);
+                      openBusinessDropdown();
                     }
                   }}
-                  className={`group capitalize px-3 lg:px-4 py-1 rounded-full text-xs font-normal transition-all duration-300 relative flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/90 hover:text-charcoal/90'}`}
+                  className={`group capitalize px-3 lg:px-4 py-1.5 text-xs sm:text-sm font-semibold transition-colors duration-200 flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/80 hover:text-sage'}`}
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative z-10 whitespace-nowrap">For Businesses</span>
-                  <ChevronDown className={`relative z-10 w-3 h-3 transition-transform duration-200 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`} />
+                  <span className="whitespace-nowrap">For Businesses</span>
+                  <ChevronDown className={`w-4 h-4 sm:w-4 sm:h-4 transition-transform duration-200 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {isBusinessDropdownOpen &&
@@ -501,29 +517,32 @@ export default function Header({
                       }`}
                       style={{
                         left: menuPos.left,
-                        top: menuPos.top + 12,
+                        top: menuPos.top,
                         fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                         animation: isBusinessDropdownClosing ? 'none' : 'fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                       }}
                       onClick={(e) => e.stopPropagation()}
+                      onMouseEnter={() => {
+                        clearBusinessHoverTimeout();
+                      }}
+                      onMouseLeave={() => {
+                        scheduleBusinessDropdownClose();
+                      }}
                     >
                       <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 bg-off-white">
                         <div className="relative z-10 flex items-center gap-2">
-                          <Briefcase className="w-4 h-4 text-sage" />
+                          <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-sage" />
                           <h2 className="text-sm md:text-base font-semibold text-charcoal" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>For Businesses</h2>
                         </div>
                         <button
                           onClick={() => {
-                            setIsBusinessDropdownClosing(true);
-                            setTimeout(() => {
-                              setIsBusinessDropdownOpen(false);
-                              setIsBusinessDropdownClosing(false);
-                            }, 300);
+                            clearBusinessHoverTimeout();
+                            closeBusinessDropdown();
                           }}
                           className="relative z-10 w-11 h-11 sm:w-9 sm:h-9 rounded-full border border-charcoal/10 bg-off-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0"
                           aria-label="Close menu"
                         >
-                          <X className="w-4 h-4" />
+                          <X className="w-5 h-5 md:w-6 md:h-6" />
                         </button>
                       </div>
 
@@ -534,6 +553,10 @@ export default function Header({
                             href={href}
                             className="group flex items-start gap-3 px-4 py-3 rounded-xl hover:bg-sage/10 transition-all duration-200"
                           style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                          onClick={() => {
+                            clearBusinessHoverTimeout();
+                            closeBusinessDropdown();
+                          }}
                         >
                             <div className="mt-1 w-2 h-2 rounded-full bg-gradient-to-br from-sage to-coral/70 group-hover:scale-125 transition-transform" />
                           <div className="flex-1">
@@ -559,28 +582,29 @@ export default function Header({
               {showSearch && !(forceSearchOpen || isStackedLayout) && (
               <button
                 onClick={handleSearchToggle}
-                className="group w-11 h-11 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-charcoal/90 hover:text-charcoal/90 transition-all duration-300 relative overflow-hidden min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0"
+                className="group w-11 h-11 sm:w-12 sm:h-12 md:w-12 md:h-12 flex items-center justify-center text-charcoal/80 hover:text-sage transition-colors duration-200"
                 aria-label="Toggle search"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 backdrop-blur-sm bg-off-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <Search className="relative z-10 w-4 h-4" />
+                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               )}
 
               {/* Mobile menu toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden w-11 h-11 rounded-full flex items-center justify-center hover:bg-sage/10 transition-colors min-h-[44px] min-w-[44px]"
+                className="md:hidden w-12 h-12 flex items-center justify-center text-charcoal/80 hover:text-sage transition-colors"
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
-                  <X className={`w-5 h-5 ${whiteText ? 'text-white' : 'text-charcoal/90'}`} />
+                  <X
+                    className={`w-5 h-5 sm:w-6 sm:h-6 ${whiteText ? 'text-white' : 'text-current'}`}
+                    strokeWidth={2.8}
+                  />
                 ) : (
-                  <div className="flex flex-col items-center justify-center gap-[5px]">
-                    <span className={`w-4 h-[2px] rounded-full ${whiteText ? 'bg-white' : 'bg-charcoal/90'}`} />
-                    <span className={`w-4 h-[2px] rounded-full ${whiteText ? 'bg-white' : 'bg-charcoal/90'}`} />
-                    <span className={`w-2 h-[2px] rounded-full ${whiteText ? 'bg-white' : 'bg-charcoal/90'}`} />
+                  <div className="flex flex-col items-start justify-center gap-[5px]">
+                    <span className={`block w-8 h-[3px] rounded-full ${whiteText ? 'bg-white' : 'bg-current'}`} />
+                    <span className={`block w-6 h-[3px] rounded-full ${whiteText ? 'bg-white' : 'bg-current'}`} />
+                    <span className={`block w-4 h-[3px] rounded-full ${whiteText ? 'bg-white' : 'bg-current'}`} />
                   </div>
                 )}
               </button>
@@ -588,12 +612,10 @@ export default function Header({
               {/* Profile */}
               <OptimizedLink
                 href="/profile"
-                className={`group hidden md:flex w-6 h-6 rounded-full items-center justify-center transition-all duration-300 relative overflow-hidden md:min-h-[24px] md:min-w-[24px] ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/90 hover:text-charcoal/90'}`}
+                className={`group hidden md:flex w-9 h-9 lg:w-10 lg:h-10 items-center justify-center text-charcoal/80 hover:text-sage transition-colors duration-200`}
                 aria-label="Profile"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-sage/20 to-coral/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 backdrop-blur-sm bg-off-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <User className="relative z-10 w-4 h-4" />
+                <User className="w-4 h-4 sm:w-5 sm:h-5" />
               </OptimizedLink>
             </div>
           </div>
@@ -634,40 +656,36 @@ export default function Header({
 
       {/* Mobile menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-full bg-off-white z-[99999] shadow-lg shadow-sage/10 transform md:hidden ${
+        className={`fixed top-0 right-0 h-full w-full bg-navbar-bg z-[99999] shadow-lg shadow-sage/10 transform md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300`}
       >
-        <div className="flex flex-col h-full overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-6 border-b border-charcoal/10 flex-shrink-0">
+        <div className={`flex flex-col h-full overflow-hidden ${mobileModalRevealClass}`}>
+          <div className="flex items-center justify-between px-6 py-6 border-b border-charcoal/10 flex-shrink-0 transition-all duration-500 ease-out">
             <Logo variant="mobile" />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`w-11 h-11 rounded-full flex items-center justify-center hover:bg-sage/10 group min-h-[44px] min-w-[44px] ${isHomeVariant ? 'text-charcoal' : 'text-charcoal/90'}`}
+              className="w-20 h-20 sm:w-16 sm:h-16 flex items-center justify-center text-off-white hover:text-off-white/80 transition-colors focus:outline-none focus:ring-0"
               aria-label="Close menu"
             >
-              <X className={`w-6 h-6 ${isHomeVariant ? 'text-charcoal' : 'text-charcoal/90'} group-hover:text-sage transition-colors`} />
+              <X className="w-8 h-8 sm:w-7 sm:h-7" strokeWidth={2.8} />
             </button>
           </div>
 
           <nav className="flex flex-col py-4 px-4 overflow-y-auto flex-1 min-h-0">
-            {PRIMARY_LINKS.map(({ key, label, href }) => (
+            {PRIMARY_LINKS.map(({ key, label, href }, index) => (
               <OptimizedLink
                 key={key}
                 href={href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-3 rounded-xl text-sm font-bold text-charcoal hover:text-charcoal hover:bg-sage/5 transition-colors relative min-h-[44px] flex items-center"
-                style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                className={`px-4 py-3 rounded-xl text-sm font-bold text-charcoal hover:text-charcoal hover:bg-sage/5 transition-colors relative min-h-[44px] flex items-center ${mobileRevealClass}`}
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                  transitionDelay: `${index * 60}ms`,
+                }}
               >
                 <span className="flex items-center justify-between">
                   {label}
-                  {key === "saved" && (
-                    <div
-                      className={`${savedCount === 0 ? 'bg-off-white/60 text-charcoal/50' : 'bg-off-white text-charcoal'} text-xs font-bold rounded-full min-w-[20px] h-[20px] flex items-center justify-center px-1 shadow-lg`}
-                    >
-                      {savedCount > 99 ? "99+" : savedCount}
-                    </div>
-                  )}
                 </span>
               </OptimizedLink>
             ))}
@@ -680,13 +698,16 @@ export default function Header({
                 <span className="text-xs font-semibold text-charcoal/60 uppercase tracking-wider">Discover</span>
               </div>
               <div className="space-y-2">
-                {DISCOVER_LINKS.map(({ key, label, href }) => (
+                {DISCOVER_LINKS.map(({ key, label, href }, index) => (
                   <OptimizedLink
                     key={key}
                     href={href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 transition-all duration-200 min-h-[44px] flex gap-3"
-                    style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                    className={`px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 transition-all duration-200 min-h-[44px] flex gap-3 ${mobileRevealClass}`}
+                    style={{
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      transitionDelay: `${(primaryCount + index) * 60}ms`,
+                    }}
                   >
                     <span className="mt-1 w-2 h-2 rounded-full bg-gradient-to-br from-sage to-coral/70 flex-shrink-0" />
                     <span className="flex-1 text-left">{label}</span>
@@ -700,17 +721,21 @@ export default function Header({
             {/* For Businesses Section */}
             <div className="px-4 py-2">
               <div className="flex items-center gap-2 mb-2">
-                <Briefcase className="w-4 h-4 text-sage" />
+                <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-sage" />
                 <span className="text-xs font-semibold text-charcoal/60 uppercase tracking-wider">For Businesses</span>
               </div>
               <div className="space-y-2">
-                {BUSINESS_LINKS.map(({ key, label, description, href }) => (
+                {BUSINESS_LINKS.map(({ key, label, description, href }, index) => (
             <OptimizedLink
                 key={key}
                 href={href}
               onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 transition-all duration-200 min-h-[44px] flex gap-3"
-              style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                className={`px-4 py-3 rounded-lg text-sm font-medium text-charcoal/80 hover:text-sage transition-colors duration-200 min-h-[44px] flex gap-3 ${mobileRevealClass}`}
+              style={{
+                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                fontWeight: 500,
+                transitionDelay: `${(primaryCount + discoverCount + index) * 60}ms`,
+              }}
             >
                   <span className="mt-1 w-2 h-2 rounded-full bg-gradient-to-br from-sage to-coral/70 flex-shrink-0" />
                   <span className="flex-1 text-left">
@@ -726,8 +751,12 @@ export default function Header({
             <OptimizedLink
               href="/profile"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-3 rounded-xl text-sm font-semibold text-charcoal/90 hover:text-charcoal/90 hover:bg-sage/5 flex items-center gap-3 transition-all duration-200 min-h-[44px]"
-              style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+              className={`px-4 py-3 rounded-lg text-sm font-medium text-charcoal/80 hover:text-sage flex items-center gap-3 transition-colors duration-200 min-h-[44px] ${mobileRevealClass}`}
+              style={{
+                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                fontWeight: 500,
+                transitionDelay: `${(primaryCount + discoverCount + businessCount) * 60}ms`,
+              }}
             >
               Profile
             </OptimizedLink>

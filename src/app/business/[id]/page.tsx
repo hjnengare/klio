@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import React, { useMemo, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { PageLoader } from "../../components/Loader";
 import {
     ArrowLeft,
@@ -21,13 +21,13 @@ import {
     Share2,
     X,
     ChevronUp,
-    Info,
 } from "react-feather";
 import { ImageCarousel } from "../../components/Business/ImageCarousel";
 import { PremiumReviewCard } from "../../components/Business/PremiumReviewCard";
 import { getCategoryPng, isPngIcon } from "../../utils/categoryToPngMapping";
 import Footer from "../../components/Footer/Footer";
-import BusinessInfoModal, { BusinessInfo } from "../../components/BusinessInfo/BusinessInfoModal";
+import { BusinessInfo } from "../../components/BusinessInfo/BusinessInfoModal";
+import BusinessInfoAside from "../../components/BusinessInfo/BusinessInfoAside";
 import { useAuth } from "../../contexts/AuthContext";
 
 // CSS animations to replace framer-motion
@@ -83,8 +83,6 @@ export default function BusinessProfilePage() {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [modalPosition, setModalPosition] = useState({ top: 0, right: 0 });
     const [showScrollTop, setShowScrollTop] = useState(false);
-    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-    const infoButtonRef = useRef<HTMLButtonElement>(null);
 
     // Calculate modal position based on button position
     useEffect(() => {
@@ -129,26 +127,22 @@ export default function BusinessProfilePage() {
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
-                if (showSpecialsModal) {
-                    setShowSpecialsModal(false);
-                }
-                if (isInfoModalOpen) {
-                    setIsInfoModalOpen(false);
-                }
+                setShowSpecialsModal(false);
             }
         };
 
-        if (showSpecialsModal || isInfoModalOpen) {
+        if (showSpecialsModal) {
             document.addEventListener('keydown', handleEscape);
-            // Prevent body scroll when modal is open
             document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
         }
 
         return () => {
             document.removeEventListener('keydown', handleEscape);
             document.body.style.overflow = 'unset';
         };
-    }, [showSpecialsModal, isInfoModalOpen]);
+    }, [showSpecialsModal]);
 
     // Fetch business data from API
     const [business, setBusiness] = useState<any>(null);
@@ -264,6 +258,19 @@ export default function BusinessProfilePage() {
         reviews: business.reviews || [],
     };
 
+    const businessInfo: BusinessInfo = {
+        name: businessData.name,
+        description: businessData.description,
+        category: businessData.category,
+        location: businessData.location,
+        address: businessData.address,
+        phone: businessData.phone,
+        email: businessData.email,
+        website: businessData.website,
+        price_range: businessData.price_range,
+        verified: businessData.verified,
+    };
+
     return (
         <>
             <style dangerouslySetInnerHTML={{ __html: animations }} />
@@ -305,7 +312,10 @@ export default function BusinessProfilePage() {
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
                                     <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                                 </div>
-                                <h1 className="font-urbanist text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                                <h1
+                                    className="text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
+                                    style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
+                                >
                                     {businessData.name}
                                 </h1>
                             </button>
@@ -347,31 +357,14 @@ export default function BusinessProfilePage() {
                                     </Link>
                                 )}
 
-                                {/* Manage Button */}
+                                {/* Leave Review Button */}
                                 <Link
-                                    href="/manage-business"
+                                    href={`/business/review?business_id=${businessId}`}
                                     className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
                                 >
-                                    <Briefcase className="w-3 h-3" />
-                                    <span className="hidden lg:inline">Manage Business</span>
+                                    <Edit className="w-3 h-3" />
+                                    <span className="hidden lg:inline">Leave a Review</span>
                                 </Link>
-
-                                {/* Info Button */}
-                                <button
-                                    ref={infoButtonRef}
-                                    onClick={() => {
-                                        if (isInfoModalOpen) {
-                                            setIsInfoModalOpen(false);
-                                        } else {
-                                            setIsInfoModalOpen(true);
-                                        }
-                                    }}
-                                    className="w-10 h-10 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 min-h-[44px] min-w-[44px]"
-                                    style={{ animation: 'gentlePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}
-                                    aria-label="View business information"
-                                >
-                                    <Info className="w-5 h-5 text-white" strokeWidth={2.5} />
-                                </button>
                             </div>
                         </nav>
                     </div>
@@ -384,73 +377,86 @@ export default function BusinessProfilePage() {
                                 <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
 
 
-                                    {/* Full width layout */}
                                     <div className="space-y-6">
-
-                                        {/* PRIORITY 1: Hero Carousel - Full Width at Top */}
-                                        <article className="w-full sm:mx-0 flex items-center justify-center" aria-labelledby="photos-heading">
-                                            <div className="bg-card-bg backdrop-blur-xl border-0 sm:border border-white/60 rounded-2xl sm:rounded-[20px] shadow-none sm:shadow-lg relative overflow-hidden animate-fade-in-up mx-auto w-full">
-                                               
-                                                <div className="relative z-10">
-                                                    <ImageCarousel
-                                                        images={businessData.images}
-                                                        altBase={businessData.name}
-                                                        rating={businessData.rating}
-                                                        metrics={[
-                                                            { label: "Trust", value: businessData.trust, color: "sage" },
-                                                            { label: "Punctuality", value: businessData.punctuality, color: "coral" },
-                                                            { label: "Friendliness", value: businessData.friendliness, color: "sage" },
-                                                        ]}
-                                                    />
-                                                </div>
+                                        <div className="grid gap-6 lg:grid-cols-3 items-start">
+                                            <div className="lg:col-span-2">
+                                                <article className="w-full sm:mx-0 flex items-center justify-center" aria-labelledby="photos-heading">
+                                                    <div className="bg-card-bg backdrop-blur-xl border-0 sm:border border-white/60 rounded-2xl sm:rounded-[20px] shadow-none sm:shadow-lg relative overflow-hidden animate-fade-in-up mx-auto w-full">
+                                                        <div className="relative z-10">
+                                                            <ImageCarousel
+                                                                images={businessData.images}
+                                                                altBase={businessData.name}
+                                                                rating={businessData.rating}
+                                                                metrics={[
+                                                                    { label: "Trust", value: businessData.trust, color: "sage" },
+                                                                    { label: "Punctuality", value: businessData.punctuality, color: "coral" },
+                                                                    { label: "Friendliness", value: businessData.friendliness, color: "sage" },
+                                                                ]}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </article>
                                             </div>
-                                        </article>
 
-                                        {/* PRIORITY 2: Reviews Section - Centered */}
-                                        <div className="flex justify-center">
-                                          <div className="flex flex-col gap-3">
-                                                    <h2 id="reviews-heading" className="text-sm font-bold text-charcoal font-urbanist border-b border-charcoal/10 pb-2">
+                                            <div className="space-y-6">
+                                                <BusinessInfoAside
+                                                    businessInfo={businessInfo}
+                                                    className="self-start lg:sticky lg:top-28"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <section className="space-y-6" aria-labelledby="reviews-heading">
+                                                <div className="flex justify-center">
+                                                    <div className="flex flex-col gap-3">
+                                                        <h2
+                                                            id="reviews-heading"
+                                                            className="text-sm font-bold text-charcoal border-b border-charcoal/10 pb-2"
+                                                            style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
+                                                        >
                                                             Community Reviews
                                                         </h2>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                                    {businessData.reviews.length > 0 ? (
-                                                        <div className="space-y-4">
-                                                            {businessData.reviews.map((review: any, index: number) => (
-                                                                <PremiumReviewCard
-                                                                    key={review.id || index}
-                                                                    author={review.author}
-                                                                    rating={review.rating}
-                                                                    text={review.text}
-                                                                    date={review.date}
-                                                                    tags={review.tags}
-                                                                    highlight={index === 0 ? "Top Reviewer" : "Local Guide"}
-                                                                    verified={index < 2}
-                                                                    profileImage={review.profileImage}
-                                                                    reviewImages={review.reviewImages}
-                                                                />
-                                                            ))}
+
+                                                {businessData.reviews.length > 0 ? (
+                                                    <div className="space-y-4">
+                                                        {businessData.reviews.map((review: any, index: number) => (
+                                                            <PremiumReviewCard
+                                                                key={review.id || index}
+                                                                author={review.author}
+                                                                rating={review.rating}
+                                                                text={review.text}
+                                                                date={review.date}
+                                                                tags={review.tags}
+                                                                highlight={index === 0 ? "Top Reviewer" : "Local Guide"}
+                                                                verified={index < 2}
+                                                                profileImage={review.profileImage}
+                                                                reviewImages={review.reviewImages}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                ) : (
+                                                    <div className="text-center py-12">
+                                                        <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                            <MessageSquare className="w-8 h-8 text-charcoal/40" />
                                                         </div>
-                                                    ) : (
-                                                        <div className="text-center py-12">
-                                                            <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
-                                                                <MessageSquare className="w-8 h-8 text-charcoal/40" />
-                                                            </div>
-                                                            <h3 className="text-lg font-bold text-charcoal mb-2 font-urbanist">
-                                                                No reviews yet
-                                                            </h3>
-                                                            <p className="text-charcoal/70 mb-6 font-urbanist">
-                                                                Be the first to review this business!
-                                                            </p>
-                                                            <Link
-                                                                href={`/business/review?business_id=${businessId}`}
-                                                                className="inline-block px-6 py-3 bg-coral text-white rounded-full font-600 font-urbanist hover:bg-coral/90 transition-colors"
-                                                            >
-                                                                Write First Review
-                                                            </Link>
-                                                        </div>
-                                                    )}
-                                                </div>
+                                                        <h3 className="text-lg font-bold text-charcoal mb-2 font-urbanist">
+                                                            No reviews yet
+                                                        </h3>
+                                                        <p className="text-charcoal/70 mb-6 font-urbanist">
+                                                            Be the first to review this business!
+                                                        </p>
+                                                        <Link
+                                                            href={`/business/review?business_id=${businessId}`}
+                                                            className="inline-block px-6 py-3 bg-coral text-white rounded-full font-600 font-urbanist hover:bg-coral/90 transition-colors"
+                                                        >
+                                                            Write First Review
+                                                        </Link>
+                                                    </div>
+                                                )}
+                                            </section>
+                                    </div>
                                 </div>
                             </div>
                         </main>
@@ -550,25 +556,6 @@ export default function BusinessProfilePage() {
                     <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
             )}
-
-            {/* Business Info Modal */}
-            <BusinessInfoModal
-                businessInfo={{
-                    name: businessData.name,
-                    description: businessData.description,
-                    category: businessData.category,
-                    location: businessData.location,
-                    address: businessData.address,
-                    phone: businessData.phone,
-                    email: businessData.email,
-                    website: businessData.website,
-                    price_range: businessData.price_range,
-                    verified: businessData.verified,
-                }}
-                buttonRef={infoButtonRef}
-                isOpen={isInfoModalOpen}
-                onClose={() => setIsInfoModalOpen(false)}
-            />
 
             <Footer />
         </>

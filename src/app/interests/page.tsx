@@ -206,7 +206,7 @@ function InterestsContent() {
         <EmailVerificationBanner className="mb-4" />
         <InterestHeader isOnline={isOnline} />
 
-        <OnboardingCard className="rounded-lg border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
+        <OnboardingCard className="rounded-2xl border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
           {onboardingError && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4 enter-fade" style={{ animationDelay: "0.1s" }}>
               <p className="text-sm font-semibold text-red-600">

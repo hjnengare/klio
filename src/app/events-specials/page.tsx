@@ -93,8 +93,8 @@ export default function EventsSpecialsPage() {
             '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
         }}
       >
-        <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 sm:pt-10">
-          <nav className="py-4 px-2 sm:px-4" aria-label="Breadcrumb">
+        <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-10 ">
+          <nav aria-label="Breadcrumb">
                 <ol className="flex items-center gap-1 text-sm text-charcoal/60">
                   <li>
                 <Link

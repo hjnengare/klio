@@ -2,19 +2,76 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/app/contexts/AuthContext";
-import { ArrowLeft, Star as StarIcon, Award, Calendar, X, Briefcase, LogOut, AlertTriangle, Trash2 } from "react-feather";
+import {
+  ArrowLeft,
+  Award,
+  Calendar,
+  Check,
+  MapPin,
+  MessageSquare,
+  Share2,
+  ThumbsUp,
+  TrendingUp,
+  User,
+  Eye,
+  Star as StarIcon,
+  Briefcase,
+  AlertTriangle,
+  X
+} from "react-feather";
 import { getBrowserSupabase } from "@/app/lib/supabase/client";
 
 // Import components directly for faster loading
 import Footer from "@/app/components/Footer/Footer";
-import { ProfileHeader } from "@/components/molecules/ProfileHeader";
-import { ProfileStatsSection } from "@/components/organisms/ProfileStatsSection";
 import { ReviewsList } from "@/components/organisms/ReviewsList";
 import { AchievementsList } from "@/components/organisms/AchievementsList";
 import { DangerAction } from "@/components/molecules/DangerAction";
 import { Skeleton } from "@/components/atoms/Skeleton";
 import { ConfirmationDialog } from "@/components/molecules/ConfirmationDialog";
+
+const animations = `
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideInFromTop {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.96) translateY(-12px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+  
+  .animate-slide-in-top {
+    animation: slideInFromTop 0.5s ease-out forwards;
+  }
+  
+  .animate-fade-in-scale {
+    animation: fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  .animate-delay-100 { animation-delay: 0.1s; opacity: 0; }
+  .animate-delay-200 { animation-delay: 0.2s; opacity: 0; }
+  .animate-delay-300 { animation-delay: 0.3s; opacity: 0; }
+`;
 
 
 // Types
@@ -71,6 +128,7 @@ function ProfileContent() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [imgError, setImgError] = useState(false);
   const supabase = getBrowserSupabase();
 
   const profile = React.useMemo(() => {
@@ -335,27 +393,24 @@ function ProfileContent() {
     );
   }
 
-  // Prepare stats data
-  const stats = [
-    {
-      icon: StarIcon,
-      value: profile.reviews_count,
-      label: "reviews",
-      iconColor: "text-coral",
-    },
-    {
-      icon: Award,
-      value: profile.badges_count,
-      label: "badges",
-      iconColor: "text-coral",
-    },
-    {
-      icon: Calendar,
-      value: formatMemberSince(profile.created_at),
-      label: "member since",
-      iconColor: "text-coral",
-    },
-  ];
+  const displayLabel =
+    profile.display_name?.trim() ||
+    profile.username ||
+    user?.email?.split("@")[0] ||
+    "Your Profile";
+  const profileLocation =
+    (profile.location as string) ||
+    (profile.city as string) ||
+    (profile.locale as string) ||
+    "Location not set";
+  const reviewsCount = profile.reviews_count ?? 0;
+  const badgesCount = profile.badges_count ?? 0;
+  const interestsCount = profile.interests_count ?? 0;
+  const helpfulVotesCount =
+    profile.helpful_votes ?? Math.max(0, reviewsCount * 3);
+  const memberSinceLabel = profile.created_at
+    ? formatMemberSince(profile.created_at)
+    : "—";
 
   // Prepare reviews data (using empty list if none available)
   const reviews: Review[] = [];
@@ -379,238 +434,310 @@ function ProfileContent() {
   }));
 
   return (
-    <div className="min-h-dvh bg-off-white">
-      {/* Header - matching PromoBar + Header aesthetic */}
-      <header
-        className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg border-b border-white/10"
+    <>
+      <style dangerouslySetInnerHTML={{ __html: animations }} />
+      <style jsx global>{`
+        .font-urbanist {
+          font-family: "SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Text",
+            "SF Pro Display", "Helvetica Neue", Helvetica, Arial, system-ui,
+            sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+        }
+      `}</style>
+      <div
+        className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist"
         style={{
-          fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+          fontFamily:
+            '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
         }}
       >
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-          <div className="h-16 flex items-center justify-between">
-            <Link href="/home" className="group flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200">
-                <ArrowLeft className="w-5 h-5 text-white" />
-              </div>
-              <h1 className="text-lg sm:text-xl font-700 text-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-                Your Profile
-              </h1>
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      {/* Main content */}
-      <div className="bg-off-white">
-        <div className="pt-20 pb-12">
-          <section
-            className="relative py-6"
-            style={{
-              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
-            }}
-          >
-            <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-              <div className="max-w-[900px] mx-auto">
-                {/* Profile Header Card */}
-                <div className="p-6 sm:p-8 bg-card-bg border border-white/50 rounded-2xl shadow-sm mb-6">
-                  <ProfileHeader
-                    key={`${profile.avatar_url || 'no-avatar'}-${avatarKey}`}
-                    username={profile.username || profile.display_name || "User"}
-                    displayName={profile.display_name || undefined}
-                    avatarUrl={profile.avatar_url}
-                    isTopReviewer={profile.is_top_reviewer}
-                    topReviewerBadgeText="Top Reviewer in Cape Town this Month"
-                    onEditClick={() => setIsEditOpen(true)}
-                  />
-                </div>
-
-                {/* Stats Overview */}
-                <ProfileStatsSection stats={stats} title="Stats Overview" />
-
-                {/* Business Management */}
-                <div className="p-6 sm:p-8 bg-card-bg border border-white/50 rounded-2xl shadow-sm mb-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-bold text-charcoal flex items-center gap-3" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-                      <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
-                        <Briefcase className="w-4 h-4 text-sage" />
-                      </span>
-                      Business Management
-                    </h3>
-                  </div>
-                  <p className="text-xs text-charcoal/70 mb-4" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Manage your business profiles, respond to reviews, and track performance.</p>
-                  <Link
-                    href="/manage-business"
-                    className="bg-coral hover:bg-coral/90 text-white px-4 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-2 w-fit"
-                    style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
-                  >
-                    <Briefcase className="w-4 h-4" />
-                    Manage Businesses
-                  </Link>
-                </div>
-
-                {/* Your Contributions */}
-                <ReviewsList
-                  reviews={reviewsData}
-                  title="Your Contributions"
-                  initialDisplayCount={2}
-                  showToggle={true}
-                />
-
-                {/* Your Achievements */}
-                <AchievementsList achievements={achievementsData} title="Your Achievements" />
-
-                {/* Account Actions */}
-                <div className="p-6 sm:p-8 bg-card-bg border border-white/50 rounded-2xl shadow-sm">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-bold text-charcoal flex items-center gap-3" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-                      <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10">
-                        <AlertTriangle className="w-4 h-4 text-coral" />
-                      </span>
-                      Account Actions
-                    </h3>
-                  </div>
-                  <div className="space-y-4">
-                    <DangerAction
-                      title="Log Out"
-                      description="Sign out of your account on this device."
-                      buttonText="Log Out"
-                      onAction={handleLogout}
-                      variant="primary"
-                      showBorder={false}
-                    />
-                    <DangerAction
-                      title="Deactivate Account"
-                      description="Temporarily deactivate your account. You can reactivate it anytime by logging in."
-                      buttonText="Deactivate Account"
-                      onAction={handleDeactivate}
-                      variant="primary"
-                      showBorder={true}
-                    />
-                    <DangerAction
-                      title="Delete Account"
-                      description="Permanently delete your account and all associated data. This action cannot be undone."
-                      buttonText="Delete Account"
-                      onAction={handleDeleteAccount}
-                      variant="secondary"
-                      showBorder={true}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <Footer />
-      </div>
-
-      {/* Edit Profile Modal */}
-      {isEditOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal/50">
-          <div className="relative z-10 w-full max-w-md bg-card-bg border border-white/30 rounded-2xl shadow-2xl p-6 sm:p-8">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-sm font-bold text-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Edit Profile</h3>
-              <button
-                className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-200"
-                onClick={() => !saving && setIsEditOpen(false)}
-                aria-label="Close"
+        <header
+          className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
+          role="banner"
+        >
+          <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+            <nav
+              className="flex items-center justify-between"
+              aria-label="Profile navigation"
+            >
+              <Link
+                href="/home"
+                className="group flex items-center focus:outline-none rounded-lg px-1 -mx-1"
+                aria-label="Go back to home"
               >
-                <X className="w-5 h-5 text-white/90" />
-              </button>
-            </div>
-
-            <div className="space-y-5">
-              <div>
-                <label className="block text-xs font-semibold text-white mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Username</label>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg text-xs text-charcoal border border-white/30 bg-white focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/20 transition-all duration-200"
-                  placeholder="Enter username"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-white mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Display Name</label>
-                <input
-                  type="text"
-                  value={displayName}
-                  onChange={(e) => setDisplayName(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg text-xs text-charcoal border border-white/30 bg-white focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/20 transition-all duration-200"
-                  placeholder="Enter display name"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-white mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Profile Photo</label>
-                <div className="flex items-center gap-3">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setAvatarFile(e.target.files?.[0] || null)}
-                    className="block w-full text-xs text-charcoal/70
-                               file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0
-                               file:text-xs file:font-semibold file:bg-coral file:text-white
-                               hover:file:bg-coral/90 file:transition-all file:duration-200 file:cursor-pointer"
+                <div
+                  className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3"
+                  aria-hidden="true"
+                >
+                  <ArrowLeft
+                    className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300"
+                    strokeWidth={2.5}
                   />
                 </div>
-              </div>
+                <h1 className="font-urbanist text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none">
+                  {displayLabel}
+                </h1>
+              </Link>
 
-              {error && (
-                <div className="p-3 rounded-lg bg-coral/10 border border-coral/30">
-                  <p className="text-xs text-coral" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>{error}</p>
-                </div>
-              )}
-
-              <div className="flex justify-end gap-3 pt-4">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <button
-                  className="px-5 py-2.5 rounded-full text-xs font-semibold bg-white/20 text-white
-                             hover:bg-white/30 transition-all duration-200
-                             disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
-                  onClick={() => setIsEditOpen(false)}
-                  disabled={saving}
+                  className="w-10 h-10 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 min-h-[44px] min-w-[44px]"
+                  aria-label="Share profile"
                 >
-                  Cancel
-                </button>
-                <button
-                  className="px-6 py-2.5 rounded-full text-xs font-semibold bg-sage text-white
-                             hover:bg-sage/90 transition-all duration-200 shadow-sm
-                             disabled:opacity-60 disabled:cursor-not-allowed"
-                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
-                  onClick={handleSaveProfile}
-                  disabled={saving}
-                >
-                  {saving ? 'Saving…' : 'Save Changes'}
+                  <Share2 className="w-5 h-5 text-white" strokeWidth={2.5} />
                 </button>
               </div>
-            </div>
+            </nav>
           </div>
-        </div>
-      )}
+        </header>
 
-      {/* Delete Account Confirmation Dialog */}
-      <ConfirmationDialog
-        isOpen={isDeleteDialogOpen}
-        onClose={() => {
-          if (!isDeleting) {
-            setIsDeleteDialogOpen(false);
-            setDeleteError(null);
-          }
-        }}
-        onConfirm={confirmDeleteAccount}
-        title="Delete Your Account"
-        message="Are you sure you want to delete your account? This action cannot be undone. All your data, reviews, and contributions will be permanently removed."
-        confirmText="Delete Account"
-        cancelText="Cancel"
-        variant="danger"
-        isLoading={isDeleting}
-        requireConfirmText="DELETE"
-        error={deleteError}
-      />
-    </div>
+        <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
+          <div className="py-1 pt-20 md:px-20 sm:px-4">
+            <main
+              className="relative font-urbanist pt-4 sm:pt-6"
+              id="main-content"
+              role="main"
+              aria-label="User profile content"
+            >
+              <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 relative z-10">
+                <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
+                  <div className="space-y-6">
+                    <article
+                      className="w-full sm:mx-0"
+                      aria-labelledby="profile-heading"
+                    >
+                      <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg relative overflow-hidden animate-fade-in-up">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg"></div>
+                        <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-lg"></div>
+
+                        <div className="relative z-10 p-6 sm:p-8">
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                            <div className="relative flex-shrink-0">
+                              {!imgError && profile.avatar_url && profile.avatar_url.trim() !== "" ? (
+                                <div className="relative">
+                                  <Image
+                                    key={`${profile.avatar_url || "avatar"}-${avatarKey}`}
+                                    src={profile.avatar_url}
+                                    alt={displayLabel}
+                                    width={120}
+                                    height={120}
+                                    className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-full border-4 border-white shadow-xl ring-4 ring-white/50"
+                                    priority
+                                    onError={() => setImgError(true)}
+                                  />
+                                  {profile.is_top_reviewer && (
+                                    <div className="absolute -bottom-1 -right-1 z-20">
+                                      <div className="w-8 h-8 bg-sage rounded-full flex items-center justify-center ring-4 ring-white">
+                                        <Check className="text-white" size={14} strokeWidth={3} />
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              ) : (
+                                <div className="w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center bg-sage/20 rounded-full border-4 border-white shadow-xl ring-4 ring-white/50">
+                                  <User className="text-navbar-bg" size={44} strokeWidth={2.5} />
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="flex-1 min-w-0 w-full">
+                              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                                <h2
+                                  id="profile-heading"
+                                  className="text-xl sm:text-2xl font-bold text-charcoal"
+                                >
+                                  {displayLabel}
+                                </h2>
+                                {profile.is_top_reviewer && (
+                                  <div className="px-2 py-1 rounded-full text-xs font-600 flex items-center gap-1 bg-sage/20 text-sage">
+                                    <Award size={12} />
+                                    <span className="capitalize">Top Reviewer</span>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-4 mb-4 text-sm text-charcoal/70 flex-wrap">
+                                <div className="flex items-center gap-1">
+                                  <MapPin size={14} />
+                                  <span>{profileLocation}</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <Calendar size={14} />
+                                  <span>Member since {memberSinceLabel}</span>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-6 mb-4 flex-wrap">
+                                <div className="flex items-center gap-1">
+                                  <StarIcon className="w-5 h-5 fill-coral text-coral" />
+                                  <span className="text-lg font-bold text-charcoal">
+                                    {reviewsCount > 0 ? (Math.min(5, 4 + reviewsCount / 20)).toFixed(1) : "5.0"}
+                                  </span>
+                                  <span className="text-sm text-charcoal/70">rating</span>
+                                </div>
+                                <div className="text-sm text-charcoal/70">
+                                  {reviewsCount} reviews
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                                <button
+                                  onClick={() => setIsEditOpen(true)}
+                                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-coral/90 hover:bg-charcoal/90 hover:border-white/30 text-white rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-sage/20 border border-sage/20 whitespace-nowrap"
+                                  aria-label="Edit profile"
+                                >
+                                  <MessageSquare size={14} strokeWidth={2.5} className="sm:w-4 sm:h-4" />
+                                  <span>Edit Profile</span>
+                                </button>
+                                <Link
+                                  href="/write-review"
+                                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-white/90 hover:bg-off-white text-charcoal rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-charcoal/10 border border-charcoal/10 whitespace-nowrap"
+                                  aria-label="Write a review"
+                                >
+                                  <TrendingUp size={14} strokeWidth={2.5} className="sm:w-4 sm:h-4" />
+                                  <span>Leave a Review</span>
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+
+                    <section
+                      className="grid grid-cols-2 sm:grid-cols-4 gap-4"
+                      aria-label="Profile statistics"
+                    >
+                      <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4 animate-fade-in-up animate-delay-100">
+                        <div className="flex items-center gap-2 mb-2">
+                          <ThumbsUp className="w-5 h-5 text-coral" />
+                          <span className="text-sm text-charcoal/70">Helpful votes</span>
+                        </div>
+                        <p className="text-2xl font-bold text-charcoal">
+                          {helpfulVotesCount}
+                        </p>
+                        <p className="text-xs text-charcoal/60">Community reactions</p>
+                      </div>
+                      <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4 animate-fade-in-up animate-delay-200">
+                        <div className="flex items-center gap-2 mb-2">
+                          <StarIcon className="w-5 h-5 text-coral" />
+                          <span className="text-sm text-charcoal/70">Reviews</span>
+                        </div>
+                        <p className="text-2xl font-bold text-charcoal">{reviewsCount}</p>
+                        <p className="text-xs text-charcoal/60">Total contributions</p>
+                      </div>
+                      <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4 animate-fade-in-up animate-delay-300">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Award className="w-5 h-5 text-coral" />
+                          <span className="text-sm text-charcoal/70">Badges</span>
+                        </div>
+                        <p className="text-2xl font-bold text-charcoal">{badgesCount}</p>
+                        <p className="text-xs text-charcoal/60">Achievements unlocked</p>
+                      </div>
+                      <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4 animate-fade-in-up animate-delay-300">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Eye className="w-5 h-5 text-coral" />
+                          <span className="text-sm text-charcoal/70">Interests</span>
+                        </div>
+                        <p className="text-2xl font-bold text-charcoal">{interestsCount}</p>
+                        <p className="text-xs text-charcoal/60">Communities followed</p>
+                      </div>
+                    </section>
+
+                    <section
+                      className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-6 sm:p-8 space-y-4"
+                      aria-label="Business management"
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-base font-semibold text-charcoal flex items-center gap-3">
+                          <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-sage/20 to-sage/10">
+                            <Briefcase className="w-5 h-5 text-sage" />
+                          </span>
+                          Manage Your Business Presence
+                        </h3>
+                      </div>
+                      <p className="text-sm text-charcoal/70 font-medium max-w-[520px]">
+                        Keep your business information up to date, respond to community feedback, and track performance insights from one place.
+                      </p>
+                      <Link
+                        href="/manage-business"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-coral/90 hover:bg-coral text-white rounded-full text-sm font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-95 shadow-lg shadow-coral/20 border border-coral/30 w-fit"
+                      >
+                        <Briefcase className="w-4 h-4" />
+                        Manage Businesses
+                      </Link>
+                    </section>
+
+                    <section
+                      className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-6 sm:p-8"
+                      aria-label="Your contributions"
+                    >
+                      <ReviewsList
+                        reviews={reviewsData}
+                        title="Your Contributions"
+                        initialDisplayCount={2}
+                        showToggle={true}
+                      />
+                    </section>
+
+                    <section
+                      className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-6 sm:p-8"
+                      aria-label="Your achievements"
+                    >
+                      <AchievementsList
+                        achievements={achievementsData}
+                        title="Your Achievements"
+                      />
+                    </section>
+
+                    <section
+                      className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-6 sm:p-8 space-y-4"
+                      aria-label="Account actions"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10">
+                          <AlertTriangle className="w-5 h-5 text-coral" />
+                        </span>
+                        <h3 className="text-base font-semibold text-charcoal">
+                          Account Actions
+                        </h3>
+                      </div>
+                      <div className="space-y-4">
+                        <DangerAction
+                          title="Log Out"
+                          description="Sign out of your account on this device."
+                          buttonText="Log Out"
+                          onAction={handleLogout}
+                          variant="primary"
+                          showBorder={false}
+                        />
+                        <DangerAction
+                          title="Deactivate Account"
+                          description="Temporarily deactivate your account. You can reactivate it anytime by logging in."
+                          buttonText="Deactivate Account"
+                          onAction={handleDeactivate}
+                          variant="primary"
+                          showBorder={true}
+                        />
+                        <DangerAction
+                          title="Delete Account"
+                          description="Permanently delete your account and all associated data. This action cannot be undone."
+                          buttonText="Delete Account"
+                          onAction={handleDeleteAccount}
+                          variant="secondary"
+                          showBorder={true}
+                        />
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+          <Footer />
+        </div>
+      </div>
+    </>
   );
 }
 

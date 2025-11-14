@@ -17,7 +17,7 @@ export default function ReviewTextForm({
     <>
       {/* Review Title */}
       <div className="mb-3 px-4">
-        <h3 className="text-sm font-bold text-charcoal mb-3 text-center md:text-left">
+        <h3 className="text-sm font-bold text-charcoal mb-3 text-center md:text-left" style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}>
           Review Title (Optional)
         </h3>
         <input
@@ -31,7 +31,7 @@ export default function ReviewTextForm({
 
       {/* Review Text */}
       <div className="mb-3 px-4">
-        <h3 className="text-sm font-bold text-charcoal mb-3 text-center md:text-left">
+        <h3 className="text-sm font-bold text-charcoal mb-3 text-center md:text-left" style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}>
           Tell us about your experience
         </h3>
         <textarea

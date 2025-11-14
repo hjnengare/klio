@@ -11,9 +11,9 @@ export default function OnboardingCard({ children, className = "" }: OnboardingC
   return (
     <div
       className={`
-        bg-card-bg rounded-lg sm:rounded-lg px-4 sm:px-6 md:px-8 py-4 md:py-6 mb-2 relative overflow-visible
+        bg-card-bg rounded-2xl sm:rounded-2xl px-2 md:px-4 py-4 md:py-6 mb-2 relative overflow-visible
         border border-white/50 backdrop-blur-lg
-        shadow-[0_8px_32px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]
+        shadow-md hover:shadow-lg
         transition-shadow duration-300
         onboarding-card ${className}
       `}

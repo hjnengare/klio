@@ -32,6 +32,18 @@ interface BusinessRPCResult {
   cursor_created_at: string;
 }
 
+// Mapping of interests to subcategories
+const INTEREST_TO_SUBCATEGORIES: Record<string, string[]> = {
+  'food-drink': ['restaurants', 'cafes', 'bars', 'fast-food', 'fine-dining'],
+  'beauty-wellness': ['gyms', 'spas', 'salons', 'wellness', 'nail-salons'],
+  'professional-services': ['education-learning', 'transport-travel', 'finance-insurance', 'plumbers', 'electricians', 'legal-services'],
+  'outdoors-adventure': ['hiking', 'cycling', 'water-sports', 'camping'],
+  'experiences-entertainment': ['events-festivals', 'sports-recreation', 'nightlife', 'comedy-clubs'],
+  'arts-culture': ['museums', 'galleries', 'theaters', 'concerts'],
+  'family-pets': ['family-activities', 'pet-services', 'childcare', 'veterinarians'],
+  'shopping-lifestyle': ['fashion', 'electronics', 'home-decor', 'books'],
+};
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
@@ -48,6 +60,26 @@ export async function GET(req: Request) {
     const priceRange = searchParams.get('price_range') || null;
     const location = searchParams.get('location') || null;
     const minRating = searchParams.get('min_rating') ? parseFloat(searchParams.get('min_rating')!) : null;
+
+    // Interest-based filtering
+    const interestIds = searchParams.get('interest_ids')
+      ? searchParams.get('interest_ids')!.split(',').filter(id => id.trim())
+      : null;
+    
+    // Map interests to subcategories
+    let subcategoriesToFilter: string[] = [];
+    if (interestIds && interestIds.length > 0) {
+      for (const interestId of interestIds) {
+        const subcats = INTEREST_TO_SUBCATEGORIES[interestId];
+        if (subcats) {
+          subcategoriesToFilter.push(...subcats);
+        }
+      }
+    }
+    console.log('[BUSINESSES API] Mapped interests to subcategories:', {
+      interests: interestIds,
+      subcategories: subcategoriesToFilter,
+    });
 
     // Search parameters
     const search = searchParams.get('search') || null;
@@ -113,6 +145,12 @@ export async function GET(req: Request) {
 
       // Apply filters
       if (category) query = query.eq('category', category);
+      // Interest-based filtering: filter by subcategories mapped from interests
+      else if (subcategoriesToFilter && subcategoriesToFilter.length > 0) {
+        console.log('[BUSINESSES API] Filtering by mapped subcategories:', subcategoriesToFilter);
+        query = query.in('category', subcategoriesToFilter);
+      }
+      
       if (badge) query = query.eq('badge', badge);
       if (verified !== null) query = query.eq('verified', verified);
       if (priceRange) query = query.eq('price_range', priceRange);
@@ -133,9 +171,20 @@ export async function GET(req: Request) {
         }
       }
 
-      // Sorting
-      query = query.order('created_at', { ascending: sortOrder === 'asc' });
-      query = query.limit(limit);
+      // Sorting - use random order when filtering by interests, otherwise use specified sort
+      if (interestIds && interestIds.length > 0) {
+        console.log('[BUSINESSES API] Using random sort for interest-filtered results');
+        // Supabase doesn't have native random, so we'll randomize client-side after fetch
+        query = query.limit(limit * 2); // Fetch extra to randomize from
+      } else {
+        // Default sorting for non-interest queries
+        if (sortBy === 'total_rating') {
+          query = query.order('total_reviews', { ascending: sortOrder === 'asc' });
+        } else {
+          query = query.order('created_at', { ascending: sortOrder === 'asc' });
+        }
+        query = query.limit(limit);
+      }
 
       const { data: fallbackData, error: fallbackError } = await query;
       
@@ -153,7 +202,7 @@ export async function GET(req: Request) {
       }
 
       // Transform fallback data to match RPC format
-      businesses = (fallbackData || []).map((b: any) => ({
+      let transformedFallbackData = (fallbackData || []).map((b: any) => ({
         ...b,
         latitude: null,
         longitude: null,
@@ -164,6 +213,20 @@ export async function GET(req: Request) {
         cursor_id: b.id,
         cursor_created_at: b.created_at,
       }));
+
+      // Randomize results when filtering by interests
+      if (interestIds && interestIds.length > 0 && transformedFallbackData.length > 0) {
+        console.log('[BUSINESSES API] Randomizing results for interest filter');
+        // Fisher-Yates shuffle algorithm
+        for (let i = transformedFallbackData.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [transformedFallbackData[i], transformedFallbackData[j]] = [transformedFallbackData[j], transformedFallbackData[i]];
+        }
+        // Return only the requested limit after randomizing
+        transformedFallbackData = transformedFallbackData.slice(0, limit);
+      }
+
+      businesses = transformedFallbackData;
     }
 
     if (error) {

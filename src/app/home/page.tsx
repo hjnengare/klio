@@ -17,8 +17,6 @@ import {
   BUSINESSES_OF_THE_MONTH,
 } from "../data/communityHighlightsData";
 import { useOnboarding } from "../contexts/OnboardingContext";
-import ToastContainer from "../components/ToastNotification/ToastContainer";
-import { useToastNotifications } from "../hooks/useToastNotifications";
 import { useForYouBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 
 // Removed any animation / scroll-reveal classes and imports.
@@ -48,23 +46,10 @@ export default function Home() {
   const { businesses: forYouBusinesses, loading: forYouLoading, error: forYouError } = useForYouBusinesses(10);
   const { businesses: trendingBusinesses, loading: trendingLoading, error: trendingError } = useTrendingBusinesses(10);
   
-  const { notifications, removeNotification } = useToastNotifications({
-    interval: 15000, // Show a notification every 15 seconds
-    maxToasts: 1,
-    enabled: true,
-  });
-
   return (
     <div className="min-h-dvh bg-off-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
       <div className="relative">
         <PromoBar />
-
-        <ToastContainer
-          notifications={notifications}
-          onRemove={removeNotification}
-          position="bottom-left"
-          duration={5000}
-        />
 
         <HeroCarousel />
       </div>

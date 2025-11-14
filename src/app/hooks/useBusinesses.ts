@@ -4,6 +4,7 @@
 
 import { useState, useEffect } from 'react';
 import { Business } from '../components/BusinessCard/BusinessCard';
+import { useUserPreferences } from './useUserPreferences';
 
 export interface UseBusinessesOptions {
   limit?: number;
@@ -14,6 +15,7 @@ export interface UseBusinessesOptions {
   badge?: string;
   location?: string;
   priceRange?: string;
+  interestIds?: string[]; // IDs of interests/subcategories to filter by
 }
 
 export interface UseBusinessesResult {
@@ -46,6 +48,9 @@ export function useBusinesses(options: UseBusinessesOptions = {}): UseBusinesses
       if (options.badge) params.set('badge', options.badge);
       if (options.location) params.set('location', options.location);
       if (options.priceRange) params.set('price_range', options.priceRange);
+      if (options.interestIds && options.interestIds.length > 0) {
+        params.set('interest_ids', options.interestIds.join(','));
+      }
 
       const response = await fetch(`/api/businesses?${params.toString()}`);
       
@@ -78,6 +83,7 @@ export function useBusinesses(options: UseBusinessesOptions = {}): UseBusinesses
     options.badge,
     options.location,
     options.priceRange,
+    options.interestIds?.join(','), // Include interestIds in dependency array
   ]);
 
   return {
@@ -100,13 +106,21 @@ export function useTrendingBusinesses(limit: number = 10): UseBusinessesResult {
 }
 
 /**
- * Hook to fetch businesses for "For You" section (can be personalized later)
+ * Hook to fetch businesses for "For You" section personalized based on user interests
  */
 export function useForYouBusinesses(limit: number = 10): UseBusinessesResult {
+  const { interests, subcategories } = useUserPreferences();
+
+  // Combine interests and subcategories into a single list of IDs
+  const interestIds = interests.map((i) => i.id).concat(
+    subcategories.map((s) => s.id)
+  );
+
   return useBusinesses({
     limit,
     sortBy: 'total_rating',
     sortOrder: 'desc',
+    interestIds: interestIds.length > 0 ? interestIds : undefined, // Filter if user has preferences
   });
 }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import type { MouseEvent, CSSProperties } from "react";
 import { Event } from "../../data/eventsData";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,6 +9,98 @@ import { getEventIconPng } from "../../utils/eventIconToPngMapping";
 import EventBadge from "./EventBadge";
 import RatingBadge from "./RatingBadge";
 
+const EVENT_IMAGE_BASE_PATH = "/png";
+
+const SPECIAL_FOOD_KEYWORDS = [
+  "food",
+  "pizza",
+  "meal",
+  "dinner",
+  "lunch",
+  "breakfast",
+  "brunch",
+  "snack",
+  "burger",
+  "kitchen",
+  "restaurant",
+];
+
+const SPECIAL_DRINK_KEYWORDS = [
+  "cocktail",
+  "beer",
+  "wine",
+  "drink",
+  "bar",
+  "happy hour",
+  "brew",
+  "wine",
+];
+
+const EVENT_SPORT_KEYWORDS = [
+  "yoga",
+  "sport",
+  "fitness",
+  "run",
+  "park",
+  "outdoor",
+  "dance",
+  "music",
+];
+
+const getEventMediaImage = (event: Event) => {
+  const haystack = `${event.title} ${event.description ?? ""}`.toLowerCase();
+
+  if (event.type === "event") {
+    if (EVENT_SPORT_KEYWORDS.some((keyword) => haystack.includes(keyword))) {
+      return `${EVENT_IMAGE_BASE_PATH}/033-sport.png`;
+    }
+
+    if (haystack.includes("yoga")) {
+      return `${EVENT_IMAGE_BASE_PATH}/015-yoga.png`;
+    }
+
+    if (haystack.includes("music") || haystack.includes("concert")) {
+      return `${EVENT_IMAGE_BASE_PATH}/040-stage.png`;
+    }
+
+    return `${EVENT_IMAGE_BASE_PATH}/022-party-people.png`;
+  }
+
+  if (SPECIAL_DRINK_KEYWORDS.some((keyword) => haystack.includes(keyword))) {
+    return `${EVENT_IMAGE_BASE_PATH}/007-beer-tap.png`;
+  }
+
+  if (SPECIAL_FOOD_KEYWORDS.some((keyword) => haystack.includes(keyword))) {
+    return `${EVENT_IMAGE_BASE_PATH}/031-fast-food.png`;
+  }
+
+  return `${EVENT_IMAGE_BASE_PATH}/025-open-book.png`;
+};
+
+const formatPriceDisplay = (price?: string) => {
+  if (!price || price.trim().length === 0) {
+    return "Free";
+  }
+
+  const trimmed = price.trim();
+
+  const numeric = trimmed.replace(/[^0-9.]/g, "");
+  if (numeric && !Number.isNaN(Number(numeric))) {
+    const value = Number(numeric);
+    if (trimmed.includes("%")) {
+      return `${value}% Off`;
+    }
+
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      maximumFractionDigits: value % 1 === 0 ? 0 : 2,
+    }).format(value);
+  }
+
+  return trimmed;
+};
+
 interface EventCardProps {
   event: Event;
   onBookmark?: (event: Event) => void;
@@ -15,8 +108,10 @@ interface EventCardProps {
 
 export default function EventCard({ event, onBookmark }: EventCardProps) {
   const iconPng = getEventIconPng(event.icon);
+  const mediaImage = getEventMediaImage(event);
+  const priceLabel = formatPriceDisplay(event.price);
   
-  const handleBookmarkClick = (e: React.MouseEvent) => {
+  const handleBookmarkClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (onBookmark) {
@@ -26,44 +121,39 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
   
   return (
     <li
-      className="snap-start snap-always flex-shrink-0"
+      className="flex w-full"
       style={{
         fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
         fontWeight: 600,
       }}
     >
-      <Link href={`/event/${event.id}`} className="block group">
-        <article className="relative overflow-hidden cursor-pointer w-full sm:w-[252px] md:w-[277px] lg:w-[288px] h-[400px] sm:h-[450px] flex flex-col bg-card-bg backdrop-blur-xl border border-white/60 rounded-[12px] shadow-lg">
+      <Link href={`/event/${event.id}`} className="group w-full">
+        <article
+          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-lg transition-shadow duration-300"
+          style={
+            {
+              width: "100%",
+              maxWidth: "540px",
+              boxShadow: "0 12px 24px rgba(15, 23, 42, 0.12)",
+              "--width": "540",
+              "--height": "720",
+            } as CSSProperties
+          }
+        >
           {/* MEDIA - Full bleed with premium overlay */}
-          <div className="relative overflow-hidden flex-[2] z-10 rounded-t-[12px]">
+          <div className="relative overflow-hidden flex-1 sm:flex-initial h-[540px] sm:h-[320px] lg:h-[240px] xl:h-[220px] z-10 rounded-t-[12px] border border-white/60">
+            <div className="absolute inset-0 bg-gradient-to-b from-off-white/90 via-off-white/80 to-off-white/70" aria-hidden="true" />
             <div className="relative w-full h-full">
-              {event.image ? (
-                <div className="relative w-full h-full overflow-hidden">
-                  <Image
-                    src={event.image}
-                    alt={event.alt || event.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 252px, 288px"
-                    className="object-cover"
-                    priority={false}
-                  />
-                  {/* Subtle gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-              ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-off-white/95 to-off-white/85">
-                  <div className="w-24 h-24 flex items-center justify-center">
-                    <Image
-                      src={iconPng}
-                      alt={event.title}
-                      width={96}
-                      height={96}
-                      className="object-contain opacity-60"
-                      priority={false}
-                    />
-                  </div>
-                </div>
-              )}
+              <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
+                <Image
+                  src={mediaImage}
+                  alt={event.alt || event.title}
+                  width={160}
+                  height={160}
+                  className="object-contain w-32 h-32 sm:w-36 sm:h-36 md:w-32 md:h-32"
+                  priority={false}
+                />
+              </div>
             </div>
 
             {/* Premium glass badges */}
@@ -72,59 +162,53 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
           </div>
 
           {/* CONTENT - Minimal, premium spacing */}
-          <div className="px-4 sm:px-6 pt-4 sm:pt-5 pb-4 sm:pb-6 relative flex-shrink-0 flex-1 flex flex-col justify-between bg-transparent z-10">
-            <div className="flex-1 flex flex-col items-center text-center">
-              {/* Icon */}
-              <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full">
-                <Image
-                  src={iconPng}
-                  alt={event.title}
-                  width={28}
-                  height={28}
-                  className="object-contain w-6 h-6 sm:w-7 sm:h-7"
-                  priority={false}
-                />
-              </div>
-              
-              {/* Title */}
-              <h3 
-                className="text-base sm:text-lg font-bold leading-tight text-charcoal mb-1.5 sm:mb-2 text-center group-hover:text-coral transition-colors duration-300 line-clamp-2"
-                style={{ 
-                  fontFamily: '"DM Sans", system-ui, sans-serif', 
+          <div className="px-4 pt-4 pb-6 flex flex-col justify-between bg-sage/10 gap-4">
+            <div className="flex flex-col items-center text-center gap-3">
+              <h3
+                className="text-base font-bold leading-tight text-charcoal text-center group-hover:text-navbar-bg/90 transition-colors duration-300 line-clamp-2"
+                style={{
+                  fontFamily: '"DM Sans", system-ui, sans-serif',
                   fontWeight: 700,
-                  WebkitFontSmoothing: 'antialiased',
-                  MozOsxFontSmoothing: 'grayscale',
-                  textRendering: 'optimizeLegibility',
-                  letterSpacing: '-0.02em',
+                  letterSpacing: '-0.01em'
                 }}
               >
                 {event.title}
               </h3>
-              
-              {/* Description - Apple-like */}
+
               {event.description && (
-                <p className="text-[10px] sm:text-xs font-bold text-charcoal/70 leading-relaxed font-600 text-center line-clamp-2" style={{ 
-                  fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
-                  fontWeight: 400,
-                  WebkitFontSmoothing: 'antialiased',
-                  MozOsxFontSmoothing: 'grayscale',
-                  textRendering: 'optimizeLegibility',
-                }}>
+                <p
+                  className="text-[11px] sm:text-xs text-charcoal/70 leading-relaxed text-center line-clamp-2"
+                  style={{
+                    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                    fontWeight: 400
+                  }}
+                >
                   {event.description}
                 </p>
               )}
+
+              {priceLabel && (
+                <span
+                  className="inline-flex items-center gap-1 rounded-full bg-navbar-bg/10 px-3 py-1 text-[11px] font-semibold text-navbar-bg/90 uppercase tracking-[0.08em]"
+                  style={{
+                    fontFamily: '"DM Sans", system-ui, sans-serif',
+                    letterSpacing: "0.12em"
+                  }}
+                >
+                  {priceLabel}
+                </span>
+              )}
             </div>
-            
-            {/* Bookmark button in info area */}
+
             {onBookmark && (
               <button
                 onClick={handleBookmarkClick}
-                className="mt-3 sm:mt-4 w-full min-h-[44px] py-3 sm:py-2 px-4 sm:px-4 bg-off-white/90 backdrop-blur-sm rounded-full flex items-center justify-center gap-2 shadow-lg hover:bg-off-white active:scale-95 transition-all duration-200 border border-charcoal/10"
+                className="w-full min-h-[44px] py-3 px-4 bg-navbar-bg/90 rounded-full flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:bg-navbar-bg transition-colors duration-200 text-off-white border border-sage/60"
                 aria-label="Bookmark event"
                 title="Bookmark"
               >
-                <Bookmark className="text-coral w-5 h-5 sm:w-[18px] sm:h-[18px]" size={18} />
-                <span className="text-sm sm:text-sm font-600 text-coral" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
+                <Bookmark className="w-5 h-5 sm:w-[18px] sm:h-[18px]" />
+                <span className="text-sm font-semibold" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                   Save
                 </span>
               </button>

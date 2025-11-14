@@ -11,6 +11,10 @@ interface PercentileChipProps {
 function PercentileChip({ label, value }: PercentileChipProps) {
   // Handle placeholder (0 value) with grayed out style
   const isPlaceholder = value === 0;
+  const formattedLabel = label.charAt(0).toUpperCase() + label.slice(1);
+  const chipTitle = isPlaceholder
+    ? `${formattedLabel} insights coming soon`
+    : `${formattedLabel} score: ${value}%`;
 
   // Render icon based on label with coral stroke
   const renderIcon = () => {
@@ -44,13 +48,19 @@ function PercentileChip({ label, value }: PercentileChipProps) {
   };
 
   return (
-    <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 shadow-md border border-white/30 transition-all duration-200 hover:shadow-md hover:scale-105 ${
-      isPlaceholder 
-        ? 'bg-sage border-white/20' 
-        : 'bg-sage border-white/30'
-    }`}>
+    <div
+      role="button"
+      tabIndex={0}
+      title={chipTitle}
+      aria-label={chipTitle}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+        }
+      }}
+      className="inline-flex items-center gap-1.5 px-4 pt-1">
       {renderIcon()}
-      <span className={`text-xs font-600 whitespace-nowrap ${
+      <span className={`text-xs font-600 whitespace-nowrap  ${
         isPlaceholder ? 'text-charcoal/40' : 'text-charcoal'
       }`}>
         {isPlaceholder ? '—' : `${value}%`}

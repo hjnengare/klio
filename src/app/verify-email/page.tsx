@@ -413,11 +413,11 @@ export default function VerifyEmailPage() {
           {/* Header with premium styling and animations */}
           <div className="text-center mb-4">
             <div className="inline-block relative mb-4 animate-fade-in-up animate-delay-400">
-              <h2 className="text-xl sm:text-lg md:text-lg lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
+              <h2 className="text-xl sm:text-lg md:text-lg lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Check Your Email
               </h2>
             </div>
-            <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" >
+            <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
               We&apos;ve sent a confirmation email to verify your account and unlock full features!
             </p>
           </div>
@@ -434,9 +434,9 @@ export default function VerifyEmailPage() {
               {/* Email Display - Clickable */}
               <button
                 onClick={handleOpenInbox}
-                className="bg-sage/5 rounded-lg p-4 mb-6 border border-sage/20 w-full hover:bg-coral/10 hover:border-sage/30 transition-all duration-300 cursor-pointer group"
+                className="bg-navbar-bg/90 rounded-full p-4 mb-6 border-0 w-full hover:bg-navbar-bg transition-all duration-300 cursor-pointer group"
               >
-                <p className="text-lg font-600 text-charcoal group-hover:text-charcoal transition-colors duration-300 flex items-center justify-center gap-2" >
+                <p className="text-lg font-600 text-white group-hover:text-white transition-colors duration-300 flex items-center justify-center gap-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                   {displayEmail}
                   <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </p>
@@ -445,17 +445,17 @@ export default function VerifyEmailPage() {
 
             {/* Instructions */}
             <div className="text-center mb-8">
-              <p className="text-sm text-charcoal/70 mb-6 leading-relaxed" >
+              <p className="text-sm text-charcoal/70 mb-6 leading-relaxed" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                 Please check your email and click the verification link to activate your account. The link will automatically redirect you back to the app once verified.
               </p>
 
               {/* Benefits */}
               <div className="bg-gradient-to-r from-sage/5 to-coral/5 rounded-lg p-6 mb-6 text-left border border-sage/10">
-                <h3 className="text-base font-600 text-charcoal mb-4 flex items-center gap-2" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
+                <h3 className="text-base font-600 text-charcoal mb-4 flex items-center gap-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                   <CheckCircle className="w-5 h-5 text-sage" />
                   Why verify your email?
                 </h3>
-                <ul className="text-sm text-charcoal/80 space-y-2 list-disc pl-5" >
+                <ul className="text-sm text-charcoal/80 space-y-2 list-disc pl-5" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
                   <li>Unlock full app features (posting, saving, leaderboards)</li>
                   <li>Secure account recovery and password resets</li>
                   <li>Receive important updates and notifications</li>

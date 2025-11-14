@@ -50,11 +50,11 @@ export function usePasswordStrength(password: string, email: string = ""): Passw
       feedback = "Fair - Getting better";
       color = "text-orange-500";
     } else if (score === 3) {
-      feedback = "Good - Almost there";
+      feedback = "Strong - Looking great!";
       color = "text-yellow-500";
     } else if (score === 4) {
-      feedback = "Strong - Perfect! 🎉";
-      color = "text-sage";
+      feedback = "Perfect - Ready to go! 🎉";
+      color = "text-navbar-bg/90";
     }
 
     return { score, feedback, checks, color };

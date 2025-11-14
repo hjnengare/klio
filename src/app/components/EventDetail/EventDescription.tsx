@@ -16,8 +16,16 @@ export default function EventDescription({ event }: EventDescriptionProps) {
       transition={{ delay: 0.4, duration: 0.6 }}
       className="bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4"
     >
-      <h2 className="text-sm font-bold text-charcoal mb-3 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>About This Event</h2>
-      <p className="text-sm text-charcoal/70 leading-relaxed font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+      <h2
+        className="text-base font-semibold text-charcoal mb-3"
+        style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+      >
+        About This Event
+      </h2>
+      <p
+        className="text-sm text-charcoal/70 leading-relaxed"
+        style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+      >
         {event.description || "Join us for an amazing experience! This event promises to be unforgettable with great company, beautiful surroundings, and memorable moments. Don't miss out on this special opportunity to connect with like-minded people and create lasting memories."}
       </p>
     </motion.div>

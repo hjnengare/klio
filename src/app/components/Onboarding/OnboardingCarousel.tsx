@@ -7,61 +7,98 @@ interface OnboardingCarouselProps {
   autoPlayInterval?: number;
 }
 
+const DEFAULT_IMAGES: string[] = [
+  "/onboarding/art.png",
+  "/onboarding/barber-chair.png",
+  "/onboarding/barber-shop.png",
+  "/onboarding/camping.png",
+  "/onboarding/certificate.png",
+  "/onboarding/chinese-food.png",
+  "/onboarding/doctor.png",
+  "/onboarding/dumbbell.png",
+  "/onboarding/film-strip.png",
+  "/onboarding/flamenco.png",
+  "/onboarding/hiking.png",
+  "/onboarding/movies.png",
+  "/onboarding/pets.png",
+];
+
+const sanitizeImageList = (list?: string[]) => {
+  const cleaned = (list ?? []).filter(
+    (src): src is string => typeof src === "string" && src.trim() !== ""
+  );
+  return cleaned.length > 0 ? cleaned : DEFAULT_IMAGES;
+};
+
 /**
  * OnboardingCarousel Component
- * 
- * A mobile-first, responsive carousel with:
+ *
+ * Mobile-first carousel with:
  * - Stationary circular hero background
  * - Dynamic rotating images
  * - Dot indicators for navigation
- * - Auto-rotation (configurable interval)
+ * - Auto-rotation with error handling for missing images
  */
 export default function OnboardingCarousel({
-  images = [
-    "/onboarding/art.png",
-    "/onboarding/barber-chair.png",
-    "/onboarding/barber-shop.png",
-    "/onboarding/books.png",
-    "/onboarding/camping.png",
-    "/onboarding/chinese-food.png",
-    "/onboarding/doctor.png",
-    "/onboarding/drum.png",
-    "/onboarding/dumbbell.png",
-    "/onboarding/entertainment.png",
-    "/onboarding/farmer.png",
-    "/onboarding/fast-food.png",
-    "/onboarding/flamenco.png",
-    "/onboarding/football.png",
-    "/onboarding/hiking.png",
-    "/onboarding/pets.png",
-    "/onboarding/podium.png",
-    "/onboarding/swings.png",
-    "/onboarding/treadmill-machine.png",
-    "/onboarding/veterinary.png",
-  ],
+  images = DEFAULT_IMAGES,
   autoPlayInterval = 4000,
 }: OnboardingCarouselProps) {
+  const [carouselImages, setCarouselImages] = useState<string[]>(() => sanitizeImageList(images));
   const [index, setIndex] = useState(0);
+
+  // Keep carousel images in sync with prop changes
+  useEffect(() => {
+    setCarouselImages(sanitizeImageList(images));
+  }, [images]);
+
+  // Clamp index when image list changes
+  useEffect(() => {
+    if (carouselImages.length === 0) {
+      setCarouselImages(DEFAULT_IMAGES);
+      return;
+    }
+    if (index >= carouselImages.length) {
+      setIndex(0);
+    }
+  }, [carouselImages.length, index]);
 
   // Auto-rotate carousel
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (carouselImages.length <= 1) return;
     const id = setInterval(() => {
-      setIndex((i) => (i + 1) % images.length);
+      setIndex((i) => (i + 1) % carouselImages.length);
     }, autoPlayInterval);
     return () => clearInterval(id);
-  }, [images.length, autoPlayInterval]);
+  }, [carouselImages.length, autoPlayInterval]);
 
   const goTo = (i: number) => setIndex(i);
 
   // Calculate which group (dot) the current index belongs to
   const totalDots = 3;
-  const imagesPerDot = Math.ceil(images.length / totalDots);
+  const imagesPerDot = Math.ceil(carouselImages.length / totalDots) || 1;
   const currentDot = Math.floor(index / imagesPerDot);
-  
+
   // Handle dot click - go to first image of that group
   const handleDotClick = (dotIndex: number) => {
     goTo(dotIndex * imagesPerDot);
+  };
+
+  const handleImageError = (brokenIndex: number) => {
+    setCarouselImages((prev) => {
+      if (prev.length === 0) return DEFAULT_IMAGES;
+
+      const updated = [...prev];
+      const fallback =
+        DEFAULT_IMAGES.find((src) => !updated.includes(src)) ?? DEFAULT_IMAGES[0];
+
+      if (fallback === updated[brokenIndex]) {
+        updated.splice(brokenIndex, 1);
+      } else {
+        updated[brokenIndex] = fallback;
+      }
+
+      return updated.length > 0 ? updated : DEFAULT_IMAGES;
+    });
   };
 
   return (
@@ -89,7 +126,7 @@ export default function OnboardingCarousel({
         }
       `}</style>
       
-      <div className="relative overflow-hidden rounded-lg">
+      <div className="relative overflow-hidden rounded-2xl">
         {/* Stationary circular hero background */}
         <div
           aria-hidden="true"
@@ -105,7 +142,7 @@ export default function OnboardingCarousel({
             transform: `translateX(-${index * 100}%)`,
           }}
         >
-          {images.map((src, i) => (
+          {carouselImages.map((src, i) => (
             <div
               key={i}
               className="w-full flex-shrink-0 flex items-center justify-center py-6 carousel-slide"
@@ -117,6 +154,7 @@ export default function OnboardingCarousel({
                 className="mx-auto w-[260px] h-[260px] object-contain drop-shadow-sm"
                 decoding="async"
                 loading="eager"
+                onError={() => handleImageError(i)}
               />
             </div>
           ))}
@@ -124,7 +162,7 @@ export default function OnboardingCarousel({
       </div>
 
       {/* Dot indicators for slide navigation - 3 dots only */}
-      {images.length > 1 && (
+      {carouselImages.length > 1 && (
         <div className="mt-4 flex items-center justify-center gap-3">
           {Array.from({ length: totalDots }).map((_, dotIndex) => (
             <button

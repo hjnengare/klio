@@ -220,8 +220,13 @@ export default function FilterModal({
         {/* header */}
         <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-white/30 bg-off-white shadow-sm transition-all duration-300">
           <div className="relative z-10 flex items-center gap-2">
-            <Sliders className="w-4 h-4 text-sage" />
-            <h2 className="text-xs font-semibold text-charcoal">Filters</h2>
+            <Sliders className="w-4 h-4 text-warning-600" />
+            <h2
+              className="text-sm font-semibold text-charcoal"
+              style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+            >
+              Filters
+            </h2>
           </div>
           <button
             onClick={onClose}
@@ -249,8 +254,11 @@ export default function FilterModal({
         >
           {/* Category */}
           <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.05s]">
-            <h3 className="text-xs font-semibold text-charcoal mb-3 flex items-center gap-2">
-              <ShoppingBag className="w-3 h-3 text-sage" />
+            <h3
+              className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2"
+              style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+            >
+              <ShoppingBag className="w-4 h-4 text-warning-600" />
               Category
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -284,8 +292,11 @@ export default function FilterModal({
 
           {/* Rating */}
           <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.1s]">
-            <h3 className="text-xs font-semibold text-charcoal mb-3 flex items-center gap-2">
-              <Star className="w-3 h-3 text-sage" />
+            <h3
+              className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2"
+              style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+            >
+              <Star className="w-3.5 h-3.5 text-warning-600" />
               Minimum Rating
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -320,8 +331,11 @@ export default function FilterModal({
 
           {/* Distance */}
           <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.15s]">
-            <h3 className="text-xs font-semibold text-charcoal mb-3 flex items-center gap-2">
-              <MapPin className="w-3 h-3 text-sage" />
+            <h3
+              className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2"
+              style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+            >
+              <MapPin className="w-3.5 h-3.5 text-warning-600" />
               Distance
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -355,12 +369,14 @@ export default function FilterModal({
             <button
             onClick={handleClearAll}
             className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
           >
             Clear
           </button>
           <button
             onClick={handleApply}
             className="flex-1 rounded-full bg-sage hover:bg-sage/90 text-white font-semibold py-2.5 px-4 text-xs border border-sage transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
           >
             Apply
           </button>

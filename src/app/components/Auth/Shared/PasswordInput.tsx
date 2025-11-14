@@ -40,7 +40,7 @@ export function PasswordInput({
 
   return (
     <div>
-      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif", sans-serif', fontWeight: 600 }}>
+      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
         Password
       </label>
       <div className="relative group">
@@ -59,7 +59,7 @@ export function PasswordInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
-          style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif", sans-serif', fontWeight: 600 }}
+          style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
           className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 text-body font-600 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
             isStrong ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
             isWeak ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
@@ -85,29 +85,27 @@ export function PasswordInput({
       {showStrength && value.length > 0 && strength && (
         <div className="h-5 mt-1 flex items-center gap-2">
           <div className="flex-1 flex gap-1" role="progressbar" aria-valuenow={strength.score} aria-valuemin={0} aria-valuemax={4}>
-            {[1, 2, 3, 4].map((level) => (
-              <div
-                key={level}
-                className={`h-1 flex-1 transition-all duration-300 ${
-                  level <= strength.score
-                    ? level === 1
-                      ? 'bg-error-500'
-                      : level === 2
-                      ? 'bg-orange-400'
-                      : level === 3
-                      ? 'bg-yellow-400'
-                      : 'bg-sage'
-                    : 'bg-gray-200'
-                }`}
-              />
-            ))}
+            {[1, 2, 3, 4].map((level) => {
+              const barColors = ['bg-error-500', 'bg-yellow-400', 'bg-yellow-500', 'bg-navbar-bg/90'] as const;
+              const activeColor = barColors[Math.min(level - 1, barColors.length - 1)];
+              return (
+                <div
+                  key={level}
+                  className={`h-1 flex-1 transition-all duration-300 ${level <= strength.score ? activeColor : 'bg-gray-200'}`}
+                />
+              );
+            })}
           </div>
           {strength.feedback && (
             <span className={`text-xs font-500 ${
-              strength.score >= 3 ? 'text-coral' :
-              strength.score > 0 ? 'text-orange-500' :
-              'text-orange-400'
-            }`} style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif", sans-serif', fontWeight: 600 }}>
+              strength.score >= 4
+                ? 'text-navbar-bg/90'
+                : strength.score === 3
+                ? 'text-sage'
+                : strength.score > 0
+                ? 'text-orange-500'
+                : 'text-orange-400'
+            }`} style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
               {strength.feedback}
             </span>
           )}

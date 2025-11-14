@@ -58,13 +58,13 @@ export default function ProfilePicture({
   if (!src || src.trim() === '' || imgError) {
     return (
       <div className="relative inline-block">
-        <div className={`${sizeClasses[size]} rounded-full bg-sage/10 flex items-center justify-center border-2 border-white shadow-lg ring-2 ring-white/50`}>
+        <div className={`${sizeClasses[size]} rounded-full bg-sage/10 flex items-center justify-center border-2 border-white ring-2 ring-white/50`}>
           <User
             className={`${size === 'sm' ? 'w-3 h-3' : size === 'md' ? 'w-3.5 h-3.5' : 'w-4 h-4'} text-sage/70`}
           />
         </div>
         {badge && (
-          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-off-white rounded-full flex items-center justify-center shadow-lg border border-white/50 ring-1 ring-white/30">
+          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-off-white rounded-full flex items-center justify-center border border-white/50 ring-1 ring-white/30">
             {React.createElement(getBadgeIcon(badge), {
               className: `w-2.5 h-2.5 ${getBadgeColor(badge)}`
             })}
@@ -81,13 +81,13 @@ export default function ProfilePicture({
         alt={alt}
         width={getSizeNumber(size)}
         height={getSizeNumber(size)}
-        className={`${sizeClasses[size]} rounded-full object-cover border-2 border-white shadow-md`}
+        className={`${sizeClasses[size]} rounded-full object-cover border-2 border-white`}
         unoptimized={src.includes('dicebear.com')}
         onError={() => setImgError(true)}
       />
 
       {badge && (
-        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-off-white   rounded-full flex items-center justify-center shadow-lg border border-gray-100">
+        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-off-white   rounded-full flex items-center justify-center border border-gray-100">
           {React.createElement(getBadgeIcon(badge), {
             className: `w-2.5 h-2.5 ${getBadgeColor(badge)}`
           })}
