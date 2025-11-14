@@ -170,10 +170,10 @@ export default function FilterModal({
   ];
 
   const distanceOptions = [
-    { distance: "1 mile", Icon: Move },
-    { distance: "5 miles", Icon: Truck },
-    { distance: "10 miles", Icon: Truck },
-    { distance: "25 miles", Icon: Navigation },
+    { distance: "1 km", Icon: Move },
+    { distance: "5 km", Icon: Truck },
+    { distance: "10 km", Icon: Truck },
+    { distance: "25 km", Icon: Navigation },
   ];
 
   return (
@@ -350,7 +350,7 @@ export default function FilterModal({
                       ${
                         active
                           ? "bg-coral text-white border-coral shadow-sm"
-                          : "bg-white text-charcoal border-charcoal/10 hover:border-coral/40 hover:bg-coral/5"
+                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-coral/40 hover:bg-coral/5"
                       }
                     focus:outline-none focus:ring-2 focus:ring-coral/30`}
                     aria-pressed={active}
