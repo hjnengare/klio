@@ -8,6 +8,7 @@ import Header from "../components/Header/Header";
 import { Loader } from "../components/Loader";
 import { ChevronLeft, ChevronRight, ChevronUp } from "react-feather";
 import { useTrendingBusinesses } from "../hooks/useBusinesses";
+import { useUserPreferences } from "../hooks/useUserPreferences";
 import SearchInput from "../components/SearchInput/SearchInput";
 import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
 
@@ -15,7 +16,24 @@ const ITEMS_PER_PAGE = 12;
 
 export default function TrendingPage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { businesses: trendingBusinesses, loading} = useTrendingBusinesses(50); // Fetch more for pagination
+  const { interests, subcategories, dealbreakers } = useUserPreferences();
+
+  const dealbreakerIds = useMemo(
+    () => dealbreakers.map((dealbreaker) => dealbreaker.id),
+    [dealbreakers]
+  );
+
+  const preferredPriceRanges = useMemo(() => {
+    if (dealbreakerIds.includes("value-for-money")) {
+      return ["$", "$$"];
+    }
+    return undefined;
+  }, [dealbreakerIds]);
+
+  const { businesses: trendingBusinesses, loading } = useTrendingBusinesses(50, {
+    priceRanges: preferredPriceRanges,
+    dealbreakerIds: dealbreakerIds.length ? dealbreakerIds : undefined,
+  });
 
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);

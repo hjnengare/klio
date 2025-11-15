@@ -110,12 +110,16 @@ export function useBusinesses(options: UseBusinessesOptions = {}): UseBusinesses
 /**
  * Hook to fetch trending businesses (sorted by rating, limited)
  */
-export function useTrendingBusinesses(limit: number = 10): UseBusinessesResult {
+export function useTrendingBusinesses(
+  limit: number = 10,
+  extraOptions: Partial<UseBusinessesOptions> = {}
+): UseBusinessesResult {
   return useBusinesses({
     limit,
     sortBy: 'total_rating',
     sortOrder: 'desc',
     feedStrategy: 'mixed',
+    ...extraOptions,
   });
 }
 

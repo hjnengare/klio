@@ -6,6 +6,7 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import BusinessCard from "../components/BusinessCard/BusinessCard";
 import { useBusinesses } from "../hooks/useBusinesses";
+import { useUserPreferences } from "../hooks/useUserPreferences";
 import { Loader } from "../components/Loader";
 import SearchInput from "../components/SearchInput/SearchInput";
 import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
@@ -14,15 +15,34 @@ import { ChevronLeft, ChevronRight, ChevronUp } from "react-feather";
 const ITEMS_PER_PAGE = 12;
 
 export default function ExplorePage() {
+  const { interests, subcategories, dealbreakers } = useUserPreferences();
+  const preferenceIds = useMemo(
+    () => interests.map((interest) => interest.id).concat(subcategories.map((sub) => sub.id)),
+    [interests, subcategories]
+  );
+  const dealbreakerIds = useMemo(
+    () => dealbreakers.map((dealbreaker) => dealbreaker.id),
+    [dealbreakers]
+  );
+  const preferredPriceRanges = useMemo(() => {
+    if (dealbreakerIds.includes("value-for-money")) {
+      return ["$", "$$"];
+    }
+    return undefined;
+  }, [dealbreakerIds]);
   const {
     businesses,
     loading,
     error,
     refetch,
   } = useBusinesses({
-    limit: 100,
+    limit: 120,
     sortBy: "created_at",
     sortOrder: "desc",
+    feedStrategy: "mixed",
+    interestIds: preferenceIds.length ? preferenceIds : undefined,
+    priceRanges: preferredPriceRanges,
+    dealbreakerIds: dealbreakerIds.length ? dealbreakerIds : undefined,
   });
 
   const [isFilterVisible, setIsFilterVisible] = useState(false);
