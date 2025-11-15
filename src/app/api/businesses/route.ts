@@ -9,6 +9,8 @@ interface BusinessRPCResult {
   name: string;
   description: string | null;
   category: string;
+  interest_id?: string | null;
+  sub_interest_id?: string | null;
   location: string;
   address: string | null;
   phone: string | null;
@@ -30,7 +32,50 @@ interface BusinessRPCResult {
   distance_km: number | null;
   cursor_id: string;
   cursor_created_at: string;
+  personalization_score?: number;
+  diversity_rank?: number;
 }
+
+const BUSINESS_SELECT = `
+  id, name, description, category, interest_id, sub_interest_id, location, address,
+  phone, email, website, image_url, uploaded_image,
+  verified, price_range, badge, slug, latitude, longitude,
+  created_at, updated_at,
+  business_stats (
+    total_reviews, average_rating, percentiles
+  )
+`;
+
+type SupabaseClientInstance = Awaited<ReturnType<typeof getServerSupabase>>;
+
+type DatabaseBusinessRow = {
+  id: string;
+  name: string;
+  description: string | null;
+  category: string;
+  interest_id: string | null;
+  sub_interest_id: string | null;
+  location: string;
+  address: string | null;
+  phone: string | null;
+  email: string | null;
+  website: string | null;
+  image_url: string | null;
+  uploaded_image: string | null;
+  verified: boolean;
+  price_range: string;
+  badge: string | null;
+  slug: string;
+  latitude: number | null;
+  longitude: number | null;
+  created_at: string;
+  updated_at: string;
+  business_stats?: Array<{
+    total_reviews: number | null;
+    average_rating: number | null;
+    percentiles: Record<string, number> | null;
+  }>;
+};
 
 // Mapping of interests to subcategories
 const INTEREST_TO_SUBCATEGORIES: Record<string, string[]> = {
@@ -63,13 +108,14 @@ export async function GET(req: Request) {
     const minRating = searchParams.get('min_rating') ? parseFloat(searchParams.get('min_rating')!) : null;
 
     // Interest-based filtering
-    const interestIds = searchParams.get('interest_ids')
-      ? searchParams.get('interest_ids')!.split(',').filter(id => id.trim())
-      : null;
+    const interestIdsParam = searchParams.get('interest_ids');
+    const interestIds = interestIdsParam
+      ? interestIdsParam.split(',').map(id => id.trim()).filter(Boolean)
+      : [];
     
     // Map interests to subcategories
     let subcategoriesToFilter: string[] = [];
-    if (interestIds && interestIds.length > 0) {
+    if (interestIds.length > 0) {
       for (const interestId of interestIds) {
         const subcats = INTEREST_TO_SUBCATEGORIES[interestId];
         if (subcats) {
@@ -88,6 +134,14 @@ export async function GET(req: Request) {
     // Sorting parameters
     const sortBy = searchParams.get('sort_by') || 'created_at';
     const sortOrder = searchParams.get('sort_order') || 'desc';
+    const preferredPriceRanges = searchParams.get('preferred_price_ranges')
+      ? searchParams.get('preferred_price_ranges')!.split(',').map(range => range.trim()).filter(Boolean)
+      : [];
+    const dealbreakerIds = searchParams.get('dealbreakers')
+      ? searchParams.get('dealbreakers')!.split(',').map(id => id.trim()).filter(Boolean)
+      : [];
+
+    const feedStrategy = (searchParams.get('feed_strategy') as 'mixed' | 'standard' | null) || 'standard';
 
     // Location-based parameters
     const lat = searchParams.get('lat') ? parseFloat(searchParams.get('lat')!) : null;
@@ -95,6 +149,27 @@ export async function GET(req: Request) {
     const radius = searchParams.get('radius') ? parseFloat(searchParams.get('radius')!) : 10;
 
     const supabase = await getServerSupabase();
+
+    if (feedStrategy === 'mixed') {
+      return await handleMixedFeed({
+        supabase,
+        limit,
+        category,
+        badge,
+        verified,
+        priceRange,
+        preferredPriceRanges,
+        location,
+        minRating,
+        interestIds,
+        subInterestIds: subcategoriesToFilter,
+        dealbreakerIds,
+        sortBy,
+        sortOrder,
+        latitude: lat,
+        longitude: lng,
+      });
+    }
 
     // Try to use the optimized RPC function for listing, fallback to regular query
     let businesses: BusinessRPCResult[] | null = null;
@@ -135,7 +210,7 @@ export async function GET(req: Request) {
       let query = supabase
         .from('businesses')
         .select(`
-          id, name, description, category, location, address, 
+          id, name, description, category, interest_id, sub_interest_id, location, address, 
           phone, email, website, image_url, uploaded_image,
           verified, price_range, badge, slug, created_at, updated_at,
           business_stats (
@@ -173,7 +248,7 @@ export async function GET(req: Request) {
       }
 
       // Sorting - use random order when filtering by interests, otherwise use specified sort
-      if (interestIds && interestIds.length > 0) {
+      if (interestIds.length > 0) {
         console.log('[BUSINESSES API] Using random sort for interest-filtered results');
         // Supabase doesn't have native random, so we'll randomize client-side after fetch
         query = query.limit(limit * 2); // Fetch extra to randomize from
@@ -205,6 +280,8 @@ export async function GET(req: Request) {
       // Transform fallback data to match RPC format
       let transformedFallbackData = (fallbackData || []).map((b: any) => ({
         ...b,
+        interest_id: b.interest_id,
+        sub_interest_id: b.sub_interest_id,
         latitude: null,
         longitude: null,
         total_reviews: b.business_stats?.[0]?.total_reviews || 0,
@@ -248,35 +325,7 @@ export async function GET(req: Request) {
 
     // Transform database format to BusinessCard component format
     // Only select fields needed for card display (not full business data)
-    const transformedBusinesses = typedBusinesses.map(business => {
-      const hasRating = business.average_rating && business.average_rating > 0;
-      const hasReviews = business.total_reviews && business.total_reviews > 0;
-      const shouldShowBadge = business.verified && business.badge;
-      
-      return {
-        // Card essentials only
-        id: business.id,
-        name: business.name,
-        image: business.image_url || business.uploaded_image,
-        category: business.category,
-        location: business.location,
-        rating: hasRating ? Math.round(business.average_rating * 2) / 2 : undefined,
-        totalRating: hasRating ? business.average_rating : undefined,
-        reviews: hasReviews ? business.total_reviews : 0,
-        badge: shouldShowBadge ? business.badge : undefined,
-        href: `/business/${business.id}`,
-        verified: business.verified || false,
-        priceRange: business.price_range || '$$',
-        distance: business.distance_km,
-        hasRating,
-        // Percentiles for detail view (optional)
-        percentiles: business.percentiles ? {
-          service: business.percentiles.service || 85,
-          price: business.percentiles.price || 85,
-          ambience: business.percentiles.ambience || 85,
-        } : undefined,
-      };
-    });
+    const transformedBusinesses = typedBusinesses.map(transformBusinessForCard);
 
     // Get cursor for next page from last item
     const nextCursor = typedBusinesses.length > 0 
@@ -297,22 +346,7 @@ export async function GET(req: Request) {
         nextCursor,
       }
     });
-
-    // Add Cache-Control headers for better performance
-    // Cache for 5 minutes on client, 1 hour on CDN with stale-while-revalidate
-    response.headers.set(
-      'Cache-Control',
-      'public, s-maxage=3600, stale-while-revalidate=7200'
-    );
-
-    // Add ETag for conditional requests
-    const etag = `W/"businesses-${Date.now()}"`;
-    response.headers.set('ETag', etag);
-
-    // Add Vary header to cache by query params
-    response.headers.set('Vary', 'Accept-Encoding');
-
-    return response;
+    return applySharedResponseHeaders(response);
 
   } catch (error) {
     console.error('Error in businesses API:', error);
@@ -415,4 +449,569 @@ export async function HEAD(req: Request) {
       { status: 500 }
     );
   }
+}
+
+// ---- Mixed strategy helpers -------------------------------------------------
+
+type MixedFeedOptions = {
+  supabase: SupabaseClientInstance;
+  limit: number;
+  category: string | null;
+  badge: string | null;
+  verified: boolean | null;
+  priceRange: string | null;
+  preferredPriceRanges: string[];
+  location: string | null;
+  minRating: number | null;
+  interestIds: string[];
+  subInterestIds: string[];
+  dealbreakerIds: string[];
+  sortBy: string;
+  sortOrder: string;
+  latitude: number | null;
+  longitude: number | null;
+};
+
+async function handleMixedFeed(options: MixedFeedOptions) {
+  const {
+    supabase,
+    limit,
+    category,
+    badge,
+    verified,
+    priceRange,
+    preferredPriceRanges,
+    location,
+    minRating,
+    interestIds,
+    subInterestIds,
+    dealbreakerIds,
+    latitude,
+    longitude,
+  } = options;
+
+  const bucketLimit = Math.min(Math.max(limit * 3, limit + 4), 150);
+  const priceFilters = derivePriceFilters(priceRange, preferredPriceRanges);
+
+  const [personalMatches, topRated, explore] = await Promise.all([
+    fetchPersonalMatches(supabase, {
+      limit: bucketLimit,
+      category,
+      badge,
+      verified,
+      priceRange,
+      preferredPriceRanges: priceFilters,
+      location,
+      minRating,
+      subcategories: subInterestIds,
+      interestIds,
+      dealbreakerIds,
+      latitude,
+      longitude,
+    }),
+    fetchTopRated(supabase, {
+      limit: bucketLimit,
+      category,
+      badge,
+      verified,
+      priceRange,
+      preferredPriceRanges: priceFilters,
+      location,
+      minRating,
+      dealbreakerIds,
+    }),
+    fetchExplore(supabase, {
+      limit: bucketLimit,
+      category,
+      badge,
+      verified,
+      priceRange,
+      preferredPriceRanges: priceFilters,
+      location,
+      minRating,
+      dealbreakerIds,
+    }),
+  ]);
+
+  const blended = mixBusinesses(personalMatches, topRated, explore, limit);
+  const transformedBusinesses = blended.map(transformBusinessForCard);
+
+  const response = NextResponse.json({
+    data: transformedBusinesses,
+    meta: {
+      count: transformedBusinesses.length,
+      limit,
+      strategy: 'mixed',
+      buckets: {
+        personalMatches: personalMatches.length,
+        topRated: topRated.length,
+        explore: explore.length,
+      },
+    },
+  });
+
+  return applySharedResponseHeaders(response);
+}
+
+type BucketOptions = {
+  limit: number;
+  category: string | null;
+  badge: string | null;
+  verified: boolean | null;
+  priceRange: string | null;
+  preferredPriceRanges?: string[] | null;
+  location: string | null;
+  minRating: number | null;
+  interestIds?: string[];
+  subcategories?: string[];
+  dealbreakerIds?: string[];
+  latitude?: number | null;
+  longitude?: number | null;
+};
+
+async function fetchPersonalMatches(
+  supabase: SupabaseClientInstance,
+  options: BucketOptions
+): Promise<BusinessRPCResult[]> {
+  try {
+    const priceFilters = derivePriceFilters(options.priceRange, options.preferredPriceRanges || undefined);
+    const rpcPayload: Record<string, unknown> = {
+      p_user_sub_interest_ids: options.subcategories || [],
+      p_user_interest_ids: options.interestIds || [],
+      p_limit: Math.min(options.limit, 150),
+      p_latitude: options.latitude,
+      p_longitude: options.longitude,
+      p_price_ranges: priceFilters && priceFilters.length > 0 ? priceFilters : null,
+      p_min_rating: options.minRating,
+    };
+
+    const { data, error } = await supabase.rpc('recommend_personalized_businesses', rpcPayload);
+
+    if (!error && data) {
+      const normalized = (data as any[]).map((row) => ({
+        id: row.id,
+        name: row.name,
+        description: row.description,
+        category: row.category,
+        interest_id: row.interest_id,
+        sub_interest_id: row.sub_interest_id,
+        location: row.location,
+        address: row.address,
+        phone: row.phone,
+        email: row.email,
+        website: row.website,
+        image_url: row.image_url,
+        uploaded_image: row.uploaded_image,
+        verified: row.verified,
+        price_range: row.price_range,
+        badge: row.badge,
+        slug: row.slug,
+        latitude: row.latitude,
+        longitude: row.longitude,
+        created_at: row.created_at,
+        updated_at: row.updated_at,
+        total_reviews: row.total_reviews || 0,
+        average_rating: Number(row.average_rating || 0),
+        percentiles: row.percentiles,
+        distance_km: null,
+        cursor_id: row.id,
+        cursor_created_at: row.created_at,
+        personalization_score: row.personalization_score,
+        diversity_rank: row.diversity_rank,
+      })) as BusinessRPCResult[];
+
+      return filterByDealbreakers(normalized, options.dealbreakerIds);
+    }
+
+    if (error && error.code !== '42883') {
+      console.error('[BUSINESSES API] recommend_personalized_businesses RPC error:', error);
+    }
+  } catch (rpcError) {
+    console.warn('[BUSINESSES API] Falling back from recommend_personalized_businesses RPC:', rpcError);
+  }
+
+  try {
+    let query = buildBaseBusinessQuery(supabase);
+
+    if (options.category) {
+      query = query.eq('category', options.category);
+    } else if (options.subcategories && options.subcategories.length > 0) {
+      query = query.in('sub_interest_id', options.subcategories);
+    } else if (options.interestIds && options.interestIds.length > 0) {
+      query = query.in('interest_id', options.interestIds);
+    }
+
+    query = applyCommonFilters(query, options);
+
+    const { data, error } = await query.limit(Math.min(options.limit, 150));
+
+    if (error) {
+      console.error('[BUSINESSES API] Personal matches fallback query error:', error);
+      return [];
+    }
+
+    const normalized = filterByMinRating(normalizeBusinessRows(data || []), options.minRating)
+      .sort((a, b) => scorePersonal(b) - scorePersonal(a));
+    return filterByDealbreakers(normalized, options.dealbreakerIds);
+  } catch (err) {
+    console.error('[BUSINESSES API] Personal matches fallback fetch error:', err);
+    return [];
+  }
+}
+
+async function fetchTopRated(
+  supabase: SupabaseClientInstance,
+  options: BucketOptions
+): Promise<BusinessRPCResult[]> {
+  try {
+    let query = buildBaseBusinessQuery(supabase);
+
+    if (options.category) {
+      query = query.eq('category', options.category);
+    }
+
+    query = applyCommonFilters(query, options);
+
+    const { data, error } = await query.limit(Math.min(options.limit, 150));
+
+    if (error) {
+      console.error('[BUSINESSES API] Top rated query error:', error);
+      return [];
+    }
+
+    const normalized = filterByMinRating(normalizeBusinessRows(data || []), options.minRating)
+      .sort((a, b) => scoreTopRated(b) - scoreTopRated(a));
+    return filterByDealbreakers(normalized, options.dealbreakerIds);
+  } catch (err) {
+    console.error('[BUSINESSES API] Top rated fetch error:', err);
+    return [];
+  }
+}
+
+async function fetchExplore(
+  supabase: SupabaseClientInstance,
+  options: BucketOptions
+): Promise<BusinessRPCResult[]> {
+  try {
+    let query = buildBaseBusinessQuery(supabase);
+
+    if (options.category) {
+      query = query.eq('category', options.category);
+    }
+
+    query = applyCommonFilters(query, options);
+
+    const { data, error } = await query
+      .order('created_at', { ascending: false })
+      .limit(Math.min(options.limit, 150));
+
+    if (error) {
+      console.error('[BUSINESSES API] Explore query error:', error);
+      return [];
+    }
+
+    const normalized = filterByMinRating(normalizeBusinessRows(data || []), options.minRating)
+      .sort((a, b) => scoreExplore(b) - scoreExplore(a));
+    return filterByDealbreakers(normalized, options.dealbreakerIds);
+  } catch (err) {
+    console.error('[BUSINESSES API] Explore fetch error:', err);
+    return [];
+  }
+}
+
+function buildBaseBusinessQuery(supabase: SupabaseClientInstance) {
+  return supabase
+    .from('businesses')
+    .select(BUSINESS_SELECT)
+    .eq('status', 'active');
+}
+
+function applyCommonFilters(query: any, options: BucketOptions) {
+  let updatedQuery = query;
+
+  if (options.badge) {
+    updatedQuery = updatedQuery.eq('badge', options.badge);
+  }
+  if (options.verified !== null && options.verified !== undefined) {
+    updatedQuery = updatedQuery.eq('verified', options.verified);
+  }
+  if (options.preferredPriceRanges && options.preferredPriceRanges.length > 0) {
+    updatedQuery = updatedQuery.in('price_range', options.preferredPriceRanges);
+  } else if (options.priceRange) {
+    updatedQuery = updatedQuery.eq('price_range', options.priceRange);
+  }
+  if (options.location) {
+    updatedQuery = updatedQuery.ilike('location', `%${options.location}%`);
+  }
+
+  return updatedQuery;
+}
+
+function normalizeBusinessRows(rows: DatabaseBusinessRow[]): BusinessRPCResult[] {
+  return rows.map((row) => {
+    const stats = row.business_stats?.[0];
+
+    return {
+      id: row.id,
+      name: row.name,
+      description: row.description,
+      category: row.category,
+      interest_id: row.interest_id,
+      sub_interest_id: row.sub_interest_id,
+      location: row.location,
+      address: row.address,
+      phone: row.phone,
+      email: row.email,
+      website: row.website,
+      image_url: row.image_url,
+      uploaded_image: row.uploaded_image,
+      verified: row.verified,
+      price_range: row.price_range,
+      badge: row.badge,
+      slug: row.slug,
+      latitude: row.latitude,
+      longitude: row.longitude,
+      created_at: row.created_at,
+      updated_at: row.updated_at,
+      total_reviews: stats?.total_reviews || 0,
+      average_rating: stats?.average_rating || 0,
+      percentiles: stats?.percentiles || null,
+      distance_km: null,
+      cursor_id: row.id,
+      cursor_created_at: row.created_at,
+    };
+  });
+}
+
+function filterByMinRating(
+  businesses: BusinessRPCResult[],
+  minRating: number | null
+): BusinessRPCResult[] {
+  if (!minRating) return businesses;
+  return businesses.filter((business) => (business.average_rating || 0) >= minRating);
+}
+
+function filterByDealbreakers(
+  businesses: BusinessRPCResult[],
+  dealbreakerIds?: string[]
+): BusinessRPCResult[] {
+  if (!dealbreakerIds || dealbreakerIds.length === 0) {
+    return businesses;
+  }
+
+  return businesses.filter((business) =>
+    dealbreakerIds.every((id) => {
+      const rule = DEALBREAKER_RULES[id];
+      if (!rule) return true;
+      try {
+        return rule(business);
+      } catch {
+        return true;
+      }
+    })
+  );
+}
+
+function derivePriceFilters(
+  primary: string | null,
+  preferred?: string[] | null
+): string[] | undefined {
+  const values = new Set<string>();
+  preferred?.forEach((value) => {
+    if (value) values.add(value);
+  });
+  if (primary) {
+    values.add(primary);
+  }
+  return values.size > 0 ? Array.from(values) : undefined;
+}
+
+function mixBusinesses(
+  personalMatches: BusinessRPCResult[],
+  topRated: BusinessRPCResult[],
+  explore: BusinessRPCResult[],
+  limit: number
+): BusinessRPCResult[] {
+  const result: BusinessRPCResult[] = [];
+  const seen = new Set<string>();
+  const subInterestCounts = new Map<string, number>();
+  const PERSONAL_LIMIT = 2;
+  const TOP_LIMIT = 3;
+
+  const buckets = {
+    personal: { data: personalMatches, index: 0 },
+    top: { data: topRated, index: 0 },
+    explore: { data: explore, index: 0 },
+  };
+
+  const getSubInterestKey = (business: BusinessRPCResult) =>
+    business.sub_interest_id || business.category || 'uncategorized';
+
+  const pushIfNew = (
+    business: BusinessRPCResult | undefined,
+    bucketKey: keyof typeof buckets,
+    allowOverflow = false
+  ) => {
+    if (!business) return false;
+    if (seen.has(business.id)) return false;
+
+    const key = getSubInterestKey(business);
+    const limitPerBucket = bucketKey === 'top' ? TOP_LIMIT : PERSONAL_LIMIT;
+    const currentCount = subInterestCounts.get(key) || 0;
+
+    if (!allowOverflow && limitPerBucket > 0 && currentCount >= limitPerBucket) {
+      return false;
+    }
+
+    seen.add(business.id);
+    subInterestCounts.set(key, currentCount + 1);
+    result.push(business);
+    return true;
+  };
+
+  const pushFromBucket = (
+    bucketKey: keyof typeof buckets,
+    allowOverflow = false
+  ) => {
+    const bucket = buckets[bucketKey];
+    while (bucket.index < bucket.data.length) {
+      const candidate = bucket.data[bucket.index++];
+      if (pushIfNew(candidate, bucketKey, allowOverflow)) return true;
+    }
+    return false;
+  };
+
+  const hasRemaining = () =>
+    buckets.personal.index < buckets.personal.data.length ||
+    buckets.top.index < buckets.top.data.length ||
+    buckets.explore.index < buckets.explore.data.length;
+
+  while (result.length < limit && hasRemaining()) {
+    for (let i = 0; i < 2 && result.length < limit; i++) {
+      if (!pushFromBucket('personal')) break;
+    }
+
+    if (result.length < limit) {
+      pushFromBucket('top');
+    }
+
+    if (result.length < limit) {
+      pushFromBucket('explore');
+    }
+  }
+
+  for (const key of ['personal', 'top', 'explore'] as const) {
+    while (result.length < limit && pushFromBucket(key, true)) {
+      // continue filling with relaxed diversity constraints
+    }
+  }
+
+  return result.slice(0, limit);
+}
+
+const DEALBREAKER_RULES: Record<string, (business: BusinessRPCResult) => boolean> = {
+  trustworthiness: (business) => business.verified !== false,
+  punctuality: (business) => {
+    const serviceScore = business.percentiles?.service ?? 80;
+    return serviceScore >= 70;
+  },
+  friendliness: (business) => {
+    const serviceScore = business.percentiles?.service ?? 80;
+    return serviceScore >= 65;
+  },
+  'value-for-money': (business) => {
+    if (business.price_range) {
+      return business.price_range === '$' || business.price_range === '$$';
+    }
+    const priceScore = business.percentiles?.price ?? 85;
+    return priceScore >= 75;
+  },
+};
+
+const ONE_DAY_MS = 1000 * 60 * 60 * 24;
+
+function calculateRecencyBoost(dateString: string | null, multiplier = 1) {
+  if (!dateString) return 0;
+  const timestamp = Date.parse(dateString);
+  if (Number.isNaN(timestamp)) return 0;
+  const days = Math.max((Date.now() - timestamp) / ONE_DAY_MS, 1);
+  return multiplier / days;
+}
+
+function scorePersonal(business: BusinessRPCResult) {
+  const rating = business.average_rating || 0;
+  const reviews = Math.log(Math.max(business.total_reviews || 0, 1) + 1);
+  const recency = calculateRecencyBoost(business.created_at, 1.2);
+  const verifiedBonus = business.verified ? 0.4 : 0;
+  const photoBonus = business.image_url || business.uploaded_image ? 0.2 : 0;
+  return rating * 2.2 + reviews + recency + verifiedBonus + photoBonus;
+}
+
+function scoreTopRated(business: BusinessRPCResult) {
+  const rating = business.average_rating || 0;
+  const reviews = Math.log(Math.max(business.total_reviews || 0, 1) + 1.5);
+  const verifiedBonus = business.verified ? 0.5 : 0;
+  return rating * 2.5 + reviews + verifiedBonus;
+}
+
+function scoreExplore(business: BusinessRPCResult) {
+  const recency = calculateRecencyBoost(business.created_at, 2.5);
+  const lowReviewBoost = (business.total_reviews || 0) < 10 ? 1.2 : 0;
+  const ratingSupport = (business.average_rating || 0) * 0.8;
+  const photoBonus = business.image_url || business.uploaded_image ? 0.4 : 0;
+  const verifiedBonus = business.verified ? 0.3 : 0;
+  return recency + lowReviewBoost + ratingSupport + photoBonus + verifiedBonus;
+}
+
+function transformBusinessForCard(business: BusinessRPCResult) {
+  const hasRating = business.average_rating && business.average_rating > 0;
+  const hasReviews = business.total_reviews && business.total_reviews > 0;
+  const shouldShowBadge = business.verified && business.badge;
+  const subInterestLabel = formatSubInterestLabel(business.sub_interest_id);
+
+  return {
+    id: business.id,
+    name: business.name,
+    image: business.image_url || business.uploaded_image,
+    category: business.category,
+    subInterestId: business.sub_interest_id || undefined,
+    subInterestLabel,
+    interestId: business.interest_id || undefined,
+    location: business.location,
+    rating: hasRating ? Math.round(business.average_rating * 2) / 2 : undefined,
+    totalRating: hasRating ? business.average_rating : undefined,
+    reviews: hasReviews ? business.total_reviews : 0,
+    badge: shouldShowBadge ? business.badge : undefined,
+    href: `/business/${business.id}`,
+    verified: business.verified || false,
+    priceRange: business.price_range || '$$',
+    distance: business.distance_km,
+    hasRating,
+    percentiles: business.percentiles
+      ? {
+          service: business.percentiles.service || 85,
+          price: business.percentiles.price || 85,
+          ambience: business.percentiles.ambience || 85,
+        }
+      : undefined,
+  };
+}
+
+function formatSubInterestLabel(subInterestId?: string | null) {
+  if (!subInterestId) return undefined;
+  return subInterestId
+    .split(/[-_]/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function applySharedResponseHeaders(response: NextResponse) {
+  response.headers.set(
+    'Cache-Control',
+    'public, s-maxage=3600, stale-while-revalidate=7200'
+  );
+  response.headers.set('ETag', `W/"businesses-${Date.now()}"`);
+  response.headers.set('Vary', 'Accept-Encoding');
+  return response;
 }

@@ -25,6 +25,9 @@ type Business = {
   uploadedImage?: string;
   alt: string;
   category: string;
+  subInterestId?: string;
+  subInterestLabel?: string;
+  interestId?: string;
   location: string;
   rating?: number;
   totalRating?: number;
@@ -45,6 +48,15 @@ type Business = {
   address?: string;
   amenity?: string;
   tags?: string[];
+};
+
+const formatCategoryLabel = (value?: string) => {
+  if (!value) return "Explore";
+  return value
+    .split(/[-_]/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 };
 
 function BusinessCard({
@@ -80,6 +92,10 @@ function BusinessCard({
   const handleShare = () => console.log("Share clicked:", business.name);
 
   // Image fallback logic
+  const categoryKey = business.subInterestId || business.category || "default";
+  const displayCategoryLabel =
+    business.subInterestLabel || formatCategoryLabel(categoryKey);
+
   const getDisplayImage = useMemo(() => {
     const uploadedImage = business.uploaded_image || business.uploadedImage;
     if (uploadedImage &&
@@ -104,9 +120,15 @@ function BusinessCard({
       return { image: business.image, isPng: false };
     }
 
-    const categoryPng = getCategoryPng(business.category);
+    const categoryPng = getCategoryPng(categoryKey);
     return { image: categoryPng, isPng: true };
-  }, [business.uploaded_image, business.uploadedImage, business.image_url, business.image, business.category]);
+  }, [
+    business.uploaded_image,
+    business.uploadedImage,
+    business.image_url,
+    business.image,
+    categoryKey,
+  ]);
 
   const displayImage = getDisplayImage.image;
   const isImagePng = getDisplayImage.isPng;
@@ -177,7 +199,7 @@ function BusinessCard({
               isImagePng || displayImage.includes('/png/') || displayImage.endsWith('.png') || usingFallback ? (
                 <div className="relative w-full h-full flex items-center justify-center bg-gradient-to-br from-off-white/95 to-off-white/85">
                   <OptimizedImage
-                    src={usingFallback ? getCategoryPng(business.category) : displayImage}
+                    src={usingFallback ? getCategoryPng(categoryKey) : displayImage}
                     alt={displayAlt}
                     width={320}
                     height={350}
@@ -210,7 +232,7 @@ function BusinessCard({
               >
                 <div className="w-32 h-32 md:w-36 md:h-36 flex items-center justify-center">
                   <OptimizedImage
-                    src={getCategoryPng(business.category)}
+                    src={getCategoryPng(categoryKey)}
                     alt={displayAlt}
                     width={144}
                     height={144}
@@ -349,7 +371,7 @@ function BusinessCard({
                     letterSpacing: '0.01em'
                   }}
                 >
-                  <span className="truncate">{business.category}</span>
+                  <span className="truncate">{displayCategoryLabel}</span>
                   {(business.address || business.location) && (
                     <>
                       <span aria-hidden>·</span>

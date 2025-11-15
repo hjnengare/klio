@@ -41,7 +41,7 @@ export default function Footer() {
   return (
     <footer className="relative overflow-hidden pb-safe-area-bottom bg-charcoal text-off-white">
    
-      <div className="relative z-10 mx-auto w-full max-w-[2000px] px-4 sm:px-6 lg:px-8 2xl:px-16 pt-8 sm:pt-12 md:pt-16">
+      <div className="relative z-10 mx-auto w-full max-w-[2000px] px-2 pt-8 sm:pt-12 md:pt-16">
         {/* Main footer content */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
           {/* Brand section */}

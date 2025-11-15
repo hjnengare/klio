@@ -2,7 +2,7 @@
  * Hook to fetch businesses from the API
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Business } from '../components/BusinessCard/BusinessCard';
 import { useUserPreferences } from './useUserPreferences';
 
@@ -16,6 +16,9 @@ export interface UseBusinessesOptions {
   location?: string;
   priceRange?: string;
   interestIds?: string[]; // IDs of interests/subcategories to filter by
+  priceRanges?: string[];
+  dealbreakerIds?: string[];
+  feedStrategy?: 'mixed' | 'standard';
 }
 
 export interface UseBusinessesResult {
@@ -51,6 +54,13 @@ export function useBusinesses(options: UseBusinessesOptions = {}): UseBusinesses
       if (options.interestIds && options.interestIds.length > 0) {
         params.set('interest_ids', options.interestIds.join(','));
       }
+      if (options.priceRanges && options.priceRanges.length > 0) {
+        params.set('preferred_price_ranges', options.priceRanges.join(','));
+      }
+      if (options.dealbreakerIds && options.dealbreakerIds.length > 0) {
+        params.set('dealbreakers', options.dealbreakerIds.join(','));
+      }
+      if (options.feedStrategy) params.set('feed_strategy', options.feedStrategy);
 
       const response = await fetch(`/api/businesses?${params.toString()}`);
       
@@ -84,6 +94,9 @@ export function useBusinesses(options: UseBusinessesOptions = {}): UseBusinesses
     options.location,
     options.priceRange,
     options.interestIds?.join(','), // Include interestIds in dependency array
+    options.priceRanges?.join(','),
+    options.dealbreakerIds?.join(','),
+    options.feedStrategy,
   ]);
 
   return {
@@ -102,25 +115,37 @@ export function useTrendingBusinesses(limit: number = 10): UseBusinessesResult {
     limit,
     sortBy: 'total_rating',
     sortOrder: 'desc',
+    feedStrategy: 'mixed',
   });
 }
 
 /**
  * Hook to fetch businesses for "For You" section personalized based on user interests
  */
-export function useForYouBusinesses(limit: number = 10): UseBusinessesResult {
-  const { interests, subcategories } = useUserPreferences();
+export function useForYouBusinesses(limit: number = 20): UseBusinessesResult {
+  const { interests, subcategories, dealbreakers } = useUserPreferences();
 
   // Combine interests and subcategories into a single list of IDs
   const interestIds = interests.map((i) => i.id).concat(
     subcategories.map((s) => s.id)
   );
+  const dealbreakerIds = dealbreakers.map((d) => d.id);
+
+  const preferredPriceRanges = useMemo(() => {
+    if (dealbreakerIds.includes('value-for-money')) {
+      return ['$', '$$'];
+    }
+    return undefined;
+  }, [dealbreakerIds]);
 
   return useBusinesses({
     limit,
     sortBy: 'total_rating',
     sortOrder: 'desc',
     interestIds: interestIds.length > 0 ? interestIds : undefined, // Filter if user has preferences
+    priceRanges: preferredPriceRanges,
+    dealbreakerIds: dealbreakerIds.length > 0 ? dealbreakerIds : undefined,
+    feedStrategy: 'mixed',
   });
 }
 

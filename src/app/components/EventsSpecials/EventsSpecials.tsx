@@ -24,7 +24,7 @@ export default function EventsSpecials({
 
   return (
     <section
-      className="relative m-0 p-2 w-full"
+      className="relative m-0 w-full"
       aria-label={title}
       data-section
       style={{

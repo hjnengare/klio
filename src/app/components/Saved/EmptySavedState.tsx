@@ -8,7 +8,7 @@ export default function EmptySavedState() {
 
   return (
     <div
-      className="mx-auto w-full max-w-[2000px] px-4 sm:px-6 lg:px-10 2xl:px-16"
+      className="mx-auto w-full max-w-[2000px] px-2"
       style={{
         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}

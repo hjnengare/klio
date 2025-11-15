@@ -23,8 +23,14 @@ export function RegistrationProgress({
       {/* Progress bar */}
       <div className="relative h-1.5 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
         <div
-          className="absolute top-0 left-0 h-full bg-gradient-to-r from-white via-white to-white/90 rounded-full transition-all duration-500 ease-out"
-          style={{ width: `${progress}%` }}
+          className="absolute top-0 left-0 h-full rounded-full transition-all duration-500 ease-out"
+          style={{
+            width: `${progress}%`,
+            background: `linear-gradient(90deg,
+              rgba(255,255,255,0.9) 0%,
+              rgba(255,255,200,0.95) 50%,
+              rgba(255,255,255,0.85) 100%)`,
+          }}
         />
       </div>
 

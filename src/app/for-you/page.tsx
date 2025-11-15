@@ -7,11 +7,12 @@ import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import { Loader } from "../components/Loader";
 import { ChevronLeft, ChevronRight, ChevronUp } from "react-feather";
-import { useForYouBusinesses } from "../hooks/useBusinesses";
+import { useForYouBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 import ToastContainer from "../components/ToastNotification/ToastContainer";
 import { useToastNotifications } from "../hooks/useToastNotifications";
 import SearchInput from "../components/SearchInput/SearchInput";
 import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
+import { useUserPreferences } from "../hooks/useUserPreferences";
 
 
 const ITEMS_PER_PAGE = 12;
@@ -19,6 +20,12 @@ const ITEMS_PER_PAGE = 12;
 export default function ForYouPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const { businesses: forYouBusinesses, loading } = useForYouBusinesses(50); // Fetch more for pagination
+  const { businesses: trendingBusinesses, loading: trendingLoading } = useTrendingBusinesses(50);
+  const { interests, subcategories } = useUserPreferences();
+  const hasPersonalization = (interests.length + subcategories.length) > 0;
+  const activeBusinesses = hasPersonalization ? forYouBusinesses : trendingBusinesses;
+  const activeLoading = hasPersonalization ? loading : trendingLoading;
+  const headingTitle = hasPersonalization ? "For You" : "Trending Now";
   
   const { notifications, removeNotification } = useToastNotifications({
     interval: 15000, // Show a notification every 15 seconds
@@ -31,12 +38,12 @@ export default function ForYouPage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const searchWrapRef = useRef<HTMLDivElement>(null);
 
-  const totalPages = useMemo(() => Math.ceil(forYouBusinesses.length / ITEMS_PER_PAGE), [forYouBusinesses.length]);
+  const totalPages = useMemo(() => Math.ceil(activeBusinesses.length / ITEMS_PER_PAGE), [activeBusinesses.length]);
   const currentBusinesses = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    return forYouBusinesses.slice(startIndex, endIndex);
-  }, [forYouBusinesses, currentPage]);
+    return activeBusinesses.slice(startIndex, endIndex);
+  }, [activeBusinesses, currentPage]);
 
   const openFilters = () => {
     if (isFilterVisible) return;
@@ -121,24 +128,54 @@ export default function ForYouPage() {
             />
           </div>
 
-          <div className="py-4">
-            {loading && (
+          <div className="py-4 space-y-6">
+            <div className="flex flex-col gap-1">
+              <p className="text-xs uppercase tracking-[0.2em] text-charcoal/50" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
+                {headingTitle}
+              </p>
+              {!hasPersonalization && (
+                <p className="text-sm text-charcoal/70" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                  You haven’t selected interests yet, so we’re showing what’s trending across KLIO.
+                </p>
+              )}
+            </div>
+
+            {activeLoading && (
               <div className="py-24 flex justify-center">
-                <Loader size="lg" color="sage" text="Loading personalized recommendations..." />
+                <Loader
+                  size="lg"
+                  color="sage"
+                  text={
+                    hasPersonalization
+                      ? "Loading personalized recommendations..."
+                      : "Loading Trending Now picks..."
+                  }
+                />
               </div>
             )}
 
-            {!loading && (
+            {!activeLoading && (
               <>
-                {forYouBusinesses.length === 0 ? (
-                  <div className="bg-white border border-sage/20 rounded-3xl shadow-sm px-6 py-16 text-center space-y-3">
-                    <h2 className="text-lg font-600 text-charcoal" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
-                      No recommendations yet
-                    </h2>
-                    <p className="text-sm text-charcoal/60 max-w-lg mx-auto" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 500 }}>
-                      Complete your interests to get personalized recommendations.
-                    </p>
-                  </div>
+                {activeBusinesses.length === 0 ? (
+                  hasPersonalization ? (
+                    <div className="bg-white border border-sage/20 rounded-3xl shadow-sm px-6 py-16 text-center space-y-3">
+                      <h2 className="text-lg font-600 text-charcoal" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                        No recommendations yet
+                      </h2>
+                      <p className="text-sm text-charcoal/60 max-w-lg mx-auto" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 500 }}>
+                        Complete your interests to get personalized recommendations.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="bg-white border border-sage/20 rounded-3xl shadow-sm px-6 py-16 text-center space-y-3">
+                      <h2 className="text-lg font-600 text-charcoal" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                        Trending data is warming up
+                      </h2>
+                      <p className="text-sm text-charcoal/60 max-w-lg mx-auto" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 500 }}>
+                        We’re fetching the latest hot spots. Check back in a moment.
+                      </p>
+                    </div>
+                  )
                 ) : (
                   <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
