@@ -97,7 +97,6 @@ export default function FilterModal({
       window.removeEventListener("resize", onWin);
       window.removeEventListener("scroll", onWin, true);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible, updatePosition]);
 
   // Body scroll lock when modal is open
