@@ -12,10 +12,10 @@ export default function SavedHeader() {
     <div
       className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10"
       style={{
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: '"DM Sans", system-ui, sans-serif',
       }}
     >
-      <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+      <div className="mx-auto w-full max-w-[2000px] px-2 py-4">
         <div className="flex items-center justify-between">
           <button
             onClick={() => router.back()}

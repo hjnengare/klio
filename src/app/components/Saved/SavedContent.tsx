@@ -15,10 +15,10 @@ function SavedContent({ savedBusinesses }: SavedContentProps) {
     <section
       className="relative"
       style={{
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: '"DM Sans", system-ui, sans-serif',
       }}
     >
-      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
+      <div className="mx-auto w-full max-w-[2000px] px-2 relative z-10">
         {savedBusinesses.length > 0 && (
           <div className="mb-6 flex items-center gap-3">
             <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full backdrop-blur-sm border border-sage/20">

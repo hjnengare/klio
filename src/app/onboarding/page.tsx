@@ -115,7 +115,7 @@ export default function OnboardingPage() {
       <div className="min-h-[100svh] md:min-h-[100dvh] bg-off-white flex flex-col items-center justify-center px-4 py-4 md:py-8 relative overflow-hidden safe-area-padding no-overflow">
 
         {/* Content only — background objects removed */}
-        <div className="w-full max-w-full max-w-full-safe px-3 md:max-w-4xl md:px-4 mx-auto relative z-10 flex flex-col h-full py-4 sm:py-6">
+        <div className="w-full mx-auto max-w-[2000px] px-4 sm:px-6 lg:px-8 2xl:px-16 relative z-10 flex flex-col h-full py-4 sm:py-6">
           {/* Logo */}
           <div className={`text-center mb-8 md:mb-6 flex-shrink-0 flex justify-center ${mounted ? "opacity-0 animate-fade-in-up delay-400" : "opacity-0"}`}>
             <Logo variant="onboarding" />

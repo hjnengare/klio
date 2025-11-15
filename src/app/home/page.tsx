@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import PromoBar from "../components/PromoBar/PromoBar";
 import HeroCarousel from "../components/Hero/HeroCarousel";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
+import BusinessRowSkeleton from "../components/BusinessRow/BusinessRowSkeleton";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import {
   FEATURED_REVIEWS,
@@ -18,6 +19,7 @@ import {
 } from "../data/communityHighlightsData";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useForYouBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
+import { useRoutePrefetch } from "../hooks/useRoutePrefetch";
 
 // Removed any animation / scroll-reveal classes and imports.
 
@@ -45,6 +47,18 @@ export default function Home() {
   const { selectedInterests } = useOnboarding();
   const { businesses: forYouBusinesses, loading: forYouLoading, error: forYouError } = useForYouBusinesses(10);
   const { businesses: trendingBusinesses, loading: trendingLoading, error: trendingError } = useTrendingBusinesses(10);
+  useRoutePrefetch([
+    "/for-you",
+    "/trending",
+    "/discover/reviews",
+    "/events-specials",
+    "/explore",
+    "/write-review",
+    "/saved",
+  ]);
+  const hasForYouBusinesses = forYouBusinesses.length > 0;
+  const hasTrendingBusinesses = trendingBusinesses.length > 0;
+  const hasInterestSelections = selectedInterests.length > 0;
   
   return (
     <div className="min-h-dvh bg-off-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
@@ -57,22 +71,31 @@ export default function Home() {
       <div className="bg-off-white">
         <div className="pb-12 sm:pb-16 md:pb-20">
           {/* No scroll-reveal wrappers; simple static rendering */}
-          {forYouBusinesses.length > 0 && (
-            <MemoizedBusinessRow
-              title="For You"
-              businesses={forYouBusinesses}
-              cta="See More"
-              href="/for-you"
-            />
+          {forYouLoading && <BusinessRowSkeleton title="For You" />}
+          {!forYouLoading && hasForYouBusinesses && (
+            <MemoizedBusinessRow title="For You" businesses={forYouBusinesses} cta="See More" href="/for-you" />
+          )}
+          {!forYouLoading && !hasForYouBusinesses && !forYouError && (
+            <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-charcoal/70">
+              {hasInterestSelections
+                ? "We’re curating businesses for you based on your interests. Check back shortly."
+                : "We’re gathering recommendations for you. Once you pick a few interests, this row will instantly feel more personalized."}
+            </div>
+          )}
+          {forYouError && !forYouLoading && (
+            <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-coral">
+              Couldn’t load personalized picks right now. We’ll retry in the background.
+            </div>
           )}
 
-          {trendingBusinesses.length > 0 && (
-            <MemoizedBusinessRow
-              title="Trending Now"
-              businesses={trendingBusinesses}
-              cta="See More"
-              href="/trending"
-            />
+          {trendingLoading && <BusinessRowSkeleton title="Trending Now" />}
+          {!trendingLoading && hasTrendingBusinesses && (
+            <MemoizedBusinessRow title="Trending Now" businesses={trendingBusinesses} cta="See More" href="/trending" />
+          )}
+          {trendingError && !trendingLoading && (
+            <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-coral">
+              Trending businesses are still loading. Refresh to try again.
+            </div>
           )}
 
           <EventsSpecials events={EVENTS_AND_SPECIALS.slice(0, 5)} />

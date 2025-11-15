@@ -66,7 +66,7 @@ export default function CommunityHighlights({
       }}
     >
 
-      <div className="container mx-auto max-w-[1300px] relative z-10">
+      <div className="mx-auto w-full max-w-[2000px] relative z-10 px-2">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2

@@ -1,4 +1,9 @@
 import type { NextConfig } from "next";
+import webpack from "webpack";
+
+if (typeof globalThis.self === "undefined") {
+  (globalThis as any).self = globalThis;
+}
 
 const nextConfig: NextConfig = {
   // Development optimizations
@@ -54,6 +59,12 @@ const nextConfig: NextConfig = {
 
     // Fix for "self is not defined" error - handle browser-only packages
     if (isServer) {
+      config.plugins = config.plugins || [];
+      config.plugins.push(
+        new webpack.DefinePlugin({
+          self: "globalThis",
+        })
+      );
       // On server, exclude canvas-confetti and provide fallback for browser globals
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -70,7 +81,6 @@ const nextConfig: NextConfig = {
       }
     } else {
       // On client, define self as window for browser-only code
-      const webpack = require('webpack');
       config.plugins = config.plugins || [];
       config.plugins.push(
         new webpack.DefinePlugin({

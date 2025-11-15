@@ -59,12 +59,12 @@ export const colors = {
     },
     'off-white': {
       50: 'hsl(0, 0%, 100%)',     // Pure white
-      100: '#E8E8E8',             // Main page background
+      100: '#E5E0E5',             // Main page background
       200: '#D5CED5',             // Slightly darker
       300: '#C5BCC5',             // Medium
       400: '#B5AAB5',             // Darker
       500: '#A598A5',             // Medium gray
-      DEFAULT: '#E8E8E8',         // Main background color
+      DEFAULT: '#E5E0E5',         // Main background color
     }
   },
 

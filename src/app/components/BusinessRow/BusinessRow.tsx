@@ -1,6 +1,7 @@
 // src/components/BusinessRow/BusinessRow.tsx
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "react-feather";
 import BusinessCard, { Business } from "../BusinessCard/BusinessCard";
@@ -19,6 +20,48 @@ export default function BusinessRow({
 }) {
   const router = useRouter();
 
+  useEffect(() => {
+    if (!href || !href.startsWith("/")) return;
+    let timeoutId: number | null = null;
+    let idleId: number | null = null;
+
+    const prefetch = () => {
+      if (typeof router.prefetch !== "function") return;
+      try {
+        const maybePromise = router.prefetch(href);
+        if (typeof (maybePromise as unknown as Promise<unknown>)?.catch === "function") {
+          (maybePromise as unknown as Promise<unknown>).catch(() => {
+            // ignore failures (e.g., dynamic routes without params yet)
+          });
+        }
+      } catch {
+        // ignore synchronous failures
+      }
+    };
+
+    const schedulePrefetch = () => {
+      if (typeof window === "undefined") return;
+      const idleCallback = (window as any).requestIdleCallback;
+      if (typeof idleCallback === "function") {
+        idleId = idleCallback(prefetch, { timeout: 1200 });
+      } else {
+        timeoutId = window.setTimeout(prefetch, 120);
+      }
+    };
+
+    schedulePrefetch();
+
+    return () => {
+      if (typeof window === "undefined") return;
+      if (idleId !== null && typeof (window as any).cancelIdleCallback === "function") {
+        (window as any).cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [href, router]);
+
   if (!businesses || businesses.length === 0) return null;
 
   return (
@@ -30,7 +73,7 @@ export default function BusinessRow({
         fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
       }}
     >
-      <div className="container max-w-[1300px] relative z-10 m-0 p-2">
+      <div className="mx-auto w-full max-w-[2000px] relative z-10 px-2">
         <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
           <h2
             className="text-sm font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default"

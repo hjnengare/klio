@@ -25,13 +25,13 @@ export default function SavedBusinessRow({
       aria-label={title}
       data-section
       style={{
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: '"DM Sans", system-ui, sans-serif',
       }}
     >
-      <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
+      <div className="mx-auto w-full max-w-[2000px] px-2 relative z-10">
         <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <h2 className="font-urbanist text-sm sm:text-base font-600 text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
+            <h2 className="text-sm sm:text-base font-semibold text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default">
               {title}
             </h2>
             {showCount && savedCount > 0 && (

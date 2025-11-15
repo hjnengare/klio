@@ -254,7 +254,7 @@ export default function HeroCarousel() {
 
            {/* Content - Text Left Aligned */}
            <div className="absolute inset-0 z-20 flex items-center pt-16 pb-12">
-             <div className="container mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto w-full max-w-[2200px] px-4 sm:px-8 xl:px-12 2xl:px-16">
                <div className="max-w-lg sm:max-w-lg lg:max-w-2xl xl:max-w-3xl">
                  {/* Text Content */}
                  <div className="relative">

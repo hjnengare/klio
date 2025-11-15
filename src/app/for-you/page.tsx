@@ -93,9 +93,9 @@ export default function ForYouPage() {
       />
 
       <main className="pt-20 sm:pt-24 pb-28">
-        <div className="max-w-[1300px] px-4 sm:px-6 lg:px-10">
+        <div className="mx-auto w-full max-w-[2000px] px-2">
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb">
+          <nav className="px-2" aria-label="Breadcrumb">
             <ol className="flex items-center gap-1 text-sm text-charcoal/60">
               <li>
                 <Link href="/home" className="hover:text-charcoal transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>

@@ -198,7 +198,7 @@ export default function DMPage() {
                         fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                     }}
                 >
-                    <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+                    <div className="mx-auto w-full max-w-[2000px] px-2 py-4">
                         <nav className="flex items-center justify-between" aria-label="Direct message navigation">
                             <button
                                 onClick={() => router.back()}

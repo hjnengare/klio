@@ -227,7 +227,7 @@ export default function ReviewerProfilePage() {
                         fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                     }}
                 >
-                    <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+                    <div className="mx-auto w-full max-w-[2000px] px-4 sm:px-6 lg:px-10 2xl:px-16 py-4">
                         <nav className="flex items-center justify-between" aria-label="Reviewer profile navigation">
                             <Link
                                 href="/home"
@@ -257,7 +257,7 @@ export default function ReviewerProfilePage() {
                 <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
                     <div className="py-1 pt-20 md:px-20 sm:px-4">
                         <main className="relative font-sf-pro pt-4 sm:pt-6" id="main-content" role="main" aria-label="Reviewer profile content">
-                            <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 relative z-10">
+                            <div className="mx-auto w-full max-w-[2000px] px-3 sm:px-6 lg:px-10 2xl:px-16 relative z-10">
                                 <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
                                     <div className="space-y-6">
                                         {/* Profile Header Section */}

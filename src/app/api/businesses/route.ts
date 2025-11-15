@@ -46,7 +46,8 @@ const INTEREST_TO_SUBCATEGORIES: Record<string, string[]> = {
 
 export async function GET(req: Request) {
   try {
-    const { searchParams } = new URL(req.url);
+    const requestUrl = req?.url ?? `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/businesses`;
+    const { searchParams } = new URL(requestUrl);
 
     // Pagination parameters - use cursor-based (keyset) pagination
     const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '20')));
@@ -325,7 +326,8 @@ export async function GET(req: Request) {
 // GET endpoint for trending/top businesses (uses materialized views)
 export async function HEAD(req: Request) {
   try {
-    const { searchParams } = new URL(req.url);
+    const requestUrl = req?.url ?? `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/businesses`;
+    const { searchParams } = new URL(requestUrl);
     const type = searchParams.get('type'); // 'trending', 'top', 'new'
     const category = searchParams.get('category') || null;
     const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '20')));

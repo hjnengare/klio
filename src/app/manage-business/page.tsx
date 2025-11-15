@@ -184,7 +184,7 @@ export default function ManageBusinessPage() {
                         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                     }}
                 >
-                    <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+                    <div className="mx-auto w-full max-w-[2000px] px-2 py-4">
                         <div className="flex items-center justify-between">
                             <Link
                                 href="/home"
@@ -217,7 +217,7 @@ export default function ManageBusinessPage() {
                                 fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
                             }}
                         >
-                            <div className="container mx-auto max-w-[1300px] px-4 sm:px-6 relative z-10">
+                            <div className="mx-auto w-full max-w-[2000px] px-2 relative z-10">
                                 <div className="max-w-6xl mx-auto pt-8 pb-8">
                     <div className="space-y-6">
                         {/* Welcome Section */}

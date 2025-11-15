@@ -1,3 +1,7 @@
+"use client";
+
+"use client";
+
 import { getBrowserSupabase } from './supabase/client';
 import type { AuthUser, SignUpData, SignInData, AuthError } from './types/database';
 import type { Session } from '@supabase/supabase-js';

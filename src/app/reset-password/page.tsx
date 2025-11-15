@@ -65,8 +65,7 @@ export default function ResetPasswordPage() {
     };
 
     checkSession();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run once on mount
+  }, [router, showToast]); // Only run once on mount
 
   const getPasswordError = () => {
     if (!passwordTouched) return "";

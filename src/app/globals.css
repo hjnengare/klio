@@ -10,7 +10,7 @@
   --color-sage: #9DAB9B;
   --color-coral: #7D0F2A;
   --color-charcoal: hsl(0, 0%, 25%);
-  --color-off-white: #E8E8E8;
+  --color-off-white: #E5E0E5;
 
   /* Utility colors */
   --color-white-30: hsl(0, 0%, 100%, 0.3);
@@ -889,74 +889,22 @@
   }
 
 
-  /* Scroll reveal animations */
-  .scroll-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-
-  .scroll-reveal.reveal {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .scroll-reveal-left {
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-
-  .scroll-reveal-left.reveal {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .scroll-reveal-right {
-    opacity: 0;
-    transform: translateX(30px);
-    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-
-  .scroll-reveal-right.reveal {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
+  /* Scroll reveal styles disabled for accessibility */
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
   .scroll-reveal-scale {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 
+  .scroll-reveal.reveal,
+  .scroll-reveal-left.reveal,
+  .scroll-reveal-right.reveal,
   .scroll-reveal-scale.reveal {
     opacity: 1;
-    transform: scale(1);
-  }
-
-  /* Staggered animation delays */
-  .stagger-1 {
-    transition-delay: 0.1s;
-  }
-
-  .stagger-2 {
-    transition-delay: 0.2s;
-  }
-
-  .stagger-3 {
-    transition-delay: 0.3s;
-  }
-
-  .stagger-4 {
-    transition-delay: 0.4s;
-  }
-
-  .stagger-5 {
-    transition-delay: 0.5s;
-  }
-
-  .stagger-6 {
-    transition-delay: 0.6s;
+    transform: none;
   }
 
   /* Scroll arrow animations */
@@ -982,33 +930,17 @@
     box-shadow: 0 8px 25px rgba(116, 145, 118, 0.15);
   }
 
-  /* Card entrance animations */
-  .card-entrance {
-    animation: slideInFromBottom 0.6s ease-out forwards;
-  }
-
-  .card-entrance-1 {
-    animation-delay: 0.1s;
-  }
-
-  .card-entrance-2 {
-    animation-delay: 0.2s;
-  }
-
-  .card-entrance-3 {
-    animation-delay: 0.3s;
-  }
-
-  .card-entrance-4 {
-    animation-delay: 0.4s;
-  }
-
-  .card-entrance-5 {
-    animation-delay: 0.5s;
-  }
-
+  /* Card entrance animations disabled */
+  .card-entrance,
+  .card-entrance-1,
+  .card-entrance-2,
+  .card-entrance-3,
+  .card-entrance-4,
+  .card-entrance-5,
   .card-entrance-6 {
-    animation-delay: 0.6s;
+    animation: none !important;
+    opacity: 1;
+    transform: none;
   }
 
   /* Floating elements */

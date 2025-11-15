@@ -8,8 +8,8 @@ export default function VerificationStatusPage() {
         </p>
         <p className="text-sm text-charcoal/60">
           In the meantime, you can continue exploring upcoming business tools from your dashboard.
-        </p>
-      </div>
+                          </p>
+                        </div>
     </main>
   );
 }

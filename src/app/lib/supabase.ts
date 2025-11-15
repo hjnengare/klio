@@ -1,3 +1,7 @@
+"use client";
+
+"use client";
+
 import { getBrowserSupabase } from './supabase/client'
 
 // Create the client-side Supabase instance

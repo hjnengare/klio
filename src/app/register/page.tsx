@@ -236,7 +236,8 @@ export default function RegisterPage() {
           subtitle="Sign up today - share honest reviews, climb leaderboards, and rate any business!"
         />
 
-        <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12 px-2">
+        <div className="w-full mx-auto max-w-[2000px] flex-1 flex flex-col justify-center py-8 sm:py-12 px-4 sm:px-6 lg:px-10 2xl:px-16">
+          <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl mx-auto relative z-10">
           {/* Form Card */}
           <div className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden backdrop-blur-md ring-2 ring-coral px-2 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10 lg:px-12 lg:py-10 xl:px-16 xl:py-12">
 
@@ -354,6 +355,7 @@ export default function RegisterPage() {
                 </Link>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

@@ -54,7 +54,7 @@ export default function WriteReviewPage() {
       <div className="min-h-screen bg-off-white relative overflow-hidden">
       {/* Header */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10">
-        <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+        <div className="mx-auto w-full max-w-[2000px] px-2 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <button
               onClick={() => router.back()}
@@ -75,7 +75,7 @@ export default function WriteReviewPage() {
       <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
         <div className="py-1 pt-20">
           <section className="relative font-sf-pro pt-16 sm:pt-20">
-            <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 md:px-6 relative z-10">
+            <div className="mx-auto w-full max-w-[2000px] px-2 relative z-10">
               <div className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20">
                 <div className="max-w-[800px] mx-auto">
         {/* Search Section */}

@@ -229,9 +229,9 @@ export default function GeneralReviewsPage() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="sticky top-0 z-50  bg-off-white  /80 backdrop-blur-xl border-b border-charcoal/10 px-3 sm:px-4 py-4 sm:py-6 shadow-premium-md"
+        className="sticky top-0 z-50 bg-off-white/80 backdrop-blur-xl border-b border-charcoal/10 px-2 py-4 sm:py-6 shadow-premium-md"
       >
-        <div className="flex items-center justify-between max-w-[1300px] mx-auto">
+        <div className="flex items-center justify-between mx-auto w-full max-w-[2000px] px-2">
           <Link href="/home" className="group flex items-center">
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center shadow-premium-sm hover:shadow-premium-md transition-all duration-premium ease-premium hover:scale-110 border border-charcoal/5 hover:border-sage/20 mr-2 sm:mr-4">
               <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-charcoal/70 group-hover:text-sage transition-colors duration-premium ease-premium" />
@@ -246,7 +246,7 @@ export default function GeneralReviewsPage() {
         </div>
       </motion.header>
 
-      <div className="max-w-[1300px] mx-auto px-3 sm:px-4 py-6 sm:py-8 relative z-10">
+      <div className="mx-auto w-full max-w-[2000px] px-2 py-6 sm:py-8 relative z-10">
 
         {/* Filters and Sort */}
         <motion.div

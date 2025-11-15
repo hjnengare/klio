@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import {
   X,
   Sliders,
@@ -63,7 +63,7 @@ export default function FilterModal({
     width: 360,
   });
 
-  const updatePosition = () => {
+  const updatePosition = useCallback(() => {
     const anchor = anchorRef?.current;
     if (!anchor) return;
 
@@ -83,7 +83,7 @@ export default function FilterModal({
     const top = rect.bottom + gap;
 
     setStyle({ top, left, width });
-  };
+  }, [anchorRef]);
 
   useEffect(() => {
     if (!isVisible) return;
@@ -98,7 +98,7 @@ export default function FilterModal({
       window.removeEventListener("scroll", onWin, true);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isVisible]);
+  }, [isVisible, updatePosition]);
 
   // Body scroll lock when modal is open
   useEffect(() => {

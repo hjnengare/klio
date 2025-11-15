@@ -6,7 +6,7 @@
     "dev": "next dev --turbo",
     "dev:fast": "next dev --turbo --port 3000",
     "dev:perf": "node scripts/dev-performance.js && npm run dev:fast",
-    "build": "next build",
+    "build": "node scripts/run-build-with-polyfill.js",
     "build:analyze": "ANALYZE=true next build",
     "build:fast": "NODE_ENV=development next build",
     "start": "next start",
@@ -43,11 +43,13 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/webpack": "^5.28.5",
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.5.3",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.13",
-    "typescript": "^5"
+    "typescript": "5.9.3",
+    "webpack": "^5.102.1"
   }
 }

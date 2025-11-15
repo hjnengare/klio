@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState, useEffect, memo } from "react";
 import { useRouter } from "next/navigation";
-import { Image, Star, Edit, Share2, MapPin, Bookmark, Globe, Tag } from "react-feather";
+import { Image as ImageIcon, Star, Edit, Share2, MapPin, Bookmark, Globe, Tag } from "react-feather";
 import Stars from "../Stars/Stars";
 import PercentileChip from "../PercentileChip/PercentileChip";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
@@ -204,7 +204,10 @@ function BusinessCard({
                 </div>
               )
             ) : (
-              <div className="relative w-full h-full flex items-center justify-center bg-gradient-to-br from-off-white/95 to-off-white/85">
+              <div
+                className="relative w-full h-full flex items-center justify-center"
+                style={{ backgroundColor: '#E5E0E5' }}
+              >
                 <div className="w-32 h-32 md:w-36 md:h-36 flex items-center justify-center">
                   <OptimizedImage
                     src={getCategoryPng(business.category)}
@@ -222,8 +225,11 @@ function BusinessCard({
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             {imgError && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-off-white/95 to-off-white/85">
-                <Image className="w-16 h-16 text-charcoal/20" />
+              <div
+                className="absolute inset-0 flex items-center justify-center"
+                style={{ backgroundColor: '#E5E0E5' }}
+              >
+                <ImageIcon className="w-16 h-16 text-charcoal/20" aria-hidden="true" />
               </div>
             )}
           </div>

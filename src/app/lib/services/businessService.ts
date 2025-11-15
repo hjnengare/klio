@@ -1,3 +1,7 @@
+"use client";
+
+"use client";
+
 import { supabase } from '../supabase';
 import type { Business, BusinessWithStats, BusinessSearchFilters, BusinessStats } from '../types/database';
 

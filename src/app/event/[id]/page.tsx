@@ -112,7 +112,7 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
         <section
           className="relative font-sf-pro pt-4 sm:pt-6"
         >
-          <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 md:px-6 relative z-10">
+          <div className="mx-auto w-full max-w-[2000px] px-2 relative z-10">
             <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
                 {/* Left Column - Main Content */}

@@ -33,38 +33,16 @@ import { useEffect, RefObject } from "react";
  *
  * Add stagger delays with: stagger-1 through stagger-6
  */
-export default function useScrollReveal(options?: {
-  threshold?: number;
-  rootMargin?: string;
-}) {
+export default function useScrollReveal() {
   useEffect(() => {
-    const { threshold = 0.1, rootMargin = "0px 0px -100px 0px" } = options || {};
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("reveal");
-          }
-        });
-      },
-      {
-        threshold,
-        rootMargin,
-      }
-    );
-
-    // Observe all scroll-reveal elements
     const elements = document.querySelectorAll(
       ".scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale"
     );
 
-    elements.forEach((el) => observer.observe(el));
-
-    return () => {
-      elements.forEach((el) => observer.unobserve(el));
-    };
-  }, [options]);
+    elements.forEach((el) => {
+      el.classList.add("reveal");
+    });
+  }, []);
 }
 
 /**
@@ -87,37 +65,10 @@ export default function useScrollReveal(options?: {
  * }
  * ```
  */
-export function useScrollRevealRef(
-  ref: RefObject<HTMLElement>,
-  options?: {
-    threshold?: number;
-    rootMargin?: string;
-  }
-) {
+export function useScrollRevealRef(ref: RefObject<HTMLElement>) {
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-
-    const { threshold = 0.1, rootMargin = "0px 0px -100px 0px" } = options || {};
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("reveal");
-          }
-        });
-      },
-      {
-        threshold,
-        rootMargin,
-      }
-    );
-
-    observer.observe(element);
-
-    return () => {
-      observer.unobserve(element);
-    };
-  }, [ref, options]);
+    element.classList.add("reveal");
+  }, [ref]);
 }

@@ -457,7 +457,7 @@ function ProfileContent() {
           className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
           role="banner"
         >
-          <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
+          <div className="mx-auto w-full max-w-[2000px] px-4 sm:px-6 lg:px-10 2xl:px-16 py-4">
             <nav
               className="flex items-center justify-between"
               aria-label="Profile navigation"
@@ -501,7 +501,7 @@ function ProfileContent() {
               role="main"
               aria-label="User profile content"
             >
-              <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 relative z-10">
+              <div className="mx-auto w-full max-w-[2000px] px-3 sm:px-6 lg:px-10 2xl:px-16 relative z-10">
                 <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
                   <div className="space-y-6">
                     <article
