@@ -15,10 +15,9 @@ import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import {
   FEATURED_REVIEWS,
   TOP_REVIEWERS,
-  BUSINESSES_OF_THE_MONTH,
 } from "../data/communityHighlightsData";
 import { useOnboarding } from "../contexts/OnboardingContext";
-import { useForYouBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
+import { useBusinesses, useForYouBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 import { useRoutePrefetch } from "../hooks/useRoutePrefetch";
 
 // Removed any animation / scroll-reveal classes and imports.
@@ -47,6 +46,64 @@ export default function Home() {
   const { selectedInterests } = useOnboarding();
   const { businesses: forYouBusinesses, loading: forYouLoading, error: forYouError } = useForYouBusinesses(10);
   const { businesses: trendingBusinesses, loading: trendingLoading, error: trendingError } = useTrendingBusinesses(10);
+  const { businesses: allBusinesses } = useBusinesses({ limit: 200, sortBy: "total_rating", sortOrder: "desc", feedStrategy: "mixed" });
+
+  const featuredByCategory = (() => {
+    if (!allBusinesses || allBusinesses.length === 0) return [];
+
+    const byCategory = new Map<string, any>();
+
+    const getDisplayRating = (b: any) =>
+      (typeof b.totalRating === "number" && b.totalRating) ||
+      (typeof b.rating === "number" && b.rating) ||
+      (typeof b?.stats?.average_rating === "number" && b.stats.average_rating) ||
+      0;
+
+    const getReviews = (b: any) =>
+      (typeof b.reviews === "number" && b.reviews) ||
+      (typeof b.total_reviews === "number" && b.total_reviews) ||
+      0;
+
+    const toTitle = (value?: string) =>
+      (value || "Business")
+        .toString()
+        .split(/[-_]/)
+        .filter(Boolean)
+        .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+        .join(" ");
+
+    for (const b of allBusinesses) {
+      const cat = (b.category || "Business") as string;
+      const existing = byCategory.get(cat);
+      if (!existing || getDisplayRating(b) > getDisplayRating(existing)) {
+        byCategory.set(cat, b);
+      }
+    }
+
+    const results = Array.from(byCategory.entries()).map(([cat, b]) => {
+      const rating = getDisplayRating(b);
+      const reviews = getReviews(b);
+      const categoryLabel = toTitle(b.subInterestLabel || cat);
+      return {
+        id: b.id,
+        name: b.name,
+        image: b.image || b.image_url || b.uploaded_image || b.uploadedImage || "",
+        alt: b.alt || b.name,
+        category: b.category || "Business",
+        location: b.location || b.address || "Cape Town",
+        rating: rating > 0 ? 5 : 0,
+        totalRating: rating,
+        reviews,
+        badge: "featured" as const,
+        href: `/business/${b.id}`,
+        monthAchievement: `Featured ${categoryLabel}`,
+        verified: Boolean(b.verified),
+      };
+    });
+
+    results.sort((a, b) => b.totalRating - a.totalRating || b.reviews - a.reviews);
+    return results;
+  })();
   useRoutePrefetch([
     "/for-you",
     "/trending",
@@ -103,7 +160,7 @@ export default function Home() {
           <CommunityHighlights
             reviews={FEATURED_REVIEWS}
             topReviewers={TOP_REVIEWERS}
-            businessesOfTheMonth={BUSINESSES_OF_THE_MONTH}
+            businessesOfTheMonth={featuredByCategory}
             variant="reviews"
           />
         </div>

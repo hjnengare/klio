@@ -63,9 +63,9 @@ function BusinessLeaderboardItem({ business, index, rank }: BusinessLeaderboardI
         <div className="flex flex-col items-end gap-1 flex-shrink-0 ml-2">
           <div className="bg-gradient-to-br from-off-white via-off-white to-off-white/90 backdrop-blur-xl px-2 sm:px-3 py-1 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] border border-white/60 ring-1 ring-white/30 flex items-center gap-1">
             <Star className="w-3 h-3 sm:w-4 sm:h-4 text-coral fill-coral" />
-            <span className="font-urbanist text-xs sm:text-sm font-600 text-charcoal">{business.totalRating}</span>
+            <span className="font-urbanist text-xs sm:text-sm font-600 text-charcoal">{business.reviews > 0 ? business.totalRating : "New"}</span>
           </div>
-          <span className="font-urbanist text-[10px] sm:text-xs text-charcoal/50 whitespace-nowrap">{business.reviews} reviews</span>
+          <span className="font-urbanist text-[10px] sm:text-xs text-charcoal/50 whitespace-nowrap">{business.reviews > 0 ? `${business.reviews} reviews` : "No reviews yet"}</span>
         </div>
       </div>
     </motion.div>

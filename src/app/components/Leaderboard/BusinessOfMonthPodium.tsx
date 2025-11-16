@@ -39,7 +39,11 @@ function BusinessOfMonthPodium({ topBusinesses }: BusinessOfMonthPodiumProps) {
         </div>
         <div className="font-urbanist text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 truncate px-2">{topBusinesses[1].name}</div>
         <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
-          <span className="font-700 text-charcoal">{topBusinesses[1].totalRating}</span> rating
+          {topBusinesses[1].reviews > 0 ? (
+            <><span className="font-700 text-charcoal">{topBusinesses[1].totalRating}</span> rating</>
+          ) : (
+            <>New</>
+          )}
         </div>
         {/* Professional Podium Block */}
         <div className="relative mt-auto">
@@ -73,7 +77,11 @@ function BusinessOfMonthPodium({ topBusinesses }: BusinessOfMonthPodiumProps) {
         </div>
         <div className="font-urbanist text-sm sm:text-base md:text-xl font-700 text-charcoal mb-1 truncate px-2">{topBusinesses[0].name}</div>
         <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
-          <span className="font-700 text-charcoal">{topBusinesses[0].totalRating}</span> rating
+          {topBusinesses[0].reviews > 0 ? (
+            <><span className="font-700 text-charcoal">{topBusinesses[0].totalRating}</span> rating</>
+          ) : (
+            <>New</>
+          )}
         </div>
         {/* Professional Podium Block */}
         <div className="relative mt-auto">
@@ -107,7 +115,11 @@ function BusinessOfMonthPodium({ topBusinesses }: BusinessOfMonthPodiumProps) {
         </div>
         <div className="font-urbanist text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 truncate px-2">{topBusinesses[2].name}</div>
         <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
-          <span className="font-700 text-charcoal">{topBusinesses[2].totalRating}</span> rating
+          {topBusinesses[2].reviews > 0 ? (
+            <><span className="font-700 text-charcoal">{topBusinesses[2].totalRating}</span> rating</>
+          ) : (
+            <>New</>
+          )}
         </div>
         {/* Professional Podium Block */}
         <div className="relative mt-auto">

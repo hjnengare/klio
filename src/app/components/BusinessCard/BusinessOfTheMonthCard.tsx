@@ -4,16 +4,22 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { Image as ImageIcon, Star, Edit, Bookmark, Share2, MapPin } from "react-feather";
+import { Image as ImageIcon, Star, Edit, Bookmark, Share2, MapPin, Award } from "react-feather";
 import Stars from "../Stars/Stars";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
 import { BusinessOfTheMonth } from "../../data/communityHighlightsData";
-import { getCategoryPng, isPngIcon } from "../../utils/categoryToPngMapping";
+import { getCategoryPng, getCategoryPngFromLabels, isPngIcon } from "../../utils/categoryToPngMapping";
 
 export default function BusinessOfTheMonthCard({ business }: { business: BusinessOfTheMonth }) {
   const idForSnap = useMemo(() => `business-month-${business.id}`, [business.id]);
   const [imgError, setImgError] = useState(false);
   const [usingFallback, setUsingFallback] = useState(false);
+
+  const hasReviews = business.reviews > 0;
+  const ribbonText = useMemo(() => {
+    const src = business.monthAchievement || "";
+    return src.replace(/^Best\s+/i, "Featured ");
+  }, [business.monthAchievement]);
 
   // Image fallback logic with edge case handling
   const getDisplayImage = useMemo(() => {
@@ -36,8 +42,8 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       return { image: imageUrl, isPng: false };
     }
 
-    // Priority 3: Fallback to PNG based on category
-    const categoryPng = getCategoryPng(business.category);
+    // Priority 3: Fallback to PNG based on specific labels (monthAchievement/category) for banners
+    const categoryPng = getCategoryPngFromLabels([business.monthAchievement, business.category]);
     return { image: categoryPng, isPng: true };
   }, [business]);
 
@@ -71,18 +77,9 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
     }
   };
 
-  const badgeIcon = (badge: string) => {
-    switch (badge) {
-      case "winner":
-        return "🏆";
-      case "runner-up":
-        return "🥈";
-      case "featured":
-        return "⭐";
-      default:
-        return "";
-    }
-  };
+  const badgeIcon = () => (
+    <Award className="w-4 h-4 text-white" aria-hidden />
+  );
 
   return (
     <li
@@ -169,11 +166,11 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-semibold ${badgeStyle(
                 business.badge
               )}`}
-              aria-label={`${business.monthAchievement} ${business.badge}`}
-              title={`${business.monthAchievement} — ${business.badge}`}
+              aria-label={`${ribbonText} ${business.badge}`}
+              title={`${ribbonText} — ${business.badge}`}
             >
-              <span>{badgeIcon(business.badge)}</span>
-              <span>{business.monthAchievement}</span>
+              {badgeIcon()}
+              <span>{ribbonText}</span>
             </span>
           </div>
 
@@ -191,7 +188,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
               fontWeight: 600,
             }}>
-              {Number(displayTotal).toFixed(1)}
+              {hasReviews ? Number(displayTotal).toFixed(1) : "New"}
             </span>
           </span>
 
@@ -268,22 +265,34 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
 
           <div className="mb-4 flex items-center justify-center gap-2 cursor-pointer">
             <Stars value={business.rating} color="coral/90" />
-            <p className="text-xs font-600 leading-none text-charcoal" style={{ 
-              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
-              fontWeight: 600,
-              WebkitFontSmoothing: 'antialiased',
-              MozOsxFontSmoothing: 'grayscale',
-              textRendering: 'optimizeLegibility'
-            }}>
-              {business.reviews}
-            </p>
-            <p className="text-xs leading-none text-charcoal/60" style={{ 
-              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
-              fontWeight: 600,
-              WebkitFontSmoothing: 'antialiased',
-              MozOsxFontSmoothing: 'grayscale',
-              textRendering: 'optimizeLegibility'
-            }}>reviews</p>
+            {hasReviews ? (
+              <>
+                <p className="text-xs font-600 leading-none text-charcoal" style={{ 
+                  fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                  fontWeight: 600,
+                  WebkitFontSmoothing: 'antialiased',
+                  MozOsxFontSmoothing: 'grayscale',
+                  textRendering: 'optimizeLegibility'
+                }}>
+                  {business.reviews}
+                </p>
+                <p className="text-xs leading-none text-charcoal/60" style={{ 
+                  fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                  fontWeight: 600,
+                  WebkitFontSmoothing: 'antialiased',
+                  MozOsxFontSmoothing: 'grayscale',
+                  textRendering: 'optimizeLegibility'
+                }}>reviews</p>
+              </>
+            ) : (
+              <p className="text-xs leading-none text-charcoal/60" style={{ 
+                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                fontWeight: 600,
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                textRendering: 'optimizeLegibility'
+              }}>No reviews yet</p>
+            )}
           </div>
 
           {/* Month chip */}
@@ -295,7 +304,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
               MozOsxFontSmoothing: 'grayscale',
               textRendering: 'optimizeLegibility'
             }}>
-              {(business as any).monthLabel || "September Winner"}
+              {hasReviews ? ((business as any).monthLabel || "September Winner") : "New on KLIO"}
             </div>
           </div>
 

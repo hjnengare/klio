@@ -148,7 +148,7 @@ export default function CommunityHighlights({
                 className="text-xs font-600 text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-lg text-center"
                 style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
               >
-                Businesses of the Month by Category
+                Featured Businesses of the Month by Category
               </h3>
             </div>
             <ScrollableSection>

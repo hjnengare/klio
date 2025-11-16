@@ -8,7 +8,7 @@ import PercentileChip from "../PercentileChip/PercentileChip";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
 import OptimizedImage from "../Performance/OptimizedImage";
 import { useSavedItems } from "../../contexts/SavedItemsContext";
-import { getCategoryPng, isPngIcon } from "../../utils/categoryToPngMapping";
+import { getCategoryPng, getCategoryPngFromLabels, isPngIcon } from "../../utils/categoryToPngMapping";
 
 type Percentiles = {
   service: number;
@@ -120,7 +120,8 @@ function BusinessCard({
       return { image: business.image, isPng: false };
     }
 
-    const categoryPng = getCategoryPng(categoryKey);
+    // Prefer resolving by multiple labels (subInterestId, subInterestLabel, category)
+    const categoryPng = getCategoryPngFromLabels([business.subInterestId, business.subInterestLabel, business.category, categoryKey]);
     return { image: categoryPng, isPng: true };
   }, [
     business.uploaded_image,
@@ -128,6 +129,9 @@ function BusinessCard({
     business.image_url,
     business.image,
     categoryKey,
+    business.subInterestId,
+    business.subInterestLabel,
+    business.category,
   ]);
 
   const displayImage = getDisplayImage.image;

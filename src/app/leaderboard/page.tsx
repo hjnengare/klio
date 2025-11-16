@@ -12,7 +12,7 @@ import LeaderboardList from "../components/Leaderboard/LeaderboardList";
 import LeaderboardTitle from "../components/Leaderboard/LeaderboardTitle";
 import BusinessOfMonthLeaderboard from "../components/Leaderboard/BusinessOfMonthLeaderboard";
 import { Tabs } from "@/components/atoms/Tabs";
-import { BUSINESSES_OF_THE_MONTH } from "../data/communityHighlightsData";
+import { useBusinesses } from "../hooks/useBusinesses";
 
 const Footer = dynamic(() => import("../components/Footer/Footer"), {
   loading: () => null,
@@ -53,6 +53,71 @@ function LeaderboardPage() {
   const [showFullLeaderboard, setShowFullLeaderboard] = useState(false);
   const [showFullBusinessLeaderboard, setShowFullBusinessLeaderboard] = useState(false);
 
+  // Fetch real businesses and compute featured-by-category set
+  const { businesses: allBusinesses } = useBusinesses({
+    limit: 200,
+    sortBy: "total_rating",
+    sortOrder: "desc",
+    feedStrategy: "mixed",
+  });
+
+  const featuredBusinesses = useMemo(() => {
+    if (!allBusinesses || allBusinesses.length === 0) return [];
+
+    const byCategory = new Map<string, any>();
+
+    const getDisplayRating = (b: any) =>
+      (typeof b.totalRating === "number" && b.totalRating) ||
+      (typeof b.rating === "number" && b.rating) ||
+      (typeof b?.stats?.average_rating === "number" && b.stats.average_rating) ||
+      0;
+
+    const getReviews = (b: any) =>
+      (typeof b.reviews === "number" && b.reviews) ||
+      (typeof b.total_reviews === "number" && b.total_reviews) ||
+      0;
+
+    const toTitle = (value?: string) =>
+      (value || "Business")
+        .toString()
+        .split(/[-_]/)
+        .filter(Boolean)
+        .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+        .join(" ");
+
+    for (const b of allBusinesses) {
+      const cat = (b.category || "Business") as string;
+      const existing = byCategory.get(cat);
+      if (!existing || getDisplayRating(b) > getDisplayRating(existing)) {
+        byCategory.set(cat, b);
+      }
+    }
+
+    const results = Array.from(byCategory.entries()).map(([cat, b]) => {
+      const rating = getDisplayRating(b);
+      const reviews = getReviews(b);
+      const categoryLabel = toTitle(b.subInterestLabel || cat);
+      return {
+        id: b.id,
+        name: b.name,
+        image: b.image || b.image_url || b.uploaded_image || b.uploadedImage || "",
+        alt: b.alt || b.name,
+        category: b.category || "Business",
+        location: b.location || b.address || "Cape Town",
+        rating: rating > 0 ? 5 : 0,
+        totalRating: rating,
+        reviews,
+        badge: "featured" as const,
+        href: `/business/${b.id}`,
+        monthAchievement: `Featured ${categoryLabel}`,
+        verified: Boolean(b.verified),
+      };
+    });
+
+    results.sort((a, b) => b.totalRating - a.totalRating || b.reviews - a.reviews);
+    return results;
+  }, [allBusinesses]);
+
   // Memoize the toggle functions to prevent unnecessary re-renders
   const handleToggleFullLeaderboard = useMemo(() =>
     () => setShowFullLeaderboard(!showFullLeaderboard),
@@ -85,9 +150,9 @@ function LeaderboardPage() {
           <div className="py-1 pt-20">
             {/* Hero Section */}
             <section className="relative z-10 pb-6 sm:pb-8 md:pb-12">
-              <div className="max-w-[1300px] mx-auto px-3 sm:px-4 md:px-6">
+              <div className="mx-auto w-full max-w-[2000px] px-2">
                 {/* Breadcrumb */}
-                <nav className="px-2 sm:px-4 py-4" aria-label="Breadcrumb">
+                <nav className="px-2 py-4" aria-label="Breadcrumb">
                   <ol className="flex items-center gap-1 text-sm text-charcoal/60">
                     <li>
                       <Link href="/home" className="hover:text-charcoal transition-colors font-urbanist">
@@ -108,7 +173,7 @@ function LeaderboardPage() {
                 fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
               }}
             >
-              <div className="container mx-auto max-w-[1300px] px-3 sm:px-4 md:px-6 relative z-10">
+              <div className="mx-auto w-full max-w-[2000px] px-2 relative z-10">
                 <div className="max-w-[800px] mx-auto pt-4 sm:pt-6 md:pt-8">
 
                   {/* Tabs */}
@@ -140,7 +205,7 @@ function LeaderboardPage() {
                         </>
                       ) : (
                         <BusinessOfMonthLeaderboard
-                          businesses={BUSINESSES_OF_THE_MONTH}
+                          businesses={featuredBusinesses}
                           showFullLeaderboard={showFullBusinessLeaderboard}
                           onToggleFullLeaderboard={handleToggleFullBusinessLeaderboard}
                         />
