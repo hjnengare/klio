@@ -391,7 +391,7 @@ export default function Header({
                 <Fragment key={key}>
                 <OptimizedLink
                     href={href}
-                    className={`group capitalize px-2.5 lg:px-3.5 py-1 text-xs sm:text-sm font-semibold transition-colors duration-200 ${whiteText ? 'text-white hover:text-white/90' : 'text-charcoal/80 hover:text-sage'}`}
+                    className={`group capitalize px-2.5 lg:px-3.5 py-1 text-xs sm:text-sm md:text-xs lg:text-xs font-semibold transition-colors duration-200 ${whiteText ? 'text-white hover:text-white/90' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                     <span>{label}</span>
@@ -418,7 +418,7 @@ export default function Header({
                             openDiscoverDropdown();
                           }
                         }}
-                        className={`group capitalize px-3 lg:px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200 flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/80 hover:text-sage'}`}
+                        className={`group capitalize px-3 lg:px-4 py-1.5 rounded-full text-xs sm:text-sm md:text-xs lg:text-xs font-semibold transition-colors duration-200 flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
                         style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                         aria-expanded={isDiscoverDropdownOpen}
                         aria-haspopup="true"
@@ -501,7 +501,7 @@ export default function Header({
                       openBusinessDropdown();
                     }
                   }}
-                  className={`group capitalize px-3 lg:px-4 py-1.5 text-xs sm:text-sm font-semibold transition-colors duration-200 flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/80 hover:text-sage'}`}
+                  className={`group capitalize px-3 lg:px-4 py-1.5 text-xs sm:text-sm md:text-xs lg:text-xs font-semibold transition-colors duration-200 flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
                   style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
                 >
                   <span className="whitespace-nowrap">For Businesses</span>
