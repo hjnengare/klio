@@ -111,7 +111,7 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
       className={`${asideClasses} ${className}`}
       aria-labelledby="business-info-heading"
       style={{
-        fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
       }}
     >
       <header className="space-y-1">

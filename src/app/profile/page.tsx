@@ -438,8 +438,7 @@ function ProfileContent() {
       <style dangerouslySetInnerHTML={{ __html: animations }} />
       <style jsx global>{`
         .font-urbanist {
-          font-family: "SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Text",
-            "SF Pro Display", "Helvetica Neue", Helvetica, Arial, system-ui,
+          font-family: "Urbanist", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, system-ui,
             sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
@@ -450,7 +449,7 @@ function ProfileContent() {
         className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist"
         style={{
           fontFamily:
-            '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+            "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
         }}
       >
         <header

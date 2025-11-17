@@ -140,7 +140,7 @@ export default function Home() {
   const hasInterestSelections = selectedInterests.length > 0;
   
   return (
-    <div className="min-h-dvh bg-off-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+    <div className="min-h-dvh bg-off-white" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
       <div className="relative">
         <PromoBar />
 

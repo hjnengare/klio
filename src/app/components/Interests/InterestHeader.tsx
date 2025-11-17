@@ -9,7 +9,7 @@ export default function InterestHeader({ isOnline }: InterestHeaderProps) {
     fontFamily: '"DM Sans", system-ui, sans-serif',
   } as React.CSSProperties;
   const bodyStyle = {
-    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
     fontWeight: 400,
   } as React.CSSProperties;
 
@@ -19,7 +19,7 @@ export default function InterestHeader({ isOnline }: InterestHeaderProps) {
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 enter-fade" style={{ animationDelay: "0.1s" }}>
           <div
             className="bg-orange-50/90 border border-orange-200 rounded-full px-3 py-1 flex items-center gap-2 shadow-sm"
-            style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+            style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
           >
             <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
             <span className="text-xs font-semibold text-orange-700">Offline</span>

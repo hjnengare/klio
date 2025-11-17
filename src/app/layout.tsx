@@ -18,9 +18,10 @@ const ClientLayoutWrapper = nextDynamic(() => import("./components/Performance/C
 
 const urbanist = Urbanist({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
   fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+  variable: "--font-urbanist",
 });
 
 export const metadata: Metadata = {
@@ -107,6 +108,9 @@ export default function RootLayout({
         {/* Preload critical resources */}
         <link rel="preload" href="/globals.css" as="style" />
         
+        {/* Urbanist Font - for body text and card text */}
+        <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+        
         {/* Dancing Script Font */}
         <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet" />
         
@@ -120,8 +124,6 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
         
         {/* Cormorant & Livvic Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Livvic:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap" rel="stylesheet" />
  

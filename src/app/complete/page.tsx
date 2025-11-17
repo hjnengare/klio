@@ -151,7 +151,7 @@ const completeStyles = `
 /** ---------- Shared fonts ---------- */
 const sf = {
   fontFamily:
-    '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+    'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
 } as const;
 
 function CompletePageContent() {
@@ -223,7 +223,7 @@ function CompletePageContent() {
           >
             You&apos;re all set!
           </h1>
-          <p className="text-base md:text-lg text-charcoal/70 mb-4 leading-relaxed animate-subtitle" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 400 }}>
+          <p className="text-base md:text-lg text-charcoal/70 mb-4 leading-relaxed animate-subtitle" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 400 }}>
             Time to discover what&apos;s out there.
           </p>
 
@@ -249,7 +249,7 @@ function CompletePageContent() {
               data-testid="onboarding-complete-cta"
               aria-label="Go to Home"
               className="group inline-flex items-center justify-center w-full sm:w-auto text-white text-sm font-semibold py-4 px-8 rounded-full transition-all duration-300 focus:outline-none"
-              style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+              style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
             >
               <span
                 className="

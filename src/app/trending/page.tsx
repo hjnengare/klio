@@ -102,12 +102,12 @@ export default function TrendingPage() {
           <nav className="px-2" aria-label="Breadcrumb">
             <ol className="flex items-center gap-1 text-sm text-charcoal/60">
               <li>
-                <Link href="/home" className="hover:text-charcoal transition-colors" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
+                <Link href="/home" className="hover:text-charcoal transition-colors" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
                   Home
                 </Link>
               </li>
               <li className="text-charcoal/40">/</li>
-              <li className="text-charcoal font-medium" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>Trending</li>
+              <li className="text-charcoal font-medium" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>Trending</li>
             </ol>
           </nav>
 
@@ -136,10 +136,10 @@ export default function TrendingPage() {
               <>
                 {trendingBusinesses.length === 0 ? (
                   <div className="bg-white border border-sage/20 rounded-3xl shadow-sm px-6 py-16 text-center space-y-3">
-                    <h2 className="text-lg font-600 text-charcoal" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                    <h2 className="text-lg font-600 text-charcoal" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                       No trending businesses yet
                     </h2>
-                    <p className="text-sm text-charcoal/60 max-w-lg mx-auto" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 500 }}>
+                    <p className="text-sm text-charcoal/60 max-w-lg mx-auto" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 500 }}>
                       Check back soon for trending businesses in your area.
                     </p>
                   </div>
@@ -170,7 +170,7 @@ export default function TrendingPage() {
                           <button
                             key={page}
                             onClick={() => setCurrentPage(page)}
-                            style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+                            style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
                             className={`w-10 h-10 rounded-full bg-navbar-bg/90 font-600 text-sm transition-all duration-200 ${
                               currentPage === page
                                 ? "bg-sage text-white shadow-lg"

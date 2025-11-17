@@ -137,7 +137,7 @@ export default function BusinessLoginPage() {
               {/* Error Message */}
               {error && (
                 <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
-                  <p className="text-[14px] font-600 text-orange-600" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{error}</p>
+                  <p className="text-[14px] font-600 text-orange-600" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>{error}</p>
                 </div>
               )}
 
@@ -173,7 +173,7 @@ export default function BusinessLoginPage() {
                 <Link
                   href="/forgot-password"
                   className="text-sm text-white hover:text-coral transition-colors duration-300 font-medium"
-                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+                  style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}
                 >
                   Forgot password?
                 </Link>
@@ -185,7 +185,7 @@ export default function BusinessLoginPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting || !email || !password}
-                    style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+                    style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}
                     className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
                   >
                     {isSubmitting ? (
@@ -206,22 +206,22 @@ export default function BusinessLoginPage() {
 
             {/* Footer */}
             <div className="text-center mt-6 pt-6 border-t border-white/20">
-              <div className="text-sm sm:text-base text-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}>
+              <div className="text-sm sm:text-base text-white" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}>
                 Don&apos;t have a business account?{" "}
                 <Link
                   href="/claim-business"
                   className="text-white font-semibold hover:text-coral transition-colors duration-300 relative group"
-                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+                  style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}
                 >
                   Claim your business
                 </Link>
               </div>
-              <div className="text-sm text-white/70 mt-3" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+              <div className="text-sm text-white/70 mt-3" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
                 Looking for personal account?{" "}
                 <Link
                   href="/login"
                   className="text-white hover:text-coral transition-colors duration-300"
-                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                  style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
                 >
                   Sign in here
                 </Link>

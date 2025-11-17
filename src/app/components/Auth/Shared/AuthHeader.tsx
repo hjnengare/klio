@@ -14,7 +14,7 @@ export function AuthHeader({ backLink, title, subtitle }: AuthHeaderProps) {
     fontFamily: '"DM Sans", system-ui, sans-serif',
   } as React.CSSProperties;
   const bodyStyle = {
-    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
     fontWeight: 400,
   } as React.CSSProperties;
 

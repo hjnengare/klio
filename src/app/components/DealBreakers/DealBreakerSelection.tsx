@@ -16,7 +16,7 @@ interface DealBreakerSelectionProps {
 
 export default function DealBreakerSelection({ selectedCount, children }: DealBreakerSelectionProps) {
   const sfPro = {
-    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
     fontWeight: 600,
   };
 

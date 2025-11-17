@@ -24,7 +24,7 @@ export function UsernameInput({
 
   return (
     <div>
-      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif", sans-serif', fontWeight: 600 }}>
+      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}>
         Username
       </label>
       <div className="relative group">
@@ -43,7 +43,7 @@ export function UsernameInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
-          style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif", sans-serif', fontWeight: 600 }}
+          style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}
           className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 text-body font-600 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
             hasError ? 'border-error-100 focus:border-error-500 focus:ring-error-500/20' :
             isValid ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
@@ -55,13 +55,13 @@ export function UsernameInput({
 
       {/* Username validation feedback */}
       {hasError && (
-        <p className="text-xs text-error-600 flex items-center gap-1 mt-1" role="alert" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif", sans-serif', fontWeight: 600 }}>
+        <p className="text-xs text-error-600 flex items-center gap-1 mt-1" role="alert" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}>
           <AlertCircle className="w-3 h-3" />
           {error}
         </p>
       )}
       {isValid && (
-        <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif", sans-serif', fontWeight: 600 }}>
+        <p className="text-xs text-sage flex items-center gap-1 mt-1" role="status" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}>
           <CheckCircle className="w-3 h-3" />
           Username looks good!
         </p>

@@ -153,7 +153,7 @@ export default function SeedPage() {
             className="flex items-center gap-2 text-charcoal/70 hover:text-charcoal mb-4 transition-colors"
             style={{
               fontFamily:
-                '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
             }}
           >
             <ArrowLeft className="w-4 h-4" />
@@ -163,7 +163,7 @@ export default function SeedPage() {
             className="text-2xl font-bold text-charcoal mb-2"
             style={{
               fontFamily:
-                '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
             }}
           >
             Seed Database
@@ -172,7 +172,7 @@ export default function SeedPage() {
             className="text-sm text-charcoal/60"
             style={{
               fontFamily:
-                '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
             }}
           >
             Populate your database with businesses from OpenStreetMap
@@ -186,7 +186,7 @@ export default function SeedPage() {
               className="block text-sm font-semibold text-charcoal mb-2"
               style={{
                 fontFamily:
-                  '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                  "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
               }}
             >
               Number of businesses to seed
@@ -201,7 +201,7 @@ export default function SeedPage() {
               className="w-full px-4 py-2 rounded-full border border-charcoal/20 focus:outline-none focus:ring-2 focus:ring-coral/30 focus:border-coral/50 transition-all"
               style={{
                 fontFamily:
-                  '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                  "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
               }}
             />
           </div>
@@ -212,7 +212,7 @@ export default function SeedPage() {
             className="w-full py-4 px-6 rounded-full bg-gradient-to-r from-coral to-coral/90 text-white font-semibold hover:from-coral/90 hover:to-coral/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
             style={{
               fontFamily:
-                '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
             }}
           >
             {loading ? (
@@ -240,7 +240,7 @@ export default function SeedPage() {
                   className="font-semibold text-red-900 mb-1"
                   style={{
                     fontFamily:
-                      '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                   }}
                 >
                   Error: {error.step}
@@ -249,7 +249,7 @@ export default function SeedPage() {
                   className="text-xs text-red-600 font-medium"
                   style={{
                     fontFamily:
-                      '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                   }}
                 >
                   {error.message}
@@ -263,7 +263,7 @@ export default function SeedPage() {
                   className="text-xs text-red-800 font-medium mb-1"
                   style={{
                     fontFamily:
-                      '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                   }}
                 >
                   Details:
@@ -272,7 +272,7 @@ export default function SeedPage() {
                   className="text-xs text-red-700 font-mono break-all"
                   style={{
                     fontFamily:
-                      '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                   }}
                 >
                   {error.details}
@@ -286,7 +286,7 @@ export default function SeedPage() {
                   className="text-xs text-red-700 font-medium"
                   style={{
                     fontFamily:
-                      '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                   }}
                 >
                   Error Code:{" "}
@@ -295,7 +295,7 @@ export default function SeedPage() {
                   className="text-xs text-red-800 font-mono bg-red-100 px-2 py-1 rounded"
                   style={{
                     fontFamily:
-                      '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                   }}
                 >
                   {error.code}
@@ -309,7 +309,7 @@ export default function SeedPage() {
                   className="text-xs text-amber-900 font-semibold mb-1"
                   style={{
                     fontFamily:
-                      '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                   }}
                 >
                   💡 Suggestion:
@@ -318,7 +318,7 @@ export default function SeedPage() {
                   className="text-xs text-amber-800"
                   style={{
                     fontFamily:
-                      '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                   }}
                 >
                   {error.suggestion}
@@ -336,7 +336,7 @@ export default function SeedPage() {
                 className="font-semibold text-green-900"
                 style={{
                   fontFamily:
-                    '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                    "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                 }}
               >
                 Success!
@@ -346,7 +346,7 @@ export default function SeedPage() {
               className="text-sm text-green-800 space-y-2"
               style={{
                 fontFamily:
-                  '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                  "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
               }}
             >
               <p>✅ Seeded {result.count} businesses</p>
@@ -358,7 +358,7 @@ export default function SeedPage() {
               className="mt-4 px-6 py-2 rounded-full bg-green-600 text-white hover:bg-green-700 transition-colors text-sm font-semibold"
               style={{
                 fontFamily:
-                  '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                  "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
               }}
             >
               Go to Home
@@ -377,7 +377,7 @@ export default function SeedPage() {
                     className="text-sm text-charcoal/70"
                     style={{
                       fontFamily:
-                        '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                        "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                     }}
                   >
                     Testing database connection...
@@ -392,7 +392,7 @@ export default function SeedPage() {
                       className="text-sm text-green-700"
                       style={{
                         fontFamily:
-                          '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                          "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                       }}
                     >
                       Database connected
@@ -404,7 +404,7 @@ export default function SeedPage() {
                       className="text-sm text-charcoal/70"
                       style={{
                         fontFamily:
-                          '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                          "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                       }}
                     >
                       Fetching businesses from Overpass API...
@@ -420,7 +420,7 @@ export default function SeedPage() {
                       className="text-sm text-green-700"
                       style={{
                         fontFamily:
-                          '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                          "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                       }}
                     >
                       Database seeded
@@ -432,7 +432,7 @@ export default function SeedPage() {
                       className="text-sm text-charcoal/70"
                       style={{
                         fontFamily:
-                          '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                          "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                       }}
                     >
                       Verifying data...

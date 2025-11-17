@@ -37,7 +37,7 @@ export default function Pagination({
               ? "bg-sage text-white shadow-lg"
               : "border border-charcoal/20 text-white hover:bg-navbar-bg/80"
           }`}
-          style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+          style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}
           aria-current={currentPage === page ? "page" : undefined}
         >
           {page}

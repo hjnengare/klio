@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowLeft } from "react-feather";
 
 const sf = {
-  fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+  fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
 } as const;
 
 export default function LeaderboardHeader() {

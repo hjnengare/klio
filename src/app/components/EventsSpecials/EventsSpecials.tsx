@@ -28,7 +28,7 @@ export default function EventsSpecials({
       aria-label={title}
       data-section
       style={{
-        fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
       }}
     >
       <div className="mx-auto w-full max-w-[2000px] relative z-10 px-2">

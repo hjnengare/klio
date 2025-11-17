@@ -96,15 +96,15 @@ export default function LoginPage() {
           subtitle="Sign in to continue discovering sayso"
         />
 
-        <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12 px-1 sm:px-2">
-        {/* Form Card */}
-        <div className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[20px] overflow-hidden backdrop-blur-md px-2 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10 lg:px-12 lg:py-10 xl:px-16 xl:py-12">
+        <div className="w-full sm:max-w-md lg:max-w-lg sm:mx-auto relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12 px-0 sm:px-2">
+          {/* Form Card */}
+          <div className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-none sm:rounded-[20px] overflow-hidden backdrop-blur-md px-2 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10 lg:px-12 lg:py-10 xl:px-16 xl:py-12">
 
             <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
               {/* Error Message */}
               {error && (
                 <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
-                  <p className="text-[14px] font-600 text-orange-600" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{error}</p>
+                  <p className="text-[14px] font-600 text-orange-600" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>{error}</p>
                 </div>
               )}
 
@@ -140,7 +140,7 @@ export default function LoginPage() {
                 <Link
                   href="/forgot-password"
                   className="text-sm text-white hover:text-coral transition-colors duration-300 font-medium"
-                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+                  style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
                 >
                   Forgot password?
                 </Link>
@@ -152,7 +152,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting || !email || !password}
-                    style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+                    style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
                     className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-2 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 btn-target btn-press"
                   >
                     {isSubmitting ? (
@@ -173,12 +173,12 @@ export default function LoginPage() {
 
             {/* Footer */}
             <div className="text-center mt-6 pt-6 border-t border-white/20">
-              <div className="text-sm sm:text-base text-white" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 400 }}>
+              <div className="text-sm sm:text-base text-white" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 400 }}>
                 Don&apos;t have an account?{" "}
                 <Link
                   href="/register"
                   className="text-white font-semibold hover:text-coral transition-colors duration-300 relative group"
-                  style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+                  style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
                 >
                   Sign up
                 </Link>

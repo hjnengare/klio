@@ -92,7 +92,7 @@ export default function ClaimBusinessPage() {
       <div
         className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10"
         style={{
-          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+          fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
         }}
       >
         <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-8 py-4">
@@ -118,7 +118,7 @@ export default function ClaimBusinessPage() {
           <section
             className="relative pb-12 sm:pb-16 md:pb-20"
             style={{
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+              fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
             }}
           > {/* Breadcrumb */}
             <nav className="px-2 sm:px-4 py-4 mb-4" aria-label="Breadcrumb">
@@ -128,7 +128,7 @@ export default function ClaimBusinessPage() {
                     href="/home"
                     className="hover:text-charcoal transition-colors"
                     style={{
-                      fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                       fontWeight: 600
                     }}
                   >
@@ -141,7 +141,7 @@ export default function ClaimBusinessPage() {
                     href="/claim-business"
                     className="text-charcoal font-medium hover:text-charcoal transition-colors"
                     style={{
-                      fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                       fontWeight: 600
                     }}
                   >

@@ -58,7 +58,7 @@ const HERO_SLIDES: HeroSlide[] = [
   },
 ];
 
-const FONT_STACK = '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif';
+const FONT_STACK = 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif';
 
 export default function HeroCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -261,7 +261,7 @@ export default function HeroCarousel() {
                   <h1
                      className="text-off-white leading-[1.1] mb-6 sm:mb-6 font-extrabold tracking-tight whitespace-normal lg:whitespace-nowrap"
                      style={{
-                       fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                       fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                        fontSize: "clamp(2.25rem, 6vw, 3rem)",
                      }}
                    >
@@ -270,7 +270,7 @@ export default function HeroCarousel() {
            <p
              className="text-off-white/90 leading-relaxed mb-8 whitespace-normal lg:whitespace-nowrap lg:max-w-none"
              style={{
-              fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+              fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
               fontWeight: 600,
               fontSize: "clamp(1rem, 2vw, 0.875rem)",
                maxWidth: "60ch",

@@ -90,7 +90,7 @@ export default function EventsSpecialsPage() {
         className="bg-off-white pt-20 sm:pt-24 pb-28"
         style={{
           fontFamily:
-            '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+            'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
         }}
       >
         <div className="mx-auto w-full max-w-[2000px] px-2">
@@ -102,7 +102,7 @@ export default function EventsSpecialsPage() {
                   className="hover:text-charcoal transition-colors"
                   style={{
                     fontFamily:
-                      '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                      'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                     fontWeight: 600,
                   }}
                 >
@@ -114,7 +114,7 @@ export default function EventsSpecialsPage() {
                 className="text-charcoal font-medium"
                 style={{
                   fontFamily:
-                    '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                    'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                   fontWeight: 600,
                 }}
               >

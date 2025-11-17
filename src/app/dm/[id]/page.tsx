@@ -176,8 +176,7 @@ export default function DMPage() {
             <style dangerouslySetInnerHTML={{ __html: animations }} />
             <style jsx global>{`
                 .font-urbanist {
-                    font-family: "SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Text",
-                        "SF Pro Display", "Helvetica Neue", Helvetica, Arial, system-ui,
+                    font-family: "Urbanist", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, system-ui,
                         sans-serif;
                     -webkit-font-smoothing: antialiased;
                     -moz-osx-font-smoothing: grayscale;
@@ -187,7 +186,7 @@ export default function DMPage() {
             <div
                 className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist flex flex-col"
                 style={{
-                    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                 }}
             >
                 {/* Fixed Premium Header */}
@@ -195,7 +194,7 @@ export default function DMPage() {
                     className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
                     role="banner"
                     style={{
-                        fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                     }}
                 >
                     <div className="mx-auto w-full max-w-[2000px] px-2 py-4">
@@ -238,12 +237,12 @@ export default function DMPage() {
                                     </div>
                                 )}
                                 <div className="min-w-0 flex-1">
-                                    <h1 className="font-urbanist text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate" style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                                    <h1 className="font-urbanist text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
                                         {recipient.name}
                                     </h1>
                                     {recipient.online && (
                                         <p className="text-xs text-white/70 truncate" style={{
-                                            fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                                            fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                         }}>
                                             Online
                                         </p>
@@ -279,18 +278,18 @@ export default function DMPage() {
                                                     : 'bg-card-bg/95 backdrop-blur-xl text-charcoal border border-white/60'
                                             }`}
                                             style={{
-                                                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                                                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                             }}
                                         >
                                             <p className="text-sm leading-relaxed whitespace-pre-wrap break-words" style={{
-                                                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                                                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                             }}>
                                                 {msg.text}
                                             </p>
                                             <div className={`flex items-center gap-1 mt-2 text-xs ${
                                                 isCurrentUser ? 'text-white/70' : 'text-charcoal/50'
                                             }`} style={{
-                                                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                                                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                             }}>
                                                 <span>{msg.timestamp}</span>
                                                 {isCurrentUser && msg.read && (
@@ -320,7 +319,7 @@ export default function DMPage() {
                                     rows={1}
                                     className="w-full bg-white border border-charcoal/10 rounded-[20px] px-4 py-3 pr-12 text-charcoal placeholder-charcoal/40 resize-none focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50 transition-all duration-300 max-h-[120px] overflow-y-auto shadow-sm"
                                     style={{
-                                        fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                                        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                         fontSize: '15px',
                                         lineHeight: '1.4',
                                     }}

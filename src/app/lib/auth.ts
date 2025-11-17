@@ -11,6 +11,17 @@ export class AuthService {
     return getBrowserSupabase();
   }
 
+  /**
+   * Get the base URL for redirects - uses NEXT_PUBLIC_BASE_URL if available,
+   * otherwise falls back to window.location.origin
+   */
+  private static getBaseUrl(): string {
+    if (typeof window === 'undefined') {
+      return process.env.NEXT_PUBLIC_BASE_URL || 'https://local-gems-ten.vercel.app';
+    }
+    return process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
+  }
+
   static async signUp({ email, password }: SignUpData): Promise<{ user: AuthUser | null; session: Session | null; error: AuthError | null }> {
     const supabase = this.getClient();
     try {
@@ -48,11 +59,12 @@ export class AuthService {
         };
       }
 
+      const baseUrl = this.getBaseUrl();
       const { data, error } = await supabase.auth.signUp({
         email: email.trim().toLowerCase(),
         password: password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?type=signup`,
+          emailRedirectTo: `${baseUrl}/auth/callback`,
         }
       });
 
@@ -307,11 +319,12 @@ export class AuthService {
     const supabase = this.getClient();
 
     try {
+      const baseUrl = this.getBaseUrl();
       const { error } = await supabase.auth.resend({
         type: 'signup',
         email: email.trim().toLowerCase(),
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?type=signup`,
+          emailRedirectTo: `${baseUrl}/auth/callback`,
         }
       });
 
@@ -337,10 +350,11 @@ export class AuthService {
     const supabase = this.getClient();
 
     try {
+      const baseUrl = this.getBaseUrl();
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?type=oauth`,
+          redirectTo: `${baseUrl}/auth/callback?type=oauth`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
@@ -382,8 +396,9 @@ export class AuthService {
         };
       }
 
+      const baseUrl = this.getBaseUrl();
       const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
-        redirectTo: `${window.location.origin}/auth/callback?type=recovery`,
+        redirectTo: `${baseUrl}/reset-password`,
       });
 
       if (error) {

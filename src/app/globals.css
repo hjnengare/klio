@@ -99,7 +99,7 @@
   }
 
   html {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+    font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     font-size: 100%;
     /* Standard 16px base for accessibility */
     margin: 0;
@@ -111,6 +111,7 @@
   body {
     @apply text-base;
     /* Use token system: 16px with 1.6 line-height */
+    font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     color: hsl(0, 0%, 0%);
     background-color: #E5E0E5;
     margin: 0;
@@ -121,6 +122,35 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
+  }
+  
+  /* Body text and card text use Urbanist - headers (h1-h6) keep their own font-family styles */
+  p,
+  span,
+  li,
+  td,
+  th,
+  label,
+  input:not([type="button"]):not([type="submit"]):not([type="reset"]),
+  textarea,
+  select {
+    font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  
+  /* Card content text uses Urbanist */
+  [class*="card"] p,
+  [class*="card"] span,
+  [class*="card"] li,
+  [class*="card"] label,
+  [class*="Card"] p,
+  [class*="Card"] span,
+  [class*="Card"] li,
+  [class*="Card"] label,
+  .card p,
+  .card span,
+  .card li,
+  .card label {
+    font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
 
   /* Reset default margins and paddings */

@@ -206,7 +206,7 @@ function BusinessCard({
       className={`snap-start snap-always flex-shrink-0 ${compact ? 'w-auto' : 'w-[100vw] sm:w-auto sm:min-w-[25%] md:min-w-[25%] xl:min-w-[25%]'
         }`}
       style={{
-        fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
         fontWeight: 600,
       }}
     >
@@ -308,7 +308,7 @@ function BusinessCard({
             <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1 rounded-full bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
               <Star className="w-3.5 h-3.5 text-coral fill-coral" aria-hidden />
               <span className="text-sm font-semibold text-charcoal" style={{ 
-                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', 
+                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                 fontWeight: 600
               }}>
                 {Number(displayRating).toFixed(1)}
@@ -319,7 +319,7 @@ function BusinessCard({
           {!hideStar && !hasRating && (
             <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1 rounded-full bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
               <span className="text-sm font-semibold text-charcoal" style={{ 
-                fontFamily: '"SF Pro Display", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif', 
+                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                 fontWeight: 600
               }}>
                 New
@@ -404,7 +404,7 @@ function BusinessCard({
                 <div
                   className="flex items-center justify-center gap-1.5 text-xs text-charcoal/70 min-h-[20px]"
                   style={{
-                    fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                     fontWeight: 600,
                     WebkitFontSmoothing: 'antialiased',
                     MozOsxFontSmoothing: 'grayscale',
@@ -450,7 +450,7 @@ function BusinessCard({
                           }}
                           className="inline-flex items-center justify-center text-xs font-semibold leading-none text-charcoal underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral"
                           style={{
-                            fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                            fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                             fontWeight: 600
                           }}
                         >
@@ -471,7 +471,7 @@ function BusinessCard({
                           }}
                           className="inline-flex items-center justify-center text-xs leading-none text-charcoal/60 underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral"
                           style={{
-                            fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                            fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                             fontWeight: 600
                           }}
                         >
@@ -494,7 +494,7 @@ function BusinessCard({
                         }}
                         className={`inline-flex items-center justify-center text-xs text-charcoal underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral min-w-[92px] text-center ${compact ? 'lg:order-1 lg:mb-1' : ''}`}
                         style={{
-                          fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                          fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                           fontWeight: 600
                         }}
                       >
@@ -542,7 +542,7 @@ function BusinessCard({
               }}
               aria-label={`Write a review for ${business.name}`}
               style={{
-                fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                 fontWeight: 600,
               }}
             >

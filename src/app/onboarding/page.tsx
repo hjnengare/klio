@@ -135,7 +135,7 @@ export default function OnboardingPage() {
 
               <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-800" : "opacity-0"}`}>
                 <p className="text-base md:text-lg font-normal text-charcoal/70 leading-relaxed max-w-sm md:max-w-lg lg:max-w-xl mx-auto px-4 no-hyphens"
-                   style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 400 }}>
+                   style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 400 }}>
                    Explore trusted businesses, leave reviews and see what&apos;s trending around you
                 </p>
               </div>
@@ -145,7 +145,7 @@ export default function OnboardingPage() {
                   <Link
                     href="/register"
                     className="group relative block w-[200px] mx-auto rounded-full py-4 px-4 text-sm font-600 text-white text-center flex items-center justify-center bg-gradient-to-r from-coral to-coral/80 hover:from-sage hover:to-sage transition-all duration-300 btn-target btn-press focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2"
-                    style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+                    style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
                   >
                     <span className="relative z-10">Get Started</span>
                   </Link>
@@ -155,7 +155,7 @@ export default function OnboardingPage() {
                   <Link
                     href="/login"
                     className="block w-full text-coral hover:text-sage text-sm font-600 min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2 relative text-center flex items-center justify-center"
-                    style={{ fontFamily: '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif', fontWeight: 600 }}
+                    style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
                   >
                     Log in
                   </Link>
