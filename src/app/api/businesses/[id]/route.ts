@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSupabase } from '../../../lib/supabase/server';
+import { fetchBusinessOptimized } from '../../../lib/utils/optimizedQueries';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs'; // Use Node.js runtime to avoid Edge Runtime warnings with Supabase
 
 /**
  * GET /api/businesses/[id]
@@ -21,7 +23,62 @@ export async function GET(
       );
     }
 
-    const supabase = await getServerSupabase();
+    // Use optimized fetch with caching and parallel queries
+    try {
+      const businessData = await fetchBusinessOptimized(businessId, req, true);
+      
+      // Transform to match expected response format
+      const stats = businessData.stats;
+      const response = {
+        ...businessData,
+        stats: stats || undefined,
+        reviews: (businessData.reviews || []).map((review: any) => {
+          const profile = review.profile;
+          return {
+            id: review.id,
+            author: profile?.display_name || 'Anonymous',
+            rating: review.rating,
+            text: review.content || review.title || '',
+            date: new Date(review.created_at).toLocaleDateString('en-US', {
+              month: 'short',
+              year: 'numeric'
+            }),
+            tags: review.tags || [],
+            profileImage: profile?.avatar_url || '',
+            reviewImages: review.images?.map((img: any) => {
+              if (img.image_url) return img.image_url;
+              if (img.storage_path) {
+                const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+                return `${supabaseUrl}/storage/v1/object/public/review-images/${img.storage_path}`;
+              }
+              return null;
+            }).filter(Boolean) || [],
+            helpfulCount: review.helpful_count || 0,
+          };
+        }),
+        images: (() => {
+          const imageList: string[] = [];
+          if (businessData.uploaded_image && businessData.uploaded_image.trim() !== '') {
+            imageList.push(businessData.uploaded_image);
+          }
+          if (businessData.image_url && businessData.image_url.trim() !== '' && !imageList.includes(businessData.image_url)) {
+            imageList.push(businessData.image_url);
+          }
+          return imageList.filter(img => img && img.trim() !== '');
+        })(),
+        trust: stats?.percentiles?.service || 85,
+        punctuality: stats?.percentiles?.price || 85,
+        friendliness: stats?.percentiles?.ambience || 85,
+      };
+
+      return NextResponse.json(response);
+    } catch (optimizedError: any) {
+      // Fallback to original implementation if optimized fetch fails
+      console.warn('[API] Optimized fetch failed, falling back to standard query:', optimizedError);
+    }
+
+    // Fallback to original implementation
+    const supabase = await getServerSupabase(req);
 
     // Fetch business with stats
     const businessQuery = supabase

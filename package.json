@@ -13,7 +13,7 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf .next out dist",
+    "clean": "node -e \"const fs = require('fs'); ['.next', 'out', 'dist'].forEach(dir => { try { fs.rmSync(dir, { recursive: true, force: true }); } catch(e) {} });\"",
     "dev:clean": "npm run clean && npm run dev",
     "perf:check": "node scripts/dev-performance.js",
     "perf:audit": "node scripts/performance-audit.js"
@@ -51,5 +51,8 @@
     "tailwindcss": "^4.1.13",
     "typescript": "5.9.3",
     "webpack": "^5.102.1"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }

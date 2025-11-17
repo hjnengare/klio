@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSupabase } from "@/app/lib/supabase/server";
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs'; // Use Node.js runtime to avoid Edge Runtime warnings with Supabase
 
 // Type for the RPC response
 interface BusinessRPCResult {

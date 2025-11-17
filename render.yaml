@@ -8,7 +8,7 @@ services:
     startCommand: npm run start
     envVars:
       - key: NODE_VERSION
-        value: 22.16.0
+        value: 20.18.0
       - key: NODE_OPTIONS
         value: --max-old-space-size=2048
       - key: NEXT_TELEMETRY_DISABLED

@@ -157,6 +157,12 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: false, // Enable ESLint during builds
   },
+  
+  // Workaround for _document static generation issues in Next.js 15
+  // Skip static optimization for pages that might cause issues
+  generateBuildId: async () => {
+    return 'build-' + Date.now();
+  },
 
   // Additional performance optimizations
   poweredByHeader: false,

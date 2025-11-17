@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
     url: "/",
     siteName: "sayso",
-    images: [],
+    images: [], // Empty array is valid for OpenGraph
     locale: "en_US",
     type: "website",
   },
