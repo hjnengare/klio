@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState, useEffect, memo } from "react";
+import React, { useMemo, useState, useEffect, useRef, memo } from "react";
 import { useRouter } from "next/navigation";
 import { Image as ImageIcon, Star, Edit, Share2, MapPin, Bookmark, Globe, Tag } from "react-feather";
 import Stars from "../Stars/Stars";
@@ -76,13 +76,48 @@ function BusinessCard({
   const [usingFallback, setUsingFallback] = useState(false);
 
   const reviewRoute = useMemo(() => `/business/review`, []);
+  const businessProfileRoute = useMemo(() => `/business/${business.id}`, [business.id]);
 
+  // Prefetch routes on mount
   useEffect(() => {
     router.prefetch(reviewRoute);
-  }, [router, reviewRoute]);
+    router.prefetch(businessProfileRoute);
+  }, [router, reviewRoute, businessProfileRoute]);
+
+  // Prefetch on hover with debouncing
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
+  
+  const handleMouseEnter = () => {
+    // Clear any existing timeout
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    
+    // Prefetch after a short delay to avoid prefetching on accidental hovers
+    hoverTimeoutRef.current = setTimeout(() => {
+      router.prefetch(businessProfileRoute);
+      router.prefetch(reviewRoute);
+    }, 100);
+  };
+
+  const handleMouseLeave = () => {
+    // Clear timeout if user moves away before prefetch
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleCardClick = () => {
-    router.push(`/business/${business.id}`);
+    router.push(businessProfileRoute);
   };
 
   const handleWriteReview = () => router.push(reviewRoute);
@@ -184,6 +219,8 @@ function BusinessCard({
         role="link"
         tabIndex={0}
         onClick={handleCardClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();

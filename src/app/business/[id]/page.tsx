@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { PageLoader } from "../../components/Loader";
 import {
     ArrowLeft,
@@ -83,6 +83,12 @@ export default function BusinessProfilePage() {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [modalPosition, setModalPosition] = useState({ top: 0, right: 0 });
     const [showScrollTop, setShowScrollTop] = useState(false);
+
+    // Prefetch review page on mount
+    const reviewRoute = useMemo(() => `/business/review?business_id=${businessId}`, [businessId]);
+    useEffect(() => {
+        router.prefetch(reviewRoute);
+    }, [router, reviewRoute]);
 
     // Calculate modal position based on button position
     useEffect(() => {
@@ -338,8 +344,10 @@ export default function BusinessProfilePage() {
                                 {user && !isBusinessOwner && (
                                     <Link
                                         href={`/business/review?business_id=${businessId}`}
+                                        prefetch={true}
                                         className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
                                         aria-label={`Write a review for ${businessData.name}`}
+                                        onMouseEnter={() => router.prefetch(reviewRoute)}
                                     >
                                         <Edit className="w-3 h-3" />
                                         <span className="hidden md:inline">Write Review</span>
@@ -360,7 +368,9 @@ export default function BusinessProfilePage() {
                                 {/* Leave Review Button */}
                                 <Link
                                     href={`/business/review?business_id=${businessId}`}
+                                    prefetch={true}
                                     className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                    onMouseEnter={() => router.prefetch(reviewRoute)}
                                 >
                                     <Edit className="w-3 h-3" />
                                     <span className="hidden lg:inline">Leave a Review</span>
@@ -449,7 +459,9 @@ export default function BusinessProfilePage() {
                                                         </p>
                                                         <Link
                                                             href={`/business/review?business_id=${businessId}`}
+                                                            prefetch={true}
                                                             className="inline-block px-6 py-3 bg-coral text-white rounded-full font-600 font-urbanist hover:bg-coral/90 transition-colors"
+                                                            onMouseEnter={() => router.prefetch(reviewRoute)}
                                                         >
                                                             Write First Review
                                                         </Link>

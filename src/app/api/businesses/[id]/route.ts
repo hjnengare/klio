@@ -24,7 +24,7 @@ export async function GET(
     const supabase = await getServerSupabase();
 
     // Fetch business with stats
-    const { data: business, error: businessError } = await supabase
+    const businessQuery = supabase
       .from('businesses')
       .select(`
         *,
@@ -38,6 +38,23 @@ export async function GET(
       .eq('id', businessId)
       .single();
 
+    // Fetch reviews for the business (limit to 20 for the profile page) - start in parallel
+    const reviewsQuery = supabase
+      .from('reviews')
+      .select('*')
+      .eq('business_id', businessId)
+      .order('created_at', { ascending: false })
+      .limit(20);
+
+    // Execute business and reviews queries in parallel
+    const [businessResult, reviewsResult] = await Promise.all([
+      businessQuery,
+      reviewsQuery
+    ]);
+
+    const { data: business, error: businessError } = businessResult;
+    const { data: reviews, error: reviewsError } = reviewsResult;
+
     if (businessError || !business) {
       if (businessError?.code === 'PGRST116') {
         return NextResponse.json(
@@ -48,27 +65,32 @@ export async function GET(
       throw businessError || new Error('Business not found');
     }
 
-    // Fetch reviews for the business (limit to 20 for the profile page)
-    // Note: Since there's no direct FK between reviews and review_images/profiles, we fetch them separately
-    const { data: reviews, error: reviewsError } = await supabase
-      .from('reviews')
-      .select('*')
-      .eq('business_id', businessId)
-      .order('created_at', { ascending: false })
-      .limit(20);
-
     if (reviewsError) {
       console.error('[API] Error fetching reviews:', reviewsError);
     }
 
-    // Fetch review images separately
+    // Fetch review images and profiles in parallel if we have reviews
     let reviewImagesMap: Record<string, any[]> = {};
+    let reviewsWithProfiles = [];
+    
     if (reviews && reviews.length > 0) {
       const reviewIds = reviews.map((r: any) => r.id);
-      const { data: reviewImages, error: imagesError } = await supabase
-        .from('review_images')
-        .select('id, review_id, image_url, storage_path, alt_text')
-        .in('review_id', reviewIds);
+      const userIds = [...new Set(reviews.map((r: any) => r.user_id))];
+
+      // Execute images and profiles queries in parallel
+      const [imagesResult, profilesResult] = await Promise.all([
+        supabase
+          .from('review_images')
+          .select('id, review_id, image_url, storage_path, alt_text')
+          .in('review_id', reviewIds),
+        supabase
+          .from('profiles')
+          .select('user_id, display_name, avatar_url')
+          .in('user_id', userIds)
+      ]);
+
+      const { data: reviewImages, error: imagesError } = imagesResult;
+      const { data: profiles, error: profilesError } = profilesResult;
 
       if (imagesError) {
         console.error('[API] Error fetching review images:', imagesError);
@@ -81,16 +103,6 @@ export async function GET(
           reviewImagesMap[img.review_id].push(img);
         });
       }
-    }
-
-    // Fetch profiles for the review authors
-    let reviewsWithProfiles = [];
-    if (reviews && reviews.length > 0) {
-      const userIds = [...new Set(reviews.map((r: any) => r.user_id))];
-      const { data: profiles, error: profilesError } = await supabase
-        .from('profiles')
-        .select('user_id, display_name, avatar_url')
-        .in('user_id', userIds);
 
       if (profilesError) {
         console.error('[API] Error fetching profiles:', profilesError);
