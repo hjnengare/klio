@@ -100,8 +100,7 @@ export default function EventsSpecialsPage() {
                   href="/home"
                   className="hover:text-charcoal transition-colors"
                   style={{
-                    fontFamily:
-                      'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                    fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                     fontWeight: 600,
                   }}
                 >
@@ -112,8 +111,7 @@ export default function EventsSpecialsPage() {
               <li
                 className="text-charcoal font-medium"
                 style={{
-                  fontFamily:
-                    'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                  fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                   fontWeight: 600,
                 }}
               >
