@@ -40,7 +40,7 @@ export function PasswordInput({
 
   return (
     <div>
-      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
+      <label className="block text-sm font-semibold text-white mb-2" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
         Password
       </label>
       <div className="relative group">
@@ -59,11 +59,11 @@ export function PasswordInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
-          style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
-          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 text-body font-600 text-charcoal placeholder-charcoal/50 focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
-            isStrong ? 'border-sage/40 focus:border-sage focus:ring-sage/20' :
-            isWeak ? 'border-orange-300 focus:border-orange-500 focus:ring-orange-500/20' :
-            'border-white/60 focus:ring-sage/30 focus:border-sage'
+          style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
+          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 text-body font-semibold text-charcoal placeholder-charcoal/50 placeholder:font-normal focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
+            isStrong ? 'border-sage/40 focus:border-navbar-bg focus:ring-navbar-bg/20' :
+            isWeak ? 'border-orange-300 focus:border-navbar-bg focus:ring-navbar-bg/20' :
+            'border-white/60 focus:ring-navbar-bg/30 focus:border-navbar-bg'
           }`}
           disabled={disabled}
         />
@@ -97,15 +97,7 @@ export function PasswordInput({
             })}
           </div>
           {strength.feedback && (
-            <span className={`text-xs font-500 ${
-              strength.score >= 4
-                ? 'text-navbar-bg/90'
-                : strength.score === 3
-                ? 'text-sage'
-                : strength.score > 0
-                ? 'text-orange-500'
-                : 'text-orange-400'
-            }`} style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
+            <span className="text-sm sm:text-xs font-500 text-navbar-bg" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
               {strength.feedback}
             </span>
           )}

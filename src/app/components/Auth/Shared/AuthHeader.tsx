@@ -14,7 +14,7 @@ export function AuthHeader({ backLink, title, subtitle }: AuthHeaderProps) {
     fontFamily: '"DM Sans", system-ui, sans-serif',
   } as React.CSSProperties;
   const bodyStyle = {
-    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+    fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
     fontWeight: 400,
   } as React.CSSProperties;
 
@@ -30,11 +30,11 @@ export function AuthHeader({ backLink, title, subtitle }: AuthHeaderProps) {
       {/* Header with premium styling and animations */}
       <div className="text-center mb-4">
         <div className="inline-block relative mb-4 animate-fade-in-up animate-delay-400">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-2 text-center leading-snug px-2 tracking-tight" style={titleStyle}>
+          <h2 className="text-3xl md:text-4xl font-semibold text-charcoal mb-2 text-center leading-[1.2] px-2 tracking-tight" style={titleStyle}>
             {title}
           </h2>
         </div>
-        <p className="text-sm md:text-base font-normal text-charcoal/70 mb-4 leading-relaxed px-2 max-w-lg mx-auto animate-fade-in-up animate-delay-700" style={bodyStyle}>
+        <p className="text-body font-normal text-charcoal/70 mb-4 leading-[1.55] px-2 max-w-[70ch] mx-auto animate-fade-in-up animate-delay-700" style={bodyStyle}>
           {subtitle}
         </p>
       </div>

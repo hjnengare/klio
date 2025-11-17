@@ -123,7 +123,7 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
     <li
       className="flex w-full"
       style={{
-        fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
         fontWeight: 600,
       }}
     >
@@ -177,9 +177,9 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
 
               {event.description && (
                 <p
-                  className="text-[11px] sm:text-xs text-charcoal/70 leading-relaxed text-center line-clamp-2"
+                  className="text-[11px] sm:text-sm sm:text-xs text-charcoal/70 leading-relaxed text-center line-clamp-2"
                   style={{
-                    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                     fontWeight: 400
                   }}
                 >
@@ -208,7 +208,7 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
                 title="Bookmark"
               >
                 <Bookmark className="w-5 h-5 sm:w-[18px] sm:h-[18px]" />
-                <span className="text-sm font-semibold" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
+                <span className="text-sm font-semibold" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
                   Save
                 </span>
               </button>

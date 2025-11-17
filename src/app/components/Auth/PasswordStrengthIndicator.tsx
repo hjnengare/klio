@@ -27,7 +27,7 @@ export function PasswordStrengthIndicator({ strength, showChecks = true }: Passw
           />
         </div>
         {feedback && (
-          <span className={`text-xs font-medium ${color || 'text-charcoal/60'}`}>
+          <span className={`text-sm sm:text-xs font-medium ${color || 'text-charcoal/60'}`}>
             {feedback}
           </span>
         )}
@@ -35,7 +35,7 @@ export function PasswordStrengthIndicator({ strength, showChecks = true }: Passw
 
       {/* Password Requirements Checklist */}
       {showChecks && (
-        <div className="grid grid-cols-2 gap-2 text-xs">
+        <div className="grid grid-cols-2 gap-2 text-sm sm:text-xs">
           <div className={`flex items-center gap-1.5 ${checks.length ? 'text-sage' : 'text-charcoal/40'}`}>
             <Circle className={`w-3 h-3 ${checks.length ? 'fill-sage' : ''}`} />
             <span>8+ characters</span>

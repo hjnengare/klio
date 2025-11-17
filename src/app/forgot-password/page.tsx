@@ -108,15 +108,15 @@ export default function ForgotPasswordPage() {
                 </div>
 
                 <div className="bg-sage/5 rounded-xl p-4 text-left space-y-2">
-                  <p className="font-urbanist text-xs text-charcoal/70">
+                  <p className="font-urbanist text-sm sm:text-xs text-charcoal/70">
                     <strong className="text-charcoal">Next steps:</strong>
                   </p>
-                  <ol className="font-urbanist text-xs text-charcoal/70 space-y-1 list-decimal list-inside">
+                  <ol className="font-urbanist text-sm sm:text-xs text-charcoal/70 space-y-1 list-decimal list-inside">
                     <li>Check your inbox (and spam folder)</li>
                     <li>Click the reset link in the email</li>
                     <li>Create a new password</li>
                   </ol>
-                  <p className="font-urbanist text-xs text-charcoal/60 italic pt-2">
+                  <p className="font-urbanist text-sm sm:text-xs text-charcoal/60 italic pt-2">
                     The reset link expires in 60 minutes
                   </p>
                 </div>

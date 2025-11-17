@@ -142,7 +142,7 @@ export function ImageCarousel({
                             {metrics.map((m) => (
                                 <span
                                     key={m.label}
-                                    className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs ${m.color === "sage"
+                                    className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-sm sm:text-xs ${m.color === "sage"
                                             ? "border-coral/25 text-charcoal font-600 bg-sage/10"
                                             : "border-coral/25 text-coral font-600 bg-coral/10"
                                         }`}

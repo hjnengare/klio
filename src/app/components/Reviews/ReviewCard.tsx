@@ -251,7 +251,7 @@ export default function ReviewCard({
             </motion.button>
 
             {!user && (
-              <span className="font-urbanist text-xs text-charcoal/40">
+              <span className="font-urbanist text-sm sm:text-xs text-charcoal/40">
                 Login to like reviews
               </span>
             )}

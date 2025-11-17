@@ -211,7 +211,7 @@ function FeaturedDeal() {
                     <span className="font-urbanist text-lg sm:text-lg font-800 text-primary">
                       {String(item.value).padStart(2, "0")}
                     </span>
-                    <span className="font-urbanist text-xs text-primary/70 uppercase tracking-wide mt-1">
+                    <span className="font-urbanist text-sm sm:text-xs text-primary/70 uppercase tracking-wide mt-1">
                       {item.label}
                     </span>
                   </div>

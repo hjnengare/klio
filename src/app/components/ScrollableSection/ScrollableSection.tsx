@@ -96,7 +96,8 @@ export default function ScrollableSection({
           msOverflowStyle: 'none',
           WebkitOverflowScrolling: 'touch',
           overscrollBehaviorX: 'contain',
-          touchAction: 'pan-x',
+          overscrollBehaviorY: 'auto',
+          touchAction: 'pan-x pan-y',
           scrollSnapType: 'x mandatory',
         } as React.CSSProperties}
       >

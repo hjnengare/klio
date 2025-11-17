@@ -111,11 +111,11 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
       className={`${asideClasses} ${className}`}
       aria-labelledby="business-info-heading"
       style={{
-        fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
       }}
     >
       <header className="space-y-1">
-        <p className="text-xs uppercase tracking-wide text-charcoal/50 font-semibold">Business Info</p>
+        <p className="text-sm sm:text-xs uppercase tracking-wide text-charcoal/50 font-semibold">Business Info</p>
         <h2 id="business-info-heading" className="text-lg font-bold text-charcoal" style={sectionTitleStyle}>
           {businessInfo.name || "Business Information"}
         </h2>
@@ -123,7 +123,7 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
           {businessInfo.description || "No description available."}
         </p>
         {businessInfo.category && (
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/40 bg-white/20 text-xs font-semibold text-charcoal/80">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/40 bg-white/20 text-sm sm:text-xs font-semibold text-charcoal/80">
             <span>{businessInfo.category}</span>
           </div>
         )}

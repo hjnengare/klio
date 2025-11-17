@@ -63,7 +63,7 @@ function SavedBusinessesGrid({ savedBusinesses }: SavedBusinessesGridProps) {
             >
               {category}
               {category !== "All" && (
-                <span className="ml-2 text-xs opacity-70">
+                <span className="ml-2 text-sm sm:text-xs opacity-70">
                   ({savedBusinesses.filter(b => b.category === category).length})
                 </span>
               )}

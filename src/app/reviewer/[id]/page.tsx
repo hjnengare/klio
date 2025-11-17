@@ -236,7 +236,7 @@ export default function ReviewerProfilePage() {
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
                                     <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                                 </div>
-                                <h1 className="font-urbanist text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
+                                <h1 className="text-h3 sm:text-h2 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
                                     {reviewer.name}
                                 </h1>
                             </Link>
@@ -306,9 +306,8 @@ export default function ReviewerProfilePage() {
                                                         {/* Profile Info */}
                                                         <div className="flex-1 min-w-0 w-full">
                                                             <div className="flex items-center gap-2 mb-2 flex-wrap">
-                                                                <h2 id="profile-heading" className="text-xl sm:text-2xl font-bold text-charcoal" style={{
-                                                                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-                                                                    fontWeight: 700,
+                                                                <h2 id="profile-heading" className="text-h1 sm:text-hero font-semibold text-charcoal" style={{
+                                                                    fontFamily: 'DM Sans, system-ui, sans-serif',
                                                                     letterSpacing: '-0.02em',
                                                                 }}>
                                                                     {reviewer.name}

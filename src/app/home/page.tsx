@@ -20,6 +20,7 @@ import {
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useBusinesses, useForYouBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 import { useRoutePrefetch } from "../hooks/useRoutePrefetch";
+import { useScrollReveal } from "../hooks/useScrollReveal";
 
 // Note: dynamic and revalidate cannot be exported from client components
 // Client components are automatically dynamic
@@ -61,7 +62,7 @@ export default function Home() {
       setShowScrollTop(window.scrollY > 200);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -139,8 +140,11 @@ export default function Home() {
   const hasTrendingBusinesses = trendingBusinesses.length > 0;
   const hasInterestSelections = selectedInterests.length > 0;
   
+  // Initialize scroll reveal (runs once per page load)
+  useScrollReveal({ threshold: 0.1, rootMargin: "0px 0px -100px 0px", once: true });
+  
   return (
-    <div className="min-h-dvh bg-off-white" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
+    <div className="min-h-dvh bg-off-white" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
       <div className="relative">
         <PromoBar />
 
@@ -149,42 +153,50 @@ export default function Home() {
 
       <div className="bg-off-white">
         <div className="pb-12 sm:pb-16 md:pb-20">
-          {/* No scroll-reveal wrappers; simple static rendering */}
-          {forYouLoading && <BusinessRowSkeleton title="For You" />}
-          {!forYouLoading && hasForYouBusinesses && (
-            <MemoizedBusinessRow title="For You" businesses={forYouBusinesses} cta="See More" href="/for-you" />
-          )}
-          {!forYouLoading && !hasForYouBusinesses && !forYouError && (
-            <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-charcoal/70">
-              {hasInterestSelections
-                ? "We’re curating businesses for you based on your interests. Check back shortly."
-                : "We’re gathering recommendations for you. Once you pick a few interests, this row will instantly feel more personalized."}
-            </div>
-          )}
-          {forYouError && !forYouLoading && (
-            <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-coral">
-              Couldn’t load personalized picks right now. We’ll retry in the background.
-            </div>
-          )}
+          {/* Scroll reveal sections */}
+          <section data-section>
+            {forYouLoading && <BusinessRowSkeleton title="For You" />}
+            {!forYouLoading && hasForYouBusinesses && (
+              <MemoizedBusinessRow title="For You" businesses={forYouBusinesses} cta="See More" href="/for-you" />
+            )}
+            {!forYouLoading && !hasForYouBusinesses && !forYouError && (
+              <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-charcoal/70">
+                {hasInterestSelections
+                  ? "We're curating businesses for you based on your interests. Check back shortly."
+                  : "We're gathering recommendations for you. Once you pick a few interests, this row will instantly feel more personalized."}
+              </div>
+            )}
+            {forYouError && !forYouLoading && (
+              <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-coral">
+                Couldn't load personalized picks right now. We'll retry in the background.
+              </div>
+            )}
+          </section>
 
-          {trendingLoading && <BusinessRowSkeleton title="Trending Now" />}
-          {!trendingLoading && hasTrendingBusinesses && (
-            <MemoizedBusinessRow title="Trending Now" businesses={trendingBusinesses} cta="See More" href="/trending" />
-          )}
-          {trendingError && !trendingLoading && (
-            <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-coral">
-              Trending businesses are still loading. Refresh to try again.
-            </div>
-          )}
+          <section data-section>
+            {trendingLoading && <BusinessRowSkeleton title="Trending Now" />}
+            {!trendingLoading && hasTrendingBusinesses && (
+              <MemoizedBusinessRow title="Trending Now" businesses={trendingBusinesses} cta="See More" href="/trending" />
+            )}
+            {trendingError && !trendingLoading && (
+              <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-coral">
+                Trending businesses are still loading. Refresh to try again.
+              </div>
+            )}
+          </section>
 
-          <EventsSpecials events={EVENTS_AND_SPECIALS.slice(0, 5)} />
+          <section data-section>
+            <EventsSpecials events={EVENTS_AND_SPECIALS.slice(0, 5)} />
+          </section>
 
-          <CommunityHighlights
-            reviews={FEATURED_REVIEWS}
-            topReviewers={TOP_REVIEWERS}
-            businessesOfTheMonth={featuredByCategory}
-            variant="reviews"
-          />
+          <section data-section>
+            <CommunityHighlights
+              reviews={FEATURED_REVIEWS}
+              topReviewers={TOP_REVIEWERS}
+              businessesOfTheMonth={featuredByCategory}
+              variant="reviews"
+            />
+          </section>
         </div>
 
         <Footer />

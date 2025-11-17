@@ -210,7 +210,7 @@ export default function ClaimBusinessPage() {
                                            transition-colors duration-200 truncate">
                               {business.name}
                             </h3>
-                            <div className="flex items-center flex-wrap gap-2 mt-1 font-urbanist text-xs text-charcoal/70">
+                            <div className="flex items-center flex-wrap gap-2 mt-1 font-urbanist text-sm sm:text-xs text-charcoal/70">
                               <span>{business.category}</span>
                               <span className="text-charcoal/40">•</span>
                               <div className="flex items-center gap-1">
@@ -228,7 +228,7 @@ export default function ClaimBusinessPage() {
                         </div>
                         <button
                           onClick={() => handleClaimBusiness(business)}
-                          className="px-4 py-2 rounded-full text-xs font-600 font-urbanist transition-all duration-200 flex-shrink-0
+                          className="px-4 py-2 rounded-full text-sm sm:text-xs font-600 font-urbanist transition-all duration-200 flex-shrink-0
                             bg-white/40 text-charcoal hover:bg-charcoal hover:text-white hover:shadow-lg"
                         >
                           Claim

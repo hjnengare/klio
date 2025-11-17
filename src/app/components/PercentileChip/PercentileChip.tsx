@@ -60,7 +60,7 @@ function PercentileChip({ label, value }: PercentileChipProps) {
       }}
       className="inline-flex items-center gap-1.5 px-4 pt-1">
       {renderIcon()}
-      <span className={`text-xs font-600 whitespace-nowrap  ${
+      <span className={`text-sm sm:text-xs font-600 whitespace-nowrap  ${
         isPlaceholder ? 'text-charcoal/40' : 'text-charcoal'
       }`}>
         {isPlaceholder ? '—' : `${value}%`}

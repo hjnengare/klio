@@ -18,7 +18,7 @@ export default function SubcategoryActions({
   onSkip 
 }: SubcategoryActionsProps) {
   const sfPro = {
-    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
     fontWeight: 600,
   };
 

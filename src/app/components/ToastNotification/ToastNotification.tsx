@@ -130,7 +130,7 @@ export default function ToastNotification({
 
         {/* Details */}
         <div className="toast-detail flex-1 min-w-0">
-          <p className="toast-message font-urbanist text-xs font-600 text-charcoal/70 mb-1">
+          <p className="toast-message font-urbanist text-sm sm:text-xs font-600 text-charcoal/70 mb-1">
             {notification.message}
           </p>
 
@@ -138,7 +138,7 @@ export default function ToastNotification({
             {notification.title}
           </p>
 
-          <p className="toast-meta font-urbanist text-xs text-charcoal/60">
+          <p className="toast-meta font-urbanist text-sm sm:text-xs text-charcoal/60">
             <time>{notification.timeAgo}</time> ago
           </p>
         </div>

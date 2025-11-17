@@ -246,7 +246,7 @@ export default function SeedPage() {
                   Error: {error.step}
                 </h3>
                 <p
-                  className="text-xs text-red-600 font-medium"
+                  className="text-sm sm:text-xs text-red-600 font-medium"
                   style={{
                     fontFamily:
                       "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
@@ -260,7 +260,7 @@ export default function SeedPage() {
             {error.details && (
               <div className="bg-red-100 rounded-lg p-3 mb-3">
                 <p
-                  className="text-xs text-red-800 font-medium mb-1"
+                  className="text-sm sm:text-xs text-red-800 font-medium mb-1"
                   style={{
                     fontFamily:
                       "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
@@ -269,7 +269,7 @@ export default function SeedPage() {
                   Details:
                 </p>
                 <p
-                  className="text-xs text-red-700 font-mono break-all"
+                  className="text-sm sm:text-xs text-red-700 font-mono break-all"
                   style={{
                     fontFamily:
                       "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
@@ -283,7 +283,7 @@ export default function SeedPage() {
             {error.code && (
               <div className="mb-3">
                 <span
-                  className="text-xs text-red-700 font-medium"
+                  className="text-sm sm:text-xs text-red-700 font-medium"
                   style={{
                     fontFamily:
                       "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
@@ -292,7 +292,7 @@ export default function SeedPage() {
                   Error Code:{" "}
                 </span>
                 <span
-                  className="text-xs text-red-800 font-mono bg-red-100 px-2 py-1 rounded"
+                  className="text-sm sm:text-xs text-red-800 font-mono bg-red-100 px-2 py-1 rounded"
                   style={{
                     fontFamily:
                       "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
@@ -306,7 +306,7 @@ export default function SeedPage() {
             {error.suggestion && (
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
                 <p
-                  className="text-xs text-amber-900 font-semibold mb-1"
+                  className="text-sm sm:text-xs text-amber-900 font-semibold mb-1"
                   style={{
                     fontFamily:
                       "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
@@ -315,7 +315,7 @@ export default function SeedPage() {
                   💡 Suggestion:
                 </p>
                 <p
-                  className="text-xs text-amber-800"
+                  className="text-sm sm:text-xs text-amber-800"
                   style={{
                     fontFamily:
                       "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",

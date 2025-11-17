@@ -16,7 +16,7 @@ export default function DealBreakerActions({
   onSkip 
 }: DealBreakerActionsProps) {
   const sfPro = {
-    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
     fontWeight: 600,
   };
 

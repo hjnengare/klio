@@ -31,7 +31,7 @@ export default function EventDetailsCard({ event }: EventDetailsCardProps) {
           </div>
           <div>
             <p
-              className="text-xs text-charcoal/60"
+              className="text-sm sm:text-xs text-charcoal/60"
               style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.005em' }}
             >
               Date
@@ -44,7 +44,7 @@ export default function EventDetailsCard({ event }: EventDetailsCardProps) {
             </p>
             {event.endDate && (
               <p
-                className="text-xs text-charcoal/60"
+                className="text-sm sm:text-xs text-charcoal/60"
                 style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.005em' }}
               >
                 to {event.endDate}
@@ -59,7 +59,7 @@ export default function EventDetailsCard({ event }: EventDetailsCardProps) {
           </div>
           <div>
             <p
-              className="text-xs text-charcoal/60"
+              className="text-sm sm:text-xs text-charcoal/60"
               style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.005em' }}
             >
               Duration
@@ -79,7 +79,7 @@ export default function EventDetailsCard({ event }: EventDetailsCardProps) {
           </div>
           <div>
             <p
-              className="text-xs text-charcoal/60"
+              className="text-sm sm:text-xs text-charcoal/60"
               style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.005em' }}
             >
               Capacity
@@ -100,7 +100,7 @@ export default function EventDetailsCard({ event }: EventDetailsCardProps) {
             </div>
             <div>
               <p
-                className="text-xs text-charcoal/60"
+                className="text-sm sm:text-xs text-charcoal/60"
                 style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.005em' }}
               >
                 Price

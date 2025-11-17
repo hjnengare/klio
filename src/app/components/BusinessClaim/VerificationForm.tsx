@@ -71,7 +71,7 @@ export function VerificationForm({ business, onClose, onSuccess }: VerificationF
         {/* Header */}
         <div className="sticky top-0 bg-off-white border-b border-charcoal/10 px-6 py-4 flex items-center justify-between">
           <h2 className="text-xl font-bold text-charcoal" style={{
-            fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif'
+            fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif"
           }}>
             Verify Ownership
           </h2>
@@ -89,17 +89,17 @@ export function VerificationForm({ business, onClose, onSuccess }: VerificationF
           {/* Business Info */}
           <div className="bg-white/50 rounded-xl p-4 border border-charcoal/10">
             <h3 className="text-sm font-semibold text-charcoal mb-2" style={{
-              fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif'
+              fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif"
             }}>
               {business.name}
             </h3>
-            <p className="text-xs text-charcoal/70">{business.category} • {business.location}</p>
+            <p className="text-sm sm:text-xs text-charcoal/70">{business.category} • {business.location}</p>
           </div>
 
           {/* Verification Methods */}
           <div className="space-y-3">
             <label className="text-sm font-semibold text-charcoal block" style={{
-              fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif'
+              fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif"
             }}>
               Choose Verification Method
             </label>
@@ -123,7 +123,7 @@ export function VerificationForm({ business, onClose, onSuccess }: VerificationF
                   <Mail className="w-4 h-4 text-charcoal" />
                   <span className="text-sm font-semibold text-charcoal">Email Verification</span>
                 </div>
-                <p className="text-xs text-charcoal/70">
+                <p className="text-sm sm:text-xs text-charcoal/70">
                   We'll send a verification code to the business email address
                 </p>
                 {selectedMethod === 'email' && business.email && (
@@ -160,7 +160,7 @@ export function VerificationForm({ business, onClose, onSuccess }: VerificationF
                   <Phone className="w-4 h-4 text-charcoal" />
                   <span className="text-sm font-semibold text-charcoal">Phone Verification</span>
                 </div>
-                <p className="text-xs text-charcoal/70">
+                <p className="text-sm sm:text-xs text-charcoal/70">
                   We'll send an SMS code to the business phone number
                 </p>
                 {selectedMethod === 'phone' && business.phone && (
@@ -197,10 +197,10 @@ export function VerificationForm({ business, onClose, onSuccess }: VerificationF
                   <FileText className="w-4 h-4 text-charcoal" />
                   <span className="text-sm font-semibold text-charcoal">Document Upload</span>
                 </div>
-                <p className="text-xs text-charcoal/70">
+                <p className="text-sm sm:text-xs text-charcoal/70">
                   Upload business license, tax documents, or other proof of ownership
                 </p>
-                <p className="text-xs text-coral/80 mt-1">(Coming soon - manual review required)</p>
+                <p className="text-sm sm:text-xs text-coral/80 mt-1">(Coming soon - manual review required)</p>
               </div>
             </label>
 
@@ -223,7 +223,7 @@ export function VerificationForm({ business, onClose, onSuccess }: VerificationF
                   <UserCheck className="w-4 h-4 text-charcoal" />
                   <span className="text-sm font-semibold text-charcoal">Manual Review</span>
                 </div>
-                <p className="text-xs text-charcoal/70">
+                <p className="text-sm sm:text-xs text-charcoal/70">
                   Request manual review by our team (for complex cases)
                 </p>
                 {selectedMethod === 'manual' && (
@@ -249,7 +249,7 @@ export function VerificationForm({ business, onClose, onSuccess }: VerificationF
               onClick={onClose}
               className="flex-1 px-4 py-3 rounded-full text-sm font-semibold text-charcoal bg-white/50 hover:bg-charcoal/10 transition-colors"
               style={{
-                fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif'
+                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif"
               }}
             >
               Cancel
@@ -259,7 +259,7 @@ export function VerificationForm({ business, onClose, onSuccess }: VerificationF
               disabled={!selectedMethod || isSubmitting || (selectedMethod === 'document')}
               className="flex-1 px-4 py-3 rounded-full text-sm font-semibold text-white bg-coral hover:bg-coral/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
               style={{
-                fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif'
+                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif"
               }}
             >
               {isSubmitting ? (

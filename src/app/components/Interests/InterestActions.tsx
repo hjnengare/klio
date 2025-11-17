@@ -20,7 +20,7 @@ export default function InterestActions({
   onSkip 
 }: InterestActionsProps) {
   const sfPro = {
-    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
     fontWeight: 600,
   };
 
@@ -35,7 +35,7 @@ export default function InterestActions({
         onClick={onContinue}
         disabled={!canProceed}
         aria-label={`Continue with ${selectedCount} selected interests`}
-        style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
+        style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}
       >
         {isNavigating ? (
           <>
@@ -61,7 +61,7 @@ export default function InterestActions({
         >
           Skip for now
         </button>
-        <div className="mt-1 text-xs text-charcoal/50 max-w-sm mx-auto" style={sfPro}>
+        <div className="mt-1 text-sm sm:text-xs text-charcoal/50 max-w-sm mx-auto" style={sfPro}>
           {selectedCount < minSelections ? (
             <span>We&apos;ll suggest popular local businesses instead</span>
           ) : (

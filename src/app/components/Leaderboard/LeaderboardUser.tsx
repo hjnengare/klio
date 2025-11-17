@@ -32,7 +32,7 @@ function LeaderboardUser({ user, index }: LeaderboardUserProps) {
       >
       <div className="flex items-center justify-between p-3 sm:p-4">
         <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
-          <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-charcoal/15 to-charcoal/10 rounded-full flex items-center justify-center font-urbanist text-xs sm:text-sm font-600 text-charcoal/70 shadow-[0_4px_12px_rgba(0,0,0,0.1)] flex-shrink-0 border border-white/40">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-charcoal/15 to-charcoal/10 rounded-full flex items-center justify-center font-urbanist text-sm sm:text-xs sm:text-sm font-600 text-charcoal/70 shadow-[0_4px_12px_rgba(0,0,0,0.1)] flex-shrink-0 border border-white/40">
             {user.rank}
           </div>
           <div className="w-10 h-10 sm:w-12 sm:h-12 relative rounded-full overflow-hidden border-2 border-white shadow-[0_4px_20px_rgba(0,0,0,0.15)] ring-2 ring-white/50 flex-shrink-0">
@@ -47,7 +47,7 @@ function LeaderboardUser({ user, index }: LeaderboardUserProps) {
           </div>
           <div className="min-w-0 flex-1">
             <div className="font-urbanist text-sm sm:text-base font-600 text-charcoal truncate">@{user.username}</div>
-            <div className="font-urbanist text-xs sm:text-sm text-charcoal/60">
+            <div className="font-urbanist text-sm sm:text-xs sm:text-sm text-charcoal/60">
               <span className="font-700">{user.reviews}</span> <span className="font-400">reviews</span>
             </div>
           </div>

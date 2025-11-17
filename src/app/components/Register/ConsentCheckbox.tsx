@@ -8,7 +8,7 @@ interface ConsentCheckboxProps {
 export default function ConsentCheckbox({ checked, onChange }: ConsentCheckboxProps) {
   return (
     <div className="pt-2">
-      <label className="flex items-start gap-3 text-xs text-charcoal/70 cursor-pointer">
+      <label className="flex items-start gap-3 text-sm sm:text-xs text-charcoal/70 cursor-pointer">
         <input
           type="checkbox"
           checked={checked}

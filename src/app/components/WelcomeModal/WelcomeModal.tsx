@@ -121,7 +121,7 @@ export default function WelcomeModal() {
                       <h4 className="font-urbanist text-sm font-600 text-charcoal mb-1">
                         Leave Reviews
                       </h4>
-                      <p className="font-urbanist text-xs text-charcoal/60 leading-relaxed">
+                      <p className="font-urbanist text-sm sm:text-xs text-charcoal/60 leading-relaxed">
                         Share your experiences and help others discover great places
                       </p>
                     </div>
@@ -135,7 +135,7 @@ export default function WelcomeModal() {
                       <h4 className="font-urbanist text-sm font-600 text-charcoal mb-1">
                         Save Favorites
                       </h4>
-                      <p className="font-urbanist text-xs text-charcoal/60 leading-relaxed">
+                      <p className="font-urbanist text-sm sm:text-xs text-charcoal/60 leading-relaxed">
                         Create lists of your favorite spots to revisit anytime
                       </p>
                     </div>
@@ -149,7 +149,7 @@ export default function WelcomeModal() {
                       <h4 className="font-urbanist text-sm font-600 text-charcoal mb-1">
                         Join the Community
                       </h4>
-                      <p className="font-urbanist text-xs text-charcoal/60 leading-relaxed">
+                      <p className="font-urbanist text-sm sm:text-xs text-charcoal/60 leading-relaxed">
                         Connect with fellow locals and share recommendations
                       </p>
                     </div>
@@ -164,7 +164,7 @@ export default function WelcomeModal() {
                   Start Exploring
                 </button>
 
-                <p className="text-center font-urbanist text-xs text-charcoal/50">
+                <p className="text-center font-urbanist text-sm sm:text-xs text-charcoal/50">
                   You can always find this info in Settings
                 </p>
               </div>

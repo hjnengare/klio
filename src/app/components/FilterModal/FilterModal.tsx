@@ -188,8 +188,7 @@ export default function FilterModal({
         aria-label="Search filters"
         aria-modal="true"
         tabIndex={-1}
-        className={`pointer-events-auto
-                    rounded-none sm:rounded-2xl overflow-hidden
+        className={`pointer-events-auto rounded-2xl overflow-hidden
                     bg-off-white
                     border border-white/30 shadow-2xl
                     transition-all duration-200
@@ -272,7 +271,7 @@ export default function FilterModal({
                         prev.includes(name) ? prev.filter((x) => x !== name) : [...prev, name]
                       )
                     }
-                    className={`px-3 py-2 rounded-full text-xs flex items-center gap-2 border transition-all
+                    className={`px-3 py-2 rounded-full text-sm sm:text-xs flex items-center gap-2 border transition-all
                       ${
                         active
                           ? "bg-sage text-white border-sage shadow-sm"
@@ -306,7 +305,7 @@ export default function FilterModal({
                     key={r}
                     type="button"
                     onClick={() => setSelectedRating(active ? null : r)}
-                    className={`px-3 py-2 rounded-full text-xs flex items-center gap-2 border transition-all
+                    className={`px-3 py-2 rounded-full text-sm sm:text-xs flex items-center gap-2 border transition-all
                       ${
                         active
                           ? "bg-sage text-white border-sage shadow-sm"
@@ -345,7 +344,7 @@ export default function FilterModal({
                     key={distance}
                     type="button"
                     onClick={() => setSelectedDistance(active ? null : distance)}
-                    className={`px-3 py-2 rounded-full text-xs flex items-center gap-2 border transition-all whitespace-nowrap
+                    className={`px-3 py-2 rounded-full text-sm sm:text-xs flex items-center gap-2 border transition-all whitespace-nowrap
                       ${
                         active
                           ? "bg-coral text-white border-coral shadow-sm"
@@ -367,14 +366,14 @@ export default function FilterModal({
         <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm flex-shrink-0">
             <button
             onClick={handleClearAll}
-            className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 text-sm sm:text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
             style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
           >
             Clear
           </button>
           <button
             onClick={handleApply}
-            className="flex-1 rounded-full bg-sage hover:bg-sage/90 text-white font-semibold py-2.5 px-4 text-xs border border-sage transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="flex-1 rounded-full bg-sage hover:bg-sage/90 text-white font-semibold py-2.5 px-4 text-sm sm:text-xs border border-sage transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
             style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
           >
             Apply

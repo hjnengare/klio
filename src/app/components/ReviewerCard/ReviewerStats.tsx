@@ -10,7 +10,7 @@ export default function ReviewerStats({
   location,
 }: ReviewerStatsProps) {
   return (
-    <div className="text-xs text-charcoal/70 space-y-0.5">
+    <div className="text-sm sm:text-xs text-charcoal/70 space-y-0.5">
       <div className="flex items-center gap-2">
         <span className="font-urbanist">{reviewCount} reviews</span>
       </div>

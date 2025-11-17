@@ -130,7 +130,7 @@ export default function BusinessCarousel({ businessName, businessImages }: Busin
 
         {/* Image Counter */}
         <div className="absolute top-3 md:top-4 right-3 md:right-4 px-3 py-1.5 rounded-full bg-charcoal/70 backdrop-blur-sm z-10">
-          <span className="text-xs md:text-sm font-500 text-white">
+          <span className="text-sm sm:text-xs md:text-sm font-500 text-white">
             {currentImageIndex + 1} / {validImages.length}
           </span>
         </div>

@@ -63,7 +63,7 @@ export default function DealBreakerCard({
           <h3 className="text-base font-semibold text-charcoal mb-2" style={sfPro}>
             {dealbreaker.label}
           </h3>
-          <p className="text-xs text-charcoal/60 leading-relaxed px-2" style={sfPro}>
+          <p className="text-sm sm:text-xs text-charcoal/60 leading-relaxed px-2" style={sfPro}>
             {dealbreaker.description}
           </p>
         </div>

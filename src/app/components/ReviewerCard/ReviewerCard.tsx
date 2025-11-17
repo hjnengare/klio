@@ -97,7 +97,7 @@ export default function ReviewerCard({
 
                 <div className="flex-1 min-w-0">
                   <h3 className="text-sm font-bold text-charcoal group-hover:text-coral/90 truncate transition-colors duration-300" style={{ 
-                    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                     fontWeight: 700,
                     WebkitFontSmoothing: 'antialiased',
                     MozOsxFontSmoothing: 'grayscale',
@@ -105,8 +105,8 @@ export default function ReviewerCard({
                   }}>
                     {reviewerData?.name}
                   </h3>
-                  <p className="text-xs text-charcoal/70" style={{ 
-                    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+                  <p className="text-sm sm:text-xs text-charcoal/70" style={{ 
+                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                     fontWeight: 400,
                   }}>
                     {reviewerData?.location}
@@ -121,13 +121,13 @@ export default function ReviewerCard({
               <div className="flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-sm font-semibold text-charcoal flex items-center justify-center gap-1" style={{ 
-                    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                     fontWeight: 600,
                   }}>
                     <span>{reviewerData?.reviewCount}</span>
                     </div>
-                  <div className="text-xs text-charcoal/70" style={{ 
-                    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+                  <div className="text-sm sm:text-xs text-charcoal/70" style={{ 
+                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                     fontWeight: 400,
                   }}>Reviews</div>
                 </div>
@@ -141,11 +141,11 @@ export default function ReviewerCard({
                   <div className="flex items-center gap-1 mb-0.5">
                     <Star className="w-3 h-3 fill-coral text-coral" />
                     <span className="font-urbanist text-[10px] text-charcoal/60" style={{ 
-                      fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+                      fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                     }}>Latest Review</span>
                   </div>
-                  <p className="font-urbanist text-xs text-charcoal/80 leading-relaxed line-clamp-2 italic" style={{ 
-                    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+                  <p className="font-urbanist text-sm sm:text-xs text-charcoal/80 leading-relaxed line-clamp-2 italic" style={{ 
+                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                   }}>
                     "{latestReview.reviewText}"
                   </p>
@@ -277,7 +277,7 @@ export default function ReviewerCard({
 
           <div className="flex-1 min-w-0">
             <h3 className="text-sm font-bold text-charcoal group-hover:text-coral/90 truncate transition-colors duration-300" style={{ 
-              fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+              fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
               fontWeight: 700,
               WebkitFontSmoothing: 'antialiased',
               MozOsxFontSmoothing: 'grayscale',

@@ -112,14 +112,14 @@ export default function ExplorePage() {
         <div className="mx-auto w-full max-w-[2000px] px-2">
           {/* Breadcrumb */}
           <nav className="px-2" aria-label="Breadcrumb">
-            <ol className="flex items-center gap-1 text-sm text-charcoal/60">
+            <ol className="flex items-center gap-1 text-body-sm text-charcoal/60">
               <li>
-                <Link href="/home" className="hover:text-charcoal transition-colors" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
+                <Link href="/home" className="hover:text-charcoal transition-colors" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
                   Home
                 </Link>
               </li>
               <li className="text-charcoal/40">/</li>
-              <li className="text-charcoal font-medium" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>Explore</li>
+              <li className="text-charcoal font-medium" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>Explore</li>
             </ol>
           </nav>
 
@@ -146,16 +146,16 @@ export default function ExplorePage() {
 
           {!loading && error && (
             <div className="bg-white border border-sage/20 rounded-3xl shadow-sm px-6 py-10 text-center space-y-4">
-              <p className="text-charcoal font-600" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
-                We couldn’t load businesses right now.
+              <p className="text-charcoal font-semibold text-h2" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
+                We couldn't load businesses right now.
               </p>
-              <p className="text-sm text-charcoal/60" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 500 }}>
+              <p className="text-body-sm text-charcoal/60 max-w-[70ch]" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 500 }}>
                 {error}
               </p>
               <button
                 onClick={refetch}
-                className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-sage text-white hover:bg-sage/90 transition-colors text-sm font-semibold"
-                style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
+                className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-sage text-white hover:bg-sage/90 transition-colors text-body font-semibold"
+                style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
               >
                 Try again
               </button>
@@ -166,10 +166,10 @@ export default function ExplorePage() {
             <>
               {businesses.length === 0 ? (
                 <div className="bg-white border border-sage/20 rounded-3xl shadow-sm px-6 py-16 text-center space-y-3">
-                  <h2 className="text-lg font-600 text-charcoal" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
+                  <h2 className="text-h2 font-semibold text-charcoal" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                     No businesses yet
                   </h2>
-                  <p className="text-sm text-charcoal/60 max-w-lg mx-auto" style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 500 }}>
+                  <p className="text-body-sm text-charcoal/60 max-w-[70ch] mx-auto" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 500 }}>
                     Try adjusting your filters or check back soon as new businesses join the community.
                   </p>
                 </div>
@@ -200,8 +200,8 @@ export default function ExplorePage() {
                         <button
                           key={page}
                           onClick={() => setCurrentPage(page)}
-                          style={{ fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
-                          className={`w-10 h-10 rounded-full bg-navbar-bg/90 font-600 text-sm transition-all duration-200 ${
+                          style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
+                          className={`w-10 h-10 rounded-full bg-navbar-bg/90 font-semibold text-body-sm transition-all duration-200 ${
                             currentPage === page
                               ? "bg-sage text-white shadow-lg"
                               : "border border-charcoal/20 text-white hover:bg-navbar-bg/80"

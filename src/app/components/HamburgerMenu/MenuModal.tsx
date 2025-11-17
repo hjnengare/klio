@@ -291,7 +291,7 @@ export default function MenuModal({ isOpen, isVisible, onClose }: MenuModalProps
 
         {/* Footer */}
         <div className="mt-auto p-6 border-t border-sage/10">
-          <p className="text-xs text-charcoal/40 text-center">
+          <p className="text-sm sm:text-xs text-charcoal/40 text-center">
             sayso - Discover trusted local gems
           </p>
         </div>

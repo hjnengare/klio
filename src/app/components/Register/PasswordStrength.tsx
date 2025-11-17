@@ -40,7 +40,7 @@ export default function PasswordStrength({ password, strength }: PasswordStrengt
         ))}
       </div>
       {strength.feedback && (
-        <span className={`text-xs font-500 px-2 py-1 rounded ${
+        <span className={`text-sm sm:text-xs font-500 px-2 py-1 rounded ${
           strength.score === 4 
             ? 'bg-blue-500 text-white' :
           strength.score >= 3 

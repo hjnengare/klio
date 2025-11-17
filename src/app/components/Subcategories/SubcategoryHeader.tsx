@@ -5,7 +5,7 @@ export default function SubcategoryHeader() {
     fontFamily: '"DM Sans", system-ui, sans-serif',
   } as React.CSSProperties;
   const bodyStyle = {
-    fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
     fontWeight: 400,
   } as React.CSSProperties;
 

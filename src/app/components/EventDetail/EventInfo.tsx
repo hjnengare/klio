@@ -36,7 +36,7 @@ export default function EventInfo({ event }: EventInfoProps) {
         <div className="flex items-center gap-1.5 text-charcoal/70">
           <MapPin size={14} />
           <span
-            className="text-xs font-medium"
+            className="text-sm sm:text-xs font-medium"
             style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.005em' }}
           >
             {event.location}

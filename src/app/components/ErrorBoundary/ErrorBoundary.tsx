@@ -77,7 +77,7 @@ class ErrorBoundary extends Component<Props, State> {
                 <summary className="font-urbanist text-sm font-600 text-red-600 cursor-pointer">
                   Error Details (Dev Only)
                 </summary>
-                <pre className="mt-2 text-xs text-red-800 whitespace-pre-wrap overflow-auto">
+                <pre className="mt-2 text-sm sm:text-xs text-red-800 whitespace-pre-wrap overflow-auto">
                   {this.state.error.stack}
                 </pre>
               </details>

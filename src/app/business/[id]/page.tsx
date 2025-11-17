@@ -205,15 +205,16 @@ export default function BusinessProfilePage() {
                     <div className="w-16 h-16 bg-coral/10 rounded-full flex items-center justify-center mx-auto mb-4">
                         <X className="w-8 h-8 text-coral" />
                     </div>
-                    <h2 className="text-xl font-bold text-charcoal mb-2 font-urbanist">
+                    <h2 className="text-h1 font-semibold text-charcoal mb-2" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
                         {error || 'Business not found'}
                     </h2>
-                    <p className="text-charcoal/70 mb-6 font-urbanist">
+                    <p className="text-body text-charcoal/70 mb-6 max-w-[70ch]" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                         The business you're looking for doesn't exist or has been removed.
                     </p>
                     <Link
                         href="/home"
-                        className="inline-block px-6 py-3 bg-coral text-white rounded-full font-600 font-urbanist hover:bg-coral/90 transition-colors"
+                        className="inline-block px-6 py-3 bg-coral text-white rounded-full text-body font-semibold hover:bg-coral/90 transition-colors"
+                        style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                     >
                         Go to Home
                     </Link>
@@ -319,8 +320,8 @@ export default function BusinessProfilePage() {
                                     <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                                 </div>
                                 <h1
-                                    className="text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
-                                    style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
+                                    className="text-h3 sm:text-h2 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
+                                    style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
                                 >
                                     {businessData.name}
                                 </h1>
@@ -332,7 +333,7 @@ export default function BusinessProfilePage() {
                                     <button
                                         ref={buttonRef}
                                         onClick={() => setShowSpecialsModal(true)}
-                                        className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                        className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-caption font-semibold transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
                                         aria-label="View events and specials"
                                     >
                                         <Calendar className="w-3 h-3" />
@@ -421,7 +422,7 @@ export default function BusinessProfilePage() {
                                                     <div className="flex flex-col gap-3">
                                                         <h2
                                                             id="reviews-heading"
-                                                            className="text-sm font-bold text-charcoal border-b border-charcoal/10 pb-2"
+                                                            className="text-h3 font-semibold text-charcoal border-b border-charcoal/10 pb-2"
                                                             style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
                                                         >
                                                             Community Reviews
@@ -451,16 +452,17 @@ export default function BusinessProfilePage() {
                                                         <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
                                                             <MessageSquare className="w-8 h-8 text-charcoal/40" />
                                                         </div>
-                                                        <h3 className="text-lg font-bold text-charcoal mb-2 font-urbanist">
+                                                        <h3 className="text-h2 font-semibold text-charcoal mb-2" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
                                                             No reviews yet
                                                         </h3>
-                                                        <p className="text-charcoal/70 mb-6 font-urbanist">
+                                                        <p className="text-body text-charcoal/70 mb-6 max-w-[70ch]" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                                                             Be the first to review this business!
                                                         </p>
                                                         <Link
                                                             href={`/business/review?business_id=${businessId}`}
                                                             prefetch={true}
-                                                            className="inline-block px-6 py-3 bg-coral text-white rounded-full font-600 font-urbanist hover:bg-coral/90 transition-colors"
+                                                            className="inline-block px-6 py-3 bg-coral text-white rounded-full text-body font-semibold hover:bg-coral/90 transition-colors"
+                                                            style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                                                             onMouseEnter={() => router.prefetch(reviewRoute)}
                                                         >
                                                             Write First Review
@@ -510,7 +512,8 @@ export default function BusinessProfilePage() {
                                                     <div className="relative z-10">
                                 <h3
                                     id="specials-modal-heading"
-                                    className="text-sm font-bold text-charcoal mb-4 flex items-center gap-2.5 font-urbanist pr-8"
+                                    className="text-h3 font-semibold text-charcoal mb-4 flex items-center gap-2.5 pr-8"
+                                    style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
                                 >
                                                             <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10" aria-hidden="true">
                                                                 <Calendar className="w-4 h-4 text-coral" />
@@ -540,14 +543,14 @@ export default function BusinessProfilePage() {
                                                                                 <Icon className="w-4 h-4 text-sage" />
                                                                             </div>
                                                                             <div className="flex-1">
-                                                                                <h4 className="text-sm font-600 text-charcoal mb-0.5 font-urbanist">{special.name}</h4>
-                                                                                <p className="text-xs text-charcoal/70">{special.description}</p>
+                                                                                <h4 className="text-body-sm font-semibold text-charcoal mb-0.5" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>{special.name}</h4>
+                                                                                <p className="text-caption text-charcoal/70 max-w-[70ch]">{special.description}</p>
                                                                             </div>
                                                                         </Link>
                                                                     </li>
                                                                 );
                                                             })) : (
-                                                                <li className="text-center py-8 text-charcoal/70 font-urbanist text-sm">
+                                                                <li className="text-center py-8 text-charcoal/70 text-body-sm" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                                                                     No events or specials available at this time.
                                                                 </li>
                                                             )}

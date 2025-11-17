@@ -35,7 +35,7 @@ export default function SavedBusinessRow({
               {title}
             </h2>
             {showCount && savedCount > 0 && (
-              <span className="px-3 py-1 bg-sage/10 text-sage text-xs font-600 rounded-full">
+              <span className="px-3 py-1 bg-sage/10 text-sage text-sm sm:text-xs font-600 rounded-full">
                 {savedCount}
               </span>
             )}

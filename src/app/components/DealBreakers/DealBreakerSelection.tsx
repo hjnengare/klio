@@ -30,7 +30,7 @@ export default function DealBreakerSelection({ selectedCount, children }: DealBr
           <CheckCircle className="w-4 h-4 text-sage" />
         )}
       </div>
-      <p className="text-xs text-charcoal/60 py-2" style={sfPro}>
+      <p className="text-sm sm:text-xs text-charcoal/60 py-2" style={sfPro}>
         {selectedCount === 0
           ? "Select at least one deal-breaker to continue"
           : "Great! Select more or complete setup"}

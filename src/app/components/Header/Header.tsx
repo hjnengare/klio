@@ -12,7 +12,7 @@ import Logo from "../Logo/Logo";
 import OptimizedLink from "../Navigation/OptimizedLink";
 
 const sf = {
-  fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+  fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
 } as const;
 
 const PRIMARY_LINKS = [
@@ -391,8 +391,8 @@ export default function Header({
                 <Fragment key={key}>
                 <OptimizedLink
                     href={href}
-                    className={`group capitalize px-2.5 lg:px-3.5 py-1 text-xs sm:text-sm md:text-xs lg:text-xs font-semibold transition-colors duration-200 ${whiteText ? 'text-white hover:text-white/90' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
-                  style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
+                    className={`group capitalize px-2.5 lg:px-3.5 py-1 text-sm sm:text-xs sm:text-sm md:text-sm sm:text-xs lg:text-sm sm:text-xs font-semibold transition-colors duration-200 ${whiteText ? 'text-white hover:text-white/90' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
+                  style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                 >
                     <span>{label}</span>
                   </OptimizedLink>
@@ -418,8 +418,8 @@ export default function Header({
                             openDiscoverDropdown();
                           }
                         }}
-                        className={`group capitalize px-3 lg:px-4 py-1.5 rounded-full text-xs sm:text-sm md:text-xs lg:text-xs font-semibold transition-colors duration-200 flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
-                        style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
+                        className={`group capitalize px-3 lg:px-4 py-1.5 rounded-full text-sm sm:text-xs sm:text-sm md:text-sm sm:text-xs lg:text-sm sm:text-xs font-semibold transition-colors duration-200 flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
+                        style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                         aria-expanded={isDiscoverDropdownOpen}
                         aria-haspopup="true"
                       >
@@ -437,7 +437,7 @@ export default function Header({
                             style={{
                               left: discoverMenuPos.left,
                               top: discoverMenuPos.top,
-                              fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+                              fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                               animation: isDiscoverDropdownClosing ? 'none' : 'fadeInScale 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                             }}
                             onClick={(e) => e.stopPropagation()}
@@ -462,12 +462,12 @@ export default function Header({
                                     closeDiscoverDropdown();
                                   }}
                                   className="group flex items-start gap-3 px-5 py-3 hover:bg-sage/10 transition-all duration-200"
-                                  style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
+                                  style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                                 >
                                   <div className="mt-1 w-2 h-2 rounded-full bg-gradient-to-br from-sage to-coral/70 group-hover:scale-125 transition-transform" />
                                   <div className="flex-1">
                                     <div className="text-sm font-semibold text-charcoal group-hover:text-coral">{subLabel}</div>
-                                    <div className="text-xs text-charcoal/60 mt-0.5">{description}</div>
+                                    <div className="text-sm sm:text-xs text-charcoal/60 mt-0.5">{description}</div>
                                   </div>
                                 </OptimizedLink>
                               ))}
@@ -501,8 +501,8 @@ export default function Header({
                       openBusinessDropdown();
                     }
                   }}
-                  className={`group capitalize px-3 lg:px-4 py-1.5 text-xs sm:text-sm md:text-xs lg:text-xs font-semibold transition-colors duration-200 flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
-                  style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
+                  className={`group capitalize px-3 lg:px-4 py-1.5 text-sm sm:text-xs sm:text-sm md:text-sm sm:text-xs lg:text-sm sm:text-xs font-semibold transition-colors duration-200 flex items-center gap-1 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
+                  style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                 >
                   <span className="whitespace-nowrap">For Businesses</span>
                   <ChevronDown className={`w-4 h-4 sm:w-4 sm:h-4 transition-transform duration-200 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`} />
@@ -518,7 +518,7 @@ export default function Header({
                       style={{
                         left: menuPos.left,
                         top: menuPos.top,
-                        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+                        fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                         animation: isBusinessDropdownClosing ? 'none' : 'fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                       }}
                       onClick={(e) => e.stopPropagation()}
@@ -532,7 +532,7 @@ export default function Header({
                       <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 bg-off-white">
                         <div className="relative z-10 flex items-center gap-2">
                           <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-sage" />
-                          <h2 className="text-sm md:text-base font-semibold text-charcoal" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>For Businesses</h2>
+                          <h2 className="text-sm md:text-base font-semibold text-charcoal" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>For Businesses</h2>
                         </div>
                         <button
                           onClick={() => {
@@ -546,13 +546,13 @@ export default function Header({
                         </button>
                       </div>
 
-                      <div className="px-5 sm:px-6 py-4 space-y-1.5" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
+                      <div className="px-5 sm:px-6 py-4 space-y-1.5" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                         {BUSINESS_LINKS.map(({ key, label, description, href }) => (
                           <OptimizedLink
                             key={key}
                             href={href}
                             className="group flex items-start gap-3 px-4 py-3 rounded-xl hover:bg-sage/10 transition-all duration-200"
-                          style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
+                          style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                           onClick={() => {
                             clearBusinessHoverTimeout();
                             closeBusinessDropdown();
@@ -563,7 +563,7 @@ export default function Header({
                               <div className="text-sm font-semibold text-charcoal group-hover:text-coral transition-colors">
                                 {label}
                           </div>
-                              <div className="text-xs text-charcoal/60 mt-0.5">
+                              <div className="text-sm sm:text-xs text-charcoal/60 mt-0.5">
                                 {description}
                           </div>
                           </div>
@@ -680,7 +680,7 @@ export default function Header({
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`px-4 py-3 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-off-white/10 transition-colors relative min-h-[48px] flex items-center ${mobileRevealClass}`}
                 style={{
-                  fontFamily: '"DM Sans", 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                  fontFamily: 'DM Sans, Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                   transitionDelay: `${index * 60}ms`,
                 }}
               >
@@ -705,7 +705,7 @@ export default function Header({
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`px-4 py-3 rounded-xl text-base font-medium text-white/90 hover:text-white hover:bg-off-white/10 transition-all duration-200 min-h-[48px] flex gap-3 ${mobileRevealClass}`}
                     style={{
-                      fontFamily: '"DM Sans", 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                      fontFamily: 'DM Sans, Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                       transitionDelay: `${(primaryCount + index) * 60}ms`,
                     }}
                   >
@@ -732,7 +732,7 @@ export default function Header({
               onClick={() => setIsMobileMenuOpen(false)}
                 className={`px-4 py-3 rounded-lg text-base font-medium text-white/90 hover:text-white hover:bg-off-white/10 transition-colors duration-200 min-h-[48px] flex gap-3 ${mobileRevealClass}`}
               style={{
-                fontFamily: '"DM Sans", 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                fontFamily: 'DM Sans, Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                 fontWeight: 500,
                 transitionDelay: `${(primaryCount + discoverCount + index) * 60}ms`,
               }}
@@ -753,7 +753,7 @@ export default function Header({
               onClick={() => setIsMobileMenuOpen(false)}
               className={`px-4 py-3 rounded-lg text-base font-semibold text-white hover:text-white flex items-center gap-3 transition-colors duration-200 min-h-[48px] ${mobileRevealClass}`}
               style={{
-                fontFamily: '"DM Sans", 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                fontFamily: 'DM Sans, Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                 fontWeight: 500,
                 transitionDelay: `${(primaryCount + discoverCount + businessCount) * 60}ms`,
               }}

@@ -42,8 +42,8 @@ function LeaderboardPodium({ topReviewers }: LeaderboardPodiumProps) {
             <span className="text-sm sm:text-lg font-bold text-white">2</span>
           </div>
         </div>
-        <div className="font-urbanist text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[1].username}</div>
-        <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
+        <div className="font-urbanist text-sm sm:text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[1].username}</div>
+        <div className="font-urbanist text-sm sm:text-xs sm:text-sm text-charcoal/60 mb-2">
           <span className="font-700 text-charcoal">{topReviewers[1].reviews}</span> reviews
         </div>
         {/* Professional Podium Block */}
@@ -77,7 +77,7 @@ function LeaderboardPodium({ topReviewers }: LeaderboardPodiumProps) {
           </div>
         </div>
         <div className="font-urbanist text-sm sm:text-base md:text-xl font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[0].username}</div>
-        <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
+        <div className="font-urbanist text-sm sm:text-xs sm:text-sm text-charcoal/60 mb-2">
           <span className="font-700 text-charcoal">{topReviewers[0].reviews}</span> reviews
         </div>
         {/* Professional Podium Block */}
@@ -110,8 +110,8 @@ function LeaderboardPodium({ topReviewers }: LeaderboardPodiumProps) {
             <span className="text-sm sm:text-lg font-bold text-white">3</span>
           </div>
         </div>
-        <div className="font-urbanist text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[2].username}</div>
-        <div className="font-urbanist text-xs sm:text-sm text-charcoal/60 mb-2">
+        <div className="font-urbanist text-sm sm:text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[2].username}</div>
+        <div className="font-urbanist text-sm sm:text-xs sm:text-sm text-charcoal/60 mb-2">
           <span className="font-700 text-charcoal">{topReviewers[2].reviews}</span> reviews
         </div>
         {/* Professional Podium Block */}

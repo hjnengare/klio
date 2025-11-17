@@ -19,7 +19,7 @@ export default function ValidationMessage({
 }: ValidationMessageProps) {
   if (error) {
     return (
-      <p className="text-xs text-orange-600 flex items-center gap-1 mt-1" role="alert">
+      <p className="text-sm sm:text-xs text-orange-600 flex items-center gap-1 mt-1" role="alert">
         <AlertCircle className="w-3 h-3" />
         {error}
       </p>
@@ -28,7 +28,7 @@ export default function ValidationMessage({
 
   if (value && isValid && touched) {
     return (
-      <p className="text-xs text-coral flex items-center gap-1 mt-1" role="status">
+      <p className="text-sm sm:text-xs text-coral flex items-center gap-1 mt-1" role="status">
         <CheckCircle className="w-3 h-3" />
         {successMessage}
       </p>

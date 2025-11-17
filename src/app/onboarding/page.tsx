@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { useMounted } from "../hooks/useMounted";
+import { useScrollReveal } from "../hooks/useScrollReveal";
 import Logo from "../components/Logo/Logo";
 import OnboardingCarousel from "../components/Onboarding/OnboardingCarousel";
 
@@ -105,6 +106,9 @@ const styles = `
 export default function OnboardingPage() {
   const mounted = useMounted();
 
+  // Initialize scroll reveal (runs once per page load)
+  useScrollReveal({ threshold: 0.1, rootMargin: "0px 0px -50px 0px", once: true });
+
   useEffect(() => {
     document.title = "Onboarding - sayso";
   }, []);
@@ -117,51 +121,62 @@ export default function OnboardingPage() {
         {/* Content only — background objects removed */}
         <div className="w-full mx-auto max-w-[2000px] px-4 sm:px-6 lg:px-8 2xl:px-16 relative z-10 flex flex-col h-full py-4 sm:py-6">
           {/* Logo */}
-          <div className={`text-center mb-8 md:mb-6 flex-shrink-0 flex justify-center ${mounted ? "opacity-0 animate-fade-in-up delay-400" : "opacity-0"}`}>
+          <section data-section className="text-center mb-8 md:mb-6 flex-shrink-0 flex justify-center">
             <Logo variant="onboarding" />
-          </div>
+          </section>
 
           {/* Main content */}
           <div className="text-center flex-1 flex flex-col justify-center min-h-0 py-4">
-            <div className="space-y-6 md:space-y-8">
-              <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-600" : "opacity-0"}`}>
+            <section data-section className="space-y-6 md:space-y-8">
+              <div>
                 <h2
-                  className="text-4xl md:text-5xl font-bold mb-5 md:mb-6 leading-tight tracking-tight px-2 text-charcoal no-hyphens"
-                  style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
+                  className="text-4xl md:text-5xl font-semibold mb-5 md:mb-6 leading-[1.2] tracking-tight px-2 text-charcoal no-hyphens"
+                  style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
                 >
                   Discover local gems near you!
                 </h2>
               </div>
 
-              <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-800" : "opacity-0"}`}>
-                <p className="text-base md:text-lg font-normal text-charcoal/70 leading-relaxed max-w-sm md:max-w-lg lg:max-w-xl mx-auto px-4 no-hyphens"
-                   style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 400 }}>
-                   Explore trusted businesses, leave reviews and see what&apos;s trending around you
+              <div>
+                <p
+                  className="text-body font-normal text-charcoal/70 leading-[1.55] max-w-[70ch] mx-auto px-4 no-hyphens"
+                  style={{
+                    fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                    fontWeight: 400,
+                  }}
+                >
+                  Explore trusted businesses, leave reviews and see what&apos;s trending around you
                 </p>
               </div>
 
               <div className="space-y-3 md:space-y-4 max-w-xs md:max-w-md mx-auto pt-2 md:pt-4">
-                <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-1000" : "opacity-0"}`}>
+                <div>
                   <Link
                     href="/register"
-                    className="group relative block w-[200px] mx-auto rounded-full py-4 px-4 text-sm font-600 text-white text-center flex items-center justify-center bg-gradient-to-r from-coral to-coral/80 hover:from-sage hover:to-sage transition-all duration-300 btn-target btn-press focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2"
-                    style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
+                    className="group relative block w-[200px] mx-auto rounded-full py-4 px-4 text-body font-semibold text-white text-center flex items-center justify-center bg-gradient-to-r from-coral to-coral/80 hover:from-sage hover:to-sage transition-all duration-300 btn-target btn-press focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2"
+                    style={{
+                      fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                      fontWeight: 600,
+                    }}
                   >
                     <span className="relative z-10">Get Started</span>
                   </Link>
                 </div>
 
-                <div className={`${mounted ? "opacity-0 animate-fade-in-up delay-1200" : "opacity-0"}`}>
+                <div>
                   <Link
                     href="/login"
-                    className="block w-full text-coral hover:text-sage text-sm font-600 min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2 relative text-center flex items-center justify-center"
-                    style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
+                    className="block w-full text-coral hover:text-sage text-body font-semibold min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2 relative text-center flex items-center justify-center"
+                    style={{
+                      fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                      fontWeight: 600,
+                    }}
                   >
                     Log in
                   </Link>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
         </div>
       </div>

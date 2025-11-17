@@ -54,7 +54,7 @@ export default function EmailVerificationModal({
               <h3 className="font-urbanist text-lg font-700 text-charcoal">
                 Verify Your Email
               </h3>
-              <p className="font-urbanist text-xs text-charcoal/60">
+              <p className="font-urbanist text-sm sm:text-xs text-charcoal/60">
                 Required to {action}
               </p>
             </div>
@@ -80,7 +80,7 @@ export default function EmailVerificationModal({
               <CheckCircle className="w-4 h-4 text-sage" />
               What you'll unlock:
             </h4>
-            <ul className="space-y-1 text-xs text-charcoal/70">
+            <ul className="space-y-1 text-sm sm:text-xs text-charcoal/70">
               <li className="flex items-center gap-2">
                 <div className="w-1 h-1 bg-sage rounded-full"></div>
                 Post reviews and share experiences
@@ -145,7 +145,7 @@ export default function EmailVerificationModal({
           </div>
 
           {/* Help Text */}
-          <p className="font-urbanist text-xs text-charcoal/50 mt-3 text-center">
+          <p className="font-urbanist text-sm sm:text-xs text-charcoal/50 mt-3 text-center">
             Check your spam folder if you don't see the email
           </p>
         </div>

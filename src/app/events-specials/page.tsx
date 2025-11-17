@@ -89,8 +89,7 @@ export default function EventsSpecialsPage() {
       <main
         className="bg-off-white pt-20 sm:pt-24 pb-28"
         style={{
-          fontFamily:
-            'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+          fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
         }}
       >
         <div className="mx-auto w-full max-w-[2000px] px-2">

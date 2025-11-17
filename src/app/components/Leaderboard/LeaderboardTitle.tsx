@@ -17,7 +17,7 @@ export default function LeaderboardTitle() {
       <h2 className="font-urbanist text-lg sm:text-xl md:text-2xl font-600 text-charcoal mb-2">
         Top Contributors This Month
       </h2>
-      <p className="font-urbanist text-charcoal/70 text-xs sm:text-sm max-w-md mx-auto px-2">
+      <p className="font-urbanist text-charcoal/70 text-sm sm:text-xs sm:text-sm max-w-md mx-auto px-2">
         Celebrating our community&apos;s most valued reviewers and featured businesses
       </p>
     </motion.div>

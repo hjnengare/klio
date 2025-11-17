@@ -139,7 +139,7 @@ export default function CollectionsSection() {
             >
               {/* Sponsored Badge */}
               {business.isSponsored && (
-                <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-coral text-white text-xs font-urbanist font-600 rounded-full">
+                <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-coral text-white text-sm sm:text-xs font-urbanist font-600 rounded-full">
                   Sponsored
                 </div>
               )}
@@ -160,7 +160,7 @@ export default function CollectionsSection() {
                   <span className="ml-1 text-sm font-urbanist font-600 text-charcoal">
                     {business.rating}
                   </span>
-                  <span className="text-xs text-charcoal/60">
+                  <span className="text-sm sm:text-xs text-charcoal/60">
                     ({business.reviewCount})
                   </span>
                 </div>

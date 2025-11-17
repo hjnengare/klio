@@ -72,7 +72,7 @@ export default function ReviewSidebar({ otherReviews, businessInfo, businessRati
                       <p className="text-sm font-600 text-charcoal/80 font-urbanist mb-1">
                         No reviews yet
                       </p>
-                      <p className="text-xs text-charcoal/60 font-urbanist leading-relaxed">
+                      <p className="text-sm sm:text-xs text-charcoal/60 font-urbanist leading-relaxed">
                         Other community reviews will appear here once they're submitted
                       </p>
                     </div>
@@ -165,7 +165,7 @@ export default function ReviewSidebar({ otherReviews, businessInfo, businessRati
                   <p className="text-sm font-600 text-charcoal/80 font-urbanist mb-1">
                     No reviews yet
                   </p>
-                  <p className="text-xs text-charcoal/60 font-urbanist leading-relaxed">
+                  <p className="text-sm sm:text-xs text-charcoal/60 font-urbanist leading-relaxed">
                     Other community reviews will appear here once they're submitted
                   </p>
                 </div>

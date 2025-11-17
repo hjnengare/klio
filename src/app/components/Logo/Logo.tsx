@@ -25,8 +25,8 @@ export default function Logo({
   const domainSizeClasses = {
     default: "text-sm lg:text-base",
     mobile: "text-sm",
-    footer: "text-xs lg:text-sm",
-    onboarding: "text-xs md:text-sm"
+    footer: "text-sm sm:text-xs lg:text-sm",
+    onboarding: "text-sm sm:text-xs md:text-sm"
   };
 
   return (

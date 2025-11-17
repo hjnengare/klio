@@ -88,6 +88,16 @@ module.exports = {
         sf: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'SF Pro Text', 'system-ui', 'sans-serif'],
       },
       fontSize: {
+        // SAYSO Typography Scale (Mobile-first, Base = 18px)
+        'hero': ['36px', { lineHeight: '1.2' }],      // Hero Title
+        'h1': ['30px', { lineHeight: '1.25' }],       // H1
+        'h2': ['24px', { lineHeight: '1.25' }],       // H2
+        'h3': ['20px', { lineHeight: '1.3' }],        // H3
+        'body': ['18px', { lineHeight: '1.55' }],     // Body (Base)
+        'body-sm': ['16px', { lineHeight: '1.5' }],   // Small Body
+        'caption': ['14px', { lineHeight: '1.4' }],   // Caption
+        'micro': ['12px', { lineHeight: '1.4' }],     // Micro Label
+
         // Legacy numbered scale (for gradual migration)
         1: '4.8rem',
         2: '4rem',
@@ -99,19 +109,17 @@ module.exports = {
         8: '1.4rem',
         9: '1.3rem',
 
-        // Mobile-first responsive typography scale
-        // [fontSize, { lineHeight, letterSpacing }]
-        xs: ['0.625rem', { lineHeight: '1.2', letterSpacing: '0.01em' }],   // 10px
-        sm: ['0.75rem', { lineHeight: '1.35', letterSpacing: '0.005em' }],  // 12px
-        base: ['0.875rem', { lineHeight: '1.6' }],                          // 14px
-        lg: ['1rem', { lineHeight: '1.55' }],                               // 16px
-        xl: ['1.125rem', { lineHeight: '1.45' }],                           // 18px
-        'lg': ['1.25rem', { lineHeight: '1.35' }],                         // 20px
-        'lg': ['1.5rem', { lineHeight: '1.25' }],                          // 24px
-        '4xl': ['1.875rem', { lineHeight: '1.2' }],                         // 30px
-        '5xl': ['2.25rem', { lineHeight: '1.1' }],                          // 36px
-        '6xl': ['3rem', { lineHeight: '1.05' }],                            // 48px
-        '7xl': ['3.75rem', { lineHeight: '1' }],                            // 60px
+        // Standard Tailwind sizes (kept for compatibility)
+        xs: ['0.75rem', { lineHeight: '1.4' }],       // 12px
+        sm: ['0.875rem', { lineHeight: '1.4' }],      // 14px
+        base: ['1rem', { lineHeight: '1.5' }],        // 16px
+        lg: ['1.125rem', { lineHeight: '1.55' }],     // 18px
+        xl: ['1.25rem', { lineHeight: '1.3' }],       // 20px
+        '2xl': ['1.5rem', { lineHeight: '1.25' }],    // 24px
+        '3xl': ['1.875rem', { lineHeight: '1.2' }],   // 30px
+        '4xl': ['2.25rem', { lineHeight: '1.2' }],    // 36px
+        '5xl': ['3rem', { lineHeight: '1.1' }],       // 48px
+        '6xl': ['3.75rem', { lineHeight: '1' }],      // 60px
       },
       fontWeight: {
         400: '400',

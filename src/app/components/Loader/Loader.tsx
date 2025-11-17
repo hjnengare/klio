@@ -31,7 +31,7 @@ export interface LoaderProps {
 // =============================================================================
 
 const sizeConfig: Record<LoaderSize, { spinner: string; dot: string; bar: string; text: string }> = {
-  xs: { spinner: "w-3 h-3 border-2", dot: "w-1.5 h-1.5", bar: "w-1 h-3", text: "text-xs" },
+  xs: { spinner: "w-3 h-3 border-2", dot: "w-1.5 h-1.5", bar: "w-1 h-3", text: "text-sm sm:text-xs" },
   sm: { spinner: "w-4 h-4 border-2", dot: "w-2 h-2", bar: "w-1 h-4", text: "text-sm" },
   md: { spinner: "w-6 h-6 border-2", dot: "w-2.5 h-2.5", bar: "w-1.5 h-5", text: "text-sm" },
   lg: { spinner: "w-8 h-8 border-[3px]", dot: "w-3 h-3", bar: "w-2 h-6", text: "text-base" },

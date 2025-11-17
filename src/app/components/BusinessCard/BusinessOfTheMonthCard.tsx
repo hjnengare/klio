@@ -86,7 +86,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
       id={idForSnap}
       className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[25%] md:min-w-[25%] xl:min-w-[25%] flex-shrink-0"
       style={{
-        fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
         fontWeight: 600,
       }}
     >
@@ -185,7 +185,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
             <Star className="w-3.5 h-3.5 text-coral fill-coral" />
             <span className="text-sm font-semibold" style={{
-              fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+              fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
               fontWeight: 600,
             }}>
               {hasReviews ? Number(displayTotal).toFixed(1) : "New"}
@@ -247,8 +247,8 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             </h3>
           </div>
 
-          <div className="mb-3 flex items-center justify-center gap-1.5 text-xs text-charcoal/70 cursor-pointer" style={{ 
-            fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+          <div className="mb-3 flex items-center justify-center gap-1.5 text-sm sm:text-xs text-charcoal/70 cursor-pointer" style={{ 
+            fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
             fontWeight: 600,
             WebkitFontSmoothing: 'antialiased',
             MozOsxFontSmoothing: 'grayscale',
@@ -267,8 +267,8 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             <Stars value={business.rating} color="coral/90" />
             {hasReviews ? (
               <>
-                <p className="text-xs font-600 leading-none text-charcoal" style={{ 
-                  fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+                <p className="text-sm sm:text-xs font-600 leading-none text-charcoal" style={{ 
+                  fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                   fontWeight: 600,
                   WebkitFontSmoothing: 'antialiased',
                   MozOsxFontSmoothing: 'grayscale',
@@ -276,8 +276,8 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
                 }}>
                   {business.reviews}
                 </p>
-                <p className="text-xs leading-none text-charcoal/60" style={{ 
-                  fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+                <p className="text-sm sm:text-xs leading-none text-charcoal/60" style={{ 
+                  fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                   fontWeight: 600,
                   WebkitFontSmoothing: 'antialiased',
                   MozOsxFontSmoothing: 'grayscale',
@@ -285,8 +285,8 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
                 }}>reviews</p>
               </>
             ) : (
-              <p className="text-xs leading-none text-charcoal/60" style={{ 
-                fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+              <p className="text-sm sm:text-xs leading-none text-charcoal/60" style={{ 
+                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                 fontWeight: 600,
                 WebkitFontSmoothing: 'antialiased',
                 MozOsxFontSmoothing: 'grayscale',
@@ -297,8 +297,8 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
 
           {/* Month chip */}
           <div className="flex items-center justify-center gap-2 mb-4 cursor-pointer">
-            <div className="px-3 py-1.5 rounded-full bg-white/40 text-charcoal text-xs font-600 border border-white/40" style={{ 
-              fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+            <div className="px-3 py-1.5 rounded-full bg-white/40 text-charcoal text-sm sm:text-xs font-600 border border-white/40" style={{ 
+              fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
               fontWeight: 600,
               WebkitFontSmoothing: 'antialiased',
               MozOsxFontSmoothing: 'grayscale',
@@ -311,14 +311,14 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           {/* Mobile actions - always visible on card */}
           <div className="flex md:hidden items-center justify-center gap-3 mt-3">
             <button
-              className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-sage to-sage/90 text-white rounded-full text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 transition-all active:scale-95"
+              className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-sage to-sage/90 text-white rounded-full text-sm sm:text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 transition-all active:scale-95"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle write review
               }}
               aria-label={`Write a review for ${business.name}`}
               style={{ 
-                fontFamily: 'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
                 fontWeight: 600,
                 WebkitFontSmoothing: 'antialiased',
                 MozOsxFontSmoothing: 'grayscale',

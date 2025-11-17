@@ -104,7 +104,7 @@ export default function EmailVerificationGuard({
               <CheckCircle className="w-4 h-4 text-sage" />
               What you'll unlock:
             </h3>
-            <ul className="space-y-2 text-xs text-charcoal/70">
+            <ul className="space-y-2 text-sm sm:text-xs text-charcoal/70">
               <li className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-sage rounded-full"></div>
                 Post reviews and share your experiences
@@ -165,7 +165,7 @@ export default function EmailVerificationGuard({
           </div>
 
           {/* Help Text */}
-          <p className="font-urbanist text-xs text-charcoal/50 mt-4">
+          <p className="font-urbanist text-sm sm:text-xs text-charcoal/50 mt-4">
             Didn't receive the email? Check your spam folder or try resending.
           </p>
         </div>

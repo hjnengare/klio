@@ -206,7 +206,7 @@ function BusinessCard({
       className={`snap-start snap-always flex-shrink-0 ${compact ? 'w-auto' : 'w-[100vw] sm:w-auto sm:min-w-[25%] md:min-w-[25%] xl:min-w-[25%]'
         }`}
       style={{
-        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+        fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
         fontWeight: 600,
       }}
     >
@@ -308,7 +308,7 @@ function BusinessCard({
             <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1 rounded-full bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
               <Star className="w-3.5 h-3.5 text-coral fill-coral" aria-hidden />
               <span className="text-sm font-semibold text-charcoal" style={{ 
-                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
+                fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
                 fontWeight: 600
               }}>
                 {Number(displayRating).toFixed(1)}
@@ -319,7 +319,7 @@ function BusinessCard({
           {!hideStar && !hasRating && (
             <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1 rounded-full bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
               <span className="text-sm font-semibold text-charcoal" style={{ 
-                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
+                fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
                 fontWeight: 600
               }}>
                 New
@@ -386,7 +386,7 @@ function BusinessCard({
                     aria-label={`View ${business.name} details`}
                   >
                     <h3
-                      className="text-base font-bold text-inherit text-center leading-tight line-clamp-2 tracking-tight transition-colors duration-300 group-hover:text-navbar-bg/90"
+                      className="text-h3 font-semibold text-inherit text-center leading-[1.3] line-clamp-2 tracking-tight transition-colors duration-300 group-hover:text-navbar-bg/90"
                       style={{
                         fontFamily: '"DM Sans", system-ui, sans-serif',
                         fontWeight: 700,
@@ -402,9 +402,9 @@ function BusinessCard({
                 </div>
                 {/* Category and Location - Combined with bullet separator */}
                 <div
-                  className="flex items-center justify-center gap-1.5 text-xs text-charcoal/70 min-h-[20px]"
+                  className="flex items-center justify-center gap-1.5 text-body-sm sm:text-caption text-charcoal/70 min-h-[20px]"
                   style={{
-                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+                    fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                     fontWeight: 600,
                     WebkitFontSmoothing: 'antialiased',
                     MozOsxFontSmoothing: 'grayscale',
@@ -420,7 +420,7 @@ function BusinessCard({
                         href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${business.name} ${business.location || business.address || ''}`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-semibold text-charcoal transition-colors duration-200 hover:text-navbar-bg/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-coral/30 rounded-full px-2 py-1"
+                        className="inline-flex items-center gap-1 text-body-sm sm:text-caption font-semibold text-charcoal transition-colors duration-200 hover:text-navbar-bg/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-coral/30 rounded-full px-2 py-1"
                         aria-label={`Open ${business.name} in maps`}
                       >
                         <MapPin className="w-3 h-3 text-navbar-bg/90 stroke-[2.5] transition-colors duration-200 group-hover:text-navbar-bg/90" />
@@ -448,9 +448,9 @@ function BusinessCard({
                               handleCardClick();
                             }
                           }}
-                          className="inline-flex items-center justify-center text-xs font-semibold leading-none text-charcoal underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral"
+                          className="inline-flex items-center justify-center text-sm sm:text-xs font-semibold leading-none text-charcoal underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral"
                           style={{
-                            fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+                            fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                             fontWeight: 600
                           }}
                         >
@@ -469,9 +469,9 @@ function BusinessCard({
                               handleCardClick();
                             }
                           }}
-                          className="inline-flex items-center justify-center text-xs leading-none text-charcoal/60 underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral"
+                          className="inline-flex items-center justify-center text-sm sm:text-xs leading-none text-charcoal/60 underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral"
                           style={{
-                            fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+                            fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                             fontWeight: 600
                           }}
                         >
@@ -492,9 +492,9 @@ function BusinessCard({
                             handleWriteReview();
                           }
                         }}
-                        className={`inline-flex items-center justify-center text-xs text-charcoal underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral min-w-[92px] text-center ${compact ? 'lg:order-1 lg:mb-1' : ''}`}
+                        className={`inline-flex items-center justify-center text-sm sm:text-xs text-charcoal underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral min-w-[92px] text-center ${compact ? 'lg:order-1 lg:mb-1' : ''}`}
                         style={{
-                          fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+                          fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                           fontWeight: 600
                         }}
                       >
@@ -535,14 +535,14 @@ function BusinessCard({
           {/* Mobile actions - Minimal */}
           <div className="flex md:hidden items-center justify-center pt-4 border-t border-off-white/30">
             <button
-              className="flex-1 flex items-center justify-center gap-1.5 px-4 py-3 bg-gradient-to-br from-navbar-bg to-navbar-bg/90 text-white rounded-full text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 transition-all active:scale-95 min-h-[48px]"
+              className="flex-1 flex items-center justify-center gap-1.5 px-4 py-3 bg-gradient-to-br from-navbar-bg to-navbar-bg/90 text-white rounded-full text-sm sm:text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 transition-all active:scale-95 min-h-[48px]"
               onClick={(e) => {
                 e.stopPropagation();
                 handleWriteReview();
               }}
               aria-label={`Write a review for ${business.name}`}
               style={{
-                fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+                fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                 fontWeight: 600,
               }}
             >

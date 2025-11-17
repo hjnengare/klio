@@ -475,7 +475,7 @@ function ProfileContent() {
                     strokeWidth={2.5}
                   />
                 </div>
-                <h1 className="font-urbanist text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none">
+                <h1 className="text-h3 sm:text-h2 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
                   {displayLabel}
                 </h1>
               </Link>
@@ -545,18 +545,19 @@ function ProfileContent() {
                               <div className="flex items-center gap-2 mb-2 flex-wrap">
                                 <h2
                                   id="profile-heading"
-                                  className="text-xl sm:text-2xl font-bold text-charcoal"
+                                  className="text-h1 sm:text-hero font-semibold text-charcoal"
+                                  style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
                                 >
                                   {displayLabel}
                                 </h2>
                                 {profile.is_top_reviewer && (
-                                  <div className="px-2 py-1 rounded-full text-xs font-600 flex items-center gap-1 bg-sage/20 text-sage">
+                                  <div className="px-2 py-1 rounded-full text-caption font-semibold flex items-center gap-1 bg-sage/20 text-sage">
                                     <Award size={12} />
                                     <span className="capitalize">Top Reviewer</span>
                                   </div>
                                 )}
                               </div>
-                              <div className="flex items-center gap-4 mb-4 text-sm text-charcoal/70 flex-wrap">
+                              <div className="flex items-center gap-4 mb-4 text-body-sm text-charcoal/70 flex-wrap">
                                 <div className="flex items-center gap-1">
                                   <MapPin size={14} />
                                   <span>{profileLocation}</span>
@@ -582,7 +583,7 @@ function ProfileContent() {
                               <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                                 <button
                                   onClick={() => setIsEditOpen(true)}
-                                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-coral/90 hover:bg-charcoal/90 hover:border-white/30 text-white rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-sage/20 border border-sage/20 whitespace-nowrap"
+                                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-coral/90 hover:bg-charcoal/90 hover:border-white/30 text-white rounded-full text-caption sm:text-body-sm font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-sage/20 border border-sage/20 whitespace-nowrap"
                                   aria-label="Edit profile"
                                 >
                                   <MessageSquare size={14} strokeWidth={2.5} className="sm:w-4 sm:h-4" />
@@ -590,7 +591,7 @@ function ProfileContent() {
                                 </button>
                                 <Link
                                   href="/write-review"
-                                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-white/90 hover:bg-off-white text-charcoal rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-charcoal/10 border border-charcoal/10 whitespace-nowrap"
+                                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-white/90 hover:bg-off-white text-charcoal rounded-full text-caption sm:text-body-sm font-semibold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-charcoal/10 border border-charcoal/10 whitespace-nowrap"
                                   aria-label="Write a review"
                                 >
                                   <TrendingUp size={14} strokeWidth={2.5} className="sm:w-4 sm:h-4" />

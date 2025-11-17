@@ -23,7 +23,7 @@ export default function SubcategorySelection({ selectedCount, children }: Subcat
           <CheckCircle className="w-4 h-4 text-sage" />
         )}
       </div>
-      <p className="text-xs text-charcoal/60" style={sfPro}>
+      <p className="text-sm sm:text-xs text-charcoal/60" style={sfPro}>
         {selectedCount === 0
           ? "Select at least one subcategory to continue"
           : "Great! Select more or continue"}
