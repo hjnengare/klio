@@ -216,32 +216,6 @@ export default function Home() {
   );
 }
 
-// ================================
-// File: src/hooks/useScrollReveal.ts
-// Description: No-op stub to globally disable scroll reveal without refactors
-// ================================
-
-export type ScrollRevealOptions = {
-  rootMargin?: string;
-  threshold?: number | number[];
-};
-
-/**
- * A no-op replacement for any previous scroll-reveal hook.
- * Importing this hook will do nothing, preventing animations.
- */
-export function useScrollReveal(_opts?: ScrollRevealOptions) {
-  // Intentionally empty — ensures components that call this hook won't throw
-  // and will render instantly with no IntersectionObserver created.
-  return null;
-}
-
-// If you previously had a provider or context for scroll-reveal, consider exporting
-// shadowed versions here to avoid breaking imports:
-export const ScrollRevealProvider: React.FC<React.PropsWithChildren> = ({ children }) => (
-  <>{children}</>
-);
-
 
 
 
