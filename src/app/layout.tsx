@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import "./globals.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { OnboardingProvider } from "./contexts/OnboardingContext";
@@ -9,12 +9,12 @@ import { SavedItemsProvider } from "./contexts/SavedItemsContext";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 // Lazy load non-critical components for faster initial load
-const PageTransitionProvider = dynamic(() => import("./components/Providers/PageTransitionProvider"), {
+const PageTransitionProvider = nextDynamic(() => import("./components/Providers/PageTransitionProvider"), {
   ssr: true,
 });
-const WebVitals = dynamic(() => import("./components/Performance/WebVitals"));
-const BusinessNotifications = dynamic(() => import("./components/Notifications/BusinessNotifications"));
-const ClientLayoutWrapper = dynamic(() => import("./components/Performance/ClientLayoutWrapper"));
+const WebVitals = nextDynamic(() => import("./components/Performance/WebVitals"));
+const BusinessNotifications = nextDynamic(() => import("./components/Notifications/BusinessNotifications"));
+const ClientLayoutWrapper = nextDynamic(() => import("./components/Performance/ClientLayoutWrapper"));
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://local-gems.vercel.app'),
   title: "sayso - Discover trusted sayso near you",
   description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
-  keywords: "local business, restaurants, reviews, recommendations, sayso",
+  keywords: ["local business", "restaurants", "reviews", "recommendations", "sayso"],
   authors: [{ name: "sayso" }],
   creator: "sayso",
   openGraph: {
@@ -58,6 +58,9 @@ export const metadata: Metadata = {
 };
 
 export const runtime = "nodejs";
+// Force dynamic rendering at layout level to prevent static generation issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default function RootLayout({
   children,

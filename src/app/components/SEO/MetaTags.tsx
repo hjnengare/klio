@@ -15,10 +15,13 @@ export function generateMetadata({
   ogImage = "/og-image.jpg",
   canonical,
 }: MetaTagsProps = {}): Metadata {
+  // Ensure keywords is always an array
+  const keywordsArray = Array.isArray(keywords) ? keywords : [];
+  
   return {
     title,
     description,
-    keywords: keywords.join(", "),
+    keywords: keywordsArray.join(", "),
     authors: [{ name: "sayso Team" }],
     openGraph: {
       title,

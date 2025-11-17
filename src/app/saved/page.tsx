@@ -1,6 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import { useMemo } from "react";
 import { getBusinessesByIds } from "../data/businessDataOptimized";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
@@ -9,7 +9,11 @@ import SavedHeader from "../components/Saved/SavedHeader";
 import SavedBusinessRow from "../components/Saved/SavedBusinessRow";
 import EmptySavedState from "../components/Saved/EmptySavedState";
 
-const Footer = dynamic(() => import("../components/Footer/Footer"), {
+// Force dynamic rendering to prevent static generation issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+const Footer = nextDynamic(() => import("../components/Footer/Footer"), {
   loading: () => null,
   ssr: false,
 });
@@ -19,7 +23,7 @@ export default function SavedPage() {
 
   // Optimized filtering using the optimized data structure
   const savedBusinesses = useMemo(() => {
-    if (savedItems.length === 0) return [];
+    if (!savedItems || savedItems.length === 0) return [];
     return getBusinessesByIds(savedItems);
   }, [savedItems]);
 

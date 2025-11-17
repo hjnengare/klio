@@ -14,6 +14,9 @@ import SearchInput from "../components/SearchInput/SearchInput";
 import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
 import { useUserPreferences } from "../hooks/useUserPreferences";
 
+// Force dynamic rendering to prevent static generation issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const ITEMS_PER_PAGE = 12;
 
@@ -22,7 +25,8 @@ export default function ForYouPage() {
   const { businesses: forYouBusinesses, loading } = useForYouBusinesses(50); // Fetch more for pagination
   const { businesses: trendingBusinesses, loading: trendingLoading } = useTrendingBusinesses(50);
   const { interests, subcategories } = useUserPreferences();
-  const hasPersonalization = (interests.length + subcategories.length) > 0;
+  // Add defensive checks for undefined arrays
+  const hasPersonalization = ((interests?.length || 0) + (subcategories?.length || 0)) > 0;
   const activeBusinesses = hasPersonalization ? forYouBusinesses : trendingBusinesses;
   const activeLoading = hasPersonalization ? loading : trendingLoading;
   const headingTitle = hasPersonalization ? "For You" : "Trending Now";

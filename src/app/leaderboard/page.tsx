@@ -4,7 +4,7 @@
 import { useState, useMemo, memo } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 import Header from "../components/Header/Header";
 import LeaderboardPodium from "../components/Leaderboard/LeaderboardPodium";
@@ -14,7 +14,11 @@ import BusinessOfMonthLeaderboard from "../components/Leaderboard/BusinessOfMont
 import { Tabs } from "@/components/atoms/Tabs";
 import { useBusinesses } from "../hooks/useBusinesses";
 
-const Footer = dynamic(() => import("../components/Footer/Footer"), {
+// Force dynamic rendering to prevent static generation issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+const Footer = nextDynamic(() => import("../components/Footer/Footer"), {
   loading: () => null,
   ssr: false,
 });

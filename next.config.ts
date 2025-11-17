@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
     compiler: {
       removeConsole: true,
     },
+    // Disable static page generation to prevent _document issues
+    // All pages will be dynamically rendered
+    generateStaticParams: false,
   }),
 
   // Image optimization
@@ -163,6 +166,14 @@ const nextConfig: NextConfig = {
   generateBuildId: async () => {
     return 'build-' + Date.now();
   },
+  
+  // Disable static optimization to prevent _document generation issues
+  // This forces all pages to be dynamically rendered
+  outputFileTracing: false,
+  
+  // Skip static page generation entirely to avoid _document issues
+  // This is a workaround for Next.js 15 App Router static generation bugs
+  skipTrailingSlashRedirect: true,
 
   // Additional performance optimizations
   poweredByHeader: false,

@@ -12,6 +12,10 @@ import { useUserPreferences } from "../hooks/useUserPreferences";
 import SearchInput from "../components/SearchInput/SearchInput";
 import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
 
+// Force dynamic rendering to prevent static generation issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const ITEMS_PER_PAGE = 12;
 
 export default function TrendingPage() {
@@ -19,7 +23,7 @@ export default function TrendingPage() {
   const { interests, subcategories, dealbreakers } = useUserPreferences();
 
   const dealbreakerIds = useMemo(
-    () => dealbreakers.map((dealbreaker) => dealbreaker.id),
+    () => (dealbreakers || []).map((dealbreaker) => dealbreaker.id),
     [dealbreakers]
   );
 

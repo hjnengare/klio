@@ -6,7 +6,7 @@
 "use client";
 
 import { memo, useState, useEffect } from "react";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import { ChevronUp } from "react-feather";
 import PromoBar from "../components/PromoBar/PromoBar";
 import HeroCarousel from "../components/Hero/HeroCarousel";
@@ -21,23 +21,27 @@ import { useOnboarding } from "../contexts/OnboardingContext";
 import { useBusinesses, useForYouBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 import { useRoutePrefetch } from "../hooks/useRoutePrefetch";
 
+// Force dynamic rendering to prevent static generation issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Removed any animation / scroll-reveal classes and imports.
 
-const EventsSpecials = dynamic(
+const EventsSpecials = nextDynamic(
   () => import("../components/EventsSpecials/EventsSpecials"),
   {
     loading: () => <div className="h-96 bg-off-white/50" />,
   }
 );
 
-const CommunityHighlights = dynamic(
+const CommunityHighlights = nextDynamic(
   () => import("../components/CommunityHighlights/CommunityHighlights"),
   {
     loading: () => <div className="h-96 bg-off-white/50" />,
   }
 );
 
-const Footer = dynamic(() => import("../components/Footer/Footer"), {
+const Footer = nextDynamic(() => import("../components/Footer/Footer"), {
   loading: () => <div className="h-64 bg-charcoal" />,
 });
 
@@ -68,7 +72,7 @@ export default function Home() {
   };
 
   const featuredByCategory = (() => {
-    if (!allBusinesses || allBusinesses.length === 0) return [];
+    if (!allBusinesses || !Array.isArray(allBusinesses) || allBusinesses.length === 0) return [];
 
     const byCategory = new Map<string, any>();
 

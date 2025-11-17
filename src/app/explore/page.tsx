@@ -12,16 +12,20 @@ import SearchInput from "../components/SearchInput/SearchInput";
 import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
 import { ChevronLeft, ChevronRight, ChevronUp } from "react-feather";
 
+// Force dynamic rendering to prevent static generation issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const ITEMS_PER_PAGE = 12;
 
 export default function ExplorePage() {
   const { interests, subcategories, dealbreakers } = useUserPreferences();
   const preferenceIds = useMemo(
-    () => interests.map((interest) => interest.id).concat(subcategories.map((sub) => sub.id)),
+    () => (interests || []).map((interest) => interest.id).concat((subcategories || []).map((sub) => sub.id)),
     [interests, subcategories]
   );
   const dealbreakerIds = useMemo(
-    () => dealbreakers.map((dealbreaker) => dealbreaker.id),
+    () => (dealbreakers || []).map((dealbreaker) => dealbreaker.id),
     [dealbreakers]
   );
   const preferredPriceRanges = useMemo(() => {

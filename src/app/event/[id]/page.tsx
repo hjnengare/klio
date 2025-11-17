@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Calendar } from "react-feather";
 import { EVENTS_AND_SPECIALS, Event } from "../../data/eventsData";
 import { useToast } from "../../contexts/ToastContext";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import { PageLoader } from "../../components/Loader";
 import {
   EventDetailHeader,
@@ -17,7 +17,11 @@ import {
   EventContactInfo,
 } from "../../components/EventDetail";
 
-const Footer = dynamic(() => import("../../components/Footer/Footer"), {
+// Force dynamic rendering to prevent static generation issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+const Footer = nextDynamic(() => import("../../components/Footer/Footer"), {
   loading: () => null,
   ssr: false,
 });
