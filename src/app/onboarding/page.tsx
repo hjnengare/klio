@@ -126,55 +126,53 @@ export default function OnboardingPage() {
           </section>
 
           {/* Main content */}
-          <div className="text-center flex-1 flex flex-col justify-center min-h-0 py-4">
-            <section data-section className="space-y-6 md:space-y-8">
-              <div>
-                <h2
-                  className="text-4xl md:text-5xl font-semibold mb-5 md:mb-6 leading-[1.2] tracking-tight px-2 text-charcoal no-hyphens"
-                  style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
-                >
-                  Discover local gems near you!
-                </h2>
-              </div>
+          <div className="text-center flex-1 flex flex-col justify-center min-h-0 py-4 space-y-6 md:space-y-8">
+            <section data-section>
+              <h2
+                className="text-4xl md:text-5xl font-semibold mb-5 md:mb-6 leading-[1.2] tracking-tight px-2 text-charcoal no-hyphens"
+                style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+              >
+                Discover local gems near you!
+              </h2>
+            </section>
 
+            <section data-section>
+              <p
+                className="text-body font-normal text-charcoal/70 leading-[1.55] max-w-[70ch] mx-auto px-4 no-hyphens"
+                style={{
+                  fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                  fontWeight: 400,
+                }}
+              >
+                Explore trusted businesses, leave reviews and see what&apos;s trending around you
+              </p>
+            </section>
+
+            <section data-section className="space-y-3 md:space-y-4 max-w-xs md:max-w-md mx-auto pt-2 md:pt-4">
               <div>
-                <p
-                  className="text-body font-normal text-charcoal/70 leading-[1.55] max-w-[70ch] mx-auto px-4 no-hyphens"
+                <Link
+                  href="/register"
+                  className="group relative block w-[200px] mx-auto rounded-full py-4 px-4 text-body font-semibold text-white text-center flex items-center justify-center bg-gradient-to-r from-coral to-coral/80 hover:from-sage hover:to-sage transition-all duration-300 btn-target btn-press focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2"
                   style={{
                     fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-                    fontWeight: 400,
+                    fontWeight: 600,
                   }}
                 >
-                  Explore trusted businesses, leave reviews and see what&apos;s trending around you
-                </p>
+                  <span className="relative z-10">Get Started</span>
+                </Link>
               </div>
 
-              <div className="space-y-3 md:space-y-4 max-w-xs md:max-w-md mx-auto pt-2 md:pt-4">
-                <div>
-                  <Link
-                    href="/register"
-                    className="group relative block w-[200px] mx-auto rounded-full py-4 px-4 text-body font-semibold text-white text-center flex items-center justify-center bg-gradient-to-r from-coral to-coral/80 hover:from-sage hover:to-sage transition-all duration-300 btn-target btn-press focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2"
-                    style={{
-                      fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-                      fontWeight: 600,
-                    }}
-                  >
-                    <span className="relative z-10">Get Started</span>
-                  </Link>
-                </div>
-
-                <div>
-                  <Link
-                    href="/login"
-                    className="block w-full text-coral hover:text-sage text-body font-semibold min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2 relative text-center flex items-center justify-center"
-                    style={{
-                      fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-                      fontWeight: 600,
-                    }}
-                  >
-                    Log in
-                  </Link>
-                </div>
+              <div>
+                <Link
+                  href="/login"
+                  className="block w-full text-coral hover:text-sage text-body font-semibold min-h-[48px] py-3 px-6 transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2 relative text-center flex items-center justify-center"
+                  style={{
+                    fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                    fontWeight: 600,
+                  }}
+                >
+                  Log in
+                </Link>
               </div>
             </section>
           </div>
