@@ -154,7 +154,7 @@ export default function Home() {
       <div className="bg-off-white">
         <div className="pb-12 sm:pb-16 md:pb-20">
           {/* Scroll reveal sections */}
-          <section data-section>
+          <section data-section className="pt-4 sm:pt-8 md:pt-10">
             {forYouLoading && <BusinessRowSkeleton title="For You" />}
             {!forYouLoading && hasForYouBusinesses && (
               <MemoizedBusinessRow title="For You" businesses={forYouBusinesses} cta="See More" href="/for-you" />
@@ -173,7 +173,7 @@ export default function Home() {
             )}
           </section>
 
-          <section data-section>
+          <section data-section className="pt-4 sm:pt-8 md:pt-10">
             {trendingLoading && <BusinessRowSkeleton title="Trending Now" />}
             {!trendingLoading && hasTrendingBusinesses && (
               <MemoizedBusinessRow title="Trending Now" businesses={trendingBusinesses} cta="See More" href="/trending" />
@@ -185,11 +185,11 @@ export default function Home() {
             )}
           </section>
 
-          <section data-section>
+          <section data-section className="pt-4 sm:pt-8 md:pt-10">
             <EventsSpecials events={EVENTS_AND_SPECIALS.slice(0, 5)} />
           </section>
 
-          <section data-section>
+          <section data-section className="pt-4 sm:pt-8 md:pt-10">
             <CommunityHighlights
               reviews={FEATURED_REVIEWS}
               topReviewers={TOP_REVIEWERS}

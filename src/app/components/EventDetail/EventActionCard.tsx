@@ -10,38 +10,43 @@ export default function EventActionCard() {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5, duration: 0.6 }}
-      className="bg-card-bg backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4 sticky top-24"
+      className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4 sm:p-6 relative overflow-hidden"
     >
-      <h3
-        className="text-base font-semibold text-charcoal mb-3"
-        style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
-      >
-        Join This Event
-      </h3>
-
-      <div className="space-y-3">
-        <button
-          className="w-full bg-navbar-bg text-white font-semibold py-3 px-5 rounded-full transition-all duration-300 hover:bg-navbar-bg/90 hover:shadow-lg text-sm"
-          style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+      {/* Gradient overlays matching user profile */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg"></div>
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-lg"></div>
+      
+      <div className="relative z-10">
+        <h3
+          className="text-h3 font-semibold text-charcoal mb-3"
+          style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
         >
-          Reserve Your Spot
-        </button>
+          Join This Event
+        </h3>
 
-        <button
-          className="w-full bg-white/40 text-charcoal font-semibold py-3 px-5 rounded-full transition-all duration-300 hover:bg-charcoal hover:text-white hover:shadow-lg text-sm"
-          style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
-        >
-          Contact Organizer
-        </button>
-      </div>
+        <div className="space-y-3">
+          <button
+            className="w-full bg-navbar-bg text-white font-semibold py-3 px-5 rounded-full transition-all duration-300 hover:bg-navbar-bg/90 hover:shadow-lg text-body-sm"
+            style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
+          >
+            Reserve Your Spot
+          </button>
 
-      <div className="mt-4 pt-4 border-t border-charcoal/10">
-        <h4
-          className="text-sm font-semibold text-charcoal/80 mb-2.5"
-          style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
-        >
-          Share Event
-        </h4>
+          <button
+            className="w-full bg-white/40 text-charcoal font-semibold py-3 px-5 rounded-full transition-all duration-300 hover:bg-charcoal hover:text-white hover:shadow-lg text-body-sm"
+            style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
+          >
+            Contact Organizer
+          </button>
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-charcoal/10">
+          <h4
+            className="text-body-sm font-semibold text-charcoal/80 mb-2.5"
+            style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
+          >
+            Share Event
+          </h4>
         <div className="flex gap-2">
           <button className="flex-1 bg-white/30 hover:bg-navbar-bg text-navbar-bg hover:text-white py-2 px-3 rounded-full transition-all duration-200">
             <Facebook size={16} className="mx-auto" />
@@ -53,6 +58,7 @@ export default function EventActionCard() {
             <Twitter size={16} className="mx-auto" />
           </button>
         </div>
+      </div>
       </div>
     </motion.div>
   );

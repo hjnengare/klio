@@ -84,11 +84,6 @@ export default function BusinessProfilePage() {
     const [modalPosition, setModalPosition] = useState({ top: 0, right: 0 });
     const [showScrollTop, setShowScrollTop] = useState(false);
 
-    // Prefetch review page on mount
-    const reviewRoute = useMemo(() => `/business/review?business_id=${businessId}`, [businessId]);
-    useEffect(() => {
-        router.prefetch(reviewRoute);
-    }, [router, reviewRoute]);
 
     // Calculate modal position based on button position
     useEffect(() => {
@@ -320,7 +315,7 @@ export default function BusinessProfilePage() {
                                     <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                                 </div>
                                 <h1
-                                    className="text-h3 sm:text-h2 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
+                                    className="text-body font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
                                     style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
                                 >
                                     {businessData.name}
@@ -333,27 +328,13 @@ export default function BusinessProfilePage() {
                                     <button
                                         ref={buttonRef}
                                         onClick={() => setShowSpecialsModal(true)}
-                                        className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-caption font-semibold transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                        className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
                                         aria-label="View events and specials"
                                     >
                                         <Calendar className="w-3 h-3" />
-                                        <span className="hidden sm:inline">Events & Specials</span>
+                                        <span className="hidden lg:inline">Events & Specials</span>
                                     </button>
                                 </div>
-
-                                {/* Write Review Button - Only show to authenticated users who are not the owner */}
-                                {user && !isBusinessOwner && (
-                                    <Link
-                                        href={`/business/review?business_id=${businessId}`}
-                                        prefetch={true}
-                                        className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
-                                        aria-label={`Write a review for ${businessData.name}`}
-                                        onMouseEnter={() => router.prefetch(reviewRoute)}
-                                    >
-                                        <Edit className="w-3 h-3" />
-                                        <span className="hidden md:inline">Write Review</span>
-                                    </Link>
-                                )}
 
                                 {/* Edit Button - Only show to business owner */}
                                 {isBusinessOwner && (
@@ -368,10 +349,10 @@ export default function BusinessProfilePage() {
 
                                 {/* Leave Review Button */}
                                 <Link
-                                    href={`/business/review?business_id=${businessId}`}
+                                    href={`/business/${businessId}/review`}
                                     prefetch={true}
                                     className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
-                                    onMouseEnter={() => router.prefetch(reviewRoute)}
+                                    onMouseEnter={() => router.prefetch(`/business/${businessId}/review`)}
                                 >
                                     <Edit className="w-3 h-3" />
                                     <span className="hidden lg:inline">Leave a Review</span>
@@ -382,9 +363,9 @@ export default function BusinessProfilePage() {
                 </header>
 
                 <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white ">
-                    <div className="py-1 pt-20 md:px-20 sm:px-4">
+                    <div className="py-1 pt-20 sm:px-4">
                         <main className="relative font-sf-pro pt-4 sm:pt-6" id="main-content" role="main" aria-label="Business profile content">
-                            <div className="mx-auto w-full max-w-[2000px] px-3 sm:px-6 lg:px-10 2xl:px-16 relative z-10">
+                            <div className="mx-auto w-full max-w-[2000px] px-3 relative z-10">
                                 <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
 
 
@@ -455,15 +436,15 @@ export default function BusinessProfilePage() {
                                                         <h3 className="text-h2 font-semibold text-charcoal mb-2" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
                                                             No reviews yet
                                                         </h3>
-                                                        <p className="text-body text-charcoal/70 mb-6 max-w-[70ch]" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
+                                                        <p className="text-body text-charcoal/70 mb-6 max-w-[70ch] mx-auto text-center" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                                                             Be the first to review this business!
                                                         </p>
                                                         <Link
-                                                            href={`/business/review?business_id=${businessId}`}
+                                                            href={`/business/${businessId}/review`}
                                                             prefetch={true}
                                                             className="inline-block px-6 py-3 bg-coral text-white rounded-full text-body font-semibold hover:bg-coral/90 transition-colors"
                                                             style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
-                                                            onMouseEnter={() => router.prefetch(reviewRoute)}
+                                                            onMouseEnter={() => router.prefetch(`/business/${businessId}/review`)}
                                                         >
                                                             Write First Review
                                                         </Link>

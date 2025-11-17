@@ -90,8 +90,8 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
           <div className="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
             <Calendar className="w-7 h-7 text-charcoal" />
           </div>
-          <h1 className="text-2xl font-bold text-charcoal mb-4 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Event Not Found</h1>
-          <Link href="/events-specials" className="px-6 py-2.5 bg-charcoal text-white rounded-full text-sm font-600 hover:bg-charcoal/90 transition-all duration-300 hover:shadow-lg inline-block font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+          <h1 className="text-2xl font-bold text-charcoal mb-4" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Event Not Found</h1>
+          <Link href="/events-specials" className="px-6 py-2.5 bg-charcoal text-white rounded-full text-sm font-600 hover:bg-charcoal/90 transition-all duration-300 hover:shadow-lg inline-block" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
             Back to Events & Specials
           </Link>
         </div>
@@ -100,7 +100,12 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
   }
 
   return (
-    <div className="min-h-dvh bg-off-white">
+    <div 
+      className="min-h-dvh bg-off-white font-urbanist"
+      style={{
+        fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+      }}
+    >
       {/* Header */}
       <EventDetailHeader
         isBookmarked={isBookmarked}
@@ -113,7 +118,10 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
 
         {/* Main Content Section */}
         <section
-          className="relative font-sf-pro pt-4 sm:pt-6"
+          className="relative pt-4 sm:pt-6"
+          style={{
+            fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+          }}
         >
           <div className="mx-auto w-full max-w-[2000px] px-2 relative z-10">
             <div className="pt-2 pb-12 sm:pb-16 md:pb-20">

@@ -17,27 +17,31 @@ export default function EventInfo({ event }: EventInfoProps) {
       transition={{ delay: 0.2, duration: 0.6 }}
     >
       <h1
-        className="text-xl font-semibold text-charcoal mb-3"
-        style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.02em' }}
+        className="text-h1 font-semibold text-charcoal mb-3"
+        style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
       >
         {event.title}
       </h1>
 
-      <div className="flex items-center gap-3 mb-4">
-        <div className="flex items-center gap-1">
-          <Star className="text-amber-400 fill-amber-400" size={16} />
+      <div className="flex items-center gap-3 mb-4 flex-wrap">
+        {/* Rating Badge - matching BusinessCard style */}
+        <div className="inline-flex items-center gap-1 rounded-full bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
+          <Star className="w-3.5 h-3.5 text-coral fill-coral" aria-hidden />
           <span
-            className="text-sm font-semibold text-charcoal"
-            style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+            className="text-body-sm font-semibold text-charcoal"
+            style={{ 
+              fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+              fontWeight: 600
+            }}
           >
-            {event.rating}
+            {Number(event.rating).toFixed(1)}
           </span>
         </div>
         <div className="flex items-center gap-1.5 text-charcoal/70">
           <MapPin size={14} />
           <span
-            className="text-sm sm:text-xs font-medium"
-            style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.005em' }}
+            className="text-body-sm font-medium"
+            style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
           >
             {event.location}
           </span>

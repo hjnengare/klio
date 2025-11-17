@@ -33,7 +33,7 @@ export default function TrendingPage() {
     return undefined;
   }, [dealbreakerIds]);
 
-  const { businesses: trendingBusinesses, loading } = useTrendingBusinesses(50, {
+  const { businesses: trendingBusinesses, loading, error, refetch } = useTrendingBusinesses(50, {
     priceRanges: preferredPriceRanges,
     dealbreakerIds: dealbreakerIds.length ? dealbreakerIds : undefined,
   });
@@ -132,7 +132,25 @@ export default function TrendingPage() {
               </div>
             )}
 
-            {!loading && (
+            {!loading && error && (
+              <div className="bg-white border border-sage/20 rounded-3xl shadow-sm px-6 py-10 text-center space-y-4">
+                <p className="text-charcoal font-semibold text-h2" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
+                  We couldn't load businesses right now.
+                </p>
+                <p className="text-body-sm text-charcoal/60 max-w-[70ch]" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 500 }}>
+                  {error}
+                </p>
+                <button
+                  onClick={refetch}
+                  className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-sage text-white hover:bg-sage/90 transition-colors text-body font-semibold"
+                  style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
+                >
+                  Try again
+                </button>
+              </div>
+            )}
+
+            {!loading && !error && (
               <>
                 {trendingBusinesses.length === 0 ? (
                   <div className="bg-white border border-sage/20 rounded-3xl shadow-sm px-6 py-16 text-center space-y-3">

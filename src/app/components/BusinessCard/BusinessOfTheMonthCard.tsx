@@ -84,7 +84,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
   return (
     <li
       id={idForSnap}
-      className="snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[25%] md:min-w-[25%] xl:min-w-[25%] flex-shrink-0"
+      className="list-none snap-start snap-always w-[100vw] sm:w-auto sm:min-w-[25%] md:min-w-[25%] xl:min-w-[25%] flex-shrink-0"
       style={{
         fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
         fontWeight: 600,
@@ -235,8 +235,8 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
         {/* CONTENT */}
         <div className="px-4 pt-4 pb-6 relative flex-shrink-0 z-10">
           <div className="mb-2 cursor-pointer">
-            <h3 className="text-base font-bold text-charcoal group-hover:text-coral/90 transition-colors duration-300 text-center truncate" style={{ 
-              fontFamily: '"DM Sans", system-ui, sans-serif', 
+            <h3 className="text-h2 sm:text-h1 font-bold text-charcoal group-hover:text-coral/90 transition-colors duration-300 text-center truncate" style={{ 
+              fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
               fontWeight: 700,
               WebkitFontSmoothing: 'antialiased',
               MozOsxFontSmoothing: 'grayscale',
@@ -247,16 +247,15 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             </h3>
           </div>
 
-          <div className="mb-3 flex items-center justify-center gap-1.5 text-sm sm:text-xs text-charcoal/70 cursor-pointer" style={{ 
+          <div className="mb-3 flex items-center justify-center gap-1.5 text-caption sm:text-xs text-charcoal/60 cursor-pointer" style={{ 
             fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
-            fontWeight: 600,
+            fontWeight: 400,
             WebkitFontSmoothing: 'antialiased',
             MozOsxFontSmoothing: 'grayscale',
             textRendering: 'optimizeLegibility',
             letterSpacing: '0.01em'
           }}>
             <span>{business.category}</span>
-            <span>·</span>
             <div className="flex items-center gap-1">
               <MapPin className="w-3 h-3 text-charcoal/60" />
               <span>{business.location}</span>
@@ -267,18 +266,18 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             <Stars value={business.rating} color="coral/90" />
             {hasReviews ? (
               <>
-                <p className="text-sm sm:text-xs font-600 leading-none text-charcoal" style={{ 
+                <p className="text-body-sm sm:text-base font-bold leading-none text-charcoal" style={{ 
                   fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
-                  fontWeight: 600,
+                  fontWeight: 700,
                   WebkitFontSmoothing: 'antialiased',
                   MozOsxFontSmoothing: 'grayscale',
                   textRendering: 'optimizeLegibility'
                 }}>
                   {business.reviews}
                 </p>
-                <p className="text-sm sm:text-xs leading-none text-charcoal/60" style={{ 
+                <p className="text-caption sm:text-xs leading-none text-charcoal/50" style={{ 
                   fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
-                  fontWeight: 600,
+                  fontWeight: 400,
                   WebkitFontSmoothing: 'antialiased',
                   MozOsxFontSmoothing: 'grayscale',
                   textRendering: 'optimizeLegibility'
@@ -311,7 +310,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           {/* Mobile actions - always visible on card */}
           <div className="flex md:hidden items-center justify-center gap-3 mt-3">
             <button
-              className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-sage to-sage/90 text-white rounded-full text-sm sm:text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 transition-all active:scale-95"
+              className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-sage to-sage/90 text-white rounded-full text-caption sm:text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 transition-all active:scale-95"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle write review

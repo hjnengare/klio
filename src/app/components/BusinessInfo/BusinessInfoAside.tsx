@@ -30,7 +30,7 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
       ),
       label: "Verification",
       render: () => (
-        <span className={`text-sm font-medium ${businessInfo.verified ? "text-sage" : "text-charcoal/60"}`}>
+        <span className={`text-body-sm font-medium ${businessInfo.verified ? "text-sage" : "text-charcoal/60"}`}>
           {businessInfo.verified ? "Verified Business" : "Not Verified"}
         </span>
       ),
@@ -52,12 +52,12 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
         businessInfo.phone ? (
           <a
             href={`tel:${businessInfo.phone}`}
-            className="text-sm text-navbar-bg/90 hover:text-sage transition-colors"
+            className="text-body-sm text-navbar-bg/90 hover:text-sage transition-colors"
           >
             {businessInfo.phone}
           </a>
         ) : (
-          <span className="text-sm italic text-charcoal/40">Phone number not provided</span>
+          <span className="text-body-sm italic text-charcoal/40">Phone number not provided</span>
         ),
     },
     {
@@ -67,12 +67,12 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
         businessInfo.email ? (
           <a
             href={`mailto:${businessInfo.email}`}
-            className="text-sm text-navbar-bg/90 hover:text-sage transition-colors break-all"
+            className="text-body-sm text-navbar-bg/90 hover:text-sage transition-colors break-all"
           >
             {businessInfo.email}
           </a>
         ) : (
-          <span className="text-sm italic text-charcoal/40">Email not provided</span>
+          <span className="text-body-sm italic text-charcoal/40">Email not provided</span>
         ),
     },
     {
@@ -88,12 +88,12 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
             }
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-navbar-bg/90 hover:text-sage transition-colors break-all"
+            className="text-body-sm text-navbar-bg/90 hover:text-sage transition-colors break-all"
           >
             {businessInfo.website}
           </a>
         ) : (
-          <span className="text-sm italic text-charcoal/40">Website not provided</span>
+          <span className="text-body-sm italic text-charcoal/40">Website not provided</span>
         ),
     },
     {
@@ -104,7 +104,7 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
   ];
 
   const asideClasses =
-    "bg-card-bg/90 backdrop-blur-xl border border-white/60 rounded-[20px] p-5 sm:p-6 space-y-5";
+    "bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] p-5 sm:p-6 space-y-5 relative overflow-hidden";
 
   return (
     <aside
@@ -114,16 +114,21 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
         fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
       }}
     >
+      {/* Gradient overlays matching user profile */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg"></div>
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-lg"></div>
+      
+      <div className="relative z-10">
       <header className="space-y-1">
-        <p className="text-sm sm:text-xs uppercase tracking-wide text-charcoal/50 font-semibold">Business Info</p>
-        <h2 id="business-info-heading" className="text-lg font-bold text-charcoal" style={sectionTitleStyle}>
+        <p className="text-caption uppercase tracking-wide text-charcoal/50 font-semibold">Business Info</p>
+        <h2 id="business-info-heading" className="text-h3 font-semibold text-charcoal" style={sectionTitleStyle}>
           {businessInfo.name || "Business Information"}
         </h2>
-        <p className={`text-sm text-charcoal/70 leading-relaxed ${businessInfo.description ? "" : "italic text-charcoal/40"}`}>
+        <p className={`text-body-sm text-charcoal/70 leading-relaxed ${businessInfo.description ? "" : "italic text-charcoal/40"}`}>
           {businessInfo.description || "No description available."}
         </p>
         {businessInfo.category && (
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/40 bg-white/20 text-sm sm:text-xs font-semibold text-charcoal/80">
+          <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border border-white/40 bg-white/20 text-caption font-semibold text-charcoal/80">
             <span>{businessInfo.category}</span>
           </div>
         )}
@@ -136,14 +141,14 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
               {row.icon}
             </span>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-charcoal mb-0.5" style={sectionTitleStyle}>
+              <p className="text-body-sm font-semibold text-charcoal mb-0.5" style={sectionTitleStyle}>
                 {row.label}
               </p>
               {row.render ? (
                 row.render()
               ) : (
                 <p
-                  className={`text-sm ${
+                  className={`text-body-sm ${
                     row.value ? "text-charcoal/70" : "italic text-charcoal/40"
                   }`}
                 >
@@ -154,6 +159,7 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
           </li>
         ))}
       </ul>
+      </div>
     </aside>
   );
 }

@@ -32,26 +32,24 @@ export default function EventsSpecials({
       }}
     >
       <div className="mx-auto w-full max-w-[2000px] relative z-10 px-2">
-        <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
+        <div className="pb-4 sm:pb-8 md:pb-10 flex flex-wrap items-center justify-between gap-2">
           <h2
-            className="text-h2 font-semibold text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default"
-            style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+            className="text-h2 sm:text-h1 font-bold text-charcoal hover:text-sage transition-all duration-300 px-3 sm:px-4 py-1 hover:bg-sage/5 rounded-lg cursor-default"
+            style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
           >
             {title}
           </h2>
 
           <button
             onClick={() => router.push(href)}
-            className="group inline-flex items-center gap-1 text-body-sm font-semibold text-navbar-bg/90 transition-all duration-300 hover:text-sage focus:outline-none rounded-full px-4 py-2 -mx-2 relative overflow-hidden"
+            className="group inline-flex items-center gap-1 text-body-sm sm:text-caption font-normal text-charcoal transition-all duration-300 hover:text-sage focus:outline-none px-4 py-2 -mx-2 relative"
             aria-label={`${cta}: ${title}`}
-            style={{ fontFamily: 'DM Sans, system-ui, sans-serif', fontWeight: 600 }}
+            style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 400 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-sage/10 to-coral/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-0 backdrop-blur-sm bg-off-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-0.5 text-navbar-bg/90 group-hover:text-sage">
+            <span className="relative z-10 transition-transform duration-300 group-hover:-translate-x-0.5 text-charcoal group-hover:text-sage">
               {cta}
             </span>
-            <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 text-navbar-bg/90 group-hover:text-sage" />
+            <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 text-charcoal group-hover:text-sage" />
           </button>
         </div>
 

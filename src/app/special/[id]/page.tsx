@@ -89,8 +89,8 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white via-coral/[0.02] to-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-charcoal mb-4 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Special Not Found</h1>
-          <Link href="/events-specials" className="text-coral hover:underline font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+          <h1 className="text-2xl font-bold text-charcoal mb-4" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Special Not Found</h1>
+          <Link href="/events-specials" className="text-coral hover:underline" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
             Back to Events & Specials
           </Link>
         </div>
@@ -100,7 +100,10 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-white via-coral/[0.02] to-white relative overflow-hidden font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+      <div 
+        className="min-h-screen bg-gradient-to-br from-white via-coral/[0.02] to-white relative overflow-hidden font-urbanist"
+        style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
+      >
         {/* Background Elements */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-coral/3 via-transparent to-sage/3" />
@@ -120,7 +123,7 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                 <div className="w-10 h-10 bg-gradient-to-br from-charcoal/10 to-charcoal/5 hover:from-coral/20 hover:to-coral/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-charcoal/5 hover:border-coral/20 mr-3">
                   <ArrowLeft className="text-charcoal/70 group-hover:text-coral transition-colors duration-300" size={20} />
                 </div>
-                <span className="text-sm font-medium text-charcoal group-hover:text-coral transition-colors duration-300 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                <span className="text-sm font-medium text-charcoal group-hover:text-coral transition-colors duration-300" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                   Back to Specials
                 </span>
               </Link>
@@ -201,8 +204,8 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                 transition={{ delay: 0.2, duration: 0.6 }}
               >
                 <h1
-                  className="text-xl font-bold text-charcoal mb-4 font-urbanist"
-                  style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}
+                  className="text-xl font-bold text-charcoal mb-4"
+                  style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                 >
                   {special.title}
                 </h1>
@@ -210,11 +213,11 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                 <div className="flex items-center gap-4 mb-6">
                   <div className="flex items-center gap-1">
                     <Star className="text-amber-400 fill-amber-400" size={16} />
-                    <span className="text-sm font-semibold text-charcoal font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{special.rating}</span>
+                    <span className="text-sm font-semibold text-charcoal" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>{special.rating}</span>
                   </div>
                   <div className="flex items-center gap-2 text-charcoal/70">
                     <MapPin size={14} />
-                    <span className="text-xs font-medium font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{special.location}</span>
+                    <span className="text-xs font-medium" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>{special.location}</span>
                   </div>
                 </div>
               </motion.div>
@@ -226,7 +229,7 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                 transition={{ delay: 0.3, duration: 0.6 }}
                 className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4"
               >
-                <h2 className="text-lg font-bold text-charcoal mb-4 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Special Details</h2>
+                <h2 className="text-lg font-bold text-charcoal mb-4" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Special Details</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex items-center gap-2.5">
@@ -234,8 +237,8 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                       <Calendar className="text-coral" size={18} />
                     </div>
                     <div>
-                      <p className="text-xs text-charcoal/60 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Valid</p>
-                      <p className="text-sm font-semibold text-charcoal font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{special.startDate}</p>
+                      <p className="text-xs text-charcoal/60" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Valid</p>
+                      <p className="text-sm font-semibold text-charcoal" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>{special.startDate}</p>
                     </div>
                   </div>
 
@@ -244,8 +247,8 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                       <Percent className="text-sage" size={18} />
                     </div>
                     <div>
-                      <p className="text-xs text-charcoal/60 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Discount</p>
-                      <p className="text-sm font-semibold text-charcoal font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{special.price || "Special Price"}</p>
+                      <p className="text-xs text-charcoal/60" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Discount</p>
+                      <p className="text-sm font-semibold text-charcoal" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>{special.price || "Special Price"}</p>
                     </div>
                   </div>
 
@@ -254,8 +257,8 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                       <Clock className="text-coral" size={18} />
                     </div>
                     <div>
-                      <p className="text-xs text-charcoal/60 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Available</p>
-                      <p className="text-sm font-semibold text-charcoal font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Limited Time</p>
+                      <p className="text-xs text-charcoal/60" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Available</p>
+                      <p className="text-sm font-semibold text-charcoal" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Limited Time</p>
                     </div>
                   </div>
 
@@ -264,8 +267,8 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                       <Users className="text-sage" size={18} />
                     </div>
                     <div>
-                      <p className="text-xs text-charcoal/60 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Terms</p>
-                      <p className="text-sm font-semibold text-charcoal font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>See venue for details</p>
+                      <p className="text-xs text-charcoal/60" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Terms</p>
+                      <p className="text-sm font-semibold text-charcoal" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>See venue for details</p>
                     </div>
                   </div>
                 </div>
@@ -278,8 +281,8 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                 transition={{ delay: 0.4, duration: 0.6 }}
                 className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4"
               >
-                <h2 className="text-lg font-bold text-charcoal mb-3 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>About This Special</h2>
-                <p className="text-sm text-charcoal/80 leading-relaxed font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                <h2 className="text-lg font-bold text-charcoal mb-3" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>About This Special</h2>
+                <p className="text-sm text-charcoal/80 leading-relaxed" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                   {special.description || "Don't miss out on this amazing special offer! This limited-time deal provides incredible value and a fantastic experience. Perfect for trying something new or treating yourself to something special."}
                 </p>
               </motion.div>
@@ -294,20 +297,20 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                 transition={{ delay: 0.5, duration: 0.6 }}
                 className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4 sticky top-24"
               >
-                <h3 className="text-lg font-bold text-charcoal mb-3 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Claim This Special</h3>
+                <h3 className="text-lg font-bold text-charcoal mb-3" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Claim This Special</h3>
 
                 <div className="space-y-3">
-                  <button className="w-full bg-gradient-to-r from-sage to-sage/90 hover:from-sage/90 hover:to-sage/80 text-white font-semibold py-3 px-5 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-sm font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                  <button className="w-full bg-gradient-to-r from-sage to-sage/90 hover:from-sage/90 hover:to-sage/80 text-white font-semibold py-3 px-5 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-sm" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                     Visit Venue
                   </button>
 
-                  <button className="w-full bg-gradient-to-r from-coral to-coral/90 hover:from-coral/90 hover:to-coral/80 text-white font-semibold py-3 px-5 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-sm font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+                  <button className="w-full bg-gradient-to-r from-coral to-coral/90 hover:from-coral/90 hover:to-coral/80 text-white font-semibold py-3 px-5 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-sm" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
                     Call for Details
                   </button>
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-charcoal/10">
-                  <h4 className="text-sm font-semibold text-charcoal mb-2.5 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Share Special</h4>
+                  <h4 className="text-sm font-semibold text-charcoal mb-2.5" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Share Special</h4>
                   <div className="flex gap-2">
                     <button className="flex-1 bg-white/30 hover:bg-coral text-charcoal/90 hover:text-white py-2 px-3 rounded-full transition-all duration-200 shadow-sm">
                       <Facebook size={16} className="mx-auto" />
@@ -329,20 +332,20 @@ export default function SpecialDetailPage({ params }: SpecialDetailPageProps) {
                 transition={{ delay: 0.6, duration: 0.6 }}
                 className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-4"
               >
-                <h3 className="text-lg font-bold text-charcoal mb-3 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>Venue Information</h3>
+                <h3 className="text-lg font-bold text-charcoal mb-3" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>Venue Information</h3>
 
                 <div className="space-y-2.5">
                   <div className="flex items-center gap-2.5">
                     <Phone className="text-coral" size={16} />
-                    <span className="text-sm text-charcoal/80 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>+44 20 1234 5678</span>
+                    <span className="text-sm text-charcoal/80" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>+44 20 1234 5678</span>
                   </div>
                   <div className="flex items-center gap-2.5">
                     <Globe className="text-sage" size={16} />
-                    <span className="text-sm text-charcoal/80 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>www.example.com</span>
+                    <span className="text-sm text-charcoal/80" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>www.example.com</span>
                   </div>
                   <div className="flex items-center gap-2.5">
                     <MapPin className="text-coral" size={16} />
-                    <span className="text-sm text-charcoal/80 font-urbanist" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>{special.location}</span>
+                    <span className="text-sm text-charcoal/80" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>{special.location}</span>
                   </div>
                 </div>
               </motion.div>

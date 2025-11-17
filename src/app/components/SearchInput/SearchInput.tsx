@@ -91,7 +91,7 @@ const SearchInput = forwardRef<HTMLFormElement, SearchInputProps>(
               py-3 px-0
             `}
             style={{
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+              fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
             }}
             aria-label="Search"
           />

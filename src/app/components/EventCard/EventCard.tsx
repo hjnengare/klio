@@ -165,9 +165,9 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
           <div className="px-4 pt-4 pb-6 flex flex-col justify-between bg-sage/10 gap-4">
             <div className="flex flex-col items-center text-center gap-3">
               <h3
-                className="text-base font-bold leading-tight text-charcoal text-center group-hover:text-navbar-bg/90 transition-colors duration-300 line-clamp-2"
+                className="text-h2 sm:text-h1 font-bold leading-tight text-charcoal text-center group-hover:text-navbar-bg/90 transition-colors duration-300 truncate"
                 style={{
-                  fontFamily: '"DM Sans", system-ui, sans-serif',
+                  fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                   fontWeight: 700,
                   letterSpacing: '-0.01em'
                 }}
@@ -177,7 +177,7 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
 
               {event.description && (
                 <p
-                  className="text-[11px] sm:text-sm sm:text-xs text-charcoal/70 leading-relaxed text-center line-clamp-2"
+                  className="text-caption sm:text-xs text-charcoal/60 leading-relaxed text-center line-clamp-2"
                   style={{
                     fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                     fontWeight: 400

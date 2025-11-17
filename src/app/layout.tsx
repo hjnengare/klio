@@ -6,9 +6,16 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { OnboardingProvider } from "./contexts/OnboardingContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import { SavedItemsProvider } from "./contexts/SavedItemsContext";
-import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 // Lazy load non-critical components for faster initial load
+// ErrorBoundary must be dynamically imported in Next.js 15 to avoid promise resolution issues
+const ErrorBoundary = nextDynamic(
+  () => import("./components/ErrorBoundary/ErrorBoundary"),
+  {
+    ssr: true,
+    loading: () => null, // No loading state needed for error boundary
+  }
+);
 const PageTransitionProvider = nextDynamic(() => import("./components/Providers/PageTransitionProvider"), {
   ssr: true,
 });

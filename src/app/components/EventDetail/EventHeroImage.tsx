@@ -3,7 +3,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Heart } from "react-feather";
+import { Heart, Star } from "react-feather";
 import { Event } from "../../data/eventsData";
 
 interface EventHeroImageProps {
@@ -38,19 +38,30 @@ export default function EventHeroImage({
 
       {/* Event Type Badge */}
       <div className="absolute top-6 left-6">
-        <span className={`px-4 py-2 rounded-full text-sm font-600 backdrop-blur-md border shadow-sm font-urbanist ${
+        <span className={`px-4 py-2 rounded-full text-body-sm font-600 backdrop-blur-md border shadow-sm ${
           event.type === "event"
             ? "bg-coral/90 text-white border-coral/50"
             : "bg-sage/90 text-white border-sage/50"
-        }`} style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif' }}>
+        }`} style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
           {event.type === "event" ? "Event" : "Special"}
+        </span>
+      </div>
+
+      {/* Rating Badge - matching BusinessCard style */}
+      <div className="absolute top-6 right-6 z-20 inline-flex items-center gap-1 rounded-full bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
+        <Star className="w-3.5 h-3.5 text-coral fill-coral" aria-hidden />
+        <span className="text-body-sm font-semibold text-charcoal" style={{ 
+          fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+          fontWeight: 600
+        }}>
+          {Number(event.rating).toFixed(1)}
         </span>
       </div>
 
       {/* Like Button */}
       <button
         onClick={onLike}
-        className={`absolute top-6 right-6 w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-110 ${
+        className={`absolute bottom-6 right-6 w-12 h-12 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-110 ${
           isLiked
             ? "bg-coral/90 text-white border-coral/50"
             : "bg-white/20 text-white border-white/30 hover:bg-white/30"

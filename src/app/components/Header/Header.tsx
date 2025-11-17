@@ -4,7 +4,7 @@
 import { useRef, useState, useEffect, useLayoutEffect, useCallback, Fragment } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { createPortal } from "react-dom";
-import { User, X, Search, Briefcase, ChevronDown, Compass } from "react-feather";
+import { User, X, Search, Briefcase, ChevronDown, Compass, Bookmark } from "react-feather";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { useSavedItems } from "../../contexts/SavedItemsContext";
@@ -17,7 +17,6 @@ const sf = {
 
 const PRIMARY_LINKS = [
   { key: "home", label: "Home", href: "/home" },
-  { key: "saved", label: "Saved", href: "/saved" },
 ] as const;
 
 const DISCOVER_LINKS = [
@@ -73,7 +72,7 @@ export default function Header({
   const [isBusinessDropdownClosing, setIsBusinessDropdownClosing] = useState(false);
   const [menuPos, setMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
   const [discoverMenuPos, setDiscoverMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
-  useSavedItems();
+  const { savedCount } = useSavedItems();
 
   // Use refs to track state without causing re-renders
   const isFilterVisibleRef = useRef(isFilterVisible);
@@ -609,10 +608,24 @@ export default function Header({
                 )}
               </button>
 
+              {/* Saved */}
+              <OptimizedLink
+                href="/saved"
+                className={`group hidden md:flex w-9 h-9 lg:w-10 lg:h-10 items-center justify-center transition-colors duration-200 relative ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/80 hover:text-sage'}`}
+                aria-label="Saved"
+              >
+                <Bookmark className="w-4 h-4 sm:w-5 sm:h-5" />
+                {savedCount > 0 && (
+                  <span className={`absolute -top-1 -right-1 flex items-center justify-center min-w-[20px] h-5 px-1.5 text-white text-[11px] font-semibold rounded-full shadow-md ${whiteText ? 'bg-white/20' : 'bg-charcoal'}`}>
+                    {savedCount > 99 ? '99+' : savedCount}
+                  </span>
+                )}
+              </OptimizedLink>
+
               {/* Profile */}
               <OptimizedLink
                 href="/profile"
-                className={`group hidden md:flex w-9 h-9 lg:w-10 lg:h-10 items-center justify-center text-charcoal/80 hover:text-sage transition-colors duration-200`}
+                className={`group hidden md:flex w-9 h-9 lg:w-10 lg:h-10 items-center justify-center transition-colors duration-200 ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/80 hover:text-sage'}`}
                 aria-label="Profile"
               >
                 <User className="w-4 h-4 sm:w-5 sm:h-5" />
