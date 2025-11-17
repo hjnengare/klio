@@ -21,9 +21,8 @@ import { useOnboarding } from "../contexts/OnboardingContext";
 import { useBusinesses, useForYouBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 import { useRoutePrefetch } from "../hooks/useRoutePrefetch";
 
-// Force dynamic rendering to prevent static generation issues
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Note: dynamic and revalidate cannot be exported from client components
+// Client components are automatically dynamic
 
 // Removed any animation / scroll-reveal classes and imports.
 

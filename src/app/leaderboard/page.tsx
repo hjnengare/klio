@@ -14,9 +14,8 @@ import BusinessOfMonthLeaderboard from "../components/Leaderboard/BusinessOfMont
 import { Tabs } from "@/components/atoms/Tabs";
 import { useBusinesses } from "../hooks/useBusinesses";
 
-// Force dynamic rendering to prevent static generation issues
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Note: dynamic and revalidate cannot be exported from client components
+// Client components are automatically dynamic
 
 const Footer = nextDynamic(() => import("../components/Footer/Footer"), {
   loading: () => null,

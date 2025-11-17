@@ -59,6 +59,7 @@ export const metadata: Metadata = {
 
 export const runtime = "nodejs";
 // Force dynamic rendering at layout level to prevent static generation issues
+// Layout is a Server Component, so these exports are valid
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 

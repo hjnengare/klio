@@ -19,9 +19,8 @@ const nextConfig: NextConfig = {
     compiler: {
       removeConsole: true,
     },
-    // Disable static page generation to prevent _document issues
-    // All pages will be dynamically rendered
-    generateStaticParams: false,
+    // Note: generateStaticParams is a function, not a boolean config option
+    // We handle dynamic rendering at the page level with export const dynamic
   }),
 
   // Image optimization
@@ -174,6 +173,13 @@ const nextConfig: NextConfig = {
   // Skip static page generation entirely to avoid _document issues
   // This is a workaround for Next.js 15 App Router static generation bugs
   skipTrailingSlashRedirect: true,
+  
+  // Disable build cache to ensure fresh builds
+  // This helps avoid stale cache issues during development
+  // Note: This may slow down builds but ensures consistency
+  // experimental: {
+  //   // Disable build cache (commented out as it's not a valid option)
+  // },
 
   // Additional performance optimizations
   poweredByHeader: false,

@@ -12,9 +12,8 @@ import SearchInput from "../components/SearchInput/SearchInput";
 import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
 import { ChevronLeft, ChevronRight, ChevronUp } from "react-feather";
 
-// Force dynamic rendering to prevent static generation issues
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Note: dynamic and revalidate cannot be exported from client components
+// Client components are automatically dynamic
 
 const ITEMS_PER_PAGE = 12;
 
