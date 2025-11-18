@@ -100,7 +100,7 @@ export default function Pagination({
               <span
                 key={`ellipsis-${index}`}
                 className="px-3 py-2 text-charcoal/50"
-                style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+                style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}
               >
                 ...
               </span>
@@ -119,7 +119,7 @@ export default function Pagination({
                   ? "bg-sage text-white shadow-md"
                   : "bg-off-white hover:bg-sage/10 text-charcoal hover:text-sage border border-sage/20 hover:border-sage/40"
               }`}
-              style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+              style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}
               aria-label={`Go to page ${pageNum}`}
               aria-current={isActive ? "page" : undefined}
             >

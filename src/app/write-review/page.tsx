@@ -64,7 +64,7 @@ export default function WriteReviewPage() {
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3">
                 <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-white transition-colors duration-300" />
               </div>
-              <h1 className="text-base sm:text-xl font-700 text-white transition-all duration-300 relative" style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}>
+              <h1 className="text-base sm:text-xl font-700 text-white transition-all duration-300 relative" style={{ fontFamily: '"Urbanist", system-ui, sans-serif' }}>
                Leave a Review
               </h1>
             </button>
@@ -81,7 +81,7 @@ export default function WriteReviewPage() {
         {/* Search Section */}
         <div className="mb-8">
           <div className="text-center mb-6">
-            <h2 className="text-xl font-600 text-charcoal mb-2" style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}>
+            <h2 className="text-xl font-600 text-charcoal mb-2" style={{ fontFamily: '"Urbanist", system-ui, sans-serif' }}>
               Which business would you like to review?
             </h2>
             <p className="text-charcoal/60 text-sm" >
@@ -139,7 +139,7 @@ export default function WriteReviewPage() {
                     )}
                   </div>
                   <div>
-                    <h3 className="text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200" style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}>
+                    <h3 className="text-base font-600 text-charcoal group-hover:text-sage transition-colors duration-200" style={{ fontFamily: '"Urbanist", system-ui, sans-serif' }}>
                       {business.name}
                     </h3>
                     <div className="flex items-center space-x-3 mt-1">

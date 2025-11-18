@@ -5,13 +5,24 @@ interface EventBadgeProps {
 
 export default function EventBadge({ startDate, endDate }: EventBadgeProps) {
   return (
-    <div className="absolute left-2 top-2 z-20">
-      <span className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-br from-off-white via-off-white to-off-white/90 backdrop-blur-xl px-2.5 py-1 text-charcoal shadow-[0_4px_20px_rgba(0,0,0,0.15)] ring-1 ring-white/30 border border-white/60">
-        <div className="w-2 h-2 bg-coral rounded-full"></div>
-        <span className="text-sm sm:text-xs font-600" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", fontWeight: 600 }}>
-          {endDate ? `${startDate} - ${endDate}` : startDate}
-        </span>
-      </span>
+    <div className="absolute left-0 top-0 z-20 overflow-hidden" style={{ width: '120px', height: '120px' }}>
+      <div 
+        className="absolute bg-coral text-white px-3 py-1.5 shadow-lg"
+        style={{
+          transform: 'rotate(-45deg)',
+          transformOrigin: 'center',
+          left: '-30px',
+          top: '20px',
+          width: '180px',
+          textAlign: 'center',
+          fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+          fontWeight: 600,
+          fontSize: '0.75rem',
+          letterSpacing: '0.025em',
+        }}
+      >
+        {endDate ? `${startDate} - ${endDate}` : startDate}
+      </div>
     </div>
   );
 }

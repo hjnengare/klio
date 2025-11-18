@@ -12,7 +12,7 @@ export default function SavedHeader() {
     <div
       className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10"
       style={{
-        fontFamily: '"DM Sans", system-ui, sans-serif',
+        fontFamily: '"Urbanist", system-ui, sans-serif',
       }}
     >
       <div className="mx-auto w-full max-w-[2000px] px-2 py-4">

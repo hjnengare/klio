@@ -40,22 +40,30 @@ export default function SimilarBusinesses({
 
   if (loading) {
     return (
-      <section className="space-y-6" aria-labelledby="similar-businesses-heading">
-        <div className="flex justify-center">
-          <div className="flex flex-col gap-3">
-            <h2
-              id="similar-businesses-heading"
-              className="text-h3 font-semibold text-charcoal border-b border-charcoal/10 pb-2"
-              style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
-            >
-              Similar Businesses
-            </h2>
+      <section className="space-y-8 py-8 relative" aria-labelledby="similar-businesses-heading">
+        {/* Premium background decoration */}
+        <div className="absolute inset-0 -z-10 opacity-30">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-sage/20 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-br from-coral/15 to-transparent rounded-full blur-3xl" />
+        </div>
+
+        <div className="flex justify-center relative z-10">
+          <div className="flex flex-col gap-4 items-center">
+            <div className="inline-flex items-center gap-3">
+              <h3
+                id="similar-businesses-heading"
+                className="text-charcoal font-semibold"
+                style={{ fontFamily: '"Urbanist", system-ui, sans-serif' }}
+              >
+                Similar Businesses
+              </h3>
+            </div>
           </div>
         </div>
-        <ul className="list-none grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 sm:gap-4">
+        <ul className="list-none grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-2 relative z-10">
           {[...Array(6)].map((_, i) => (
             <li key={i}>
-              <div className="h-[200px] bg-off-white/50 rounded-lg animate-pulse" />
+              <div className="h-[240px] bg-gradient-to-br from-off-white/90 via-off-white/85 to-off-white/90 rounded-xl border border-white/60 backdrop-blur-xl shadow-lg animate-pulse" />
             </li>
           ))}
         </ul>
@@ -68,21 +76,29 @@ export default function SimilarBusinesses({
   }
 
   return (
-    <section className="space-y-6" aria-labelledby="similar-businesses-heading">
-      <div className="flex justify-center">
-        <div className="flex flex-col gap-3">
-          <h2
-            id="similar-businesses-heading"
-            className="text-h3 font-semibold text-charcoal border-b border-charcoal/10 pb-2 flex items-center gap-2"
-            style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
-          >
-            <Briefcase className="w-5 h-5 text-sage" />
-            Similar Businesses
-          </h2>
+    <section className="space-y-8 py-8 relative" aria-labelledby="similar-businesses-heading">
+      {/* Premium background decoration */}
+      <div className="absolute inset-0 -z-10 opacity-30">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-sage/20 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-br from-coral/15 to-transparent rounded-full blur-3xl" />
+      </div>
+
+      <div className="flex justify-center relative z-10">
+        <div className="flex flex-col gap-4 items-center">
+          <div className="inline-flex items-center gap-3">
+          
+            <h2
+              id="similar-businesses-heading"
+              className="text-h3 font-bold text-charcoal"
+              style={{ fontFamily: '"Urbanist", system-ui, sans-serif' }}
+            >
+              Similar Businesses
+            </h2>
+          </div>
         </div>
       </div>
 
-      <ul className="list-none grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 sm:gap-4">
+      <ul className="list-none grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-2 relative z-10">
         {similarBusinesses.map((business) => (
           <li key={business.id}>
             <SimilarBusinessCard
@@ -96,10 +112,8 @@ export default function SimilarBusinesses({
               rating={business.rating}
               totalRating={business.totalRating}
               reviews={business.reviews}
-              total_reviews={business.total_reviews}
               verified={business.verified}
               priceRange={business.priceRange}
-              price_range={business.price_range}
             />
           </li>
         ))}

@@ -15,7 +15,7 @@ function SavedContent({ savedBusinesses }: SavedContentProps) {
     <section
       className="relative"
       style={{
-        fontFamily: '"DM Sans", system-ui, sans-serif',
+        fontFamily: '"Urbanist", system-ui, sans-serif',
       }}
     >
       <div className="mx-auto w-full max-w-[2000px] px-2 relative z-10">

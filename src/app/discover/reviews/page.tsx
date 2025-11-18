@@ -238,7 +238,7 @@ export default function GeneralReviewsPage() {
             </div>
             <motion.h1
               className="text-base sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal transition-all duration-premium ease-premium group-hover:from-sage/90 group-hover:to-sage relative tracking-[-0.02em]"
-              style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
+              style={{ fontFamily: '"Urbanist", system-ui, sans-serif' }}
             >
               Community Reviews
             </motion.h1>

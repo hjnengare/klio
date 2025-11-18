@@ -7,7 +7,6 @@ import Image from "next/image";
 import { Bookmark } from "react-feather";
 import { getEventIconPng } from "../../utils/eventIconToPngMapping";
 import EventBadge from "./EventBadge";
-import RatingBadge from "./RatingBadge";
 
 const EVENT_IMAGE_BASE_PATH = "/png";
 
@@ -104,7 +103,7 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
     >
       <Link href={`/event/${event.id}`} className="w-full">
         <article
-          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-lg"
+          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20"
           style={
             {
               width: "100%",
@@ -133,7 +132,6 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
 
             {/* Premium glass badges */}
             <EventBadge startDate={event.startDate} endDate={event.endDate} />
-            <RatingBadge rating={event.rating} />
           </div>
 
           {/* CONTENT - Minimal, premium spacing */}

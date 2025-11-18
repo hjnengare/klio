@@ -7,6 +7,7 @@ import Stars from "../Stars/Stars";
 import PercentileChip from "../PercentileChip/PercentileChip";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
 import OptimizedImage from "../Performance/OptimizedImage";
+import Tooltip from "../Tooltip/Tooltip";
 import { useSavedItems } from "../../contexts/SavedItemsContext";
 import { getCategoryPng, getCategoryPngFromLabels, isPngIcon } from "../../utils/categoryToPngMapping";
 
@@ -305,7 +306,7 @@ function BusinessCard({
 
           {!hideStar && hasRating && displayRating !== undefined && (
             <div className="absolute right-4 top-4 z-20 inline-flex items-center gap-1 rounded-full bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
-              <Star className="w-3.5 h-3.5 text-coral fill-coral" aria-hidden />
+              <Star className="w-3.5 h-3.5 text-navbar-bg fill-navbar-bg" aria-hidden />
               <span className="text-sm font-semibold text-charcoal" style={{ 
                 fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
                 fontWeight: 600
@@ -329,7 +330,7 @@ function BusinessCard({
           {/* Premium floating actions - desktop only */}
           <div className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-2 transition-all duration-300 ease-out translate-x-12 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
             <button
-              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30"
+              className="w-12 h-10 bg-off-white/95 rounded-[20px] flex items-center justify-center hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30"
               onClick={(e) => {
                 e.stopPropagation();
                 handleWriteReview();
@@ -340,7 +341,7 @@ function BusinessCard({
               <Edit className="w-4 h-4 text-primary" />
             </button>
             <button
-              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30"
+              className="w-12 h-10 bg-off-white/95 rounded-[20px] flex items-center justify-center hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30"
               onClick={(e) => {
                 e.stopPropagation();
                 handleBookmark();
@@ -353,7 +354,7 @@ function BusinessCard({
               />
             </button>
             <button
-              className="w-10 h-10 bg-off-white/95 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30"
+              className="w-12 h-10 bg-off-white/95 rounded-[20px] flex items-center justify-center hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30"
               onClick={(e) => {
                 e.stopPropagation();
                 handleShare();
@@ -378,26 +379,28 @@ function BusinessCard({
               <div className="flex flex-col items-center text-center relative z-10 space-y-1">
                 {/* Business Name - Inside wrapper */}
                 <div className="flex items-center justify-center w-full">
-                  <button
-                    type="button"
-                    onClick={handleCardClick}
-                  className="group w-full max-w-full text-charcoal transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-coral/40 rounded-lg px-2 py-1"
-                    aria-label={`View ${business.name} details`}
-                  >
-                    <h3
-                      className="text-h2 sm:text-h1 font-bold text-inherit text-center leading-[1.3] truncate tracking-tight transition-colors duration-300 group-hover:text-navbar-bg/90"
-                      style={{
-                        fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-                        fontWeight: 700,
-                        WebkitFontSmoothing: 'antialiased',
-                        MozOsxFontSmoothing: 'grayscale',
-                        textRendering: 'optimizeLegibility',
-                        letterSpacing: '-0.01em'
-                      }}
+                  <Tooltip content={business.name} position="top">
+                    <button
+                      type="button"
+                      onClick={handleCardClick}
+                      className="group w-full max-w-full text-charcoal transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-coral/40 rounded-lg px-2 py-1"
+                      aria-label={`View ${business.name} details`}
                     >
-                      {business.name}
-                    </h3>
-                  </button>
+                      <h3
+                        className="text-h2 sm:text-h1 font-bold text-inherit text-center leading-[1.3] truncate tracking-tight transition-colors duration-300 group-hover:text-navbar-bg/90 max-w-full"
+                        style={{
+                          fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                          fontWeight: 700,
+                          WebkitFontSmoothing: 'antialiased',
+                          MozOsxFontSmoothing: 'grayscale',
+                          textRendering: 'optimizeLegibility',
+                          letterSpacing: '-0.01em'
+                        }}
+                      >
+                        {business.name}
+                      </h3>
+                    </button>
+                  </Tooltip>
                 </div>
                 {/* Category and Location - Combined with bullet separator */}
                 <div
@@ -491,10 +494,10 @@ function BusinessCard({
                             handleWriteReview();
                           }
                         }}
-                        className={`inline-flex items-center justify-center text-body-sm sm:text-base font-bold text-charcoal underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral min-w-[92px] text-center ${compact ? 'lg:order-1 lg:mb-1' : ''}`}
+                        className={`inline-flex items-center justify-center text-sm font-normal text-charcoal underline-offset-2 cursor-pointer transition-colors duration-200 hover:text-coral min-w-[92px] text-center ${compact ? 'lg:order-1 lg:mb-1' : ''}`}
                         style={{
                           fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-                          fontWeight: 700
+                          fontWeight: 400
                         }}
                       >
                         Be the first to review
@@ -506,7 +509,7 @@ function BusinessCard({
                       className={`flex items-center justify-center gap-2 text-charcoal transition-all duration-300 ${compact ? 'lg:order-2' : ''}`}
                       aria-label={hasRating && displayRating !== undefined ? `View ${business.reviews} reviews for ${business.name}` : `Be the first to review ${business.name}`}
                     >
-                      <Stars value={hasRating && displayRating !== undefined ? displayRating : 0} color="coral/90" size={18} spacing={2.5} />
+                      <Stars value={hasRating && displayRating !== undefined ? displayRating : 0} color="navbar-bg" size={18} spacing={2.5} />
                     </div>
                   </div>
                 </div>

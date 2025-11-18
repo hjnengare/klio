@@ -351,11 +351,8 @@ export default function Header({
     if (forceSearchOpen || isStackedLayout) {
       return;
     }
-    if (isHomeVariant) {
-      router.push("/explore?openSearch=true");
-      return;
-    }
-    setShowSearchBar((prev) => !prev);
+    // Always navigate to explore page when clicking search icon
+    router.push("/explore?openSearch=true");
   };
 
   const renderSearchInput = () => (
@@ -391,7 +388,7 @@ export default function Header({
             <OptimizedLink href="/home" className="group flex-shrink-0 relative" aria-label="sayso Home">
               <div className="absolute inset-0 bg-gradient-to-r from-sage/30 to-coral/30 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative scale-[0.72] origin-left">
-                <Logo variant="default" className="relative drop-shadow-[0_4px_12px_rgba(0,0,0,0.08)]" />
+                <Logo variant="default" className="relative drop-shadow-[0_4px_12px_rgba(0,0,0,0.08)]" color={whiteText ? "sage" : "gradient"} />
               </div>
             </OptimizedLink>
 
@@ -460,7 +457,6 @@ export default function Header({
                             }}
                           >
                             <div className="px-5 pt-4 pb-3 border-b border-charcoal/10 bg-off-white flex items-center gap-2">
-                              <Compass className="w-5 h-5 md:w-6 md:h-6 text-sage" />
                               <span className="text-sm font-semibold text-charcoal">Discover</span>
                             </div>
                             <div className="py-3">
@@ -475,7 +471,6 @@ export default function Header({
                                   className="group flex items-start gap-3 px-5 py-3 hover:bg-sage/10 transition-all duration-200"
                                   style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                                 >
-                                  <div className="mt-1 w-2 h-2 rounded-full bg-gradient-to-br from-sage to-coral/70 group-hover:scale-125 transition-transform" />
                                   <div className="flex-1">
                                     <div className="text-sm font-semibold text-charcoal group-hover:text-coral">{subLabel}</div>
                                     <div className="text-sm sm:text-xs text-charcoal/60 mt-0.5">{description}</div>
@@ -543,7 +538,6 @@ export default function Header({
                     >
                       <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-charcoal/10 bg-off-white">
                         <div className="relative z-10 flex items-center gap-2">
-                          <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-sage" />
                           <h2 className="text-sm md:text-base font-semibold text-charcoal" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>For Businesses</h2>
                         </div>
                         <button
@@ -570,7 +564,6 @@ export default function Header({
                             closeBusinessDropdown();
                           }}
                         >
-                            <div className="mt-1 w-2 h-2 rounded-full bg-gradient-to-br from-sage to-coral/70 group-hover:scale-125 transition-transform" />
                           <div className="flex-1">
                               <div className="text-sm font-semibold text-charcoal group-hover:text-coral transition-colors">
                                 {label}
@@ -594,7 +587,7 @@ export default function Header({
               {showSearch && !(forceSearchOpen || isStackedLayout) && (
               <button
                 onClick={handleSearchToggle}
-                className="group w-11 h-11 sm:w-12 sm:h-12 md:w-12 md:h-12 flex items-center justify-center text-charcoal/80 hover:text-sage transition-colors duration-200"
+                className={`group w-11 h-11 sm:w-12 sm:h-12 md:w-12 md:h-12 flex items-center justify-center transition-colors duration-200 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`}
                 aria-label="Toggle search"
               >
                 <Search className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -688,7 +681,7 @@ export default function Header({
       >
         <div className={`flex flex-col h-full overflow-hidden ${mobileModalRevealClass}`}>
           <div className="flex items-center justify-between px-6 py-6 border-b border-charcoal/10 flex-shrink-0 transition-all duration-500 ease-out">
-            <Logo variant="mobile" />
+            <Logo variant="mobile" color="sage" />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-20 h-20 sm:w-16 sm:h-16 flex items-center justify-center text-off-white hover:text-off-white/80 transition-colors focus:outline-none focus:ring-0"
@@ -706,7 +699,7 @@ export default function Header({
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`px-4 py-3 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-off-white/10 transition-colors relative min-h-[48px] flex items-center ${mobileRevealClass}`}
                 style={{
-                  fontFamily: 'DM Sans, Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                  fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                   transitionDelay: `${index * 60}ms`,
                 }}
               >
@@ -720,7 +713,6 @@ export default function Header({
 
             <div className="px-4 py-2">
               <div className="flex items-center gap-2 mb-2">
-                <Compass className="w-4 h-4 text-off-white" />
                 <span className="text-sm font-semibold text-white/80 tracking-wide">Discover</span>
               </div>
               <div className="space-y-2">
@@ -731,11 +723,10 @@ export default function Header({
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`px-4 py-3 rounded-xl text-base font-medium text-white/90 hover:text-white hover:bg-off-white/10 transition-all duration-200 min-h-[48px] flex gap-3 ${mobileRevealClass}`}
                     style={{
-                      fontFamily: 'DM Sans, Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                      fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                       transitionDelay: `${(primaryCount + index) * 60}ms`,
                     }}
                   >
-                    <span className="mt-1 w-2 h-2 rounded-full bg-gradient-to-br from-sage to-coral/70 flex-shrink-0" />
                     <span className="flex-1 text-left">{label}</span>
                   </OptimizedLink>
                 ))}
@@ -747,7 +738,6 @@ export default function Header({
             {/* For Businesses Section */}
             <div className="px-4 py-2">
               <div className="flex items-center gap-2 mb-2">
-                <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-off-white" />
                 <span className="text-sm font-semibold text-white/80 tracking-wide">For Businesses</span>
               </div>
               <div className="space-y-2">
@@ -758,12 +748,11 @@ export default function Header({
               onClick={() => setIsMobileMenuOpen(false)}
                 className={`px-4 py-3 rounded-lg text-base font-medium text-white/90 hover:text-white hover:bg-off-white/10 transition-colors duration-200 min-h-[48px] flex gap-3 ${mobileRevealClass}`}
               style={{
-                fontFamily: 'DM Sans, Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                 fontWeight: 500,
                 transitionDelay: `${(primaryCount + discoverCount + index) * 60}ms`,
               }}
             >
-                  <span className="mt-1 w-2 h-2 rounded-full bg-gradient-to-br from-sage to-coral/70 flex-shrink-0" />
                   <span className="flex-1 text-left">
                     <span className="block text-white">{label}</span>
                     <span className="text-sm font-normal text-white/70 normal-case">{description}</span>
@@ -779,7 +768,7 @@ export default function Header({
               onClick={() => setIsMobileMenuOpen(false)}
               className={`px-4 py-3 rounded-lg text-base font-semibold text-white hover:text-white flex items-center gap-3 transition-colors duration-200 min-h-[48px] ${mobileRevealClass}`}
               style={{
-                fontFamily: 'DM Sans, Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                 fontWeight: 500,
                 transitionDelay: `${(primaryCount + discoverCount + businessCount) * 60}ms`,
               }}

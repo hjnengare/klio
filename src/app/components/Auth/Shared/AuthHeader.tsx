@@ -11,7 +11,7 @@ interface AuthHeaderProps {
 
 export function AuthHeader({ backLink, title, subtitle }: AuthHeaderProps) {
   const titleStyle = {
-    fontFamily: '"DM Sans", system-ui, sans-serif',
+    fontFamily: '"Urbanist", system-ui, sans-serif',
   } as React.CSSProperties;
   const bodyStyle = {
     fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',

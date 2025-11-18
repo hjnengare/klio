@@ -119,9 +119,6 @@ export default function RootLayout({
         {/* Changa One Font */}
         <link href="https://fonts.googleapis.com/css2?family=Changa+One:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
         
-        {/* DM Sans Font */}
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
-        
         {/* Cormorant & Livvic Fonts */}
         <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Livvic:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap" rel="stylesheet" />

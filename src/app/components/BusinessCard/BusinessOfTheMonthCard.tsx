@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { Image as ImageIcon, Star, Edit, Bookmark, Share2, MapPin, Award } from "react-feather";
 import Stars from "../Stars/Stars";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
+import Tooltip from "../Tooltip/Tooltip";
 import { BusinessOfTheMonth } from "../../data/communityHighlightsData";
 import { getCategoryPng, getCategoryPngFromLabels, isPngIcon } from "../../utils/categoryToPngMapping";
 
@@ -183,7 +184,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
 
           {/* rating badge */}
           <span className="absolute right-2 top-2 z-20 inline-flex items-center gap-1 rounded-[12px] bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
-            <Star className="w-3.5 h-3.5 text-coral fill-coral" />
+            <Star className="w-3.5 h-3.5 text-navbar-bg fill-navbar-bg" />
             <span className="text-sm font-semibold" style={{
               fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
               fontWeight: 600,
@@ -235,16 +236,18 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
         {/* CONTENT */}
         <div className="px-4 pt-4 pb-6 relative flex-shrink-0 z-10">
           <div className="mb-2 cursor-pointer">
-            <h3 className="text-h2 sm:text-h1 font-bold text-charcoal group-hover:text-coral/90 transition-colors duration-300 text-center truncate" style={{ 
-              fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
-              fontWeight: 700,
-              WebkitFontSmoothing: 'antialiased',
-              MozOsxFontSmoothing: 'grayscale',
-              textRendering: 'optimizeLegibility',
-              letterSpacing: '-0.01em'
-            }}>
-              {business.name}
-            </h3>
+            <Tooltip content={business.name} position="top">
+              <h3 className="text-h2 sm:text-h1 font-bold text-charcoal group-hover:text-coral/90 transition-colors duration-300 text-center truncate max-w-full" style={{ 
+                fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', 
+                fontWeight: 700,
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                textRendering: 'optimizeLegibility',
+                letterSpacing: '-0.01em'
+              }}>
+                {business.name}
+              </h3>
+            </Tooltip>
           </div>
 
           <div className="mb-3 flex items-center justify-center gap-1.5 text-caption sm:text-xs text-charcoal/60 cursor-pointer" style={{ 
@@ -263,7 +266,7 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
           </div>
 
           <div className="mb-4 flex items-center justify-center gap-2 cursor-pointer">
-            <Stars value={business.rating} color="coral/90" />
+            <Stars value={business.rating} color="navbar-bg" />
             {hasReviews ? (
               <>
                 <p className="text-body-sm sm:text-base font-bold leading-none text-charcoal" style={{ 

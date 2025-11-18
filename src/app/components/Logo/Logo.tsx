@@ -7,12 +7,14 @@ interface LogoProps {
   variant?: "default" | "mobile" | "footer" | "onboarding";
   className?: string;
   showDomain?: boolean;
+  color?: "sage" | "gradient";
 }
 
 export default function Logo({
   variant = "default",
   className = "",
-  showDomain = true
+  showDomain = true,
+  color = "gradient"
 }: LogoProps) {
   // Size configurations for different variants
   const sizeClasses = {
@@ -29,10 +31,14 @@ export default function Logo({
     onboarding: "text-sm sm:text-xs md:text-sm"
   };
 
+  const colorClass = color === "sage" 
+    ? "text-sage" 
+    : "text-transparent bg-clip-text bg-gradient-to-r from-sage via-coral to-sage";
+
   return (
     <div className={`flex items-baseline gap-1 ${className}`}>
       <span
-        className={`font-bold py-2 px-1 text-transparent bg-clip-text bg-gradient-to-r from-sage via-coral to-sage drop-shadow-sm ${sizeClasses[variant]}`}
+        className={`font-bold py-2 px-1 ${colorClass} drop-shadow-sm ${sizeClasses[variant]}`}
         style={{ fontFamily: '"Playfair Display", serif', fontWeight: 700, letterSpacing: '-0.02em' }}
       >
         sayso

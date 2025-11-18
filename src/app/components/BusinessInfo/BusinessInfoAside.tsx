@@ -10,7 +10,7 @@ interface BusinessInfoAsideProps {
 }
 
 const sectionTitleStyle: CSSProperties = {
-  fontFamily: '"DM Sans", system-ui, sans-serif',
+  fontFamily: '"Urbanist", system-ui, sans-serif',
 };
 
 export default function BusinessInfoAside({ businessInfo, className = "" }: BusinessInfoAsideProps) {
@@ -124,11 +124,11 @@ export default function BusinessInfoAside({ businessInfo, className = "" }: Busi
         <h2 id="business-info-heading" className="text-h3 font-semibold text-charcoal" style={sectionTitleStyle}>
           {businessInfo.name || "Business Information"}
         </h2>
-        <p className={`text-body-sm text-charcoal/70 leading-relaxed ${businessInfo.description ? "" : "italic text-charcoal/40"}`}>
+        <p className={`text-body-sm text-charcoal/70 leading-relaxed mb-4 ${businessInfo.description ? "" : "italic text-charcoal/40"}`}>
           {businessInfo.description || "No description available."}
         </p>
         {businessInfo.category && (
-          <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border border-white/40 bg-white/20 text-caption font-semibold text-charcoal/80">
+          <div className="inline-flex items-center gap-1.5 px-2 py-1 mb-4 rounded-full border border-white/40 bg-white/20 text-caption font-semibold text-charcoal/80">
             <span>{businessInfo.category}</span>
           </div>
         )}

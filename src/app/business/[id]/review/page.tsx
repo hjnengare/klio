@@ -200,7 +200,7 @@ function WriteReviewContent() {
     return (
       <div className="min-h-dvh bg-off-white flex items-center justify-center">
         <div className="text-center max-w-md px-4">
-          <h2 className="text-h1 font-semibold text-charcoal mb-2" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+          <h2 className="text-h1 font-semibold text-charcoal mb-2" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
             {error || 'Business not found'}
           </h2>
           <p className="text-body text-charcoal/70 mb-6" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
@@ -256,7 +256,7 @@ function WriteReviewContent() {
                 </div>
                 <h3
                   className="text-body sm:text-h4 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
-                  style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+                  style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}
                 >
                   Write a Review
                 </h3>
@@ -292,7 +292,7 @@ function WriteReviewContent() {
                               {/* Business Info and Carousel - visible on mobile only */}
                               <div className="md:hidden mb-6 flex flex-col px-4 pt-4">
                                 <div className="text-center px-4 mb-4">
-                                  <h3 className="text-h3 font-semibold text-charcoal mb-2" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+                                  <h3 className="text-h3 font-semibold text-charcoal mb-2" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
                                     {businessName}
                                   </h3>
                                   <div className="flex items-center justify-center space-x-2">

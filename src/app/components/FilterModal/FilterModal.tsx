@@ -210,7 +210,7 @@ export default function FilterModal({
                 left: style.left,
                 width: style.width || 360,
                 maxWidth: "calc(100vw - 16px)",
-                maxHeight: "calc(100vh - " + (style.top + 40) + "px)",
+                maxHeight: "calc(100vh - " + (style.top + 20) + "px)",
               }),
           outline: "none",
         }}
@@ -221,7 +221,7 @@ export default function FilterModal({
             <Sliders className="w-4 h-4 text-warning-600" />
             <h2
               className="text-sm font-semibold text-charcoal"
-              style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+              style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
             >
               Filters
             </h2>
@@ -254,7 +254,7 @@ export default function FilterModal({
           <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.05s]">
             <h3
               className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2"
-              style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+              style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
             >
               <ShoppingBag className="w-4 h-4 text-warning-600" />
               Category
@@ -292,7 +292,7 @@ export default function FilterModal({
           <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.1s]">
             <h3
               className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2"
-              style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+              style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
             >
               <Star className="w-3.5 h-3.5 text-warning-600" />
               Minimum Rating
@@ -331,7 +331,7 @@ export default function FilterModal({
           <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.15s]">
             <h3
               className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2"
-              style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+              style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
             >
               <MapPin className="w-3.5 h-3.5 text-warning-600" />
               Distance
@@ -367,14 +367,14 @@ export default function FilterModal({
             <button
             onClick={handleClearAll}
             className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 text-sm sm:text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
-            style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+            style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
           >
             Clear
           </button>
           <button
             onClick={handleApply}
             className="flex-1 rounded-full bg-sage hover:bg-sage/90 text-white font-semibold py-2.5 px-4 text-sm sm:text-xs border border-sage transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
-            style={{ fontFamily: '"DM Sans", system-ui, sans-serif', letterSpacing: '-0.01em' }}
+            style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
           >
             Apply
           </button>

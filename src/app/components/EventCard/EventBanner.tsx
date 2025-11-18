@@ -2,7 +2,6 @@ import Image from "next/image";
 import { Image as ImageIcon } from "react-feather";
 import EventIcon from "./EventIcon";
 import EventBadge from "./EventBadge";
-import RatingBadge from "./RatingBadge";
 
 interface EventBannerProps {
   image?: string;
@@ -48,7 +47,6 @@ export default function EventBanner({
 
       {/* Badges */}
       <EventBadge startDate={startDate} endDate={endDate} />
-      <RatingBadge rating={rating} />
     </div>
   );
 }

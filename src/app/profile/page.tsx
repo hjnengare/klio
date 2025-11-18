@@ -475,7 +475,7 @@ function ProfileContent() {
                     strokeWidth={2.5}
                   />
                 </div>
-                <h3 className="text-h3 sm:text-h2 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+                <h3 className="text-h3 sm:text-h2 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
                   {displayLabel}
                 </h3>
               </Link>
@@ -546,7 +546,7 @@ function ProfileContent() {
                                 <h2
                                   id="profile-heading"
                                   className="text-h1 sm:text-hero font-semibold text-charcoal"
-                                  style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+                                  style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}
                                 >
                                   {displayLabel}
                                 </h2>

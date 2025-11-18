@@ -209,7 +209,7 @@ export default function BusinessProfilePage() {
                     <div className="w-16 h-16 bg-coral/10 rounded-full flex items-center justify-center mx-auto mb-4">
                         <X className="w-8 h-8 text-coral" />
                     </div>
-                    <h2 className="text-h1 font-semibold text-charcoal mb-2" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+                    <h2 className="text-h1 font-semibold text-charcoal mb-2" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
                         {error || 'Business not found'}
                     </h2>
                     <p className="text-body text-charcoal/70 mb-6 max-w-[70ch]" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
@@ -413,7 +413,7 @@ export default function BusinessProfilePage() {
                                                         <h2
                                                             id="reviews-heading"
                                                             className="text-h3 font-semibold text-charcoal border-b border-charcoal/10 pb-2"
-                                                            style={{ fontFamily: '"DM Sans", system-ui, sans-serif' }}
+                                                            style={{ fontFamily: '"Urbanist", system-ui, sans-serif' }}
                                                         >
                                                             Community Reviews
                                                         </h2>
@@ -442,7 +442,7 @@ export default function BusinessProfilePage() {
                                                         <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
                                                             <MessageSquare className="w-8 h-8 text-charcoal/40" />
                                                         </div>
-                                                        <h3 className="text-h2 font-semibold text-charcoal mb-2" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+                                                        <h3 className="text-h2 font-semibold text-charcoal mb-2" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
                                                             No reviews yet
                                                         </h3>
                                                         <p className="text-body text-charcoal/70 mb-6 max-w-[70ch] mx-auto text-center" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
@@ -514,7 +514,7 @@ export default function BusinessProfilePage() {
                                 <h3
                                     id="specials-modal-heading"
                                     className="text-h3 font-semibold text-charcoal mb-4 flex items-center gap-2.5 pr-8"
-                                    style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+                                    style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}
                                 >
                                                             <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-coral/20 to-coral/10" aria-hidden="true">
                                                                 <Calendar className="w-4 h-4 text-coral" />
@@ -544,7 +544,7 @@ export default function BusinessProfilePage() {
                                                                                 <Icon className="w-4 h-4 text-sage" />
                                                                             </div>
                                                                             <div className="flex-1">
-                                                                                <h4 className="text-body-sm font-semibold text-charcoal mb-0.5" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>{special.name}</h4>
+                                                                                <h4 className="text-body-sm font-semibold text-charcoal mb-0.5" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>{special.name}</h4>
                                                                                 <p className="text-caption text-charcoal/70 max-w-[70ch]">{special.description}</p>
                                                                             </div>
                                                                         </Link>

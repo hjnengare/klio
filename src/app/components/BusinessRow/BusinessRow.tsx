@@ -68,7 +68,6 @@ export default function BusinessRow({
     <section
       className="relative m-0 p-0 w-full"
       aria-label={title}
-      data-section
       style={{
         fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
       }}

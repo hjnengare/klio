@@ -1,85 +1,171 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { Smile, Star, Check, ArrowRight, CheckCircle } from "react-feather";
 import { useAuth } from "../contexts/AuthContext";
-import { useScrollReveal } from "../hooks/useScrollReveal";
-import Logo from "../components/Logo/Logo";
-import { CheckCircle } from "react-feather";
+import { useReducedMotion } from "../utils/useReducedMotion";
+import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 
-export default function CompletePage() {
-  const router = useRouter();
-  const { user } = useAuth();
+// 🎨 Additional animations + highlight removal
+const completeStyles = `
+  @keyframes float {
+    0% { transform: translateY(0) scale(.95); opacity: 0; }
+    10% { opacity: 1; }
+    50% { transform: translateY(-40%) scale(1); }
+    90% { opacity: 1; }
+    100% { transform: translateY(-90%) scale(.95); opacity: 0; }
+  }
 
-  // Initialize scroll reveal
-  useScrollReveal({ threshold: 0.1, rootMargin: "0px 0px -50px 0px", once: true });
+  .float-anim { animation: float 4s ease-in-out infinite; }
+  .float-anim.delay-400 { animation-delay: .4s; }
+  .float-anim.delay-800 { animation-delay: .8s; }
 
-  // Redirect to home after a short delay if onboarding is complete
+  @media (prefers-reduced-motion: reduce) {
+    .float-anim { animation: none !important; }
+  }
+
+  /* 🔒 Remove browser tap highlight overlay */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+`;
+
+/** ---------- Shared fonts ---------- */
+const sf = {
+  fontFamily:
+    '"SF Pro New", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+} as const;
+
+function CompletePageContent() {
+  const { updateUser, user } = useAuth();
+  const reducedMotion = useReducedMotion();
+
   useEffect(() => {
-    if (user?.profile?.onboarding_complete) {
-      const timer = setTimeout(() => {
-        router.push("/home");
-      }, 3000); // Show success message for 3 seconds
+    // 🎉 Confetti rain effect
+    if (!reducedMotion && typeof window !== 'undefined') {
+      let cancelled = false;
 
-      return () => clearTimeout(timer);
+      // Dynamically import canvas-confetti to avoid SSR issues
+      import('canvas-confetti').then((confetti) => {
+        const duration = 2000; // 2 seconds
+        const end = Date.now() + duration;
+
+        (function frame() {
+          if (cancelled) return;
+
+          confetti.default({
+            particleCount: 3,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ["var(--coral)", "var(--sage)", "var(--charcoal)", "var(--off-white)"],
+          });
+          confetti.default({
+            particleCount: 3,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ["var(--coral)", "var(--sage)", "var(--charcoal)", "var(--off-white)"],
+          });
+
+          if (Date.now() < end) requestAnimationFrame(frame);
+        })();
+      });
+
+      return () => {
+        cancelled = true;
+      };
     }
-  }, [user, router]);
+  }, [updateUser, reducedMotion]);
 
   return (
-    <div className="min-h-[100dvh] bg-off-white flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
-      <div className="w-full mx-auto max-w-[2000px] px-4 sm:px-6 lg:px-8 2xl:px-16 relative z-10 flex flex-col items-center justify-center">
-        <section data-section>
-          <div className="text-center space-y-6 max-w-2xl">
-            {/* Logo */}
-            <div className="mb-8">
-              <Logo />
-            </div>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: completeStyles }} />
+      <OnboardingLayout
+        step={4}
+        showProgress={false}
+      >
+        <div
+          className="text-center animate-fade-in-up flex-1 flex flex-col justify-center px-4"
+          style={
+            {
+              "--coral": "hsl(16, 100%, 66%)",
+              "--sage": "hsl(148, 20%, 38%)",
+              "--charcoal": "hsl(0, 0%, 25%)",
+              "--off-white": "hsl(0, 0%, 98%)",
+              ...sf,
+            } as React.CSSProperties
+          }
+        >
+          {/* Heading */}
+          <h1
+            className="text-lg md:text-4xl lg:text-5xl font-bold text-charcoal mb-4 tracking-tight leading-snug"
+            aria-live="polite"
+            style={sf}
+          >
+            You&apos;re all set!
+          </h1>
+          <p className="text-base md:text-lg font-normal text-charcoal/70 mb-4 leading-relaxed" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
+            Time to discover what&apos;s out there.
+          </p>
 
-            {/* Success Icon */}
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-sage to-sage/80 rounded-full flex items-center justify-center shadow-lg">
-                <CheckCircle className="w-12 h-12 sm:w-14 sm:h-14 text-white" strokeWidth={2.5} />
+          {/* Floating graphics (non-interactive now) */}
+          <div className="relative mx-auto mb-4 h-28 w-full max-w-[420px]" aria-hidden="true">
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="absolute bottom-0 left-[15%] w-14 h-14 rounded-full bg-off-white/90 border-2 border-coral flex items-center justify-center float-anim shadow-[0_8px_24px_rgba(0,0,0,0.06)] pointer-events-none select-none">
+                <Smile className="w-5 h-5 text-charcoal" aria-hidden="true" />
+              </div>
+              <div className="absolute bottom-0 left-[45%] w-14 h-14 rounded-full bg-off-white/90 border-2 border-sage flex items-center justify-center float-anim delay-400 shadow-[0_8px_24px_rgba(0,0,0,0.06)] pointer-events-none select-none">
+                <Star className="w-5 h-5 text-charcoal" aria-hidden="true" />
+              </div>
+              <div className="absolute bottom-0 left-[75%] w-14 h-14 rounded-full bg-off-white/90 border-2 border-coral flex items-center justify-center float-anim delay-800 shadow-[0_8px_24px_rgba(0,0,0,0.06)] pointer-events-none select-none">
+                <Check className="w-5 h-5 text-charcoal" aria-hidden="true" />
               </div>
             </div>
-
-            {/* Heading */}
-            <h1
-              className="text-4xl md:text-5xl font-semibold text-charcoal mb-4 leading-[1.2] tracking-tight"
-              style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
-            >
-              You're all set! 🎉
-            </h1>
-
-            {/* Subtitle */}
-            <p
-              className="text-body font-normal text-charcoal/70 max-w-[70ch] mx-auto leading-relaxed"
-              style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
-            >
-              Welcome to sayso! Your profile is complete and you're ready to discover amazing local businesses, share honest reviews, and connect with your community.
-            </p>
-
-            {/* CTA Button */}
-            <div className="pt-6">
-              <button
-                onClick={() => router.push("/home")}
-                className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-coral to-coral/80 text-white rounded-full text-body font-semibold hover:from-coral/90 hover:to-coral transition-all duration-300 shadow-lg hover:shadow-xl"
-                style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
-              >
-                Start Exploring
-              </button>
-            </div>
-
-            {/* Auto-redirect message */}
-            <p
-              className="text-body-sm text-charcoal/50 mt-4"
-              style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
-            >
-              Redirecting to home in a few seconds...
-            </p>
           </div>
-        </section>
-      </div>
-    </div>
+
+          {/* Continue CTA */}
+          <div>
+            <Link
+              href="/home"
+              data-testid="onboarding-complete-cta"
+              aria-label="Go to Home"
+              className="group inline-flex items-center justify-center w-full sm:w-auto text-white text-sm font-semibold py-4 px-8 rounded-full transition-all duration-300"
+              style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
+            >
+              <span
+                className="
+                  group relative block w-[200px] mx-auto rounded-full py-4 px-4 text-body font-semibold text-white text-center flex items-center justify-center bg-gradient-to-r from-coral to-coral/80 hover:from-sage hover:to-sage transition-all duration-300 btn-target btn-press focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/30 focus-visible:ring-offset-2
+                "
+              >
+                Continue to Home
+                <ArrowRight className="w-5 h-5 ml-2 inline-block" />
+              </span>
+
+            </Link>
+          </div>
+
+          {/* Completion badge */}
+          <div className="mt-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-sage/10 border border-sage/30 rounded-full">
+              <CheckCircle className="w-4 h-4 text-sage" />
+              <span className="text-xs font-semibold text-sage" style={sf}>
+                Setup Complete
+              </span>
+            </div>
+          </div>
+        </div>
+      </OnboardingLayout>
+    </>
   );
 }
 
+export default function CompletePage() {
+  return (
+    <ProtectedRoute requiresAuth={true}>
+      <CompletePageContent />
+    </ProtectedRoute>
+  );
+}

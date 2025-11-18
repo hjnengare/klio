@@ -215,7 +215,14 @@ export default function HeroCarousel() {
   return (
     <>
       <div className="relative w-full px-0 top-0">
-        <Header showSearch={true} variant="frosty" />
+        <Header 
+          showSearch={true} 
+          variant="white"
+          backgroundClassName="bg-navbar-bg/90"
+          topPosition="top-0"
+          reducedPadding={true}
+          whiteText={true}
+        />
         <section
           ref={containerRef as React.RefObject<HTMLElement>}
           className="relative min-h-[80vh] sm:min-h-[80vh] md:min-h-[90vh] w-full overflow-hidden outline-none rounded-none"

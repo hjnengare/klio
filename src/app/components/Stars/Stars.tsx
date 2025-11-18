@@ -27,11 +27,12 @@ export default function Stars({ value = 5, color = "amber", size = 15, spacing =
       </svg>
       {Array.from({ length: 5 }).map((_, i) => {
         const active = i < full;
+        const starColor = color === "navbar-bg" ? "#7D0F2A" : color === "coral/90" ? "#f87171" : "#f59e0b";
         return (
           <span
             key={i}
-            className="inline-flex items-center justify-center rounded-full bg-navbar-bg/90 shadow-[0_2px_4px_rgba(0,0,0,0.12)]"
-            style={{ width: size + 12, height: size + 12 }}
+            className="inline-flex items-center justify-center"
+            style={{ width: size, height: size }}
             aria-hidden
           >
             <Star
@@ -39,8 +40,8 @@ export default function Stars({ value = 5, color = "amber", size = 15, spacing =
               style={{
                 width: size,
                 height: size,
-                stroke: "url(#starGradient)",
-                fill: active ? "url(#starGradient)" : "transparent"
+                stroke: starColor,
+                fill: active ? starColor : "transparent"
               }}
             />
           </span>

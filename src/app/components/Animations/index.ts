@@ -4,4 +4,4 @@ export { default as StaggerContainer, staggerContainerVariants, staggerItemVaria
 export { default as PremiumHover } from './PremiumHover';
 export { default as FloatingElements } from './FloatingElements';
 export { default as MagneticButton } from './MagneticButton';
-export { default as useScrollReveal } from '../../hooks/useScrollReveal';
+export { useScrollReveal } from '../../hooks/useScrollReveal';

@@ -11,7 +11,6 @@ export default function BusinessRowSkeleton({ title, cards = DEFAULT_CARD_COUNT 
       className="relative m-0 p-0 w-full"
       aria-label={`${title} loading`}
       aria-busy="true"
-      data-section="loading"
       style={{
         fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
       }}
