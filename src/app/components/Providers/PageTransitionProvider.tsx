@@ -41,7 +41,7 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
     const transitionTimeout = window.setTimeout(() => {
       setDisplayChildren(children);
       requestAnimationFrame(() => setIsTransitioning(false));
-    }, 90); // faster transitions
+    }, 50); // faster transitions
 
     return () => {
       window.clearTimeout(transitionTimeout);
@@ -53,6 +53,17 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
     setTransitioning: setIsTransitioning,
   };
 
+  // Skip animation on initial render for faster load
+  if (isFirstRender.current) {
+    return (
+      <PageTransitionContext.Provider value={value}>
+        <div className="min-h-screen">
+          {children}
+        </div>
+      </PageTransitionContext.Provider>
+    );
+  }
+
   return (
     <PageTransitionContext.Provider value={value}>
       <AnimatePresence mode="wait">
@@ -62,8 +73,8 @@ export default function PageTransitionProvider({ children }: PageTransitionProvi
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
           transition={{ 
-            duration: 0.12,
-            ease: [0.25, 0.1, 0.25, 1]
+            duration: 0.15,
+            ease: [0.25, 0.1, 0.25, 1] as const
           }}
           className="min-h-screen"
         >

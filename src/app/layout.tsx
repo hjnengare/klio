@@ -8,9 +8,6 @@ import { ToastProvider } from "./contexts/ToastContext";
 import { SavedItemsProvider } from "./contexts/SavedItemsContext";
 
 // Lazy load non-critical components for faster initial load
-const PageTransitionProvider = dynamicImport(() => import("./components/Providers/PageTransitionProvider"), {
-  ssr: true,
-});
 const WebVitals = dynamicImport(() => import("./components/Performance/WebVitals"));
 const BusinessNotifications = dynamicImport(() => import("./components/Notifications/BusinessNotifications"));
 const ClientLayoutWrapper = dynamicImport(() => import("./components/Performance/ClientLayoutWrapper"));
@@ -157,10 +154,8 @@ export default function RootLayout({
           <AuthProvider>
             <OnboardingProvider>
               <SavedItemsProvider>
-                <PageTransitionProvider>
-                  <BusinessNotifications />
-                  {children}
-                </PageTransitionProvider>
+                <BusinessNotifications />
+                {children}
               </SavedItemsProvider>
             </OnboardingProvider>
           </AuthProvider>

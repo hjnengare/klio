@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface PageTransitionProps {
   children: ReactNode;
@@ -19,9 +19,8 @@ const pageVariants = {
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.4,
+      duration: 0.3,
       ease: [0.25, 0.1, 0.25, 1] as const,
-      staggerChildren: 0.05,
     },
   },
   exit: {
@@ -29,24 +28,25 @@ const pageVariants = {
     y: -20,
     scale: 0.98,
     transition: {
-      duration: 0.3,
+      duration: 0.2,
       ease: [0.25, 0.1, 0.25, 1] as const,
     },
   },
 };
 
-const containerVariants = {
-  initial: {},
-  animate: {
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.1,
-    },
-  },
-  exit: {},
-};
-
 export default function PageTransition({ children, className = "" }: PageTransitionProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    // Skip animation on initial mount for faster load
+    setIsMounted(true);
+  }, []);
+
+  // On initial mount, render without animation
+  if (!isMounted) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       variants={pageVariants}
@@ -55,9 +55,7 @@ export default function PageTransition({ children, className = "" }: PageTransit
       exit="exit"
       className={className}
     >
-      <motion.div variants={containerVariants}>
-        {children}
-      </motion.div>
+      {children}
     </motion.div>
   );
 }
