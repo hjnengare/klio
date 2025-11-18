@@ -216,11 +216,11 @@ export default function FilterModal({
         }}
       >
         {/* header */}
-        <div className="relative flex items-center justify-between px-5 sm:px-6 pt-4 pb-3 border-b border-white/30 bg-off-white shadow-sm transition-all duration-300">
+        <div className="relative flex items-center justify-between px-4 sm:px-5 md:px-6 pt-4 pb-3 border-b border-white/30 bg-off-white shadow-sm transition-all duration-300 flex-shrink-0">
           <div className="relative z-10 flex items-center gap-2">
-            <Sliders className="w-4 h-4 text-warning-600" />
+            <Sliders className="w-4 h-4 sm:w-4 sm:h-4 text-warning-600" />
             <h2
-              className="text-sm font-semibold text-charcoal"
+              className="text-base sm:text-sm font-semibold text-charcoal"
               style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
             >
               Filters
@@ -228,16 +228,16 @@ export default function FilterModal({
           </div>
           <button
             onClick={onClose}
-            className="relative z-10 w-9 h-9 rounded-full border border-charcoal/10 bg-off-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="relative z-10 w-10 h-10 sm:w-9 sm:h-9 rounded-full border border-charcoal/10 bg-off-white/70 hover:bg-sage/10 hover:text-sage text-charcoal/80 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30 touch-manipulation"
             aria-label="Close filters"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5 sm:w-4 sm:h-4" />
           </button>
         </div>
 
         {/* body */}
         <div
-          className="px-5 sm:px-6 py-4 space-y-4 overflow-y-auto overscroll-contain flex-1 min-h-0 max-h-[calc(100vh-140px)] sm:max-h-none"
+          className="px-4 sm:px-5 md:px-6 py-4 space-y-4 overflow-y-auto overscroll-contain flex-1 min-h-0 max-h-[calc(100vh-180px)] sm:max-h-none"
           style={{ 
             WebkitOverflowScrolling: 'touch',
           }}
@@ -251,15 +251,15 @@ export default function FilterModal({
           }}
         >
           {/* Category */}
-          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.05s]">
+          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-3 sm:p-4 animate-fade-in-up [animation-delay:0.05s]">
             <h3
-              className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2"
+              className="text-base sm:text-sm font-semibold text-charcoal mb-3 sm:mb-3 flex items-center gap-2"
               style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
             >
-              <ShoppingBag className="w-4 h-4 text-warning-600" />
+              <ShoppingBag className="w-4 h-4 sm:w-4 sm:h-4 text-warning-600" />
               Category
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 sm:gap-2">
               {categoryOptions.map(({ name, Icon }) => {
                 const active = selectedCategories.includes(name);
                 return (
@@ -271,17 +271,17 @@ export default function FilterModal({
                         prev.includes(name) ? prev.filter((x) => x !== name) : [...prev, name]
                       )
                     }
-                    className={`px-3 py-2 rounded-full text-sm sm:text-xs flex items-center gap-2 border transition-all
+                    className={`px-3 sm:px-3 py-2.5 sm:py-2 rounded-full text-sm sm:text-xs flex items-center gap-2 border transition-all min-h-[44px] sm:min-h-0 touch-manipulation
                       ${
                         active
                           ? "bg-sage text-white border-sage shadow-sm"
-                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
+                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5 active:bg-sage/10"
                       }
                     focus:outline-none focus:ring-2 focus:ring-sage/30`}
                     aria-pressed={active}
                   >
-                    <Icon className={`w-3.5 h-3.5 ${active ? "text-white" : "text-sage"}`} />
-                    <span>{name}</span>
+                    <Icon className={`w-4 h-4 sm:w-3.5 sm:h-3.5 flex-shrink-0 ${active ? "text-white" : "text-sage"}`} />
+                    <span className="whitespace-nowrap">{name}</span>
                   </button>
                 );
               })}
@@ -289,15 +289,15 @@ export default function FilterModal({
           </section>
 
           {/* Rating */}
-          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.1s]">
+          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-3 sm:p-4 animate-fade-in-up [animation-delay:0.1s]">
             <h3
-              className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2"
+              className="text-base sm:text-sm font-semibold text-charcoal mb-3 sm:mb-3 flex items-center gap-2"
               style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
             >
-              <Star className="w-3.5 h-3.5 text-warning-600" />
+              <Star className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-warning-600" />
               Minimum Rating
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 sm:gap-2">
               {[5, 4, 3, 2, 1].map((r) => {
                 const active = selectedRating === r;
                 return (
@@ -305,11 +305,11 @@ export default function FilterModal({
                     key={r}
                     type="button"
                     onClick={() => setSelectedRating(active ? null : r)}
-                    className={`px-3 py-2 rounded-full text-sm sm:text-xs flex items-center gap-2 border transition-all
+                    className={`px-3 sm:px-3 py-2.5 sm:py-2 rounded-full text-sm sm:text-xs flex items-center gap-2 border transition-all min-h-[44px] sm:min-h-0 touch-manipulation
                       ${
                         active
                           ? "bg-sage text-white border-sage shadow-sm"
-                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5"
+                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-sage/40 hover:bg-sage/5 active:bg-sage/10"
                       }
                     focus:outline-none focus:ring-2 focus:ring-sage/30`}
                     aria-pressed={active}
@@ -317,7 +317,7 @@ export default function FilterModal({
                   >
                     <div className="flex">
                       {[...Array(r)].map((_, i) => (
-                        <Star key={i} className={`w-4 h-4 ${active ? "text-white" : "text-sage"}`} />
+                        <Star key={i} className={`w-4 h-4 sm:w-4 sm:h-4 ${active ? "text-white" : "text-sage"}`} />
                       ))}
                     </div>
                     <span>{r}+</span>
@@ -328,15 +328,15 @@ export default function FilterModal({
           </section>
 
           {/* Distance */}
-          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-4 animate-fade-in-up [animation-delay:0.15s]">
+          <section className="rounded-xl bg-off-white/70 border border-charcoal/10 p-3 sm:p-4 animate-fade-in-up [animation-delay:0.15s]">
             <h3
-              className="text-sm font-semibold text-charcoal mb-3 flex items-center gap-2"
+              className="text-base sm:text-sm font-semibold text-charcoal mb-3 sm:mb-3 flex items-center gap-2"
               style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
             >
-              <MapPin className="w-3.5 h-3.5 text-warning-600" />
+              <MapPin className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-warning-600" />
               Distance
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 sm:gap-2">
               {distanceOptions.map(({ distance, Icon }) => {
                 const active = selectedDistance === distance;
                 return (
@@ -344,16 +344,16 @@ export default function FilterModal({
                     key={distance}
                     type="button"
                     onClick={() => setSelectedDistance(active ? null : distance)}
-                    className={`px-3 py-2 rounded-full text-sm sm:text-xs flex items-center gap-2 border transition-all whitespace-nowrap
+                    className={`px-3 sm:px-3 py-2.5 sm:py-2 rounded-full text-sm sm:text-xs flex items-center gap-2 border transition-all whitespace-nowrap min-h-[44px] sm:min-h-0 touch-manipulation
                       ${
                         active
                           ? "bg-coral text-white border-coral shadow-sm"
-                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-coral/40 hover:bg-coral/5"
+                          : "bg-off-white text-charcoal border-charcoal/10 hover:border-coral/40 hover:bg-coral/5 active:bg-coral/10"
                       }
                     focus:outline-none focus:ring-2 focus:ring-coral/30`}
                     aria-pressed={active}
                   >
-                    <Icon className={`w-4 h-4 ${active ? "text-white" : "text-coral"}`} />
+                    <Icon className={`w-4 h-4 sm:w-4 sm:h-4 flex-shrink-0 ${active ? "text-white" : "text-coral"}`} />
                     <span>{distance}</span>
                   </button>
                 );
@@ -363,17 +363,17 @@ export default function FilterModal({
         </div>
 
         {/* footer */}
-        <div className="flex gap-3 px-5 sm:px-6 py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm flex-shrink-0">
+        <div className="flex gap-3 px-4 sm:px-5 md:px-6 py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm flex-shrink-0 safe-area-bottom">
             <button
             onClick={handleClearAll}
-            className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 font-semibold py-2.5 px-4 text-sm sm:text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 active:bg-charcoal/10 font-semibold py-3 sm:py-2.5 px-4 text-base sm:text-sm md:text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30 min-h-[48px] sm:min-h-0 touch-manipulation"
             style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
           >
             Clear
           </button>
           <button
             onClick={handleApply}
-            className="flex-1 rounded-full bg-sage hover:bg-sage/90 text-white font-semibold py-2.5 px-4 text-sm sm:text-xs border border-sage transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="flex-1 rounded-full bg-sage hover:bg-sage/90 active:bg-sage/80 text-white font-semibold py-3 sm:py-2.5 px-4 text-base sm:text-sm md:text-xs border border-sage transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30 min-h-[48px] sm:min-h-0 touch-manipulation"
             style={{ fontFamily: '"Urbanist", system-ui, sans-serif', letterSpacing: '-0.01em' }}
           >
             Apply
