@@ -5,7 +5,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Header from "../Header/Header";
-import PromoBar from "../PromoBar/PromoBar";
 
 interface HeroSlide {
   id: string;
@@ -216,23 +215,20 @@ export default function HeroCarousel() {
   return (
     <>
       <div className="relative w-full px-0 top-0">
-        {/* Promo Banner - Only visible on larger screens */}
-        <PromoBar />
-        
-        {/* Header - Positioned below promo banner on larger screens */}
+        {/* Header */}
         <Header 
           showSearch={true} 
           variant="white"
           backgroundClassName="bg-navbar-bg/90"
-          topPosition="top-0 md:top-10"
+          topPosition="top-0"
           reducedPadding={true}
           whiteText={true}
         />
         
-        {/* Hero Section - Adjusted for promo banner on larger screens */}
+        {/* Hero Section */}
         <section
           ref={containerRef as React.RefObject<HTMLElement>}
-          className="relative min-h-[80vh] sm:min-h-[80vh] md:min-h-[90vh] w-full overflow-hidden outline-none rounded-none md:pt-24"
+          className="relative min-h-[80vh] sm:min-h-[80vh] md:min-h-[90vh] w-full overflow-hidden outline-none rounded-none"
           aria-label="Hero carousel"
           tabIndex={0}
           style={{ fontFamily: FONT_STACK }}
@@ -267,7 +263,7 @@ export default function HeroCarousel() {
            </div>
 
            {/* Content - Text Left Aligned */}
-           <div className="absolute inset-0 z-20 flex items-center pt-16 pb-12 md:pt-24">
+           <div className="absolute inset-0 z-20 flex items-center pt-16 pb-12">
             <div className="mx-auto w-full max-w-[2200px] px-4 sm:px-8 xl:px-12 2xl:px-16">
                <div className="max-w-lg sm:max-w-lg lg:max-w-2xl xl:max-w-3xl">
                  {/* Text Content */}
@@ -301,35 +297,6 @@ export default function HeroCarousel() {
            </div>
         </div>
       ))}
-
-      {/* Carousel Progress Bar and Controls */}
-      <div className="absolute bottom-12 left-0 right-0 z-30 px-8 flex items-center gap-3 py-2">
-        {/* Progress Bar */}
-        <div className="flex-1 h-[6px] bg-white/25 relative overflow-hidden rounded-full">
-          <div
-            className="absolute left-0 top-0 h-full bg-gradient-to-r from-white via-white/90 to-white/70 transition-all duration-75 ease-linear"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        
-        {/* Pause/Play Button */}
-        <button
-          onClick={() => setPaused(!paused)}
-          className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors backdrop-blur-md border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
-          aria-label={paused ? "Play carousel" : "Pause carousel"}
-        >
-          {paused ? (
-            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          ) : (
-            <div className="flex items-center justify-center gap-[2px]">
-              <span className="w-[3px] h-4 bg-white rounded-full" />
-              <span className="w-[3px] h-4 bg-white rounded-full" />
-            </div>
-          )}
-        </button>
-      </div>
 
       {/* Accessible live region (announces slide title) */}
       <div className="sr-only" aria-live="polite">

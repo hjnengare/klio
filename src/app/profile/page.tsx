@@ -30,6 +30,10 @@ import { AchievementsList } from "@/components/organisms/AchievementsList";
 import { DangerAction } from "@/components/molecules/DangerAction";
 import { Skeleton } from "@/components/atoms/Skeleton";
 import { ConfirmationDialog } from "@/components/molecules/ConfirmationDialog";
+import SavedBusinessRow from "@/app/components/Saved/SavedBusinessRow";
+import { useSavedItems } from "@/app/contexts/SavedItemsContext";
+import { getBusinessesByIds } from "@/app/data/businessDataOptimized";
+import { useMemo } from "react";
 
 const animations = `
   @keyframes fadeInUp {
@@ -117,6 +121,7 @@ interface UserAchievement {
 
 function ProfileContent() {
   const { user, updateUser, isLoading, logout } = useAuth();
+  const { savedItems } = useSavedItems();
 
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -130,6 +135,12 @@ function ProfileContent() {
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [imgError, setImgError] = useState(false);
   const supabase = getBrowserSupabase();
+
+  // Get saved businesses for mobile display
+  const savedBusinesses = useMemo(() => {
+    if (!savedItems || savedItems.length === 0) return [];
+    return getBusinessesByIds(savedItems);
+  }, [savedItems]);
 
   const profile = React.useMemo(() => {
     const rawProfile: any = user?.profile || {};
@@ -643,6 +654,20 @@ function ProfileContent() {
                         <p className="text-xs text-charcoal/60">Communities followed</p>
                       </div>
                     </section>
+
+                    {/* Saved Businesses - Mobile Only */}
+                    {savedBusinesses.length > 0 && (
+                      <section
+                        className="md:hidden bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-6 space-y-4 animate-fade-in-up animate-delay-300"
+                        aria-label="Saved businesses"
+                      >
+                        <SavedBusinessRow
+                          title="Your Saved Gems"
+                          businesses={savedBusinesses}
+                          showCount={true}
+                        />
+                      </section>
+                    )}
 
                     <section
                       className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-6 sm:p-8 space-y-4"

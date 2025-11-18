@@ -204,6 +204,8 @@ export default function FilterModal({
                 height: '100vh',
                 maxWidth: '100vw',
                 maxHeight: '100vh',
+                display: 'flex',
+                flexDirection: 'column',
               }
             : {
                 top: style.top,
@@ -211,6 +213,8 @@ export default function FilterModal({
                 width: style.width || 360,
                 maxWidth: "calc(100vw - 16px)",
                 maxHeight: "calc(100vh - " + (style.top + 20) + "px)",
+                display: 'flex',
+                flexDirection: 'column',
               }),
           outline: "none",
         }}
@@ -237,7 +241,7 @@ export default function FilterModal({
 
         {/* body */}
         <div
-          className="px-4 sm:px-5 md:px-6 py-4 space-y-4 overflow-y-auto overscroll-contain flex-1 min-h-0 max-h-[calc(100vh-180px)] sm:max-h-none"
+          className="px-4 sm:px-5 md:px-6 py-4 space-y-4 overflow-y-auto overscroll-contain flex-1 min-h-0"
           style={{ 
             WebkitOverflowScrolling: 'touch',
           }}
@@ -363,7 +367,7 @@ export default function FilterModal({
         </div>
 
         {/* footer */}
-        <div className="flex gap-3 px-4 sm:px-5 md:px-6 py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm flex-shrink-0 safe-area-bottom">
+        <div className="flex gap-3 px-4 sm:px-5 md:px-6 py-3 sm:py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm flex-shrink-0 safe-area-bottom">
             <button
             onClick={handleClearAll}
             className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 active:bg-charcoal/10 font-semibold py-3 sm:py-2.5 px-4 text-base sm:text-sm md:text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30 min-h-[48px] sm:min-h-0 touch-manipulation"
