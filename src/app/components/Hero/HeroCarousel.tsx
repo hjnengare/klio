@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Header from "../Header/Header";
+import PromoBar from "../PromoBar/PromoBar";
 
 interface HeroSlide {
   id: string;
@@ -215,17 +216,23 @@ export default function HeroCarousel() {
   return (
     <>
       <div className="relative w-full px-0 top-0">
+        {/* Promo Banner - Only visible on larger screens */}
+        <PromoBar />
+        
+        {/* Header - Positioned below promo banner on larger screens */}
         <Header 
           showSearch={true} 
           variant="white"
           backgroundClassName="bg-navbar-bg/90"
-          topPosition="top-0"
+          topPosition="top-0 md:top-10"
           reducedPadding={true}
           whiteText={true}
         />
+        
+        {/* Hero Section - Adjusted for promo banner on larger screens */}
         <section
           ref={containerRef as React.RefObject<HTMLElement>}
-          className="relative min-h-[80vh] sm:min-h-[80vh] md:min-h-[90vh] w-full overflow-hidden outline-none rounded-none"
+          className="relative min-h-[80vh] sm:min-h-[80vh] md:min-h-[90vh] w-full overflow-hidden outline-none rounded-none md:pt-24"
           aria-label="Hero carousel"
           tabIndex={0}
           style={{ fontFamily: FONT_STACK }}
@@ -260,7 +267,7 @@ export default function HeroCarousel() {
            </div>
 
            {/* Content - Text Left Aligned */}
-           <div className="absolute inset-0 z-20 flex items-center pt-16 pb-12">
+           <div className="absolute inset-0 z-20 flex items-center pt-16 pb-12 md:pt-24">
             <div className="mx-auto w-full max-w-[2200px] px-4 sm:px-8 xl:px-12 2xl:px-16">
                <div className="max-w-lg sm:max-w-lg lg:max-w-2xl xl:max-w-3xl">
                  {/* Text Content */}
