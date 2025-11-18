@@ -24,7 +24,7 @@ const urbanist = Urbanist({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://local-gems.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://sayso-nine.vercel.app'),
   title: "sayso - Discover trusted sayso near you",
   description: "Find amazing local businesses, restaurants, and experiences in your area with personalized recommendations and trusted reviews.",
   keywords: ["local business", "restaurants", "reviews", "recommendations", "sayso"],

@@ -13,11 +13,11 @@ export class AuthService {
 
   /**
    * Get the base URL for redirects - uses NEXT_PUBLIC_BASE_URL if available,
-   * otherwise falls back to window.location.origin
+   * otherwise falls back to window.location.origin or Vercel production URL
    */
   private static getBaseUrl(): string {
     if (typeof window === 'undefined') {
-      return process.env.NEXT_PUBLIC_BASE_URL || 'https://local-gems-ten.vercel.app';
+      return process.env.NEXT_PUBLIC_BASE_URL || 'https://sayso-nine.vercel.app';
     }
     return process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
   }
