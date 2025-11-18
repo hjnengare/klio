@@ -236,9 +236,9 @@ export default function ReviewerProfilePage() {
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
                                     <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                                 </div>
-                                <h1 className="text-h3 sm:text-h2 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+                                <h3 className="text-h3 sm:text-h2 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
                                     {reviewer.name}
-                                </h1>
+                                </h3>
                             </Link>
 
                             <div className="flex items-center gap-2 sm:gap-3">

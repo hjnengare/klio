@@ -195,7 +195,7 @@ function BusinessCard({
   };
 
   const mediaBaseClass =
-    "relative overflow-hidden z-10 cursor-pointer rounded-t-[12px] bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 border border-white/50 backdrop-blur-md transition-all duration-300";
+    "relative overflow-hidden z-10 cursor-pointer rounded-t-[12px] bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 border border-white/50 backdrop-blur-md";
   const mediaClass = compact
     ? `${mediaBaseClass} h-[300px] lg:h-[260px]`
     : `${mediaBaseClass} h-[540px] sm:h-[320px] md:h-[240px]`;
@@ -286,7 +286,6 @@ function BusinessCard({
                 </div>
               </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             {imgError && (
               <div
                 className="absolute inset-0 flex items-center justify-center"

@@ -475,9 +475,9 @@ function ProfileContent() {
                     strokeWidth={2.5}
                   />
                 </div>
-                <h1 className="text-h3 sm:text-h2 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+                <h3 className="text-h3 sm:text-h2 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
                   {displayLabel}
-                </h1>
+                </h3>
               </Link>
 
               <div className="flex items-center gap-2 sm:gap-3">

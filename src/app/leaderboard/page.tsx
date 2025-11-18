@@ -173,7 +173,7 @@ function LeaderboardPage() {
             <section
               className="relative pb-12 sm:pb-16 md:pb-20"
               style={{
-                fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
               }}
             >
               <div className="mx-auto w-full max-w-[2000px] px-2 relative z-10">

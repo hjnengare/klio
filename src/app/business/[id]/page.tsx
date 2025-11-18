@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef, useMemo } from "react";
 import { PageLoader } from "../../components/Loader";
 import {
     ArrowLeft,
@@ -28,6 +28,7 @@ import { getCategoryPng, isPngIcon } from "../../utils/categoryToPngMapping";
 import Footer from "../../components/Footer/Footer";
 import { BusinessInfo } from "../../components/BusinessInfo/BusinessInfoModal";
 import BusinessInfoAside from "../../components/BusinessInfo/BusinessInfoAside";
+import SimilarBusinesses from "../../components/SimilarBusinesses/SimilarBusinesses";
 import { useAuth } from "../../contexts/AuthContext";
 
 // CSS animations to replace framer-motion
@@ -48,8 +49,8 @@ const animations = `
   }
   
   @keyframes fadeInScale {
-    from { opacity: 0; transform: scale(0.96) translateY(-12px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
   }
   
   .animate-fade-in-up {
@@ -81,23 +82,28 @@ export default function BusinessProfilePage() {
     const businessId = params?.id as string;
     const [showSpecialsModal, setShowSpecialsModal] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const [modalPosition, setModalPosition] = useState({ top: 0, right: 0 });
+    const headerRef = useRef<HTMLElement>(null);
+    const [modalPosition, setModalPosition] = useState<{ top: number; right: number } | null>(null);
     const [showScrollTop, setShowScrollTop] = useState(false);
 
 
-    // Calculate modal position based on button position
-    useEffect(() => {
-        if (showSpecialsModal && buttonRef.current) {
+    // Calculate modal position based on header bottom - use useLayoutEffect for immediate calculation
+    useLayoutEffect(() => {
+        if (showSpecialsModal && buttonRef.current && headerRef.current) {
             const updatePosition = () => {
-                if (buttonRef.current) {
+                if (buttonRef.current && headerRef.current) {
                     const buttonRect = buttonRef.current.getBoundingClientRect();
+                    const headerRect = headerRef.current.getBoundingClientRect();
+                    // Position dropdown below the navbar's bottom margin
+                    const gap = 8; // Gap below navbar
                     setModalPosition({
-                        top: buttonRect.bottom + 8, // 8px gap below button
+                        top: headerRect.bottom + gap, // Position below navbar
                         right: window.innerWidth - buttonRect.right, // Align right edge with button
                     });
                 }
             };
 
+            // Calculate position immediately
             updatePosition();
             window.addEventListener('resize', updatePosition);
             window.addEventListener('scroll', updatePosition, true);
@@ -106,6 +112,9 @@ export default function BusinessProfilePage() {
                 window.removeEventListener('resize', updatePosition);
                 window.removeEventListener('scroll', updatePosition, true);
             };
+        } else {
+            // Reset position when modal closes
+            setModalPosition(null);
         }
     }, [showSpecialsModal]);
 
@@ -298,7 +307,7 @@ export default function BusinessProfilePage() {
                 }}
             >
                 {/* Fixed Premium Header */}
-                <header className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
+                <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
                     role="banner"
                     style={{
                         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
@@ -314,12 +323,12 @@ export default function BusinessProfilePage() {
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
                                     <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                                 </div>
-                                <h1
-                                    className="text-body font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
-                                    style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+                                <h3
+                                    className="text-body-sm font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
+                                    style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                                 >
                                     {businessData.name}
-                                </h1>
+                                </h3>
                             </button>
 
                             <div className="flex items-center gap-2 sm:gap-3">
@@ -451,6 +460,14 @@ export default function BusinessProfilePage() {
                                                     </div>
                                                 )}
                                             </section>
+
+                                        {/* Similar Businesses Section */}
+                                        <SimilarBusinesses
+                                            currentBusinessId={businessId}
+                                            category={businessData.category}
+                                            location={businessData.location}
+                                            limit={6}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -459,7 +476,7 @@ export default function BusinessProfilePage() {
                 </div>
 
                 {/* Events and Specials Modal */}
-                {showSpecialsModal && (
+                {showSpecialsModal && modalPosition && (
                     <div
                         className="fixed z-[201] pointer-events-none"
                         style={{
@@ -472,6 +489,9 @@ export default function BusinessProfilePage() {
                     >
                         <div
                             className="bg-off-white backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-6 relative overflow-hidden w-[280px] sm:w-[300px] lg:w-[320px] pointer-events-auto animate-fade-in-scale"
+                            style={{
+                                transformOrigin: 'top right',
+                            }}
                         >
                             {/* Decorative background element */}
                                                     <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-coral/10 to-transparent rounded-full blur-lg" aria-hidden="true" />

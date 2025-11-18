@@ -10,6 +10,9 @@ import dynamic from "next/dynamic";
 
 const ImageUpload = dynamic(() => import("./ImageUpload"), {
   ssr: false,
+  loading: () => (
+    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg border-2 border-dashed border-charcoal/30 bg-off-white/30 animate-pulse" />
+  ),
 });
 
 interface ReviewFormProps {

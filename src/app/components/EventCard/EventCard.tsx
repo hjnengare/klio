@@ -77,30 +77,6 @@ const getEventMediaImage = (event: Event) => {
   return `${EVENT_IMAGE_BASE_PATH}/025-open-book.png`;
 };
 
-const formatPriceDisplay = (price?: string) => {
-  if (!price || price.trim().length === 0) {
-    return "Free";
-  }
-
-  const trimmed = price.trim();
-
-  const numeric = trimmed.replace(/[^0-9.]/g, "");
-  if (numeric && !Number.isNaN(Number(numeric))) {
-    const value = Number(numeric);
-    if (trimmed.includes("%")) {
-      return `${value}% Off`;
-    }
-
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
-      maximumFractionDigits: value % 1 === 0 ? 0 : 2,
-    }).format(value);
-  }
-
-  return trimmed;
-};
-
 interface EventCardProps {
   event: Event;
   onBookmark?: (event: Event) => void;
@@ -109,7 +85,6 @@ interface EventCardProps {
 export default function EventCard({ event, onBookmark }: EventCardProps) {
   const iconPng = getEventIconPng(event.icon);
   const mediaImage = getEventMediaImage(event);
-  const priceLabel = formatPriceDisplay(event.price);
   
   const handleBookmarkClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -127,9 +102,9 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
         fontWeight: 600,
       }}
     >
-      <Link href={`/event/${event.id}`} className="group w-full">
+      <Link href={`/event/${event.id}`} className="w-full">
         <article
-          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-lg transition-shadow duration-300"
+          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-lg"
           style={
             {
               width: "100%",
@@ -165,7 +140,7 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
           <div className="px-4 pt-4 pb-6 flex flex-col justify-between bg-sage/10 gap-4">
             <div className="flex flex-col items-center text-center gap-3">
               <h3
-                className="text-h2 sm:text-h1 font-bold leading-tight text-charcoal text-center group-hover:text-navbar-bg/90 transition-colors duration-300 truncate"
+                className="text-h2 sm:text-h1 font-bold leading-tight text-charcoal text-center truncate"
                 style={{
                   fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                   fontWeight: 700,
@@ -185,18 +160,6 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
                 >
                   {event.description}
                 </p>
-              )}
-
-              {priceLabel && (
-                <span
-                  className="inline-flex items-center gap-1 rounded-full bg-navbar-bg/10 px-3 py-1 text-[11px] font-semibold text-navbar-bg/90 uppercase tracking-[0.08em]"
-                  style={{
-                    fontFamily: '"DM Sans", system-ui, sans-serif',
-                    letterSpacing: "0.12em"
-                  }}
-                >
-                  {priceLabel}
-                </span>
               )}
             </div>
 

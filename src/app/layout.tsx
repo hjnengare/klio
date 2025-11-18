@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
-import nextDynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import "./globals.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { OnboardingProvider } from "./contexts/OnboardingContext";
@@ -8,20 +8,12 @@ import { ToastProvider } from "./contexts/ToastContext";
 import { SavedItemsProvider } from "./contexts/SavedItemsContext";
 
 // Lazy load non-critical components for faster initial load
-// ErrorBoundary must be dynamically imported in Next.js 15 to avoid promise resolution issues
-const ErrorBoundary = nextDynamic(
-  () => import("./components/ErrorBoundary/ErrorBoundary"),
-  {
-    ssr: true,
-    loading: () => null, // No loading state needed for error boundary
-  }
-);
-const PageTransitionProvider = nextDynamic(() => import("./components/Providers/PageTransitionProvider"), {
+const PageTransitionProvider = dynamicImport(() => import("./components/Providers/PageTransitionProvider"), {
   ssr: true,
 });
-const WebVitals = nextDynamic(() => import("./components/Performance/WebVitals"));
-const BusinessNotifications = nextDynamic(() => import("./components/Notifications/BusinessNotifications"));
-const ClientLayoutWrapper = nextDynamic(() => import("./components/Performance/ClientLayoutWrapper"));
+const WebVitals = dynamicImport(() => import("./components/Performance/WebVitals"));
+const BusinessNotifications = dynamicImport(() => import("./components/Notifications/BusinessNotifications"));
+const ClientLayoutWrapper = dynamicImport(() => import("./components/Performance/ClientLayoutWrapper"));
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -158,20 +150,18 @@ export default function RootLayout({
       <body className={`${urbanist.className} no-layout-shift`}>
         <WebVitals />
         <ClientLayoutWrapper />
-        <ErrorBoundary>
-          <ToastProvider>
-            <AuthProvider>
-              <OnboardingProvider>
-                <SavedItemsProvider>
-                  <PageTransitionProvider>
-                    <BusinessNotifications />
-                    {children}
-                  </PageTransitionProvider>
-                </SavedItemsProvider>
-              </OnboardingProvider>
-            </AuthProvider>
-          </ToastProvider>
-        </ErrorBoundary>
+        <ToastProvider>
+          <AuthProvider>
+            <OnboardingProvider>
+              <SavedItemsProvider>
+                <PageTransitionProvider>
+                  <BusinessNotifications />
+                  {children}
+                </PageTransitionProvider>
+              </SavedItemsProvider>
+            </OnboardingProvider>
+          </AuthProvider>
+        </ToastProvider>
       </body>
     </html>
   );

@@ -70,8 +70,8 @@ export default function Header({
   });
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
   const [isBusinessDropdownClosing, setIsBusinessDropdownClosing] = useState(false);
-  const [menuPos, setMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
-  const [discoverMenuPos, setDiscoverMenuPos] = useState<{left:number; top:number}>({left:0, top:0});
+  const [menuPos, setMenuPos] = useState<{left:number; top:number} | null>(null);
+  const [discoverMenuPos, setDiscoverMenuPos] = useState<{left:number; top:number} | null>(null);
   const { savedCount } = useSavedItems();
 
   // Use refs to track state without causing re-renders
@@ -104,6 +104,7 @@ export default function Header({
   }, [forceSearchOpen, isStackedLayout]);
 
   // Anchor for the dropdown FilterModal to hang under
+  const headerRef = useRef<HTMLElement>(null);
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const businessDropdownRef = useRef<HTMLDivElement>(null);
   const businessMenuPortalRef = useRef<HTMLDivElement>(null);
@@ -274,32 +275,42 @@ export default function Header({
 
   // Measure button position when dropdown opens
   useLayoutEffect(() => {
-    if (isBusinessDropdownOpen && btnRef.current) {
-      const r = btnRef.current.getBoundingClientRect();
+    if (isBusinessDropdownOpen && btnRef.current && headerRef.current) {
+      const buttonRect = btnRef.current.getBoundingClientRect();
+      const headerRect = headerRef.current.getBoundingClientRect();
       const dropdownWidth = 560; // min-w-[560px]
       const viewportWidth = window.innerWidth;
       const padding = 16; // padding from edge
-      const center = r.left + r.width / 2;
+      const center = buttonRect.left + buttonRect.width / 2;
       let leftPos = center - dropdownWidth / 2;
       const maxLeft = viewportWidth - dropdownWidth - padding;
       leftPos = Math.max(padding, Math.min(leftPos, maxLeft));
 
-      setMenuPos({ left: leftPos, top: r.bottom + 12 });
+      // Position dropdown below the navbar's bottom margin
+      const gap = 8; // Gap below navbar
+      setMenuPos({ left: leftPos, top: headerRect.bottom + gap });
+    } else {
+      setMenuPos(null);
     }
   }, [isBusinessDropdownOpen]);
 
   useLayoutEffect(() => {
-     if (isDiscoverDropdownOpen && discoverBtnRef.current) {
-       const r = discoverBtnRef.current.getBoundingClientRect();
+     if (isDiscoverDropdownOpen && discoverBtnRef.current && headerRef.current) {
+       const buttonRect = discoverBtnRef.current.getBoundingClientRect();
+       const headerRect = headerRef.current.getBoundingClientRect();
        const dropdownWidth = 320;
        const viewportWidth = window.innerWidth;
        const padding = 16;
-       const center = r.left + r.width / 2;
+       const center = buttonRect.left + buttonRect.width / 2;
        let leftPos = center - dropdownWidth / 2;
        const maxLeft = viewportWidth - dropdownWidth - padding;
        leftPos = Math.max(padding, Math.min(leftPos, maxLeft));
 
-       setDiscoverMenuPos({ left: leftPos, top: r.bottom + 12 });
+       // Position dropdown below the navbar's bottom margin
+       const gap = 8; // Gap below navbar
+       setDiscoverMenuPos({ left: leftPos, top: headerRect.bottom + gap });
+     } else {
+       setDiscoverMenuPos(null);
      }
    }, [isDiscoverDropdownOpen]);
 
@@ -372,7 +383,7 @@ export default function Header({
 
   return (
     <>
-      <header className={headerClassName} style={sf}>
+      <header ref={headerRef} className={headerClassName} style={sf}>
         <div className={`relative z-[1] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 ${isHomeVariant ? 'py-0' : reducedPadding ? 'py-2 md:py-3' : 'py-4 md:py-6'}`}>
           {/* Top row */}
           <div className="flex items-center justify-between gap-6">
@@ -426,7 +437,7 @@ export default function Header({
                         <ChevronDown className={`w-4 h-4 sm:w-4 sm:h-4 transition-transform duration-200 ${isDiscoverDropdownOpen ? 'rotate-180' : ''}`} />
                       </button>
 
-                      {isDiscoverDropdownOpen &&
+                      {isDiscoverDropdownOpen && discoverMenuPos &&
                         createPortal(
                           <div
                             ref={discoverMenuPortalRef}
@@ -438,6 +449,7 @@ export default function Header({
                               top: discoverMenuPos.top,
                               fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                               animation: isDiscoverDropdownClosing ? 'none' : 'fadeInScale 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                              transformOrigin: 'top center',
                             }}
                             onClick={(e) => e.stopPropagation()}
                             onMouseEnter={() => {
@@ -507,7 +519,7 @@ export default function Header({
                   <ChevronDown className={`w-4 h-4 sm:w-4 sm:h-4 transition-transform duration-200 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {isBusinessDropdownOpen &&
+                {isBusinessDropdownOpen && menuPos &&
                   createPortal(
                     <div
                       ref={businessMenuPortalRef}
@@ -519,6 +531,7 @@ export default function Header({
                         top: menuPos.top,
                         fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                         animation: isBusinessDropdownClosing ? 'none' : 'fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        transformOrigin: 'top center',
                       }}
                       onClick={(e) => e.stopPropagation()}
                       onMouseEnter={() => {

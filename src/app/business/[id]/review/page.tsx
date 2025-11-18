@@ -11,6 +11,7 @@ import { PageLoader } from "../../../components/Loader";
 import ReviewForm from "../../../components/ReviewForm/ReviewForm";
 import BusinessInfoAside from "../../../components/BusinessInfo/BusinessInfoAside";
 import { BusinessInfo } from "../../../components/BusinessInfo/BusinessInfoModal";
+import SimilarBusinesses from "../../../components/SimilarBusinesses/SimilarBusinesses";
 import Footer from "../../../components/Footer/Footer";
 
 // CSS animations matching business profile
@@ -253,12 +254,12 @@ function WriteReviewContent() {
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
                   <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                 </div>
-                <h1
+                <h3
                   className="text-body sm:text-h4 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
                   style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
                 >
                   Write a Review
-                </h1>
+                </h3>
               </button>
 
               <div className="flex items-center gap-2 sm:gap-3">
@@ -291,9 +292,9 @@ function WriteReviewContent() {
                               {/* Business Info and Carousel - visible on mobile only */}
                               <div className="md:hidden mb-6 flex flex-col px-4 pt-4">
                                 <div className="text-center px-4 mb-4">
-                                  <h2 className="text-h3 font-semibold text-charcoal mb-2" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+                                  <h3 className="text-h3 font-semibold text-charcoal mb-2" style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
                                     {businessName}
-                                  </h2>
+                                  </h3>
                                   <div className="flex items-center justify-center space-x-2">
                                     {/* Rating Badge - matching BusinessCard style */}
                                     <div className="inline-flex items-center gap-1 rounded-full bg-off-white/90 px-3 py-1.5 text-charcoal border border-white/30">
@@ -343,6 +344,16 @@ function WriteReviewContent() {
                           className="self-start"
                         />
                       </div>
+                    </div>
+
+                    {/* Similar Businesses Section */}
+                    <div className="lg:col-span-3">
+                      <SimilarBusinesses
+                        currentBusinessId={businessId}
+                        category={business?.category || ""}
+                        location={business?.location}
+                        limit={6}
+                      />
                     </div>
                   </div>
                 </div>
