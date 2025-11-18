@@ -32,8 +32,8 @@ export default function Logo({
   return (
     <div className={`flex items-baseline gap-1 ${className}`}>
       <span
-        className={`font-bold py-2 px-1 text-transparent bg-clip-text bg-gradient-to-r from-sage via-sage/90 to-charcoal drop-shadow-sm ${sizeClasses[variant]}`}
-        style={{ fontFamily: '"Dancing Script", cursive' }}
+        className={`font-bold py-2 px-1 text-transparent bg-clip-text bg-gradient-to-r from-sage via-coral to-sage drop-shadow-sm ${sizeClasses[variant]}`}
+        style={{ fontFamily: '"Playfair Display", serif', fontWeight: 700, letterSpacing: '-0.02em' }}
       >
         sayso
       </span>

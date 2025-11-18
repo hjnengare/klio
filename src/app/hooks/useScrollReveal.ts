@@ -47,8 +47,9 @@ export function useScrollReveal(options: UseScrollRevealOptions = {}) {
       }
     );
 
-    // Function to observe all sections
-    const observeSections = () => {
+    // Function to observe all sections and individual reveal elements
+    const observeElements = () => {
+      // Observe sections (for backward compatibility)
       const sections = document.querySelectorAll("[data-section]");
       sections.forEach((section) => {
         if (!observedElementsRef.current.has(section) && observerRef.current) {
@@ -56,16 +57,25 @@ export function useScrollReveal(options: UseScrollRevealOptions = {}) {
           observedElementsRef.current.add(section);
         }
       });
+      
+      // Observe individual reveal elements (for per-element reveals)
+      const revealElements = document.querySelectorAll("[data-reveal]");
+      revealElements.forEach((element) => {
+        if (!observedElementsRef.current.has(element) && observerRef.current) {
+          observerRef.current.observe(element);
+          observedElementsRef.current.add(element);
+        }
+      });
     };
 
     // Initial observation - use setTimeout to ensure DOM is ready
     const timeoutId = setTimeout(() => {
-      observeSections();
+      observeElements();
     }, 0);
 
     // Also observe on any dynamic content changes
     const mutationObserver = new MutationObserver(() => {
-      observeSections();
+      observeElements();
     });
 
     // Observe the document body for new sections

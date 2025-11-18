@@ -6,7 +6,7 @@ interface InterestHeaderProps {
 
 export default function InterestHeader({ isOnline }: InterestHeaderProps) {
   const titleStyle = {
-    fontFamily: '"DM Sans", system-ui, sans-serif',
+    fontFamily: '"Urbanist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
   } as React.CSSProperties;
   const bodyStyle = {
     fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",

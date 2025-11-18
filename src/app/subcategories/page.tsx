@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
-import OnboardingCard from "../components/Onboarding/OnboardingCard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import SubcategoryStyles from "../components/Subcategories/SubcategoryStyles";
 import SubcategoryHeader from "../components/Subcategories/SubcategoryHeader";
@@ -159,7 +158,7 @@ function SubcategoriesContent() {
       <OnboardingLayout step={2} backHref="/interests">
         <SubcategoryHeader />
 
-        <OnboardingCard className="rounded-lg border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
+        <div className="enter-fade">
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4">
               <p className="text-sm font-semibold text-red-600">
@@ -189,7 +188,7 @@ function SubcategoriesContent() {
             onContinue={handleNext}
             onSkip={handleSkip}
           />
-        </OnboardingCard>
+        </div>
       </OnboardingLayout>
     </>
   );

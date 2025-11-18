@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useOnboarding } from "../contexts/OnboardingContext";
 import { useToast } from "../contexts/ToastContext";
 import OnboardingLayout from "../components/Onboarding/OnboardingLayout";
-import OnboardingCard from "../components/Onboarding/OnboardingCard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import { Loader } from "../components/Loader";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
@@ -50,6 +49,11 @@ function InterestsContent() {
   const searchParams = useSearchParams();
   const { showToast, showToastOnce } = useToast();
 
+  // Prefetch next page immediately on mount for faster navigation
+  useEffect(() => {
+    router.prefetch("/subcategories");
+  }, [router]);
+
   const MIN_SELECTIONS = 3;
   const MAX_SELECTIONS = 6;
 
@@ -67,14 +71,22 @@ function InterestsContent() {
     minimumReached: false,
   });
 
-  // Handle verification success from URL flag
+  // Handle verification success from URL flag - optimize for fast loading
   useEffect(() => {
-    if (searchParams.get('verified') === '1') {
-      showToastOnce('email-verified-v1', '🎉 You\'re verified! Your account is now secured and ready.', 'success', 4000);
+    const verified = searchParams.get('verified');
+    const emailVerified = searchParams.get('email_verified');
+    
+    if (verified === '1' || emailVerified === 'true') {
+      // Show toast immediately without blocking
+      showToastOnce('email-verified-v1', '🎉 You\'re verified! Your account is now secured and ready.', 'success', 3000);
 
-      const url = new URL(window.location.href);
-      url.searchParams.delete('verified');
-      router.replace(url.pathname + (url.search ? '?' + url.searchParams.toString() : ''), { scroll: false });
+      // Clean up URL params asynchronously to not block rendering
+      requestAnimationFrame(() => {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('verified');
+        url.searchParams.delete('email_verified');
+        router.replace(url.pathname + (url.search ? '?' + url.searchParams.toString() : ''), { scroll: false });
+      });
     }
   }, [searchParams, router, showToastOnce]);
 
@@ -206,7 +218,7 @@ function InterestsContent() {
         <EmailVerificationBanner className="mb-4" />
         <InterestHeader isOnline={isOnline} />
 
-        <OnboardingCard className="rounded-2xl border border-white/30 shadow-sm bg-off-white px-5 sm:px-7 md:px-9 py-5 sm:py-7 md:py-8 enter-fade">
+        <div className="enter-fade">
           {onboardingError && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mb-4 enter-fade" style={{ animationDelay: "0.1s" }}>
               <p className="text-sm font-semibold text-red-600">
@@ -237,7 +249,7 @@ function InterestsContent() {
             onContinue={handleNext}
             onSkip={handleSkip}
           />
-        </OnboardingCard>
+        </div>
       </OnboardingLayout>
     </EmailVerificationGuard>
   );

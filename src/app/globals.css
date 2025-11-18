@@ -920,13 +920,26 @@
 
 
   /* Scroll reveal styles - runs once per page load */
+  /* Section-based reveal (for backward compatibility) */
   [data-section] > * {
-    transform: translateY(100px);
+    transform: translateY(30px);
     opacity: 0;
     transition: transform 0.6s cubic-bezier(0.33, 0.85, 0.4, 0.96), opacity 0.6s cubic-bezier(0.33, 0.85, 0.4, 0.96);
   }
 
   [data-section].active > * {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Individual element reveal - each element reveals independently */
+  [data-reveal] {
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.33, 0.85, 0.4, 0.96), opacity 0.6s cubic-bezier(0.33, 0.85, 0.4, 0.96);
+  }
+
+  [data-reveal].active {
     transform: translateY(0);
     opacity: 1;
   }

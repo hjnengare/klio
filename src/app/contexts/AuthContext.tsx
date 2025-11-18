@@ -63,6 +63,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email_confirmed_at: session?.user?.email_confirmed_at
       });
       
+      // Optimize for email verification events - update immediately if email is confirmed
+      if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
+        // Fast path: if email is confirmed in session, optimistically update user
+        const currentUser = await AuthService.getCurrentUser();
+        if (currentUser) {
+          console.log('AuthContext: Email verified - fast update', {
+            email: currentUser.email,
+            email_verified: currentUser.email_verified
+          });
+          setUser(currentUser);
+          setIsLoading(false);
+          return;
+        }
+      }
+      
       // Only update user state - middleware handles all routing logic
       if (session?.user) {
         const currentUser = await AuthService.getCurrentUser();
@@ -72,9 +87,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
           user_id: currentUser?.id
         });
         setUser(currentUser);
+        setIsLoading(false);
       } else {
         console.log('AuthContext: User signed out');
         setUser(null);
+        setIsLoading(false);
       }
     });
 

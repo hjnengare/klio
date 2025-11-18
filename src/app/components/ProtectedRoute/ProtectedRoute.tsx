@@ -22,9 +22,15 @@ export default function ProtectedRoute({
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
+  
+  // Optimistic check: if URL indicates verification, don't block on loading
+  const emailVerifiedParam = searchParams?.get('email_verified') === 'true';
+  const verifiedParam = searchParams?.get('verified') === '1';
+  const isVerifiedFromUrl = emailVerifiedParam || verifiedParam;
 
   useEffect(() => {
-    if (isLoading) return; // Wait for auth state to load
+    // Don't block if we have verification signal from URL
+    if (isLoading && !isVerifiedFromUrl) return; // Wait for auth state to load
 
     console.log('ProtectedRoute: Checking route protection', {
       requiresAuth,
@@ -86,8 +92,8 @@ export default function ProtectedRoute({
     }
   }, [user, isLoading, router, requiresAuth, requiresOnboarding, allowedOnboardingSteps, redirectTo]);
 
-  // Show loading state while checking authentication
-  if (isLoading) {
+  // Show loading state while checking authentication - but allow optimistic rendering if verified
+  if (isLoading && !isVerifiedFromUrl) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-off-white">
         <div className="text-center">

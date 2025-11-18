@@ -45,7 +45,7 @@ export default function CompletePage() {
             {/* Heading */}
             <h1
               className="text-4xl md:text-5xl font-semibold text-charcoal mb-4 leading-[1.2] tracking-tight"
-              style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+              style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
             >
               You're all set! 🎉
             </h1>

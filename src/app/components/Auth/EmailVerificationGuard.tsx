@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
 import { AuthService } from '../../lib/auth';
 import { useToast } from '../../contexts/ToastContext';
@@ -18,19 +19,39 @@ export default function EmailVerificationGuard({
   fallback,
   onVerificationRequired 
 }: EmailVerificationGuardProps) {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, updateUser } = useAuth();
   const { showToast } = useToast();
   const [isResending, setIsResending] = useState(false);
+  const searchParams = useSearchParams();
+  const emailVerifiedParam = searchParams?.get('email_verified');
+
+  // Optimistically allow access if URL param indicates verification
+  const isVerifiedFromUrl = emailVerifiedParam === 'true';
+
+  // Force refresh user state if we detect verification from URL
+  useEffect(() => {
+    if (isVerifiedFromUrl && user && !user.email_verified) {
+      // Optimistically update user state
+      AuthService.getCurrentUser().then(freshUser => {
+        if (freshUser?.email_verified) {
+          updateUser({ email_verified: true });
+        }
+      }).catch(() => {
+        // Silently fail - will be handled by normal flow
+      });
+    }
+  }, [isVerifiedFromUrl, user, updateUser]);
 
   console.log('EmailVerificationGuard: Checking access', {
     user_exists: !!user,
     email: user?.email,
     email_verified: user?.email_verified,
+    isVerifiedFromUrl,
     isLoading
   });
 
-  // Show loading while auth state is being determined
-  if (isLoading) {
+  // Show loading only briefly - don't block if we have URL verification signal
+  if (isLoading && !isVerifiedFromUrl) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-off-white">
         <div className="text-center">
@@ -47,8 +68,8 @@ export default function EmailVerificationGuard({
     return <>{children}</>;
   }
 
-  // If email is verified, show children
-  if (user.email_verified) {
+  // If email is verified (from user state or URL param), show children immediately
+  if (user.email_verified || isVerifiedFromUrl) {
     console.log('EmailVerificationGuard: Email verified, allowing access');
     return <>{children}</>;
   }

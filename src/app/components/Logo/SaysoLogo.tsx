@@ -32,16 +32,15 @@ export default function SaysoLogo({
   // Color mappings for each letter using design system tokens
   const letterColors = {
     S: colors.primary.sage[500],     // Sage
-    A: colors.primary.coral[500],   // Coral
-    Y: colors.neutral['off-white'][100], // Off-white
-    S2: colors.neutral.charcoal[500],  // Charcoal
+    A: colors.primary.coral[700],   // Red (Navbar burgundy)
+    Y: colors.primary.sage[500],     // Sage
+    S2: colors.primary.coral[700],  // Red (Navbar burgundy)
     O: colors.primary.sage[500]     // Sage
   };
 
   // Enhanced variant styles
   const getLetterStyle = (letter: keyof typeof letterColors, isHovered: boolean) => {
     const baseColor = letterColors[letter];
-    const isYellow = letter === "Y";
 
     switch (variant) {
       case "gradient":
@@ -79,11 +78,9 @@ export default function SaysoLogo({
       default:
         return {
           color: baseColor,
-          textShadow: isYellow
-            ? "0 2px 4px rgba(0,0,0,0.15)"
-            : isHovered
-              ? `0 4px 12px ${baseColor}40`
-              : "none",
+          textShadow: isHovered
+            ? `0 4px 12px ${baseColor}40`
+            : "none",
           filter: isHovered ? "brightness(1.2) saturate(1.1)" : "brightness(1)",
           transition: "all 0.3s ease",
           transform: isHovered ? "translateY(-2px)" : "translateY(0)"
@@ -92,7 +89,10 @@ export default function SaysoLogo({
   };
 
   const logoContent = (
-    <span className={`font-urbanist font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
+    <span 
+      className={`font-700 tracking-tight ${sizeClasses[size]} ${className}`}
+      style={{ fontFamily: '"Playfair Display", serif', fontWeight: 700, letterSpacing: '-0.02em' }}
+    >
       {["S", "A", "Y", "S2", "O"].map((letter, index) => (
         <span
           key={`${letter}-${index}`}
@@ -121,7 +121,10 @@ export default function SaysoLogo({
       }}
       className="inline-block"
     >
-      <span className={`font-urbanist font-700 tracking-tight ${sizeClasses[size]} ${className}`}>
+      <span 
+        className={`font-700 tracking-tight ${sizeClasses[size]} ${className}`}
+        style={{ fontFamily: '"Playfair Display", serif', fontWeight: 700, letterSpacing: '-0.02em' }}
+      >
         {["S", "A", "Y", "S2", "O"].map((letter, index) => (
           <motion.span
             key={`${letter}-${index}`}
