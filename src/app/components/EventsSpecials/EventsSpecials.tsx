@@ -53,7 +53,21 @@ export default function EventsSpecials({
         </div>
 
         <div className="pt-2">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+          {/* Mobile: Scrollable section with one card at a time */}
+          <div className="md:hidden">
+            <ScrollableSection>
+              <div className="flex gap-3 items-stretch">
+                {events.slice(0, 4).map((event) => (
+                  <div key={event.id} className="snap-start snap-always flex-shrink-0 w-[100vw] list-none flex">
+                    <EventCard event={event} />
+                  </div>
+                ))}
+              </div>
+            </ScrollableSection>
+          </div>
+          
+          {/* Desktop: Grid layout */}
+          <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-4 gap-3">
             {events.slice(0, 4).map((event) => (
               <div key={event.id} className="list-none flex">
                 <EventCard event={event} />

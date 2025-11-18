@@ -46,7 +46,7 @@ function BusinessOfMonthLeaderboard({
     <>
       {/* Category Filter */}
       <div className="mb-6 sm:mb-8 px-2">
-        <h3 className="font-urbanist text-sm sm:text-xs sm:text-sm font-600 text-charcoal/70 mb-3 text-center">Filter by Category</h3>
+        <h3 className="font-urbanist text-caption sm:text-body-sm font-600 text-charcoal/70 mb-3 text-center">Filter by Category</h3>
         <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-full">
           {categories.map((category) => {
             const isActive = selectedCategory === category;
@@ -57,7 +57,7 @@ function BusinessOfMonthLeaderboard({
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`
-                  px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-urbanist font-semibold text-[10px] xs:text-sm sm:text-xs sm:text-sm
+                  px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-urbanist font-semibold text-caption sm:text-body-sm
                   transition-all duration-300
                   focus:outline-none focus:ring-2 focus:ring-sage/30
                   whitespace-nowrap flex-shrink-0
@@ -111,7 +111,7 @@ function BusinessOfMonthLeaderboard({
         <div className="text-center mt-6 sm:mt-8">
           <button
             onClick={onToggleFullLeaderboard}
-            className="font-urbanist text-sm sm:text-xs sm:text-sm md:text-base font-700 text-white transition-all duration-300 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-gradient-to-br from-sage to-sage/90 rounded-full flex items-center gap-1.5 sm:gap-2 mx-auto shadow-[0_8px_30px_rgba(0,0,0,0.2)] border border-sage ring-1 ring-white/30 hover:shadow-[0_10px_40px_rgba(0,0,0,0.25)] hover:scale-[1.02] active:scale-[0.98]"
+            className="font-urbanist text-body-sm sm:text-body font-700 text-white transition-all duration-300 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-gradient-to-br from-sage to-sage/90 rounded-full flex items-center gap-1.5 sm:gap-2 mx-auto shadow-[0_8px_30px_rgba(0,0,0,0.2)] border border-sage ring-1 ring-white/30 hover:shadow-[0_10px_40px_rgba(0,0,0,0.25)] hover:scale-[1.02] active:scale-[0.98]"
           >
             {showFullLeaderboard ? (
               <>

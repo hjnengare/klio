@@ -39,11 +39,11 @@ function LeaderboardPodium({ topReviewers }: LeaderboardPodiumProps) {
             />
           </div>
           <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-coral to-coral/80 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.3)] border-2 border-white ring-2 ring-white/50">
-            <span className="text-sm sm:text-lg font-bold text-white">2</span>
+            <span className="text-body-sm sm:text-body font-bold text-white">2</span>
           </div>
         </div>
-        <div className="font-urbanist text-sm sm:text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[1].username}</div>
-        <div className="font-urbanist text-sm sm:text-xs sm:text-sm text-charcoal/60 mb-2">
+        <div className="font-urbanist text-body-sm sm:text-body font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[1].username}</div>
+        <div className="font-urbanist text-caption sm:text-body-sm text-charcoal/60 mb-2">
           <span className="font-700 text-charcoal">{topReviewers[1].reviews}</span> reviews
         </div>
         {/* Professional Podium Block */}
@@ -73,11 +73,11 @@ function LeaderboardPodium({ topReviewers }: LeaderboardPodiumProps) {
             />
           </div>
           <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.3)] border-2 border-white ring-2 ring-white/50">
-            <Trophy className="text-xl sm:text-lg text-white" />
+            <Trophy className="text-h3 sm:text-h2 text-white" />
           </div>
         </div>
-        <div className="font-urbanist text-sm sm:text-base md:text-xl font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[0].username}</div>
-        <div className="font-urbanist text-sm sm:text-xs sm:text-sm text-charcoal/60 mb-2">
+        <div className="font-urbanist text-body sm:text-h3 font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[0].username}</div>
+        <div className="font-urbanist text-caption sm:text-body-sm text-charcoal/60 mb-2">
           <span className="font-700 text-charcoal">{topReviewers[0].reviews}</span> reviews
         </div>
         {/* Professional Podium Block */}
@@ -107,11 +107,11 @@ function LeaderboardPodium({ topReviewers }: LeaderboardPodiumProps) {
             />
           </div>
           <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-charcoal/70 to-charcoal/50 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.3)] border-2 border-white ring-2 ring-white/50">
-            <span className="text-sm sm:text-lg font-bold text-white">3</span>
+            <span className="text-body-sm sm:text-body font-bold text-white">3</span>
           </div>
         </div>
-        <div className="font-urbanist text-sm sm:text-xs sm:text-sm md:text-base font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[2].username}</div>
-        <div className="font-urbanist text-sm sm:text-xs sm:text-sm text-charcoal/60 mb-2">
+        <div className="font-urbanist text-body-sm sm:text-body font-700 text-charcoal mb-1 truncate px-2">@{topReviewers[2].username}</div>
+        <div className="font-urbanist text-caption sm:text-body-sm text-charcoal/60 mb-2">
           <span className="font-700 text-charcoal">{topReviewers[2].reviews}</span> reviews
         </div>
         {/* Professional Podium Block */}

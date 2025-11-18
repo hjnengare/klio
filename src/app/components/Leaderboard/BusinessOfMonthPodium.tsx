@@ -25,13 +25,13 @@ export default function BusinessOfMonthPodium({ topBusinesses }: BusinessOfMonth
               className={`flex-1 max-w-[120px] sm:max-w-[150px] ${height} bg-gradient-to-br from-sage/10 to-sage/5 rounded-t-xl border border-sage/20 flex flex-col items-center justify-end p-2 sm:p-3`}
             >
               <div className="text-center w-full">
-                <div className="text-2xl sm:text-3xl font-bold text-sage mb-1" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
+                <div className="text-h2 sm:text-h1 font-bold text-sage mb-1" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
                   #{rank}
                 </div>
-                <div className="text-xs sm:text-sm font-semibold text-charcoal truncate" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
+                <div className="text-caption sm:text-body-sm font-semibold text-charcoal truncate" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
                   {business.name}
                 </div>
-                <div className="text-[10px] sm:text-xs text-charcoal/70 mt-1" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
+                <div className="text-caption sm:text-body-sm text-charcoal/70 mt-1" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
                   {business.totalRating?.toFixed(1) || "0.0"} ⭐
                 </div>
               </div>

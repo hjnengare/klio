@@ -156,7 +156,7 @@ function LeaderboardPage() {
               <div className="mx-auto w-full max-w-[2000px] px-2">
                 {/* Breadcrumb */}
                 <nav className="px-2 py-4" aria-label="Breadcrumb">
-                  <ol className="flex items-center gap-1 text-sm text-charcoal/60">
+                  <ol className="flex items-center gap-1 text-body-sm text-charcoal/60">
                     <li>
                       <Link href="/home" className="hover:text-charcoal transition-colors font-urbanist">
                         Home

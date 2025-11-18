@@ -4,6 +4,7 @@ import { memo, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import LeaderboardUser from "./LeaderboardUser";
+import ScrollableSection from "../ScrollableSection/ScrollableSection";
 
 interface LeaderboardUser {
   rank: number;
@@ -38,12 +39,31 @@ function LeaderboardList({
 
   return (
     <>
-      <div className="space-y-2 sm:space-y-3">
+      {/* Mobile: Horizontal scrollable cards */}
+      <div className="md:hidden">
+        <ScrollableSection>
+          <div className="flex gap-3 items-stretch">
+            {visibleUsers.map((user, index) => (
+              <div key={user.rank} className="snap-start snap-always flex-shrink-0 w-[calc(100vw-1rem)] list-none flex">
+                <LeaderboardUser 
+                  user={user} 
+                  index={index}
+                  isMobile={true}
+                />
+              </div>
+            ))}
+          </div>
+        </ScrollableSection>
+      </div>
+
+      {/* Desktop: Vertical list */}
+      <div className="hidden md:block space-y-2 sm:space-y-3">
         {visibleUsers.map((user, index) => (
           <LeaderboardUser 
             key={user.rank} 
             user={user} 
-            index={index} 
+            index={index}
+            isMobile={false}
           />
         ))}
 
@@ -58,7 +78,8 @@ function LeaderboardList({
             >
               <LeaderboardUser 
                 user={user} 
-                index={index + 5} 
+                index={index + 5}
+                isMobile={false}
               />
             </motion.div>
           ))}
@@ -68,7 +89,7 @@ function LeaderboardList({
       <div className="text-center mt-6 sm:mt-8">
         <button
           onClick={onToggleFullLeaderboard}
-          className="font-urbanist text-sm sm:text-xs sm:text-sm md:text-base font-700 text-white transition-all duration-300 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-gradient-to-br from-sage to-sage/90 rounded-full flex items-center gap-1.5 sm:gap-2 mx-auto shadow-[0_8px_30px_rgba(0,0,0,0.2)] border border-sage ring-1 ring-white/30 hover:shadow-[0_10px_40px_rgba(0,0,0,0.25)] hover:scale-[1.02] active:scale-[0.98]"
+          className="font-urbanist text-body-sm sm:text-body font-700 text-white transition-all duration-300 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-gradient-to-br from-sage to-sage/90 rounded-full flex items-center gap-1.5 sm:gap-2 mx-auto shadow-[0_8px_30px_rgba(0,0,0,0.2)] border border-sage ring-1 ring-white/30 hover:shadow-[0_10px_40px_rgba(0,0,0,0.25)] hover:scale-[1.02] active:scale-[0.98]"
         >
           {showFullLeaderboard ? (
             <>

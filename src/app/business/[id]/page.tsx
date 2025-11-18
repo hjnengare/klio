@@ -317,10 +317,10 @@ export default function BusinessProfilePage() {
                         <nav className="flex items-center justify-between" aria-label="Business profile navigation">
                             <button
                                 onClick={() => router.back()}
-                                className="group flex items-center focus:outline-none rounded-lg px-1 -mx-1"
+                                className="group flex items-center focus:outline-none rounded-lg px-1 -mx-1 touch-manipulation"
                                 aria-label="Go back to previous page"
                             >
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
+                                <div className="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
                                     <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                                 </div>
                                 <h3
@@ -337,7 +337,7 @@ export default function BusinessProfilePage() {
                                     <button
                                         ref={buttonRef}
                                         onClick={() => setShowSpecialsModal(true)}
-                                        className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                        className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 min-h-[44px] sm:min-h-0 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30 touch-manipulation"
                                         aria-label="View events and specials"
                                     >
                                         <Calendar className="w-3 h-3" />
@@ -349,7 +349,7 @@ export default function BusinessProfilePage() {
                                 {isBusinessOwner && (
                                     <Link
                                         href={`/business/${businessId}/edit`}
-                                        className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                        className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 min-h-[44px] sm:min-h-0 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30 touch-manipulation"
                                     >
                                         <Edit className="w-3 h-3" />
                                         <span className="hidden lg:inline">Edit Business</span>
@@ -360,7 +360,7 @@ export default function BusinessProfilePage() {
                                 <Link
                                     href={`/business/${businessId}/review`}
                                     prefetch={true}
-                                    className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                    className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 min-h-[44px] sm:min-h-0 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30 touch-manipulation"
                                     onMouseEnter={() => router.prefetch(`/business/${businessId}/review`)}
                                 >
                                     <Edit className="w-3 h-3" />

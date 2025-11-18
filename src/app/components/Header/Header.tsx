@@ -387,7 +387,7 @@ export default function Header({
             {/* Logo */}
             <OptimizedLink href="/home" className="group flex-shrink-0 relative" aria-label="sayso Home">
               <div className="absolute inset-0 bg-gradient-to-r from-sage/30 to-coral/30 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative scale-[0.72] origin-left">
+              <div className="relative scale-90 sm:scale-[0.72] origin-left">
                 <Logo variant="default" className="relative drop-shadow-[0_4px_12px_rgba(0,0,0,0.08)]" color={whiteText ? "sage" : "gradient"} />
               </div>
             </OptimizedLink>
@@ -590,7 +590,7 @@ export default function Header({
                 className={`group w-11 h-11 sm:w-12 sm:h-12 md:w-12 md:h-12 flex items-center justify-center transition-colors duration-200 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`}
                 aria-label="Toggle search"
               >
-                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Search className="w-8 h-8 sm:w-5 sm:h-5" />
               </button>
               )}
 
