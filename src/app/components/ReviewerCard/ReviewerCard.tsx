@@ -49,7 +49,7 @@ export default function ReviewerCard({
     return (
       <div
         id={idForSnap}
-        className="snap-start snap-always w-[calc(50vw-0.5rem)] sm:w-[240px] flex-shrink-0"
+        className="snap-start snap-always w-full sm:w-[240px] flex-shrink-0"
       >
         <Link
           href={`/reviewer/${reviewerData?.id || ''}`}

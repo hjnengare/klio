@@ -199,7 +199,7 @@ function BusinessCard({
     "relative overflow-hidden z-10 cursor-pointer rounded-t-[12px] bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 border border-white/50 backdrop-blur-md";
   const mediaClass = compact
     ? `${mediaBaseClass} h-[300px] lg:h-[260px]`
-    : `${mediaBaseClass} h-[540px] sm:h-[320px] md:h-[240px]`;
+    : `${mediaBaseClass} h-[490px] sm:h-[320px] md:h-[240px]`;
 
   return (
     <li
@@ -212,7 +212,7 @@ function BusinessCard({
       }}
     >
       <div
-        className={`relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden group cursor-pointer w-full flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 ${compact ? "md:h-[416px]" : "h-[720px] sm:h-auto md:w-[340px]"
+        className={`relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden group cursor-pointer w-full flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 ${compact ? "md:h-[416px]" : "h-[650px] sm:h-auto md:w-[340px]"
           }`}
         style={{
           maxWidth: compact ? "100%" : "540px",

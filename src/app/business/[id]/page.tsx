@@ -21,6 +21,7 @@ import {
     Share2,
     X,
     ChevronUp,
+    MoreVertical,
 } from "react-feather";
 import { ImageCarousel } from "../../components/Business/ImageCarousel";
 import { PremiumReviewCard } from "../../components/Business/PremiumReviewCard";
@@ -30,6 +31,7 @@ import { BusinessInfo } from "../../components/BusinessInfo/BusinessInfoModal";
 import BusinessInfoAside from "../../components/BusinessInfo/BusinessInfoAside";
 import SimilarBusinesses from "../../components/SimilarBusinesses/SimilarBusinesses";
 import { useAuth } from "../../contexts/AuthContext";
+import Logo from "../../components/Logo/Logo";
 
 // CSS animations to replace framer-motion
 const animations = `
@@ -85,6 +87,7 @@ export default function BusinessProfilePage() {
     const headerRef = useRef<HTMLElement>(null);
     const [modalPosition, setModalPosition] = useState<{ top: number; right: number } | null>(null);
     const [showScrollTop, setShowScrollTop] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 
     // Calculate modal position based on header bottom - use useLayoutEffect for immediate calculation
@@ -133,15 +136,20 @@ export default function BusinessProfilePage() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+
     // Handle ESC key to close modals
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
-                setShowSpecialsModal(false);
+                if (isMobileMenuOpen) {
+                    setIsMobileMenuOpen(false);
+                } else if (showSpecialsModal) {
+                    setShowSpecialsModal(false);
+                }
             }
         };
 
-        if (showSpecialsModal) {
+        if (showSpecialsModal || isMobileMenuOpen) {
             document.addEventListener('keydown', handleEscape);
             document.body.style.overflow = 'hidden';
         } else {
@@ -150,9 +158,11 @@ export default function BusinessProfilePage() {
 
         return () => {
             document.removeEventListener('keydown', handleEscape);
-            document.body.style.overflow = 'unset';
+            if (!showSpecialsModal && !isMobileMenuOpen) {
+                document.body.style.overflow = 'unset';
+            }
         };
-    }, [showSpecialsModal]);
+    }, [showSpecialsModal, isMobileMenuOpen]);
 
     // Fetch business data from API
     const [business, setBusiness] = useState<any>(null);
@@ -332,44 +342,132 @@ export default function BusinessProfilePage() {
                             </button>
 
                             <div className="flex items-center gap-2 sm:gap-3">
-                                {/* Events and Specials Button */}
-                                <div className="relative">
-                                    <button
-                                        ref={buttonRef}
-                                        onClick={() => setShowSpecialsModal(true)}
-                                        className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 min-h-[44px] sm:min-h-0 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30 touch-manipulation"
-                                        aria-label="View events and specials"
-                                    >
-                                        <Calendar className="w-3 h-3" />
-                                        <span className="hidden lg:inline">Events & Specials</span>
-                                    </button>
-                                </div>
+                                {/* Desktop buttons */}
+                                <div className="hidden md:flex items-center gap-2 sm:gap-3">
+                                    {/* Events and Specials Button */}
+                                    <div className="relative">
+                                        <button
+                                            ref={buttonRef}
+                                            onClick={() => setShowSpecialsModal(true)}
+                                            className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                            aria-label="View events and specials"
+                                        >
+                                            <Calendar className="w-3 h-3" />
+                                            <span className="hidden lg:inline">Events & Specials</span>
+                                        </button>
+                                    </div>
 
-                                {/* Edit Button - Only show to business owner */}
-                                {isBusinessOwner && (
+                                    {/* Edit Button - Only show to business owner */}
+                                    {isBusinessOwner && (
+                                        <Link
+                                            href={`/business/${businessId}/edit`}
+                                            className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                        >
+                                            <Edit className="w-3 h-3" />
+                                            <span className="hidden lg:inline">Edit Business</span>
+                                        </Link>
+                                    )}
+
+                                    {/* Leave Review Button */}
                                     <Link
-                                        href={`/business/${businessId}/edit`}
-                                        className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 min-h-[44px] sm:min-h-0 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30 touch-manipulation"
+                                        href={`/business/${businessId}/review`}
+                                        prefetch={true}
+                                        className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
+                                        onMouseEnter={() => router.prefetch(`/business/${businessId}/review`)}
                                     >
                                         <Edit className="w-3 h-3" />
-                                        <span className="hidden lg:inline">Edit Business</span>
+                                        <span className="hidden lg:inline">Leave a Review</span>
                                     </Link>
-                                )}
+                                </div>
 
-                                {/* Leave Review Button */}
-                                <Link
-                                    href={`/business/${businessId}/review`}
-                                    prefetch={true}
-                                    className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 min-h-[44px] sm:min-h-0 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30 touch-manipulation"
-                                    onMouseEnter={() => router.prefetch(`/business/${businessId}/review`)}
+                                {/* Mobile menu button */}
+                                <button
+                                    onClick={() => setIsMobileMenuOpen(true)}
+                                    className="md:hidden w-11 h-11 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-all duration-300 border border-white/20 hover:border-white/40 touch-manipulation"
+                                    aria-label="Open menu"
                                 >
-                                    <Edit className="w-3 h-3" />
-                                    <span className="hidden lg:inline">Leave a Review</span>
-                                </Link>
+                                    <MoreVertical className="w-5 h-5" strokeWidth={2.5} />
+                                </button>
                             </div>
                         </nav>
                     </div>
                 </header>
+
+                {/* Mobile Menu Backdrop */}
+                {isMobileMenuOpen && (
+                    <div
+                        className="fixed inset-0 bg-charcoal/40 backdrop-blur-xl z-[99998] md:hidden"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    />
+                )}
+
+                {/* Mobile Menu */}
+                <div
+                    className={`fixed top-0 right-0 h-full w-full bg-navbar-bg z-[99999] shadow-lg shadow-sage/10 transform md:hidden ${
+                        isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+                    } transition-transform duration-300`}
+                >
+                    <div className="flex flex-col h-full overflow-hidden">
+                        <div className="flex items-center justify-between px-4 py-4 border-b border-charcoal/10 flex-shrink-0 transition-all duration-500 ease-out">
+                            <Logo variant="mobile" color="sage" />
+                            <button
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="w-12 h-12 flex items-center justify-center text-off-white hover:text-off-white/80 transition-colors focus:outline-none focus:ring-0"
+                                aria-label="Close menu"
+                            >
+                                <X className="w-6 h-6" strokeWidth={2.8} />
+                            </button>
+                        </div>
+
+                        <nav className="flex flex-col py-2 px-3 overflow-y-auto flex-1 min-h-0">
+                            {/* Events & Specials */}
+                            <button
+                                onClick={() => {
+                                    setIsMobileMenuOpen(false);
+                                    setShowSpecialsModal(true);
+                                }}
+                                className="px-3 py-2 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-off-white/10 transition-colors relative min-h-[44px] flex items-center"
+                                style={{
+                                    fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                                }}
+                            >
+                                <Calendar className="w-5 h-5 mr-3" />
+                                <span>Events & Specials</span>
+                            </button>
+
+                            {/* Write a Review */}
+                            <Link
+                                href={`/business/${businessId}/review`}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="px-3 py-2 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-off-white/10 transition-colors relative min-h-[44px] flex items-center"
+                                style={{
+                                    fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                                }}
+                            >
+                                <Edit className="w-5 h-5 mr-3" />
+                                <span>Write a Review</span>
+                            </Link>
+
+                            {/* Edit Business - Only show to business owner */}
+                            {isBusinessOwner && (
+                                <>
+                                    <div className="h-px bg-charcoal/10 my-2 mx-3" />
+                                    <Link
+                                        href={`/business/${businessId}/edit`}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="px-3 py-2 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-off-white/10 transition-colors relative min-h-[44px] flex items-center"
+                                        style={{
+                                            fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                                        }}
+                                    >
+                                        <Edit className="w-5 h-5 mr-3" />
+                                        <span>Edit Business</span>
+                                    </Link>
+                                </>
+                            )}
+                        </nav>
+                    </div>
+                </div>
 
                 <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white ">
                     <div className="py-1 pt-20 sm:px-4">

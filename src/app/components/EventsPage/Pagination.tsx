@@ -99,7 +99,7 @@ export default function Pagination({
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="px-3 py-2 text-charcoal/50"
+                className="px-3 py-2 text-body-sm text-charcoal/50"
                 style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}
               >
                 ...

@@ -14,7 +14,7 @@ export default function FilterTabs({
     <div className="flex flex-wrap items-center gap-2">
       <button
         onClick={() => onFilterChange("all")}
-        className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
+        className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-body-sm sm:text-body transition-all duration-200 active:scale-95 ${
           selectedFilter === "all"
             ? "bg-coral text-white shadow-lg"
             : "bg-off-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
@@ -24,7 +24,7 @@ export default function FilterTabs({
       </button>
       <button
         onClick={() => onFilterChange("event")}
-        className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
+        className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-body-sm sm:text-body transition-all duration-200 active:scale-95 ${
           selectedFilter === "event"
             ? "bg-coral text-white shadow-lg"
             : "bg-off-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"
@@ -34,7 +34,7 @@ export default function FilterTabs({
       </button>
       <button
         onClick={() => onFilterChange("special")}
-        className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-sm sm:text-base transition-all duration-200 active:scale-95 ${
+        className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-urbanist font-600 text-body-sm sm:text-body transition-all duration-200 active:scale-95 ${
           selectedFilter === "special"
             ? "bg-coral text-white shadow-lg"
             : "bg-off-white text-charcoal/70 hover:bg-coral/10 hover:text-coral border border-charcoal/20"

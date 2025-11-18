@@ -103,19 +103,18 @@ export default function EventCard({ event, onBookmark }: EventCardProps) {
     >
       <Link href={`/event/${event.id}`} className="w-full">
         <article
-          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden cursor-pointer h-[720px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20"
+          className="relative bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 rounded-[12px] overflow-hidden cursor-pointer h-[650px] sm:h-auto flex flex-col border border-white/50 backdrop-blur-md ring-1 ring-white/20 shadow-none sm:shadow-lg"
           style={
             {
               width: "100%",
               maxWidth: "540px",
-              boxShadow: "0 12px 24px rgba(15, 23, 42, 0.12)",
               "--width": "540",
-              "--height": "720",
+              "--height": "650",
             } as CSSProperties
           }
         >
           {/* MEDIA - Full bleed with premium overlay */}
-          <div className="relative overflow-hidden flex-1 sm:flex-initial h-[540px] sm:h-[320px] lg:h-[240px] xl:h-[220px] z-10 rounded-t-[12px] border border-white/60">
+          <div className="relative overflow-hidden flex-1 sm:flex-initial h-[490px] sm:h-[320px] lg:h-[240px] xl:h-[220px] z-10 rounded-t-[12px] border border-white/60">
             <div className="absolute inset-0 bg-gradient-to-b from-off-white/90 via-off-white/80 to-off-white/70" aria-hidden="true" />
             <div className="relative w-full h-full">
               <div className="relative w-full h-full overflow-hidden flex items-center justify-center">

@@ -3,7 +3,7 @@
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense, useMemo } from "react";
 import dynamic from "next/dynamic";
-import { ArrowLeft, Edit, Star } from "react-feather";
+import { ArrowLeft, Edit, Star, ChevronUp } from "react-feather";
 import Link from "next/link";
 import { useReviewForm } from "../../../hooks/useReviewForm";
 import { useReviewSubmission } from "../../../hooks/useReviews";
@@ -90,6 +90,7 @@ function WriteReviewContent() {
   const [business, setBusiness] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Fetch business data using optimized API route
   useEffect(() => {
@@ -127,6 +128,21 @@ function WriteReviewContent() {
 
     fetchBusiness();
   }, [businessId]);
+
+  // Handle scroll to top button visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 200);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Memoize computed values
   const businessName = useMemo(() => business?.name || "Loading...", [business?.name]);
@@ -262,14 +278,6 @@ function WriteReviewContent() {
                 </h3>
               </button>
 
-              <div className="flex items-center gap-2 sm:gap-3">
-                <Link
-                  href={`/business/${businessId}`}
-                  className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
-                >
-                  <span className="hidden lg:inline">View Business</span>
-                </Link>
-              </div>
             </nav>
           </div>
         </header>
@@ -361,6 +369,17 @@ function WriteReviewContent() {
             </main>
           </div>
         </div>
+
+        {/* Scroll to Top Button */}
+        {showScrollTop && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-6 right-6 z-[100] w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-sage to-sage/90 hover:from-sage/90 hover:to-sage/80 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center border border-sage/30 hover:scale-110"
+            aria-label="Scroll to top"
+          >
+            <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
+          </button>
+        )}
 
         <Footer />
       </div>

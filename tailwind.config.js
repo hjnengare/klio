@@ -89,10 +89,11 @@ module.exports = {
       },
       fontSize: {
         // SAYSO Typography Scale (Mobile-first, Base = 18px)
-        'hero': ['36px', { lineHeight: '1.2' }],      // Hero Title
-        'h1': ['30px', { lineHeight: '1.25' }],       // H1
-        'h2': ['24px', { lineHeight: '1.25' }],       // H2
-        'h3': ['20px', { lineHeight: '1.3' }],        // H3
+        // Increased mobile sizes for better readability
+        'hero': ['40px', { lineHeight: '1.2' }],      // Hero Title (increased from 36px)
+        'h1': ['34px', { lineHeight: '1.25' }],       // H1 (increased from 30px)
+        'h2': ['28px', { lineHeight: '1.25' }],       // H2 (increased from 24px)
+        'h3': ['24px', { lineHeight: '1.3' }],        // H3 (increased from 20px)
         'body': ['18px', { lineHeight: '1.55' }],     // Body (Base)
         'body-sm': ['16px', { lineHeight: '1.5' }],   // Small Body
         'caption': ['14px', { lineHeight: '1.4' }],   // Caption

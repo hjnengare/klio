@@ -41,7 +41,7 @@ export default function EventsPageHeader({
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-base sm:text-xl font-700 text-white transition-all duration-300 relative"
+                className="text-xl sm:text-xl font-700 text-white transition-all duration-300 relative"
                 style={sf}
               >
                 {title}

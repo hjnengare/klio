@@ -680,100 +680,86 @@ export default function Header({
         } transition-transform duration-300`}
       >
         <div className={`flex flex-col h-full overflow-hidden ${mobileModalRevealClass}`}>
-          <div className="flex items-center justify-between px-6 py-6 border-b border-charcoal/10 flex-shrink-0 transition-all duration-500 ease-out">
+          <div className="flex items-center justify-between px-4 py-4 border-b border-charcoal/10 flex-shrink-0 transition-all duration-500 ease-out">
             <Logo variant="mobile" color="sage" />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-20 h-20 sm:w-16 sm:h-16 flex items-center justify-center text-off-white hover:text-off-white/80 transition-colors focus:outline-none focus:ring-0"
+              className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-off-white hover:text-off-white/80 transition-colors focus:outline-none focus:ring-0"
               aria-label="Close menu"
             >
-              <X className="w-8 h-8 sm:w-7 sm:h-7" strokeWidth={2.8} />
+              <X className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2.8} />
             </button>
           </div>
 
-          <nav className="flex flex-col py-4 px-4 overflow-y-auto flex-1 min-h-0">
+          <nav className="flex flex-col py-2 px-3 overflow-y-auto flex-1 min-h-0">
             {PRIMARY_LINKS.map(({ key, label, href }, index) => (
               <OptimizedLink
                 key={key}
                 href={href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-off-white/10 transition-colors relative min-h-[48px] flex items-center ${mobileRevealClass}`}
+                className={`px-3 py-2 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-off-white/10 transition-colors relative min-h-[44px] flex items-center justify-start ${mobileRevealClass}`}
                 style={{
                   fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                   transitionDelay: `${index * 60}ms`,
                 }}
               >
-                <span className="flex items-center justify-between">
+                <span className="text-left">
                   {label}
                 </span>
               </OptimizedLink>
             ))}
 
-            <div className="h-px bg-charcoal/10 my-4 mx-4" />
+            <div className="h-px bg-charcoal/10 my-2 mx-3" />
 
-            <div className="px-4 py-2">
-              <div className="flex items-center gap-2 mb-2">
+            <div className="px-3 py-1">
+              <div className="flex items-center gap-2 mb-1">
                 <span className="text-sm font-semibold text-white/80 tracking-wide">Discover</span>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1">
                 {DISCOVER_LINKS.map(({ key, label, href }, index) => (
                   <OptimizedLink
                     key={key}
                     href={href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`px-4 py-3 rounded-xl text-base font-medium text-white/90 hover:text-white hover:bg-off-white/10 transition-all duration-200 min-h-[48px] flex gap-3 ${mobileRevealClass}`}
+                    className={`px-3 py-2 rounded-xl text-base font-medium text-white/90 hover:text-white hover:bg-off-white/10 transition-all duration-200 min-h-[44px] flex items-center justify-start ${mobileRevealClass}`}
                     style={{
                       fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                       transitionDelay: `${(primaryCount + index) * 60}ms`,
                     }}
                   >
-                    <span className="flex-1 text-left">{label}</span>
+                    <span className="text-left">{label}</span>
                   </OptimizedLink>
                 ))}
               </div>
             </div>
             
-            <div className="h-px bg-charcoal/10 my-4 mx-4" />
+            <div className="h-px bg-charcoal/10 my-2 mx-3" />
             
-            {/* For Businesses Section */}
-            <div className="px-4 py-2">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-sm font-semibold text-white/80 tracking-wide">For Businesses</span>
-              </div>
-              <div className="space-y-2">
-                {BUSINESS_LINKS.map(({ key, label, description, href }, index) => (
+            {/* Manage Business Link */}
             <OptimizedLink
-                key={key}
-                href={href}
+              href="/manage-business"
               onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-lg text-base font-medium text-white/90 hover:text-white hover:bg-off-white/10 transition-colors duration-200 min-h-[48px] flex gap-3 ${mobileRevealClass}`}
+              className={`px-3 py-2 rounded-xl text-base font-semibold text-white hover:text-white hover:bg-off-white/10 transition-colors relative min-h-[44px] flex items-center justify-start ${mobileRevealClass}`}
               style={{
                 fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-                fontWeight: 500,
-                transitionDelay: `${(primaryCount + discoverCount + index) * 60}ms`,
+                transitionDelay: `${(primaryCount + discoverCount) * 60}ms`,
               }}
             >
-                  <span className="flex-1 text-left">
-                    <span className="block text-white">{label}</span>
-                    <span className="text-sm font-normal text-white/70 normal-case">{description}</span>
-                  </span>
+              <span className="text-left">Manage Business</span>
             </OptimizedLink>
-                ))}
-              </div>
-            </div>
             
-            <div className="h-px bg-charcoal/10 my-4 mx-4" />
+            <div className="h-px bg-charcoal/10 my-2 mx-3" />
             <OptimizedLink
               href="/profile"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-4 py-3 rounded-lg text-base font-semibold text-white hover:text-white flex items-center gap-3 transition-colors duration-200 min-h-[48px] ${mobileRevealClass}`}
+              className={`px-3 py-2 rounded-lg text-base font-semibold text-white hover:text-white flex items-center justify-start transition-colors duration-200 min-h-[44px] ${mobileRevealClass}`}
               style={{
                 fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                 fontWeight: 500,
-                transitionDelay: `${(primaryCount + discoverCount + businessCount) * 60}ms`,
+                transitionDelay: `${(primaryCount + discoverCount + 1) * 60}ms`,
               }}
             >
-              Profile
+              <span className="text-left">Profile</span>
             </OptimizedLink>
           </nav>
         </div>

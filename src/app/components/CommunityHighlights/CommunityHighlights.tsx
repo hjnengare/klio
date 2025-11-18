@@ -93,7 +93,7 @@ export default function CommunityHighlights({
           <div className="mt-1">
             <div className="mb-2 flex justify-center">
               <h3
-                className="text-sm font-semibold text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-lg text-center"
+                className="text-sm font-semibold text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-lg text-center my-4 md:my-0"
                 style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
               >
                 Top Reviewers This Month In Claremont
@@ -101,7 +101,7 @@ export default function CommunityHighlights({
             </div>
 
             <ScrollableSection>
-              <div className="flex gap-1 sm:gap-3 py-2">
+              <div className="flex gap-3 items-stretch py-2">
                 {topReviewers.map((reviewer, index) => {
                 // Try to find an actual review first, otherwise use sample text
                 const actualReview = reviews.find(r => r.reviewer.id === reviewer.id);
@@ -111,9 +111,7 @@ export default function CommunityHighlights({
                 return (
                   <div
                     key={reviewer.id}
-                    className={`list-none flex-shrink-0 w-[calc(50vw-0.5rem)] sm:w-auto ${
-                      index === 1 ? 'pointer-events-none sm:pointer-events-auto' : ''
-                    }`}
+                    className="snap-start snap-always flex-shrink-0 w-[calc(100vw-1rem)] sm:w-auto list-none flex"
                   >
                     <ReviewerCard
                       reviewer={reviewer}
@@ -142,7 +140,7 @@ export default function CommunityHighlights({
           <div className="mt-3">
             <div className="mb-2 flex justify-center">
               <h3
-                className="text-sm font-semibold text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-lg text-center"
+                className="text-sm font-semibold text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-lg text-center my-4 md:my-0"
                 style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
               >
                 Featured Businesses of the Month by Category

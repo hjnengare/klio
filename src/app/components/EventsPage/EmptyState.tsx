@@ -35,10 +35,10 @@ export default function EmptyState({ filterType }: EmptyStateProps) {
       <div className="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
         <Calendar className="w-7 h-7 text-charcoal" />
       </div>
-      <h3 className="font-urbanist font-700 text-lg sm:text-xl text-charcoal/60 mb-2">
+      <h3 className="font-urbanist font-700 text-h3 text-charcoal/60 mb-2">
         {title}
       </h3>
-      <p className="font-urbanist text-sm sm:text-base text-charcoal/40">
+      <p className="font-urbanist text-body-sm sm:text-body text-charcoal/40">
         {description}
       </p>
     </div>

@@ -199,7 +199,10 @@ function LeaderboardPage() {
                     <div className="relative z-10">
                       {activeTab === "contributors" ? (
                         <>
-                          <LeaderboardPodium topReviewers={topReviewers} />
+                          {/* Podium - hidden on mobile, visible on larger screens */}
+                          <div className="hidden md:block">
+                            <LeaderboardPodium topReviewers={topReviewers} />
+                          </div>
                           <LeaderboardList
                             users={topReviewers}
                             showFullLeaderboard={showFullLeaderboard}

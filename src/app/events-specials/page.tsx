@@ -94,7 +94,7 @@ export default function EventsSpecialsPage() {
       >
         <div className="mx-auto w-full max-w-[2000px] px-2">
           <nav className="px-2" aria-label="Breadcrumb">
-                <ol className="flex items-center gap-1 text-sm text-charcoal/60">
+                <ol className="flex items-center gap-1 text-body-sm text-charcoal/60">
                   <li>
                 <Link
                   href="/home"

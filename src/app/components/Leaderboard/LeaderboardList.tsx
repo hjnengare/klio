@@ -4,7 +4,6 @@ import { memo, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import LeaderboardUser from "./LeaderboardUser";
-import ScrollableSection from "../ScrollableSection/ScrollableSection";
 
 interface LeaderboardUser {
   rank: number;
@@ -39,21 +38,34 @@ function LeaderboardList({
 
   return (
     <>
-      {/* Mobile: Horizontal scrollable cards */}
-      <div className="md:hidden">
-        <ScrollableSection>
-          <div className="flex gap-3 items-stretch">
-            {visibleUsers.map((user, index) => (
-              <div key={user.rank} className="snap-start snap-always flex-shrink-0 w-[calc(100vw-1rem)] list-none flex">
-                <LeaderboardUser 
-                  user={user} 
-                  index={index}
-                  isMobile={true}
-                />
-              </div>
-            ))}
-          </div>
-        </ScrollableSection>
+      {/* Mobile: Vertical stacked list */}
+      <div className="md:hidden space-y-2 sm:space-y-3">
+        {visibleUsers.map((user, index) => (
+          <LeaderboardUser 
+            key={user.rank} 
+            user={user} 
+            index={index}
+            isMobile={true}
+          />
+        ))}
+
+        <AnimatePresence>
+          {showFullLeaderboard && hiddenUsers.map((user, index) => (
+            <motion.div
+              key={user.rank}
+              initial={{ opacity: 0, height: 0, y: -20 }}
+              animate={{ opacity: 1, height: 'auto', y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -20 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+            >
+              <LeaderboardUser 
+                user={user} 
+                index={index + 5}
+                isMobile={true}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
 
       {/* Desktop: Vertical list */}
