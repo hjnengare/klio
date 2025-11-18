@@ -8,10 +8,12 @@
 import { memo, useState, useEffect } from "react";
 import nextDynamic from "next/dynamic";
 import { ChevronUp } from "react-feather";
+import { motion } from "framer-motion";
 import HeroCarousel from "../components/Hero/HeroCarousel";
 import BusinessRow from "../components/BusinessRow/BusinessRow";
 import BusinessRowSkeleton from "../components/BusinessRow/BusinessRowSkeleton";
 import HomeBackgroundOrbs from "../components/Home/HomeBackgroundOrbs";
+import PageTransition from "../components/PageTransition/PageTransition";
 import { EVENTS_AND_SPECIALS } from "../data/eventsData";
 import {
   FEATURED_REVIEWS,
@@ -140,12 +142,13 @@ export default function Home() {
   const hasInterestSelections = selectedInterests.length > 0;
   
   return (
-    <div className="min-h-dvh bg-off-white" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
-      <div className="relative">
-        <HeroCarousel />
-      </div>
+    <PageTransition>
+      <div className="min-h-dvh bg-off-white" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
+        <div className="relative">
+          <HeroCarousel />
+        </div>
 
-      <div className="bg-off-white">
+        <div className="bg-off-white">
         <div className="pb-12 sm:pb-16 md:pb-20">
           <section className="pt-4 sm:pt-8 md:pt-10 relative overflow-hidden">
             <HomeBackgroundOrbs />
@@ -217,7 +220,8 @@ export default function Home() {
           <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       )}
-    </div>
+      </div>
+    </PageTransition>
   );
 }
 

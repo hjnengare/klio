@@ -4,8 +4,8 @@
   "description": "Discover and review local businesses in Cape Town",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FDFBF7",
-  "theme_color": "#8BA888",
+  "background_color": "#E5E0E5",
+  "theme_color": "#7D0F2A",
   "orientation": "portrait-primary",
   "icons": [
     {

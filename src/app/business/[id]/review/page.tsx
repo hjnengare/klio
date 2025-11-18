@@ -289,16 +289,14 @@ function WriteReviewContent() {
                 <div className="pt-2 pb-12 sm:pb-16 md:pb-20">
                   <div className="space-y-6">
                     <div className="grid gap-6 lg:grid-cols-3 items-start">
-                      {/* Main Form Section */}
-                      <div className="lg:col-span-2">
-                        <article className="w-full sm:mx-0 flex items-center justify-center" aria-labelledby="review-form-heading">
-                          <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border-0 sm:border border-white/60 rounded-2xl sm:rounded-[20px] shadow-none sm:shadow-lg relative overflow-hidden animate-fade-in-up mx-auto w-full">
-                            {/* Gradient overlays matching user profile */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg"></div>
-                            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-lg"></div>
+                      {/* Main Content Section */}
+                      <div className="lg:col-span-2 space-y-6">
+                        {/* Image Gallery Section - Separated from form */}
+                        <article className="w-full sm:mx-0 flex items-center justify-center" aria-labelledby="business-images-heading">
+                          <div className="bg-card-bg backdrop-blur-xl border-0 sm:border border-white/60 rounded-2xl sm:rounded-[20px] shadow-none sm:shadow-lg relative overflow-hidden animate-fade-in-up mx-auto w-full">
                             <div className="relative z-10">
-                              {/* Business Info and Carousel - visible on mobile only */}
-                              <div className="md:hidden mb-6 flex flex-col px-4 pt-4">
+                              {/* Business Info and Carousel */}
+                              <div className="flex flex-col px-4 pt-4 pb-4 md:pb-6">
                                 <div className="text-center px-4 mb-4">
                                   <h3 className="text-h3 font-semibold text-charcoal mb-2" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
                                     {businessName}
@@ -318,9 +316,19 @@ function WriteReviewContent() {
                                 </div>
                                 <BusinessCarousel businessName={businessName} businessImages={businessImages} />
                               </div>
+                            </div>
+                          </div>
+                        </article>
 
+                        {/* Review Form Section - Separated from images */}
+                        <article className="w-full sm:mx-0 flex items-center justify-center" aria-labelledby="review-form-heading">
+                          <div className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border-0 sm:border border-white/60 rounded-2xl sm:rounded-[20px] shadow-none sm:shadow-lg relative overflow-hidden animate-fade-in-up mx-auto w-full">
+                            {/* Gradient overlays matching user profile */}
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage/10 to-transparent rounded-full blur-lg"></div>
+                            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-coral/10 to-transparent rounded-full blur-lg"></div>
+                            <div className="relative z-10">
                               {/* Review Form */}
-                              <div className="lg:border lg:border-sage/10 lg:rounded-2xl lg:shadow-lg lg:p-6">
+                              <div className="p-4 md:p-6">
                                 <ReviewForm
                                   businessName={businessName}
                                   businessRating={businessRating}
@@ -349,7 +357,7 @@ function WriteReviewContent() {
                       <div className="space-y-6">
                         <BusinessInfoAside
                           businessInfo={businessInfo}
-                          className="self-start"
+                          className="self-start lg:sticky lg:top-28"
                         />
                       </div>
                     </div>

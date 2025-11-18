@@ -76,10 +76,13 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="sayso" />
-        <meta name="theme-color" content="#9DAB9B" />
-        <meta name="theme-color" content="#9DAB9B" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#9DAB9B" media="(prefers-color-scheme: dark)" />
-        <meta name="msapplication-TileColor" content="#9DAB9B" />
+        {/* Theme color - matches navbar background for browser UI */}
+        <meta name="theme-color" content="#7D0F2A" />
+        <meta name="theme-color" content="#7D0F2A" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#7D0F2A" media="(prefers-color-scheme: dark)" />
+        <meta name="msapplication-TileColor" content="#7D0F2A" />
+        {/* Color scheme - indicates light theme preference */}
+        <meta name="color-scheme" content="light" />
         <meta name="apple-touch-fullscreen" content="yes" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />

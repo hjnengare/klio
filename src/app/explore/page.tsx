@@ -11,6 +11,7 @@ import { Loader } from "../components/Loader";
 import SearchInput from "../components/SearchInput/SearchInput";
 import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
 import { ChevronLeft, ChevronRight, ChevronUp } from "react-feather";
+import PageTransition from "../components/PageTransition/PageTransition";
 
 // Note: dynamic and revalidate cannot be exported from client components
 // Client components are automatically dynamic
@@ -98,8 +99,9 @@ export default function ExplorePage() {
   }, []);
 
   return (
-    <div className="min-h-dvh bg-off-white">
-      <Header
+    <PageTransition>
+      <div className="min-h-dvh bg-off-white">
+        <Header
         showSearch={false}
         variant="white"
         backgroundClassName="bg-navbar-bg/90"
