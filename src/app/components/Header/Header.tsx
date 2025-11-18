@@ -4,7 +4,7 @@
 import { useRef, useState, useEffect, useLayoutEffect, useCallback, Fragment } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { createPortal } from "react-dom";
-import { User, X, Search, Briefcase, ChevronDown, Compass, Bookmark } from "react-feather";
+import { User, X, Search, Briefcase, ChevronDown, Compass, Bookmark, Bell, Edit } from "react-feather";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { useSavedItems } from "../../contexts/SavedItemsContext";

@@ -237,11 +237,11 @@ export default function DMPage() {
                                     </div>
                                 )}
                                 <div className="min-w-0 flex-1">
-                                    <h1 className="font-urbanist text-sm sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
+                                    <h1 className="font-urbanist text-h3 sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
                                         {recipient.name}
                                     </h1>
                                     {recipient.online && (
-                                        <p className="text-xs text-white/70 truncate" style={{
+                                        <p className="text-caption text-white/70 truncate" style={{
                                             fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                         }}>
                                             Online
@@ -281,12 +281,12 @@ export default function DMPage() {
                                                 fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                             }}
                                         >
-                                            <p className="text-sm leading-relaxed whitespace-pre-wrap break-words" style={{
+                                            <p className="text-body-sm leading-relaxed whitespace-pre-wrap break-words" style={{
                                                 fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                             }}>
                                                 {msg.text}
                                             </p>
-                                            <div className={`flex items-center gap-1 mt-2 text-xs ${
+                                            <div className={`flex items-center gap-1 mt-2 text-caption ${
                                                 isCurrentUser ? 'text-white/70' : 'text-charcoal/50'
                                             }`} style={{
                                                 fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
@@ -317,11 +317,10 @@ export default function DMPage() {
                                     onKeyDown={handleKeyDown}
                                     placeholder="Type a message..."
                                     rows={1}
-                                    className="w-full bg-white border border-charcoal/10 rounded-[20px] px-4 py-3 pr-12 text-charcoal placeholder-charcoal/40 resize-none focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50 transition-all duration-300 max-h-[120px] overflow-y-auto shadow-sm"
+                                    className="w-full bg-white border border-charcoal/10 rounded-[20px] px-4 py-3 pr-12 text-body-sm text-charcoal placeholder-charcoal/40 resize-none focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50 transition-all duration-300 max-h-[120px] overflow-y-auto shadow-sm"
                                     style={{
                                         fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-                                        fontSize: '15px',
-                                        lineHeight: '1.4',
+                                        lineHeight: '1.5',
                                     }}
                                 />
                             </div>

@@ -76,7 +76,7 @@ function BusinessCard({
   const [imgError, setImgError] = useState(false);
   const [usingFallback, setUsingFallback] = useState(false);
 
-  const reviewRoute = useMemo(() => `/business/review`, []);
+  const reviewRoute = useMemo(() => `/business/${business.id}/review`, [business.id]);
   const businessProfileRoute = useMemo(() => `/business/${business.id}`, [business.id]);
 
   // Prefetch routes on mount
