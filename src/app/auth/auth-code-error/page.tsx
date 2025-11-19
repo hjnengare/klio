@@ -10,7 +10,12 @@ export default function AuthCodeErrorPage() {
   const error = searchParams.get('error') || 'Authentication failed';
 
   return (
-    <div className="min-h-screen bg-brand-bg-50-50-50-50-50-50-50 flex items-center justify-center px-4 py-8">
+    <div 
+      className="min-h-screen bg-brand-bg-50-50-50-50-50-50-50 flex items-center justify-center px-4 py-8 font-urbanist"
+      style={{
+        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+      }}
+    >
       <div className="max-w-md w-full text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -27,10 +32,10 @@ export default function AuthCodeErrorPage() {
 
           {/* Error Message */}
           <div className="space-y-3">
-            <h1 className="text-lg md:text-lg lg:text-4xl font-bold text-charcoal tracking-tight" style={{ fontFamily: '"Changa One", cursive, sans-serif' }}>
+            <h1 className="font-urbanist text-lg md:text-lg lg:text-4xl font-700 text-charcoal tracking-tight">
               Authentication Error
             </h1>
-            <p className="text-charcoal/70 leading-relaxed" >
+            <p className="font-urbanist text-charcoal/70 leading-relaxed">
               {error}
             </p>
           </div>
@@ -39,8 +44,7 @@ export default function AuthCodeErrorPage() {
           <div className="space-y-3 pt-4">
             <button
               onClick={() => router.push('/login')}
-              className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 flex items-center justify-center gap-2 btn-target btn-press"
-              
+              className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 flex items-center justify-center gap-2 btn-target btn-press font-urbanist"
             >
               <Home className="w-5 h-5" />
               Back to Login
@@ -48,8 +52,7 @@ export default function AuthCodeErrorPage() {
 
             <button
               onClick={() => router.push('/register')}
-              className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 flex items-center justify-center gap-2 btn-target btn-press"
-              
+              className="w-full bg-gradient-to-r from-coral to-coral/80 text-white text-sm font-600 py-4 px-4 rounded-full hover:from-coral/90 hover:to-coral transition-all duration-300 flex items-center justify-center gap-2 btn-target btn-press font-urbanist"
             >
               <Mail className="w-5 h-5" />
               Try Registering Instead
@@ -58,7 +61,7 @@ export default function AuthCodeErrorPage() {
 
           {/* Help Text */}
           <div className="pt-6 border-t border-light-gray/30">
-            <p className="text-sm text-charcoal/60" >
+            <p className="font-urbanist text-sm text-charcoal/60">
               If you continue to experience issues, please contact support at{" "}
               <a
                 href="mailto:support@sayso.com"

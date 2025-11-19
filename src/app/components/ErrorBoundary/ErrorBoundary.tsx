@@ -56,7 +56,12 @@ class ErrorBoundary extends Component<Props, State> {
       const isRepeatedError = this.state.retryCount >= 2;
 
       return (
-        <div className="min-h-dvh flex items-center justify-center  bg-off-white   px-4">
+        <div 
+          className="min-h-dvh flex items-center justify-center bg-off-white px-4 font-urbanist"
+          style={{
+            fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+          }}
+        >
           <div className="max-w-md w-full text-center">
             <div className="w-16 h-16 mx-auto mb-6 bg-red-100 rounded-full flex items-center justify-center">
               <AlertTriangle className="w-8 h-8 text-red-600" />

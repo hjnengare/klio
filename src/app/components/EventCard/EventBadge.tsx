@@ -7,7 +7,7 @@ export default function EventBadge({ startDate, endDate }: EventBadgeProps) {
   return (
     <div className="absolute left-0 top-0 z-20 overflow-hidden" style={{ width: '120px', height: '120px' }}>
       <div 
-        className="absolute bg-coral text-white px-3 py-1.5 shadow-lg"
+        className="absolute bg-coral text-white px-3 py-2.5 shadow-lg"
         style={{
           transform: 'rotate(-45deg)',
           transformOrigin: 'center',

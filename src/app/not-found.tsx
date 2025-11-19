@@ -9,10 +9,12 @@ import PremiumHover from "./components/Animations/PremiumHover";
 
 export default function NotFound() {
   return (
-    <div className="min-h-dvh bg-off-white relative overflow-hidden" style={{
-      fontFamily:
-        '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
-    }}>
+    <div 
+      className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist"
+      style={{
+        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+      }}
+    >
       {/* Floating background elements */}
       <FloatingElements />
 
