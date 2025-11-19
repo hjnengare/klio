@@ -395,7 +395,7 @@ export default function Header({
             {/* Desktop nav - centered */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-3 flex-1 justify-center">
               {PRIMARY_LINKS.map(({ key, label, href }, index) => {
-                const isActive = pathname === href || (href !== '/home' && pathname?.startsWith(href));
+                const isActive = pathname === href;
                 return (
                 <Fragment key={key}>
                 <OptimizedLink
@@ -463,7 +463,7 @@ export default function Header({
                             </div>
                             <div className="py-3">
                               {DISCOVER_LINKS.map(({ key: subKey, label: subLabel, description, href: subHref }) => {
-                                const isActive = pathname === subHref || (subHref !== '/home' && pathname?.startsWith(subHref));
+                                const isActive = pathname === subHref || pathname?.startsWith(subHref);
                                 return (
                                 <OptimizedLink
                                   key={subKey}
