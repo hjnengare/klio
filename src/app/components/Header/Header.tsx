@@ -600,7 +600,7 @@ export default function Header({
                 className="md:hidden group w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center transition-colors duration-200 min-h-[44px] min-w-[44px] touch-manipulation"
                 aria-label="View saved businesses"
               >
-                <Bookmark className={`w-8 h-8 sm:w-5 sm:h-5 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`} fill={whiteText ? 'currentColor' : 'none'} />
+                <Bookmark className={`w-8 h-8 sm:w-5 sm:h-5 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`} fill="none" />
               </OptimizedLink>
 
               {/* Messages/DM Icon - Mobile Only */}
