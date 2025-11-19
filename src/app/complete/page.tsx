@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { Smile, Star, Check, ArrowRight, CheckCircle } from "react-feather";
 import { useAuth } from "../contexts/AuthContext";
 import { useReducedMotion } from "../utils/useReducedMotion";
@@ -41,6 +42,37 @@ const sf = {
 function CompletePageContent() {
   const { updateUser, user } = useAuth();
   const reducedMotion = useReducedMotion();
+  const router = useRouter();
+  const redirectTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const hasRedirectedRef = useRef(false);
+
+  // Auto-redirect to home after 2 seconds
+  useEffect(() => {
+    redirectTimerRef.current = setTimeout(() => {
+      if (!hasRedirectedRef.current) {
+        hasRedirectedRef.current = true;
+        router.push('/home');
+      }
+    }, 2000);
+
+    return () => {
+      if (redirectTimerRef.current) {
+        clearTimeout(redirectTimerRef.current);
+      }
+    };
+  }, [router]);
+
+  // Handle manual redirect when button is clicked
+  const handleContinueClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (redirectTimerRef.current) {
+      clearTimeout(redirectTimerRef.current);
+    }
+    if (!hasRedirectedRef.current) {
+      hasRedirectedRef.current = true;
+      router.push('/home');
+    }
+  };
 
   useEffect(() => {
     // 🎉 Confetti rain effect
@@ -101,13 +133,13 @@ function CompletePageContent() {
         >
           {/* Heading */}
           <h1
-            className="text-lg md:text-4xl lg:text-5xl font-bold text-charcoal mb-4 tracking-tight leading-snug"
+            className="font-urbanist text-lg md:text-4xl lg:text-5xl font-700 text-charcoal mb-4 tracking-tight leading-snug"
             aria-live="polite"
-            style={sf}
+            style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}
           >
             You&apos;re all set!
           </h1>
-          <p className="text-base md:text-lg font-normal text-charcoal/70 mb-4 leading-relaxed" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
+          <p className="text-base md:text-lg font-normal text-charcoal/70 mb-4 leading-relaxed" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
             Time to discover what&apos;s out there.
           </p>
 
@@ -128,8 +160,8 @@ function CompletePageContent() {
 
           {/* Continue CTA */}
           <div>
-            <Link
-              href="/home"
+            <button
+              onClick={handleContinueClick}
               data-testid="onboarding-complete-cta"
               aria-label="Go to Home"
               className="group inline-flex items-center justify-center w-full sm:w-auto text-white text-sm font-semibold py-4 px-8 rounded-full transition-all duration-300"
@@ -143,8 +175,7 @@ function CompletePageContent() {
                 Continue to Home
                 <ArrowRight className="w-5 h-5 ml-2 inline-block" />
               </span>
-
-            </Link>
+            </button>
           </div>
 
           {/* Completion badge */}

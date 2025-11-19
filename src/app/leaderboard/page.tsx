@@ -90,7 +90,7 @@ function LeaderboardPage() {
 
     for (const b of allBusinesses) {
       // Group by interestId instead of category
-      const interestId = (b.interestId || b.interest_id || "uncategorized") as string;
+      const interestId = (b.interestId || "uncategorized") as string;
       const existing = byInterest.get(interestId);
       if (!existing || getDisplayRating(b) > getDisplayRating(existing)) {
         byInterest.set(interestId, b);
