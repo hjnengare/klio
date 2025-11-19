@@ -1,6 +1,6 @@
 "use client";
 
-import { Zap, Heart, Star, CheckCircle } from "react-feather";
+import { Clock, DollarSign, Smile, Shield, CheckCircle } from "react-feather";
 import { memo } from "react";
 
 interface PercentileChipProps {
@@ -11,37 +11,47 @@ interface PercentileChipProps {
 function PercentileChip({ label, value }: PercentileChipProps) {
   // Handle placeholder (0 value) with grayed out style
   const isPlaceholder = value === 0;
-  const formattedLabel = label.charAt(0).toUpperCase() + label.slice(1);
-  const chipTitle = isPlaceholder
-    ? `${formattedLabel} insights coming soon`
-    : `${formattedLabel} score: ${value}%`;
+  const normalizedLabel = label.toLowerCase().replace(/\s+/g, '-').replace(/_/g, '-');
+  
+  // Get descriptive tooltip text for each percentile
+  const getTooltipText = () => {
+    if (isPlaceholder) {
+      return `${label.charAt(0).toUpperCase() + label.slice(1).replace(/-/g, ' ')} insights coming soon`;
+    }
+    
+    switch (normalizedLabel) {
+      case 'punctuality':
+        return `Punctuality: ${value}% - How well the business keeps appointments and meets deadlines`;
+      case 'cost-effectiveness':
+      case 'costeffectiveness':
+      case 'cost':
+        return `Cost Effectiveness: ${value}% - Value for money and fair pricing`;
+      case 'friendliness':
+        return `Friendliness: ${value}% - How welcoming and approachable the staff are`;
+      case 'trustworthiness':
+        return `Trustworthiness: ${value}% - Reliability, honesty, and credibility of the business`;
+      default:
+        return `${label.charAt(0).toUpperCase() + label.slice(1).replace(/-/g, ' ')}: ${value}%`;
+    }
+  };
 
-  // Render icon based on label with coral stroke
+  const tooltipText = getTooltipText();
+
+  // Render icon based on label with coral stroke (outlined, not filled)
   const renderIcon = () => {
     const baseClasses = "w-3 h-3 flex-shrink-0 text-coral";
 
-    switch (label.toLowerCase()) {
-      case 'speed':
-        return (
-          <Zap 
-            className={baseClasses}
-            fill="currentColor" 
-          />
-        );
-      case 'hospitality':
-        return (
-          <Heart 
-            className={baseClasses}
-            fill="currentColor" 
-          />
-        );
-      case 'quality':
-        return (
-          <Star 
-            className={baseClasses}
-            fill="currentColor" 
-          />
-        );
+    switch (normalizedLabel) {
+      case 'punctuality':
+        return <Clock className={baseClasses} />;
+      case 'cost-effectiveness':
+      case 'costeffectiveness':
+      case 'cost':
+        return <DollarSign className={baseClasses} />;
+      case 'friendliness':
+        return <Smile className={baseClasses} />;
+      case 'trustworthiness':
+        return <Shield className={baseClasses} />;
       default:
         return <CheckCircle className={baseClasses} />;
     }
@@ -51,14 +61,14 @@ function PercentileChip({ label, value }: PercentileChipProps) {
     <div
       role="button"
       tabIndex={0}
-      title={chipTitle}
-      aria-label={chipTitle}
+      title={tooltipText}
+      aria-label={tooltipText}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
         }
       }}
-      className="inline-flex items-center gap-1.5 px-4 pt-1">
+      className="inline-flex items-center gap-1.5 px-4 pt-1 cursor-help group relative">
       {renderIcon()}
       <span className={`text-sm sm:text-xs font-600 whitespace-nowrap  ${
         isPlaceholder ? 'text-charcoal/40' : 'text-charcoal'

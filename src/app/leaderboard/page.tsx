@@ -67,7 +67,7 @@ function LeaderboardPage() {
   const featuredBusinesses = useMemo(() => {
     if (!allBusinesses || allBusinesses.length === 0) return [];
 
-    const byCategory = new Map<string, any>();
+    const byInterest = new Map<string, any>();
 
     const getDisplayRating = (b: any) =>
       (typeof b.totalRating === "number" && b.totalRating) ||
@@ -89,30 +89,32 @@ function LeaderboardPage() {
         .join(" ");
 
     for (const b of allBusinesses) {
-      const cat = (b.category || "Business") as string;
-      const existing = byCategory.get(cat);
+      // Group by interestId instead of category
+      const interestId = (b.interestId || b.interest_id || "uncategorized") as string;
+      const existing = byInterest.get(interestId);
       if (!existing || getDisplayRating(b) > getDisplayRating(existing)) {
-        byCategory.set(cat, b);
+        byInterest.set(interestId, b);
       }
     }
 
-    const results = Array.from(byCategory.entries()).map(([cat, b]) => {
+    const results = Array.from(byInterest.entries()).map(([interestId, b]) => {
       const rating = getDisplayRating(b);
       const reviews = getReviews(b);
-      const categoryLabel = toTitle(b.subInterestLabel || cat);
+      const interestLabel = toTitle(interestId);
       return {
         id: b.id,
         name: b.name,
         image: b.image || b.image_url || b.uploaded_image || b.uploadedImage || "",
         alt: b.alt || b.name,
         category: b.category || "Business",
+        interestId: interestId,
         location: b.location || b.address || "Cape Town",
         rating: rating > 0 ? 5 : 0,
         totalRating: rating,
         reviews,
         badge: "featured" as const,
         href: `/business/${b.id}`,
-        monthAchievement: `Featured ${categoryLabel}`,
+        monthAchievement: `Featured ${interestLabel}`,
         verified: Boolean(b.verified),
       };
     });

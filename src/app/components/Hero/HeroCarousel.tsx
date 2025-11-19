@@ -302,6 +302,35 @@ export default function HeroCarousel() {
       <div className="sr-only" aria-live="polite">
         {slides[currentIndex]?.title}
       </div>
+
+      {/* Minimal Progress Indicators */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-3">
+        {/* Progress Bar */}
+        <div className="w-32 h-0.5 bg-white/20 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-white/60 rounded-full transition-all duration-75 ease-linear"
+            style={{ width: `${progress}%` }}
+            aria-hidden="true"
+          />
+        </div>
+
+        {/* Dot Indicators */}
+        <div className="flex items-center gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-white/50 ${
+                index === currentIndex
+                  ? "w-2 h-2 bg-white"
+                  : "w-1.5 h-1.5 bg-white/40 hover:bg-white/60"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+              aria-current={index === currentIndex ? "true" : "false"}
+            />
+          ))}
+        </div>
+      </div>
         </section>
       </div>
     </>

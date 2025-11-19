@@ -12,9 +12,14 @@ import { useSavedItems } from "../../contexts/SavedItemsContext";
 import { getCategoryPng, getCategoryPngFromLabels, isPngIcon } from "../../utils/categoryToPngMapping";
 
 type Percentiles = {
-  service: number;
-  price: number;
-  ambience: number;
+  punctuality?: number;
+  'cost-effectiveness'?: number;
+  friendliness?: number;
+  trustworthiness?: number;
+  // Legacy support
+  service?: number;
+  price?: number;
+  ambience?: number;
 };
 
 type Business = {
@@ -517,16 +522,20 @@ function BusinessCard({
                 {/* Percentile chips - Inside wrapper */}
                 <div className="flex items-center justify-center gap-2 flex-wrap min-h-[32px] py-2 md:bg-off-white/40 md:rounded-[20px] md:border md:border-white/30">
                   <PercentileChip
-                    label="speed"
-                    value={business.percentiles?.service || 0}
+                    label="punctuality"
+                    value={business.percentiles?.punctuality || business.percentiles?.service || 0}
                   />
                   <PercentileChip
-                    label="hospitality"
-                    value={business.percentiles?.price || 0}
+                    label="cost-effectiveness"
+                    value={business.percentiles?.['cost-effectiveness'] || business.percentiles?.price || 0}
                   />
                   <PercentileChip
-                    label="quality"
-                    value={business.percentiles?.ambience || 0}
+                    label="friendliness"
+                    value={business.percentiles?.friendliness || business.percentiles?.ambience || 0}
+                  />
+                  <PercentileChip
+                    label="trustworthiness"
+                    value={business.percentiles?.trustworthiness || 0}
                   />
                 </div>
 

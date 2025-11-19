@@ -1,11 +1,27 @@
 "use client";
 
-import { memo, useMemo, useState } from "react";
+import { memo, useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import BusinessOfMonthPodium from "./BusinessOfMonthPodium";
 import BusinessLeaderboardItem from "./BusinessLeaderboardItem";
 import { BusinessOfTheMonth } from "../../data/communityHighlightsData";
+
+interface Interest {
+  id: string;
+  name: string;
+}
+
+const INTEREST_TITLES: { [key: string]: string } = {
+  'food-drink': 'Food & Drink',
+  'beauty-wellness': 'Beauty & Wellness',
+  'professional-services': 'Professional Services',
+  'outdoors-adventure': 'Outdoors & Adventure',
+  'experiences-entertainment': 'Entertainment & Experiences',
+  'arts-culture': 'Arts & Culture',
+  'family-pets': 'Family & Pets',
+  'shopping-lifestyle': 'Shopping & Lifestyle',
+};
 
 interface BusinessOfMonthLeaderboardProps {
   businesses: BusinessOfTheMonth[];
@@ -18,21 +34,68 @@ function BusinessOfMonthLeaderboard({
   showFullLeaderboard,
   onToggleFullLeaderboard,
 }: BusinessOfMonthLeaderboardProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedInterest, setSelectedInterest] = useState<string>("all");
+  const [interests, setInterests] = useState<Interest[]>([]);
 
-  // Extract unique categories
-  const categories = useMemo(() => {
-    const uniqueCategories = Array.from(new Set(businesses.map(b => b.category)));
-    return ["all", ...uniqueCategories];
-  }, [businesses]);
+  // Fetch interests
+  useEffect(() => {
+    const fetchInterests = async () => {
+      try {
+        const response = await fetch('/api/interests');
+        if (response.ok) {
+          const data = await response.json();
+          setInterests(data.interests || []);
+        } else {
+          // Fallback to static interests
+          setInterests([
+            { id: 'food-drink', name: 'Food & Drink' },
+            { id: 'beauty-wellness', name: 'Beauty & Wellness' },
+            { id: 'professional-services', name: 'Professional Services' },
+            { id: 'outdoors-adventure', name: 'Outdoors & Adventure' },
+            { id: 'experiences-entertainment', name: 'Entertainment & Experiences' },
+            { id: 'arts-culture', name: 'Arts & Culture' },
+            { id: 'family-pets', name: 'Family & Pets' },
+            { id: 'shopping-lifestyle', name: 'Shopping & Lifestyle' },
+          ]);
+        }
+      } catch (error) {
+        console.error('Error fetching interests:', error);
+        // Fallback to static interests
+        setInterests([
+          { id: 'food-drink', name: 'Food & Drink' },
+          { id: 'beauty-wellness', name: 'Beauty & Wellness' },
+          { id: 'professional-services', name: 'Professional Services' },
+          { id: 'outdoors-adventure', name: 'Outdoors & Adventure' },
+          { id: 'experiences-entertainment', name: 'Entertainment & Experiences' },
+          { id: 'arts-culture', name: 'Arts & Culture' },
+          { id: 'family-pets', name: 'Family & Pets' },
+          { id: 'shopping-lifestyle', name: 'Shopping & Lifestyle' },
+        ]);
+      }
+    };
 
-  // Filter and sort businesses by category and rating
+    fetchInterests();
+  }, []);
+
+  // Extract unique interests from businesses
+  const availableInterests = useMemo(() => {
+    const uniqueInterestIds = Array.from(new Set(
+      businesses
+        .map(b => (b as any).interestId)
+        .filter(Boolean)
+    ));
+    
+    // Map to interest objects with names
+    return interests.filter(interest => uniqueInterestIds.includes(interest.id));
+  }, [businesses, interests]);
+
+  // Filter and sort businesses by interest and rating
   const sortedBusinesses = useMemo(() => {
-    const filtered = selectedCategory === "all"
+    const filtered = selectedInterest === "all"
       ? businesses
-      : businesses.filter(b => b.category === selectedCategory);
+      : businesses.filter(b => (b as any).interestId === selectedInterest);
     return [...filtered].sort((a, b) => b.totalRating - a.totalRating);
-  }, [businesses, selectedCategory]);
+  }, [businesses, selectedInterest]);
 
   // Memoize the business arrays to prevent unnecessary recalculations
   const visibleBusinesses = useMemo(
@@ -44,18 +107,34 @@ function BusinessOfMonthLeaderboard({
 
   return (
     <>
-      {/* Category Filter */}
+      {/* Interest Filter */}
       <div className="mb-6 sm:mb-8 px-2">
-        <h3 className="font-urbanist text-caption sm:text-body-sm font-600 text-charcoal/70 mb-3 text-center">Filter by Category</h3>
+        <h3 className="font-urbanist text-caption sm:text-body-sm font-600 text-charcoal/70 mb-3 text-center">Filter by Interest</h3>
         <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-full">
-          {categories.map((category) => {
-            const isActive = selectedCategory === category;
-            const displayName = category === "all" ? "All Categories" : category;
+          <button
+            onClick={() => setSelectedInterest("all")}
+            className={`
+              px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-urbanist font-semibold text-caption sm:text-body-sm
+              transition-all duration-300
+              focus:outline-none focus:ring-2 focus:ring-sage/30
+              whitespace-nowrap flex-shrink-0
+              ${
+                selectedInterest === "all"
+                  ? 'bg-gradient-to-br from-sage to-sage/90 text-white shadow-md'
+                  : 'bg-white/80 text-charcoal/70 hover:text-charcoal hover:bg-white border border-charcoal/20'
+              }
+            `}
+          >
+            All Interests
+          </button>
+          {availableInterests.map((interest) => {
+            const isActive = selectedInterest === interest.id;
+            const displayName = INTEREST_TITLES[interest.id] || interest.name;
 
             return (
               <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
+                key={interest.id}
+                onClick={() => setSelectedInterest(interest.id)}
                 className={`
                   px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-urbanist font-semibold text-caption sm:text-body-sm
                   transition-all duration-300
