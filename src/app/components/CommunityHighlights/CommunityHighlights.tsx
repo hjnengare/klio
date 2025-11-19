@@ -111,7 +111,7 @@ export default function CommunityHighlights({
                 return (
                   <div
                     key={reviewer.id}
-                    className="snap-start snap-always flex-shrink-0 w-[calc(100vw-1rem)] sm:w-auto list-none flex"
+                    className="snap-start snap-always flex-shrink-0 w-[calc(66.666vw-0.75rem)] sm:w-auto list-none flex"
                   >
                     <ReviewerCard
                       reviewer={reviewer}
