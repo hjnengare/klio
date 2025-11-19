@@ -394,11 +394,13 @@ export default function Header({
 
             {/* Desktop nav - centered */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-3 flex-1 justify-center">
-              {PRIMARY_LINKS.map(({ key, label, href }, index) => (
+              {PRIMARY_LINKS.map(({ key, label, href }, index) => {
+                const isActive = pathname === href || (href !== '/home' && pathname?.startsWith(href));
+                return (
                 <Fragment key={key}>
                 <OptimizedLink
                     href={href}
-                    className={`group capitalize px-2.5 lg:px-3.5 py-1 text-sm sm:text-xs sm:text-sm md:text-sm sm:text-xs lg:text-sm sm:text-xs font-semibold transition-colors duration-200 ${whiteText ? 'text-white hover:text-white/90' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
+                    className={`group capitalize px-2.5 lg:px-3.5 py-1 text-sm sm:text-xs sm:text-sm md:text-sm sm:text-xs lg:text-sm sm:text-xs font-semibold transition-colors duration-200 ${isActive ? 'text-sage' : whiteText ? 'text-white hover:text-white/90' : 'text-charcoal/90 md:text-charcoal/95 hover:text-sage'}`}
                   style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                 >
                     <span>{label}</span>
@@ -460,7 +462,9 @@ export default function Header({
                               <span className="text-sm font-semibold text-charcoal">Discover</span>
                             </div>
                             <div className="py-3">
-                              {DISCOVER_LINKS.map(({ key: subKey, label: subLabel, description, href: subHref }) => (
+                              {DISCOVER_LINKS.map(({ key: subKey, label: subLabel, description, href: subHref }) => {
+                                const isActive = pathname === subHref || (subHref !== '/home' && pathname?.startsWith(subHref));
+                                return (
                                 <OptimizedLink
                                   key={subKey}
                                   href={subHref}
@@ -468,15 +472,16 @@ export default function Header({
                                     clearDiscoverHoverTimeout();
                                     closeDiscoverDropdown();
                                   }}
-                                  className="group flex items-start gap-3 px-5 py-3 hover:bg-sage/10 transition-all duration-200"
+                                  className={`group flex items-start gap-3 px-5 py-3 hover:bg-sage/10 transition-all duration-200 ${isActive ? 'bg-sage/5' : ''}`}
                                   style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
                                 >
                                   <div className="flex-1">
-                                    <div className="text-sm font-semibold text-charcoal group-hover:text-coral">{subLabel}</div>
+                                    <div className={`text-sm font-semibold ${isActive ? 'text-sage' : 'text-charcoal group-hover:text-coral'}`}>{subLabel}</div>
                                     <div className="text-sm sm:text-xs text-charcoal/60 mt-0.5">{description}</div>
                                   </div>
                                 </OptimizedLink>
-                              ))}
+                                );
+                              })}
                             </div>
                           </div>,
                           document.body
@@ -484,7 +489,8 @@ export default function Header({
                     </div>
                   )}
                 </Fragment>
-              ))}
+                );
+              })}
 
               {/* For Businesses Dropdown (desktop) */}
               <div

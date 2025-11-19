@@ -142,7 +142,7 @@ export default function DMChatListPage() {
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-3 sm:mr-4">
                 <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
               </div>
-              <h1 className="font-urbanist text-sm font-700 text-white transition-all duration-300 group-hover:text-white/80 relative">
+              <h1 className="font-urbanist text-body-sm font-semibold text-white transition-all duration-300 group-hover:text-white/80 relative truncate max-w-[150px] sm:max-w-none">
                 Messages
               </h1>
             </button>
