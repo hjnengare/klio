@@ -93,7 +93,7 @@ export default function CommunityHighlights({
           <div className="mt-1">
             <div className="mb-2 flex justify-center">
               <h3
-                className="text-sm font-semibold text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-lg text-center my-4 md:my-0"
+                className="text-sm font-semibold text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-lg text-center my-4 md:mb-4"
                 style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
               >
                 Top Reviewers This Month In Claremont
@@ -140,7 +140,7 @@ export default function CommunityHighlights({
           <div className="mt-3">
             <div className="mb-2 flex justify-center">
               <h3
-                className="text-sm font-semibold text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-lg text-center my-4 md:my-0"
+                className="text-sm font-semibold text-charcoal px-4 sm:px-6 py-2 backdrop-blur-md border border-white/50 rounded-full shadow-lg text-center my-4 md:mb-4"
                 style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}
               >
                 Featured Businesses of the Month by Category

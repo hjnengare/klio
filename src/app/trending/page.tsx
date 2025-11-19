@@ -88,7 +88,7 @@ export default function TrendingPage() {
     <div className="min-h-dvh bg-off-white">
       {/* Header */}
       <Header
-        showSearch={false}
+        showSearch={true}
         variant="white"
         backgroundClassName="bg-navbar-bg/90"
         topPosition="top-0"

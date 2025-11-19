@@ -89,7 +89,7 @@ export default function ForYouPage() {
   return (
     <div className="min-h-dvh bg-off-white">
       <Header
-        showSearch={false}
+        showSearch={true}
         variant="white"
         backgroundClassName="bg-navbar-bg/90"
         topPosition="top-0"
