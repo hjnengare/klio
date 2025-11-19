@@ -4,7 +4,7 @@
 import { useRef, useState, useEffect, useLayoutEffect, useCallback, Fragment } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { createPortal } from "react-dom";
-import { User, X, Search, Briefcase, ChevronDown, Compass, Bookmark, Bell, Edit } from "react-feather";
+import { User, X, Search, Briefcase, ChevronDown, Compass, Bookmark, Bell, Edit, MessageCircle } from "react-feather";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
 import SearchInput from "../SearchInput/SearchInput";
 import { useSavedItems } from "../../contexts/SavedItemsContext";
@@ -603,6 +603,15 @@ export default function Header({
                 <Bookmark className={`w-8 h-8 sm:w-5 sm:h-5 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`} fill={whiteText ? 'currentColor' : 'none'} />
               </OptimizedLink>
 
+              {/* Messages/DM Icon - Mobile Only */}
+              <OptimizedLink
+                href="/dm"
+                className="md:hidden group w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center transition-colors duration-200 min-h-[44px] min-w-[44px] touch-manipulation"
+                aria-label="Messages"
+              >
+                <MessageCircle className={`w-8 h-8 sm:w-5 sm:h-5 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`} />
+              </OptimizedLink>
+
               {/* Mobile menu toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -635,6 +644,15 @@ export default function Header({
                     {savedCount > 99 ? '99+' : savedCount}
                   </span>
                 )}
+              </OptimizedLink>
+
+              {/* Messages/DM */}
+              <OptimizedLink
+                href="/dm"
+                className={`group hidden md:flex w-9 h-9 lg:w-10 lg:h-10 items-center justify-center transition-colors duration-200 relative ${whiteText ? 'text-white hover:text-white/85' : 'text-charcoal/80 hover:text-sage'}`}
+                aria-label="Messages"
+              >
+                <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
               </OptimizedLink>
 
               {/* Profile */}
@@ -759,13 +777,25 @@ export default function Header({
             
             <div className="h-px bg-charcoal/10 my-2 mx-3" />
             <OptimizedLink
-              href="/profile"
+              href="/dm"
               onClick={() => setIsMobileMenuOpen(false)}
               className={`px-3 py-2 rounded-lg text-base font-semibold text-white hover:text-white flex items-center justify-start transition-colors duration-200 min-h-[44px] ${mobileRevealClass}`}
               style={{
                 fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                 fontWeight: 500,
                 transitionDelay: `${(primaryCount + discoverCount + 1) * 60}ms`,
+              }}
+            >
+              <span className="text-left">Messages</span>
+            </OptimizedLink>
+            <OptimizedLink
+              href="/profile"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`px-3 py-2 rounded-lg text-base font-semibold text-white hover:text-white flex items-center justify-start transition-colors duration-200 min-h-[44px] ${mobileRevealClass}`}
+              style={{
+                fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                fontWeight: 500,
+                transitionDelay: `${(primaryCount + discoverCount + 2) * 60}ms`,
               }}
             >
               <span className="text-left">Profile</span>

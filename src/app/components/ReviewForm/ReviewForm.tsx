@@ -57,9 +57,6 @@ export default function ReviewForm({
       {/* Subtle glows - similar to review cards */}
 
       <div className="relative z-10 flex-1 flex flex-col">
-        <div className="hidden md:block">
-          <BusinessCarousel businessName={businessName} businessImages={businessImages} />
-        </div>
         <RatingSelector overallRating={overallRating} onRatingChange={onRatingChange} />
         <TagSelector
           selectedTags={selectedTags}

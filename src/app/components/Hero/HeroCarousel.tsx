@@ -305,15 +305,6 @@ export default function HeroCarousel() {
 
       {/* Minimal Progress Indicators */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-3">
-        {/* Progress Bar */}
-        <div className="w-32 h-0.5 bg-white/20 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-white/60 rounded-full transition-all duration-75 ease-linear"
-            style={{ width: `${progress}%` }}
-            aria-hidden="true"
-          />
-        </div>
-
         {/* Dot Indicators */}
         <div className="flex items-center gap-2">
           {slides.map((_, index) => (
