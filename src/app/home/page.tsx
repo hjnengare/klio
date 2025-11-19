@@ -17,7 +17,6 @@ import {
   FEATURED_REVIEWS,
   TOP_REVIEWERS,
 } from "../data/communityHighlightsData";
-import { useOnboarding } from "../contexts/OnboardingContext";
 import { useBusinesses, useForYouBusinesses, useTrendingBusinesses } from "../hooks/useBusinesses";
 import { useRoutePrefetch } from "../hooks/useRoutePrefetch";
 
@@ -47,7 +46,6 @@ const Footer = nextDynamic(() => import("../components/Footer/Footer"), {
 const MemoizedBusinessRow = memo(BusinessRow);
 
 export default function Home() {
-  const { selectedInterests } = useOnboarding();
   const { businesses: forYouBusinesses, loading: forYouLoading, error: forYouError } = useForYouBusinesses(10);
   const { businesses: trendingBusinesses, loading: trendingLoading, error: trendingError } = useTrendingBusinesses(10);
   const { businesses: allBusinesses } = useBusinesses({ limit: 200, sortBy: "total_rating", sortOrder: "desc", feedStrategy: "mixed" });
@@ -137,7 +135,6 @@ export default function Home() {
   ]);
   const hasForYouBusinesses = forYouBusinesses.length > 0;
   const hasTrendingBusinesses = trendingBusinesses.length > 0;
-  const hasInterestSelections = selectedInterests.length > 0;
   
   return (
     <div className="min-h-dvh bg-off-white" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
@@ -150,16 +147,12 @@ export default function Home() {
           <section className="pt-4 sm:pt-8 md:pt-10 relative overflow-hidden">
             <HomeBackgroundOrbs />
             <div className="relative z-10">
-              {forYouLoading && <BusinessRowSkeleton title="For You" />}
+              {forYouLoading && <BusinessRowSkeleton title="For You Now" />}
               {!forYouLoading && hasForYouBusinesses && (
-                <MemoizedBusinessRow title="For You" businesses={forYouBusinesses} cta="See More" href="/for-you" />
+                <MemoizedBusinessRow title="For You Now" businesses={forYouBusinesses} cta="See More" href="/for-you" />
               )}
               {!forYouLoading && !hasForYouBusinesses && !forYouError && (
-                <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-charcoal/70">
-                  {hasInterestSelections
-                    ? "We're curating businesses for you based on your interests. Check back shortly."
-                    : "We're gathering recommendations for you. Once you pick a few interests, this row will instantly feel more personalized."}
-                </div>
+                <MemoizedBusinessRow title="For You Now" businesses={[]} cta="See More" href="/for-you" />
               )}
               {forYouError && !forYouLoading && (
                 <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-coral">
@@ -175,6 +168,9 @@ export default function Home() {
               {trendingLoading && <BusinessRowSkeleton title="Trending Now" />}
               {!trendingLoading && hasTrendingBusinesses && (
                 <MemoizedBusinessRow title="Trending Now" businesses={trendingBusinesses} cta="See More" href="/trending" />
+              )}
+              {!trendingLoading && !hasTrendingBusinesses && !trendingError && (
+                <MemoizedBusinessRow title="Trending Now" businesses={[]} cta="See More" href="/trending" />
               )}
               {trendingError && !trendingLoading && (
                 <div className="mx-auto w-full max-w-[2000px] px-2 py-4 text-sm text-coral">
