@@ -28,13 +28,13 @@ export default function SavedPage() {
 
   return (
     <EmailVerificationGuard>
-      <div className="min-h-dvh bg-off-white">
+      <div className="min-h-dvh bg-off-white relative">
         <SavedHeader />
 
-        <div className="bg-gradient-to-b from-off-white/0 via-off-white/50 to-off-white">
+        <div className="relative z-0">
           <div className="py-1 pt-20 pb-12 sm:pb-16 md:pb-20">
             {savedBusinesses.length > 0 ? (
-              <div>
+              <div className="relative z-10">
                 <SavedBusinessRow
                   title="Your Saved Gems"
                   businesses={savedBusinesses}
@@ -42,7 +42,7 @@ export default function SavedPage() {
                 />
               </div>
             ) : (
-              <div className="pt-4">
+              <div className="pt-4 relative z-10">
                 <EmptySavedState />
               </div>
             )}
