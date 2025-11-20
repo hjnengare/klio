@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSupabase } from '../../../lib/supabase/server';
 import { fetchBusinessOptimized } from '../../../lib/utils/optimizedQueries';
+import { cachedJsonResponse, CachePresets, checkETag, generateETag } from '../../../lib/utils/httpCache';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs'; // Use Node.js runtime to avoid Edge Runtime warnings with Supabase
@@ -71,7 +72,8 @@ export async function GET(
         friendliness: stats?.percentiles?.ambience || 85,
       };
 
-      return NextResponse.json(response);
+      // Add cache headers for business profile
+      return cachedJsonResponse(response, CachePresets.business());
     } catch (optimizedError: any) {
       // Fallback to original implementation if optimized fetch fails
       console.warn('[API] Optimized fetch failed, falling back to standard query:', optimizedError);

@@ -146,7 +146,7 @@ export default function RootLayout({
           }}
         />
         
-        <link rel="canonical" href="/" />
+        {/* Canonical tag removed - set per page via metadata */}
       </head>
       <body className={`${urbanist.className} no-layout-shift`}>
         <WebVitals />

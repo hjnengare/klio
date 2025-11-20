@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useCallback, memo } from "react";
+import { useState, useCallback, memo, useEffect } from "react";
 import { motion } from "framer-motion";
+import { getResponsiveSizes, getOptimalQuality, preloadImage } from "../../lib/utils/cdnUtils";
 
 interface OptimizedImageProps {
   src: string;
@@ -27,8 +28,8 @@ function OptimizedImage({
   height,
   className,
   priority = false,
-  sizes,
-  quality = 85,
+  sizes: customSizes,
+  quality: customQuality,
   placeholder = "empty",
   blurDataURL,
   fallback,
@@ -37,6 +38,21 @@ function OptimizedImage({
 }: OptimizedImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+
+  // Determine optimal quality based on use case
+  const quality = customQuality || getOptimalQuality(
+    priority ? 'hero' : width && width < 200 ? 'thumbnail' : 'gallery'
+  );
+
+  // Generate responsive sizes if not provided
+  const sizes = customSizes || getResponsiveSizes();
+
+  // Preload priority images
+  useEffect(() => {
+    if (priority && src) {
+      preloadImage(src);
+    }
+  }, [priority, src]);
 
   const handleLoad = useCallback(() => {
     setIsLoading(false);

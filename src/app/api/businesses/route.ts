@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSupabase } from "@/app/lib/supabase/server";
+import { CachePresets } from "@/app/lib/utils/httpCache";
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs'; // Use Node.js runtime to avoid Edge Runtime warnings with Supabase
@@ -1008,11 +1009,11 @@ function formatSubInterestLabel(subInterestId?: string | null) {
 }
 
 function applySharedResponseHeaders(response: NextResponse) {
-  response.headers.set(
-    'Cache-Control',
-    'public, s-maxage=3600, stale-while-revalidate=7200'
-  );
+  // Use optimized cache headers for business data
+  response.headers.set('Cache-Control', CachePresets.business());
   response.headers.set('ETag', `W/"businesses-${Date.now()}"`);
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  return response;
   response.headers.set('Vary', 'Accept-Encoding');
   return response;
 }

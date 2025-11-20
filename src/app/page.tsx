@@ -1,32 +1,23 @@
-"use client";
+import { redirect } from 'next/navigation';
+import { Metadata } from 'next';
+import { PageMetadata } from './lib/utils/seoMetadata';
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+// Set canonical to /home to prevent duplicate content
+export const metadata: Metadata = {
+  ...PageMetadata.home(),
+  alternates: {
+    canonical: '/home', // Point canonical to /home since this redirects there
+  },
+  robots: {
+    index: false, // Don't index the redirect page
+    follow: true,
+  },
+};
 
-// Note: dynamic and revalidate cannot be exported from client components
-// Client components are automatically dynamic
-
-export default function HomePage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    // Direct redirect to home for UI/UX design (no auth required)
-    router.push("/home");
-  }, [router]);
-
-  return (
-    <div className="min-h-dvh  bg-off-white   flex items-center justify-center">
-      <div className="text-center">
-        <div className="w-12 h-12 mx-auto mb-4">
-          <div className="w-full h-full border-4 border-sage border-t-transparent rounded-full animate-spin"></div>
-        </div>
-        <h1 className="font-urbanist text-4 font-700 text-charcoal mb-2">
-          sayso
-        </h1>
-        <p className="font-urbanist text-6 font-600 text-charcoal/70">
-          Getting ready...
-        </p>
-      </div>
-    </div>
-  );
+/**
+ * Root page - redirects to /home
+ * Using server-side redirect to prevent duplicate content issues
+ */
+export default function RootPage() {
+  redirect('/home');
 }

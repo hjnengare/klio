@@ -1,26 +1,7 @@
-import type { Metadata } from "next";
+import { Metadata } from 'next';
+import { PageMetadata } from '../lib/utils/seoMetadata';
 
-export const metadata: Metadata = {
-  title: "Home - Discover Local Businesses | sayso",
-  description: "Discover amazing local businesses, restaurants, and experiences in your area. Get personalized recommendations, read authentic reviews, and explore trending places near you.",
-  keywords: ["local business", "restaurants", "reviews", "recommendations", "trending", "for you"],
-  openGraph: {
-    title: "Home - Discover Local Businesses | sayso",
-    description: "Discover amazing local businesses, restaurants, and experiences in your area. Get personalized recommendations, read authentic reviews, and explore trending places near you.",
-    url: "/home",
-    siteName: "sayso",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Home - Discover Local Businesses | sayso",
-    description: "Discover amazing local businesses, restaurants, and experiences in your area. Get personalized recommendations, read authentic reviews, and explore trending places near you.",
-  },
-  alternates: {
-    canonical: "/home",
-  },
-};
+export const metadata: Metadata = PageMetadata.home();
 
 export default function HomeLayout({
   children,
@@ -29,4 +10,3 @@ export default function HomeLayout({
 }) {
   return <>{children}</>;
 }
-

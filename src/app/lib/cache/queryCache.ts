@@ -14,6 +14,15 @@ class QueryCache {
   private cache: Map<string, CacheEntry<any>> = new Map();
   private maxSize: number = 1000; // Maximum number of cache entries
   private defaultTTL: number = 60000; // Default TTL: 60 seconds
+  
+  // Extended TTLs for different content types
+  private extendedTTLs: Record<string, number> = {
+    business: 600000, // 10 minutes for business data
+    businesses: 300000, // 5 minutes for business lists
+    reviews: 300000, // 5 minutes for reviews
+    stats: 900000, // 15 minutes for stats (less frequently updated)
+    profile: 600000, // 10 minutes for profiles
+  };
 
   /**
    * Generate a cache key from query parameters
@@ -50,6 +59,7 @@ class QueryCache {
 
   /**
    * Set cache entry with optional TTL
+   * If TTL is not provided, attempts to infer from key prefix
    */
   set<T>(key: string, data: T, ttl?: number): void {
     // Evict oldest entries if cache is full
@@ -57,10 +67,22 @@ class QueryCache {
       this.evictOldest();
     }
 
+    // Auto-detect TTL from key prefix if not provided
+    let finalTTL = ttl;
+    if (!finalTTL) {
+      for (const [prefix, prefixTTL] of Object.entries(this.extendedTTLs)) {
+        if (key.startsWith(prefix + ':')) {
+          finalTTL = prefixTTL;
+          break;
+        }
+      }
+      finalTTL = finalTTL || this.defaultTTL;
+    }
+
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
-      ttl: ttl || this.defaultTTL
+      ttl: finalTTL
     });
   }
 

@@ -68,16 +68,20 @@ export default function FilterModal({
     if (!anchor) return;
 
     const rect = anchor.getBoundingClientRect();
+    const isMobile = window.innerWidth < 768; // Use md breakpoint (768px)
+    
+    const gap = isMobile ? 8 : 8; // Small space below the input
+    const leftPadding = isMobile ? 16 : 8;
+    const rightPadding = isMobile ? 16 : 8;
 
-    const gap = 8; // small space below the input
-    const leftPadding = 8;
-    const rightPadding = 8;
-
-    const left = Math.max(leftPadding, rect.left);
+    // On mobile, align with anchor but ensure it fits viewport
+    const left = isMobile ? Math.max(leftPadding, rect.left) : Math.max(leftPadding, rect.left);
     const maxWidth = window.innerWidth - left - rightPadding;
 
-    // Prefer anchor width but clamp to viewport
-    const width = Math.min(rect.width, maxWidth);
+    // On mobile, use full width minus padding, otherwise use anchor width
+    const width = isMobile 
+      ? Math.min(window.innerWidth - leftPadding - rightPadding, maxWidth)
+      : Math.min(rect.width || 400, maxWidth, 600); // Cap at 600px on desktop
 
     // Place directly under the anchor (account for page scroll)
     const top = rect.bottom + gap;
@@ -188,7 +192,7 @@ export default function FilterModal({
         aria-label="Search filters"
         aria-modal="true"
         tabIndex={-1}
-        className={`pointer-events-auto rounded-none md:rounded-2xl overflow-hidden
+        className={`pointer-events-auto rounded-none sm:rounded-xl md:rounded-2xl overflow-hidden
                     bg-off-white
                     border border-white/30 shadow-2xl
                     transition-all duration-200
@@ -196,26 +200,13 @@ export default function FilterModal({
                     ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"}`}
         style={{
           position: "fixed",
-          ...(typeof window !== 'undefined' && window.innerWidth < 640
-            ? {
-                top: 0,
-                left: 0,
-                width: '100vw',
-                height: '100vh',
-                maxWidth: '100vw',
-                maxHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-              }
-            : {
-                top: style.top,
-                left: style.left,
-                width: style.width || 360,
-                maxWidth: "calc(100vw - 16px)",
-                maxHeight: "calc(100vh - " + (style.top + 20) + "px)",
-                display: 'flex',
-                flexDirection: 'column',
-              }),
+          top: style.top,
+          left: style.left,
+          width: style.width || (typeof window !== 'undefined' && window.innerWidth < 768 ? 'calc(100vw - 32px)' : 400),
+          maxWidth: "calc(100vw - 32px)", // 16px padding on each side
+          maxHeight: `calc(100vh - ${style.top + 20}px)`, // Dynamic based on position
+          display: 'flex',
+          flexDirection: 'column',
           outline: "none",
         }}
       >
@@ -241,9 +232,10 @@ export default function FilterModal({
 
         {/* body */}
         <div
-          className="px-4 sm:px-5 md:px-6 py-4 space-y-4 overflow-y-auto overscroll-contain flex-1 min-h-0"
+          className="px-4 sm:px-5 md:px-6 py-4 space-y-3 sm:space-y-4 overflow-y-auto overscroll-contain flex-1 min-h-0"
           style={{ 
             WebkitOverflowScrolling: 'touch',
+            maxHeight: 'calc(100vh - 180px)', // Reserve space for header and footer on mobile
           }}
           onWheel={(e) => {
             // Prevent scroll propagation to body
