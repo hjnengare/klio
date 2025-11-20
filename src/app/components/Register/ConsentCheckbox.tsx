@@ -1,5 +1,7 @@
 "use client";
 
+import Link from 'next/link';
+
 interface ConsentCheckboxProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
@@ -17,13 +19,13 @@ export default function ConsentCheckbox({ checked, onChange }: ConsentCheckboxPr
         />
         <span className="flex-1 leading-relaxed">
           I agree to the{" "}
-          <a href="/terms" className="underline text-sage hover:text-coral transition-colors">
+          <Link href="/terms" className="underline text-sage hover:text-coral transition-colors">
             Terms of Use
-          </a>{" "}
+          </Link>{" "}
           and{" "}
-          <a href="/privacy" className="underline text-sage hover:text-coral transition-colors">
+          <Link href="/privacy" className="underline text-sage hover:text-coral transition-colors">
             Privacy Policy
-          </a>
+          </Link>
         </span>
       </label>
     </div>

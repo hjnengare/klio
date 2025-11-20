@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { Mail, X } from 'lucide-react';
@@ -75,12 +76,12 @@ export default function EmailVerificationBanner({ onDismiss, className = "" }: E
             
             <span className="text-amber-600">•</span>
             
-            <a
+            <Link
               href="/verify-email"
               className="font-urbanist text-sm font-600 text-amber-800 hover:text-amber-900 underline"
             >
               Go to verification page
-            </a>
+            </Link>
           </div>
         </div>
 

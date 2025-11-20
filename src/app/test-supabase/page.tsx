@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { getBrowserSupabase } from '../lib/supabase/client';
 
 export default function TestSupabasePage() {
@@ -93,24 +94,24 @@ export default function TestSupabasePage() {
 
         {/* Quick Actions */}
         <div className="mt-6 space-x-4">
-          <a 
+          <Link 
             href="/test-auth" 
             className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Test Authentication
-          </a>
-          <a 
+          </Link>
+          <Link 
             href="/login" 
             className="inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
           >
             Go to Login
-          </a>
-          <a 
+          </Link>
+          <Link 
             href="/register" 
             className="inline-block px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600"
           >
             Go to Register
-          </a>
+          </Link>
         </div>
       </div>
     </div>
