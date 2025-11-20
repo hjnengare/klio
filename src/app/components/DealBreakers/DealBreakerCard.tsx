@@ -72,7 +72,7 @@ export default function DealBreakerCard({
         <div
           className={`
             absolute inset-0 w-full h-full rounded-lg border-2 p-4 flex flex-col justify-center items-center text-center
-            bg-gradient-to-br from-coral to-coral/90 border-coral shadow-[0_8px_24px_rgba(214,116,105,0.25)]
+            bg-gradient-to-br from-coral to-coral/90 border-coral 
           `}
           style={{ 
             backfaceVisibility: 'hidden',

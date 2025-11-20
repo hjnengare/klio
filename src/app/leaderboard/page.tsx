@@ -10,8 +10,20 @@ import Header from "../components/Header/Header";
 import LeaderboardPodium from "../components/Leaderboard/LeaderboardPodium";
 import LeaderboardList from "../components/Leaderboard/LeaderboardList";
 import LeaderboardTitle from "../components/Leaderboard/LeaderboardTitle";
-import BusinessOfMonthLeaderboard from "../components/Leaderboard/BusinessOfMonthLeaderboard";
 import { Tabs } from "@/components/atoms/Tabs";
+
+// Dynamically import BusinessOfMonthLeaderboard to improve initial load time
+const BusinessOfMonthLeaderboard = nextDynamic(
+  () => import("../components/Leaderboard/BusinessOfMonthLeaderboard"),
+  {
+    loading: () => (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-charcoal/60 font-urbanist">Loading businesses...</div>
+      </div>
+    ),
+    ssr: false,
+  }
+);
 import { useBusinesses } from "../hooks/useBusinesses";
 
 // Note: dynamic and revalidate cannot be exported from client components
@@ -55,14 +67,25 @@ function LeaderboardPage() {
   const [activeTab, setActiveTab] = useState("contributors");
   const [showFullLeaderboard, setShowFullLeaderboard] = useState(false);
   const [showFullBusinessLeaderboard, setShowFullBusinessLeaderboard] = useState(false);
+  const [shouldFetchBusinesses, setShouldFetchBusinesses] = useState(false);
 
-  // Fetch real businesses and compute featured-by-category set
+  // Fetch real businesses only when businesses tab is active or has been viewed
+  // Reduced limit from 200 to 50 - we only need one business per interest category (max ~8)
   const { businesses: allBusinesses } = useBusinesses({
-    limit: 200,
+    limit: 50,
     sortBy: "total_rating",
     sortOrder: "desc",
     feedStrategy: "mixed",
+    skip: !shouldFetchBusinesses,
   });
+
+  // Trigger business fetch when switching to businesses tab
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    if (tab === "businesses" && !shouldFetchBusinesses) {
+      setShouldFetchBusinesses(true);
+    }
+  };
 
   const featuredBusinesses = useMemo(() => {
     if (!allBusinesses || allBusinesses.length === 0) return [];
@@ -183,7 +206,7 @@ function LeaderboardPage() {
 
                   {/* Tabs */}
                   <div className="flex justify-center mb-4 sm:mb-6 md:mb-8 px-2">
-                    <Tabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
+                    <Tabs tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
                   </div>
 
                   {/* Leaderboard Content */}

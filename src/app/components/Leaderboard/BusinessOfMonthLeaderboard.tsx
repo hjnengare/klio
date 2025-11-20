@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useMemo, useState, useEffect } from "react";
+import { memo, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import BusinessOfMonthPodium from "./BusinessOfMonthPodium";
@@ -35,47 +35,18 @@ function BusinessOfMonthLeaderboard({
   onToggleFullLeaderboard,
 }: BusinessOfMonthLeaderboardProps) {
   const [selectedInterest, setSelectedInterest] = useState<string>("all");
-  const [interests, setInterests] = useState<Interest[]>([]);
-
-  // Fetch interests
-  useEffect(() => {
-    const fetchInterests = async () => {
-      try {
-        const response = await fetch('/api/interests');
-        if (response.ok) {
-          const data = await response.json();
-          setInterests(data.interests || []);
-        } else {
-          // Fallback to static interests
-          setInterests([
-            { id: 'food-drink', name: 'Food & Drink' },
-            { id: 'beauty-wellness', name: 'Beauty & Wellness' },
-            { id: 'professional-services', name: 'Professional Services' },
-            { id: 'outdoors-adventure', name: 'Outdoors & Adventure' },
-            { id: 'experiences-entertainment', name: 'Entertainment & Experiences' },
-            { id: 'arts-culture', name: 'Arts & Culture' },
-            { id: 'family-pets', name: 'Family & Pets' },
-            { id: 'shopping-lifestyle', name: 'Shopping & Lifestyle' },
-          ]);
-        }
-      } catch (error) {
-        console.error('Error fetching interests:', error);
-        // Fallback to static interests
-        setInterests([
-          { id: 'food-drink', name: 'Food & Drink' },
-          { id: 'beauty-wellness', name: 'Beauty & Wellness' },
-          { id: 'professional-services', name: 'Professional Services' },
-          { id: 'outdoors-adventure', name: 'Outdoors & Adventure' },
-          { id: 'experiences-entertainment', name: 'Entertainment & Experiences' },
-          { id: 'arts-culture', name: 'Arts & Culture' },
-          { id: 'family-pets', name: 'Family & Pets' },
-          { id: 'shopping-lifestyle', name: 'Shopping & Lifestyle' },
-        ]);
-      }
-    };
-
-    fetchInterests();
-  }, []);
+  
+  // Use static interests to improve performance - no API call needed
+  const [interests] = useState<Interest[]>([
+    { id: 'food-drink', name: 'Food & Drink' },
+    { id: 'beauty-wellness', name: 'Beauty & Wellness' },
+    { id: 'professional-services', name: 'Professional Services' },
+    { id: 'outdoors-adventure', name: 'Outdoors & Adventure' },
+    { id: 'experiences-entertainment', name: 'Entertainment & Experiences' },
+    { id: 'arts-culture', name: 'Arts & Culture' },
+    { id: 'family-pets', name: 'Family & Pets' },
+    { id: 'shopping-lifestyle', name: 'Shopping & Lifestyle' },
+  ]);
 
   // Extract unique interests from businesses
   const availableInterests = useMemo(() => {

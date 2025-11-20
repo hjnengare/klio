@@ -19,6 +19,7 @@ export interface UseBusinessesOptions {
   priceRanges?: string[];
   dealbreakerIds?: string[];
   feedStrategy?: 'mixed' | 'standard';
+  skip?: boolean; // Skip fetching if true
 }
 
 export interface UseBusinessesResult {
@@ -33,10 +34,15 @@ export interface UseBusinessesResult {
  */
 export function useBusinesses(options: UseBusinessesOptions = {}): UseBusinessesResult {
   const [businesses, setBusinesses] = useState<Business[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!options.skip);
   const [error, setError] = useState<string | null>(null);
 
   const fetchBusinesses = async () => {
+    if (options.skip) {
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -69,9 +75,6 @@ export function useBusinesses(options: UseBusinessesOptions = {}): UseBusinesses
       }
 
       const data = await response.json();
-      console.log('[useBusinesses] API Response:', JSON.stringify(data, null, 2));
-      console.log('[useBusinesses] Businesses array:', data.data || []);
-      console.log('[useBusinesses] Number of businesses:', data.data?.length || 0);
       setBusinesses(data.data || []);
     } catch (err: any) {
       console.error('Error fetching businesses:', err);
@@ -83,6 +86,10 @@ export function useBusinesses(options: UseBusinessesOptions = {}): UseBusinesses
   };
 
   useEffect(() => {
+    if (options.skip) {
+      setLoading(false);
+      return;
+    }
     fetchBusinesses();
   }, [
     options.limit,
@@ -97,6 +104,7 @@ export function useBusinesses(options: UseBusinessesOptions = {}): UseBusinesses
     options.priceRanges?.join(','),
     options.dealbreakerIds?.join(','),
     options.feedStrategy,
+    options.skip,
   ]);
 
   return {

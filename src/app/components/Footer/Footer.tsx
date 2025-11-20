@@ -176,9 +176,15 @@ export default function Footer() {
         >
           <div className="flex flex-col md:flex-row items-center justify-center md:justify-between space-y-4 md:space-y-0">
             {/* Copyright */}
-            <p className="font-urbanist text-7 text-off-white/60">
-              © {currentYear} sayso. All rights reserved.
-            </p>
+            <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-center md:text-left">
+              <p className="font-urbanist text-7 text-off-white/60">
+                © {currentYear} sayso. All rights reserved.
+              </p>
+              <span className="hidden md:inline text-off-white/40">•</span>
+              <p className="font-urbanist text-7 text-off-white/60">
+                Product of ChitChat
+              </p>
+            </div>
           </div>
         </motion.div>
       </div>

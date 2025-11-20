@@ -2,7 +2,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useLayoutEffect, useCallback, Fragment } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import { User, X, Search, Briefcase, ChevronDown, Compass, Bookmark, Bell, Edit, MessageCircle } from "react-feather";
 import FilterModal, { FilterState } from "../FilterModal/FilterModal";
@@ -59,14 +59,13 @@ export default function Header({
   const [isDiscoverDropdownClosing, setIsDiscoverDropdownClosing] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const isStackedLayout = searchLayout === "stacked";
 
   const [showSearchBar, setShowSearchBar] = useState(() => {
     if (forceSearchOpen || isStackedLayout) {
       return true;
     }
-    return searchParams.get("openSearch") === "true";
+    return false;
   });
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
   const [isBusinessDropdownClosing, setIsBusinessDropdownClosing] = useState(false);
@@ -181,24 +180,6 @@ export default function Header({
   // Header always visible (scroll effects removed)
   // Previously had scroll-based hide/show logic, now permanently visible
 
-  useEffect(() => {
-  if (forceSearchOpen || isStackedLayout) {
-    return;
-  }
-
-    const openFromParam = searchParams.get("openSearch") === "true";
-
-    if (openFromParam && !showSearchBarRef.current) {
-      setShowSearchBar(true);
-    }
-
-    if (openFromParam) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.delete("openSearch");
-      const queryString = params.toString();
-      router.replace(queryString ? `${pathname}?${queryString}` : pathname, { scroll: false });
-    }
-}, [searchParams, pathname, router, forceSearchOpen, isStackedLayout]);
 
   // Close all modals on scroll - memoized with useCallback
   const closeModalsOnScroll = useCallback(() => {
@@ -348,11 +329,8 @@ export default function Header({
   const isSearchVisible = forceSearchOpen || isStackedLayout || showSearchBar;
 
   const handleSearchToggle = () => {
-    if (forceSearchOpen || isStackedLayout) {
-      return;
-    }
-    // Always navigate to explore page when clicking search icon
-    router.push("/explore?openSearch=true");
+    // Navigate to explore page when clicking search icon
+    router.push("/explore");
   };
 
   const renderSearchInput = () => (
@@ -596,7 +574,7 @@ export default function Header({
                 className={`group w-11 h-11 sm:w-12 sm:h-12 md:w-12 md:h-12 flex items-center justify-center transition-colors duration-200 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`}
                 aria-label="Toggle search"
               >
-                <Search className="w-8 h-8 sm:w-5 sm:h-5" />
+                <Search className="w-6 h-6 sm:w-5 sm:h-5" />
               </button>
               )}
 
@@ -606,7 +584,7 @@ export default function Header({
                 className="md:hidden group w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center transition-colors duration-200 min-h-[44px] min-w-[44px] touch-manipulation"
                 aria-label="View saved businesses"
               >
-                <Bookmark className={`w-8 h-8 sm:w-5 sm:h-5 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`} fill="none" />
+                <Bookmark className={`w-6 h-6 sm:w-5 sm:h-5 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`} fill="none" />
               </OptimizedLink>
 
               {/* Messages/DM Icon - Mobile Only */}
@@ -615,7 +593,7 @@ export default function Header({
                 className="md:hidden group w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center transition-colors duration-200 min-h-[44px] min-w-[44px] touch-manipulation"
                 aria-label="Messages"
               >
-                <MessageCircle className={`w-8 h-8 sm:w-5 sm:h-5 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`} />
+                <MessageCircle className={`w-6 h-6 sm:w-5 sm:h-5 ${whiteText ? 'text-white hover:text-white/80' : 'text-charcoal/80 hover:text-sage'}`} />
               </OptimizedLink>
 
               {/* Mobile menu toggle */}
