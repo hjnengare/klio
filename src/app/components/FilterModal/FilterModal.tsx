@@ -204,7 +204,9 @@ export default function FilterModal({
           left: style.left,
           width: style.width || (typeof window !== 'undefined' && window.innerWidth < 768 ? 'calc(100vw - 32px)' : 400),
           maxWidth: "calc(100vw - 32px)", // 16px padding on each side
-          maxHeight: `calc(100vh - ${style.top + 20}px)`, // Dynamic based on position
+          maxHeight: typeof window !== 'undefined' && window.innerWidth < 768
+            ? `calc(100vh - ${style.top + 20}px - env(safe-area-inset-bottom, 0px) - 20px)` // Extra space for mobile browser UI
+            : `calc(100vh - ${style.top + 20}px)`, // Dynamic based on position
           display: 'flex',
           flexDirection: 'column',
           outline: "none",
@@ -359,7 +361,14 @@ export default function FilterModal({
         </div>
 
         {/* footer */}
-        <div className="flex gap-3 px-4 sm:px-5 md:px-6 py-3 sm:py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm flex-shrink-0 safe-area-bottom">
+        <div 
+          className="flex gap-3 px-4 sm:px-5 md:px-6 py-3 sm:py-4 border-t border-white/60 bg-off-white/80 backdrop-blur-sm flex-shrink-0"
+          style={{
+            paddingBottom: typeof window !== 'undefined' && window.innerWidth < 768 
+              ? `max(1rem, calc(1rem + env(safe-area-inset-bottom, 0px) + 20px))` 
+              : undefined,
+          }}
+        >
             <button
             onClick={handleClearAll}
             className="flex-1 rounded-full bg-off-white text-charcoal border border-charcoal/15 hover:bg-charcoal/5 active:bg-charcoal/10 font-semibold py-3 sm:py-2.5 px-4 text-base sm:text-sm md:text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-sage/30 min-h-[48px] sm:min-h-0 touch-manipulation"
