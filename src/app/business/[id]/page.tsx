@@ -197,6 +197,19 @@ export default function BusinessProfilePage() {
 
                 const data = await response.json();
                 setBusiness(data);
+
+                // SEO: Redirect from ID to slug if we have a slug and the URL uses an ID
+                // Only redirect if the current URL uses an ID (UUID format) and we have a slug
+                const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(businessId);
+                if (data.slug && data.slug !== businessId && isUUID) {
+                    // Only redirect if the slug is different (slug-based URL would be different)
+                    const slugUrl = `/business/${data.slug}`;
+                    if (window.location.pathname !== slugUrl) {
+                        // Use replace to keep history clean
+                        router.replace(slugUrl);
+                        return;
+                    }
+                }
             } catch (err: any) {
                 console.error('Error fetching business:', err);
                 setError('Failed to load business');
@@ -206,7 +219,7 @@ export default function BusinessProfilePage() {
         };
 
         fetchBusiness();
-    }, [businessId]);
+    }, [businessId, router]);
 
     // Loading state - show full page loader with transition
     if (isLoading) {
@@ -275,6 +288,7 @@ export default function BusinessProfilePage() {
     // Default values for missing data
     const businessData = {
         id: business.id || businessId,
+        slug: business.slug || businessId, // Use slug if available, fallback to ID
         name: business.name || 'Unnamed Business',
         description: business.description || `${business.category || 'Business'} located in ${business.location || 'Cape Town'}`,
         category: business.category || 'Business',
@@ -294,6 +308,9 @@ export default function BusinessProfilePage() {
         specials: [], // TODO: Fetch from events/specials table
         reviews: business.reviews || [],
     };
+
+    // Use slug for URLs, fallback to ID for SEO-friendly URLs
+    const businessSlug = businessData.slug || businessData.id;
 
     const businessInfo: BusinessInfo = {
         name: businessData.name,
@@ -387,7 +404,7 @@ export default function BusinessProfilePage() {
                                     {/* Edit Button - Only show to business owner */}
                                     {isBusinessOwner && (
                                         <Link
-                                            href={`/business/${businessId}/edit`}
+                                            href={`/business/${businessSlug}/edit`}
                                             className="bg-sage/20 hover:bg-sage/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
                                         >
                                             <Edit className="w-3 h-3" />
@@ -397,7 +414,7 @@ export default function BusinessProfilePage() {
 
                                     {/* Leave Review Button */}
                                     <Link
-                                        href={`/business/${businessId}/review`}
+                                        href={`/business/${businessSlug}/review`}
                                         prefetch={true}
                                         className="bg-sage/20 hover:bg-coral/30 text-white px-2 sm:px-3 py-2 rounded-full text-xs font-600 transition-all duration-300 flex items-center gap-1.5 sm:gap-2 border border-sage/30"
                                         onMouseEnter={() => router.prefetch(`/business/${businessId}/review`)}
@@ -574,7 +591,7 @@ export default function BusinessProfilePage() {
                                                             Be the first to review this business!
                                                         </p>
                                                         <Link
-                                                            href={`/business/${businessId}/review`}
+                                                            href={`/business/${businessSlug}/review`}
                                                             prefetch={true}
                                                             className="inline-block px-6 py-3 bg-coral text-white rounded-full text-body font-semibold hover:bg-coral/90 transition-colors"
                                                             style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}

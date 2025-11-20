@@ -80,7 +80,22 @@ export async function GET(
     // Fallback to original implementation
     const supabase = await getServerSupabase(req);
 
-    // Fetch business with stats
+    // Try slug first, then ID fallback
+    let actualBusinessId: string = businessId;
+    let businessBySlug: any = null;
+
+    // Try to find by slug first
+    const { data: slugData, error: slugError } = await supabase
+      .from('businesses')
+      .select('id')
+      .eq('slug', businessId)
+      .single();
+
+    if (slugData && slugData.id) {
+      actualBusinessId = slugData.id;
+    }
+
+    // Fetch business with stats using actual ID
     const businessQuery = supabase
       .from('businesses')
       .select(`
@@ -92,14 +107,14 @@ export async function GET(
           percentiles
         )
       `)
-      .eq('id', businessId)
+      .eq('id', actualBusinessId)
       .single();
 
     // Fetch reviews for the business (limit to 20 for the profile page) - start in parallel
     const reviewsQuery = supabase
       .from('reviews')
       .select('*')
-      .eq('business_id', businessId)
+      .eq('business_id', actualBusinessId)
       .order('created_at', { ascending: false })
       .limit(20);
 

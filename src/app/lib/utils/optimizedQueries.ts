@@ -11,13 +11,14 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 /**
  * Fetch business with all related data in parallel
  * Uses caching and parallel queries for optimal performance
+ * Supports both slug and ID lookups (slug first, then ID fallback)
  */
 export async function fetchBusinessOptimized(
-  businessId: string,
+  businessIdentifier: string, // Can be slug or ID
   request?: Request,
   useCache: boolean = true
 ) {
-  const cacheKey = queryCache.key('business', { id: businessId });
+  const cacheKey = queryCache.key('business', { id: businessIdentifier });
 
   // Check cache first
   if (useCache) {
@@ -30,8 +31,32 @@ export async function fetchBusinessOptimized(
   // Create parallel clients for independent queries
   const [client1, client2, client3] = await createParallelClients(3);
 
-  // Execute all queries in parallel
-  const [businessResult, reviewsResult, statsResult] = await executeParallelQueries([
+  // Try slug first, then ID fallback
+  let businessResult: any;
+  let actualBusinessId: string | null = null;
+
+  // First, try to find by slug
+  const slugResult = await executeWithRetry(
+    async () => {
+      const { data, error } = await client1
+        .from('businesses')
+        .select('id, slug')
+        .eq('slug', businessIdentifier)
+        .single();
+      return { data, error };
+    }
+  );
+
+  if (slugResult.data && slugResult.data.id) {
+    // Found by slug, use the actual ID for subsequent queries
+    actualBusinessId = slugResult.data.id;
+  } else {
+    // Not found by slug, assume it's an ID and try that
+    actualBusinessId = businessIdentifier;
+  }
+
+  // Execute all queries in parallel using the actual business ID
+  const [finalBusinessResult, reviewsResult, statsResult] = await executeParallelQueries([
     // Business data
     async () =>
       executeWithRetry(
@@ -39,7 +64,7 @@ export async function fetchBusinessOptimized(
           const { data, error } = await client1
             .from('businesses')
             .select('*')
-            .eq('id', businessId)
+            .eq('id', actualBusinessId)
             .single();
           return { data, error };
         }
@@ -51,7 +76,7 @@ export async function fetchBusinessOptimized(
           const { data, error } = await client2
             .from('reviews')
             .select('*')
-            .eq('business_id', businessId)
+            .eq('business_id', actualBusinessId)
             .order('created_at', { ascending: false })
             .limit(20);
           return { data, error };
@@ -64,12 +89,14 @@ export async function fetchBusinessOptimized(
           const { data, error } = await client3
             .from('business_stats')
             .select('*')
-            .eq('business_id', businessId)
+            .eq('business_id', actualBusinessId)
             .single();
           return { data, error };
         }
       ),
   ]);
+
+  businessResult = finalBusinessResult;
 
   // Handle errors
   if (businessResult.error || !businessResult.data) {
@@ -120,9 +147,14 @@ export async function fetchBusinessOptimized(
     reviews: reviewsWithProfiles,
   };
 
-  // Cache result (5 minute TTL for business data)
-  if (useCache) {
-    queryCache.set(cacheKey, result, 300000);
+  // Cache result (5 minute TTL for business data) - cache by both slug and ID
+  if (useCache && actualBusinessId) {
+    const idCacheKey = queryCache.key('business', { id: actualBusinessId });
+    const slugCacheKey = queryCache.key('business', { id: result.slug || businessIdentifier });
+    queryCache.set(idCacheKey, result, 300000);
+    if (result.slug && result.slug !== actualBusinessId) {
+      queryCache.set(slugCacheKey, result, 300000);
+    }
   }
 
   return result;

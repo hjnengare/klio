@@ -132,7 +132,7 @@ function LeaderboardPage() {
         totalRating: rating,
         reviews,
         badge: "featured" as const,
-        href: `/business/${b.id}`,
+        href: `/business/${b.slug || b.id}`,
         monthAchievement: `Featured ${interestLabel}`,
         verified: Boolean(b.verified),
       };

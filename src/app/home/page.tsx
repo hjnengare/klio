@@ -116,7 +116,7 @@ export default function Home() {
         totalRating: rating,
         reviews,
         badge: "featured" as const,
-        href: `/business/${b.id}`,
+        href: `/business/${b.slug || b.id}`,
         monthAchievement: `Featured ${categoryLabel}`,
         verified: Boolean(b.verified),
       };

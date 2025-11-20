@@ -24,6 +24,7 @@ type Percentiles = {
 
 type Business = {
   id: string;
+  slug?: string;
   name: string;
   image?: string;
   image_url?: string;
@@ -83,8 +84,10 @@ function BusinessCard({
   const [showInfoPopup, setShowInfoPopup] = useState(false);
   const infoPopupRef = useRef<HTMLDivElement>(null);
 
-  const reviewRoute = useMemo(() => `/business/${business.id}/review`, [business.id]);
-  const businessProfileRoute = useMemo(() => `/business/${business.id}`, [business.id]);
+  // Use slug for SEO-friendly URLs, fallback to ID
+  const businessIdentifier = business.slug || business.id;
+  const reviewRoute = useMemo(() => `/business/${businessIdentifier}/review`, [businessIdentifier]);
+  const businessProfileRoute = useMemo(() => `/business/${businessIdentifier}`, [businessIdentifier]);
 
   // Prefetch routes on mount
   useEffect(() => {
