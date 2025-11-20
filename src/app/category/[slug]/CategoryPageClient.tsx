@@ -1,11 +1,10 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import Header from '../../../components/Header/Header';
-import Footer from '../../../components/Footer/Footer';
-import BusinessCard from '../../../components/BusinessCard/BusinessCard';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import BusinessCard from '../../components/BusinessCard/BusinessCard';
 import { useState, useMemo } from 'react';
-import { useUserPreferences } from '../../../hooks/useUserPreferences';
 
 interface CategoryPageClientProps {
   categoryName: string;
@@ -18,7 +17,6 @@ export default function CategoryPageClient({
   categorySlug,
   businesses: initialBusinesses,
 }: CategoryPageClientProps) {
-  const { preferences } = useUserPreferences();
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 12;
 
@@ -33,6 +31,7 @@ export default function CategoryPageClient({
       location: business.location || 'Cape Town',
       image_url: business.image_url,
       uploaded_image: business.uploaded_image,
+      alt: `${business.name} - ${categoryName} in ${business.location || 'Cape Town'}`,
       rating: business.average_rating?.[0]?.average_rating || 0,
       reviews: 0,
       verified: false,

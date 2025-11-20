@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getServerSupabase } from '../../lib/supabase/server';
-import { generateSEOMetadata } from '../../lib/utils/seoMetadata';
-import { generateItemListSchema } from '../../lib/utils/schemaMarkup';
+import { getServerSupabase } from '../lib/supabase/server';
+import { generateSEOMetadata } from '../lib/utils/seoMetadata';
+import { generateItemListSchema } from '../lib/utils/schemaMarkup';
 import CityPageClient from './CityPageClient';
-import SchemaMarkup from '../../components/SEO/SchemaMarkup';
+import SchemaMarkup from '../components/SEO/SchemaMarkup';
 
 interface CityPageProps {
   params: Promise<{ 'city-slug': string }>;

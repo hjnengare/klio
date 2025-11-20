@@ -20,6 +20,7 @@ export interface CacheOptions {
   strategy?: CacheStrategy;
   mustRevalidate?: boolean;
   noTransform?: boolean;
+  immutable?: boolean; // Immutable directive for static assets
 }
 
 /**
@@ -33,6 +34,7 @@ export function generateCacheControl(options: CacheOptions = {}): string {
     strategy = 'public',
     mustRevalidate = false,
     noTransform = false,
+    immutable = false,
   } = options;
 
   const directives: string[] = [strategy];
@@ -55,6 +57,10 @@ export function generateCacheControl(options: CacheOptions = {}): string {
 
   if (noTransform) {
     directives.push('no-transform');
+  }
+
+  if (immutable) {
+    directives.push('immutable');
   }
 
   return directives.join(', ');

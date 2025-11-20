@@ -386,3 +386,118 @@ CREATE POLICY "Users can view their saved businesses"
 - `src/app/api/saved/businesses/route.ts` - NEW: POST and GET
 - `src/app/api/saved/businesses/[id]/route.ts` - NEW: DELETE
 
+Here’s your entire backend implementation plan turned into a **clean, high-level TODO list** you can paste directly into Linear / Jira / Notion.
+
+---
+
+# ✅ **HIGH-LEVEL BACKEND TODO LIST – Reviewer Features**
+
+## **🔵 Phase 1 — Critical (Week 1)**
+
+### **Implement Missing Review Endpoints**
+
+* [ ] **Create Edit Review API** (`PUT /api/reviews/[id]`)
+* [ ] **Create Delete Review API** (`DELETE /api/reviews/[id]`)
+* [ ] **Create Helpful Vote Toggle API** (`POST /api/reviews/[id]/helpful`)
+* [ ] **Create Helpful Vote Status API** (`GET /api/reviews/[id]/helpful`)
+
+### **Add Rate Limiting**
+
+* [ ] Add rate limits for:
+
+  * Creating reviews
+  * Updating reviews
+  * Deleting reviews
+  * Helpful votes
+  * Saving businesses
+
+---
+
+## **🟡 Phase 2 — High Priority (Week 2)**
+
+### **Saved Businesses (Bookmarks) System**
+
+* [ ] Create `saved_businesses` table + RLS policies
+* [ ] Implement Save API (`POST /api/saved/businesses`)
+* [ ] Implement Unsave API (`DELETE /api/saved/businesses/[id]`)
+* [ ] Implement List Saved API (`GET /api/saved/businesses`)
+
+### **Fix/Verify Existing Endpoints**
+
+* [ ] Verify `GET /api/reviews?user_id=` returns current user's reviews
+* [ ] Update Profile page query if needed
+* [ ] Sync saved items count with backend instead of localStorage
+
+### **Input Validation**
+
+* [ ] Add Zod schemas for review update
+* [ ] Add Zod schemas for helpful vote
+* [ ] Add Zod schemas for saving businesses
+* [ ] Add Zod schemas for image uploads & rating rules
+
+### **Error Response Standardization**
+
+* [ ] Refactor all endpoints to use consistent response structure
+* [ ] Add clear HTTP error codes across all review endpoints
+
+---
+
+## **🟢 Phase 3 — Supporting Infrastructure (Week 3)**
+
+### **DX & API Consistency**
+
+* [ ] Improve error message clarity
+* [ ] Add structured logging
+* [ ] Add performance checks for review endpoints
+* [ ] Refactor common DB operations into helpers
+
+---
+
+## **🧱 Database Work (Migrations)**
+
+* [ ] Migration: `review_helpful_votes` table + indexes + policies
+* [ ] Migration: `saved_businesses` table + indexes + policies
+
+---
+
+## **🧪 Testing Work**
+
+### Unit Tests
+
+* [ ] Edit review
+* [ ] Delete review
+* [ ] Helpful vote toggle
+* [ ] Saved business CRUD
+
+### Integration Tests
+
+* [ ] User can only edit/delete own reviews
+* [ ] Helpful count updates properly
+* [ ] Saved businesses persist
+* [ ] Business stats update after review edit/delete
+
+---
+
+# 🧩 **TOTAL NEW ENDPOINTS TO BUILD**
+
+### **6 New Endpoints**
+
+* `PUT /api/reviews/[id]`
+* `DELETE /api/reviews/[id]`
+* `POST /api/reviews/[id]/helpful`
+* `GET /api/reviews/[id]/helpful`
+* `POST /api/saved/businesses`
+* `DELETE /api/saved/businesses/[id]`
+* `GET /api/saved/businesses`
+
+---
+
+# 🕒 **ESTIMATED TIME**
+
+* **Phase 1:** 5–7 days
+* **Phase 2:** 5–7 days
+* **Phase 3:** 3–5 days
+
+---
+
+If you want, I can turn this into a **beautiful Notion page**, **GitHub Project board**, or **Linear issue list**.

@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getServerSupabase } from '../../../lib/supabase/server';
-import { generateSEOMetadata } from '../../../lib/utils/seoMetadata';
-import { generateItemListSchema, generateOrganizationSchema } from '../../../lib/utils/schemaMarkup';
+import { getServerSupabase } from '../../lib/supabase/server';
+import { generateSEOMetadata } from '../../lib/utils/seoMetadata';
+import { generateItemListSchema, generateOrganizationSchema } from '../../lib/utils/schemaMarkup';
 import CategoryPageClient from './CategoryPageClient';
-import SchemaMarkup from '../../../components/SEO/SchemaMarkup';
+import SchemaMarkup from '../../components/SEO/SchemaMarkup';
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;

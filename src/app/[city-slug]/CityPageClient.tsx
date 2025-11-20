@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
-import BusinessCard from '../../components/BusinessCard/BusinessCard';
+import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
+import BusinessCard from '../components/BusinessCard/BusinessCard';
 import { useState, useMemo } from 'react';
 
 interface CityPageClientProps {
@@ -32,6 +32,7 @@ export default function CityPageClient({
       location: business.location || cityName,
       image_url: business.image_url,
       uploaded_image: business.uploaded_image,
+      alt: `${business.name} - ${business.category || categoryName || 'Business'} in ${business.location || cityName}`,
       rating: business.average_rating?.[0]?.average_rating || 0,
       reviews: 0,
       verified: false,
