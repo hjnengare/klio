@@ -405,27 +405,27 @@ function BusinessCard({
             {showInfoPopup && (
               <div
                 ref={infoPopupRef}
-                className="absolute bottom-full left-0 mb-2 bg-off-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-white/30 p-2 z-30"
+                className="absolute bottom-full left-0 mb-2 bg-off-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-white/30 p-2 z-30 min-w-[140px] whitespace-nowrap"
                 style={{
                   animation: 'fadeInUp 0.2s ease-out forwards',
                   transformOrigin: 'bottom left',
                 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 w-full">
                   <button
                     data-share-btn
                     onClick={(e) => {
                       e.stopPropagation();
                       handleShare();
                     }}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-sage/10 active:bg-sage/20 transition-colors duration-200 min-h-[44px] touch-manipulation"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-sage/10 active:bg-sage/20 transition-colors duration-200 min-h-[44px] touch-manipulation w-full"
                     aria-label={`Share ${business.name}`}
                   >
-                    <div className="w-10 h-10 bg-sage/10 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-sage/10 rounded-full flex items-center justify-center flex-shrink-0">
                       <Share2 className="w-5 h-5 text-sage" />
                     </div>
-                    <span className="text-sm font-semibold text-charcoal" style={{
+                    <span className="text-sm font-semibold text-charcoal whitespace-nowrap" style={{
                       fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                       fontWeight: 600
                     }}>
@@ -437,15 +437,15 @@ function BusinessCard({
                       e.stopPropagation();
                       handleBookmark();
                     }}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-coral/10 active:bg-coral/20 transition-colors duration-200 min-h-[44px] touch-manipulation"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-coral/10 active:bg-coral/20 transition-colors duration-200 min-h-[44px] touch-manipulation w-full"
                     aria-label={isItemSaved(business.id) ? `Remove ${business.name} from saved` : `Save ${business.name}`}
                   >
-                    <div className="w-10 h-10 bg-coral/10 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-coral/10 rounded-full flex items-center justify-center flex-shrink-0">
                       <Bookmark
                         className={`w-5 h-5 ${isItemSaved(business.id) ? 'text-coral fill-coral' : 'text-coral'}`}
                       />
                     </div>
-                    <span className="text-sm font-semibold text-charcoal" style={{
+                    <span className="text-sm font-semibold text-charcoal whitespace-nowrap" style={{
                       fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
                       fontWeight: 600
                     }}>
