@@ -19,13 +19,13 @@ interface LeaderboardPodiumProps {
 
 function LeaderboardPodium({ topReviewers }: LeaderboardPodiumProps) {
   return (
-    <div className="flex flex-col sm:flex-row justify-center items-end gap-4 sm:gap-4 mb-6 sm:mb-8 md:mb-12 pt-6 sm:pt-8 md:pt-10 px-2 max-w-lg mx-auto">
+    <div className="flex flex-row justify-center items-end gap-2 sm:gap-4 mb-6 sm:mb-8 md:mb-12 pt-6 sm:pt-8 md:pt-10 px-2 max-w-lg mx-auto">
       {/* 2nd Place */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.4 }}
-        className="text-center group cursor-pointer flex-1 w-full sm:max-w-[180px]"
+        className="text-center group cursor-pointer flex-1 w-full sm:max-w-[180px] order-1"
       >
         <div className="relative mb-2 sm:mb-3">
           <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 relative rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-[0_8px_30px_rgba(0,0,0,0.2)] mx-auto ring-3 sm:ring-4 ring-coral/30">
@@ -59,7 +59,7 @@ function LeaderboardPodium({ topReviewers }: LeaderboardPodiumProps) {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="text-center group cursor-pointer flex-1 w-full sm:max-w-[200px] order-first sm:order-none"
+        className="text-center group cursor-pointer flex-1 w-full sm:max-w-[200px] order-2"
       >
         <div className="relative mb-2 sm:mb-3">
           <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 relative rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-[0_12px_40px_rgba(0,0,0,0.25)] mx-auto ring-3 sm:ring-4 ring-sage">
@@ -93,7 +93,7 @@ function LeaderboardPodium({ topReviewers }: LeaderboardPodiumProps) {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.6 }}
-        className="text-center group cursor-pointer flex-1 w-full sm:max-w-[180px]"
+        className="text-center group cursor-pointer flex-1 w-full sm:max-w-[180px] order-3"
       >
         <div className="relative mb-2 sm:mb-3">
           <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 relative rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-[0_8px_30px_rgba(0,0,0,0.2)] mx-auto ring-3 sm:ring-4 ring-charcoal/20">

@@ -39,7 +39,7 @@ function LeaderboardList({
   return (
     <>
       {/* Mobile: Vertical stacked list */}
-      <div className="md:hidden space-y-2 sm:space-y-3">
+      <div className="md:hidden space-y-3 sm:space-y-4">
         {visibleUsers.map((user, index) => (
           <LeaderboardUser 
             key={user.rank} 
@@ -57,6 +57,7 @@ function LeaderboardList({
               animate={{ opacity: 1, height: 'auto', y: 0 }}
               exit={{ opacity: 0, height: 0, y: -20 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
+              className="mt-3 sm:mt-4"
             >
               <LeaderboardUser 
                 user={user} 
@@ -69,7 +70,7 @@ function LeaderboardList({
       </div>
 
       {/* Desktop: Vertical list */}
-      <div className="hidden md:block space-y-2 sm:space-y-3">
+      <div className="hidden md:block space-y-3 sm:space-y-4">
         {visibleUsers.map((user, index) => (
           <LeaderboardUser 
             key={user.rank} 
@@ -87,6 +88,7 @@ function LeaderboardList({
               animate={{ opacity: 1, height: 'auto', y: 0 }}
               exit={{ opacity: 0, height: 0, y: -20 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
+              className="mt-3 sm:mt-4"
             >
               <LeaderboardUser 
                 user={user} 
