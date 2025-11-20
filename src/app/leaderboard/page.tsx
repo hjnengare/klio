@@ -16,11 +16,7 @@ import { Tabs } from "@/components/atoms/Tabs";
 const BusinessOfMonthLeaderboard = nextDynamic(
   () => import("../components/Leaderboard/BusinessOfMonthLeaderboard"),
   {
-    loading: () => (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-charcoal/60 font-urbanist">Loading businesses...</div>
-      </div>
-    ),
+    loading: () => null,
     ssr: false,
   }
 );

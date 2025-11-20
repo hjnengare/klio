@@ -6,6 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { OnboardingProvider } from "./contexts/OnboardingContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import { SavedItemsProvider } from "./contexts/SavedItemsContext";
+import PageTransitionProvider from "./components/Providers/PageTransitionProvider";
 
 // Lazy load non-critical components for faster initial load
 const WebVitals = dynamicImport(() => import("./components/Performance/WebVitals"));
@@ -154,8 +155,10 @@ export default function RootLayout({
           <AuthProvider>
             <OnboardingProvider>
               <SavedItemsProvider>
-                <BusinessNotifications />
-                {children}
+                <PageTransitionProvider>
+                  <BusinessNotifications />
+                  {children}
+                </PageTransitionProvider>
               </SavedItemsProvider>
             </OnboardingProvider>
           </AuthProvider>

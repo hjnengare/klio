@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState, useEffect, useRef, memo } from "react";
 import { useRouter } from "next/navigation";
-import { Image as ImageIcon, Star, Edit, Share2, MapPin, Bookmark, Globe, Tag } from "react-feather";
+import { Image as ImageIcon, Star, Edit, Share2, MapPin, Bookmark, Globe, Tag, Info } from "react-feather";
 import Stars from "../Stars/Stars";
 import PercentileChip from "../PercentileChip/PercentileChip";
 import VerifiedBadge from "../VerifiedBadge/VerifiedBadge";
@@ -80,6 +80,8 @@ function BusinessCard({
 
   const [imgError, setImgError] = useState(false);
   const [usingFallback, setUsingFallback] = useState(false);
+  const [showInfoPopup, setShowInfoPopup] = useState(false);
+  const infoPopupRef = useRef<HTMLDivElement>(null);
 
   const reviewRoute = useMemo(() => `/business/${business.id}/review`, [business.id]);
   const businessProfileRoute = useMemo(() => `/business/${business.id}`, [business.id]);
@@ -129,8 +131,60 @@ function BusinessCard({
   const handleWriteReview = () => router.push(reviewRoute);
   const handleBookmark = () => {
     toggleSavedItem(business.id);
+    setShowInfoPopup(false);
   };
-  const handleShare = () => console.log("Share clicked:", business.name);
+  
+  const handleShare = async () => {
+    try {
+      const shareUrl = `${window.location.origin}${businessProfileRoute}`;
+      const shareText = `Check out ${business.name} on sayso!`;
+      
+      if (navigator.share) {
+        await navigator.share({
+          title: business.name,
+          text: shareText,
+          url: shareUrl,
+        });
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        // Show a brief visual feedback
+        const shareBtn = infoPopupRef.current?.querySelector('[data-share-btn]') as HTMLElement;
+        if (shareBtn) {
+          const originalText = shareBtn.getAttribute('aria-label');
+          shareBtn.setAttribute('aria-label', 'Link copied!');
+          setTimeout(() => {
+            if (originalText) shareBtn.setAttribute('aria-label', originalText);
+          }, 2000);
+        }
+      }
+      setShowInfoPopup(false);
+    } catch (error) {
+      // User cancelled or error occurred
+      console.log('Share cancelled or failed:', error);
+    }
+  };
+
+  // Close popup when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (infoPopupRef.current && !infoPopupRef.current.contains(event.target as Node)) {
+        const infoButton = (event.target as HTMLElement).closest('[data-info-button]');
+        if (!infoButton) {
+          setShowInfoPopup(false);
+        }
+      }
+    };
+
+    if (showInfoPopup) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [showInfoPopup]);
 
   // Image fallback logic
   const categoryKey = business.subInterestId || business.category || "default";
@@ -331,6 +385,77 @@ function BusinessCard({
               </span>
             </div>
           )}
+
+          {/* Mobile Info Icon - Shows popup with Share and Save */}
+          <div className="md:hidden absolute left-4 bottom-4 z-20">
+            <button
+              data-info-button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowInfoPopup(!showInfoPopup);
+              }}
+              className="w-10 h-10 bg-off-white/95 backdrop-blur-sm rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage/30 border border-white/30 shadow-lg touch-manipulation"
+              aria-label="More options"
+              aria-expanded={showInfoPopup}
+            >
+              <Info className="w-5 h-5 text-charcoal" />
+            </button>
+
+            {/* Popup with Share and Save options */}
+            {showInfoPopup && (
+              <div
+                ref={infoPopupRef}
+                className="absolute bottom-full left-0 mb-2 bg-off-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-white/30 p-2 z-30"
+                style={{
+                  animation: 'fadeInUp 0.2s ease-out forwards',
+                  transformOrigin: 'bottom left',
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex flex-col gap-2">
+                  <button
+                    data-share-btn
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShare();
+                    }}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-sage/10 active:bg-sage/20 transition-colors duration-200 min-h-[44px] touch-manipulation"
+                    aria-label={`Share ${business.name}`}
+                  >
+                    <div className="w-10 h-10 bg-sage/10 rounded-full flex items-center justify-center">
+                      <Share2 className="w-5 h-5 text-sage" />
+                    </div>
+                    <span className="text-sm font-semibold text-charcoal" style={{
+                      fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                      fontWeight: 600
+                    }}>
+                      Share
+                    </span>
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleBookmark();
+                    }}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-coral/10 active:bg-coral/20 transition-colors duration-200 min-h-[44px] touch-manipulation"
+                    aria-label={isItemSaved(business.id) ? `Remove ${business.name} from saved` : `Save ${business.name}`}
+                  >
+                    <div className="w-10 h-10 bg-coral/10 rounded-full flex items-center justify-center">
+                      <Bookmark
+                        className={`w-5 h-5 ${isItemSaved(business.id) ? 'text-coral fill-coral' : 'text-coral'}`}
+                      />
+                    </div>
+                    <span className="text-sm font-semibold text-charcoal" style={{
+                      fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                      fontWeight: 600
+                    }}>
+                      {isItemSaved(business.id) ? 'Saved' : 'Save'}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Premium floating actions - desktop only */}
           <div className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-2 transition-all duration-300 ease-out translate-x-12 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">

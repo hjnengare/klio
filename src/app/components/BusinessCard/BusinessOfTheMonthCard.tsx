@@ -297,23 +297,10 @@ export default function BusinessOfTheMonthCard({ business }: { business: Busines
             )}
           </div>
 
-          {/* Month chip */}
-          <div className="flex items-center justify-center gap-2 mb-4 cursor-pointer">
-            <div className="px-3 py-1.5 rounded-full bg-white/40 text-charcoal text-sm sm:text-xs font-600 border border-white/40" style={{ 
-              fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif", 
-              fontWeight: 600,
-              WebkitFontSmoothing: 'antialiased',
-              MozOsxFontSmoothing: 'grayscale',
-              textRendering: 'optimizeLegibility'
-            }}>
-              {hasReviews ? ((business as any).monthLabel || "September Winner") : "New on KLIO"}
-            </div>
-          </div>
-
           {/* Mobile actions - always visible on card */}
           <div className="flex md:hidden items-center justify-center gap-3 mt-3">
             <button
-              className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-sage to-sage/90 text-white rounded-full text-caption sm:text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 transition-all active:scale-95"
+              className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-br from-navbar-bg to-navbar-bg/90 text-white rounded-full text-caption sm:text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-sage/40 border border-sage/50 transition-all active:scale-95"
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle write review

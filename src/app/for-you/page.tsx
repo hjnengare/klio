@@ -7,7 +7,6 @@ import Footer from "../components/Footer/Footer";
 import BusinessCard from "../components/BusinessCard/BusinessCard";
 import { useForYouBusinesses } from "../hooks/useBusinesses";
 import { useUserPreferences } from "../hooks/useUserPreferences";
-import { Loader } from "../components/Loader";
 import SearchInput from "../components/SearchInput/SearchInput";
 import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
 import { ChevronLeft, ChevronRight, ChevronUp } from "react-feather";
@@ -127,12 +126,6 @@ export default function ForYouPage() {
             </div>
 
           <div className="py-4">
-          {loading && (
-            <div className="py-24 flex justify-center">
-              <Loader size="lg" color="sage" text="Loading businesses..." />
-            </div>
-          )}
-
           {!loading && error && (
             <div className="bg-white border border-sage/20 rounded-3xl shadow-sm px-6 py-10 text-center space-y-4">
               <p className="text-charcoal font-semibold text-h2" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>

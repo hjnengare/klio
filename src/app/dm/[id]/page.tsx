@@ -236,7 +236,7 @@ export default function DMPage() {
                                     </div>
                                 )}
                                 <div className="min-w-0 flex-1">
-                                    <h1 className="font-urbanist text-h3 sm:text-base font-700 text-white animate-delay-100 animate-fade-in truncate" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
+                                    <h1 className="font-urbanist text-body-sm sm:text-body font-700 text-white animate-delay-100 animate-fade-in truncate" style={{ fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
                                         {recipient.name}
                                     </h1>
                                     {recipient.online && (
@@ -280,7 +280,7 @@ export default function DMPage() {
                                                 fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                             }}
                                         >
-                                            <p className="text-body-sm leading-relaxed whitespace-pre-wrap break-words" style={{
+                                            <p className="text-body-sm sm:text-body leading-relaxed whitespace-pre-wrap break-words" style={{
                                                 fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                             }}>
                                                 {msg.text}
@@ -316,7 +316,7 @@ export default function DMPage() {
                                     onKeyDown={handleKeyDown}
                                     placeholder="Type a message..."
                                     rows={1}
-                                    className="w-full bg-white border border-charcoal/10 rounded-[20px] px-4 py-3 pr-12 text-body-sm text-charcoal placeholder-charcoal/40 resize-none focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50 transition-all duration-300 max-h-[120px] overflow-y-auto shadow-sm"
+                                    className="w-full bg-white border border-charcoal/10 rounded-[20px] px-4 py-3 pr-12 text-body-sm sm:text-body text-charcoal placeholder:text-body-sm sm:placeholder:text-body placeholder-charcoal/40 resize-none focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50 transition-all duration-300 max-h-[120px] overflow-y-auto shadow-sm"
                                     style={{
                                         fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                                         lineHeight: '1.5',

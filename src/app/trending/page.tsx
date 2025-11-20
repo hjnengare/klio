@@ -5,7 +5,6 @@ import Link from "next/link";
 import BusinessCard from "../components/BusinessCard/BusinessCard";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
-import { Loader } from "../components/Loader";
 import { ChevronLeft, ChevronRight, ChevronUp } from "react-feather";
 import { useTrendingBusinesses } from "../hooks/useBusinesses";
 import { useUserPreferences } from "../hooks/useUserPreferences";
@@ -126,12 +125,6 @@ export default function TrendingPage() {
           </div>
 
           <div className="py-4">
-            {loading && (
-              <div className="py-24 flex justify-center">
-                <Loader size="lg" color="sage" text="Loading trending businesses..." />
-              </div>
-            )}
-
             {!loading && error && (
               <div className="bg-white border border-sage/20 rounded-3xl shadow-sm px-6 py-10 text-center space-y-4">
                 <p className="text-charcoal font-semibold text-h2" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>

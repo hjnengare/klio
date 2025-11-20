@@ -59,7 +59,7 @@ function ChatItem({ chat }: { chat: Chat }) {
       {/* Chat Info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-1">
-          <h3 className="text-body font-600 text-charcoal truncate group-hover:text-charcoal/90 transition-colors duration-200">
+          <h3 className="text-body-sm sm:text-body font-600 text-charcoal truncate group-hover:text-charcoal/90 transition-colors duration-200">
             {chat.user.name}
           </h3>
           <span className="text-caption text-charcoal/70 flex-shrink-0 ml-2">
@@ -71,7 +71,7 @@ function ChatItem({ chat }: { chat: Chat }) {
             {chat.lastMessage}
           </p>
           {chat.unreadCount > 0 && (
-            <span className="flex-shrink-0 min-w-[24px] h-6 px-2 bg-coral text-white text-[11px] font-semibold rounded-full flex items-center justify-center">
+            <span className="flex-shrink-0 min-w-[24px] h-6 px-2 bg-coral text-white text-caption font-semibold rounded-full flex items-center justify-center">
               {chat.unreadCount > 99 ? "99+" : chat.unreadCount}
             </span>
           )}
@@ -110,7 +110,8 @@ const generateDummyChats = (): Chat[] => {
     user: reviewer,
     lastMessage: lastMessages[index % lastMessages.length],
     timestamp: timestamps[index % timestamps.length],
-    unreadCount: index < 3 ? Math.floor(Math.random() * 5) + 1 : 0,
+    // Use deterministic values based on index to avoid hydration mismatch
+    unreadCount: index < 3 ? (index % 3) + 1 : 0,
     online: index < 4,
   }));
 };
@@ -142,9 +143,9 @@ export default function DMChatListPage() {
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-3 sm:mr-4">
                 <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
               </div>
-              <h1 className="font-urbanist text-body-sm font-semibold text-white transition-all duration-300 group-hover:text-white/80 relative truncate max-w-[150px] sm:max-w-none">
+              <h3 className="font-urbanist text-h3 sm:text-h2 font-semibold text-white transition-all duration-300 group-hover:text-white/80 relative truncate max-w-[150px] sm:max-w-none">
                 Messages
-              </h1>
+              </h3>
             </button>
           </div>
 
@@ -158,7 +159,7 @@ export default function DMChatListPage() {
                 placeholder="Search conversations..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent border-0 border-b-2 border-white/20 text-base placeholder:text-base placeholder:text-white/40 font-normal text-white focus:outline-none focus:border-white/60 hover:border-white/30 transition-all duration-200 pl-8 pr-2 py-3"
+                className="w-full bg-transparent border-0 border-b-2 border-white/20 text-body placeholder:text-body placeholder:text-white/40 font-normal text-white focus:outline-none focus:border-white/60 hover:border-white/30 transition-all duration-200 pl-8 pr-2 py-3"
                 style={{
                   fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
                 }}
@@ -174,7 +175,7 @@ export default function DMChatListPage() {
         {filteredChats.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <MessageCircle className="w-16 h-16 text-charcoal/20 mb-4" strokeWidth={1.5} />
-            <p className="text-body text-charcoal/60 mb-2">No conversations found</p>
+            <p className="text-body-sm sm:text-body text-charcoal/60 mb-2">No conversations found</p>
             <p className="text-caption text-charcoal/40">Try adjusting your search</p>
           </div>
         ) : (
@@ -190,8 +191,8 @@ export default function DMChatListPage() {
       {chats.length === 0 && filteredChats.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 text-center px-4">
           <MessageCircle className="w-20 h-20 text-charcoal/20 mb-6" strokeWidth={1.5} />
-          <h2 className="text-h3 font-600 text-charcoal mb-2">No messages yet</h2>
-          <p className="text-body text-charcoal/60 max-w-md">
+          <h2 className="text-h2 sm:text-h1 font-600 text-charcoal mb-2">No messages yet</h2>
+          <p className="text-body-sm sm:text-body text-charcoal/60 max-w-md">
             Start a conversation with reviewers and community members to get started!
           </p>
         </div>
