@@ -15,12 +15,12 @@ interface BusinessLayoutProps {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   
+  let business: any = null;
+  
   try {
     const supabase = await getServerSupabase();
     
     // Try slug first, then ID
-    let business: any = null;
-    
     // Try by slug
     const { data: slugData } = await supabase
       .from('businesses')
