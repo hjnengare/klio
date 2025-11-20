@@ -105,6 +105,7 @@ interface Review {
   is_featured: boolean;
   created_at: string;
   business_image_url?: string | null;
+  business_slug?: string; // For navigation
 }
 
 interface Achievement {
@@ -137,6 +138,10 @@ function ProfileContent() {
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [imgError, setImgError] = useState(false);
   const supabase = getBrowserSupabase();
+
+  // Fetch user's reviews - MUST be before any early returns
+  const [userReviews, setUserReviews] = useState<Review[]>([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
 
   // Get saved businesses for mobile display
   const savedBusinesses = useMemo(() => {
@@ -178,6 +183,67 @@ function ProfileContent() {
   useEffect(() => {
     console.log('Profile page - user.profile changed:', user?.profile);
   }, [user?.profile]);
+
+  // Fetch user's reviews
+  useEffect(() => {
+    const fetchUserReviews = async () => {
+      if (!user?.id) {
+        setReviewsLoading(false);
+        return;
+      }
+
+      try {
+        setReviewsLoading(true);
+        const supabase = getBrowserSupabase();
+        
+        // Fetch reviews by user_id
+        const { data: reviewsData, error: reviewsError } = await supabase
+          .from('reviews')
+          .select(`
+            id,
+            rating,
+            title,
+            content,
+            created_at,
+            business:businesses!reviews_business_id_fkey (
+              id,
+              name,
+              image_url,
+              uploaded_image,
+              slug
+            )
+          `)
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        if (reviewsError) {
+          console.error('Error fetching user reviews:', reviewsError);
+          setUserReviews([]);
+        } else {
+          // Transform the data to match Review interface
+          const transformedReviews: Review[] = (reviewsData || []).map((r: any) => ({
+            id: r.id,
+            business_name: r.business?.name || 'Unknown Business',
+            rating: r.rating,
+            review_text: r.content || r.title || null,
+            is_featured: false,
+            created_at: r.created_at,
+            business_image_url: r.business?.uploaded_image || r.business?.image_url || null,
+            business_slug: r.business?.slug || r.business?.id, // Store for navigation
+          }));
+          setUserReviews(transformedReviews);
+        }
+      } catch (err) {
+        console.error('Error fetching user reviews:', err);
+        setUserReviews([]);
+      } finally {
+        setReviewsLoading(false);
+      }
+    };
+
+    fetchUserReviews();
+  }, [user?.id]);
 
   const handleSaveProfile = async () => {
     if (!user) return;
@@ -401,16 +467,25 @@ function ProfileContent() {
     ? formatMemberSince(profile.created_at)
     : "—";
 
-  // Prepare reviews data (using empty list if none available)
-  const reviews: Review[] = [];
-  const reviewsData = reviews.map((review) => ({
+  // Prepare reviews data
+  const reviewsData = userReviews.map((review) => ({
     businessName: review.business_name,
     businessImageUrl: review.business_image_url,
     rating: review.rating,
     reviewText: review.review_text,
     isFeatured: review.is_featured,
     createdAt: review.created_at,
-    onViewClick: () => console.log("View review", review.id),
+            onViewClick: () => {
+              // Navigate to business page
+              const reviewData = userReviews.find(r => r.id === review.id);
+              if (reviewData) {
+                // Get business slug or ID from the review data
+                const businessSlug = (reviewData as any).business_slug;
+                if (businessSlug) {
+                  window.location.href = `/business/${businessSlug}`;
+                }
+              }
+            },
   }));
 
   // Prepare achievements data (using empty list if none available)
@@ -686,12 +761,29 @@ function ProfileContent() {
                       className="bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 backdrop-blur-xl border border-white/60 rounded-[20px] shadow-lg p-6 sm:p-8"
                       aria-label="Your contributions"
                     >
-                      <ReviewsList
-                        reviews={reviewsData}
-                        title="Your Contributions"
-                        initialDisplayCount={2}
-                        showToggle={true}
-                      />
+                      {reviewsLoading ? (
+                        <div className="flex items-center justify-center py-8">
+                          <Loader size="md" variant="spinner" color="sage" />
+                        </div>
+                      ) : reviewsData.length > 0 ? (
+                        <ReviewsList
+                          reviews={reviewsData}
+                          title="Your Contributions"
+                          initialDisplayCount={2}
+                          showToggle={true}
+                        />
+                      ) : (
+                        <div className="text-center py-8">
+                          <p className="text-charcoal/70 mb-4">You haven't written any reviews yet.</p>
+                          <Link
+                            href="/write-review"
+                            className="inline-flex items-center gap-2 px-4 py-2.5 bg-sage hover:bg-sage/90 text-white rounded-full text-sm font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-95"
+                          >
+                            <MessageSquare className="w-4 h-4" />
+                            Write Your First Review
+                          </Link>
+                        </div>
+                      )}
                     </section>
 
                     <section

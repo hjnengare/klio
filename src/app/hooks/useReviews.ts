@@ -40,8 +40,14 @@ export function useReviews(businessId?: string) {
         setLoading(true);
         setError(null);
 
-        await simulateDelay();
-        const data = getReviewsByBusinessId(businessId);
+        const response = await fetch(`/api/reviews?business_id=${businessId}&limit=50`);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch reviews');
+        }
+
+        const result = await response.json();
+        const data = result.reviews || [];
 
         if (mounted) {
           setReviews(data);
@@ -73,11 +79,18 @@ export function useReviews(businessId?: string) {
     try {
       setLoading(true);
       setError(null);
-      await simulateDelay();
-      const data = getReviewsByBusinessId(businessId);
+      
+      const response = await fetch(`/api/reviews?business_id=${businessId}&limit=50`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to refetch reviews');
+      }
+
+      const result = await response.json();
+      const data = result.reviews || [];
       setReviews(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch reviews');
+      setError(err instanceof Error ? err.message : 'Failed to refetch reviews');
       console.error('Error refetching reviews:', err);
     } finally {
       setLoading(false);
@@ -219,10 +232,16 @@ export function useReviewSubmission() {
       setSubmitting(true);
       setError(null);
 
-      // Simulate deletion delay
-      await simulateDelay(500);
+      const response = await fetch(`/api/reviews/${reviewId}`, {
+        method: 'DELETE',
+      });
 
-      // For dummy data, always succeed
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to delete review');
+      }
+
       showToast('Review deleted successfully', 'success');
       return true;
     } catch (err) {
@@ -243,16 +262,21 @@ export function useReviewSubmission() {
     }
 
     try {
-      // Simulate like delay
-      await simulateDelay(200);
+      const response = await fetch(`/api/reviews/${reviewId}/helpful`, {
+        method: 'POST',
+      });
 
-      // For dummy data, randomly toggle like status
-      const isLiked = Math.random() > 0.5;
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to toggle helpful vote');
+      }
+
       showToast(
-        isLiked ? 'Review liked!' : 'Like removed',
+        result.has_voted ? 'Review marked as helpful!' : 'Helpful vote removed',
         'success'
       );
-      return isLiked;
+      return result.has_voted;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to like review';
       showToast(errorMessage, 'error');
