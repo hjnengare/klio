@@ -413,7 +413,7 @@ export default function BusinessProfilePage() {
                                     className="md:hidden w-11 h-11 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-all duration-300 border border-white/20 hover:border-white/40 touch-manipulation"
                                     aria-label="Open menu"
                                 >
-                                    <MoreVertical className="w-5 h-5" strokeWidth={2.5} />
+                                    <MoreVertical className="w-6 h-6 sm:w-5 sm:h-5" strokeWidth={2.5} />
                                 </button>
                             </div>
                         </nav>

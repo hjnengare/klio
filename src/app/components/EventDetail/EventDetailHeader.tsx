@@ -35,7 +35,7 @@ export default function EventDetailHeader({
               className="w-10 h-10 bg-gradient-to-br from-sage/10 to-sage/5 hover:from-sage/20 hover:to-sage/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-sage/5 hover:border-sage/20"
               aria-label="Share event"
             >
-              <Share2 className="text-white" size={18} />
+              <Share2 className="text-white w-6 h-6 sm:w-5 sm:h-5" />
             </button>
             <button
               onClick={onBookmark}
@@ -46,7 +46,7 @@ export default function EventDetailHeader({
               }`}
               aria-label="Bookmark event"
             >
-              <Bookmark className="text-white" size={18} />
+              <Bookmark className="text-white w-6 h-6 sm:w-5 sm:h-5" />
             </button>
           </div>
         </div>
