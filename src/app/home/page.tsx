@@ -138,15 +138,17 @@ export default function Home() {
   const hasTrendingBusinesses = trendingBusinesses.length > 0;
   
   return (
-    <div className="min-h-dvh bg-off-white" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
+    <div className="min-h-dvh bg-off-white relative overflow-hidden" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
+      {/* Premium floating orbs background */}
+      <HomeBackgroundOrbs />
+      
       <div className="relative">
         <HeroCarousel />
       </div>
 
-      <div className="bg-off-white">
+      <div className="bg-off-white relative">
         <div className="pb-12 sm:pb-16 md:pb-20">
           <section className="pt-4 sm:pt-8 md:pt-10 relative overflow-hidden">
-            <HomeBackgroundOrbs />
             <div className="relative z-10">
               {forYouLoading && <BusinessRowSkeleton title="For You Now" />}
               {!forYouLoading && hasForYouBusinesses && (
@@ -164,7 +166,6 @@ export default function Home() {
           </section>
 
           <section className="pt-4 sm:pt-8 md:pt-10 relative overflow-hidden">
-            <HomeBackgroundOrbs />
             <div className="relative z-10">
               {trendingLoading && <BusinessRowSkeleton title="Trending Now" />}
               {!trendingLoading && hasTrendingBusinesses && (
@@ -182,14 +183,12 @@ export default function Home() {
           </section>
 
           <section className="pt-4 sm:pt-8 md:pt-10 relative overflow-hidden">
-            <HomeBackgroundOrbs />
             <div className="relative z-10">
               <EventsSpecials events={EVENTS_AND_SPECIALS.slice(0, 5)} />
             </div>
           </section>
 
           <section className="pt-4 sm:pt-8 md:pt-10 relative overflow-hidden">
-            <HomeBackgroundOrbs />
             <div className="relative z-10">
               <CommunityHighlights
                 reviews={FEATURED_REVIEWS}
