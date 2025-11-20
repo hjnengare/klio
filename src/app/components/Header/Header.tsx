@@ -202,7 +202,7 @@ export default function Header({
 }, [clearBusinessHoverTimeout, closeBusinessDropdown, clearDiscoverHoverTimeout, closeDiscoverDropdown, forceSearchOpen, isStackedLayout]);
 
   useEffect(() => {
-    const options = { passive: true };
+    const options: AddEventListenerOptions = { passive: true };
     window.addEventListener('scroll', closeModalsOnScroll, options);
 
     return () => {

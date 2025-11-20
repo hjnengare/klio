@@ -107,7 +107,7 @@ export default function ForYouPage() {
       setShowScrollTop(window.scrollY > 200);
     };
 
-    const options = { passive: true };
+    const options: AddEventListenerOptions = { passive: true };
     window.addEventListener("scroll", handleScroll, options);
     return () => window.removeEventListener("scroll", handleScroll, options);
   }, []);
