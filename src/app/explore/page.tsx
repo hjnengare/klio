@@ -128,7 +128,7 @@ export default function ExplorePage() {
       <Header
         showSearch={true}
         variant="white"
-        backgroundClassName="bg-navbar-bg/90"
+        backgroundClassName="bg-navbar-bg"
         topPosition="top-0"
         reducedPadding={true}
         whiteText={true}

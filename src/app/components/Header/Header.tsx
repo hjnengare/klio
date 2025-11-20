@@ -323,7 +323,7 @@ export default function Header({
 
   // Different styling for home page (frosty variant) vs other pages
   const isHomeVariant = variant === "frosty";
-  const computedBackgroundClass = backgroundClassName ?? "bg-off-white";
+  const computedBackgroundClass = backgroundClassName ?? "bg-navbar-bg";
   // Header is always fixed at top-0
   const headerClassName = isHomeVariant
     ? `fixed top-0 left-0 right-0 z-50 ${computedBackgroundClass} backdrop-blur-xl shadow-lg border-b border-white/30 transition-all duration-300`

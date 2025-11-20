@@ -106,7 +106,7 @@ export default function EventsSpecialsPage() {
     <div className="min-h-dvh bg-off-white">
       <Header
         showSearch={false}
-        backgroundClassName="bg-navbar-bg/90"
+        backgroundClassName="bg-navbar-bg"
         topPosition="top-0"
         reducedPadding
         whiteText
