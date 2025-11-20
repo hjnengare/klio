@@ -46,7 +46,7 @@ export function EmailInput({
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
           style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
-          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 text-body font-semibold text-charcoal placeholder-charcoal/50 placeholder:font-normal focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
+          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-4 py-3 sm:py-4 md:py-5 text-body font-semibold text-charcoal placeholder-charcoal/50 placeholder:font-normal focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-full ${
             hasError ? 'border-navbar-bg focus:border-navbar-bg focus:ring-navbar-bg/20' :
             isValid ? 'border-sage/40 focus:border-navbar-bg focus:ring-navbar-bg/20' :
             'border-white/60 focus:ring-navbar-bg/30 focus:border-navbar-bg'
@@ -54,20 +54,6 @@ export function EmailInput({
           disabled={disabled}
         />
       </div>
-
-      {/* Validation feedback */}
-      {hasError && (
-        <p className="text-sm sm:text-xs text-navbar-bg flex items-center gap-1 mt-1" role="alert" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
-          <AlertCircle className="w-3 h-3" />
-          {error}
-        </p>
-      )}
-      {isValid && (
-        <p className="text-sm sm:text-xs text-navbar-bg flex items-center gap-1 mt-1" role="status" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
-          <CheckCircle className="w-3 h-3" />
-          Email looks good!
-        </p>
-      )}
     </div>
   );
 }

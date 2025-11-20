@@ -60,7 +60,7 @@ export function PasswordInput({
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
           style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
-          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 text-body font-semibold text-charcoal placeholder-charcoal/50 placeholder:font-normal focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-lg ${
+          className={`w-full bg-white/95 backdrop-blur-sm border pl-12 sm:pl-14 pr-12 sm:pr-16 py-3 sm:py-4 md:py-5 text-body font-semibold text-charcoal placeholder-charcoal/50 placeholder:font-normal focus:outline-none focus:ring-2 transition-all duration-300 hover:border-sage/50 input-mobile rounded-full ${
             isStrong ? 'border-sage/40 focus:border-navbar-bg focus:ring-navbar-bg/20' :
             isWeak ? 'border-orange-300 focus:border-navbar-bg focus:ring-navbar-bg/20' :
             'border-white/60 focus:ring-navbar-bg/30 focus:border-navbar-bg'
@@ -96,11 +96,6 @@ export function PasswordInput({
               );
             })}
           </div>
-          {strength.feedback && (
-            <span className="text-sm sm:text-xs font-500 text-navbar-bg" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}>
-              {strength.feedback}
-            </span>
-          )}
         </div>
       )}
     </div>

@@ -2,11 +2,12 @@
 
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { Calendar } from "react-feather";
 import { EVENTS_AND_SPECIALS, Event } from "../../data/eventsData";
 import { useToast } from "../../contexts/ToastContext";
 import nextDynamic from "next/dynamic";
-import { PageLoader } from "../../components/Loader";
+import { PageLoader, Loader } from "../../components/Loader";
 import {
   EventDetailHeader,
   EventHeroImage,
@@ -79,8 +80,23 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
     }
   };
 
+  // Loading state - show full page loader with transition
   if (loading) {
-    return <PageLoader size="xl" color="sage" />;
+    return (
+      <div className="min-h-dvh bg-off-white">
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[9999] bg-off-white min-h-screen w-full flex items-center justify-center"
+          >
+            <Loader size="lg" variant="spinner" color="sage" />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    );
   }
 
   if (!event) {
@@ -100,12 +116,23 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
   }
 
   return (
-    <div 
-      className="min-h-dvh bg-off-white font-urbanist"
-      style={{
-        fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-      }}
-    >
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={resolvedParams.id}
+        initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+        exit={{ opacity: 0, y: -20, scale: 0.98, filter: "blur(8px)" }}
+        transition={{
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1],
+          opacity: { duration: 0.5 },
+          filter: { duration: 0.55 }
+        }}
+        className="min-h-dvh bg-off-white font-urbanist"
+        style={{
+          fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+        }}
+      >
       {/* Header */}
       <EventDetailHeader
         isBookmarked={isBookmarked}
@@ -147,6 +174,7 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
         <Footer />
         </div>
       </div>
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }

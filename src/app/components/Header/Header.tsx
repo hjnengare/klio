@@ -57,6 +57,7 @@ export default function Header({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDiscoverDropdownOpen, setIsDiscoverDropdownOpen] = useState(false);
   const [isDiscoverDropdownClosing, setIsDiscoverDropdownClosing] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const isStackedLayout = searchLayout === "stacked";
@@ -101,6 +102,18 @@ export default function Header({
       setShowSearchBar(true);
     }
   }, [forceSearchOpen, isStackedLayout]);
+
+  // Handle scroll to make header fixed at top
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    // Use passive for performance, but ensure we can still read scrollY
+    const options = { passive: true };
+    window.addEventListener('scroll', handleScroll, options);
+    return () => window.removeEventListener('scroll', handleScroll, options as EventListenerOptions);
+  }, []);
 
   // Anchor for the dropdown FilterModal to hang under
   const headerRef = useRef<HTMLElement>(null);
@@ -202,10 +215,11 @@ export default function Header({
 }, [clearBusinessHoverTimeout, closeBusinessDropdown, clearDiscoverHoverTimeout, closeDiscoverDropdown, forceSearchOpen, isStackedLayout]);
 
   useEffect(() => {
-    window.addEventListener('scroll', closeModalsOnScroll, { passive: true });
+    const options = { passive: true };
+    window.addEventListener('scroll', closeModalsOnScroll, options);
 
     return () => {
-      window.removeEventListener('scroll', closeModalsOnScroll);
+      window.removeEventListener('scroll', closeModalsOnScroll, options);
     };
   }, [closeModalsOnScroll]);
 
@@ -323,9 +337,12 @@ export default function Header({
   // Different positioning for home page (frosty variant) vs other pages
   const isHomeVariant = variant === "frosty";
   const computedBackgroundClass = backgroundClassName ?? "bg-off-white";
+  const effectiveTopPosition = isScrolled ? "top-0" : topPosition;
   const headerClassName = isHomeVariant
-    ? `absolute top-8 mt-6 left-1/2 -translate-x-1/2 z-50 ${computedBackgroundClass} backdrop-blur-xl rounded-full shadow-lg border border-white/30 transition-all duration-300 w-[96%] max-w-[1700px]`
-    : `fixed ${topPosition} left-0 right-0 z-50 ${computedBackgroundClass} backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300`;
+    ? isScrolled
+      ? `fixed top-0 left-0 right-0 z-50 ${computedBackgroundClass} backdrop-blur-xl shadow-lg border-b border-white/30 transition-all duration-300`
+      : `absolute top-8 mt-6 left-1/2 -translate-x-1/2 z-50 ${computedBackgroundClass} backdrop-blur-xl rounded-full shadow-lg border border-white/30 transition-all duration-300 w-[96%] max-w-[1700px]`
+    : `fixed ${effectiveTopPosition} left-0 right-0 z-50 ${computedBackgroundClass} backdrop-blur-xl shadow-lg shadow-sage/5 transition-all duration-300`;
   const isSearchVisible = forceSearchOpen || isStackedLayout || showSearchBar;
 
   const handleSearchToggle = () => {
@@ -359,7 +376,7 @@ export default function Header({
   return (
     <>
       <header ref={headerRef} className={headerClassName} style={sf}>
-        <div className={`relative z-[1] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 ${isHomeVariant ? 'py-0' : reducedPadding ? 'py-2 md:py-3' : 'py-4 md:py-6'}`}>
+        <div className={`relative z-[1] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 ${isHomeVariant && !isScrolled ? 'w-full max-w-[1700px]' : ''} ${isHomeVariant ? 'py-0' : reducedPadding ? 'py-2 md:py-3' : 'py-4 md:py-6'}`}>
           {/* Top row */}
           <div className="flex items-center justify-between gap-6">
             {/* Logo */}

@@ -6,12 +6,14 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  disabled?: boolean;
 }
 
 export default function Pagination({
   currentPage,
   totalPages,
   onPageChange,
+  disabled = false,
 }: PaginationProps) {
   // Generate page numbers to display
   const getPageNumbers = () => {
@@ -81,9 +83,9 @@ export default function Pagination({
       {/* Previous Button */}
       <button
         onClick={handlePrevious}
-        disabled={currentPage === 1}
+        disabled={currentPage === 1 || disabled}
         className={`flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300 ${
-          currentPage === 1
+          currentPage === 1 || disabled
             ? "bg-off-white/50 text-charcoal/30 cursor-not-allowed"
             : "bg-off-white hover:bg-sage/10 text-charcoal hover:text-sage border border-sage/20 hover:border-sage/40"
         }`}
@@ -114,7 +116,8 @@ export default function Pagination({
             <button
               key={pageNum}
               onClick={() => handlePageClick(pageNum)}
-              className={`min-w-[40px] h-10 px-3 rounded-lg font-semibold transition-all duration-300 ${
+              disabled={disabled}
+              className={`min-w-[40px] h-10 px-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed ${
                 isActive
                   ? "bg-sage text-white shadow-md"
                   : "bg-off-white hover:bg-sage/10 text-charcoal hover:text-sage border border-sage/20 hover:border-sage/40"
@@ -132,9 +135,9 @@ export default function Pagination({
       {/* Next Button */}
       <button
         onClick={handleNext}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPages || disabled}
         className={`flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300 ${
-          currentPage === totalPages
+          currentPage === totalPages || disabled
             ? "bg-off-white/50 text-charcoal/30 cursor-not-allowed"
             : "bg-off-white hover:bg-sage/10 text-charcoal hover:text-sage border border-sage/20 hover:border-sage/40"
         }`}

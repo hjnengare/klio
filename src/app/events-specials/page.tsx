@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import FilterTabs from "../components/EventsPage/FilterTabs";
@@ -13,6 +14,7 @@ import SearchInput from "../components/SearchInput/SearchInput";
 import { EVENTS_AND_SPECIALS, Event } from "../data/eventsData";
 import { useToast } from "../contexts/ToastContext";
 import { ChevronUp, Search } from "react-feather";
+import { Loader } from "../components/Loader/Loader";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -21,7 +23,9 @@ export default function EventsSpecialsPage() {
   const [selectedFilter, setSelectedFilter] = useState<"all" | "event" | "special">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const { showToast } = useToast();
+  const previousPageRef = useRef(currentPage);
 
   const filteredEvents = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -74,6 +78,28 @@ export default function EventsSpecialsPage() {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Handle pagination with loader and transitions
+  const handlePageChange = (newPage: number) => {
+    if (newPage === currentPage) return;
+    
+    // Show loader
+    setIsPaginationLoading(true);
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    
+    // Wait for scroll and show transition
+    setTimeout(() => {
+      previousPageRef.current = currentPage;
+      setCurrentPage(newPage);
+      
+      // Hide loader after brief delay for smooth transition
+      setTimeout(() => {
+        setIsPaginationLoading(false);
+      }, 300);
+    }, 150);
   };
 
   return (
@@ -145,11 +171,34 @@ export default function EventsSpecialsPage() {
           <div className="py-4">
                 {currentEvents.length > 0 ? (
                   <>
-                    <EventsGrid events={currentEvents} onBookmark={handleBookmark} />
+                    {/* Loading Spinner Overlay for Pagination */}
+                    {isPaginationLoading && (
+                      <div className="fixed inset-0 z-[9998] bg-off-white/95 backdrop-blur-sm flex items-center justify-center min-h-screen">
+                        <Loader size="lg" variant="spinner" color="sage" />
+                      </div>
+                    )}
+
+                    {/* Paginated Content with Smooth Transition */}
+                    <AnimatePresence mode="wait" initial={false}>
+                      <motion.div
+                        key={currentPage}
+                        initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(8px)" }}
+                        animate={{ opacity: isPaginationLoading ? 0 : 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, y: -20, scale: 0.98, filter: "blur(8px)" }}
+                        transition={{
+                          duration: 0.4,
+                          ease: [0.16, 1, 0.3, 1],
+                        }}
+                      >
+                        <EventsGrid events={currentEvents} onBookmark={handleBookmark} />
+                      </motion.div>
+                    </AnimatePresence>
+
                     <Pagination
                       currentPage={currentPage}
                       totalPages={totalPages}
-                      onPageChange={setCurrentPage}
+                      onPageChange={handlePageChange}
+                      disabled={isPaginationLoading}
                     />
                   </>
                 ) : (

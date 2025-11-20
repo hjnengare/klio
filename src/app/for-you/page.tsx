@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import BusinessCard from "../components/BusinessCard/BusinessCard";
@@ -10,6 +11,7 @@ import { useUserPreferences } from "../hooks/useUserPreferences";
 import SearchInput from "../components/SearchInput/SearchInput";
 import FilterModal, { FilterState } from "../components/FilterModal/FilterModal";
 import { ChevronLeft, ChevronRight, ChevronUp } from "react-feather";
+import { Loader } from "../components/Loader/Loader";
 
 // Note: dynamic and revalidate cannot be exported from client components
 // Client components are automatically dynamic
@@ -40,7 +42,9 @@ export default function ForYouPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const searchWrapRef = useRef<HTMLDivElement>(null);
+  const previousPageRef = useRef(currentPage);
 
   const totalPages = useMemo(() => Math.ceil(businesses.length / ITEMS_PER_PAGE), [businesses.length]);
   const currentBusinesses = useMemo(() => {
@@ -75,14 +79,37 @@ export default function ForYouPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Handle pagination with loader and transitions
+  const handlePageChange = (newPage: number) => {
+    if (newPage === currentPage) return;
+    
+    // Show loader
+    setIsPaginationLoading(true);
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    
+    // Wait for scroll and show transition
+    setTimeout(() => {
+      previousPageRef.current = currentPage;
+      setCurrentPage(newPage);
+      
+      // Hide loader after brief delay for smooth transition
+      setTimeout(() => {
+        setIsPaginationLoading(false);
+      }, 300);
+    }, 150);
+  };
+
   // Handle scroll to top button visibility
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 200);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const options = { passive: true };
+    window.addEventListener("scroll", handleScroll, options);
+    return () => window.removeEventListener("scroll", handleScroll, options);
   }, []);
 
   return (
@@ -157,20 +184,40 @@ export default function ForYouPage() {
                 </div>
               ) : (
                 <>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
-                    {currentBusinesses.map((business) => (
-                    <div key={business.id} className="list-none">
-                        <BusinessCard business={business} compact />
+                  {/* Loading Spinner Overlay for Pagination */}
+                  {isPaginationLoading && (
+                    <div className="fixed inset-0 z-[9998] bg-off-white/95 backdrop-blur-sm flex items-center justify-center min-h-screen">
+                      <Loader size="lg" variant="spinner" color="sage" />
                     </div>
-                  ))}
-                </div>
+                  )}
+
+                  {/* Paginated Content with Smooth Transition */}
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.div
+                      key={currentPage}
+                      initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(8px)" }}
+                      animate={{ opacity: isPaginationLoading ? 0 : 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, y: -20, scale: 0.98, filter: "blur(8px)" }}
+                      transition={{
+                        duration: 0.4,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3"
+                    >
+                      {currentBusinesses.map((business) => (
+                        <div key={business.id} className="list-none">
+                          <BusinessCard business={business} compact />
+                        </div>
+                      ))}
+                    </motion.div>
+                  </AnimatePresence>
 
                   {/* Pagination */}
                   {totalPages > 1 && (
                     <div className="flex justify-center items-center gap-2 mt-12">
                       <button
-                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                        disabled={currentPage === 1}
+                        onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+                        disabled={currentPage === 1 || isPaginationLoading}
                         className="w-10 h-10 rounded-full bg-navbar-bg/90 border border-charcoal/20 flex items-center justify-center hover:bg-navbar-bg/80 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
                         aria-label="Previous page"
                         title="Previous"
@@ -181,9 +228,10 @@ export default function ForYouPage() {
                       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                         <button
                           key={page}
-                          onClick={() => setCurrentPage(page)}
+                          onClick={() => handlePageChange(page)}
+                          disabled={isPaginationLoading}
                           style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif', fontWeight: 600 }}
-                          className={`w-10 h-10 rounded-full bg-navbar-bg/90 font-semibold text-body-sm transition-all duration-200 ${
+                          className={`w-10 h-10 rounded-full bg-navbar-bg/90 font-semibold text-body-sm transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed ${
                             currentPage === page
                               ? "bg-sage text-white shadow-lg"
                               : "border border-charcoal/20 text-white hover:bg-navbar-bg/80"
@@ -195,8 +243,8 @@ export default function ForYouPage() {
                       ))}
 
                       <button
-                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                        disabled={currentPage === totalPages}
+                        onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
+                        disabled={currentPage === totalPages || isPaginationLoading}
                         className="w-10 h-10 rounded-full bg-navbar-bg/90 border border-charcoal/20 flex items-center justify-center hover:bg-navbar-bg/80 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
                         aria-label="Next page"
                         title="Next"

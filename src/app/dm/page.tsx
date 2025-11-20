@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, Search, User, Check, ArrowLeft } from "react-feather";
 import { TOP_REVIEWERS, type Reviewer } from "../data/communityHighlightsData";
 import Footer from "../components/Footer/Footer";
@@ -126,12 +127,23 @@ export default function DMChatListPage() {
   );
 
   return (
-    <div
-      className="min-h-dvh bg-off-white font-urbanist"
-      style={{
-        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-      }}
-    >
+    <AnimatePresence mode="wait">
+      <motion.div
+        key="dm-list"
+        initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+        exit={{ opacity: 0, y: -20, scale: 0.98, filter: "blur(8px)" }}
+        transition={{
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1],
+          opacity: { duration: 0.5 },
+          filter: { duration: 0.55 }
+        }}
+        className="min-h-dvh bg-off-white font-urbanist"
+        style={{
+          fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+        }}
+      >
       {/* Header */}
       <header className="sticky top-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10">
         <div className="mx-auto w-full max-w-[2000px] px-4 py-4">
@@ -199,7 +211,8 @@ export default function DMChatListPage() {
       )}
 
       <Footer />
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 

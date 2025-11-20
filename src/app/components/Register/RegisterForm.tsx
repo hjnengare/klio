@@ -5,7 +5,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useToast } from "../../contexts/ToastContext";
 import { usePrefersReducedMotion } from "../../utils/hooks/usePrefersReducedMotion";
 import FormField from "./FormField";
-import ValidationMessage from "./ValidationMessage";
 import PasswordStrength from "./PasswordStrength";
 import ConsentCheckbox from "./ConsentCheckbox";
 import SubmitButton from "./SubmitButton";
@@ -334,13 +333,6 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
         touched={usernameTouched}
           disabled={isFormDisabled}
         />
-      <ValidationMessage
-        error={getUsernameError()}
-        isValid={!getUsernameError()}
-        touched={usernameTouched}
-        value={username}
-        successMessage="Username looks good!"
-      />
 
       {/* Email Field */}
       <FormField
@@ -354,13 +346,6 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
         touched={emailTouched}
           disabled={isFormDisabled}
         />
-      <ValidationMessage
-        error={getEmailError()}
-        isValid={!getEmailError()}
-        touched={emailTouched}
-        value={email}
-        successMessage="Email looks good!"
-      />
 
       {/* Password Field */}
       <FormField

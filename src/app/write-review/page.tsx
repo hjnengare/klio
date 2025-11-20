@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, Search, Briefcase, MapPin, ChevronRight } from "react-feather";
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 
@@ -51,7 +52,20 @@ export default function WriteReviewPage() {
 
   return (
     <EmailVerificationGuard>
-      <div className="min-h-screen bg-off-white relative overflow-hidden">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="write-review"
+          initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -20, scale: 0.98, filter: "blur(8px)" }}
+          transition={{
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1],
+            opacity: { duration: 0.5 },
+            filter: { duration: 0.55 }
+          }}
+          className="min-h-screen bg-off-white relative overflow-hidden"
+        >
       {/* Header */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10">
         <div className="mx-auto w-full max-w-[2000px] px-2 py-3 sm:py-4">
@@ -182,7 +196,8 @@ export default function WriteReviewPage() {
           </section>
         </div>
       </div>
-      </div>
+        </motion.div>
+      </AnimatePresence>
     </EmailVerificationGuard>
   );
 }

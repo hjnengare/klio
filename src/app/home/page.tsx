@@ -59,8 +59,9 @@ export default function Home() {
       setShowScrollTop(window.scrollY > 200);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const options = { passive: true };
+    window.addEventListener('scroll', handleScroll, options);
+    return () => window.removeEventListener('scroll', handleScroll, options);
   }, []);
 
   // Scroll to top function

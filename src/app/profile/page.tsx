@@ -3,7 +3,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/app/contexts/AuthContext";
+import { Loader } from "@/app/components/Loader/Loader";
 import {
   ArrowLeft,
   Award,
@@ -361,45 +363,21 @@ function ProfileContent() {
     }
   };
 
-  // Loading skeleton
+  // Loading state - show full page loader with transition
   if (isLoading) {
     return (
       <div className="min-h-dvh bg-off-white">
-        <header className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg border-b border-white/10">
-          <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-            <div className="h-16 flex items-center">
-              <div className="w-10 h-10 bg-white/10 rounded-full animate-pulse" />
-            </div>
-          </div>
-        </header>
-
-        <div className="bg-off-white pt-20 pb-12">
-          <section className="relative py-6">
-            <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-              <div className="max-w-[900px] mx-auto">
-                <div className="p-6 sm:p-8 bg-card-bg border border-white/50 rounded-2xl shadow-sm mb-6">
-                  <div className="animate-pulse">
-                    <div className="flex items-center space-x-4">
-                      <Skeleton variant="circular" width={64} height={64} />
-                      <div className="space-y-2 flex-1">
-                        <Skeleton variant="text" width={200} height={24} />
-                        <Skeleton variant="text" width={150} height={16} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6 sm:p-8 bg-card-bg border border-white/50 rounded-2xl shadow-sm">
-                  <Skeleton variant="text" width={150} height={20} className="mb-4" />
-                  <div className="grid grid-cols-3 gap-4">
-                    {[1, 2, 3].map((i) => (
-                      <Skeleton key={i} variant="rectangular" height={80} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[9999] bg-off-white min-h-screen w-full flex items-center justify-center"
+          >
+            <Loader size="lg" variant="spinner" color="sage" />
+          </motion.div>
+        </AnimatePresence>
       </div>
     );
   }
@@ -456,13 +434,24 @@ function ProfileContent() {
           font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
         }
       `}</style>
-      <div
-        className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist"
-        style={{
-          fontFamily:
-            "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-        }}
-      >
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="profile"
+          initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -20, scale: 0.98, filter: "blur(8px)" }}
+          transition={{
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1],
+            opacity: { duration: 0.5 },
+            filter: { duration: 0.55 }
+          }}
+          className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist"
+          style={{
+            fontFamily:
+              "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+          }}
+        >
         <header
           className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
           role="banner"
@@ -761,7 +750,8 @@ function ProfileContent() {
           </div>
           <Footer />
         </div>
-      </div>
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }

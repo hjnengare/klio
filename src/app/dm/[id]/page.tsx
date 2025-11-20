@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import React, { useMemo, useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
     ArrowLeft,
     MessageSquare,
@@ -182,12 +183,23 @@ export default function DMPage() {
                     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
                 }
             `}</style>
-            <div
-                className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist flex flex-col"
-                style={{
-                    fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-                }}
-            >
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={recipientId}
+                    initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -20, scale: 0.98, filter: "blur(8px)" }}
+                    transition={{
+                        duration: 0.6,
+                        ease: [0.16, 1, 0.3, 1],
+                        opacity: { duration: 0.5 },
+                        filter: { duration: 0.55 }
+                    }}
+                    className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist flex flex-col"
+                    style={{
+                        fontFamily: "'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+                    }}
+                >
                 {/* Fixed Premium Header */}
                 <header
                     className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
@@ -334,7 +346,8 @@ export default function DMPage() {
                         </form>
                     </div>
                 </div>
-            </div>
+                </motion.div>
+            </AnimatePresence>
         </>
     );
 }

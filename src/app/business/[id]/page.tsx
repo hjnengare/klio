@@ -4,7 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState, useEffect, useLayoutEffect, useRef, useMemo } from "react";
-import { PageLoader } from "../../components/Loader";
+import { motion, AnimatePresence } from "framer-motion";
+import { PageLoader, Loader } from "../../components/Loader";
 import {
     ArrowLeft,
     Briefcase,
@@ -127,8 +128,9 @@ export default function BusinessProfilePage() {
             setShowScrollTop(window.scrollY > 200);
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        const options = { passive: true };
+        window.addEventListener('scroll', handleScroll, options);
+        return () => window.removeEventListener('scroll', handleScroll, options);
     }, []);
 
     // Scroll to top function
@@ -206,9 +208,23 @@ export default function BusinessProfilePage() {
         fetchBusiness();
     }, [businessId]);
 
-    // Loading state
+    // Loading state - show full page loader with transition
     if (isLoading) {
-        return <PageLoader size="lg" color="sage" text="Loading business..." />;
+        return (
+            <div className="min-h-dvh bg-off-white">
+                <AnimatePresence>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="fixed inset-0 z-[9999] bg-off-white min-h-screen w-full flex items-center justify-center"
+                    >
+                        <Loader size="lg" variant="spinner" color="sage" />
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+        );
     }
 
     // Error state
@@ -309,13 +325,24 @@ export default function BusinessProfilePage() {
                     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
                 }
             `}</style>
-            <div
-                className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist"
-                style={{
-                    fontFamily:
-                        '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
-                }}
-            >
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={businessId}
+                    initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -20, scale: 0.98, filter: "blur(8px)" }}
+                    transition={{
+                        duration: 0.6,
+                        ease: [0.16, 1, 0.3, 1],
+                        opacity: { duration: 0.5 },
+                        filter: { duration: 0.55 }
+                    }}
+                    className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist"
+                    style={{
+                        fontFamily:
+                            '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+                    }}
+                >
                 {/* Fixed Premium Header */}
                 <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
                     role="banner"
@@ -658,7 +685,6 @@ export default function BusinessProfilePage() {
                                                 </div>
                     </div>
                 )}
-            </div>
 
             {/* Scroll to Top Button */}
             {showScrollTop && (
@@ -672,6 +698,8 @@ export default function BusinessProfilePage() {
             )}
 
             <Footer />
+                </motion.div>
+            </AnimatePresence>
         </>
     );
 }
