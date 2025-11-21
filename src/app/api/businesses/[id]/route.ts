@@ -49,8 +49,9 @@ export async function GET(
             reviewImages: review.images?.map((img: any) => {
               if (img.image_url) return img.image_url;
               if (img.storage_path) {
+                // Use review_images bucket (matches upload bucket name)
                 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-                return `${supabaseUrl}/storage/v1/object/public/review-images/${img.storage_path}`;
+                return `${supabaseUrl}/storage/v1/object/public/review_images/${img.storage_path}`;
               }
               return null;
             }).filter(Boolean) || [],
@@ -217,9 +218,9 @@ export async function GET(
             // Use image_url if available, otherwise construct from storage_path
             if (img.image_url) return img.image_url;
             if (img.storage_path) {
-              // Construct public URL from storage path
+              // Construct public URL from storage path - use review_images bucket (matches upload)
               const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-              return `${supabaseUrl}/storage/v1/object/public/review-images/${img.storage_path}`;
+              return `${supabaseUrl}/storage/v1/object/public/review_images/${img.storage_path}`;
             }
             return null;
           }).filter(Boolean) || [],

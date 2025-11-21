@@ -71,15 +71,19 @@ export default function ReviewCard({
           className="flex-shrink-0"
         >
           {review.user.avatar_url ? (
-            <Image
-              src={review.user.avatar_url}
-              alt={review.user.name || 'User'}
-              width={48}
-              height={48}
-              className="w-12 h-12 rounded-full object-cover ring-2 ring-sage/20 group-hover:ring-sage/40 transition-all duration-300"
-            />
+            <div className="relative">
+              <div className="w-12 h-12 rounded-full p-0.5 bg-off-white ring-2 ring-off-white shadow-sm">
+                <Image
+                  src={review.user.avatar_url}
+                  alt={review.user.name || 'User'}
+                  width={48}
+                  height={48}
+                  className="w-full h-full rounded-full object-cover group-hover:ring-2 group-hover:ring-sage/40 transition-all duration-300"
+                />
+              </div>
+            </div>
           ) : (
-            <div className="w-12 h-12 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center transition-shadow duration-300">
+            <div className="w-12 h-12 bg-gradient-to-br from-sage/20 to-sage/10 rounded-full flex items-center justify-center ring-2 ring-off-white shadow-sm transition-shadow duration-300">
               <span className="font-urbanist text-lg font-700 text-sage">
                 {review.user.name?.[0] || 'U'}
               </span>

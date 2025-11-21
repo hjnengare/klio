@@ -165,19 +165,42 @@ export function useRecentReviews(limit?: number) {
 export function useReviewSubmission() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const { showToast } = useToast();
   const { checkEmailVerification } = useEmailVerification();
 
   const submitReview = async (reviewData: ReviewFormData): Promise<boolean> => {
-    if (!user) {
-      setError('You must be logged in to submit a review');
-      showToast('Please log in to submit a review', 'error');
-      return false;
+    // Wait for auth to finish loading (up to 2 seconds)
+    let attempts = 0;
+    while (isLoading && attempts < 4) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      attempts++;
     }
 
-    if (!checkEmailVerification('submit reviews')) {
-      setError('You must verify your email to submit reviews');
+    // Get fresh user state - sometimes the context hasn't updated yet
+    let currentUser = user;
+    if (!currentUser) {
+      // Try to get user from session directly
+      try {
+        const { AuthService } = await import('../lib/auth');
+        currentUser = await AuthService.getCurrentUser();
+        console.log('Fetched user directly from session:', currentUser ? { id: currentUser.id, email: currentUser.email } : null);
+      } catch (err) {
+        console.error('Error fetching current user:', err);
+      }
+    }
+
+    // Check email verification if we have a user
+    if (currentUser && !currentUser.email_verified) {
+      if (!checkEmailVerification('submit reviews')) {
+        setError('You must verify your email to submit reviews');
+        return false;
+      }
+    } else if (!currentUser) {
+      // Only show error if we truly don't have a user
+      // The API will also check, but we check here for better UX
+      setError('You must be logged in to submit a review');
+      showToast('Please log in to submit a review', 'error');
       return false;
     }
 

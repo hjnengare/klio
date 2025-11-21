@@ -152,7 +152,7 @@ export function useForYouBusinesses(limit: number = 20): UseBusinessesResult {
 
   return useBusinesses({
     limit,
-    sortBy: 'total_rating',
+    sortBy: 'total_reviews', // Prioritize businesses with reviews first
     sortOrder: 'desc',
     interestIds: interestIds.length > 0 ? interestIds : undefined, // Filter if user has preferences
     priceRanges: preferredPriceRanges,

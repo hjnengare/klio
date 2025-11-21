@@ -111,9 +111,21 @@ export async function fetchBusinessOptimized(
     const userIds: string[] = Array.from(new Set(userIdsArray));
 
     // Fetch images and profiles in parallel
+    // For review_images, we need to fetch by review_id (not by their own id)
     const [imagesResult, profilesResult] = await executeParallelQueries([
-      () =>
-        batchFetchByIds(client1, 'review_images', reviewIds, 'id, review_id, image_url, storage_path, alt_text'),
+      async () => {
+        // Fetch review images by review_id
+        const { data, error } = await executeWithRetry(
+          async () => {
+            const result = await client1
+              .from('review_images')
+              .select('id, review_id, image_url, storage_path, alt_text')
+              .in('review_id', reviewIds);
+            return { data: result.data, error: result.error };
+          }
+        );
+        return { data, error };
+      },
       () =>
         batchFetchByIds(client2, 'profiles', userIds, 'user_id, display_name, avatar_url'),
     ]);

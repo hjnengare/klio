@@ -6,12 +6,13 @@ import dynamic from "next/dynamic";
 import { ArrowLeft, Edit, Star, ChevronUp } from "react-feather";
 import Link from "next/link";
 import { useReviewForm } from "../../../hooks/useReviewForm";
-import { useReviewSubmission } from "../../../hooks/useReviews";
+import { useReviewSubmission, useReviews } from "../../../hooks/useReviews";
 import { PageLoader } from "../../../components/Loader";
 import ReviewForm from "../../../components/ReviewForm/ReviewForm";
 import BusinessInfoAside from "../../../components/BusinessInfo/BusinessInfoAside";
 import { BusinessInfo } from "../../../components/BusinessInfo/BusinessInfoModal";
-import SimilarBusinesses from "../../../components/SimilarBusinesses/SimilarBusinesses";
+import { PremiumReviewCard } from "../../../components/Business/PremiumReviewCard";
+import { TestimonialCarousel } from "../../../components/Business/TestimonialCarousel";
 import Footer from "../../../components/Footer/Footer";
 
 // CSS animations matching business profile
@@ -86,11 +87,21 @@ function WriteReviewContent() {
 
   const { submitReview, submitting } = useReviewSubmission();
 
+  // Ensure form validity updates reactively
+  const effectiveIsFormValid = useMemo(() => {
+    return isFormValid && !submitting;
+  }, [isFormValid, submitting]);
+
   // State for business data
   const [business, setBusiness] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Fetch reviews for "What others are saying" section - use actual business ID from loaded business
+  // Only fetch after business data is loaded to ensure we have the actual database ID (not slug)
+  const actualBusinessId = business?.id || businessId;
+  const { reviews, loading: reviewsLoading, refetch: refetchReviews } = useReviews(business?.id ? actualBusinessId : undefined);
 
   // Fetch business data using optimized API route
   useEffect(() => {
@@ -179,8 +190,16 @@ function WriteReviewContent() {
   const quickTags = ["Trustworthy", "On Time", "Friendly", "Good Value"];
 
   const handleSubmitReview = async () => {
-    if (!businessId) {
+    // Use the actual database ID from the business object, not the URL slug
+    const actualBusinessId = business?.id || businessId;
+    
+    if (!actualBusinessId) {
       alert('No business ID provided');
+      return;
+    }
+
+    if (!business) {
+      alert('Business information not loaded yet. Please wait...');
       return;
     }
 
@@ -190,7 +209,7 @@ function WriteReviewContent() {
     }
 
     const success = await submitReview({
-      business_id: businessId,
+      business_id: actualBusinessId,
       rating: overallRating,
       title: reviewTitle,
       content: reviewText,
@@ -200,8 +219,18 @@ function WriteReviewContent() {
 
     if (success) {
       resetForm();
+      // Refetch reviews immediately so the new review appears first
+      if (refetchReviews) {
+        setTimeout(() => {
+          refetchReviews();
+        }, 500);
+      }
+      // Navigate back and force refresh of business data by adding timestamp
       setTimeout(() => {
-        router.push(`/business/${businessId}`);
+        // Use the business slug or ID for navigation - prefer slug for SEO-friendly URLs
+        const targetId = business?.slug || business?.id || businessId;
+        const refreshParam = Date.now();
+        router.push(`/business/${targetId}?refreshed=${refreshParam}`);
       }, 1500);
     }
   };
@@ -338,7 +367,7 @@ function WriteReviewContent() {
                                   reviewText={reviewText}
                                   reviewTitle={reviewTitle}
                                   selectedImages={selectedImages}
-                                  isFormValid={isFormValid && !submitting}
+                                  isFormValid={effectiveIsFormValid}
                                   availableTags={quickTags}
                                   onRatingChange={handleStarClick}
                                   onTagToggle={handleTagToggle}
@@ -362,14 +391,74 @@ function WriteReviewContent() {
                       </div>
                     </div>
 
-                    {/* Similar Businesses Section */}
-                    <div className="lg:col-span-3">
-                      <SimilarBusinesses
-                        currentBusinessId={businessId}
-                        category={business?.category || ""}
-                        location={business?.location}
-                        limit={6}
-                      />
+                    {/* What Others Are Saying Section */}
+                    <div className="lg:col-span-3 space-y-6">
+                      <section className="space-y-6" aria-labelledby="what-others-saying-heading">
+                        <div className="flex justify-center">
+                          <div className="flex flex-col gap-3">
+                            <h2
+                              id="what-others-saying-heading"
+                              className="text-h3 font-semibold text-charcoal border-b border-charcoal/10 pb-2"
+                              style={{ fontFamily: '"Urbanist", system-ui, sans-serif' }}
+                            >
+                              What Others Are Saying
+                            </h2>
+                          </div>
+                        </div>
+
+                        {reviewsLoading ? (
+                          <div className="flex items-center justify-center py-12">
+                            <PageLoader size="md" color="sage" text="Loading reviews..." />
+                          </div>
+                        ) : reviews.length > 0 ? (
+                          <div className="bg-gradient-to-br from-card-bg/50 via-card-bg/30 to-card-bg/20 backdrop-blur-xl rounded-2xl shadow-lg" style={{ minHeight: '480px' }}>
+                            <TestimonialCarousel
+                              reviews={[...reviews]
+                                // Sort reviews by created_at descending (newest first)
+                                .sort((a: any, b: any) => {
+                                  const dateA = new Date(a.created_at || 0).getTime();
+                                  const dateB = new Date(b.created_at || 0).getTime();
+                                  return dateB - dateA;
+                                })
+                                .map((review: any, index: number) => {
+                                  const profile = review.profile || {};
+                                  // Extract review images - API provides image_url
+                                  const reviewImages = review.review_images?.map((img: any) => img.image_url).filter(Boolean) || review.images || [];
+                                  
+                                  return {
+                                    id: review.id,
+                                    author: profile.display_name || review.author || 'Anonymous',
+                                    rating: review.rating,
+                                    text: review.content || review.text || review.title || '',
+                                    date: review.created_at ? new Date(review.created_at).toLocaleDateString('en-US', {
+                                      month: 'short',
+                                      year: 'numeric'
+                                    }) : review.date || '',
+                                    tags: review.tags || [],
+                                    highlight: index === 0 ? "Top Reviewer" : index < 2 ? "Local Guide" : undefined,
+                                    verified: index < 2,
+                                    profileImage: profile.avatar_url || review.profileImage,
+                                    reviewImages: reviewImages,
+                                    location: profile.location || review.location || '',
+                                    profile: profile,
+                                  };
+                                })}
+                            />
+                          </div>
+                        ) : (
+                          <div className="text-center py-12">
+                            <div className="w-16 h-16 bg-charcoal/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <Star className="w-8 h-8 text-charcoal/40" />
+                            </div>
+                            <h3 className="text-h2 font-semibold text-charcoal mb-2" style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}>
+                              No reviews yet
+                            </h3>
+                            <p className="text-body text-charcoal/70 mb-6 max-w-[70ch] mx-auto text-center" style={{ fontFamily: 'Urbanist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif' }}>
+                              Be the first to review this business!
+                            </p>
+                          </div>
+                        )}
+                      </section>
                     </div>
                   </div>
                 </div>

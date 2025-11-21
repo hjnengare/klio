@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 
 interface UseReviewFormReturn {
   overallRating: number;
@@ -24,19 +24,33 @@ export function useReviewForm(): UseReviewFormReturn {
   const [reviewTitle, setReviewTitle] = useState("");
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-  const handleTagToggle = (tag: string) => {
+  const handleTagToggle = useCallback((tag: string) => {
     setSelectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
-  };
+  }, []);
 
-  const handleStarClick = (rating: number) => {
+  const handleStarClick = useCallback((rating: number) => {
     setOverallRating(rating);
-  };
+  }, []);
 
   const isFormValid = useMemo(() => {
-    return overallRating > 0 && reviewText.trim().length > 0;
+    const ratingValid = overallRating > 0;
+    const textValid = reviewText.trim().length > 0;
+    return ratingValid && textValid;
   }, [overallRating, reviewText]);
+
+  const setReviewTextCallback = useCallback((text: string) => {
+    setReviewText(text);
+  }, []);
+
+  const setReviewTitleCallback = useCallback((title: string) => {
+    setReviewTitle(title);
+  }, []);
+
+  const setSelectedImagesCallback = useCallback((images: File[]) => {
+    setSelectedImages(images);
+  }, []);
 
   const resetForm = () => {
     setOverallRating(0);
@@ -55,9 +69,9 @@ export function useReviewForm(): UseReviewFormReturn {
     isFormValid,
     handleStarClick,
     handleTagToggle,
-    setReviewText,
-    setReviewTitle,
-    setSelectedImages,
+    setReviewText: setReviewTextCallback,
+    setReviewTitle: setReviewTitleCallback,
+    setSelectedImages: setSelectedImagesCallback,
     resetForm,
   };
 }

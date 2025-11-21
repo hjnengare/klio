@@ -26,7 +26,7 @@ const BusinessThumb: React.FC<{
   if (!imageUrl || err) {
     return (
       <div
-        className="relative rounded-full bg-gradient-to-br from-sage/15 to-coral/10 border border-charcoal/10 flex items-center justify-center"
+        className="relative rounded-full bg-gradient-to-br from-sage/15 to-coral/10 border border-charcoal/10 flex items-center justify-center ring-2 ring-off-white shadow-sm"
         style={{ width: size, height: size }}
         aria-label={`${name} placeholder image`}
       >
@@ -40,17 +40,19 @@ const BusinessThumb: React.FC<{
 
   return (
     <div
-      className="relative rounded-full overflow-hidden"
+      className="relative rounded-full overflow-hidden ring-2 ring-off-white shadow-sm"
       style={{ width: size, height: size }}
     >
-      <Image
-        src={imageUrl}
-        alt={`${name} thumbnail`}
-        width={size}
-        height={size}
-        className="object-cover"
-        onError={() => setErr(true)}
-      />
+      <div className="w-full h-full rounded-full p-0.5 bg-off-white">
+        <Image
+          src={imageUrl}
+          alt={`${name} thumbnail`}
+          width={size}
+          height={size}
+          className="w-full h-full rounded-full object-cover"
+          onError={() => setErr(true)}
+        />
+      </div>
     </div>
   );
 };

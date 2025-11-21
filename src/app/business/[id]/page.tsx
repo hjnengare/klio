@@ -125,7 +125,7 @@ export default function BusinessProfilePage() {
     // Handle scroll to top button visibility
     useEffect(() => {
         const handleScroll = () => {
-            setShowScrollTop(window.scrollY > 200);
+            setShowScrollTop(window.scrollY > 100);
         };
 
         const options: AddEventListenerOptions = { passive: true };
@@ -133,9 +133,11 @@ export default function BusinessProfilePage() {
         return () => window.removeEventListener('scroll', handleScroll, options);
     }, []);
 
-    // Scroll to top function
+    // Scroll to top function - account for fixed header
     const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Get header height to scroll just below it
+        const headerHeight = headerRef.current?.offsetHeight || 80;
+        window.scrollTo({ top: headerHeight, behavior: 'smooth' });
     };
 
 
@@ -183,7 +185,14 @@ export default function BusinessProfilePage() {
                 setIsLoading(true);
                 setError(null);
                 
-                const response = await fetch(`/api/businesses/${businessId}`);
+                // Force fresh fetch with cache-busting when coming from review submission
+                const urlParams = new URLSearchParams(window.location.search);
+                const refreshed = urlParams.get('refreshed');
+                
+                const response = await fetch(`/api/businesses/${businessId}`, {
+                    cache: 'no-store',
+                    headers: refreshed ? { 'Cache-Control': 'no-cache' } : undefined,
+                });
                 
                 if (!response.ok) {
                     if (response.status === 404) {
@@ -197,6 +206,12 @@ export default function BusinessProfilePage() {
 
                 const data = await response.json();
                 setBusiness(data);
+                
+                // Clean up the refreshed query param from URL after successful fetch
+                if (refreshed && window.history.replaceState) {
+                    const cleanUrl = window.location.pathname;
+                    window.history.replaceState({}, '', cleanUrl);
+                }
 
                 // SEO: Redirect from ID to slug if we have a slug and the URL uses an ID
                 // Only redirect if the current URL uses an ID (UUID format) and we have a slug
@@ -361,7 +376,9 @@ export default function BusinessProfilePage() {
                     }}
                 >
                 {/* Fixed Premium Header */}
-                <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-sm border-b border-charcoal/10 animate-slide-in-top"
+                <header 
+                    ref={headerRef} 
+                    className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg/95 backdrop-blur-md border-b border-sage/10 shadow-sage/10 animate-slide-in-top will-change-transform"
                     role="banner"
                     style={{
                         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',

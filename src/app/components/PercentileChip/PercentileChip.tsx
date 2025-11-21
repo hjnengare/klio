@@ -57,6 +57,9 @@ function PercentileChip({ label, value }: PercentileChipProps) {
     }
   };
 
+  const icon = renderIcon();
+  const percentageText = isPlaceholder ? '—' : `${value}%`;
+
   return (
     <div
       role="button"
@@ -68,12 +71,17 @@ function PercentileChip({ label, value }: PercentileChipProps) {
           event.preventDefault();
         }
       }}
-      className="inline-flex items-center gap-1.5 px-4 pt-1 cursor-help group relative">
-      {renderIcon()}
-      <span className={`text-sm sm:text-xs font-600 whitespace-nowrap  ${
+      className="inline-flex items-center gap-1 px-2 sm:px-3 pt-1 cursor-help group relative flex-shrink-0">
+      <div 
+        className="relative cursor-pointer"
+        title={isPlaceholder ? tooltipText : `${value}%`}
+      >
+        {icon}
+      </div>
+      <span className={`text-[10px] sm:text-xs font-600 whitespace-nowrap ${
         isPlaceholder ? 'text-charcoal/40' : 'text-charcoal'
       }`}>
-        {isPlaceholder ? '—' : `${value}%`}
+        {percentageText}
       </span>
     </div>
   );
