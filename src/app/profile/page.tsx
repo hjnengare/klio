@@ -34,6 +34,7 @@ import { Skeleton } from "@/components/atoms/Skeleton";
 import { ConfirmationDialog } from "@/components/molecules/ConfirmationDialog";
 import SavedBusinessRow from "@/app/components/Saved/SavedBusinessRow";
 import { useSavedItems } from "@/app/contexts/SavedItemsContext";
+import { EditProfileModal } from "@/app/components/EditProfile/EditProfileModal";
 import { getBusinessesByIds } from "@/app/data/businessDataOptimized";
 import { useMemo } from "react";
 
@@ -162,22 +163,27 @@ function ProfileContent() {
       ...rawProfile,
     };
     console.log('Profile memo recomputed:', {
+      username: profileData.username,
+      display_name: profileData.display_name,
       avatar_url: profileData.avatar_url,
       type: typeof profileData.avatar_url,
+      rawProfile_username: rawProfile.username,
+      rawProfile_display_name: rawProfile.display_name,
       rawProfile_avatar_url: rawProfile.avatar_url,
+      user_profile_username: user?.profile?.username,
+      user_profile_display_name: user?.profile?.display_name,
       user_profile_avatar_url: user?.profile?.avatar_url
     });
     return profileData;
   }, [user?.profile?.avatar_url, user?.profile?.username, user?.profile?.display_name, user?.email, user?.created_at]);
 
+  // Note: Username and displayName state are now managed by EditProfileModal
+  // This effect is kept for backwards compatibility but modal will initialize its own state
   useEffect(() => {
     if (isEditOpen) {
-      setAvatarFile(null);
       setError(null);
-      setUsername(profile.username || "");
-      setDisplayName(profile.display_name || "");
     }
-  }, [isEditOpen, profile.username, profile.display_name]);
+  }, [isEditOpen]);
 
   // Log profile changes for debugging
   useEffect(() => {
@@ -245,15 +251,20 @@ function ProfileContent() {
     fetchUserReviews();
   }, [user?.id]);
 
-  const handleSaveProfile = async () => {
+  const handleSaveProfile = async (data?: { username: string; displayName: string; avatarFile: File | null }) => {
     if (!user) return;
     setSaving(true);
     setError(null);
 
+    // Use data from parameters if provided, otherwise use state
+    const usernameToSave = data?.username || username;
+    const displayNameToSave = data?.displayName || displayName;
+    const avatarFileToSave = data?.avatarFile !== undefined ? data.avatarFile : avatarFile;
+
     try {
       let avatar_url = profile.avatar_url || null;
 
-      if (avatarFile) {
+      if (avatarFileToSave) {
         try {
           console.log('Starting avatar upload...', {
             fileName: avatarFile.name,
@@ -269,7 +280,7 @@ function ProfileContent() {
           }
 
           const timestamp = Date.now();
-          const fileExt = avatarFile.name.split('.').pop() || 'jpg';
+          const fileExt = avatarFileToSave.name.split('.').pop() || 'jpg';
           const path = `${user.id}/avatar-${timestamp}.${fileExt}`;
           
           console.log('Uploading to path:', path);
@@ -277,10 +288,10 @@ function ProfileContent() {
           // Upload to Supabase Storage
           const { error: uploadErr, data: uploadData } = await supabase.storage
             .from('avatars')
-            .upload(path, avatarFile, { 
+            .upload(path, avatarFileToSave, { 
               upsert: true, 
               cacheControl: '3600',
-              contentType: avatarFile.type || `image/${fileExt}`
+              contentType: avatarFileToSave.type || `image/${fileExt}`
             });
           
           if (uploadErr) {
@@ -341,16 +352,27 @@ function ProfileContent() {
       }
 
       // Use updateUser to handle both database update and local state update
+      // Ensure we explicitly set username and display_name (use null for empty strings)
+      const usernameValue = usernameToSave.trim() || null;
+      const displayNameValue = displayNameToSave.trim() || null;
+      
       await updateUser({
         profile: {
           ...(user.profile || {}),
           avatar_url: avatar_url,
-          username: username.trim() || null,
-          display_name: displayName.trim() || null,
+          username: usernameValue,
+          display_name: displayNameValue,
         } as any,
       });
 
-      console.log('Profile updated:', { avatar_url, username, display_name: displayName });
+      // Update local state if not already updated
+      if (data) {
+        setUsername(usernameToSave);
+        setDisplayName(displayNameToSave);
+        setAvatarFile(avatarFileToSave);
+      }
+
+      console.log('Profile updated:', { avatar_url, username: usernameToSave, display_name: displayNameToSave });
 
       // Force re-render of avatar component
       setAvatarKey(prev => prev + 1);
@@ -841,9 +863,24 @@ function ProfileContent() {
             </main>
           </div>
           <Footer />
-        </div>
+          </div>
         </motion.div>
       </AnimatePresence>
+
+      {/* Edit Profile Modal */}
+      <EditProfileModal
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        onSave={async (data) => {
+          // Call the save handler with the data from modal
+          await handleSaveProfile(data);
+        }}
+        currentUsername={profile.username || ""}
+        currentDisplayName={profile.display_name || null}
+        currentAvatarUrl={profile.avatar_url || null}
+        saving={saving}
+        error={error}
+      />
     </>
   );
 }

@@ -5,6 +5,7 @@ import { useEffect, useState, Suspense, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { ArrowLeft, Edit, Star, ChevronUp } from "react-feather";
 import Link from "next/link";
+import confetti from "canvas-confetti";
 import { useReviewForm } from "../../../hooks/useReviewForm";
 import { useReviewSubmission, useReviews } from "../../../hooks/useReviews";
 import { PageLoader } from "../../../components/Loader";
@@ -218,6 +219,39 @@ function WriteReviewContent() {
     });
 
     if (success) {
+      // Trigger confetti celebration
+      const duration = 3000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+
+      function randomInRange(min: number, max: number) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+
+        // Create confetti bursts from different positions
+        confetti({
+          ...defaults,
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+          colors: ['#7D9B76', '#E88D67', '#FFFFFF', '#FFD700'],
+        });
+        confetti({
+          ...defaults,
+          particleCount,
+          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+          colors: ['#7D9B76', '#E88D67', '#FFFFFF', '#FFD700'],
+        });
+      }, 250);
+
       resetForm();
       // Refetch reviews immediately so the new review appears first
       if (refetchReviews) {
@@ -411,7 +445,7 @@ function WriteReviewContent() {
                             <PageLoader size="md" color="sage" text="Loading reviews..." />
                           </div>
                         ) : reviews.length > 0 ? (
-                          <div className="bg-gradient-to-br from-card-bg/50 via-card-bg/30 to-card-bg/20 backdrop-blur-xl rounded-2xl shadow-lg" style={{ minHeight: '480px' }}>
+                          <div style={{ minHeight: '480px' }}>
                             <TestimonialCarousel
                               reviews={[...reviews]
                                 // Sort reviews by created_at descending (newest first)
@@ -427,7 +461,8 @@ function WriteReviewContent() {
                                   
                                   return {
                                     id: review.id,
-                                    author: profile.display_name || review.author || 'Anonymous',
+                                    userId: review.user_id,
+                                    author: profile.display_name || profile.username || review.author || 'Anonymous',
                                     rating: review.rating,
                                     text: review.content || review.text || review.title || '',
                                     date: review.created_at ? new Date(review.created_at).toLocaleDateString('en-US', {

@@ -1,9 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Star, BadgeCheck, ShieldCheck, ThumbsUp, Reply, Share2, Flag, MoreHorizontal, User } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Star, BadgeCheck, ShieldCheck, ThumbsUp, Reply, Share2, Flag, MoreHorizontal, User, Edit, Trash2, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../../contexts/AuthContext";
+import { useReviewSubmission } from "../../hooks/useReviews";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 interface PremiumReviewCardProps {
+    reviewId?: string;
+    userId?: string;
     author: string;
     rating: number;
     text: string;
@@ -14,9 +21,12 @@ interface PremiumReviewCardProps {
     profileImage?: string;
     reviewImages?: string[];
     compact?: boolean;
+    onDelete?: () => void;
 }
 
 export function PremiumReviewCard({
+    reviewId,
+    userId,
     author,
     rating,
     text,
@@ -27,11 +37,145 @@ export function PremiumReviewCard({
     profileImage,
     reviewImages,
     compact = false,
+    onDelete,
 }: PremiumReviewCardProps) {
     const rounded = Math.round(rating);
     const [imageError, setImageError] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
+    const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+    const [zoomLevel, setZoomLevel] = useState(1);
+    const [imagePosition, setImagePosition] = useState({ x: 0, y: 0 });
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+    const menuRef = useRef<HTMLDivElement>(null);
+    const imageRef = useRef<HTMLDivElement>(null);
+    const { user } = useAuth();
+    const { deleteReview } = useReviewSubmission();
+    const router = useRouter();
+
+    // Check if current user owns this review
+    const isOwner = user && userId && user.id === userId;
+    
+    // Handle image click
+    const handleImageClick = (index: number) => {
+        setSelectedImageIndex(index);
+        setZoomLevel(1);
+        setImagePosition({ x: 0, y: 0 });
+        document.body.style.overflow = 'hidden';
+    };
+
+    // Close lightbox
+    const closeLightbox = () => {
+        setSelectedImageIndex(null);
+        setZoomLevel(1);
+        setImagePosition({ x: 0, y: 0 });
+        document.body.style.overflow = '';
+    };
+
+    // Navigate between images
+    const navigateImage = (direction: 'prev' | 'next') => {
+        if (selectedImageIndex === null || !reviewImages) return;
+        const newIndex = direction === 'next' 
+            ? (selectedImageIndex + 1) % reviewImages.length
+            : (selectedImageIndex - 1 + reviewImages.length) % reviewImages.length;
+        setSelectedImageIndex(newIndex);
+        setZoomLevel(1);
+        setImagePosition({ x: 0, y: 0 });
+    };
+
+    // Zoom in/out
+    const handleZoom = (delta: number) => {
+        setZoomLevel(prev => Math.max(0.5, Math.min(3, prev + delta)));
+    };
+
+    // Reset zoom
+    const resetZoom = () => {
+        setZoomLevel(1);
+        setImagePosition({ x: 0, y: 0 });
+    };
+
+    // Mouse wheel zoom
+    const handleWheel = (e: React.WheelEvent) => {
+        if (selectedImageIndex === null) return;
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.1 : 0.1;
+        handleZoom(delta);
+    };
+
+    // Drag to pan when zoomed
+    const handleMouseDown = (e: React.MouseEvent) => {
+        if (zoomLevel > 1) {
+            setIsDragging(true);
+            setDragStart({ x: e.clientX - imagePosition.x, y: e.clientY - imagePosition.y });
+        }
+    };
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (isDragging && zoomLevel > 1) {
+            setImagePosition({
+                x: e.clientX - dragStart.x,
+                y: e.clientY - dragStart.y,
+            });
+        }
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    // Close menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setShowMenu(false);
+            }
+        };
+
+        if (showMenu) {
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => document.removeEventListener('mousedown', handleClickOutside);
+        }
+    }, [showMenu]);
+
+    const handleEdit = () => {
+        if (!reviewId) return;
+        // Get the current business ID from the URL
+        const pathParts = window.location.pathname.split('/');
+        const businessSlugOrId = pathParts[pathParts.indexOf('business') + 1];
+        
+        // Navigate to write review page with edit mode (query param)
+        router.push(`/business/${businessSlugOrId}/review?edit=${reviewId}`);
+        setShowMenu(false);
+    };
+
+    const handleDelete = async () => {
+        if (!reviewId || !isOwner) return;
+        
+        const confirmed = confirm('Are you sure you want to delete this review? This action cannot be undone.');
+        if (!confirmed) {
+            setShowMenu(false);
+            return;
+        }
+
+        try {
+            const success = await deleteReview(reviewId);
+            if (success) {
+                if (onDelete) {
+                    onDelete();
+                } else {
+                    // Reload the page to refresh reviews if no callback provided
+                    window.location.reload();
+                }
+            }
+        } catch (error) {
+            console.error('Error deleting review:', error);
+        } finally {
+            setShowMenu(false);
+        }
+    };
 
     return (
+        <>
         <div
             className={`relative overflow-hidden rounded-2xl border backdrop-blur-md transition-shadow duration-300 border-white/50 bg-gradient-to-br from-card-bg via-card-bg to-card-bg/95 ring-1 ring-white/20 text-charcoal shadow-[0_15px_40px_rgba(15,23,42,0.08)] ${
                 compact ? 'p-3' : 'p-4'
@@ -60,6 +204,8 @@ export function PremiumReviewCard({
                                 src={profileImage}
                                 alt={`${author} profile`}
                                 className="w-full h-full object-cover"
+                                loading="lazy"
+                                decoding="async"
                                 onError={() => setImageError(true)}
                             />
                         </div>
@@ -134,16 +280,22 @@ export function PremiumReviewCard({
                                 {reviewImages.slice(0, compact ? 4 : 8).map((image, index) => (
                                     <div
                                         key={index}
-                                        className="relative aspect-square rounded-md overflow-hidden bg-sage/10 border border-white/30"
+                                        className="relative aspect-square rounded-md overflow-hidden bg-sage/10 border border-white/30 cursor-pointer group hover:border-sage/50 transition-all duration-200"
+                                        onClick={() => handleImageClick(index)}
                                     >
                                         <img
                                             src={image}
                                             alt={`Review image ${index + 1}`}
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                                            loading={index < 4 ? "eager" : "lazy"}
+                                            decoding="async"
                                             onError={(e) => {
                                                 e.currentTarget.style.display = 'none';
                                             }}
                                         />
+                                        <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/10 transition-colors duration-200 flex items-center justify-center">
+                                            <ZoomIn className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -195,17 +347,258 @@ export function PremiumReviewCard({
                                     <Flag className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                                     <span className="hidden sm:inline">Report</span>
                                 </button>
-                                <button
-                                    className="inline-flex rounded-full border p-1 sm:p-1.5 transition border-charcoal/10 text-charcoal/60 hover:bg-charcoal/5"
-                                    aria-label="More"
-                                >
-                                    <MoreHorizontal className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                                </button>
+                                {isOwner && (
+                                    <div className="relative" ref={menuRef}>
+                                        <button
+                                            onClick={() => setShowMenu(!showMenu)}
+                                            className="inline-flex rounded-full border p-1 sm:p-1.5 transition border-charcoal/10 text-charcoal/60 hover:bg-charcoal/5"
+                                            aria-label="More options"
+                                        >
+                                            <MoreHorizontal className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                                        </button>
+                                        
+                                        {showMenu && (
+                                            <div className="absolute right-0 bottom-full mb-2 w-48 bg-gradient-to-br from-off-white via-off-white to-off-white/95 border border-white/60 rounded-lg shadow-lg z-50 overflow-hidden backdrop-blur-md">
+                                                <button
+                                                    onClick={handleEdit}
+                                                    className="w-full px-4 py-2.5 text-left text-sm font-medium text-charcoal hover:bg-sage/10 flex items-center gap-2 transition-colors border-b border-charcoal/5 whitespace-nowrap"
+                                                >
+                                                    <Edit className="h-4 w-4 text-sage flex-shrink-0" />
+                                                    <span>Edit Review</span>
+                                                </button>
+                                                <button
+                                                    onClick={handleDelete}
+                                                    className="w-full px-4 py-2.5 text-left text-sm font-medium text-coral hover:bg-coral/10 flex items-center gap-2 transition-colors whitespace-nowrap"
+                                                >
+                                                    <Trash2 className="h-4 w-4 flex-shrink-0" />
+                                                    <span>Delete Review</span>
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                                {!isOwner && (
+                                    <button
+                                        className="inline-flex rounded-full border p-1 sm:p-1.5 transition border-charcoal/10 text-charcoal/60 hover:bg-charcoal/5"
+                                        aria-label="More"
+                                    >
+                                        <MoreHorizontal className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                                    </button>
+                                )}
                             </div>
                         </div>
                     )}
                 </div>
             </div>
         </div>
+
+        {/* Image Lightbox with Zoom */}
+        <AnimatePresence>
+            {selectedImageIndex !== null && reviewImages && reviewImages[selectedImageIndex] && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="fixed inset-0 z-[9999] bg-charcoal/95 backdrop-blur-xl flex items-center justify-center p-4"
+                    onClick={closeLightbox}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={handleMouseUp}
+                    onWheel={handleWheel}
+                >
+                    {/* Close Button */}
+                    <button
+                        onClick={closeLightbox}
+                        className="absolute top-4 right-4 w-12 h-12 bg-off-white/10 hover:bg-off-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-200 z-10 border border-white/20"
+                        aria-label="Close image viewer"
+                    >
+                        <X className="w-6 h-6 text-white" />
+                    </button>
+
+                    {/* Image Counter */}
+                    {reviewImages.length > 1 && (
+                        <div className="absolute top-4 left-4 bg-off-white/10 backdrop-blur-sm px-4 py-2 rounded-full z-10 border border-white/20">
+                            <span className="text-white font-urbanist text-sm font-600">
+                                {selectedImageIndex + 1} / {reviewImages.length}
+                            </span>
+                        </div>
+                    )}
+
+                    {/* Zoom Controls */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-off-white/10 backdrop-blur-sm px-4 py-2 rounded-full z-10 flex items-center gap-3 border border-white/20">
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleZoom(-0.2);
+                            }}
+                            className="w-8 h-8 rounded-full bg-off-white/20 hover:bg-off-white/30 flex items-center justify-center transition-colors text-white"
+                            disabled={zoomLevel <= 0.5}
+                            aria-label="Zoom out"
+                        >
+                            <span className="text-lg font-bold">−</span>
+                        </button>
+                        <span className="text-white font-urbanist text-sm font-600 min-w-[3rem] text-center">
+                            {Math.round(zoomLevel * 100)}%
+                        </span>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleZoom(0.2);
+                            }}
+                            className="w-8 h-8 rounded-full bg-off-white/20 hover:bg-off-white/30 flex items-center justify-center transition-colors text-white"
+                            disabled={zoomLevel >= 3}
+                            aria-label="Zoom in"
+                        >
+                            <span className="text-lg font-bold">+</span>
+                        </button>
+                        {zoomLevel !== 1 && (
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    resetZoom();
+                                }}
+                                className="px-3 py-1 text-xs text-white hover:bg-off-white/20 rounded transition-colors"
+                                aria-label="Reset zoom"
+                            >
+                                Reset
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Previous Button */}
+                    {reviewImages.length > 1 && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                navigateImage('prev');
+                            }}
+                            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-off-white/10 hover:bg-off-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-200 z-10 border border-white/20"
+                            aria-label="Previous image"
+                        >
+                            <ChevronLeft className="w-6 h-6 text-white" />
+                        </button>
+                    )}
+
+                    {/* Next Button */}
+                    {reviewImages.length > 1 && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                navigateImage('next');
+                            }}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-off-white/10 hover:bg-off-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-200 z-10 border border-white/20"
+                            aria-label="Next image"
+                        >
+                            <ChevronRight className="w-6 h-6 text-white" />
+                        </button>
+                    )}
+
+                    {/* Image Container */}
+                    <motion.div
+                        initial={{ scale: 0.9 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0.9 }}
+                        transition={{ duration: 0.2 }}
+                        className="relative max-w-[90vw] max-h-[90vh] cursor-move"
+                        onClick={(e) => e.stopPropagation()}
+                        onMouseDown={handleMouseDown}
+                        ref={imageRef}
+                        style={{
+                            cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
+                        }}
+                    >
+                        <img
+                            src={reviewImages[selectedImageIndex]}
+                            alt={`Review image ${selectedImageIndex + 1}`}
+                            className="max-w-full max-h-[90vh] object-contain rounded-lg select-none"
+                            style={{
+                                transform: `scale(${zoomLevel}) translate(${imagePosition.x / zoomLevel}px, ${imagePosition.y / zoomLevel}px)`,
+                                transformOrigin: 'center center',
+                                transition: isDragging ? 'none' : 'transform 0.2s ease-out',
+                            }}
+                            draggable={false}
+                        />
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* Keyboard Navigation */}
+        {selectedImageIndex !== null && (
+            <KeyboardNavigation
+                onPrev={() => navigateImage('prev')}
+                onNext={() => navigateImage('next')}
+                onClose={closeLightbox}
+                onZoomIn={() => handleZoom(0.2)}
+                onZoomOut={() => handleZoom(-0.2)}
+                onResetZoom={resetZoom}
+                showPrev={reviewImages && reviewImages.length > 1}
+                showNext={reviewImages && reviewImages.length > 1}
+            />
+        )}
+        </>
     );
+}
+
+// Keyboard Navigation Component
+function KeyboardNavigation({
+    onPrev,
+    onNext,
+    onClose,
+    onZoomIn,
+    onZoomOut,
+    onResetZoom,
+    showPrev,
+    showNext,
+}: {
+    onPrev: () => void;
+    onNext: () => void;
+    onClose: () => void;
+    onZoomIn: () => void;
+    onZoomOut: () => void;
+    onResetZoom: () => void;
+    showPrev: boolean;
+    showNext: boolean;
+}) {
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            switch (e.key) {
+                case 'Escape':
+                    onClose();
+                    break;
+                case 'ArrowLeft':
+                    if (showPrev) {
+                        e.preventDefault();
+                        onPrev();
+                    }
+                    break;
+                case 'ArrowRight':
+                    if (showNext) {
+                        e.preventDefault();
+                        onNext();
+                    }
+                    break;
+                case '+':
+                case '=':
+                    e.preventDefault();
+                    onZoomIn();
+                    break;
+                case '-':
+                case '_':
+                    e.preventDefault();
+                    onZoomOut();
+                    break;
+                case '0':
+                    e.preventDefault();
+                    onResetZoom();
+                    break;
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [onPrev, onNext, onClose, onZoomIn, onZoomOut, onResetZoom, showPrev, showNext]);
+
+    return null;
 }

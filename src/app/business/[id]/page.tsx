@@ -189,8 +189,11 @@ export default function BusinessProfilePage() {
                 const urlParams = new URLSearchParams(window.location.search);
                 const refreshed = urlParams.get('refreshed');
                 
+                // Use stale-while-revalidate for better performance (unless explicitly refreshing)
+                const cacheOption = refreshed ? 'no-store' : 'force-cache';
                 const response = await fetch(`/api/businesses/${businessId}`, {
-                    cache: 'no-store',
+                    cache: cacheOption,
+                    next: refreshed ? { revalidate: 0 } : { revalidate: 600 }, // Revalidate after 10 minutes unless refreshing
                     headers: refreshed ? { 'Cache-Control': 'no-cache' } : undefined,
                 });
                 
@@ -580,20 +583,27 @@ export default function BusinessProfilePage() {
                                                 </div>
 
                                                 {businessData.reviews.length > 0 ? (
-                                                    <div className="space-y-4">
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         {businessData.reviews.map((review: any, index: number) => (
-                                                            <PremiumReviewCard
-                                                                key={review.id || index}
-                                                                author={review.author}
-                                                                rating={review.rating}
-                                                                text={review.text}
-                                                                date={review.date}
-                                                                tags={review.tags}
-                                                                highlight={index === 0 ? "Top Reviewer" : "Local Guide"}
-                                                                verified={index < 2}
-                                                                profileImage={review.profileImage}
-                                                                reviewImages={review.reviewImages}
-                                                            />
+                                                            <div key={review.id || index} className="w-full">
+                                                                <PremiumReviewCard
+                                                                    reviewId={review.id}
+                                                                    userId={review.userId}
+                                                                    author={review.author}
+                                                                    rating={review.rating}
+                                                                    text={review.text}
+                                                                    date={review.date}
+                                                                    tags={review.tags}
+                                                                    highlight={index === 0 ? "Top Reviewer" : "Local Guide"}
+                                                                    verified={index < 2}
+                                                                    profileImage={review.profileImage}
+                                                                    reviewImages={review.reviewImages}
+                                                                    onDelete={() => {
+                                                                        // Refresh the page to update reviews
+                                                                        window.location.reload();
+                                                                    }}
+                                                                />
+                                                            </div>
                                                         ))}
                                                     </div>
                                                 ) : (

@@ -235,14 +235,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
           profileUpdates.avatar_url = userData.profile.avatar_url;
         }
 
-        // Update username if provided
+        // Update username if provided (allow null/empty to clear)
         if (userData.profile.username !== undefined) {
-          profileUpdates.username = userData.profile.username;
+          profileUpdates.username = userData.profile.username?.trim() || null;
         }
 
-        // Update display_name if provided
+        // Update display_name if provided (allow null/empty to clear)
         if (userData.profile.display_name !== undefined) {
-          profileUpdates.display_name = userData.profile.display_name;
+          profileUpdates.display_name = userData.profile.display_name?.trim() || null;
         }
 
         // Update the profiles table with valid fields only
@@ -286,25 +286,70 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
       }
 
-      // Fetch fresh profile data from database to ensure we have the latest avatar_url
+      // Fetch fresh profile data from database to ensure we have the latest data including username and display_name
       const { data: freshProfile, error: fetchError } = await supabase
         .from('profiles')
-        .select('*')
+        .select('user_id, onboarding_step, interests_count, last_interests_updated, created_at, updated_at, avatar_url, username, display_name, locale, is_top_reviewer, reviews_count, badges_count, subcategories_count, dealbreakers_count')
         .eq('user_id', user.id)
         .single();
 
-      if (fetchError) {
-        console.error('Error fetching fresh profile:', fetchError);
+      // Transform fresh profile data to match the profile structure
+      let transformedProfile = null;
+      
+      if (freshProfile) {
+        // Use fresh data from database (most accurate)
+        transformedProfile = {
+          id: freshProfile.user_id,
+          onboarding_step: freshProfile.onboarding_step,
+          onboarding_complete: freshProfile.onboarding_step === 'complete',
+          interests_count: freshProfile.interests_count || 0,
+          last_interests_updated: freshProfile.last_interests_updated,
+          avatar_url: freshProfile.avatar_url || undefined,
+          username: freshProfile.username || undefined,
+          display_name: freshProfile.display_name || undefined,
+          locale: freshProfile.locale || 'en',
+          is_top_reviewer: freshProfile.is_top_reviewer || false,
+          reviews_count: freshProfile.reviews_count || 0,
+          badges_count: freshProfile.badges_count || 0,
+          subcategories_count: freshProfile.subcategories_count || 0,
+          dealbreakers_count: freshProfile.dealbreakers_count || 0,
+          created_at: freshProfile.created_at,
+          updated_at: freshProfile.updated_at
+        };
+      } else if (fetchError) {
+        // If fetch failed but update succeeded, use the data we tried to save
+        // Merge userData.profile with existing profile to preserve all fields
+        console.warn('Failed to fetch fresh profile after update, using provided data:', fetchError);
+        if (userData.profile) {
+          transformedProfile = {
+            ...user.profile,
+            ...userData.profile,
+            // Ensure username and display_name are properly set (null if empty)
+            username: userData.profile.username !== undefined 
+              ? (userData.profile.username?.trim() || undefined)
+              : user.profile?.username,
+            display_name: userData.profile.display_name !== undefined
+              ? (userData.profile.display_name?.trim() || undefined)
+              : user.profile?.display_name,
+            avatar_url: userData.profile.avatar_url !== undefined
+              ? userData.profile.avatar_url
+              : user.profile?.avatar_url,
+          };
+        }
       }
 
-      // Update local user state with fresh data from database
+      // Update local user state with fresh data from database or provided data
       const updatedUser = {
         ...user,
         ...userData,
-        profile: freshProfile ? { ...user.profile, ...freshProfile } : (userData.profile ? { ...user.profile, ...userData.profile } : user.profile)
+        profile: transformedProfile || (userData.profile ? { ...user.profile, ...userData.profile } : user.profile)
       };
 
-      console.log('Updated user state with avatar_url:', updatedUser.profile?.avatar_url);
+      console.log('Updated user state with fresh profile data:', {
+        username: updatedUser.profile?.username,
+        display_name: updatedUser.profile?.display_name,
+        avatar_url: updatedUser.profile?.avatar_url
+      });
       setUser(updatedUser);
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Update failed';

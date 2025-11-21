@@ -69,16 +69,16 @@ export async function fetchBusinessOptimized(
           return { data, error };
         }
       ),
-    // Reviews
+    // Reviews - Limit to 10 initially for faster loading
     async () =>
       executeWithRetry(
         async () => {
           const { data, error } = await client2
             .from('reviews')
-            .select('*')
+            .select('id, user_id, business_id, rating, content, title, tags, created_at, helpful_count')
             .eq('business_id', actualBusinessId)
             .order('created_at', { ascending: false })
-            .limit(20);
+            .limit(10);
           return { data, error };
         }
       ),
@@ -112,22 +112,69 @@ export async function fetchBusinessOptimized(
 
     // Fetch images and profiles in parallel
     // For review_images, we need to fetch by review_id (not by their own id)
+    // For profiles, we need to fetch by user_id (not by id)
     const [imagesResult, profilesResult] = await executeParallelQueries([
       async () => {
-        // Fetch review images by review_id
+        // Fetch review images by review_id - only if we have reviews
+        if (reviewIds.length === 0) {
+          return { data: [], error: null };
+        }
         const { data, error } = await executeWithRetry(
           async () => {
             const result = await client1
               .from('review_images')
-              .select('id, review_id, image_url, storage_path, alt_text')
-              .in('review_id', reviewIds);
+              .select('review_id, image_url')
+              .in('review_id', reviewIds)
+              .order('created_at', { ascending: true })
+              .limit(100); // Limit total images to prevent large payloads (first image per review)
             return { data: result.data, error: result.error };
           }
         );
         return { data, error };
       },
-      () =>
-        batchFetchByIds(client2, 'profiles', userIds, 'user_id, display_name, avatar_url'),
+      async () => {
+        // Fetch profiles by user_id (not id) - profiles table uses user_id as primary key
+        if (userIds.length === 0) {
+          return { data: [], error: null };
+        }
+        
+        // Split into chunks to avoid query size limits
+        const chunkSize = 100;
+        const chunks: string[][] = [];
+        for (let i = 0; i < userIds.length; i += chunkSize) {
+          chunks.push(userIds.slice(i, i + chunkSize));
+        }
+        
+        // Execute chunks in parallel
+        const chunkPromises = chunks.map(chunk =>
+          client2
+            .from('profiles')
+            .select('user_id, display_name, username, avatar_url')
+            .in('user_id', chunk)
+            .then(({ data, error }) => ({ data: data as any[] | null, error }))
+        );
+        
+        const results = await Promise.all(chunkPromises);
+        
+        // Combine results
+        const allData: any[] = [];
+        let hasError = false;
+        let lastError: any = null;
+        
+        for (const result of results) {
+          if (result.error) {
+            hasError = true;
+            lastError = result.error;
+          } else if (result.data && Array.isArray(result.data)) {
+            allData.push(...result.data);
+          }
+        }
+        
+        return {
+          data: hasError ? null : allData,
+          error: hasError ? lastError : null
+        };
+      },
     ]);
 
     // Combine data

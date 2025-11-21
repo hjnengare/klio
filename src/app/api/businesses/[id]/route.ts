@@ -34,10 +34,19 @@ export async function GET(
         ...businessData,
         stats: stats || undefined,
         reviews: (businessData.reviews || []).map((review: any) => {
-          const profile = review.profile;
+          // Handle profile - could be object, array, or undefined
+          const profile = Array.isArray(review.profile) ? review.profile[0] : review.profile;
+          
+          // Extract author name with proper fallback chain
+          const author = profile?.display_name 
+            || profile?.username 
+            || review.author 
+            || 'Anonymous';
+          
           return {
             id: review.id,
-            author: profile?.display_name || 'Anonymous',
+            userId: review.user_id,
+            author,
             rating: review.rating,
             text: review.content || review.title || '',
             date: new Date(review.created_at).toLocaleDateString('en-US', {
@@ -73,7 +82,7 @@ export async function GET(
         friendliness: stats?.percentiles?.ambience || 85,
       };
 
-      // Add cache headers for business profile
+      // Add cache headers for business profile with stale-while-revalidate for faster loading
       return cachedJsonResponse(response, CachePresets.business());
     } catch (optimizedError: any) {
       // Fallback to original implementation if optimized fetch fails
@@ -113,13 +122,13 @@ export async function GET(
       .eq('id', actualBusinessId)
       .single();
 
-    // Fetch reviews for the business (limit to 20 for the profile page) - start in parallel
+    // Fetch reviews for the business (limit to 10 initially for faster loading) - start in parallel
     const reviewsQuery = supabase
       .from('reviews')
-      .select('*')
+      .select('id, user_id, business_id, rating, content, title, tags, created_at, helpful_count')
       .eq('business_id', actualBusinessId)
       .order('created_at', { ascending: false })
-      .limit(20);
+      .limit(10);
 
     // Execute business and reviews queries in parallel
     const [businessResult, reviewsResult] = await Promise.all([
@@ -153,14 +162,17 @@ export async function GET(
       const userIds = [...new Set(reviews.map((r: any) => r.user_id))];
 
       // Execute images and profiles queries in parallel
+      // Optimize: Only fetch necessary fields and limit images per review
       const [imagesResult, profilesResult] = await Promise.all([
         supabase
           .from('review_images')
-          .select('id, review_id, image_url, storage_path, alt_text')
-          .in('review_id', reviewIds),
+          .select('review_id, image_url')
+          .in('review_id', reviewIds)
+          .order('created_at', { ascending: true })
+          .limit(100), // Limit total images to prevent large payloads
         supabase
           .from('profiles')
-          .select('user_id, display_name, avatar_url')
+          .select('user_id, display_name, username, avatar_url')
           .in('user_id', userIds)
       ]);
 
@@ -205,7 +217,8 @@ export async function GET(
         const profile = Array.isArray(review.profiles) ? review.profiles[0] : review.profiles;
         return {
           id: review.id,
-          author: profile?.display_name || 'Anonymous',
+          userId: review.user_id,
+          author: profile?.display_name || profile?.username || 'Anonymous',
           rating: review.rating,
           text: review.content || review.title || '',
           date: new Date(review.created_at).toLocaleDateString('en-US', {

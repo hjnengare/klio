@@ -93,12 +93,12 @@ export const CachePresets = {
     mustRevalidate: true,
   }),
 
-  // Business data - cache for 10 minutes
+  // Business data - cache for 5 minutes with stale-while-revalidate for faster loading
   business: (): string => generateCacheControl({
     strategy: 'public',
-    maxAge: 600, // 10 minutes
-    sMaxAge: 1200, // 20 minutes on CDN
-    staleWhileRevalidate: 3600,
+    maxAge: 300, // 5 minutes
+    sMaxAge: 600, // 10 minutes on CDN
+    staleWhileRevalidate: 1800, // Serve stale for 30 minutes while revalidating in background
   }),
 
   // Review data - cache for 5 minutes

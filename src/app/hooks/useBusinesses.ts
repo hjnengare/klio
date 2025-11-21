@@ -9,7 +9,7 @@ import { useUserPreferences } from './useUserPreferences';
 export interface UseBusinessesOptions {
   limit?: number;
   category?: string;
-  sortBy?: 'total_rating' | 'reviews' | 'created_at' | 'name';
+  sortBy?: 'total_rating' | 'total_reviews' | 'reviews' | 'created_at' | 'name';
   sortOrder?: 'asc' | 'desc';
   verified?: boolean;
   badge?: string;

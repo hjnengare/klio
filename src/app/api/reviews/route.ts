@@ -93,6 +93,7 @@ export async function POST(req: Request) {
         profile:profiles!reviews_user_id_fkey (
           user_id,
           display_name,
+          username,
           avatar_url
         )
       `)
@@ -186,19 +187,28 @@ export async function GET(req: Request) {
     const limit = parseInt(searchParams.get('limit') || '10');
     const offset = parseInt(searchParams.get('offset') || '0');
 
+    // Optimize: Select only necessary fields for faster queries
     let query = supabase
       .from('reviews')
       .select(`
-        *,
+        id,
+        user_id,
+        business_id,
+        rating,
+        content,
+        title,
+        tags,
+        created_at,
+        helpful_count,
         profile:profiles!reviews_user_id_fkey (
           user_id,
           display_name,
+          username,
           avatar_url
         ),
         review_images (
-          id,
-          image_url,
-          alt_text
+          review_id,
+          image_url
         )
       `)
       .order('created_at', { ascending: false })

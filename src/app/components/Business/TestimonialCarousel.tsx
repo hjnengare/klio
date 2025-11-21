@@ -4,26 +4,27 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PremiumReviewCard } from "./PremiumReviewCard";
 
-interface TestimonialCarouselProps {
-  reviews: Array<{
-    id?: string | number;
-    author: string;
-    rating: number;
-    text: string;
-    date: string;
-    tags?: string[];
-    highlight?: string;
-    verified?: boolean;
-    profileImage?: string;
-    reviewImages?: string[];
-    location?: string;
-    profile?: {
-      display_name?: string;
-      avatar_url?: string;
-      location?: string;
-    };
-  }>;
-}
+      interface TestimonialCarouselProps {
+        reviews: Array<{
+          id?: string | number;
+          userId?: string;
+          author: string;
+          rating: number;
+          text: string;
+          date: string;
+          tags?: string[];
+          highlight?: string;
+          verified?: boolean;
+          profileImage?: string;
+          reviewImages?: string[];
+          location?: string;
+          profile?: {
+            display_name?: string;
+            avatar_url?: string;
+            location?: string;
+          };
+        }>;
+      }
 
 export function TestimonialCarousel({ reviews }: TestimonialCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -60,7 +61,7 @@ export function TestimonialCarousel({ reviews }: TestimonialCarouselProps) {
         disabled={isSingleReview}
         className={`absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full border-2 transition-all duration-300 flex items-center justify-center shadow-lg ${
           isSingleReview
-            ? "border-sage/30 bg-transparent cursor-not-allowed opacity-40"
+            ? "border-sage/30 bg-navbar-bg/90 opacity-40"
             : "border-sage bg-sage hover:bg-navbar-bg cursor-pointer"
         }`}
         style={{
@@ -83,7 +84,7 @@ export function TestimonialCarousel({ reviews }: TestimonialCarouselProps) {
         {reviews.map((review, index) => {
           const profile = review.profile || {};
           const authorName =
-            profile.display_name || review.author || "Anonymous";
+            profile.display_name || profile.username || review.author || "Anonymous";
 
           const prevIndex = getPrevIndex();
           const nextIndex = getNextIndex();
@@ -119,18 +120,20 @@ export function TestimonialCarousel({ reviews }: TestimonialCarouselProps) {
               key={review.id || index}
               className={`${positionClasses} w-[85%] sm:w-[70%] md:w-[60%] lg:w-[55%]`}
             >
-              <PremiumReviewCard
-                author={authorName}
-                rating={review.rating}
-                text={review.text}
-                date={review.date}
-                tags={review.tags}
-                highlight={review.highlight}
-                verified={review.verified}
-                profileImage={review.profileImage || profile.avatar_url}
-                reviewImages={review.reviewImages}
-                compact={true}
-              />
+                    <PremiumReviewCard
+                      reviewId={review.id as string}
+                      userId={review.userId}
+                      author={authorName}
+                      rating={review.rating}
+                      text={review.text}
+                      date={review.date}
+                      tags={review.tags}
+                      highlight={review.highlight}
+                      verified={review.verified}
+                      profileImage={review.profileImage || profile.avatar_url}
+                      reviewImages={review.reviewImages}
+                      compact={true}
+                    />
             </div>
           );
         })}
@@ -142,7 +145,7 @@ export function TestimonialCarousel({ reviews }: TestimonialCarouselProps) {
         disabled={isSingleReview}
         className={`absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full border-2 transition-all duration-300 flex items-center justify-center shadow-lg ${
           isSingleReview
-            ? "border-sage/30 bg-transparent cursor-not-allowed opacity-40"
+            ? "border-sage/30 border-sage/30 bg-navbar-bg/90 opacity-40"
             : "border-sage bg-sage hover:bg-navbar-bg cursor-pointer"
         }`}
         style={{

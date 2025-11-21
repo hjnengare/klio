@@ -81,25 +81,28 @@ function CompletePageContent() {
 
       // Dynamically import canvas-confetti to avoid SSR issues
       import('canvas-confetti').then((confetti) => {
-        const duration = 2000; // 2 seconds
+        const duration = 3000; // 3 seconds
         const end = Date.now() + duration;
 
         (function frame() {
           if (cancelled) return;
 
+          // Use app color scheme: sage, coral, white, and gold
+          const colors = ['#7D9B76', '#E88D67', '#FFFFFF', '#FFD700'];
+
           confetti.default({
-            particleCount: 3,
+            particleCount: 5,
             angle: 60,
             spread: 55,
             origin: { x: 0 },
-            colors: ["var(--coral)", "var(--sage)", "var(--charcoal)", "var(--off-white)"],
+            colors: colors,
           });
           confetti.default({
-            particleCount: 3,
+            particleCount: 5,
             angle: 120,
             spread: 55,
             origin: { x: 1 },
-            colors: ["var(--coral)", "var(--sage)", "var(--charcoal)", "var(--off-white)"],
+            colors: colors,
           });
 
           if (Date.now() < end) requestAnimationFrame(frame);
