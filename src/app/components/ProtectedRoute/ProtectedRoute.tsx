@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, ReactNode } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface ProtectedRouteProps {
@@ -21,6 +21,7 @@ export default function ProtectedRoute({
 }: ProtectedRouteProps) {
   const { user, isLoading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   
   // Optimistic check: if URL indicates verification, don't block on loading
@@ -85,12 +86,23 @@ export default function ProtectedRoute({
       }
     }
 
-    // If user has completed onboarding but is trying to access onboarding pages
+    // If user has completed onboarding but is trying to access onboarding pages, redirect to home
+    // Check if current route is an onboarding route
+    const onboardingRoutes = ['/onboarding', '/interests', '/subcategories', '/deal-breakers', '/complete'];
+    const isOnboardingRoute = onboardingRoutes.some(route => pathname === route || pathname?.startsWith(route + '/'));
+    
+    if (user && user.profile?.onboarding_complete && isOnboardingRoute) {
+      console.log('ProtectedRoute: User completed onboarding, redirecting from onboarding route to home');
+      router.push('/home');
+      return;
+    }
+    
+    // Legacy check for allowedOnboardingSteps
     if (user && user.profile?.onboarding_complete && allowedOnboardingSteps.length > 0) {
       router.push('/home');
       return;
     }
-  }, [user, isLoading, router, requiresAuth, requiresOnboarding, allowedOnboardingSteps, redirectTo]);
+  }, [user, isLoading, router, pathname, requiresAuth, requiresOnboarding, allowedOnboardingSteps, redirectTo]);
 
   // Show loading state while checking authentication - but allow optimistic rendering if verified
   if (isLoading && !isVerifiedFromUrl) {

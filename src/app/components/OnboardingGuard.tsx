@@ -36,8 +36,8 @@ export default function OnboardingGuard({ children }: OnboardingGuardProps) {
     // Skip guard for non-onboarding routes
     if (!isOnboardingRoute) return;
 
-    // If user is already onboarded and trying to access onboarding steps, redirect to home
-    if (user?.profile?.onboarding_complete && pathname !== "/complete") {
+    // If user is already onboarded and trying to access ANY onboarding route, redirect to home
+    if (user?.profile?.onboarding_complete) {
       router.replace("/home");
       return;
     }

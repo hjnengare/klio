@@ -20,6 +20,7 @@ import { PremiumReviewCard } from "./PremiumReviewCard";
           location?: string;
           profile?: {
             display_name?: string;
+            username?: string;
             avatar_url?: string;
             location?: string;
           };

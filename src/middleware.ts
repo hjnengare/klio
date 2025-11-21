@@ -70,8 +70,14 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(route)
   );
 
+  // Onboarding routes - users who completed onboarding should be redirected
+  const onboardingRoutes = ['/interests', '/subcategories', '/deal-breakers', '/complete', '/onboarding'];
+  const isOnboardingRoute = onboardingRoutes.some(route =>
+    request.nextUrl.pathname.startsWith(route)
+  );
+
   // Auth routes - redirect authenticated users away
-  const authRoutes = ['/login', '/register', '/onboarding', '/verify-email'];
+  const authRoutes = ['/login', '/register', '/verify-email'];
   const isAuthRoute = authRoutes.some(route =>
     request.nextUrl.pathname.startsWith(route)
   );
@@ -86,6 +92,26 @@ export async function middleware(request: NextRequest) {
   if (isPasswordResetRoute) {
     console.log('Middleware: Allowing access to password reset route');
     return response;
+  }
+
+  // Check if user has completed onboarding and redirect from onboarding routes
+  if (isOnboardingRoute && user) {
+    try {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('onboarding_step')
+        .eq('user_id', user.id)
+        .single();
+
+      if (profile?.onboarding_step === 'complete') {
+        console.log('Middleware: User completed onboarding, redirecting from onboarding route to home');
+        const redirectUrl = new URL('/home', request.url);
+        return NextResponse.redirect(redirectUrl);
+      }
+    } catch (error) {
+      console.error('Middleware: Error checking onboarding status:', error);
+      // Continue with normal flow if check fails
+    }
   }
 
   // Redirect unauthenticated users from protected routes
