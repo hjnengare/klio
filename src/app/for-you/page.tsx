@@ -38,6 +38,9 @@ export default function ForYouPage() {
     refetch,
   } = useForYouBusinesses(120);
 
+  // Note: Prioritization of recently reviewed businesses is now handled on the backend
+  // The API automatically prioritizes businesses the user has reviewed within the last 24 hours
+
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);

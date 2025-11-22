@@ -5,7 +5,7 @@
 
 "use client";
 
-import { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect, useMemo } from "react";
 import nextDynamic from "next/dynamic";
 import { ChevronUp } from "react-feather";
 import HeroCarousel from "../components/Hero/HeroCarousel";
@@ -49,6 +49,9 @@ export default function Home() {
   const { businesses: forYouBusinesses, loading: forYouLoading, error: forYouError } = useForYouBusinesses(10);
   const { businesses: trendingBusinesses, loading: trendingLoading, error: trendingError } = useTrendingBusinesses(10);
   const { businesses: allBusinesses } = useBusinesses({ limit: 200, sortBy: "total_rating", sortOrder: "desc", feedStrategy: "mixed" });
+  
+  // Note: Prioritization of recently reviewed businesses is now handled on the backend
+  // The API automatically prioritizes businesses the user has reviewed within the last 24 hours
   
   // Scroll to top button state (mobile only)
   const [showScrollTop, setShowScrollTop] = useState(false);

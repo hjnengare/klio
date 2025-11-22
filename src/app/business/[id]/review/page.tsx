@@ -255,6 +255,10 @@ function WriteReviewContent() {
       }, 250);
 
       resetForm();
+      
+      // Note: Prioritization is now handled on the backend - the API will automatically
+      // prioritize businesses the user has reviewed within the last 24 hours
+      
       // Refetch reviews immediately so the new review appears first
       if (refetchReviews) {
         setTimeout(() => {

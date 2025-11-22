@@ -536,7 +536,11 @@ async function handleMixedFeed(options: MixedFeedOptions) {
   ]);
 
   const blended = mixBusinesses(personalMatches, topRated, explore, limit);
-  const transformedBusinesses = blended.map(transformBusinessForCard);
+  
+  // Prioritize businesses the user has recently reviewed (within 24 hours)
+  const prioritizedBlended = await prioritizeRecentlyReviewedBusinesses(supabase, blended);
+  
+  const transformedBusinesses = prioritizedBlended.map(transformBusinessForCard);
 
   const response = NextResponse.json({
     data: transformedBusinesses,
@@ -1009,12 +1013,91 @@ function formatSubInterestLabel(subInterestId?: string | null) {
     .join(' ');
 }
 
+/**
+ * Prioritize businesses that the user has recently reviewed (within 24 hours)
+ * Moves recently reviewed businesses to the front of the array
+ */
+async function prioritizeRecentlyReviewedBusinesses(
+  supabase: SupabaseClientInstance,
+  businesses: BusinessRPCResult[]
+): Promise<BusinessRPCResult[]> {
+  if (!businesses || businesses.length === 0) {
+    return businesses;
+  }
+
+  try {
+    // Get current user
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return businesses; // No user, return as-is
+    }
+
+    // Calculate 24 hours ago timestamp
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+    // Query user's recent reviews within last 24 hours
+    const { data: recentReviews, error } = await supabase
+      .from('reviews')
+      .select('business_id, created_at')
+      .eq('user_id', user.id)
+      .gte('created_at', twentyFourHoursAgo)
+      .order('created_at', { ascending: false });
+
+    if (error || !recentReviews || recentReviews.length === 0) {
+      return businesses; // No recent reviews or error, return as-is
+    }
+
+    // Get unique business IDs from recent reviews (prioritize most recent first)
+    const reviewedBusinessIds = [...new Set(recentReviews.map(r => r.business_id))];
+
+    if (reviewedBusinessIds.length === 0) {
+      return businesses;
+    }
+
+    // Separate businesses into reviewed and non-reviewed
+    const reviewedBusinesses: BusinessRPCResult[] = [];
+    const nonReviewedBusinesses: BusinessRPCResult[] = [];
+
+    for (const business of businesses) {
+      const businessId = business.id;
+      const businessSlug = business.slug;
+      
+      // Check if this business was recently reviewed (by ID or slug)
+      const isRecentlyReviewed = reviewedBusinessIds.some(reviewedId => 
+        reviewedId === businessId || reviewedId === businessSlug
+      );
+
+      if (isRecentlyReviewed) {
+        reviewedBusinesses.push(business);
+      } else {
+        nonReviewedBusinesses.push(business);
+      }
+    }
+
+    // Sort reviewed businesses by review recency (most recent first)
+    reviewedBusinesses.sort((a, b) => {
+      const aReview = recentReviews.find(r => r.business_id === a.id || r.business_id === a.slug);
+      const bReview = recentReviews.find(r => r.business_id === b.id || r.business_id === b.slug);
+      
+      if (!aReview) return 1;
+      if (!bReview) return -1;
+      
+      return new Date(bReview.created_at).getTime() - new Date(aReview.created_at).getTime();
+    });
+
+    // Return reviewed businesses first, then non-reviewed
+    return [...reviewedBusinesses, ...nonReviewedBusinesses];
+  } catch (error) {
+    console.error('[BUSINESSES API] Error prioritizing recently reviewed businesses:', error);
+    return businesses; // Return original order on error
+  }
+}
+
 function applySharedResponseHeaders(response: NextResponse) {
   // Use optimized cache headers for business data
   response.headers.set('Cache-Control', CachePresets.business());
   response.headers.set('ETag', `W/"businesses-${Date.now()}"`);
   response.headers.set('X-Content-Type-Options', 'nosniff');
-  return response;
   response.headers.set('Vary', 'Accept-Encoding');
   return response;
 }

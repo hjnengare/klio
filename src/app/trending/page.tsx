@@ -39,6 +39,9 @@ export default function TrendingPage() {
     dealbreakerIds: dealbreakerIds.length ? dealbreakerIds : undefined,
   });
 
+  // Trending section should be consistent for all users based on actual trending metrics
+  // No personal prioritization here - keep original order from API
+
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
