@@ -77,9 +77,9 @@ export async function GET(
           }
           return imageList.filter(img => img && img.trim() !== '');
         })(),
-        trust: stats?.percentiles?.service || 85,
-        punctuality: stats?.percentiles?.price || 85,
-        friendliness: stats?.percentiles?.ambience || 85,
+        trust: stats?.percentiles?.trustworthiness || 85,
+        punctuality: stats?.percentiles?.punctuality || 85,
+        friendliness: stats?.percentiles?.friendliness || 85,
       };
 
       // Add cache headers for business profile with stale-while-revalidate for faster loading
@@ -252,9 +252,9 @@ export async function GET(
         return imageList.filter(img => img && img.trim() !== '');
       })(),
       // Calculate metrics from percentiles if available
-      trust: stats?.percentiles?.service || 85,
-      punctuality: stats?.percentiles?.price || 85,
-      friendliness: stats?.percentiles?.ambience || 85,
+      trust: stats?.percentiles?.trustworthiness || 85,
+      punctuality: stats?.percentiles?.punctuality || 85,
+      friendliness: stats?.percentiles?.friendliness || 85,
     };
 
     return NextResponse.json(response);

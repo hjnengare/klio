@@ -914,19 +914,19 @@ function mixBusinesses(
 const DEALBREAKER_RULES: Record<string, (business: BusinessRPCResult) => boolean> = {
   trustworthiness: (business) => business.verified !== false,
   punctuality: (business) => {
-    const serviceScore = business.percentiles?.service ?? 80;
-    return serviceScore >= 70;
+    const punctualityScore = business.percentiles?.punctuality ?? 80;
+    return punctualityScore >= 70;
   },
   friendliness: (business) => {
-    const serviceScore = business.percentiles?.service ?? 80;
-    return serviceScore >= 65;
+    const friendlinessScore = business.percentiles?.friendliness ?? 80;
+    return friendlinessScore >= 65;
   },
   'value-for-money': (business) => {
     if (business.price_range) {
       return business.price_range === '$' || business.price_range === '$$';
     }
-    const priceScore = business.percentiles?.price ?? 85;
-    return priceScore >= 75;
+    const costEffectivenessScore = business.percentiles?.['cost-effectiveness'] ?? 85;
+    return costEffectivenessScore >= 75;
   },
 };
 
@@ -991,9 +991,10 @@ function transformBusinessForCard(business: BusinessRPCResult) {
     hasRating,
     percentiles: business.percentiles
       ? {
-          service: business.percentiles.service || 85,
-          price: business.percentiles.price || 85,
-          ambience: business.percentiles.ambience || 85,
+          punctuality: business.percentiles.punctuality || 85,
+          friendliness: business.percentiles.friendliness || 85,
+          trustworthiness: business.percentiles.trustworthiness || 85,
+          'cost-effectiveness': business.percentiles['cost-effectiveness'] || 85,
         }
       : undefined,
   };

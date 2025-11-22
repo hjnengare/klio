@@ -109,9 +109,10 @@ export interface BusinessStats {
     5: number;
   };
   percentiles: {
-    service: number;
-    price: number;
-    ambience: number;
+    punctuality: number;
+    friendliness: number;
+    trustworthiness: number;
+    'cost-effectiveness': number;
   };
 }
 

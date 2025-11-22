@@ -2,7 +2,7 @@
 
 import nextDynamic from "next/dynamic";
 import { useMemo } from "react";
-import { getBusinessesByIds } from "../data/businessDataOptimized";
+// Removed mock data import - use API calls instead
 import EmailVerificationGuard from "../components/Auth/EmailVerificationGuard";
 import { useSavedItems } from "../contexts/SavedItemsContext";
 import SavedHeader from "../components/Saved/SavedHeader";
@@ -20,15 +20,21 @@ const Footer = nextDynamic(() => import("../components/Footer/Footer"), {
 export default function SavedPage() {
   const { savedItems } = useSavedItems();
 
-  // Optimized filtering using the optimized data structure
+  // TODO: Implement API call to fetch businesses by IDs
   const savedBusinesses = useMemo(() => {
-    if (!savedItems || savedItems.length === 0) return [];
-    return getBusinessesByIds(savedItems);
+    // TODO: Replace with actual API call to fetch businesses by IDs
+    // Example: const businesses = await fetch(`/api/businesses?ids=${savedItems.join(',')}`);
+    return [];
   }, [savedItems]);
 
   return (
     <EmailVerificationGuard>
-      <div className="min-h-dvh bg-off-white relative">
+      <div 
+        className="min-h-dvh bg-off-white relative font-urbanist"
+        style={{
+          fontFamily: '"Urbanist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+        }}
+      >
         <SavedHeader />
 
         <div className="relative z-0">

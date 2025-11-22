@@ -1,4 +1,3 @@
-import { TRENDING_BUSINESSES } from "./businessData";
 import { ToastNotificationData } from "../components/ToastNotification/ToastNotification";
 
 const NOTIFICATION_MESSAGES = {
@@ -38,13 +37,17 @@ const TIME_RANGES = [
   "1 Hour",
 ];
 
+// Generic placeholder business for notifications
+const PLACEHOLDER_BUSINESS = {
+  name: "Local Business",
+  image: "/png/restaurants.png",
+  alt: "Business",
+  href: "/home",
+};
+
 export function generateRandomNotification(): ToastNotificationData {
   const types: ("review" | "business" | "user" | "highlyRated")[] = ["review", "business", "user", "highlyRated"];
   const type = types[Math.floor(Math.random() * types.length)];
-
-  const business = TRENDING_BUSINESSES[
-    Math.floor(Math.random() * TRENDING_BUSINESSES.length)
-  ];
 
   const messages = NOTIFICATION_MESSAGES[type];
   const message = messages[Math.floor(Math.random() * messages.length)];
@@ -54,11 +57,11 @@ export function generateRandomNotification(): ToastNotificationData {
     id: `${Date.now()}-${Math.random()}`,
     type,
     message,
-    title: business.name,
+    title: PLACEHOLDER_BUSINESS.name,
     timeAgo,
-    image: business.image,
-    imageAlt: business.alt,
-    link: business.href,
+    image: PLACEHOLDER_BUSINESS.image,
+    imageAlt: PLACEHOLDER_BUSINESS.alt,
+    link: PLACEHOLDER_BUSINESS.href,
   };
 }
 

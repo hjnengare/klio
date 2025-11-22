@@ -21,11 +21,11 @@ export default function SavedBusinessRow({
 
   return (
     <section
-      className="relative"
+      className="relative font-urbanist"
       aria-label={title}
       data-section
       style={{
-        fontFamily: '"Urbanist", system-ui, sans-serif',
+        fontFamily: '"Urbanist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
       }}
     >
       <div className="mx-auto w-full max-w-[2000px] px-2 relative z-10">

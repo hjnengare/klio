@@ -173,71 +173,76 @@ export default function BusinessProfilePage() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchBusiness = async () => {
-            if (!businessId) {
-                setError('Business ID is required');
+    const fetchBusiness = async (forceRefresh = false) => {
+        if (!businessId) {
+            setError('Business ID is required');
+            setIsLoading(false);
+            return;
+        }
+
+        try {
+            setIsLoading(true);
+            setError(null);
+            
+            // Force fresh fetch with cache-busting when coming from review submission or force refresh
+            const urlParams = new URLSearchParams(window.location.search);
+            const refreshed = urlParams.get('refreshed') || forceRefresh;
+            
+            // Use stale-while-revalidate for better performance (unless explicitly refreshing)
+            const cacheOption = refreshed ? 'no-store' : 'force-cache';
+            const response = await fetch(`/api/businesses/${businessId}${forceRefresh ? `?refreshed=${Date.now()}` : ''}`, {
+                cache: cacheOption,
+                next: refreshed ? { revalidate: 0 } : { revalidate: 600 }, // Revalidate after 10 minutes unless refreshing
+                headers: refreshed ? { 'Cache-Control': 'no-cache' } : undefined,
+            });
+            
+            if (!response.ok) {
+                if (response.status === 404) {
+                    setError('Business not found');
+                } else {
+                    setError('Failed to load business');
+                }
                 setIsLoading(false);
                 return;
             }
 
-            try {
-                setIsLoading(true);
-                setError(null);
-                
-                // Force fresh fetch with cache-busting when coming from review submission
-                const urlParams = new URLSearchParams(window.location.search);
-                const refreshed = urlParams.get('refreshed');
-                
-                // Use stale-while-revalidate for better performance (unless explicitly refreshing)
-                const cacheOption = refreshed ? 'no-store' : 'force-cache';
-                const response = await fetch(`/api/businesses/${businessId}`, {
-                    cache: cacheOption,
-                    next: refreshed ? { revalidate: 0 } : { revalidate: 600 }, // Revalidate after 10 minutes unless refreshing
-                    headers: refreshed ? { 'Cache-Control': 'no-cache' } : undefined,
-                });
-                
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        setError('Business not found');
-                    } else {
-                        setError('Failed to load business');
-                    }
-                    setIsLoading(false);
+            const data = await response.json();
+            setBusiness(data);
+            
+            // Clean up the refreshed query param from URL after successful fetch
+            if (refreshed && window.history.replaceState) {
+                const cleanUrl = window.location.pathname;
+                window.history.replaceState({}, '', cleanUrl);
+            }
+
+            // SEO: Redirect from ID to slug if we have a slug and the URL uses an ID
+            // Only redirect if the current URL uses an ID (UUID format) and we have a slug
+            const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(businessId);
+            if (data.slug && data.slug !== businessId && isUUID) {
+                // Only redirect if the slug is different (slug-based URL would be different)
+                const slugUrl = `/business/${data.slug}`;
+                if (window.location.pathname !== slugUrl) {
+                    // Use replace to keep history clean
+                    router.replace(slugUrl);
                     return;
                 }
-
-                const data = await response.json();
-                setBusiness(data);
-                
-                // Clean up the refreshed query param from URL after successful fetch
-                if (refreshed && window.history.replaceState) {
-                    const cleanUrl = window.location.pathname;
-                    window.history.replaceState({}, '', cleanUrl);
-                }
-
-                // SEO: Redirect from ID to slug if we have a slug and the URL uses an ID
-                // Only redirect if the current URL uses an ID (UUID format) and we have a slug
-                const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(businessId);
-                if (data.slug && data.slug !== businessId && isUUID) {
-                    // Only redirect if the slug is different (slug-based URL would be different)
-                    const slugUrl = `/business/${data.slug}`;
-                    if (window.location.pathname !== slugUrl) {
-                        // Use replace to keep history clean
-                        router.replace(slugUrl);
-                        return;
-                    }
-                }
-            } catch (err: any) {
-                console.error('Error fetching business:', err);
-                setError('Failed to load business');
-            } finally {
-                setIsLoading(false);
             }
-        };
+        } catch (err: any) {
+            console.error('Error fetching business:', err);
+            setError('Failed to load business');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
+    useEffect(() => {
         fetchBusiness();
     }, [businessId, router]);
+
+    // Refetch function for after delete
+    const refetchBusiness = () => {
+        fetchBusiness(true);
+    };
 
     // Loading state - show full page loader with transition
     if (isLoading) {
@@ -320,9 +325,9 @@ export default function BusinessProfilePage() {
         rating: business.stats?.average_rating || 0,
         image: fallbackImageCandidate || '',
         images: galleryImages,
-        trust: business.trust || business.stats?.percentiles?.service || 85,
-        punctuality: business.punctuality || business.stats?.percentiles?.price || 85,
-        friendliness: business.friendliness || business.stats?.percentiles?.ambience || 85,
+        trust: business.trust || business.stats?.percentiles?.trustworthiness || 85,
+        punctuality: business.punctuality || business.stats?.percentiles?.punctuality || 85,
+        friendliness: business.friendliness || business.stats?.percentiles?.friendliness || 85,
         specials: [], // TODO: Fetch from events/specials table
         reviews: business.reviews || [],
     };
@@ -598,10 +603,7 @@ export default function BusinessProfilePage() {
                                                                     verified={index < 2}
                                                                     profileImage={review.profileImage}
                                                                     reviewImages={review.reviewImages}
-                                                                    onDelete={() => {
-                                                                        // Refresh the page to update reviews
-                                                                        window.location.reload();
-                                                                    }}
+                                                                    onDelete={refetchBusiness}
                                                                 />
                                                             </div>
                                                         ))}

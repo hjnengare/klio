@@ -8,9 +8,9 @@ export default function EmptySavedState() {
 
   return (
     <div
-      className="mx-auto w-full max-w-[2000px] px-2"
+      className="mx-auto w-full max-w-[2000px] px-2 font-urbanist"
       style={{
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+        fontFamily: '"Urbanist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
       }}
     >
       <div className="text-center py-20">
@@ -18,17 +18,30 @@ export default function EmptySavedState() {
           <Bookmark className="w-8 h-8 text-sage" />
         </div>
 
-        <h3 className="font-urbanist text-lg font-600 text-charcoal mb-2">
+        <h3 
+          className="font-urbanist text-lg font-600 text-charcoal mb-2"
+          style={{
+            fontFamily: '"Urbanist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+          }}
+        >
           No saved items yet
         </h3>
 
-        <p className="font-urbanist text-sm text-charcoal/60 mb-6 max-w-md mx-auto">
+        <p 
+          className="font-urbanist text-sm text-charcoal/60 mb-6 max-w-md mx-auto"
+          style={{
+            fontFamily: '"Urbanist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+          }}
+        >
           Tap the bookmark icon on any business to save it here
         </p>
 
         <button
           onClick={() => router.push("/home")}
           className="inline-flex items-center gap-2 px-6 py-2.5 bg-sage text-white font-urbanist text-sm font-600 rounded-full hover:bg-sage/90 transition-all duration-300"
+          style={{
+            fontFamily: '"Urbanist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+          }}
         >
           Discover Businesses
         </button>

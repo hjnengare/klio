@@ -25,9 +25,10 @@ import { PremiumReviewCard } from "./PremiumReviewCard";
             location?: string;
           };
         }>;
+        onDelete?: () => void;
       }
 
-export function TestimonialCarousel({ reviews }: TestimonialCarouselProps) {
+export function TestimonialCarousel({ reviews, onDelete }: TestimonialCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!reviews || reviews.length === 0) return null;
@@ -134,6 +135,7 @@ export function TestimonialCarousel({ reviews }: TestimonialCarouselProps) {
                       profileImage={review.profileImage || profile.avatar_url}
                       reviewImages={review.reviewImages}
                       compact={true}
+                      onDelete={onDelete}
                     />
             </div>
           );

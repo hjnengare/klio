@@ -35,7 +35,7 @@ import { ConfirmationDialog } from "@/components/molecules/ConfirmationDialog";
 import SavedBusinessRow from "@/app/components/Saved/SavedBusinessRow";
 import { useSavedItems } from "@/app/contexts/SavedItemsContext";
 import { EditProfileModal } from "@/app/components/EditProfile/EditProfileModal";
-import { getBusinessesByIds } from "@/app/data/businessDataOptimized";
+// Removed mock data import - use API calls instead
 import { useMemo } from "react";
 
 const animations = `
@@ -144,10 +144,11 @@ function ProfileContent() {
   const [userReviews, setUserReviews] = useState<Review[]>([]);
   const [reviewsLoading, setReviewsLoading] = useState(true);
 
-  // Get saved businesses for mobile display
+  // Get saved businesses for mobile display - TODO: Implement API call to fetch businesses by IDs
   const savedBusinesses = useMemo(() => {
-    if (!savedItems || savedItems.length === 0) return [];
-    return getBusinessesByIds(savedItems);
+    // TODO: Replace with actual API call to fetch businesses by IDs
+    // Example: const businesses = await fetch(`/api/businesses?ids=${savedItems.join(',')}`);
+    return [];
   }, [savedItems]);
 
   const profile = React.useMemo(() => {

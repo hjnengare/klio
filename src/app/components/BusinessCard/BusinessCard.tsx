@@ -16,10 +16,6 @@ type Percentiles = {
   'cost-effectiveness'?: number;
   friendliness?: number;
   trustworthiness?: number;
-  // Legacy support
-  service?: number;
-  price?: number;
-  ambience?: number;
 };
 
 type Business = {
@@ -651,15 +647,15 @@ function BusinessCard({
                 <div className="flex items-center justify-center gap-2 flex-wrap min-h-[32px] py-2 md:bg-off-white/40 md:rounded-[20px] md:border md:border-white/30">
                   <PercentileChip
                     label="punctuality"
-                    value={business.percentiles?.punctuality || business.percentiles?.service || 0}
+                    value={business.percentiles?.punctuality || 0}
                   />
                   <PercentileChip
                     label="cost-effectiveness"
-                    value={business.percentiles?.['cost-effectiveness'] || business.percentiles?.price || 0}
+                    value={business.percentiles?.['cost-effectiveness'] || 0}
                   />
                   <PercentileChip
                     label="friendliness"
-                    value={business.percentiles?.friendliness || business.percentiles?.ambience || 0}
+                    value={business.percentiles?.friendliness || 0}
                   />
                   <PercentileChip
                     label="trustworthiness"

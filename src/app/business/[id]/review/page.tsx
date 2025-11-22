@@ -447,6 +447,14 @@ function WriteReviewContent() {
                         ) : reviews.length > 0 ? (
                           <div style={{ minHeight: '480px' }}>
                             <TestimonialCarousel
+                              onDelete={() => {
+                                // Refetch reviews after deletion
+                                if (refetchReviews) {
+                                  setTimeout(() => {
+                                    refetchReviews();
+                                  }, 500);
+                                }
+                              }}
                               reviews={[...reviews]
                                 // Sort reviews by created_at descending (newest first)
                                 .sort((a: any, b: any) => {
