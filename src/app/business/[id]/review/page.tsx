@@ -1,9 +1,9 @@
 "use client";
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, Suspense, useMemo } from "react";
+import { useEffect, useState, Suspense, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
-import { ArrowLeft, Edit, Star, ChevronUp } from "react-feather";
+import { ArrowLeft, Edit, Star, ChevronUp, Info } from "react-feather";
 import Link from "next/link";
 import confetti from "canvas-confetti";
 import { useReviewForm } from "../../../hooks/useReviewForm";
@@ -11,7 +11,7 @@ import { useReviewSubmission, useReviews } from "../../../hooks/useReviews";
 import { PageLoader } from "../../../components/Loader";
 import ReviewForm from "../../../components/ReviewForm/ReviewForm";
 import BusinessInfoAside from "../../../components/BusinessInfo/BusinessInfoAside";
-import { BusinessInfo } from "../../../components/BusinessInfo/BusinessInfoModal";
+import BusinessInfoModal, { BusinessInfo } from "../../../components/BusinessInfo/BusinessInfoModal";
 import { PremiumReviewCard } from "../../../components/Business/PremiumReviewCard";
 import { TestimonialCarousel } from "../../../components/Business/TestimonialCarousel";
 import Footer from "../../../components/Footer/Footer";
@@ -98,6 +98,8 @@ function WriteReviewContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const infoButtonRef = useRef<HTMLButtonElement>(null);
 
   // Fetch reviews for "What others are saying" section - use actual business ID from loaded business
   // Only fetch after business data is loaded to ensure we have the actual database ID (not slug)
@@ -144,10 +146,10 @@ function WriteReviewContent() {
   // Handle scroll to top button visibility
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 200);
+      setShowScrollTop(window.scrollY > 100);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -310,7 +312,7 @@ function WriteReviewContent() {
         }
       `}</style>
       <div
-        className="min-h-dvh bg-off-white relative overflow-hidden font-urbanist"
+        className="min-h-dvh bg-off-white relative overflow-x-hidden font-urbanist"
         style={{
           fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
         }}
@@ -321,6 +323,10 @@ function WriteReviewContent() {
           role="banner"
           style={{
             fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
           }}
         >
           <div className="mx-auto w-full max-w-[2000px] px-4 sm:px-6 lg:px-10 2xl:px-16 py-4">
@@ -333,13 +339,25 @@ function WriteReviewContent() {
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 mr-2 sm:mr-3" aria-hidden="true">
                   <ArrowLeft className="w-6 h-6 text-white group-hover:text-white transition-colors duration-300" strokeWidth={2.5} />
                 </div>
-                <h3
-                  className="text-body sm:text-h4 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
-                  style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}
-                >
-                  Write a Review
-                </h3>
+              <h3
+                className="text-body sm:text-h4 font-semibold text-white animate-delay-100 animate-fade-in truncate max-w-[150px] sm:max-w-none"
+                style={{ fontFamily: 'Urbanist, system-ui, sans-serif' }}
+              >
+                Write a Review
+              </h3>
+            </button>
+
+            {/* Info Button - Mobile Only */}
+            {businessInfo && (
+              <button
+                ref={infoButtonRef}
+                onClick={() => setIsInfoModalOpen(true)}
+                className="lg:hidden w-10 h-10 sm:w-11 sm:h-11 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/40 min-h-[44px] min-w-[44px]"
+                aria-label="View business information"
+              >
+                <Info className="w-5 h-5 sm:w-6 sm:h-6 text-white" strokeWidth={2.5} />
               </button>
+            )}
 
             </nav>
           </div>
@@ -416,8 +434,8 @@ function WriteReviewContent() {
                         </article>
                       </div>
 
-                      {/* Sidebar - Business Info */}
-                      <div className="space-y-6">
+                      {/* Sidebar - Business Info (Desktop Only) */}
+                      <div className="hidden lg:block space-y-6">
                         <BusinessInfoAside
                           businessInfo={businessInfo}
                           className="self-start lg:sticky lg:top-28"
@@ -515,6 +533,11 @@ function WriteReviewContent() {
           <button
             onClick={scrollToTop}
             className="fixed bottom-6 right-6 z-[100] w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-sage to-sage/90 hover:from-sage/90 hover:to-sage/80 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center border border-sage/30 hover:scale-110"
+            style={{
+              position: 'fixed',
+              bottom: '1.5rem',
+              right: '1.5rem',
+            }}
             aria-label="Scroll to top"
           >
             <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
@@ -522,6 +545,16 @@ function WriteReviewContent() {
         )}
 
         <Footer />
+
+        {/* Business Info Modal - Mobile Only */}
+        {businessInfo && (
+          <BusinessInfoModal
+            businessInfo={businessInfo}
+            buttonRef={infoButtonRef}
+            isOpen={isInfoModalOpen}
+            onClose={() => setIsInfoModalOpen(false)}
+          />
+        )}
       </div>
     </>
   );

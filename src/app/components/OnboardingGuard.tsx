@@ -37,7 +37,8 @@ export default function OnboardingGuard({ children }: OnboardingGuardProps) {
     if (!isOnboardingRoute) return;
 
     // If user is already onboarded and trying to access ANY onboarding route, redirect to home
-    if (user?.profile?.onboarding_complete) {
+    // EXCEPT for the complete page, which should be allowed as the final step
+    if (user?.profile?.onboarding_complete && pathname !== "/complete") {
       router.replace("/home");
       return;
     }
