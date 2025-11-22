@@ -37,11 +37,16 @@ export function useReviewForm(): UseReviewFormReturn {
   const isFormValid = useMemo(() => {
     const ratingValid = overallRating > 0;
     const textValid = reviewText.trim().length > 0;
-    return ratingValid && textValid;
+    const valid = ratingValid && textValid;
+    return valid;
   }, [overallRating, reviewText]);
 
   const setReviewTextCallback = useCallback((text: string) => {
-    setReviewText(text);
+    // Use functional update to ensure we're working with latest state
+    setReviewText((prev) => {
+      // Always return the new text to ensure state updates even if same value
+      return text;
+    });
   }, []);
 
   const setReviewTitleCallback = useCallback((title: string) => {

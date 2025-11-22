@@ -38,7 +38,16 @@ export default function ReviewTextForm({
           value={reviewText}
           onChange={(e) => {
             const value = e.target.value;
+            // Ensure immediate state update for validation
             onTextChange(value);
+          }}
+          onInput={(e) => {
+            // Fallback for mobile devices - onInput fires immediately as user types
+            // This ensures state updates on mobile even if onChange has issues
+            const value = (e.target as HTMLTextAreaElement).value;
+            if (value !== reviewText) {
+              onTextChange(value);
+            }
           }}
           placeholder="Share your thoughts and help other locals..."
           rows={4}
